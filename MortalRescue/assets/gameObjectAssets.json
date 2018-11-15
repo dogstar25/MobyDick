@@ -1,0 +1,18 @@
+{
+  "description":  "testJson",
+  "spriteObjects": {
+    "survivor1": [
+      {
+        "description": "male survivor player",
+        "static": false,
+        "textures": {
+          "xSize": 64,
+          "ySize": 64,
+          "assetFilename": "survivor1.png"
+        }
+      }
+    ]
+  }
+
+
+}
