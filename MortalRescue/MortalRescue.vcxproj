@@ -91,13 +91,13 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\json;C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\SDL2_image\include;C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;C:\projects\libraries\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\SDL2_image\lib\x64;C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -111,13 +111,13 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\json;C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\SDL2_image\include;C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;C:\projects\libraries\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\SDL2_image\lib\x64;C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -131,7 +131,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\json;C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\SDL2_image\include;C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;C:\projects\libraries\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,7 +139,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\SDL2_image\lib\x64;C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -153,7 +153,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\json;C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\SDL2_image\include;C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;C:\projects\libraries\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -161,7 +161,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\SDL2_image\lib\x64;C:\projects\MortalRescue\MortalRescue\thirdPartyLibraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
