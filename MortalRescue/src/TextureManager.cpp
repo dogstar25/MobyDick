@@ -1,15 +1,19 @@
 #include "TextureManager.h"
+#include <iostream>
+#include <fstream>
+using namespace std;
+
 
 
 bool TextureManager::init(SDL_Window* pWindow)
 {
 
+	//Create the main renderer
 	pRenderer = SDL_CreateRenderer(pWindow, -1, 0);
 	SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
 
-	SDL_Surface* tempSurface = IMG_Load("assets/player.png");
-	playerTex = SDL_CreateTextureFromSurface(pRenderer, tempSurface);
-	SDL_FreeSurface(tempSurface);
+	//Load all of the textures for the game
+	loadTextures();
 
 	return true;
 }
@@ -21,11 +25,47 @@ bool TextureManager::draw()
 	destRect.h = 64;
 	destRect.w = 64;
 
-	SDL_RenderCopy(pRenderer, playerTex, NULL, &destRect);
+	SDL_Texture* tex = this->textureMap["BOWMAN1"];
+
+	SDL_RenderCopy(pRenderer, tex, NULL, &destRect);
 	SDL_RenderPresent(pRenderer);
 
 	return true;
 }
+
+bool TextureManager::loadTextures()
+{
+
+	//Read file and stream it to a JSON object
+	Json::Value root;
+	ifstream ifs("assets/textureAssets.json");
+	ifs >> root;
+
+	//Get and store config values
+	string filename, id;
+	SDL_Surface* tempSurface;
+	SDL_Texture* texture;
+
+	//Loop through every texture defined in the config file, create a texture object
+	//and store it in the main texture map
+	for(auto itr : root["textures"])
+	{
+		id = itr["id"].asString();
+		filename = itr["filename"].asString();
+
+		tempSurface = IMG_Load(filename.c_str());
+		texture = SDL_CreateTextureFromSurface(this->pRenderer, tempSurface);
+		SDL_FreeSurface(tempSurface);
+
+		//this->textureMap.insert(pair<string, SDL_Texture*>(id, texture));
+		this->textureMap[id]= texture;
+
+	}
+	
+
+	return true;
+}
+
 
 TextureManager::TextureManager()
 {

@@ -1,0 +1,16 @@
+{
+  "textures": [
+    {
+      "id": "BOWMAN1",
+      "description": "single bowman image",
+      "static": false,
+      "filename": "assets/bowman1.png"
+    },
+    {
+      "id": "BOWMAN2",
+      "description": "single bowman image",
+      "static": false,
+      "filename": "assets/bowman1.png"
+    }
+  ]
+}

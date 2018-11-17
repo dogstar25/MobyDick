@@ -2,6 +2,12 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <json/json.h>
+#include <fstream>
+#include <stdio.h>
+#include <string>
+#include <map>
+using namespace std;
+
 
 class TextureManager
 {
@@ -14,10 +20,11 @@ public:
 
 private:
 
-	SDL_Texture* playerTex;
 	SDL_Rect srcRect, destRect;
 	SDL_Renderer* pRenderer;
+	map<string, SDL_Texture*> textureMap;
 
+	bool loadTextures();
 	
 };
 

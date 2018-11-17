@@ -6,7 +6,6 @@
 #include <fstream>
 #include "game.h"
 #include <stdio.h>
-#include <fstream>
 using namespace std;
 
 
@@ -30,10 +29,7 @@ bool Game::init()
 
 		//Initialize the textture manager
 		textureManager.init(pWindow);
-
 		m_bRunning = true;
-
-
 	}
 	return true;
 }
