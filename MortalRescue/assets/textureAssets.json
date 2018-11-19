@@ -1,16 +1,16 @@
 {
   "textures": [
     {
-      "id": "BOWMAN1",
+      "id": "TX_BOWMAN1",
       "description": "single bowman image",
       "static": false,
       "filename": "assets/bowman1.png"
     },
     {
-      "id": "BOWMAN2",
-      "description": "single bowman image",
+      "id": "TX_SWORDLADY1_IDLE",
+      "description": "SWORD LADY IDLE",
       "static": false,
-      "filename": "assets/bowman1.png"
+      "filename": "assets/swordLady64_Idle.png"
     }
   ]
 }

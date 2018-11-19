@@ -1,18 +1,8 @@
 
-#include <SDL.h>
-#include <SDL_image.h>
-#include <json/json.h>
-#include <iostream>
-#include <fstream>
 #include "game.h"
-#include <stdio.h>
-using namespace std;
-
 
 bool Game::init()
 {
-	std::cout << "Hello World!\n";
-
 	//Get all of the configuration values
 	getConfig();
 
@@ -28,7 +18,14 @@ bool Game::init()
 			this->windowFlags);
 
 		//Initialize the textture manager
-		textureManager.init(pWindow);
+		this->textureManager.init(pWindow);
+
+		//Initilaze the Game Object Manager
+		//This will hold all possible game objects that the game/level supports
+		this->gameObjectManager.init(&this->textureManager);
+
+		//Set the main player gameObject as defined by config
+		this->player = this->gameObjectManager.getGameObject(this->playerGameObjectId);
 		m_bRunning = true;
 	}
 	return true;
@@ -41,10 +38,10 @@ void Game::update() {
 }
 
 
-
 void Game::render() {
 
-	this->textureManager.draw();
+	//NOTE: This will be looping thru all of the game objects that need to be rendered
+	this->textureManager.render(this->player);
 }
 
 void Game::clean() {
@@ -65,6 +62,7 @@ bool Game::getConfig()
 	this->windowTitle = root["windowSettings"]["title"].asString();
 	this->screenWidth = root["windowSettings"]["width"].asInt();
 	this->screenHeight = root["windowSettings"]["height"].asInt();
+	this->playerGameObjectId = root["playerGameObjectId"].asString();
 
 	return true;
 }

@@ -1,17 +1,45 @@
 {
-  "description":  "testJson",
-  "spriteObjects": {
-    "survivor1": [
-      {
-        "description": "male survivor player",
-        "static": false,
-        "textures": {
+  
+  "gameObjects": [
+    {
+      "id": "BOWMAN",
+      "description": "Player Bowman",
+      "static": false,
+      "animated": false,
+      "texture": "TX_BOWMAN1",
+      "srcRectX": 0,
+      "srcRectY": 0
+    },
+    {
+      "id": "SWORDLADY",
+      "description": "SwordLady",
+      "static": false,
+      "animated": true,
+      "animations": [
+        {
+          "id": "IDLE",
+          "texture": "TX_SWORDLADY1_IDLE",
+          "frames": 19,
           "xSize": 64,
-          "ySize": 64,
-          "assetFilename": "survivor1.png"
+          "ySize": 64
+        },
+        {
+          "id": "RUN",
+          "texture": "TX_SWORDLADY1_RUN",
+          "frames": 5,
+          "xSize": 64,
+          "ySize": 64
         }
-      }
-    ]
-  }
-
-}
+      ]
+    },
+    {
+      "id": "WALL_BRICK_1",
+      "description": "Wall brick 1",
+      "static": true,
+      "animated": false,
+      "texture": "TX_WALLBRICK_1",
+      "srcRectX": 0,
+      "srcRectY": 0
+    }
+  ]
+}1

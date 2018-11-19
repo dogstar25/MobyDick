@@ -1,9 +1,4 @@
 #include "TextureManager.h"
-#include <iostream>
-#include <fstream>
-using namespace std;
-
-
 
 bool TextureManager::init(SDL_Window* pWindow)
 {
@@ -18,20 +13,23 @@ bool TextureManager::init(SDL_Window* pWindow)
 	return true;
 }
 
-bool TextureManager::draw()
+bool TextureManager::render(GameObject* gameObject)
 {
 	SDL_RenderClear(pRenderer);
-	SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
 	destRect.h = 64;
 	destRect.w = 64;
 
-	SDL_Texture* tex = this->textureMap["BOWMAN1"];
-
+	SDL_Texture* tex = gameObject->staticTexture;
 	SDL_RenderCopy(pRenderer, tex, NULL, &destRect);
+	//SDL_RenderCopyEx - allows for rotation and flipping
+
+
+
 	SDL_RenderPresent(pRenderer);
 
 	return true;
 }
+
 
 bool TextureManager::loadTextures()
 {
@@ -64,6 +62,15 @@ bool TextureManager::loadTextures()
 	
 
 	return true;
+}
+
+SDL_Texture * TextureManager::getTexture(string id)
+{
+	SDL_Texture *tempTexture= nullptr;
+
+	tempTexture = this->textureMap[id];
+
+	return tempTexture;
 }
 
 

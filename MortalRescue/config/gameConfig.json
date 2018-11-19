@@ -1,5 +1,6 @@
 {
-  "gameTitle":  "MortalRescue",
+  "gameTitle": "MortalRescue",
+  "playerGameObjectId": "BOWMAN",
   "windowSettings": {
     "title": "MortalRescue",
     "width": 800,

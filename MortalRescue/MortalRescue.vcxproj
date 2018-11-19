@@ -165,6 +165,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\GameObject.cpp" />
+    <ClCompile Include="src\GameObjectAnimation.cpp" />
+    <ClCompile Include="src\GameObjectManager.cpp" />
     <ClCompile Include="src\jsoncpp\jsoncpp.cpp" />
     <ClCompile Include="src\MortalRescue.cpp" />
     <ClCompile Include="src\game.cpp" />
@@ -172,10 +175,25 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\GameObject.h" />
+    <ClInclude Include="src\GameObjectAnimation.h" />
+    <ClInclude Include="src\GameObjectManager.h" />
+    <ClInclude Include="src\jsoncpp\json\json-forwards.h" />
+    <ClInclude Include="src\jsoncpp\json\json.h" />
     <ClInclude Include="src\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\gameObjectAssets.json" />
     <None Include="assets\textureAssets.json" />
+    <None Include="config\gameConfig.json" />
+    <None Include="libpng16-16.dll" />
+    <None Include="SDL2.dll" />
+    <None Include="SDL2_image.dll" />
+    <None Include="zlib1.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\bowman1.png" />
+    <Image Include="assets\swordLady64_Idle.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

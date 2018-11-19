@@ -2,12 +2,14 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <json/json.h>
-#include <fstream>
 #include <stdio.h>
 #include <string>
 #include <map>
-using namespace std;
+#include <iostream>
+#include <fstream>
+#include "GameObject.h"
 
+using namespace std;
 
 class TextureManager
 {
@@ -16,7 +18,8 @@ public:
 	~TextureManager();
 
 	bool init(SDL_Window*);
-	bool draw();
+	bool render(GameObject* gameObject);
+	SDL_Texture* getTexture(string id);
 
 private:
 
