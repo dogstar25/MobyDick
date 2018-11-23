@@ -14,8 +14,21 @@
 #include <stdio.h>
 using namespace std;
 
+struct Clock
+{
+	uint32_t last_tick_time = 0;
+	uint32_t delta = 0;
+
+	void tick()
+	{
+		uint32_t tick_time = SDL_GetTicks();
+		delta = tick_time - last_tick_time;
+		last_tick_time = tick_time;
+	}
+};
 
 class Game {
+
 public:
 	Game() {}
 	~Game() {}
@@ -28,6 +41,9 @@ public:
 	void clean();
 
 	bool running() { return m_bRunning; }
+	static Clock clock;
+
+	
 
 private:
 	//Game Window Settings
@@ -40,6 +56,7 @@ private:
 	//Manager objects
 	TextureManager textureManager;
 	GameObjectManager gameObjectManager;
+	
 
 	vector<GameObject> gameObjects;
 	GameObject* player;

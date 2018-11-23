@@ -7,8 +7,9 @@
       "static": false,
       "animated": false,
       "texture": "TX_BOWMAN1",
-      "srcRectX": 0,
-      "srcRectY": 0
+      "xSize": 64,
+      "ySize": 64,
+      "speed": 1
     },
     {
       "id": "SWORDLADY",
@@ -38,8 +39,10 @@
       "static": true,
       "animated": false,
       "texture": "TX_WALLBRICK_1",
-      "srcRectX": 0,
-      "srcRectY": 0
+      "xSize": 0,
+      "ySize": 0,
+      "speed": 3
+
     }
   ]
 }1

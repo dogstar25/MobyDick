@@ -15,15 +15,17 @@ bool TextureManager::init(SDL_Window* pWindow)
 
 bool TextureManager::render(GameObject* gameObject)
 {
+	SDL_Rect srcRect, destRect;
+
 	SDL_RenderClear(pRenderer);
-	destRect.h = 64;
-	destRect.w = 64;
+	destRect.x = gameObject->xPos;
+	destRect.y = gameObject->yPos;
+	destRect.w = gameObject->xSize;
+	destRect.h = gameObject->ySize;
 
 	SDL_Texture* tex = gameObject->staticTexture;
 	SDL_RenderCopy(pRenderer, tex, NULL, &destRect);
 	//SDL_RenderCopyEx - allows for rotation and flipping
-
-
 
 	SDL_RenderPresent(pRenderer);
 

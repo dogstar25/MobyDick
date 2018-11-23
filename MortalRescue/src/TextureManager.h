@@ -23,7 +23,6 @@ public:
 
 private:
 
-	SDL_Rect srcRect, destRect;
 	SDL_Renderer* pRenderer;
 	map<string, SDL_Texture*> textureMap;
 

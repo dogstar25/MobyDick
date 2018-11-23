@@ -1,8 +1,11 @@
 
 #include "game.h"
 
+Clock Game::clock;
+
 bool Game::init()
 {
+
 	//Get all of the configuration values
 	getConfig();
 
@@ -26,14 +29,23 @@ bool Game::init()
 
 		//Set the main player gameObject as defined by config
 		this->player = this->gameObjectManager.getGameObject(this->playerGameObjectId);
+		this->player->xPos = 0;
+		this->player->yPos = 0;
+		this->player->xVelocity = 0;
+		this->player->yVelocity = 0;
 		m_bRunning = true;
+
 	}
 	return true;
 }
 
 void Game::update() {
 
-	//printf("updating game\n");
+	//temp
+	this->clock.tick();
+	//printf("SDL Delta Ticks %d\n", this->clock.delta);
+
+	this->player->update();
 
 }
 
@@ -72,9 +84,20 @@ void Game::handleEvents() {
 	if (SDL_PollEvent(&event)) {
 		switch (event.type) {
 		case SDL_QUIT:
-		case SDL_KEYDOWN:
 			m_bRunning = false;
 			break;
+
+		case SDL_KEYDOWN:
+		case SDL_KEYUP:
+			if ((char)event.key.keysym.sym == SDLK_ESCAPE)
+			{
+				event.type = SDL_QUIT;
+				SDL_PushEvent(&event);
+			}
+			else
+			{
+				this->player->handleEvent(&event);
+			}
 
 		default:
 			break;
