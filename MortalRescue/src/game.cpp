@@ -2,6 +2,7 @@
 #include "game.h"
 
 Clock Game::clock;
+using namespace chrono_literals;
 
 bool Game::init()
 {
@@ -9,7 +10,8 @@ bool Game::init()
 	//Get all of the configuration values
 	getConfig();
 
-	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) {
+	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) 
+	{
 		printf("SDL_Init success\n");
 
 		//Create the game window
@@ -36,14 +38,14 @@ bool Game::init()
 		m_bRunning = true;
 
 	}
+
+	//Initialize the clock object
+	clock.init();
+
 	return true;
 }
 
 void Game::update() {
-
-	//temp
-	this->clock.tick();
-	//printf("SDL Delta Ticks %d\n", this->clock.delta);
 
 	this->player->update();
 

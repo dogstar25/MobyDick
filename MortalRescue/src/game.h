@@ -12,19 +12,47 @@
 #include <fstream>
 #include "game.h"
 #include <stdio.h>
+#include <ctime>
+#include <ratio>
+#include <chrono>
+
 using namespace std;
+using namespace std::chrono;
 
 struct Clock
 {
-	uint32_t last_tick_time = 0;
-	uint32_t delta = 0;
+	uint32_t current_frame_cnt;
+	uint32_t fps;
+	steady_clock::time_point begin_time;
+	steady_clock::time_point end_time;
+	std::chrono::duration<double> time_diff;
+	std::chrono::duration<double> fps_time_accum;
 
+	void init()
+	{
+		current_frame_cnt = 0;
+		fps_time_accum = fps_time_accum.zero();
+		begin_time = steady_clock::now();
+	}
 	void tick()
 	{
-		uint32_t tick_time = SDL_GetTicks();
-		delta = tick_time - last_tick_time;
-		last_tick_time = tick_time;
+		end_time = steady_clock::now();
+		time_diff = end_time - begin_time;
+		begin_time = end_time;
+		fps_time_accum += time_diff;
 	}
+
+	void calcFps()
+	{
+		if (current_frame_cnt >= 100)
+		{
+			fps = current_frame_cnt / fps_time_accum.count();
+			fps_time_accum *=0;
+			current_frame_cnt = 0;
+		}
+	}
+
+
 };
 
 class Game {
@@ -42,6 +70,8 @@ public:
 
 	bool running() { return m_bRunning; }
 	static Clock clock;
+
+	int fps = 0;
 
 	
 

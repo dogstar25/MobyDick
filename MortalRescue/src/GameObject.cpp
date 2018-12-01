@@ -53,9 +53,15 @@ void GameObject::handleEvent(SDL_Event* event)
 void GameObject::update()
 {
 
-	printf("SDL Delta Ticks %d\n", Game::clock.delta);
-	this->xPos += this->xVelocity * (this->speed * Game::clock.delta);
-	this->yPos += this->yVelocity * (this->speed * Game::clock.delta);
+	//printf("SDL Delta Ticks %d\n", Game::clock.deltaTime);
+	//this->xPos += this->xVelocity * (this->speed * Game::clock.deltaTime);
+	//this->yPos += this->yVelocity * (this->speed * Game::clock.deltaTime);
+	//printf("delta is %d\n", Game::clock.delta_time);
+	this->xPos += round(this->xVelocity * (this->speed));
+	this->yPos += round(this->yVelocity * (this->speed));
+
+	//printf("Performance COunter is  %d\n", Game::clock.NOW);
+	//printf("Performance Frequency is %d\n", Game::clock.PerfFreq);
 
 
 }
