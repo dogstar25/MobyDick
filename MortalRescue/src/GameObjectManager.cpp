@@ -21,7 +21,7 @@ bool GameObjectManager::init(TextureManager* textureManager )
 		gameObject->description = itr["description"].asString();
 		gameObject->isStaticObject = itr["static"].asBool();
 		gameObject->isAnimated = itr["animated"].asBool();
-		gameObject->speed = itr["speed"].asInt();
+		gameObject->speed = itr["speed"].asDouble();
 		
 		
 		//If this is not an animated object then store its one texture

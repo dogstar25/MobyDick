@@ -15,6 +15,9 @@
 #include <ctime>
 #include <ratio>
 #include <chrono>
+#include <chipmunk/chipmunk.h>
+
+
 
 using namespace std;
 using namespace std::chrono;
@@ -67,6 +70,8 @@ public:
 	void update();
 	void handleEvents();
 	void clean();
+	void chipmunkTest();
+	void ChipmunkDemoFreeSpaceChildren(cpSpace *space);
 
 	bool running() { return m_bRunning; }
 	static Clock clock;

@@ -16,7 +16,8 @@ public:
 	void update();
 	void init();
 
-	float xPos, yPos, xSize, ySize, speed, xVelocity, yVelocity;
+	float xPos, yPos, xSize, ySize, speed;
+	int xDirection, yDirection;
 	string id, description;
 	bool isStaticObject, isAnimated;
 	SDL_Texture* staticTexture; //Used if this is not an animated object
