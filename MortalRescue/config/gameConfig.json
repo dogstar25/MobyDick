@@ -1,6 +1,13 @@
 {
   "gameTitle": "MortalRescue",
   "playerGameObjectId": "BOWMAN",
+  "physics": {
+    "gravity": {
+      "x": 0,
+      "y": 0.1
+    },
+    "box2dScale": 25 //Box2D. This game will be 25 pixels per meter which is a factor of .04 derived from 1/25
+  },
   "windowSettings": {
     "title": "MortalRescue",
     "width": 800,

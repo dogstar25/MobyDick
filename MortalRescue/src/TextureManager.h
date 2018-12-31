@@ -7,7 +7,9 @@
 #include <map>
 #include <iostream>
 #include <fstream>
+#include <Box2D/Box2D.h>
 #include "GameObject.h"
+
 
 
 using namespace std;
@@ -20,6 +22,9 @@ public:
 
 	bool init(SDL_Window*);
 	bool render(GameObject* gameObject);
+	bool render(b2Body* body);
+	bool present();
+	bool clear();
 	SDL_Texture* getTexture(string id);
 
 private:

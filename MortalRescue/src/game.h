@@ -15,8 +15,8 @@
 #include <ctime>
 #include <ratio>
 #include <chrono>
-#include <chipmunk/chipmunk.h>
-
+#include <Box2D/Box2D.h>
+#include "Util.h"
 
 
 using namespace std;
@@ -47,6 +47,7 @@ struct Clock
 
 	void calcFps()
 	{
+		//Every 100 frames calculate how long it took to come up with FPS average
 		if (current_frame_cnt >= 100)
 		{
 			fps = current_frame_cnt / fps_time_accum.count();
@@ -57,6 +58,15 @@ struct Clock
 
 
 };
+
+struct Config
+{
+public:
+	float32 scaleFactor;
+
+};
+
+
 
 class Game {
 
@@ -70,37 +80,44 @@ public:
 	void update();
 	void handleEvents();
 	void clean();
-	void chipmunkTest();
-	void ChipmunkDemoFreeSpaceChildren(cpSpace *space);
 
-	bool running() { return m_bRunning; }
-	static Clock clock;
-
+	bool running() { return bRunning; }
 	int fps = 0;
 
-	
+	static Clock clock;
+	static Util util;
+	static TextureManager textureManager;
+	static GameObjectManager gameObjectManager;
+	static Config config;
 
+	
 private:
-	//Game Window Settings
-	//string windowTitle;
+	//Main screen and window stuff
+	SDL_Window* pWindow;
 	string windowTitle, gameTitle, playerGameObjectId;
 	int screenWidth, screenHeight;
 	Uint32 windowXpos= SDL_WINDOWPOS_CENTERED, windowYPos= SDL_WINDOWPOS_CENTERED;
 	Uint32 windowFlags= SDL_WINDOW_RESIZABLE;
 
-	//Manager objects
-	TextureManager textureManager;
-	GameObjectManager gameObjectManager;
-	
-
+	//Vector of all game objects
 	vector<GameObject> gameObjects;
 	GameObject* player;
-		
-	SDL_Window* pWindow;
-	bool m_bRunning;
 
+	//Game States
+	bool bRunning;
+
+	//Box2d Physics
+	b2Vec2 gravity;
+	b2World* physicsWorld=nullptr;
+	
+	
+
+	//Private Methods
 	bool getConfig();
+
 };
+
+
 
 #endif
 

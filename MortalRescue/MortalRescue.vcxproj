@@ -49,7 +49,6 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -116,14 +115,14 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>C:\projects\libraries\ChipmunkLatest\Chipmunk-7.0.2\include;C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\projects\Box2D;C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;chipmunk.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\projects\libraries\ChipmunkLatest\Chipmunk-7.0.2\msvc\vc14\chipmunk\x64\Debug;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\projects\Box2D\Build\bin\x86_64\Debug;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -160,7 +159,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\projects\libraries\ChipmunkLatest\Chipmunk-7.0.2\include;C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\projects\Box2D;C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
@@ -168,8 +167,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;chipmunk.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\projects\libraries\ChipmunkLatest\Chipmunk-7.0.2\msvc\vc14\chipmunk\x64\Debug;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\projects\Box2D\Build\bin\x86_64\Debug;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -180,6 +179,7 @@
     <ClCompile Include="src\MortalRescue.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
+    <ClCompile Include="src\Util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h" />
@@ -189,6 +189,7 @@
     <ClInclude Include="src\jsoncpp\json\json-forwards.h" />
     <ClInclude Include="src\jsoncpp\json\json.h" />
     <ClInclude Include="src\TextureManager.h" />
+    <ClInclude Include="src\Util.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\gameObjectAssets.json" />

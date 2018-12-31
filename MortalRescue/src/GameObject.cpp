@@ -54,18 +54,28 @@ void GameObject::handleEvent(SDL_Event* event)
 void GameObject::update()
 {
 
-	//printf("SDL Delta Ticks %d\n", Game::clock.deltaTime);
-	//this->xPos += this->xVelocity * (this->speed * Game::clock.deltaTime);
-	//this->yPos += this->yVelocity * (this->speed * Game::clock.deltaTime);
-	//printf("delta is %d\n", Game::clock.delta_time);
-	float acceleration = this->speed;
-	float velocity = (float)(acceleration * (Game::clock.time_diff.count() * 100));
-	std::cout << "Acceleration is " << acceleration << " \n";
-	//this->xPos += round(this->xVelocity * (this->speed * Game::clock.time_diff.count()));
-	//this->yPos += round(this->yVelocity * (this->speed * Game::clock.time_diff.count()));
-	this->xPos += velocity * this->xDirection;
-	this->yPos += velocity * this->yDirection;
-	std::cout << "xPos is " << this->xPos << " \n";
+	float acceleration = this->playerSpeed;
+	float velocity = (float)(acceleration * (Game::clock.time_diff.count())*1000);
+	//float velocity = this->playerSpeed;
+	
+	
+	//this->xPos += velocity * this->xDirection;
+	//this->yPos += velocity * this->yDirection;
+
+	//Set the same for physics body
+	if (this->isPhysicsObject)
+	{
+		float32 x, y;
+		x = velocity * this->xDirection;
+		y = velocity * this->yDirection;
+		b2Vec2 vec2 = b2Vec2(x, y);
+		//this->physicsBody->SetTransform(vec2, this->physicsBody->GetAngle());
+		this->physicsBody->ApplyLinearImpulseToCenter(vec2, true);
+		
+	}
+
+
+	//std::cout << "xPos is " << this->physicsBody->GetPosition().x << " \n";
 
 
 }

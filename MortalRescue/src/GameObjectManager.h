@@ -15,13 +15,15 @@ using namespace std;
 class GameObjectManager
 {
 public:
-	GameObjectManager();
-	~GameObjectManager();
+	
+	bool init(TextureManager*, b2World*);
+	void testBlocks(SDL_Event*, b2World*);
 
-	bool init(TextureManager*);
+
 	GameObject* getGameObject(string id);
+	map<string, GameObject> gameObjectMap;
 
 private:
-	map<string, GameObject> gameObjectMap;
+	b2Body* buildB2Body(GameObject*, b2World*);
 };
 

@@ -1,21 +1,52 @@
 {
-  
+
   "gameObjects": [
     {
       "id": "BOWMAN",
       "description": "Player Bowman",
+      "loadOnInit": true,
       "static": false,
-      "animated": false,
       "texture": "TX_BOWMAN1",
-      "xSize": 64,
-      "ySize": 64,
-      "speed": 2
+      "xSize": 2.56,
+      "ySize": 2.56,
+      "initPosX": 5,
+      "initPosY": 5,
+//      "primativeShape": "RECTANGLE",
+      "playerSpeed": 20, //change to walkforce
+      "physicsObject": {
+        "friction": 0.3,
+        "density": 5.5
+      }
+
+    },
+    {
+      "description": "A Red Rock",
+      "id": "ROCK",
+      "initPosX": 6,
+      "initPosY": 5,
+      "loadOnInit": true,
+      "physicsObject": {
+        "friction": 0.3,
+        "density": 0.5
+      },
+      "playerSpeed": 2,
+      "primativeColor": {
+        "red": 255,
+        "green": 0,
+        "blue": 0,
+        "alpha": 0,
+        "random": false
+      },
+      "primativeShape": "RECTANGLE",
+      "texture": "TX_BOWMAN1",
+      "xSize": 2,
+      "ySize": 2
     },
     {
       "id": "SWORDLADY",
       "description": "SwordLady",
+      "loadOnInit": false,
       "static": false,
-      "animated": true,
       "animations": [
         {
           "id": "IDLE",
@@ -36,12 +67,12 @@
     {
       "id": "WALL_BRICK_1",
       "description": "Wall brick 1",
+      "loadOnInit": false,
       "static": true,
-      "animated": false,
       "texture": "TX_WALLBRICK_1",
       "xSize": 0,
       "ySize": 0,
-      "speed": 3
+      "playerSpeed": 3
 
     }
   ]

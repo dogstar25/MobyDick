@@ -1,4 +1,5 @@
 #include "TextureManager.h"
+#include "game.h"
 
 bool TextureManager::init(SDL_Window* pWindow)
 {
@@ -6,6 +7,9 @@ bool TextureManager::init(SDL_Window* pWindow)
 	//Create the main renderer
 	pRenderer = SDL_CreateRenderer(pWindow, -1, 0);
 	SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
+
+	//SDL_RenderSetScale(pRenderer, (1/Game::config.scaleFactor), (1/Game::config.scaleFactor));
+	//SDL_RenderSetScale(pRenderer, 25 ,25);
 
 	//Load all of the textures for the game
 	loadTextures();
@@ -17,20 +21,59 @@ bool TextureManager::render(GameObject* gameObject)
 {
 	SDL_Rect srcRect, destRect;
 
-	SDL_RenderClear(pRenderer);
-	destRect.x = round(gameObject->xPos);
-	destRect.y = round(gameObject->yPos);
-	destRect.w = gameObject->xSize;
-	destRect.h = gameObject->ySize;
-	SDL_Texture* tex = gameObject->staticTexture;
-	SDL_RenderCopy(pRenderer, tex, NULL, &destRect);
-	//SDL_RenderCopyEx - allows for rotation and flipping
+	destRect.w = (gameObject->xSize * Game::config.scaleFactor);
+	destRect.h = (gameObject->ySize * Game::config.scaleFactor);
 
-	SDL_RenderPresent(pRenderer);
+	destRect.x = (gameObject->physicsBody->GetPosition().x *  Game::config.scaleFactor) - (destRect.w /2) ;
+	destRect.y = (gameObject->physicsBody->GetPosition().y *  Game::config.scaleFactor) - (destRect.h /2) ;
+	//destRect.w = gameObject->xSize * Game::config.scaleFactor;
+	//destRect.h = gameObject->ySize * Game::config.scaleFactor;
+
+	//If this is a primitive shape object just drawa a rectangle
+	if (gameObject->isPrimitiveShape == true)
+	{
+		SDL_SetRenderDrawColor(pRenderer, 
+			gameObject->primativeColor.r, 
+			gameObject->primativeColor.g, 
+			gameObject->primativeColor.b, 
+			gameObject->primativeColor.a);
+		SDL_RenderFillRect(pRenderer, &destRect);
+	}
+	else
+	{
+		SDL_Texture* tex = gameObject->staticTexture;
+		//SDL_RenderCopy(pRenderer, tex, NULL, &destRect);
+		SDL_Point *center = new SDL_Point();
+		center->x = gameObject->physicsBody->GetPosition().x;
+		center->y = gameObject->physicsBody->GetPosition().y;
+		SDL_RenderCopyEx(pRenderer, tex, NULL, &destRect, gameObject->physicsBody->GetAngle(),
+			center, SDL_FLIP_NONE);
+
+
+		
+	}
+
+	//std::cout << "Dest X is " << destRect.x << " \n";
 
 	return true;
 }
 
+bool TextureManager::render(b2Body* body)
+{
+	SDL_Rect srcRect, destRect;
+
+	//SDL_RenderClear(pRenderer);
+	SDL_SetRenderDrawColor(pRenderer, 255, 0, 0, 0);
+	destRect.x = round(body->GetPosition().x);
+	destRect.y = round(body->GetPosition().y);
+	destRect.w = 5;
+	destRect.h = 5;
+	SDL_RenderFillRect(pRenderer, &destRect);
+	//SDL_RenderPresent(pRenderer);
+	//SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
+
+	return true;
+}
 
 bool TextureManager::loadTextures()
 {
@@ -74,6 +117,20 @@ SDL_Texture * TextureManager::getTexture(string id)
 	return tempTexture;
 }
 
+bool TextureManager::present()
+{
+	SDL_RenderPresent(pRenderer);
+	SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
+
+	return true;
+}
+
+bool TextureManager::clear()
+{
+	SDL_RenderClear(pRenderer);
+
+	return true;
+}
 
 TextureManager::TextureManager()
 {
