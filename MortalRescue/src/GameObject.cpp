@@ -3,18 +3,7 @@
 #include <SDL.h>
 
 
-
-
-GameObject::GameObject()
-{
-}
-
-
-GameObject::~GameObject()
-{
-}
-
-void GameObject::handleEvent(SDL_Event* event)
+void GameObject::handlePlayerMovementEvent(SDL_Event* event)
 {
 
 	if (event->type == SDL_KEYDOWN) {
@@ -51,26 +40,33 @@ void GameObject::handleEvent(SDL_Event* event)
 	}
 }
 
-void GameObject::update()
+void GameObject::updatePlayer()
 {
 
-	float acceleration = this->playerSpeed;
-	float velocity = (float)(acceleration * (Game::clock.time_diff.count())*1000);
-	//float velocity = this->playerSpeed;
+	float acceleration = this->definition.playerSpeed;
+	//float velocity = (float)(acceleration * (Game::clock.time_diff.count())*100);
+	float velocity = this->definition.playerSpeed;
 	
 	
 	//this->xPos += velocity * this->xDirection;
 	//this->yPos += velocity * this->yDirection;
 
 	//Set the same for physics body
-	if (this->isPhysicsObject)
+	if (this->definition.isPhysicsObject)
 	{
 		float32 x, y;
 		x = velocity * this->xDirection;
 		y = velocity * this->yDirection;
-		b2Vec2 vec2 = b2Vec2(x, y);
-		//this->physicsBody->SetTransform(vec2, this->physicsBody->GetAngle());
-		this->physicsBody->ApplyLinearImpulseToCenter(vec2, true);
+		//b2Vec2 vec2 = b2Vec2(x, y);
+
+		//x = this->physicsBody->GetPosition().x + velocity * this->xDirection;
+		//y = this->physicsBody->GetPosition().y + velocity * this->yDirection;
+		b2Vec2 vec3 = b2Vec2(x, y);
+
+		//this->physicsBody->SetTransform(vec3, this->physicsBody->GetAngle());
+		this->physicsBody->SetLinearVelocity(vec3);
+		//this->physicsBody->ApplyLinearImpulseToCenter(vec2, true);
+		//this->physicsBody->SetLinearVelocity(vec2);
 		
 	}
 
@@ -80,13 +76,13 @@ void GameObject::update()
 
 }
 
-void GameObject::init()
+void GameObject::update()
 {
-
-	this->xDirection = 1;
-	this->yDirection = 1;
-
+	if(this->definition.isAnimated) {
+		this->animations[this->currentAnimationState].animate(this);
+	}
 }
+
 
 
 

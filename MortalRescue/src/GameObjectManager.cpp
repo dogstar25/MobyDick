@@ -1,10 +1,10 @@
 #include "GameObjectManager.h"
 #include "TextureManager.h"
+#include "GameObjectDefinition.h"
 #include "game.h"
 
-bool GameObjectManager::init(TextureManager* textureManager, b2World* physicsWorld)
+bool GameObjectManager::init()
 {
-
 
 	//Read file and stream it to a JSON object
 	Json::Value root;
@@ -12,109 +12,202 @@ bool GameObjectManager::init(TextureManager* textureManager, b2World* physicsWor
 	ifs >> root;
 
 	string id, textureId;
-	GameObject* gameObject;
+	GameObjectDefinition* gameObjectDefinition;
 
 	for (auto itr : root["gameObjects"])
 	{
-		if (itr["loadOnInit"].asBool() == true)
+		gameObjectDefinition = new GameObjectDefinition();
+		gameObjectDefinition->id = itr["id"].asString();
+		gameObjectDefinition->description = itr["description"].asString();
+		gameObjectDefinition->playerSpeed = itr["playerSpeed"].asDouble();
+		gameObjectDefinition->xSize = itr["xSize"].asFloat();
+		gameObjectDefinition->ySize = itr["ySize"].asFloat();
+		gameObjectDefinition->initPosX = itr["initPosX"].asInt();
+		gameObjectDefinition->initPosY = itr["initPosY"].asInt();
+		gameObjectDefinition->texture = itr["texture"].asString();
+
+		//If this has a textture then get and store it
+		if (itr["primativeShape"].isNull() == false)
 		{
-			gameObject = new GameObject();
-			gameObject->id = itr["id"].asString();
-			gameObject->description = itr["description"].asString();
-			gameObject->isStaticObject = itr["static"].asBool();
-			gameObject->playerSpeed = itr["playerSpeed"].asDouble();
-			gameObject->xSize = itr["xSize"].asFloat();
-			gameObject->ySize = itr["ySize"].asFloat();
-			gameObject->initPosX = itr["initPosX"].asInt();
-			gameObject->initPosY = itr["initPosY"].asInt();
+			gameObjectDefinition->isPrimitiveShape = true;
 
-			//If this has a textture then get and store it
-			if (itr["primativeShape"].isNull() == false)
+			//color
+			if (itr["primativeColor"]["random"].asBool() == true)
 			{
-				gameObject->isPrimitiveShape = true;
-
-				//color
-				if (itr["primativeColor"]["random"].asBool() == true)
-				{
-					gameObject->primativeColor = Game::util.generateRandomColor();
-				}
-				else
-				{
-					gameObject->primativeColor.r = itr["primativeColor"]["red"].asInt();
-					gameObject->primativeColor.g = itr["primativeColor"]["green"].asInt();
-					gameObject->primativeColor.b = itr["primativeColor"]["blue"].asInt();
-					gameObject->primativeColor.a = itr["primativeColor"]["alpha"].asInt();
-				}
+				gameObjectDefinition->primativeColor = Game::util.generateRandomColor();
 			}
-
-			//If this has a textture then get and store it
-			if (itr["texture"].isNull() == false)
+			else
 			{
-				textureId = itr["texture"].asString();
-				gameObject->staticTexture = textureManager->getTexture(textureId);
+				gameObjectDefinition->primativeColor.r = itr["primativeColor"]["red"].asInt();
+				gameObjectDefinition->primativeColor.g = itr["primativeColor"]["green"].asInt();
+				gameObjectDefinition->primativeColor.b = itr["primativeColor"]["blue"].asInt();
+				gameObjectDefinition->primativeColor.a = itr["primativeColor"]["alpha"].asInt();
 			}
-
-			//If this is a physics object then build the box2d body
-			if (itr["physicsObject"].isNull() == false)
-			{
-				gameObject->isPhysicsObject = true;
-				gameObject->friction = itr["physicsObject"]["friction"].asFloat();
-				gameObject->density = itr["physicsObject"]["density"].asFloat();
-				gameObject->physicsBody = buildB2Body(gameObject, physicsWorld);
-
-			}
-
-			//If this is not an animated object then store its one texture
-			if (itr["animations"].isNull() == false)
-			{
-				gameObject->isAnimated = true;
-				for (auto animItr : itr["annimations"])
-				{
-
-				}
-			}
-
-			this->gameObjectMap[gameObject->id] = *gameObject;
 		}
+
+		//If this is a physics object then build the box2d body
+		if (itr["physicsObject"].isNull() == false)
+		{
+			gameObjectDefinition->isPhysicsObject = true;
+			gameObjectDefinition->friction = itr["physicsObject"]["friction"].asFloat();
+			gameObjectDefinition->density = itr["physicsObject"]["density"].asFloat();
+			gameObjectDefinition->linearDamping = itr["physicsObject"]["linearDamping"].asFloat();
+			gameObjectDefinition->angularDamping = itr["physicsObject"]["angularDamping"].asFloat();
+			gameObjectDefinition->physicsType = itr["physicsObject"]["type"].asString();
+
+		}
+
+		//Store Animations
+		if (itr["animations"].isNull() == false)
+		{
+			gameObjectDefinition->isAnimated = true;
+			GameObjectAnimation* animation;
+			for (auto animItr : itr["animations"])
+			{
+				string texture = animItr["texture"].asString();
+				string id = animItr["id"].asString();
+				int frames = animItr["frames"].asInt();
+				float speed = animItr["speed"].asFloat();
+				animation = buildAnimation(gameObjectDefinition, id, texture, frames, speed);
+				gameObjectDefinition->animations[id] = *animation;
+			}
+		}
+		
+		this->gameObjectDefinitions[gameObjectDefinition->id] = *gameObjectDefinition;
+
 	}
 
 	return true;
 
 }
 
-b2Body * GameObjectManager::buildB2Body(GameObject* gameObject, b2World* physicsWorld)
+GameObject* GameObjectManager::buildGameObject(string gameObjectId, b2World* physicsWorld)
+{
+
+	GameObject* gameObject=nullptr;
+	GameObjectDefinition* gameObjectDefinition;
+
+	gameObject = new GameObject();
+	gameObjectDefinition = &this->gameObjectDefinitions[gameObjectId];
+
+	gameObject->definition = *gameObjectDefinition;
+	gameObject->staticTexture = Game::textureManager.getTexture(gameObjectDefinition->texture);
+
+	if (gameObjectDefinition->isPhysicsObject == true)
+	{
+		gameObject->physicsBody = buildB2Body(gameObjectDefinition, physicsWorld);
+	}
+
+	//build the animation objects
+	for (auto & gameObjectDefinitionAnimation : gameObjectDefinition->animations) {
+		
+		gameObject->animations[gameObjectDefinitionAnimation.second.id] = gameObjectDefinitionAnimation.second;
+		
+	}
+
+
+	return gameObject;
+
+}
+
+GameObjectAnimation* GameObjectManager::buildAnimation(GameObjectDefinition* gameObjectDefinition,
+														string id, string textureId, int frames,
+														float speed)
+{
+
+	GameObjectAnimation* animation=nullptr;
+	animation = new GameObjectAnimation();
+
+	animation->id = id;
+	animation->frameCount = frames;
+	animation->speed = speed;
+
+	//Get pointer to textture
+	animation->texture = Game::textureManager.getTexture(textureId);
+
+	//Calculate how many columns and rows this animation texture has
+	int width, height;
+	//First get width of textture
+	SDL_QueryTexture(animation->texture, NULL, NULL, &width, &height);
+
+	//Calculate nnumber of rows and columns - remember to convert the gameObject size to pixels first
+	int rows, columns;
+	columns = width / (gameObjectDefinition->xSize * Game::config.scaleFactor);
+	rows = height / (gameObjectDefinition->ySize * Game::config.scaleFactor);
+
+	//Calculate top left corner of each animation frame
+	SDL_Point point;
+	int frameCount = 0;
+	for (int rowIdx = 0; rowIdx < rows; rowIdx++) {
+		for (int colIdx = 0; colIdx < columns; colIdx++) {
+
+			point.x = colIdx * (gameObjectDefinition->xSize * Game::config.scaleFactor);
+			point.y = rowIdx * (gameObjectDefinition->ySize * Game::config.scaleFactor);
+			//animation->animationFramePositions[frameCount] = point;
+			animation->animationFramePositions.push_back(point);
+
+			//do not exceed the maximum number of frames that this texture holds
+			frameCount++;
+			if (frameCount >= animation->frameCount) {
+				break;
+			}
+		}
+	}
+	
+	//DRUNK: Initialze the current source rect to the first animation frame
+	//SDL_Rect* sourceRect = nullptr;
+	//animation->currentTextureAnimationSrcRect
+
+	return animation;
+
+
+
+}
+
+
+b2Body * GameObjectManager::buildB2Body(GameObjectDefinition* gameObjectDefinition, b2World* physicsWorld)
 {
 	b2BodyDef bodyDef;
-	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(gameObject->initPosX , gameObject->initPosY);
+
+	if(gameObjectDefinition->physicsType.compare("B2_STATIC") == 0)
+	{
+		bodyDef.type = b2_staticBody;
+	}
+	else if (gameObjectDefinition->physicsType.compare("B2_KINEMATIC") == 0)
+	{
+		bodyDef.type = b2_kinematicBody;
+	}
+	else if (gameObjectDefinition->physicsType.compare("B2_DYNAMIC") == 0)
+	{
+		bodyDef.type = b2_dynamicBody;
+	}
+
+	bodyDef.position.Set(gameObjectDefinition->initPosX , gameObjectDefinition->initPosY);
 	b2Body* body = physicsWorld->CreateBody(&bodyDef);
 
-	// Define another box shape for our dynamic body.
-	b2PolygonShape dynamicBox;
-	//dynamicBox.SetAsBox(1.0f, 1.0f);
-	//dynamicBox.SetAsBox(gameObject->xSize/2, gameObject->ySize/2);
-	float32 xSize = gameObject->xSize / 2; //SetAsBox takes half-widths
-	float32 YSize = gameObject->ySize / 2;
-	dynamicBox.SetAsBox(xSize, YSize);
-	std::cout << "BuildBox size for " << gameObject->description << " was " << xSize << "\n";
-	//dynamicBox.SetAsBox((gameObject->xSize / 2)*.04, (gameObject->ySize / 2)*.04);
+	b2PolygonShape box;
+	float32 xSize = gameObjectDefinition->xSize / 2; //SetAsBox takes half-widths
+	float32 YSize = gameObjectDefinition->ySize / 2;
 
-	// Define the dynamic body fixture.
+	box.SetAsBox(xSize, YSize);
+	std::cout << "BuildBox size for " << gameObjectDefinition->id << " was " << xSize << "\n";
+
+	// Define the body fixture.
 	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
+	fixtureDef.shape = &box;
 
 	// Set the box density to be non-zero, so it will be dynamic.
-	fixtureDef.density = gameObject->density;
+	fixtureDef.density = gameObjectDefinition->density;
 
 	// Override the default friction.
-	fixtureDef.friction = gameObject->friction;
+	fixtureDef.friction = gameObjectDefinition->friction;
 	fixtureDef.restitution = .2;
 
 	// Add the shape to the body.
 	body->CreateFixture(&fixtureDef);
-	//body->SetTransform({ gameObject->initPosX, gameObject->initPosY }, 0.0f);
 
-	//body->SetLinearDamping(.2);
+	body->SetLinearDamping(gameObjectDefinition->linearDamping);
+	body->SetAngularDamping(gameObjectDefinition->angularDamping);
 	physicsWorld->SetAutoClearForces(true);
 	
 	return body;
@@ -122,48 +215,9 @@ b2Body * GameObjectManager::buildB2Body(GameObject* gameObject, b2World* physics
 }
 
 
-GameObject * GameObjectManager::getGameObject(string id)
+GameObjectDefinition * GameObjectManager::getGameObjectDefinition(string id)
 {
-	GameObject *gameObject = nullptr;
-
-	gameObject = &this->gameObjectMap[id];
-
-	return gameObject;
+	return &this->gameObjectDefinitions[id];
 }
 
 
-void GameObjectManager::testBlocks(SDL_Event* event, b2World* physicsWorld)
-{
-
-	std::cout << "Object created " << " \n";
-	std::cout << "X " << event->button.x << " \n";
-	std::cout << "Y " << event->button.y << " \n";
-
-	GameObject* gameObject;
-	gameObject = new GameObject();
-
-	//build id
-	int count = this->gameObjectMap.size();
-	string id = "block" + to_string(count);
-	gameObject->id = id;
-
-	gameObject->description = "block";
-	gameObject->xSize = Game::util.generateRandomNumber(1,3);
-	gameObject->ySize = Game::util.generateRandomNumber(1, 3);
-	gameObject->initPosX = event->button.x / Game::config.scaleFactor;
-	gameObject->initPosY = event->button.y / Game::config.scaleFactor;
-
-	gameObject->isPrimitiveShape = true;
-
-	gameObject->primativeColor = Game::util.generateRandomColor();
-
-
-	gameObject->isPhysicsObject = true;
-	gameObject->friction = .3;
-	gameObject->density = 1;
-	gameObject->physicsBody = buildB2Body(gameObject, physicsWorld);
-
-
-	this->gameObjectMap[gameObject->id] = *gameObject;
-
-}

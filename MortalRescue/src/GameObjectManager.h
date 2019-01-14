@@ -10,20 +10,24 @@
 #include <iostream>
 #include <fstream>
 #include "TextureManager.h"
+#include "GameObjectDefinition.h"
+
 using namespace std;
 
 class GameObjectManager
 {
 public:
 	
-	bool init(TextureManager*, b2World*);
-	void testBlocks(SDL_Event*, b2World*);
+	bool init();
+	b2Body* buildB2Body(GameObjectDefinition*, b2World*);
+	GameObjectAnimation * buildAnimation(GameObjectDefinition*, string, string, int, float);
+	GameObject * buildGameObject(string , b2World* );
+	GameObjectDefinition* getGameObjectDefinition(string );
 
-
-	GameObject* getGameObject(string id);
-	map<string, GameObject> gameObjectMap;
+	//Map of the definitions of all posible game objects in the game/level
+	map<string, GameObjectDefinition> gameObjectDefinitions;
 
 private:
-	b2Body* buildB2Body(GameObject*, b2World*);
+	
 };
 

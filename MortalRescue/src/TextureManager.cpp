@@ -1,5 +1,7 @@
 #include "TextureManager.h"
 #include "game.h"
+#include <math.h>
+#include <list>
 
 bool TextureManager::init(SDL_Window* pWindow)
 {
@@ -21,36 +23,46 @@ bool TextureManager::render(GameObject* gameObject)
 {
 	SDL_Rect srcRect, destRect;
 
-	destRect.w = (gameObject->xSize * Game::config.scaleFactor);
-	destRect.h = (gameObject->ySize * Game::config.scaleFactor);
+	destRect.w = (gameObject->definition.xSize * Game::config.scaleFactor);
+	destRect.h = (gameObject->definition.ySize * Game::config.scaleFactor);
 
 	destRect.x = (gameObject->physicsBody->GetPosition().x *  Game::config.scaleFactor) - (destRect.w /2) ;
 	destRect.y = (gameObject->physicsBody->GetPosition().y *  Game::config.scaleFactor) - (destRect.h /2) ;
-	//destRect.w = gameObject->xSize * Game::config.scaleFactor;
-	//destRect.h = gameObject->ySize * Game::config.scaleFactor;
 
 	//If this is a primitive shape object just drawa a rectangle
-	if (gameObject->isPrimitiveShape == true)
+	if (gameObject->definition.isPrimitiveShape == true)
 	{
 		SDL_SetRenderDrawColor(pRenderer, 
-			gameObject->primativeColor.r, 
-			gameObject->primativeColor.g, 
-			gameObject->primativeColor.b, 
-			gameObject->primativeColor.a);
+			gameObject->definition.primativeColor.r,
+			gameObject->definition.primativeColor.g,
+			gameObject->definition.primativeColor.b,
+			gameObject->definition.primativeColor.a);
 		SDL_RenderFillRect(pRenderer, &destRect);
+		//drawPoly(gameObject->physicsBody);
 	}
 	else
 	{
-		SDL_Texture* tex = gameObject->staticTexture;
-		//SDL_RenderCopy(pRenderer, tex, NULL, &destRect);
-		SDL_Point *center = new SDL_Point();
-		center->x = gameObject->physicsBody->GetPosition().x;
-		center->y = gameObject->physicsBody->GetPosition().y;
-		SDL_RenderCopyEx(pRenderer, tex, NULL, &destRect, gameObject->physicsBody->GetAngle(),
-			center, SDL_FLIP_NONE);
+		//TODO:if this is the player then do not use the box2d angle. Use our own controller by keyboard/mouse
+		float angle = gameObject->physicsBody->GetAngle();
+		angle = angle * 180 / M_PI;
 
+		//If this is animated object then get its current animation frame texture, 
+		// otherwise get its static texture
+		SDL_Texture* texure=NULL;
+		SDL_Rect *textureSourceRect = NULL;
+		if (gameObject->definition.isAnimated) {
 
-		
+			texure = gameObject->animations[gameObject->currentAnimationState].texture;
+			textureSourceRect = &gameObject->animations[gameObject->currentAnimationState].currentTextureAnimationSrcRect;
+		}
+		else {
+
+			texure = gameObject->staticTexture;
+		}
+
+		SDL_RenderCopyEx(pRenderer, texure, textureSourceRect, &destRect, angle,
+			NULL, SDL_FLIP_NONE);
+
 	}
 
 	//std::cout << "Dest X is " << destRect.x << " \n";
@@ -132,13 +144,48 @@ bool TextureManager::clear()
 	return true;
 }
 
-TextureManager::TextureManager()
+void TextureManager::drawPoly(b2Body* body)
 {
-}
 
 
-TextureManager::~TextureManager()
-{
-	SDL_DestroyRenderer(pRenderer);
-	
+	b2Fixture* fixture = body->GetFixtureList();
+	while (fixture != NULL)
+	{
+		
+		b2Shape* s = fixture->GetShape();
+		b2PolygonShape* shape = (b2PolygonShape*)s;
+
+		SDL_Point *points = new SDL_Point[shape->m_count+1];
+
+		b2Vec2 firstVector;
+		bool firstFound = false;
+		SDL_Point point;
+		// Build list of transformed vertices
+		for (int i = 0; i < shape->m_count; ++i) {
+
+			b2Vec2 vector = shape->m_vertices[i];
+			//If this is the first vector, then save it
+			if (firstFound == false) {
+				firstVector = vector;
+				firstFound = true;
+			}
+
+			point.x = vector.x * Game::config.scaleFactor;
+			point.y = vector.y * Game::config.scaleFactor;
+			points[i] = point;
+		}
+
+		//Add the first point to the end to complete closed shape
+		point.x = firstVector.x;
+		point.y = firstVector.y;
+		points[shape->m_count] = point;
+
+		SDL_RenderDrawLines(this->pRenderer, points, shape->m_count+1);
+
+		delete[] points;
+
+		fixture = body->GetFixtureList()->GetNext();
+	}
+
 }
+

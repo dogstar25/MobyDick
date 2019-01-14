@@ -17,15 +17,13 @@ using namespace std;
 class TextureManager
 {
 public:
-	TextureManager();
-	~TextureManager();
-
 	bool init(SDL_Window*);
 	bool render(GameObject* gameObject);
 	bool render(b2Body* body);
 	bool present();
 	bool clear();
 	SDL_Texture* getTexture(string id);
+	void drawPoly(b2Body* body);
 
 private:
 

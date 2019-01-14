@@ -14,6 +14,7 @@ bool Game::init()
 	//Get all of the configuration values
 	getConfig();
 
+	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) 
 	{
 		printf("SDL_Init success\n");
@@ -24,7 +25,7 @@ bool Game::init()
 			this->windowYPos,
 			this->screenWidth, 
 			this->screenHeight, 
-			this->windowFlags);
+			SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 
 		//Initialize the textture manager
 		this->textureManager.init(pWindow);
@@ -34,71 +35,66 @@ bool Game::init()
 
 		//Initilaze the Game Object Manager
 		//This will hold all possible game objects that the game/level supports
-		this->gameObjectManager.init(&this->textureManager, this->physicsWorld);
+		this->gameObjectManager.init();
 
-		//Set the main player gameObject as defined by config
-		this->player = this->gameObjectManager.getGameObject(this->playerGameObjectId);
-		this->player->xPos = 0;
-		this->player->yPos = 0;
-		
 		bRunning = true;
-
-
-		//
-		//Temp Code
-		//
-		// Define the ground body.
-		b2BodyDef groundBodyDef;
-		groundBodyDef.position.Set(0.0f, 30.0f);
-
-		// Call the body factory which allocates memory for the ground body
-		// from a pool and creates the ground box shape (also from a pool).
-		// The body is also added to the world.
-		b2Body* groundBody = this->physicsWorld->CreateBody(&groundBodyDef);
-
-		// Define the ground box shape.
-		b2PolygonShape groundBox;
-
-		// The extents are the half-widths of the box.
-		groundBox.SetAsBox(500.0f, 10.0f);
-
-		// Add the ground fixture to the ground body.
-		groundBody->CreateFixture(&groundBox, 0.0f);
-
-
 
 	}
 
 	//Initialize the clock object
 	clock.init();
 
+
+	//Add a few objects to the world
+	GameObject *gameObject=nullptr;
+	gameObject = Game::gameObjectManager.buildGameObject(this->playerGameObjectId, this->physicsWorld);
+	this->gameObjects.push_back(*gameObject);
+	this->player = gameObject; //THIS IS THE MAIN PLAYER
+
+	gameObject = Game::gameObjectManager.buildGameObject("ROCK", this->physicsWorld);
+	this->gameObjects.push_back(*gameObject);
+
+	gameObject = Game::gameObjectManager.buildGameObject("GROUND1", this->physicsWorld);
+	this->gameObjects.push_back(*gameObject);
+
+	gameObject = Game::gameObjectManager.buildGameObject("ROCK", this->physicsWorld);
+	this->gameObjects.push_back(*gameObject);
+
+	gameObject = Game::gameObjectManager.buildGameObject("SWORDLADY", this->physicsWorld);
+	gameObject->currentAnimationState = "IDLE";
+	this->gameObjects.push_back(*gameObject);
+
 	return true;
 }
 
 void Game::update() {
 
-	this->player->update();
+	//Specifiaclly handle input and stuff for the one player gameObject
+	this->player->updatePlayer();
 
-	/*Temp code for physics test*/
+	//Update all of the other none player related update chores for each game object
+	for (auto & gameObject : gameObjects) {
+		gameObject.update();
+	}
+
+	/*Temp code for physics updating*/
 	float32 timeStep = 1.0f / 60.0f;
 	int32 velocityIterations = 6;
 	int32 positionIterations = 2;
 	this->physicsWorld->Step(timeStep, velocityIterations, positionIterations);
-	//this->physicsWorld->ClearForces(); 
 	
 }
 
 
 void Game::render() {
 
-	this->textureManager.clear();
-	//NOTE: This will be looping thru all of the game objects that need to be rendered
-	//this->textureManager.render(this->player);
-	for (auto & gameObject : gameObjectManager.gameObjectMap) {
-		this->textureManager.render(&gameObject.second);
+	Game::textureManager.clear();
+	//This will be looping thru all of the game objects that need to be rendered
+	for (auto & gameObject : gameObjects) {
+		Game::textureManager.render(&gameObject);
 	}
-	
-	this->textureManager.present();
+
+	Game::textureManager.present();
 
 }
 
@@ -144,17 +140,59 @@ void Game::handleEvents() {
 			}
 			else
 			{
-				this->player->handleEvent(&event);
+				this->player->handlePlayerMovementEvent(&event);
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			this->gameObjectManager.testBlocks(&event, this->physicsWorld);
+			this->testBlocks(&event, this->physicsWorld);
 			break;
 
 		default:
 			break;
 		}
 	}
+}
+
+void Game::testBlocks(SDL_Event* event, b2World* physicsWorld)
+{
+
+	std::cout << "Object created " << " \n";
+	std::cout << "X " << event->button.x << " \n";
+	std::cout << "Y " << event->button.y << " \n";
+
+	GameObject* gameObject;
+	gameObject = new GameObject();
+
+	//build id
+	int count = this->gameObjects.size();
+	string id = "block" + to_string(count);
+	gameObject->definition.id = id;
+
+	gameObject->definition.description = "block";
+	//gameObject->xSize = Game::util.generateRandomNumber(1,30) * .1;
+	//gameObject->ySize = Game::util.generateRandomNumber(1, 30) * .1;
+	gameObject->definition.xSize = .3;
+	gameObject->definition.ySize = .3;
+
+	gameObject->definition.initPosX = event->button.x / Game::config.scaleFactor;
+	gameObject->definition.initPosY = event->button.y / Game::config.scaleFactor;
+
+	//gameObject->isPrimitiveShape = true;
+	//gameObject->primativeColor = Game::util.generateRandomColor();
+
+	string textureId = "TX_TILE1";
+	gameObject->staticTexture = Game::textureManager.getTexture(textureId);
+
+	gameObject->definition.isPhysicsObject = true;
+	gameObject->definition.physicsType = "B2_DYNAMIC";
+	gameObject->definition.friction = .3;
+	gameObject->definition.density = 2;
+	gameObject->definition.linearDamping = .2;
+	gameObject->definition.angularDamping = .2;
+	gameObject->physicsBody = Game::gameObjectManager.buildB2Body(&gameObject->definition, physicsWorld);
+
+	this->gameObjects.push_back(*gameObject);
+
 }
 
 

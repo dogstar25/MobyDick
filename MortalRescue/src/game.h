@@ -80,6 +80,7 @@ public:
 	void update();
 	void handleEvents();
 	void clean();
+	void testBlocks(SDL_Event*, b2World*);
 
 	bool running() { return bRunning; }
 	int fps = 0;
@@ -109,6 +110,7 @@ private:
 	//Box2d Physics
 	b2Vec2 gravity;
 	b2World* physicsWorld=nullptr;
+	
 	
 	
 

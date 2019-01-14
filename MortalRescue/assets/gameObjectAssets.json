@@ -4,32 +4,32 @@
     {
       "id": "BOWMAN",
       "description": "Player Bowman",
-      "loadOnInit": true,
-      "static": false,
       "texture": "TX_BOWMAN1",
       "xSize": 2.56,
       "ySize": 2.56,
       "initPosX": 5,
       "initPosY": 5,
-//      "primativeShape": "RECTANGLE",
-      "playerSpeed": 20, //change to walkforce
+      "playerSpeed": 0.4, //change to walkforce
       "physicsObject": {
+        "type": "B2_DYNAMIC",
         "friction": 0.3,
-        "density": 5.5
+        "density": 17.5,
+        "linearDamping": 0.2,
+        "angularDamping": 0.5
       }
-
     },
     {
-      "description": "A Red Rock",
       "id": "ROCK",
+      "description": "A Red Rock",
       "initPosX": 6,
       "initPosY": 5,
-      "loadOnInit": true,
       "physicsObject": {
+        "type": "B2_DYNAMIC",
         "friction": 0.3,
-        "density": 0.5
+        "density": 0.5,
+        "linearDamping": 0.1,
+        "angularDamping": 0.1
       },
-      "playerSpeed": 2,
       "primativeColor": {
         "red": 255,
         "green": 0,
@@ -38,29 +38,48 @@
         "random": false
       },
       "primativeShape": "RECTANGLE",
-      "texture": "TX_BOWMAN1",
       "xSize": 2,
       "ySize": 2
     },
     {
+      "description": "Ground",
+      "id": "GROUND1",
+      "initPosX": 16,
+      "initPosY": 24,
+      "physicsObject": {
+        "type": "B2_STATIC",
+        "friction": 0.3
+      },
+      "texture": "TX_TILE1",
+      "xSize": 32,
+      "ySize": 5
+    },
+    {
       "id": "SWORDLADY",
       "description": "SwordLady",
-      "loadOnInit": false,
-      "static": false,
+      "xSize": 2.56, //meters which translates to 64px
+      "ySize": 1.75,
+      "initPosX": 15,
+      "initPosY": 15,
+      "physicsObject": {
+        "type": "B2_STATIC",
+        "friction": 0.3,
+        "density": 17.5,
+        "linearDamping": 0.2,
+        "angularDamping": 0.5
+      },
       "animations": [
         {
           "id": "IDLE",
           "texture": "TX_SWORDLADY1_IDLE",
-          "frames": 19,
-          "xSize": 64,
-          "ySize": 64
+          "speed":  0.06, //time in seconds for each frame. Lower the faster
+          "frames": 19
         },
         {
           "id": "RUN",
           "texture": "TX_SWORDLADY1_RUN",
-          "frames": 5,
-          "xSize": 64,
-          "ySize": 64
+          "speed": 0.06,
+          "frames": 5
         }
       ]
     },
@@ -68,7 +87,7 @@
       "id": "WALL_BRICK_1",
       "description": "Wall brick 1",
       "loadOnInit": false,
-      "static": true,
+      "type": "B2_STATIC",
       "texture": "TX_WALLBRICK_1",
       "xSize": 0,
       "ySize": 0,
@@ -76,4 +95,4 @@
 
     }
   ]
-}1
+}

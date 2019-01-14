@@ -4,14 +4,14 @@
   "physics": {
     "gravity": {
       "x": 0,
-      "y": 0.1
+      "y": 0.0
     },
     "box2dScale": 25 //Box2D. This game will be 25 pixels per meter which is a factor of .04 derived from 1/25
   },
   "windowSettings": {
     "title": "MortalRescue",
-    "width": 800,
-    "height": 600
+    "width": 1024,
+    "height": 576
   }
 
 

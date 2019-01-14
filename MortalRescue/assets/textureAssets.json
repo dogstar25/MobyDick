@@ -3,14 +3,18 @@
     {
       "id": "TX_BOWMAN1",
       "description": "single bowman image",
-      "static": false,
       "filename": "assets/bowman1.png"
     },
     {
+      "id": "TX_TILE1",
+      "description": "TILE 1",
+      "filename": "assets/tile1.png"
+    },
+    {
       "id": "TX_SWORDLADY1_IDLE",
-      "description": "SWORD LADY IDLE",
-      "static": false,
+      "description": "Sword lady idle",
       "filename": "assets/swordLady64_Idle.png"
     }
+
   ]
 }

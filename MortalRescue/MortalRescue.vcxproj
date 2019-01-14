@@ -185,6 +185,7 @@
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\GameObjectAnimation.h" />
+    <ClInclude Include="src\GameObjectDefinition.h" />
     <ClInclude Include="src\GameObjectManager.h" />
     <ClInclude Include="src\jsoncpp\json\json-forwards.h" />
     <ClInclude Include="src\jsoncpp\json\json.h" />
