@@ -7,24 +7,20 @@
 #include "GameObjectDefinition.h"
 
 using namespace std;
+class Game;
 
 class GameObject
 {
 public:
-	//Player controller specific methods
-	void handlePlayerMovementEvent(SDL_Event* event);
-	void updatePlayer();
 
 	//Non Player Controlled methods
 	void update();
 
 	GameObjectDefinition definition;
-	float
-		xPos,
-		yPos;
 	int
 		xDirection,
-		yDirection;
+		yDirection,
+		angle;
 	string
 		currentAnimationState;
 

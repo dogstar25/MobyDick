@@ -14,7 +14,23 @@
       "id": "TX_SWORDLADY1_IDLE",
       "description": "Sword lady idle",
       "filename": "assets/swordLady64_Idle.png"
+    },
+    {
+      "id": "TX_PISTOLLADY_64_RUN",
+      "description": "Pistol Lady Run 64px",
+      "filename": "assets/pistolLady64_Run.png"
+    },
+    {
+      "id": "TX_PISTOLLADY_128_RUN",
+      "description": "Pistol Lady Run 128px",
+      "filename": "assets/pistolLady128_Run.png"
+    },
+    {
+      "id": "TX_SPACESHIP1",
+      "description": "Test spaceship 64px",
+      "filename": "assets/spaceship1.png"
     }
+
 
   ]
 }

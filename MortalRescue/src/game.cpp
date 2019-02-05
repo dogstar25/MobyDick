@@ -1,11 +1,14 @@
-
 #include "game.h"
+#include "PlayerObject.h"
 
 Clock Game::clock;
 Util Game::util;
 TextureManager Game::textureManager;
 GameObjectManager Game::gameObjectManager;
 Config Game::config;
+Camera Game::camera;
+SDL_Rect Game::worldBounds;
+
 using namespace chrono_literals;
 
 bool Game::init()
@@ -20,12 +23,15 @@ bool Game::init()
 		printf("SDL_Init success\n");
 
 		//Create the game window
-		pWindow = SDL_CreateWindow(this->windowTitle.c_str(),
+		pWindow = SDL_CreateWindow(this->gameTitle.c_str(),
 			this->windowXpos,
 			this->windowYPos,
-			this->screenWidth, 
-			this->screenHeight, 
-			SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+			this->camera.frame.w, 
+			this->camera.frame.h, 
+			SDL_WINDOW_MAXIMIZED | SDL_WINDOW_OPENGL);
+
+		//Init Camera
+		this->camera.init(&this->worldBounds);
 
 		//Initialize the textture manager
 		this->textureManager.init(pWindow);
@@ -37,6 +43,29 @@ bool Game::init()
 		//This will hold all possible game objects that the game/level supports
 		this->gameObjectManager.init();
 
+		//Create the player object
+		/*
+		PlayerObject* playerObject = (PlayerObject*)Game::gameObjectManager.buildGameObject("PISTOLLADY", this->physicsWorld);
+		playerObject->currentAnimationState = "RUN";
+		this->player = (PlayerObject*)playerObject;
+		this->player->direction = 0;
+		this->player->strafe = 0;
+		*/
+
+		PlayerObject* playerObject = (PlayerObject*)Game::gameObjectManager.buildGameObject("SPACESHIP1", this->physicsWorld);
+		this->player = (PlayerObject*)playerObject;
+		this->player->direction = 0;
+		this->player->strafe = 0;
+		playerObject->currentAnimationState = "RUN";
+
+		//SDL_ShowCursor(false);
+
+		//set camera to center on player object
+		this->camera.setPosition((this->player->physicsBody->GetPosition().x *  Game::config.scaleFactor) -
+									(camera.frame.w / 2),
+								 (this->player->physicsBody->GetPosition().y *  Game::config.scaleFactor) -
+									(camera.frame.h / 2));
+
 		bRunning = true;
 
 	}
@@ -47,9 +76,8 @@ bool Game::init()
 
 	//Add a few objects to the world
 	GameObject *gameObject=nullptr;
-	gameObject = Game::gameObjectManager.buildGameObject(this->playerGameObjectId, this->physicsWorld);
+	gameObject = Game::gameObjectManager.buildGameObject("BOWMAN", this->physicsWorld);
 	this->gameObjects.push_back(*gameObject);
-	this->player = gameObject; //THIS IS THE MAIN PLAYER
 
 	gameObject = Game::gameObjectManager.buildGameObject("ROCK", this->physicsWorld);
 	this->gameObjects.push_back(*gameObject);
@@ -72,24 +100,38 @@ void Game::update() {
 	//Specifiaclly handle input and stuff for the one player gameObject
 	this->player->updatePlayer();
 
-	//Update all of the other none player related update chores for each game object
+	//Update the camera frame to point to the new player position
+	this->camera.setPosition((this->player->physicsBody->GetPosition().x *  Game::config.scaleFactor) -
+		(camera.frame.w / 2),
+		(this->player->physicsBody->GetPosition().y *  Game::config.scaleFactor) -
+		(camera.frame.h / 2));
+
+	//Update all of the other non player related update chores for each game object
+	this->awakeCount=0;
 	for (auto & gameObject : gameObjects) {
+
+		//count the number of awake objects - later to be used to adjust the players objects force/velocity
+		if (gameObject.physicsBody->IsAwake()) {
+			this->awakeCount++;
+		}
+
 		gameObject.update();
 	}
 
-	/*Temp code for physics updating*/
-	float32 timeStep = 1.0f / 60.0f;
-	int32 velocityIterations = 6;
-	int32 positionIterations = 2;
-	this->physicsWorld->Step(timeStep, velocityIterations, positionIterations);
-	
-}
+	//cout << "awake count " << this->awakeCount << "\n";
 
+	this->physicsWorld->Step(this->timeStep, this->velocityIterations, this->positionIterations);
+
+}
 
 void Game::render() {
 
 	Game::textureManager.clear();
-	//This will be looping thru all of the game objects that need to be rendered
+
+	//render the player
+	Game::textureManager.render(this->player);
+	
+	//Render all of the game objects
 	for (auto & gameObject : gameObjects) {
 		Game::textureManager.render(&gameObject);
 	}
@@ -100,6 +142,7 @@ void Game::render() {
 
 void Game::clean() {
 	printf("cleaning game\n");
+	//SDL_SetWindowFullscreen(pWindow, SDL_WINDOW_RESIZABLE);
 	SDL_DestroyWindow(this->pWindow);
 	SDL_Quit();
 }
@@ -108,17 +151,26 @@ bool Game::getConfig()
 {
 	//Read file and stream it to a JSON object
 	Json::Value root;
-	ifstream ifs("config/gameConfig.json");
+	ifstream ifs("assets/gameConfig.json");
 	ifs >> root;
 
 	//Get and store config values
 	this->gameTitle = root["gameTitle"].asString();
-	this->windowTitle = root["windowSettings"]["title"].asString();
-	this->screenWidth = root["windowSettings"]["width"].asInt();
-	this->screenHeight = root["windowSettings"]["height"].asInt();
-	this->playerGameObjectId = root["playerGameObjectId"].asString();
 	this->gravity.Set(root["physics"]["gravity"]["x"].asInt(), root["physics"]["gravity"]["y"].asFloat());
+
+	this->timeStep = root["physics"]["timeStep"].asFloat();
+	this->velocityIterations = root["physics"]["velocityIterations"].asInt();
+	this->positionIterations = root["physics"]["positionIterations"].asInt();
+
 	this->config.scaleFactor = root["physics"]["box2dScale"].asFloat();
+	this->config.mouseSensitivity = root["mouseSensitivity"].asFloat();
+
+	this->worldBounds.x = 0;
+	this->worldBounds.y = 0;
+	this->worldBounds.w = root["world"]["width"].asInt();
+	this->worldBounds.h = root["world"]["height"].asInt();
+	this->camera.frame.w = root["camera"]["width"].asInt();
+	this->camera.frame.h = root["camera"]["height"].asInt();
 
 	return true;
 }
@@ -146,6 +198,9 @@ void Game::handleEvents() {
 		case SDL_MOUSEBUTTONDOWN:
 			this->testBlocks(&event, this->physicsWorld);
 			break;
+		case SDL_MOUSEMOTION:
+			this->player->handlePlayerMovementEvent(&event);
+			break;
 
 		default:
 			break;
@@ -156,9 +211,9 @@ void Game::handleEvents() {
 void Game::testBlocks(SDL_Event* event, b2World* physicsWorld)
 {
 
-	std::cout << "Object created " << " \n";
-	std::cout << "X " << event->button.x << " \n";
-	std::cout << "Y " << event->button.y << " \n";
+	//std::cout << "Object created " << " \n";
+	//std::cout << "X " << event->button.x << " \n";
+	//std::cout << "Y " << event->button.y << " \n";
 
 	GameObject* gameObject;
 	gameObject = new GameObject();
@@ -171,8 +226,8 @@ void Game::testBlocks(SDL_Event* event, b2World* physicsWorld)
 	gameObject->definition.description = "block";
 	//gameObject->xSize = Game::util.generateRandomNumber(1,30) * .1;
 	//gameObject->ySize = Game::util.generateRandomNumber(1, 30) * .1;
-	gameObject->definition.xSize = .3;
-	gameObject->definition.ySize = .3;
+	gameObject->definition.xSize = 1;
+	gameObject->definition.ySize = 1;
 
 	gameObject->definition.initPosX = event->button.x / Game::config.scaleFactor;
 	gameObject->definition.initPosY = event->button.y / Game::config.scaleFactor;
@@ -185,8 +240,8 @@ void Game::testBlocks(SDL_Event* event, b2World* physicsWorld)
 
 	gameObject->definition.isPhysicsObject = true;
 	gameObject->definition.physicsType = "B2_DYNAMIC";
-	gameObject->definition.friction = .3;
-	gameObject->definition.density = 2;
+	gameObject->definition.friction = 2.0;
+	gameObject->definition.density = 3.0;
 	gameObject->definition.linearDamping = .2;
 	gameObject->definition.angularDamping = .2;
 	gameObject->physicsBody = Game::gameObjectManager.buildB2Body(&gameObject->definition, physicsWorld);

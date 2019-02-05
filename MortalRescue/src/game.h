@@ -10,14 +10,15 @@
 #include <json/json.h>
 #include <iostream>
 #include <fstream>
-#include "game.h"
 #include <stdio.h>
 #include <ctime>
 #include <ratio>
 #include <chrono>
 #include <Box2D/Box2D.h>
 #include "Util.h"
+#include "Camera.h"
 
+class PlayerObject;
 
 using namespace std;
 using namespace std::chrono;
@@ -63,6 +64,7 @@ struct Config
 {
 public:
 	float32 scaleFactor;
+	float32 mouseSensitivity;
 
 };
 
@@ -83,26 +85,29 @@ public:
 	void testBlocks(SDL_Event*, b2World*);
 
 	bool running() { return bRunning; }
-	int fps = 0;
+	int fps = 0,
+		awakeCount;
 
 	static Clock clock;
 	static Util util;
 	static TextureManager textureManager;
 	static GameObjectManager gameObjectManager;
 	static Config config;
+	static Camera camera;
+	static SDL_Rect worldBounds;
 
 	
 private:
 	//Main screen and window stuff
 	SDL_Window* pWindow;
-	string windowTitle, gameTitle, playerGameObjectId;
-	int screenWidth, screenHeight;
+	string gameTitle;
 	Uint32 windowXpos= SDL_WINDOWPOS_CENTERED, windowYPos= SDL_WINDOWPOS_CENTERED;
 	Uint32 windowFlags= SDL_WINDOW_RESIZABLE;
+	float mouseSensitivity;
 
 	//Vector of all game objects
 	vector<GameObject> gameObjects;
-	GameObject* player;
+	PlayerObject* player;
 
 	//Game States
 	bool bRunning;
@@ -110,8 +115,10 @@ private:
 	//Box2d Physics
 	b2Vec2 gravity;
 	b2World* physicsWorld=nullptr;
-	
-	
+	float timeStep;
+	int velocityIterations,
+		positionIterations;
+		
 	
 
 	//Private Methods

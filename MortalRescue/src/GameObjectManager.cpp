@@ -190,7 +190,7 @@ b2Body * GameObjectManager::buildB2Body(GameObjectDefinition* gameObjectDefiniti
 	float32 YSize = gameObjectDefinition->ySize / 2;
 
 	box.SetAsBox(xSize, YSize);
-	std::cout << "BuildBox size for " << gameObjectDefinition->id << " was " << xSize << "\n";
+	//std::cout << "BuildBox size for " << gameObjectDefinition->id << " was " << xSize << "\n";
 
 	// Define the body fixture.
 	b2FixtureDef fixtureDef;

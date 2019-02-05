@@ -11,7 +11,7 @@ bool TextureManager::init(SDL_Window* pWindow)
 	SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
 
 	//SDL_RenderSetScale(pRenderer, (1/Game::config.scaleFactor), (1/Game::config.scaleFactor));
-	//SDL_RenderSetScale(pRenderer, 25 ,25);
+	//SDL_RenderSetScale(pRenderer, 2 ,2);
 
 	//Load all of the textures for the game
 	loadTextures();
@@ -23,11 +23,20 @@ bool TextureManager::render(GameObject* gameObject)
 {
 	SDL_Rect srcRect, destRect;
 
+	//calculate the destination rectangle - must convert meters to pixels with scale factor
 	destRect.w = (gameObject->definition.xSize * Game::config.scaleFactor);
 	destRect.h = (gameObject->definition.ySize * Game::config.scaleFactor);
-
 	destRect.x = (gameObject->physicsBody->GetPosition().x *  Game::config.scaleFactor) - (destRect.w /2) ;
 	destRect.y = (gameObject->physicsBody->GetPosition().y *  Game::config.scaleFactor) - (destRect.h /2) ;
+
+	
+	float angle = gameObject->physicsBody->GetAngle();
+	angle = angle * 180 / M_PI;
+	//this->angle = angle;
+
+	//Adjust position based on current camera position - offset
+	destRect.x -= Game::camera.frame.x;
+	destRect.y -= Game::camera.frame.y;
 
 	//If this is a primitive shape object just drawa a rectangle
 	if (gameObject->definition.isPrimitiveShape == true)
@@ -42,10 +51,6 @@ bool TextureManager::render(GameObject* gameObject)
 	}
 	else
 	{
-		//TODO:if this is the player then do not use the box2d angle. Use our own controller by keyboard/mouse
-		float angle = gameObject->physicsBody->GetAngle();
-		angle = angle * 180 / M_PI;
-
 		//If this is animated object then get its current animation frame texture, 
 		// otherwise get its static texture
 		SDL_Texture* texure=NULL;
@@ -60,6 +65,7 @@ bool TextureManager::render(GameObject* gameObject)
 			texure = gameObject->staticTexture;
 		}
 
+		//Render th the page
 		SDL_RenderCopyEx(pRenderer, texure, textureSourceRect, &destRect, angle,
 			NULL, SDL_FLIP_NONE);
 

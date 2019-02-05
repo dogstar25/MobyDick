@@ -39,6 +39,12 @@
     <ClCompile Include="src\Util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\PlayerObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h">
@@ -68,6 +74,12 @@
     <ClInclude Include="src\GameObjectDefinition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\PlayerObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\textureAssets.json" />
@@ -76,7 +88,7 @@
     <None Include="SDL2.dll" />
     <None Include="SDL2_image.dll" />
     <None Include="zlib1.dll" />
-    <None Include="config\gameConfig.json" />
+    <None Include="assets\gameConfig.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png">

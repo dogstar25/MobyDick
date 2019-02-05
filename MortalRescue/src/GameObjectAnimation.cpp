@@ -6,12 +6,12 @@ void GameObjectAnimation::animate(GameObject* gameObject)
 	//check the clock and see if enough time as gone by
 	steady_clock::time_point now_time = steady_clock::now();
 	std::chrono::duration<double> time_diff = now_time - time_snapshot;
-	std::cout << "timediff is " << time_diff.count() << "\n";
+	//std::cout << "timediff is " << time_diff.count() << "\n";
 
 	if (time_diff.count() >= this->speed)
 	{
 		time_snapshot = now_time;
-		std::cout << "animate time is " << time_diff.count() << "\n";
+		//std::cout << "animate time is " << time_diff.count() << "\n";
 
 		//Increment animation frame counter and reset if it exceeds last one
 		this->currentAnimFrame += 1;

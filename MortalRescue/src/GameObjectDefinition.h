@@ -30,7 +30,8 @@ public:
 	bool
 		isAnimated,
 		isPhysicsObject,
-		isPrimitiveShape;
+		isPrimitiveShape,
+		isPlayerObject;
 
 	SDL_Color primativeColor; //If object is a primative shape, what color is it
 	map<string, GameObjectAnimation> animations;

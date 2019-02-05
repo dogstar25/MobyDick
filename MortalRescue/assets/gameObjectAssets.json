@@ -9,14 +9,38 @@
       "ySize": 2.56,
       "initPosX": 5,
       "initPosY": 5,
-      "playerSpeed": 0.4, //change to walkforce
+      "playerSpeed": 20.4, //change to walkforce
       "physicsObject": {
         "type": "B2_DYNAMIC",
         "friction": 0.3,
-        "density": 17.5,
-        "linearDamping": 0.2,
+        "density": 0.5,
+        "linearDamping": 0.1,
         "angularDamping": 0.5
       }
+    },
+    {
+      "id": "PISTOLLADY",
+      "description": "Player Pistol Lady",
+      "xSize": 2.56,
+      "ySize": 2.56,
+      "initPosX": 5,
+      "initPosY": 5,
+      "playerSpeed": 0.5, //change name to walkforce
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "density": 1.5,
+        "linearDamping": 0.2,
+        "angularDamping": 0.5
+      },
+      "animations": [
+        {
+          "id": "RUN",
+          "texture": "TX_PISTOLLADY_64_RUN",
+          "speed": 0.03, //time in seconds for each frame. Lower the faster
+          "frames": 16
+        }
+      ]
     },
     {
       "id": "ROCK",
@@ -35,7 +59,7 @@
         "green": 0,
         "blue": 0,
         "alpha": 0,
-        "random": false
+        "random": true
       },
       "primativeShape": "RECTANGLE",
       "xSize": 2,
@@ -62,7 +86,7 @@
       "initPosX": 15,
       "initPosY": 15,
       "physicsObject": {
-        "type": "B2_STATIC",
+        "type": "B2_DYNAMIC",
         "friction": 0.3,
         "density": 17.5,
         "linearDamping": 0.2,
@@ -72,7 +96,7 @@
         {
           "id": "IDLE",
           "texture": "TX_SWORDLADY1_IDLE",
-          "speed":  0.06, //time in seconds for each frame. Lower the faster
+          "speed": 0.06, //time in seconds for each frame. Lower the faster
           "frames": 19
         },
         {
@@ -86,11 +110,28 @@
     {
       "id": "WALL_BRICK_1",
       "description": "Wall brick 1",
-      "loadOnInit": false,
       "type": "B2_STATIC",
       "texture": "TX_WALLBRICK_1",
       "xSize": 0,
       "ySize": 0,
+      "playerSpeed": 3
+
+    },
+    {
+      "id": "SPACESHIP1",
+      "description": "Space Ship 1",
+      "initPosX": 5,
+      "initPosY": 5,
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "density": 1.5,
+        "linearDamping": 0.2,
+        "angularDamping": 0.5
+      },
+      "texture": "TX_SPACESHIP1",
+      "xSize": 2.56,
+      "ySize": 2.56,
       "playerSpeed": 3
 
     }
