@@ -5,12 +5,12 @@
 #include <stdio.h>
 #include <string>
 #include <map>
-#include <iostream>
-#include <fstream>
 #include <Box2D/Box2D.h>
 #include "GameObject.h"
 
-
+//Forward declarations
+class GameObject;
+class Texture;
 
 using namespace std;
 
@@ -22,15 +22,24 @@ public:
 	bool render(b2Body* body);
 	bool present();
 	bool clear();
-	SDL_Texture* getTexture(string id);
+	Texture* getTexture(string id);
 	void drawPoly(b2Body* body);
 
 private:
 
 	SDL_Renderer* pRenderer;
-	map<string, SDL_Texture*> textureMap;
+	map<string, Texture*> textureMap;
 
 	bool loadTextures();
 	
+};
+
+class Texture
+{
+public:
+
+	SDL_Texture* texture;
+	SDL_Surface* surface;
+
 };
 

@@ -36,5 +36,16 @@ SDL_Color Util::generateRandomColor()
 
 }
 
+Matrix::Matrix() {
+
+}
+
+Matrix::Matrix(int width, int height) {
+
+	///data = new 
+
+}
+
+
 
 

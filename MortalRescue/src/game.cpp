@@ -1,10 +1,18 @@
 #include "game.h"
 #include "PlayerObject.h"
+#include "LevelManager.h"
+#include "TextureManager.h"
+#include "GameObjectManager.h"
+#include "GameObject.h"
+#include "Util.h"
+#include "Camera.h"
+
 
 Clock Game::clock;
 Util Game::util;
 TextureManager Game::textureManager;
 GameObjectManager Game::gameObjectManager;
+LevelManager Game::levelManager;
 Config Game::config;
 Camera Game::camera;
 SDL_Rect Game::worldBounds;
@@ -28,7 +36,7 @@ bool Game::init()
 			this->windowYPos,
 			this->camera.frame.w, 
 			this->camera.frame.h, 
-			SDL_WINDOW_MAXIMIZED | SDL_WINDOW_OPENGL);
+			SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 
 		//Init Camera
 		this->camera.init(&this->worldBounds);
@@ -51,13 +59,15 @@ bool Game::init()
 		this->player->direction = 0;
 		this->player->strafe = 0;
 		*/
+		
+		PlayerObject* playerObject = 
+			(PlayerObject*)Game::gameObjectManager.buildGameObject("SPACESHIP1", this->physicsWorld, 5, 5);
 
-		PlayerObject* playerObject = (PlayerObject*)Game::gameObjectManager.buildGameObject("SPACESHIP1", this->physicsWorld);
 		this->player = (PlayerObject*)playerObject;
 		this->player->direction = 0;
 		this->player->strafe = 0;
 		playerObject->currentAnimationState = "RUN";
-
+		
 		//SDL_ShowCursor(false);
 
 		//set camera to center on player object
@@ -73,12 +83,16 @@ bool Game::init()
 	//Initialize the clock object
 	clock.init();
 
-
+	//Load level 1
+	Game::levelManager.loadLevel("TX_LEVEL1");
+	this->buildLevel("TX_LEVEL1");
+	
 	//Add a few objects to the world
+	
 	GameObject *gameObject=nullptr;
-	gameObject = Game::gameObjectManager.buildGameObject("BOWMAN", this->physicsWorld);
+	gameObject = Game::gameObjectManager.buildGameObject("BOWMAN", this->physicsWorld, 1, 1);
 	this->gameObjects.push_back(*gameObject);
-
+	/*
 	gameObject = Game::gameObjectManager.buildGameObject("ROCK", this->physicsWorld);
 	this->gameObjects.push_back(*gameObject);
 
@@ -87,11 +101,11 @@ bool Game::init()
 
 	gameObject = Game::gameObjectManager.buildGameObject("ROCK", this->physicsWorld);
 	this->gameObjects.push_back(*gameObject);
-
-	gameObject = Game::gameObjectManager.buildGameObject("SWORDLADY", this->physicsWorld);
+	*/
+	gameObject = Game::gameObjectManager.buildGameObject("SWORDLADY", this->physicsWorld, 2, 2);
 	gameObject->currentAnimationState = "IDLE";
 	this->gameObjects.push_back(*gameObject);
-
+	
 	return true;
 }
 
@@ -117,7 +131,7 @@ void Game::update() {
 
 		gameObject.update();
 	}
-
+	
 	//cout << "awake count " << this->awakeCount << "\n";
 
 	this->physicsWorld->Step(this->timeStep, this->velocityIterations, this->positionIterations);
@@ -208,6 +222,37 @@ void Game::handleEvents() {
 	}
 }
 
+void Game::addToActiveGameOjectArray(GameObject* gameObject)
+{
+	this->gameObjects.push_back(*gameObject);
+}
+
+void Game::buildLevel(string levelId)
+{
+
+	Level* level = Game::levelManager.levels[levelId];
+	LevelObject* levelObject;
+	GameObject* gameObject;
+
+	for (int y = 0; y < level->height; y++)
+	{
+		for (int x = 0; x < level->width; x++)
+		{
+
+			if (level->levelObjects[x][y].gameObjectId.empty() == false)
+			{
+				levelObject = &level->levelObjects[x][y];
+				gameObject = Game::gameObjectManager.buildGameObject(levelObject->gameObjectId, physicsWorld,
+					x, y, levelObject->angleAdjustment);
+
+				this->gameObjects.push_back(*gameObject);
+			}
+
+		}
+	}
+}
+
+
 void Game::testBlocks(SDL_Event* event, b2World* physicsWorld)
 {
 
@@ -217,34 +262,36 @@ void Game::testBlocks(SDL_Event* event, b2World* physicsWorld)
 
 	GameObject* gameObject;
 	gameObject = new GameObject();
+	gameObject->definition = new GameObjectDefinition();
 
 	//build id
 	int count = this->gameObjects.size();
 	string id = "block" + to_string(count);
-	gameObject->definition.id = id;
+	gameObject->definition->id = id;
 
-	gameObject->definition.description = "block";
+	gameObject->definition->description = "block";
 	//gameObject->xSize = Game::util.generateRandomNumber(1,30) * .1;
 	//gameObject->ySize = Game::util.generateRandomNumber(1, 30) * .1;
-	gameObject->definition.xSize = 1;
-	gameObject->definition.ySize = 1;
+	gameObject->definition->xSize = 1;
+	gameObject->definition->ySize = 1;
 
-	gameObject->definition.initPosX = event->button.x / Game::config.scaleFactor;
-	gameObject->definition.initPosY = event->button.y / Game::config.scaleFactor;
+	gameObject->definition->initPosX = event->button.x / Game::config.scaleFactor;
+	gameObject->definition->initPosY = event->button.y / Game::config.scaleFactor;
 
 	//gameObject->isPrimitiveShape = true;
 	//gameObject->primativeColor = Game::util.generateRandomColor();
 
 	string textureId = "TX_TILE1";
-	gameObject->staticTexture = Game::textureManager.getTexture(textureId);
+	gameObject->staticTexture = Game::textureManager.getTexture(textureId)->texture;
 
-	gameObject->definition.isPhysicsObject = true;
-	gameObject->definition.physicsType = "B2_DYNAMIC";
-	gameObject->definition.friction = 2.0;
-	gameObject->definition.density = 3.0;
-	gameObject->definition.linearDamping = .2;
-	gameObject->definition.angularDamping = .2;
-	gameObject->physicsBody = Game::gameObjectManager.buildB2Body(&gameObject->definition, physicsWorld);
+	gameObject->definition->isPhysicsObject = true;
+	gameObject->definition->physicsType = "B2_STATIC";
+	//gameObject->definition.physicsType = "B2_DYNAMIC";
+	gameObject->definition->friction = .5;
+	gameObject->definition->density = 10.0;
+	gameObject->definition->linearDamping = 0;
+	gameObject->definition->angularDamping = 0;
+	gameObject->physicsBody = Game::gameObjectManager.buildB2Body(gameObject->definition, physicsWorld);
 
 	this->gameObjects.push_back(*gameObject);
 

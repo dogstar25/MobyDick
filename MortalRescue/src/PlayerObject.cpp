@@ -1,5 +1,7 @@
-#include "PlayerObject.h"
 #include <math.h>
+
+#include "game.h"
+#include "PlayerObject.h"
 
 void PlayerObject::handlePlayerMovementEvent(SDL_Event* event)
 {
@@ -50,21 +52,12 @@ void PlayerObject::handlePlayerMovementEvent(SDL_Event* event)
 		float angularVelocity = event->motion.xrel * Game::config.mouseSensitivity;
 
 		this->physicsBody->SetAngularVelocity(angularVelocity);
-		/*
-		if (this->physicsBody->GetAngle() * 180 / M_PI > 360) {
-			this->physicsBody->SetTransform(this->physicsBody->GetPosition(), 
-				(this->physicsBody->GetAngle() * 180 / M_PI) -360);
-		}
-		if (this->physicsBody->GetAngle() * 180 / M_PI < -360) {
-			this->physicsBody->SetTransform(this->physicsBody->GetPosition(),
-				(this->physicsBody->GetAngle() * 180 / M_PI) + 360);
-		}
-		*/
+
 		//method 2
 		//float desiredAngle = atan2f(-event->motion.x, -event->motion.y);
 		//this->physicsBody->SetTransform(this->physicsBody->GetPosition(), desiredAngle);
 
-		std::cout << "xmouse is " << event->motion.x << " ymouse is " << event->motion.y << "\n";
+		//std::cout << "xmouse is " << event->motion.x << " ymouse is " << event->motion.y << "\n";
 		//std::cout << "player angle is " << this->physicsBody->GetAngle() * 180 / M_PI << "\n";
 
 	}
@@ -86,11 +79,12 @@ void PlayerObject::updatePlayerMovement()
 	Lots of tweeks can be down here depending on the game you are building for smoother movement
 	*/
 
-	float acceleration = this->definition.playerSpeed;
+	float acceleration = this->definition->playerSpeed;
 	//float acceleration = this->definition.playerSpeed + (game->awakeCount * .05);
-	float velocity = min((float)0.1, (float)(acceleration * (Game::clock.time_diff.count() * 100000)));
+	//float velocity = min((float)0.1, (float)(acceleration * (Game::clock.time_diff.count() * 100000)));
+	float velocity = acceleration;
 	//float velocity = acceleration * (Game::clock.time_diff.count() * 100000);
-	//cout << "velocity is " << velocity << "\n";
+	//cout << "time_diff is " << Game::clock.time_diff.count() << "\n";
 	//float velocity = this->definition.playerSpeed +(game->awakeCount * .02);
 
 
@@ -128,8 +122,9 @@ void PlayerObject::updatePlayerMovement()
 	//this->physicsBody->SetTransform(vec3, this->physicsBody->GetAngle());
 	this->physicsBody->SetLinearVelocity(vec2);
 
-	//this->physicsBody->ApplyLinearImpulseToCenter(vec3, true);
+	//this->physicsBody->ApplyLinearImpulseToCenter(vec2, true);
 
 	//std:cout << "strafevector length is " << strafeVector.Length() << "\n";
+
 
 }

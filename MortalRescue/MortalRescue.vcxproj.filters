@@ -45,6 +45,9 @@
     <ClCompile Include="src\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\LevelManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h">
@@ -71,30 +74,69 @@
     <ClInclude Include="src\Util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObjectDefinition.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\PlayerObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\LevelManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\textureAssets.json" />
-    <None Include="assets\gameObjectAssets.json" />
     <None Include="libpng16-16.dll" />
     <None Include="SDL2.dll" />
     <None Include="SDL2_image.dll" />
     <None Include="zlib1.dll" />
     <None Include="assets\gameConfig.json" />
+    <None Include="assets\level1.ase" />
+    <None Include="assets\level_test.ase" />
+    <None Include="assets\gameObjects_Common.json" />
+    <None Include="assets\gameObjects_Level1.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\swordLady64_Idle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\level1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\pistolLady64_Run.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\pistolLady128_Run.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\spaceship1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\tile1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\level_test.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_column.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_corner.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_end.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_hall.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_open.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_wall.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

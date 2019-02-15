@@ -1,5 +1,4 @@
 {
-
   "gameObjects": [
     {
       "id": "BOWMAN",
@@ -88,7 +87,7 @@
       "physicsObject": {
         "type": "B2_DYNAMIC",
         "friction": 0.3,
-        "density": 17.5,
+        "density": 10.5,
         "linearDamping": 0.2,
         "angularDamping": 0.5
       },
@@ -120,20 +119,20 @@
     {
       "id": "SPACESHIP1",
       "description": "Space Ship 1",
-      "initPosX": 5,
-      "initPosY": 5,
+      "initPosX": 15,
+      "initPosY": 15,
       "physicsObject": {
         "type": "B2_DYNAMIC",
         "friction": 0.0,
-        "density": 1.5,
-        "linearDamping": 0.2,
+        "density": 5.5,
+        "linearDamping": 0.1,
         "angularDamping": 0.5
       },
       "texture": "TX_SPACESHIP1",
-      "xSize": 2.56,
-      "ySize": 2.56,
-      "playerSpeed": 3
-
+      "xSize": 1.28,
+      "ySize": 1.28,
+      "playerSpeed": 0.3
     }
+
   ]
 }

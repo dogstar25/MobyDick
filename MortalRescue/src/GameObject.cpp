@@ -1,13 +1,10 @@
 #include "GameObject.h"
-#include "game.h"
-#include <SDL.h>
-
 
 
 void GameObject::update()
 {
 	//If this object is animated, then animate it
-	if(this->definition.isAnimated) {
+	if(this->definition->isAnimated) {
 		this->animations[this->currentAnimationState].animate(this);
 	}
 

@@ -1,5 +1,6 @@
 #include "GameObjectAnimation.h"
-#include "game.h"
+#include "GameObject.h"
+#include "game.h";
 
 void GameObjectAnimation::animate(GameObject* gameObject)
 {
@@ -26,8 +27,8 @@ void GameObjectAnimation::animate(GameObject* gameObject)
 
 		rect.x = this->animationFramePositions[currentAnimFrame].x;
 		rect.y = this->animationFramePositions[currentAnimFrame].y;
-		rect.w = gameObject->definition.xSize * Game::config.scaleFactor;
-		rect.h = gameObject->definition.ySize * Game::config.scaleFactor;
+		rect.w = gameObject->definition->xSize * Game::config.scaleFactor;
+		rect.h = gameObject->definition->ySize * Game::config.scaleFactor;
 
 		this->currentTextureAnimationSrcRect = rect;
 

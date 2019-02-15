@@ -1,27 +1,89 @@
-#ifndef __Game__
-#define __Game__
+#pragma once
 
-#include <string>
+#include <json/json.h>
+#include <Box2D/Box2D.h>
 #include <SDL.h>
 #include <SDL_image.h>
-#include "TextureManager.h"
-#include "GameObjectManager.h"
-#include "GameObject.h"
-#include <json/json.h>
+
 #include <iostream>
 #include <fstream>
 #include <stdio.h>
 #include <ctime>
 #include <ratio>
 #include <chrono>
-#include <Box2D/Box2D.h>
+
 #include "Util.h"
+#include "TextureManager.h"
+#include "GameObjectManager.h"
 #include "Camera.h"
 
+//forward declations
+struct Clock;
+struct Config;
 class PlayerObject;
+class LevelManager;
+class GameObject;
 
 using namespace std;
 using namespace std::chrono;
+
+
+class Game {
+
+public:
+	Game() {}
+	~Game() {}
+
+	bool init();
+
+	void render();
+	void update();
+	void handleEvents();
+	void clean();
+	void testBlocks(SDL_Event*, b2World*);
+	void addToActiveGameOjectArray(GameObject*);
+	void buildLevel(string);
+
+	bool running() { return bRunning; }
+	int fps = 0,
+		awakeCount;
+
+	static Clock clock;
+	static Util util;
+	static TextureManager textureManager;
+	static GameObjectManager gameObjectManager;
+	static LevelManager levelManager;
+	static Config config;
+	static Camera camera;
+	static SDL_Rect worldBounds;
+
+	
+private:
+	//Main screen and window stuff
+	SDL_Window* pWindow;
+	string gameTitle;
+	Uint32 windowXpos= SDL_WINDOWPOS_CENTERED, windowYPos= SDL_WINDOWPOS_CENTERED;
+	Uint32 windowFlags= SDL_WINDOW_RESIZABLE;
+	float mouseSensitivity;
+
+	//Vector of all game objects
+	vector<GameObject> gameObjects;
+	PlayerObject* player;
+
+	//Game States
+	bool bRunning;
+
+	//Box2d Physics
+	b2Vec2 gravity;
+	b2World* physicsWorld=nullptr;
+	float timeStep;
+	int velocityIterations,
+		positionIterations;
+
+	//Private Methods
+	bool getConfig();
+
+};
 
 struct Clock
 {
@@ -52,7 +114,7 @@ struct Clock
 		if (current_frame_cnt >= 100)
 		{
 			fps = current_frame_cnt / fps_time_accum.count();
-			fps_time_accum *=0;
+			fps_time_accum *= 0;
 			current_frame_cnt = 0;
 		}
 	}
@@ -68,65 +130,4 @@ public:
 
 };
 
-
-
-class Game {
-
-public:
-	Game() {}
-	~Game() {}
-
-	bool init();
-
-	void render();
-	void update();
-	void handleEvents();
-	void clean();
-	void testBlocks(SDL_Event*, b2World*);
-
-	bool running() { return bRunning; }
-	int fps = 0,
-		awakeCount;
-
-	static Clock clock;
-	static Util util;
-	static TextureManager textureManager;
-	static GameObjectManager gameObjectManager;
-	static Config config;
-	static Camera camera;
-	static SDL_Rect worldBounds;
-
-	
-private:
-	//Main screen and window stuff
-	SDL_Window* pWindow;
-	string gameTitle;
-	Uint32 windowXpos= SDL_WINDOWPOS_CENTERED, windowYPos= SDL_WINDOWPOS_CENTERED;
-	Uint32 windowFlags= SDL_WINDOW_RESIZABLE;
-	float mouseSensitivity;
-
-	//Vector of all game objects
-	vector<GameObject> gameObjects;
-	PlayerObject* player;
-
-	//Game States
-	bool bRunning;
-
-	//Box2d Physics
-	b2Vec2 gravity;
-	b2World* physicsWorld=nullptr;
-	float timeStep;
-	int velocityIterations,
-		positionIterations;
-		
-	
-
-	//Private Methods
-	bool getConfig();
-
-};
-
-
-
-#endif
 
