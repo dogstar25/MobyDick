@@ -5,7 +5,7 @@ void GameObject::update()
 {
 	//If this object is animated, then animate it
 	if(this->definition->isAnimated) {
-		this->animations[this->currentAnimationState].animate(this);
+		this->definition->animations[this->currentAnimationState]->animate(this);
 	}
 
 	//Calculate the physics angle for the rendering later

@@ -24,7 +24,7 @@ public:
 	float angleAdjustment; //When rendering this object, adjust the angle by this degree. Added for reusing wall textures
 
 	SDL_Texture* staticTexture; //Used if this is not an animated object
-	map<string, GameObjectAnimation> animations;
+	//map<string, GameObjectAnimation> animations;
 	b2Body* physicsBody;
 
 
@@ -57,7 +57,7 @@ public:
 		isPlayerObject;
 
 	SDL_Color primativeColor; //If object is a primative shape, what color is it
-	map<string, GameObjectAnimation> animations;
+	map<string, GameObjectAnimation*> animations;
 
 
 };

@@ -67,7 +67,7 @@ private:
 	float mouseSensitivity;
 
 	//Vector of all game objects
-	vector<GameObject> gameObjects;
+	vector<GameObject*> gameObjects;
 	PlayerObject* player;
 
 	//Game States

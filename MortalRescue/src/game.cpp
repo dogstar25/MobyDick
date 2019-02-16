@@ -93,11 +93,11 @@ bool Game::init()
 	//Add a few objects to the world
 	GameObject *gameObject=nullptr;
 	gameObject = Game::gameObjectManager.buildGameObject("BOWMAN", this->physicsWorld, 1, 1);
-	this->gameObjects.push_back(*gameObject);
+	this->gameObjects.push_back(gameObject);
 
 	gameObject = Game::gameObjectManager.buildGameObject("SWORDLADY", this->physicsWorld, 12, 12);
 	gameObject->currentAnimationState = "IDLE";
-	this->gameObjects.push_back(*gameObject);
+	this->gameObjects.push_back(gameObject);
 	
 	return true;
 }
@@ -118,11 +118,11 @@ void Game::update() {
 	for (auto & gameObject : gameObjects) {
 
 		//count the number of awake objects - later to be used to adjust the players objects force/velocity
-		if (gameObject.physicsBody->IsAwake()) {
+		if (gameObject->physicsBody->IsAwake()) {
 			this->awakeCount++;
 		}
 
-		gameObject.update();
+		gameObject->update();
 	}
 	
 	//cout << "awake count " << this->awakeCount << "\n";
@@ -140,7 +140,7 @@ void Game::render() {
 	
 	//Render all of the game objects
 	for (auto & gameObject : gameObjects) {
-		Game::textureManager.render(&gameObject);
+		Game::textureManager.render(gameObject);
 	}
 
 	Game::textureManager.present();
@@ -230,7 +230,7 @@ void Game::buildLevel(string levelId)
 				gameObject = Game::gameObjectManager.buildGameObject(levelObject->gameObjectId, physicsWorld,
 					x, y, levelObject->angleAdjustment);
 
-				this->gameObjects.push_back(*gameObject);
+				this->gameObjects.push_back(gameObject);
 
 				//Use the first level object found to determine and store the tile width and height for the map
 				if (level->tileHeight == 0 and level->tileWidth == 0)
@@ -301,7 +301,7 @@ void Game::testBlocks(SDL_Event* event, b2World* physicsWorld)
 	gameObject->definition->angularDamping = 0;
 	gameObject->physicsBody = Game::gameObjectManager.buildB2Body(gameObject->definition, physicsWorld);
 
-	this->gameObjects.push_back(*gameObject);
+	this->gameObjects.push_back(gameObject);
 
 }
 

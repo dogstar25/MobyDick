@@ -64,8 +64,8 @@ bool TextureManager::render(GameObject* gameObject)
 		SDL_Rect *textureSourceRect = NULL;
 		if (gameObject->definition->isAnimated) {
 
-			texure = gameObject->animations[gameObject->currentAnimationState].texture;
-			textureSourceRect = &gameObject->animations[gameObject->currentAnimationState].currentTextureAnimationSrcRect;
+			texure = gameObject->definition->animations[gameObject->currentAnimationState]->texture;
+			textureSourceRect = &gameObject->definition->animations[gameObject->currentAnimationState]->currentTextureAnimationSrcRect;
 		}
 		else {
 

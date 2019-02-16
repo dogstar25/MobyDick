@@ -56,13 +56,13 @@ GameObject* GameObjectManager::buildGameObject(string gameObjectId, b2World* phy
 	}
 
 	//build the animation objects
+	/*
 	for (auto & gameObjectDefinitionAnimation : gameObjectDefinition->animations) {
 		
 		gameObject->animations[gameObjectDefinitionAnimation.second.id] = gameObjectDefinitionAnimation.second;
 		
 	}
-
-	float32 size = sizeof(gameObject->animations);
+	*/
 
 	return gameObject;
 
@@ -258,7 +258,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 				int frames = animItr["frames"].asInt();
 				float speed = animItr["speed"].asFloat();
 				animation = buildAnimation(gameObjectDefinition, id, texture, frames, speed);
-				gameObjectDefinition->animations[id] = *animation;
+				gameObjectDefinition->animations[id] = animation;
 			}
 		}
 
