@@ -64,10 +64,8 @@ void LevelManager::loadLevel(string levelId)
 			LevelObject levelObject = *determineTile(x, y, surface);
 
 			//Add gameObject to array
-			//this->levels[levelId].levelObjects.push_back(*levelObject);
 			this->levels[levelId]->levelObjects[x][y] = levelObject;
 		}
-
 	}
 
 	SDL_UnlockSurface(surface);

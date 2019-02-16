@@ -38,9 +38,6 @@ bool Game::init()
 			this->camera.frame.h, 
 			SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 
-		//Init Camera
-		this->camera.init(&this->worldBounds);
-
 		//Initialize the textture manager
 		this->textureManager.init(pWindow);
 
@@ -62,13 +59,22 @@ bool Game::init()
 		
 		PlayerObject* playerObject = 
 			(PlayerObject*)Game::gameObjectManager.buildGameObject("SPACESHIP1", this->physicsWorld, 5, 5);
-
 		this->player = (PlayerObject*)playerObject;
 		this->player->direction = 0;
 		this->player->strafe = 0;
-		playerObject->currentAnimationState = "RUN";
+		playerObject->currentAnimationState = "IDLE";
 		
-		//SDL_ShowCursor(false);
+		SDL_ShowCursor(false);
+		SDL_SetRelativeMouseMode(SDL_TRUE);
+
+		//Load level 1
+		Game::levelManager.loadLevel("TX_LEVEL1");
+		this->buildLevel("TX_LEVEL1");
+
+		this->initWorldBounds();
+
+		//Init Camera
+		this->camera.init(&this->worldBounds);
 
 		//set camera to center on player object
 		this->camera.setPosition((this->player->physicsBody->GetPosition().x *  Game::config.scaleFactor) -
@@ -76,33 +82,20 @@ bool Game::init()
 								 (this->player->physicsBody->GetPosition().y *  Game::config.scaleFactor) -
 									(camera.frame.h / 2));
 
+		//Initialize the clock object
+		clock.init();
+
 		bRunning = true;
 
 	}
 
-	//Initialize the clock object
-	clock.init();
 
-	//Load level 1
-	Game::levelManager.loadLevel("TX_LEVEL1");
-	this->buildLevel("TX_LEVEL1");
-	
 	//Add a few objects to the world
-	
 	GameObject *gameObject=nullptr;
 	gameObject = Game::gameObjectManager.buildGameObject("BOWMAN", this->physicsWorld, 1, 1);
 	this->gameObjects.push_back(*gameObject);
-	/*
-	gameObject = Game::gameObjectManager.buildGameObject("ROCK", this->physicsWorld);
-	this->gameObjects.push_back(*gameObject);
 
-	gameObject = Game::gameObjectManager.buildGameObject("GROUND1", this->physicsWorld);
-	this->gameObjects.push_back(*gameObject);
-
-	gameObject = Game::gameObjectManager.buildGameObject("ROCK", this->physicsWorld);
-	this->gameObjects.push_back(*gameObject);
-	*/
-	gameObject = Game::gameObjectManager.buildGameObject("SWORDLADY", this->physicsWorld, 2, 2);
+	gameObject = Game::gameObjectManager.buildGameObject("SWORDLADY", this->physicsWorld, 12, 12);
 	gameObject->currentAnimationState = "IDLE";
 	this->gameObjects.push_back(*gameObject);
 	
@@ -179,10 +172,6 @@ bool Game::getConfig()
 	this->config.scaleFactor = root["physics"]["box2dScale"].asFloat();
 	this->config.mouseSensitivity = root["mouseSensitivity"].asFloat();
 
-	this->worldBounds.x = 0;
-	this->worldBounds.y = 0;
-	this->worldBounds.w = root["world"]["width"].asInt();
-	this->worldBounds.h = root["world"]["height"].asInt();
 	this->camera.frame.w = root["camera"]["width"].asInt();
 	this->camera.frame.h = root["camera"]["height"].asInt();
 
@@ -210,7 +199,8 @@ void Game::handleEvents() {
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			this->testBlocks(&event, this->physicsWorld);
+			//this->testBlocks(&event, this->physicsWorld);
+			std::cout << "FPS is " << Game::clock.fps << "\n";
 			break;
 		case SDL_MOUSEMOTION:
 			this->player->handlePlayerMovementEvent(&event);
@@ -222,14 +212,9 @@ void Game::handleEvents() {
 	}
 }
 
-void Game::addToActiveGameOjectArray(GameObject* gameObject)
-{
-	this->gameObjects.push_back(*gameObject);
-}
-
 void Game::buildLevel(string levelId)
 {
-
+	this->currentLevel = levelId;
 	Level* level = Game::levelManager.levels[levelId];
 	LevelObject* levelObject;
 	GameObject* gameObject;
@@ -246,12 +231,35 @@ void Game::buildLevel(string levelId)
 					x, y, levelObject->angleAdjustment);
 
 				this->gameObjects.push_back(*gameObject);
+
+				//Use the first level object found to determine and store the tile width and height for the map
+				if (level->tileHeight == 0 and level->tileWidth == 0)
+				{
+					level->tileWidth = gameObject->definition->xSize * Game::config.scaleFactor;
+					level->tileHeight = gameObject->definition->ySize * Game::config.scaleFactor;
+				}
 			}
 
 		}
 	}
 }
 
+void Game::initWorldBounds()
+{
+	int width, height;
+
+	width = this->levelManager.levels[this->currentLevel]->width *
+		this->levelManager.levels[this->currentLevel]->tileWidth;
+
+	height = this->levelManager.levels[this->currentLevel]->height *
+		this->levelManager.levels[this->currentLevel]->tileHeight;
+
+	this->worldBounds.x = 0;
+	this->worldBounds.y = 0;
+	this->worldBounds.w = width;
+	this->worldBounds.h = height;
+
+}
 
 void Game::testBlocks(SDL_Event* event, b2World* physicsWorld)
 {

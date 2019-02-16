@@ -41,12 +41,12 @@ public:
 	void handleEvents();
 	void clean();
 	void testBlocks(SDL_Event*, b2World*);
-	void addToActiveGameOjectArray(GameObject*);
 	void buildLevel(string);
+	void initWorldBounds();
 
 	bool running() { return bRunning; }
-	int fps = 0,
-		awakeCount;
+	int fps, awakeCount;
+	string currentLevel;
 
 	static Clock clock;
 	static Util util;

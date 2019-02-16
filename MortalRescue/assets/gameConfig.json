@@ -1,14 +1,10 @@
 {
   "gameTitle": "MortalRescue",
-  "world": {
-    "width": 2560,
-    "height": 1440
-  },
   "camera": {
     "width": 1280,
     "height": 720
   },
-  "mouseSensitivity": 0.05,
+  "mouseSensitivity": 0.070,
   "physics": {
     "gravity": {
       "x": 0.0,

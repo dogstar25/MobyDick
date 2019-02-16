@@ -39,8 +39,12 @@ GameObject* GameObjectManager::buildGameObject(string gameObjectId, b2World* phy
 	}
 
 	//Gameobject must be passed in it's original position
-	gameObject->definition->initPosX = xMapPos * gameObject->definition->xSize;
-	gameObject->definition->initPosY = yMapPos * gameObject->definition->ySize;
+	//Multiple the size times the x,y position in the map grid that represents the world
+	//When buildB2Body executes, it will build the box2d object centered on the x,y position we give,
+	//so att half of the object size so that the object will be placed with its top left corner in the grid location
+	//we specify
+	gameObject->definition->initPosX = (xMapPos * gameObject->definition->xSize) + (gameObject->definition->xSize/2);
+	gameObject->definition->initPosY = (yMapPos * gameObject->definition->ySize) + (gameObject->definition->ySize/2);
 
 	//Get pointer to the texture
 	gameObject->staticTexture = Game::textureManager.getTexture(gameObjectDefinition->texture)->texture;
@@ -209,8 +213,6 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		gameObjectDefinition->playerSpeed = itr["playerSpeed"].asDouble();
 		gameObjectDefinition->xSize = itr["xSize"].asFloat();
 		gameObjectDefinition->ySize = itr["ySize"].asFloat();
-		gameObjectDefinition->initPosX = itr["initPosX"].asInt();
-		gameObjectDefinition->initPosY = itr["initPosY"].asInt();
 		gameObjectDefinition->texture = itr["texture"].asString();
 
 		//If this has a textture then get and store it
