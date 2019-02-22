@@ -27,6 +27,8 @@ void GameObjectAnimation::animate(GameObject* gameObject)
 
 		rect.x = this->animationFramePositions[currentAnimFrame].x;
 		rect.y = this->animationFramePositions[currentAnimFrame].y;
+
+		//todo:find way to not have to pass in gameObject for this
 		rect.w = gameObject->definition->xSize * Game::config.scaleFactor;
 		rect.h = gameObject->definition->ySize * Game::config.scaleFactor;
 

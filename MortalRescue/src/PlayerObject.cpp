@@ -1,13 +1,42 @@
-#include <math.h>
-
 #include "game.h"
 #include "PlayerObject.h"
+#include "Weapon.h"
+
+#include <math.h>
 
 void PlayerObject::handlePlayerMovementEvent(SDL_Event* event)
 {
 
-	if (event->type == SDL_KEYUP) {
+	int count;
+	int* mouseXChg = NULL, *mouseYChg = NULL;
+	//const Uint8 *state;
 
+
+	//SDL_PumpEvents();
+	const Uint8 *state = SDL_GetKeyboardState(&count);
+	this->direction = 0;
+	this->strafe = 0;
+
+	if (state[SDL_SCANCODE_W])
+	{
+		this->direction = -1;
+	}
+	if (state[SDL_SCANCODE_S])
+	{
+		this->direction = 1;
+	}
+	if (state[SDL_SCANCODE_A])
+	{
+		this->strafe = 1;
+	}
+	if (state[SDL_SCANCODE_D])
+	{
+		this->strafe = -1;
+	}
+
+/*
+	if (event->type == SDL_KEYUP) {
+		
 		switch (event->key.keysym.sym) {
 		case SDLK_w:
 			//this->yDirection = 0;
@@ -24,44 +53,39 @@ void PlayerObject::handlePlayerMovementEvent(SDL_Event* event)
 			break;
 		}
 	}
-
+	
 	if (event->type == SDL_KEYDOWN) {
 		switch (event->key.keysym.sym) {
 		case SDLK_w:
 			//this->yDirection = -1;
-			this->direction = 1;
+			this->direction = -1;
 			break;
 		case SDLK_s:
 			//this->yDirection = 1;
-			this->direction = -1;
+			this->direction = 1;
 			break;
 		case SDLK_a:
 			//this->xDirection = -1;
-			this->strafe = -1;
+			this->strafe = 1;
 			break;
 		case SDLK_d:
 			//this->xDirection = 1;
-			this->strafe = +1;
+			this->strafe = -1;
 			break;
 		}
 	}
+*/
 
-	if (event->type == SDL_MOUSEMOTION) {
+	//method 1
+	float angularVelocity = event->motion.xrel * Game::config.mouseSensitivity;
+	this->physicsBody->SetAngularVelocity(angularVelocity);
 
-		//method 1
-		float angularVelocity = event->motion.xrel * Game::config.mouseSensitivity;
+	//method 2
+	//float desiredAngle = atan2f(-event->motion.x, event->motion.y);
+	//this->physicsBody->SetTransform(this->physicsBody->GetPosition(), desiredAngle);
 
-		this->physicsBody->SetAngularVelocity(angularVelocity);
-
-		//method 2
-		//float desiredAngle = atan2f(-event->motion.x, -event->motion.y);
-		//this->physicsBody->SetTransform(this->physicsBody->GetPosition(), desiredAngle);
-
-		//std::cout << "xmouse is " << event->motion.x << " ymouse is " << event->motion.y << "\n";
-		//std::cout << "player angle is " << this->physicsBody->GetAngle() * 180 / M_PI << "\n";
-
-	}
 }
+
 
 void PlayerObject::updatePlayer()
 {
@@ -80,32 +104,20 @@ void PlayerObject::updatePlayerMovement()
 	*/
 
 	float acceleration = this->definition->playerSpeed;
-	//float acceleration = this->definition.playerSpeed + (game->awakeCount * .05);
-	//float velocity = min((float)0.1, (float)(acceleration * (Game::clock.time_diff.count() * 100000)));
 	float velocity = acceleration;
-	//float velocity = acceleration * (Game::clock.time_diff.count() * 100000);
-	//cout << "time_diff is " << Game::clock.time_diff.count() << "\n";
-	//float velocity = this->definition.playerSpeed +(game->awakeCount * .02);
-
-
-	//float32 x = velocity * this->xDirection;
-	//float32 y = velocity * this->yDirection;
 
 	//Calc direction XY
-	float dx = cos(this->physicsBody->GetAngle()) * velocity * this->direction; // X-component.
-	float dy = sin(this->physicsBody->GetAngle()) * velocity * this->direction; // Y-component.
+	//float dx = cos(this->physicsBody->GetAngle()) * velocity * this->direction; // X-component.
+	//float dy = sin(this->physicsBody->GetAngle()) * velocity * this->direction; // Y-component.
+	float dx = cos(1.5708) * velocity * this->direction; // X-component.
+	float dy = sin(1.5708) * velocity * this->direction; // Y-component.
 
 	//calc strafe xy and add direction and strafe vectors
-	//1.578 is 90 degrees
-	float sx = cos(this->physicsBody->GetAngle() + 1.5708) * velocity * this->strafe; // X-component.
-	float sy = sin(this->physicsBody->GetAngle() + 1.5708) * velocity * this->strafe; // Y-component.
-
-
-
-	//posX += Math.cos(rotation) *  forwardSpeed + Math.sin(rotation) * strafeSpeed;
-	//posY -= -Math.cos(rotation) * strafeSpeed + Math.sin(rotation) * forwardSpeed;
-	//x = (cos(this->physicsBody->GetAngle()) *  velocity + sin(this->physicsBody->GetAngle())) * this->xDirection;
-	//y = sin(this->physicsBody->GetAngle()) * this->yDirection + sin(this->physicsBody->GetAngle()) * velocity * -1;
+	//1.5708 is 90 degrees
+	//float sx = cos(this->physicsBody->GetAngle() + 1.5708) * velocity * this->strafe; // X-component.
+	//float sy = sin(this->physicsBody->GetAngle() + 1.5708) * velocity * this->strafe; // Y-component.
+	float sx = cos((1.5708) + 1.5708) * velocity * this->strafe; // X-component.
+	float sy = sin((1.5708) + 1.5708) * velocity * this->strafe; // Y-component.
 
 	//Create the vector for forward/backward  direction
 	b2Vec2 directionVector = b2Vec2(dx, dy);
@@ -119,12 +131,30 @@ void PlayerObject::updatePlayerMovement()
 
 	vec2 = (directionVector + strafeVector);
 
+	//Update Animation state
+	if (vec2.Length() > 0)
+	{
+		this->currentAnimationState = "RUN";
+	}
+	else
+	{
+		this->currentAnimationState = "IDLE";
+	}
+
 	//this->physicsBody->SetTransform(vec3, this->physicsBody->GetAngle());
 	this->physicsBody->SetLinearVelocity(vec2);
 
 	//this->physicsBody->ApplyLinearImpulseToCenter(vec2, true);
 
-	//std:cout << "strafevector length is " << strafeVector.Length() << "\n";
+	//std:cout << "angle is " << this->physicsBody->GetAngle() << "\n";
 
+
+}
+
+void PlayerObject::addWeapon(string bulletGameObjectId, float xWeaponOffsetPct, float yWeaponOffsetPct)
+{
+
+	this->weapon = new Weapon();
+	this->weapon->init(bulletGameObjectId, this, xWeaponOffsetPct, yWeaponOffsetPct);
 
 }

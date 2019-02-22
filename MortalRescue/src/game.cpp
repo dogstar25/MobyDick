@@ -6,6 +6,7 @@
 #include "GameObject.h"
 #include "Util.h"
 #include "Camera.h"
+#include "Weapon.h"
 
 
 Clock Game::clock;
@@ -16,6 +17,8 @@ LevelManager Game::levelManager;
 Config Game::config;
 Camera Game::camera;
 SDL_Rect Game::worldBounds;
+b2World* Game::physicsWorld;
+vector<GameObject*> Game::gameObjects;
 
 using namespace chrono_literals;
 
@@ -58,12 +61,16 @@ bool Game::init()
 		*/
 		
 		PlayerObject* playerObject = 
-			(PlayerObject*)Game::gameObjectManager.buildGameObject("SPACESHIP1", this->physicsWorld, 5, 5);
+			(PlayerObject*)Game::gameObjectManager.buildGameObject("GINA_64", 5, 5);
 		this->player = (PlayerObject*)playerObject;
 		this->player->direction = 0;
 		this->player->strafe = 0;
 		playerObject->currentAnimationState = "IDLE";
+		// Add a weapon that will have bullet origin that is located half way
+		// in the X position and halfway in the Y position from this objects origin
+		playerObject->addWeapon("BULLET1", .50, .50);
 		
+		//Set the mouse mode
 		SDL_ShowCursor(false);
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 
@@ -92,13 +99,17 @@ bool Game::init()
 
 	//Add a few objects to the world
 	GameObject *gameObject=nullptr;
-	gameObject = Game::gameObjectManager.buildGameObject("BOWMAN", this->physicsWorld, 1, 1);
+	gameObject = Game::gameObjectManager.buildGameObject("BOWMAN", 1, 1);
 	this->gameObjects.push_back(gameObject);
 
-	gameObject = Game::gameObjectManager.buildGameObject("SWORDLADY", this->physicsWorld, 12, 12);
+	gameObject = Game::gameObjectManager.buildGameObject("SWORDLADY", 12, 12);
 	gameObject->currentAnimationState = "IDLE";
 	this->gameObjects.push_back(gameObject);
-	
+
+	gameObject = Game::gameObjectManager.buildGameObject("BULLET1", 10, 10);
+	gameObject->currentAnimationState = "ACTIVE";
+	this->gameObjects.push_back(gameObject);
+
 	return true;
 }
 
@@ -115,12 +126,8 @@ void Game::update() {
 
 	//Update all of the other non player related update chores for each game object
 	this->awakeCount=0;
-	for (auto & gameObject : gameObjects) {
-
-		//count the number of awake objects - later to be used to adjust the players objects force/velocity
-		if (gameObject->physicsBody->IsAwake()) {
-			this->awakeCount++;
-		}
+	for (auto & gameObject : gameObjects)
+	{
 
 		gameObject->update();
 	}
@@ -181,6 +188,7 @@ bool Game::getConfig()
 void Game::handleEvents() {
 	SDL_Event event;
 	if (SDL_PollEvent(&event)) {
+
 		switch (event.type) {
 		case SDL_QUIT:
 			bRunning = false;
@@ -188,7 +196,8 @@ void Game::handleEvents() {
 
 		case SDL_KEYDOWN:
 		case SDL_KEYUP:
-			if ((char)event.key.keysym.sym == SDLK_ESCAPE)
+		case SDL_MOUSEMOTION:
+			if ((char)event.key.keysym.sym == SDLK_ESCAPE && event.type == SDL_KEYDOWN)
 			{
 				event.type = SDL_QUIT;
 				SDL_PushEvent(&event);
@@ -200,12 +209,11 @@ void Game::handleEvents() {
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			//this->testBlocks(&event, this->physicsWorld);
+			this->player->weapon->fire();
 			std::cout << "FPS is " << Game::clock.fps << "\n";
+			std::cout << "bodycount is " << Game::gameObjectManager.box2dBodyCount << "\n";
+			std::cout << "gameobject count is " << Game::gameObjects.size() << "\n";
 			break;
-		case SDL_MOUSEMOTION:
-			this->player->handlePlayerMovementEvent(&event);
-			break;
-
 		default:
 			break;
 		}
@@ -227,8 +235,8 @@ void Game::buildLevel(string levelId)
 			if (level->levelObjects[x][y].gameObjectId.empty() == false)
 			{
 				levelObject = &level->levelObjects[x][y];
-				gameObject = Game::gameObjectManager.buildGameObject(levelObject->gameObjectId, physicsWorld,
-					x, y, levelObject->angleAdjustment);
+				gameObject = Game::gameObjectManager.buildGameObject(levelObject->gameObjectId,	
+								x, y, levelObject->angleAdjustment);
 
 				this->gameObjects.push_back(gameObject);
 
@@ -280,8 +288,8 @@ void Game::testBlocks(SDL_Event* event, b2World* physicsWorld)
 	gameObject->definition->description = "block";
 	//gameObject->xSize = Game::util.generateRandomNumber(1,30) * .1;
 	//gameObject->ySize = Game::util.generateRandomNumber(1, 30) * .1;
-	gameObject->definition->xSize = 1;
-	gameObject->definition->ySize = 1;
+	gameObject->definition->xSize = .15;
+	gameObject->definition->ySize = .15;
 
 	gameObject->definition->initPosX = event->button.x / Game::config.scaleFactor;
 	gameObject->definition->initPosY = event->button.y / Game::config.scaleFactor;
@@ -293,19 +301,17 @@ void Game::testBlocks(SDL_Event* event, b2World* physicsWorld)
 	gameObject->staticTexture = Game::textureManager.getTexture(textureId)->texture;
 
 	gameObject->definition->isPhysicsObject = true;
-	gameObject->definition->physicsType = "B2_STATIC";
-	//gameObject->definition.physicsType = "B2_DYNAMIC";
+	//gameObject->definition->physicsType = "B2_STATIC";
+	gameObject->definition->physicsType = "B2_DYNAMIC";
 	gameObject->definition->friction = .5;
 	gameObject->definition->density = 10.0;
 	gameObject->definition->linearDamping = 0;
 	gameObject->definition->angularDamping = 0;
-	gameObject->physicsBody = Game::gameObjectManager.buildB2Body(gameObject->definition, physicsWorld);
+	gameObject->physicsBody = Game::gameObjectManager.buildB2Body(gameObject->definition);
 
 	this->gameObjects.push_back(gameObject);
 
 }
-
-
 
 
 

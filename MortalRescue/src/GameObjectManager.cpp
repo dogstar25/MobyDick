@@ -19,7 +19,7 @@ bool GameObjectManager::init()
 	return true;
 }
 
-GameObject* GameObjectManager::buildGameObject(string gameObjectId, b2World* physicsWorld, int xMapPos, int yMapPos,
+GameObject* GameObjectManager::buildGameObject(string gameObjectId, int xMapPos, int yMapPos,
 											float angleAdjust)
 {
 
@@ -38,10 +38,11 @@ GameObject* GameObjectManager::buildGameObject(string gameObjectId, b2World* phy
 		gameObject->angleAdjustment = angleAdjust;
 	}
 
-	//Gameobject must be passed in it's original position
-	//Multiple the size times the x,y position in the map grid that represents the world
+	//Gameobject must be passed in it's starting position
+	//Multiply the size times the x,y position in the map grid that represents the world
 	//When buildB2Body executes, it will build the box2d object centered on the x,y position we give,
-	//so att half of the object size so that the object will be placed with its top left corner in the grid location
+	// We need it centered on the grid location
+	//so add half of the object size so that the object will be placed with its top left corner in the grid location
 	//we specify
 	gameObject->definition->initPosX = (xMapPos * gameObject->definition->xSize) + (gameObject->definition->xSize/2);
 	gameObject->definition->initPosY = (yMapPos * gameObject->definition->ySize) + (gameObject->definition->ySize/2);
@@ -52,7 +53,7 @@ GameObject* GameObjectManager::buildGameObject(string gameObjectId, b2World* phy
 	//Build the box2d object
 	if (gameObjectDefinition->isPhysicsObject == true)
 	{
-		gameObject->physicsBody = buildB2Body(gameObjectDefinition, physicsWorld);
+		gameObject->physicsBody = buildB2Body(gameObjectDefinition);
 	}
 
 	//build the animation objects
@@ -131,7 +132,7 @@ GameObjectAnimation* GameObjectManager::buildAnimation(GameObjectDefinition* gam
 }
 
 
-b2Body * GameObjectManager::buildB2Body(GameObjectDefinition* gameObjectDefinition, b2World* physicsWorld)
+b2Body * GameObjectManager::buildB2Body(GameObjectDefinition* gameObjectDefinition)
 {
 	b2BodyDef bodyDef;
 
@@ -149,7 +150,7 @@ b2Body * GameObjectManager::buildB2Body(GameObjectDefinition* gameObjectDefiniti
 	}
 
 	bodyDef.position.Set(gameObjectDefinition->initPosX , gameObjectDefinition->initPosY);
-	b2Body* body = physicsWorld->CreateBody(&bodyDef);
+	b2Body* body = Game::physicsWorld->CreateBody(&bodyDef);
 
 	b2PolygonShape box;
 	float32 xSize = gameObjectDefinition->xSize / 2; //SetAsBox takes half-widths
@@ -167,14 +168,14 @@ b2Body * GameObjectManager::buildB2Body(GameObjectDefinition* gameObjectDefiniti
 
 	// Override the default friction.
 	fixtureDef.friction = gameObjectDefinition->friction;
-	fixtureDef.restitution = .2;
+	fixtureDef.restitution = 1;
 
 	// Add the shape to the body.
 	body->CreateFixture(&fixtureDef);
 
 	body->SetLinearDamping(gameObjectDefinition->linearDamping);
 	body->SetAngularDamping(gameObjectDefinition->angularDamping);
-	physicsWorld->SetAutoClearForces(true);
+	Game::physicsWorld->SetAutoClearForces(true);
 
 	/*
 	if (gameObjectDefinition->id != "SPACESHIP1")
@@ -183,6 +184,7 @@ b2Body * GameObjectManager::buildB2Body(GameObjectDefinition* gameObjectDefiniti
 		body->SetAwake(false);
 	}
 	*/
+	this->box2dBodyCount++;
 	return body;
 
 }

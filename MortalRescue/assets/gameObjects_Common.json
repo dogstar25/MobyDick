@@ -116,13 +116,66 @@
         "friction": 0.0,
         "density": 5.5,
         "linearDamping": 0.1,
-        "angularDamping": 0.5
+        "angularDamping": 20.5
       },
       "texture": "TX_SPACESHIP1",
       "xSize": 1.28,
       "ySize": 1.28,
-      "playerSpeed": 0.3
+      "playerSpeed": 10.1
+    },
+    {
+      "id": "BULLET1",
+      "description": "Bullet 1",
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "density": 5.5,
+        "linearDamping": 0.0,
+        "angularDamping": 10.0
+      },
+      "texture": "TX_BULLET1",
+      "xSize": 0.24,
+      "ySize": 0.12,
+      "animations": [
+        {
+          "id": "ACTIVE",
+          "texture": "TX_BULLLET1",
+          "speed": 0.02, //time in seconds for each frame. Lower the faster
+          "frames": 4
+        }
+      ]
+    },
+    {
+      "id": "GINA_64",
+      "description": "Gina 64",
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "density": 5.5,
+        "linearDamping": 0.2,
+        "angularDamping": 10.0
+      },
+      "xSize": 2.56,
+      "ySize": 2.56,
+      "playerSpeed": 7.5,
+      "animations": [
+        {
+          "id": "RUN",
+          "texture": "TX_GINA_64_RUN",
+          "speed": 0.10, //time in seconds for each frame. Lower the faster
+          "frames": 4
+        },
+        {
+          "id": "IDLE",
+          "texture": "TX_GINA_64_IDLE",
+          "speed": 0.10, //time in seconds for each frame. Lower the faster
+          "frames": 1
+        }
+
+      ]
     }
+
+
 
   ]
 }

@@ -1,5 +1,7 @@
 #include "Util.h"
+
 #include <SDL.h>
+
 #include <random>
 
 
@@ -35,6 +37,14 @@ SDL_Color Util::generateRandomColor()
 	return color;
 
 }
+
+float Util::radiansToDegrees(float angleInRadians)
+{
+	float angle = angleInRadians / M_PI * 180;
+	return angle;
+
+}
+
 
 Matrix::Matrix() {
 

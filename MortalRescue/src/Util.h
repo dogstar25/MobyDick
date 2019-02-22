@@ -7,8 +7,11 @@ class Util
 
 public:
 
+	
+
 	int generateRandomNumber(int min, int max);
 	SDL_Color generateRandomColor();
+	float radiansToDegrees(float angleInRadians);
 	
 
 

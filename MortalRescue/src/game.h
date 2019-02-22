@@ -56,6 +56,8 @@ public:
 	static Config config;
 	static Camera camera;
 	static SDL_Rect worldBounds;
+	static b2World* physicsWorld;
+	static vector<GameObject*> gameObjects;
 
 	
 private:
@@ -67,7 +69,7 @@ private:
 	float mouseSensitivity;
 
 	//Vector of all game objects
-	vector<GameObject*> gameObjects;
+	//vector<GameObject*> gameObjects;
 	PlayerObject* player;
 
 	//Game States
@@ -75,7 +77,7 @@ private:
 
 	//Box2d Physics
 	b2Vec2 gravity;
-	b2World* physicsWorld=nullptr;
+	//b2World* physicsWorld=nullptr;
 	float timeStep;
 	int velocityIterations,
 		positionIterations;

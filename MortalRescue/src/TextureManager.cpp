@@ -1,10 +1,10 @@
+#include "TextureManager.h"
+#include "game.h"
+
 #include <iostream>
 #include <fstream>
 #include <math.h>
 #include <list>
-
-#include "TextureManager.h"
-#include "game.h"
 
 
 

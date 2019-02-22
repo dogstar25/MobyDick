@@ -16,14 +16,15 @@ class GameObjectManager
 public:
 	
 	bool init();
-	b2Body* buildB2Body(GameObjectDefinition*, b2World*);
+	b2Body* buildB2Body(GameObjectDefinition*);
 	GameObjectAnimation * buildAnimation(GameObjectDefinition*, string, string, int, float);
-	GameObject * buildGameObject(string , b2World*, int, int, float=.0 );
+	GameObject * buildGameObject(string , int, int, float=.0 );
 	GameObjectDefinition* getGameObjectDefinition(string);
 	void load(string);
 
 	//Map of the definitions of all posible game objects in the game/level
 	map<string, GameObjectDefinition*> gameObjectDefinitions;
+	int box2dBodyCount;
 
 private:
 	

@@ -89,7 +89,28 @@
       "description": "Wall 1 End",
       "filename": "assets/wall1_end.png",
       "retainSurface": true
+    },
+    {
+      "id": "TX_BULLLET1",
+      "description": "Bullet 1",
+      "filename": "assets/bullet1.png",
+      "retainSurface": true
+    },
+    {
+      "id": "TX_GINA_64_RUN",
+      "description": "Gina Run 64",
+      "filename": "assets/gina_Run_64.png",
+      "retainSurface": true
+    },
+    {
+      "id": "TX_GINA_64_IDLE",
+      "description": "Gina Idle 64",
+      "filename": "assets/gina_Idle_64.png",
+      "retainSurface": true
     }
+
+
+
 
 
   ]

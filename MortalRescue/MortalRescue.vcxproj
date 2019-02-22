@@ -161,6 +161,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>C:\projects\Box2D;C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>Default</CompileAs>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -183,6 +184,7 @@
     <ClCompile Include="src\PlayerObject.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\Util.cpp" />
+    <ClCompile Include="src\Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
@@ -196,6 +198,7 @@
     <ClInclude Include="src\PlayerObject.h" />
     <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\Util.h" />
+    <ClInclude Include="src\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\gameObjects_Common.json" />
@@ -211,6 +214,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png" />
+    <Image Include="assets\gina_Idle_64.png" />
+    <Image Include="assets\gina_Run_64.png" />
     <Image Include="assets\level1.png" />
     <Image Include="assets\level_test.png" />
     <Image Include="assets\pistolLady128_Run.png" />
