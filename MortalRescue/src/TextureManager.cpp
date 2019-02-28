@@ -220,3 +220,19 @@ void TextureManager::drawPoly(b2Body* body)
 
 }
 
+void TextureManager::drawPoints(SDL_Point *points)
+{
+	SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
+	SDL_RenderDrawLines(this->pRenderer, points, 5);
+
+}
+
+void TextureManager::drawLine(b2Vec2 start, b2Vec2 end)
+{
+	SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
+	SDL_RenderDrawLine(pRenderer, start.x, start.y, end.x, end.y);
+
+}
+
+
+

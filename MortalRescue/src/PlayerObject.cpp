@@ -158,3 +158,15 @@ void PlayerObject::addWeapon(string bulletGameObjectId, float xWeaponOffsetPct, 
 	this->weapon->init(bulletGameObjectId, this, xWeaponOffsetPct, yWeaponOffsetPct);
 
 }
+
+PlayerObject::PlayerObject()
+{
+}
+
+PlayerObject::~PlayerObject()
+{
+
+	//int todd = 1;
+	delete weapon;
+
+}

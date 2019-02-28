@@ -24,6 +24,8 @@ public:
 	bool clear();
 	Texture* getTexture(string id);
 	void drawPoly(b2Body* body);
+	void drawPoints(SDL_Point *);
+	void drawLine(b2Vec2, b2Vec2);
 
 private:
 

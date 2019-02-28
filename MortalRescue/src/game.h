@@ -15,7 +15,13 @@
 #include "Util.h"
 #include "TextureManager.h"
 #include "GameObjectManager.h"
+#include "GameObjectContactListener.h"
 #include "Camera.h"
+#include "DebugDraw.h"
+
+//wow!
+//#include <gl/GL.h>
+
 
 //forward declations
 struct Clock;
@@ -31,8 +37,8 @@ using namespace std::chrono;
 class Game {
 
 public:
-	Game() {}
-	~Game() {}
+	Game();
+	~Game();
 
 	bool init();
 
@@ -47,6 +53,7 @@ public:
 	bool running() { return bRunning; }
 	int fps, awakeCount;
 	string currentLevel;
+	DebugDraw debugDraw;
 
 	static Clock clock;
 	static Util util;
@@ -72,12 +79,15 @@ private:
 	//vector<GameObject*> gameObjects;
 	PlayerObject* player;
 
+	//Collision contact listener
+	GameObjectContactListener gameObjectContactListner;
+
 	//Game States
 	bool bRunning;
 
 	//Box2d Physics
 	b2Vec2 gravity;
-	//b2World* physicsWorld=nullptr;
+	bool debugDrawMode;
 	float timeStep;
 	int velocityIterations,
 		positionIterations;

@@ -54,6 +54,9 @@ GameObject* GameObjectManager::buildGameObject(string gameObjectId, int xMapPos,
 	if (gameObjectDefinition->isPhysicsObject == true)
 	{
 		gameObject->physicsBody = buildB2Body(gameObjectDefinition);
+		//Add a reference to the gameObject itself to the physics object for collision helping logic later
+		gameObject->physicsBody->SetUserData(gameObject);
+
 	}
 
 	//build the animation objects
@@ -152,23 +155,46 @@ b2Body * GameObjectManager::buildB2Body(GameObjectDefinition* gameObjectDefiniti
 	bodyDef.position.Set(gameObjectDefinition->initPosX , gameObjectDefinition->initPosY);
 	b2Body* body = Game::physicsWorld->CreateBody(&bodyDef);
 
-	b2PolygonShape box;
-	float32 xSize = gameObjectDefinition->xSize / 2; //SetAsBox takes half-widths
-	float32 YSize = gameObjectDefinition->ySize / 2;
 
-	box.SetAsBox(xSize, YSize);
-	//std::cout << "BuildBox size for " << gameObjectDefinition->id << " was " << xSize << "\n";
+
+
+	b2Shape* shape;
+	b2PolygonShape box;
+	b2CircleShape circle;
+
+
+
+	//Temp - Circle shape for player
+	if (gameObjectDefinition->id == "GINA_64") {
+		
+		//circle.m_p.Set(2.0f, 3.0f);
+		circle.m_radius = .96f;
+		shape = &circle;
+		
+	}
+	else
+	{
+		//Box Shape
+		float32 xSize = gameObjectDefinition->xSize / 2; //SetAsBox takes half-widths
+		float32 YSize = gameObjectDefinition->ySize / 2;
+		box.SetAsBox(xSize, YSize);
+		shape = &box;
+		//std::cout << "BuildBox size for " << gameObjectDefinition->id << " was " << xSize << "\n";
+	}
 
 	// Define the body fixture.
 	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &box;
+	fixtureDef.shape = shape;
 
-	// Set the box density to be non-zero, so it will be dynamic.
+
+
+
+
+
+	// Misc properties
 	fixtureDef.density = gameObjectDefinition->density;
-
-	// Override the default friction.
 	fixtureDef.friction = gameObjectDefinition->friction;
-	fixtureDef.restitution = 1;
+	fixtureDef.restitution = .1;
 
 	// Add the shape to the body.
 	body->CreateFixture(&fixtureDef);
@@ -269,4 +295,15 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 	}
 }
 
+GameObjectManager::GameObjectManager() 
+{
 
+}
+
+GameObjectManager::~GameObjectManager() 
+{
+
+	//Big todo here
+	int todd = 0;
+
+}

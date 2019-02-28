@@ -14,7 +14,10 @@ using namespace std;
 class GameObjectManager
 {
 public:
-	
+	GameObjectManager();
+	~GameObjectManager();
+		
+
 	bool init();
 	b2Body* buildB2Body(GameObjectDefinition*);
 	GameObjectAnimation * buildAnimation(GameObjectDefinition*, string, string, int, float);

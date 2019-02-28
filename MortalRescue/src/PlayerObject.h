@@ -13,8 +13,10 @@ public:
 	//direction 1 is forward, -1 is backward
 	//strafe 1 is strafe left, -1 is strafe right
 
+	PlayerObject();
+	~PlayerObject();
+
 	void handlePlayerMovementEvent(SDL_Event* event);
-	void handlePlayerMovement();
 	void updatePlayer();
 	void updatePlayerMovement();
 	void addWeapon(string, float,float);

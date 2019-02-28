@@ -157,7 +157,7 @@
       },
       "xSize": 2.56,
       "ySize": 2.56,
-      "playerSpeed": 7.5,
+      "playerSpeed": 9.5,
       "animations": [
         {
           "id": "RUN",

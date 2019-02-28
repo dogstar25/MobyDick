@@ -33,7 +33,7 @@ void Weapon::fire()
 	bullet = Game::gameObjectManager.buildGameObject(this->bulletGameObjectId, 0, 0, 0);
 
 
-	float dx = this->weaponWieldingObject->physicsBody->GetTransform().p.x + cos((this->weaponWieldingObject->physicsBody->GetAngle()));
+	float dx = this->weaponWieldingObject->physicsBody->GetTransform().p.x + cos(this->weaponWieldingObject->physicsBody->GetAngle());
 	float dy = this->weaponWieldingObject->physicsBody->GetTransform().p.y + sin(this->weaponWieldingObject->physicsBody->GetAngle());
 
 	b2Vec2 positionVector = b2Vec2(dx, dy);
@@ -43,7 +43,7 @@ void Weapon::fire()
 	b2Vec2 velocityVector = b2Vec2(dx, dy);
 
 	float angle = this->weaponWieldingObject->physicsBody->GetAngle();
-	cout << "fire location" << positionVector.x << " " << positionVector.y << "\n";
+	//cout << "fire location" << positionVector.x << " " << positionVector.y << "\n";
 	//cout << "position" << positionVector.x << " " << positionVector.y << "\n";
 	
 

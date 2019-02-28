@@ -15,6 +15,9 @@ class GameObject
 {
 public:
 
+	GameObject();
+	~GameObject();
+
 	//Non Player Controlled methods
 	void update();
 
@@ -24,7 +27,6 @@ public:
 	float angleAdjustment; //When rendering this object, adjust the angle by this degree. Added for reusing wall textures
 
 	SDL_Texture* staticTexture; //Used if this is not an animated object
-	//map<string, GameObjectAnimation> animations;
 	b2Body* physicsBody;
 
 

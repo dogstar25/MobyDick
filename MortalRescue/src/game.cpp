@@ -46,20 +46,21 @@ bool Game::init()
 
 		// Construct a world object, which will hold and simulate the rigid bodies.
 		this->physicsWorld = new b2World(this->gravity);
+		//Add a collision contact listener
+		this->physicsWorld->SetContactListener(&this->gameObjectContactListner);
+
+		//Debug Mode
+		if (this->debugDrawMode == true)
+		{
+			this->debugDraw.SetFlags(DebugDraw::e_shapeBit);
+			this->physicsWorld->SetDebugDraw(&this->debugDraw);
+		}
 
 		//Initilaze the Game Object Manager
 		//This will hold all possible game objects that the game/level supports
 		this->gameObjectManager.init();
 
-		//Create the player object
-		/*
-		PlayerObject* playerObject = (PlayerObject*)Game::gameObjectManager.buildGameObject("PISTOLLADY", this->physicsWorld);
-		playerObject->currentAnimationState = "RUN";
-		this->player = (PlayerObject*)playerObject;
-		this->player->direction = 0;
-		this->player->strafe = 0;
-		*/
-		
+		//Create the main player object
 		PlayerObject* playerObject = 
 			(PlayerObject*)Game::gameObjectManager.buildGameObject("GINA_64", 5, 5);
 		this->player = (PlayerObject*)playerObject;
@@ -140,6 +141,7 @@ void Game::update() {
 
 void Game::render() {
 
+	//Clear teh graphics display
 	Game::textureManager.clear();
 
 	//render the player
@@ -150,6 +152,13 @@ void Game::render() {
 		Game::textureManager.render(gameObject);
 	}
 
+	//DebugDraw
+	if (this->debugDrawMode == true)
+	{
+		this->physicsWorld->DrawDebugData();
+	}
+
+	//Push all drawn things to the graphics display
 	Game::textureManager.present();
 
 }
@@ -175,6 +184,7 @@ bool Game::getConfig()
 	this->timeStep = root["physics"]["timeStep"].asFloat();
 	this->velocityIterations = root["physics"]["velocityIterations"].asInt();
 	this->positionIterations = root["physics"]["positionIterations"].asInt();
+	this->debugDrawMode = root["physics"]["debugDrawMode"].asBool(); 
 
 	this->config.scaleFactor = root["physics"]["box2dScale"].asFloat();
 	this->config.mouseSensitivity = root["mouseSensitivity"].asFloat();
@@ -313,6 +323,26 @@ void Game::testBlocks(SDL_Event* event, b2World* physicsWorld)
 
 }
 
+Game::~Game()
+{
 
+	printf("cleaning game\n");
+
+	//Delete SDL stuff
+	SDL_DestroyWindow(this->pWindow);
+	SDL_Quit();
+
+
+	//Delete box2d world - should delete all bodies and fixtures within
+	delete this->physicsWorld;
+
+}
+
+Game::Game()
+{
+
+	
+
+}
 
 

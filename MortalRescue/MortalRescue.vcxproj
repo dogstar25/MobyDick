@@ -174,8 +174,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\DebugDraw.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\GameObjectAnimation.cpp" />
+    <ClCompile Include="src\GameObjectContactListener.cpp" />
     <ClCompile Include="src\GameObjectManager.cpp" />
     <ClCompile Include="src\jsoncpp\jsoncpp.cpp" />
     <ClCompile Include="src\LevelManager.cpp" />
@@ -188,9 +190,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\DebugDraw.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\GameObjectAnimation.h" />
+    <ClInclude Include="src\GameObjectContactListener.h" />
     <ClInclude Include="src\GameObjectManager.h" />
     <ClInclude Include="src\jsoncpp\json\json-forwards.h" />
     <ClInclude Include="src\jsoncpp\json\json.h" />
@@ -214,6 +218,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png" />
+    <Image Include="assets\bullet1.png" />
     <Image Include="assets\gina_Idle_64.png" />
     <Image Include="assets\gina_Run_64.png" />
     <Image Include="assets\level1.png" />
