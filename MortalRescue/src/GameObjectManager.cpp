@@ -10,11 +10,12 @@
 #include <iostream>
 #include <fstream>
 
-
 bool GameObjectManager::init()
 {
 	load("gameObjects_Common");
 	load("gameObjects_Level1");
+	//load("gameObjects_Test");
+	
 
 	return true;
 }
@@ -22,11 +23,10 @@ bool GameObjectManager::init()
 GameObject* GameObjectManager::buildGameObject(string gameObjectId, int xMapPos, int yMapPos,
 											float angleAdjust)
 {
-
-	GameObject* gameObject=nullptr;
+	GameObject* gameObject;
 	GameObjectDefinition* gameObjectDefinition;
 
-	gameObject = new GameObject();
+	gameObject = new GameObject;
 	gameObjectDefinition = this->gameObjectDefinitions[gameObjectId];
 
 	gameObject->definition = gameObjectDefinition;
@@ -186,11 +186,6 @@ b2Body * GameObjectManager::buildB2Body(GameObjectDefinition* gameObjectDefiniti
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = shape;
 
-
-
-
-
-
 	// Misc properties
 	fixtureDef.density = gameObjectDefinition->density;
 	fixtureDef.friction = gameObjectDefinition->friction;
@@ -213,12 +208,6 @@ b2Body * GameObjectManager::buildB2Body(GameObjectDefinition* gameObjectDefiniti
 	this->box2dBodyCount++;
 	return body;
 
-}
-
-
-GameObjectDefinition * GameObjectManager::getGameObjectDefinition(string id)
-{
-	return this->gameObjectDefinitions[id];
 }
 
 void GameObjectManager::load(string gameObjectAssetsFilename)
@@ -303,7 +292,12 @@ GameObjectManager::GameObjectManager()
 GameObjectManager::~GameObjectManager() 
 {
 
-	//Big todo here
-	int todd = 0;
+	//clean and delete all of the game objects
+	/*
+	for (auto gameObjectDefinition : this->gameObjectDefinitions) {
 
+		delete gameObjectDefinition.second;
+	}
+	*/
+	this->gameObjectDefinitions.clear();
 }

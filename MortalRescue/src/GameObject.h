@@ -37,6 +37,9 @@ class GameObjectDefinition
 {
 public:
 
+	GameObjectDefinition();
+	~GameObjectDefinition();
+
 	float
 		xSize,
 		ySize,

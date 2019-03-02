@@ -14,9 +14,15 @@ class Texture;
 
 using namespace std;
 
+
 class TextureManager
 {
+
 public:
+
+	TextureManager();
+	~TextureManager();
+
 	bool init(SDL_Window*);
 	bool render(GameObject* gameObject);
 	bool render(b2Body* body);
@@ -26,6 +32,7 @@ public:
 	void drawPoly(b2Body* body);
 	void drawPoints(SDL_Point *);
 	void drawLine(b2Vec2, b2Vec2);
+	void clean();
 
 private:
 
@@ -42,6 +49,7 @@ public:
 
 	SDL_Texture* texture;
 	SDL_Surface* surface;
+	//unique_ptr<SDL_Surface> surface;
 
 };
 

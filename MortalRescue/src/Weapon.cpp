@@ -1,6 +1,7 @@
 #include "Weapon.h"
 #include "GameObject.h"
 #include "game.h"
+#include <string>
 
 
 
@@ -32,7 +33,6 @@ void Weapon::fire()
 	GameObject* bullet;
 	bullet = Game::gameObjectManager.buildGameObject(this->bulletGameObjectId, 0, 0, 0);
 
-
 	float dx = this->weaponWieldingObject->physicsBody->GetTransform().p.x + cos(this->weaponWieldingObject->physicsBody->GetAngle());
 	float dy = this->weaponWieldingObject->physicsBody->GetTransform().p.y + sin(this->weaponWieldingObject->physicsBody->GetAngle());
 
@@ -46,11 +46,14 @@ void Weapon::fire()
 	//cout << "fire location" << positionVector.x << " " << positionVector.y << "\n";
 	//cout << "position" << positionVector.x << " " << positionVector.y << "\n";
 	
-
+	cout << "good 2\n";
 	bullet->physicsBody->SetTransform(positionVector, angle);
 	bullet->physicsBody->SetLinearVelocity(velocityVector);
 	bullet->currentAnimationState = "ACTIVE";
 	Game::gameObjects.push_back(bullet);
+
+
+	cout << "good 3\n";
 
 
 }

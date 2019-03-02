@@ -152,24 +152,26 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\projects\Box2D;C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\projects\libraries\Visual Leak Detector\include;C:\projects\Box2D;C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>Default</CompileAs>
-      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <OmitFramePointers>false</OmitFramePointers>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\projects\Box2D\Build\bin\x86_64\Release;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <OptimizeReferences>false</OptimizeReferences>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D.lib;vld.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\projects\libraries\Visual Leak Detector\lib\Win64;C:\projects\Box2D\Build\bin\x86_64\Release;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -207,10 +209,12 @@
   <ItemGroup>
     <None Include="assets\gameObjects_Common.json" />
     <None Include="assets\gameObjects_Level1.json" />
+    <None Include="assets\gameObjects_Test.json" />
     <None Include="assets\level1.ase" />
     <None Include="assets\level_test.ase" />
     <None Include="assets\textureAssets.json" />
     <None Include="assets\gameConfig.json" />
+    <None Include="assets\textureAssets_Test.json" />
     <None Include="libpng16-16.dll" />
     <None Include="SDL2.dll" />
     <None Include="SDL2_image.dll" />

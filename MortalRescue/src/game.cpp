@@ -7,6 +7,7 @@
 #include "Util.h"
 #include "Camera.h"
 #include "Weapon.h"
+//#include "vld.h"
 
 
 Clock Game::clock;
@@ -99,17 +100,11 @@ bool Game::init()
 
 
 	//Add a few objects to the world
+	/*
 	GameObject *gameObject=nullptr;
 	gameObject = Game::gameObjectManager.buildGameObject("BOWMAN", 1, 1);
 	this->gameObjects.push_back(gameObject);
-
-	gameObject = Game::gameObjectManager.buildGameObject("SWORDLADY", 12, 12);
-	gameObject->currentAnimationState = "IDLE";
-	this->gameObjects.push_back(gameObject);
-
-	gameObject = Game::gameObjectManager.buildGameObject("BULLET1", 10, 10);
-	gameObject->currentAnimationState = "ACTIVE";
-	this->gameObjects.push_back(gameObject);
+	*/
 
 	return true;
 }
@@ -163,19 +158,13 @@ void Game::render() {
 
 }
 
-void Game::clean() {
-	printf("cleaning game\n");
-	//SDL_SetWindowFullscreen(pWindow, SDL_WINDOW_RESIZABLE);
-	SDL_DestroyWindow(this->pWindow);
-	SDL_Quit();
-}
-
 bool Game::getConfig()
 {
 	//Read file and stream it to a JSON object
 	Json::Value root;
 	ifstream ifs("assets/gameConfig.json");
 	ifs >> root;
+	//ifs.close();
 
 	//Get and store config values
 	this->gameTitle = root["gameTitle"].asString();
@@ -245,8 +234,8 @@ void Game::buildLevel(string levelId)
 			if (level->levelObjects[x][y].gameObjectId.empty() == false)
 			{
 				levelObject = &level->levelObjects[x][y];
-				gameObject = Game::gameObjectManager.buildGameObject(levelObject->gameObjectId,	
-								x, y, levelObject->angleAdjustment);
+				gameObject = Game::gameObjectManager.buildGameObject(levelObject->gameObjectId,
+					x, y, levelObject->angleAdjustment);
 
 				this->gameObjects.push_back(gameObject);
 
@@ -256,70 +245,38 @@ void Game::buildLevel(string levelId)
 					level->tileWidth = gameObject->definition->xSize * Game::config.scaleFactor;
 					level->tileHeight = gameObject->definition->ySize * Game::config.scaleFactor;
 				}
+
 			}
 
 		}
 	}
+
+	int todd = 1;
 }
 
 void Game::initWorldBounds()
 {
 	int width, height;
 
-	width = this->levelManager.levels[this->currentLevel]->width *
-		this->levelManager.levels[this->currentLevel]->tileWidth;
+	//If there is no level loaded then default the world size to be the same as the camera size
+	if (this->currentLevel.empty())
+	{
+		width = this->camera.frame.w;
+		height = this->camera.frame.h;
+	}
+	else
+	{
+		width = this->levelManager.levels[this->currentLevel]->width *
+			this->levelManager.levels[this->currentLevel]->tileWidth;
 
-	height = this->levelManager.levels[this->currentLevel]->height *
-		this->levelManager.levels[this->currentLevel]->tileHeight;
+		height = this->levelManager.levels[this->currentLevel]->height *
+			this->levelManager.levels[this->currentLevel]->tileHeight;
+	}
 
 	this->worldBounds.x = 0;
 	this->worldBounds.y = 0;
 	this->worldBounds.w = width;
 	this->worldBounds.h = height;
-
-}
-
-void Game::testBlocks(SDL_Event* event, b2World* physicsWorld)
-{
-
-	//std::cout << "Object created " << " \n";
-	//std::cout << "X " << event->button.x << " \n";
-	//std::cout << "Y " << event->button.y << " \n";
-
-	GameObject* gameObject;
-	gameObject = new GameObject();
-	gameObject->definition = new GameObjectDefinition();
-
-	//build id
-	int count = this->gameObjects.size();
-	string id = "block" + to_string(count);
-	gameObject->definition->id = id;
-
-	gameObject->definition->description = "block";
-	//gameObject->xSize = Game::util.generateRandomNumber(1,30) * .1;
-	//gameObject->ySize = Game::util.generateRandomNumber(1, 30) * .1;
-	gameObject->definition->xSize = .15;
-	gameObject->definition->ySize = .15;
-
-	gameObject->definition->initPosX = event->button.x / Game::config.scaleFactor;
-	gameObject->definition->initPosY = event->button.y / Game::config.scaleFactor;
-
-	//gameObject->isPrimitiveShape = true;
-	//gameObject->primativeColor = Game::util.generateRandomColor();
-
-	string textureId = "TX_TILE1";
-	gameObject->staticTexture = Game::textureManager.getTexture(textureId)->texture;
-
-	gameObject->definition->isPhysicsObject = true;
-	//gameObject->definition->physicsType = "B2_STATIC";
-	gameObject->definition->physicsType = "B2_DYNAMIC";
-	gameObject->definition->friction = .5;
-	gameObject->definition->density = 10.0;
-	gameObject->definition->linearDamping = 0;
-	gameObject->definition->angularDamping = 0;
-	gameObject->physicsBody = Game::gameObjectManager.buildB2Body(gameObject->definition);
-
-	this->gameObjects.push_back(gameObject);
 
 }
 
@@ -332,6 +289,19 @@ Game::~Game()
 	SDL_DestroyWindow(this->pWindow);
 	SDL_Quit();
 
+	//delete this->player;
+
+	//Free All textures
+	this->textureManager.clean();
+
+	//Delete all game Objects
+	for (auto gameObject : this->gameObjects) {
+
+		delete gameObject;
+
+	}
+	
+	this->gameObjects.clear();
 
 	//Delete box2d world - should delete all bodies and fixtures within
 	delete this->physicsWorld;

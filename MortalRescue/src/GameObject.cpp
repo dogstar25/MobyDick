@@ -19,7 +19,22 @@ GameObject::GameObject()
 
 GameObject::~GameObject()
 {
+}
 
+GameObjectDefinition::GameObjectDefinition()
+{
+}
+
+GameObjectDefinition::~GameObjectDefinition()
+{
+	
+	for (auto animation : this->animations)
+	{
+		delete animation.second;
+	}
+
+	this->animations.clear();
+	
 }
 
 

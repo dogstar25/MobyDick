@@ -106,6 +106,7 @@ bool TextureManager::loadTextures()
 	//Read file and stream it to a JSON object
 	Json::Value root;
 	ifstream ifs("assets/textureAssets.json");
+	//ifstream ifs("assets/textureAssets_Test.json");
 	ifs >> root;
 
 	//Get and store config values
@@ -233,6 +234,40 @@ void TextureManager::drawLine(b2Vec2 start, b2Vec2 end)
 	SDL_RenderDrawLine(pRenderer, start.x, start.y, end.x, end.y);
 
 }
+
+void TextureManager::clean()
+{
+
+	for (auto textureItem : this->textureMap)
+	{
+		if (textureItem.second != NULL) {
+
+			if (textureItem.second->surface != NULL) {
+				SDL_FreeSurface(textureItem.second->surface);
+			}
+			SDL_DestroyTexture(textureItem.second->texture);
+
+		}
+
+
+	}
+
+	this->textureMap.clear();
+
+}
+
+
+TextureManager::TextureManager()
+{
+
+}
+TextureManager::~TextureManager()
+{
+
+	
+}
+
+
 
 
 

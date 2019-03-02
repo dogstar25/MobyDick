@@ -1,8 +1,8 @@
 #pragma once
 #include <SDL.h>
-
+#include "Weapon.h"
 class GameObject;
-class Weapon;
+//class Weapon;
 
 class PlayerObject :public GameObject
 {
