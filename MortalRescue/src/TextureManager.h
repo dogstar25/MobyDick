@@ -49,7 +49,6 @@ public:
 
 	SDL_Texture* texture;
 	SDL_Surface* surface;
-	//unique_ptr<SDL_Surface> surface;
 
 };
 

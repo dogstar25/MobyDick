@@ -8,6 +8,7 @@
 
 //Forward declarations
 class GameObjectDefinition;
+class Weapon;
 
 using namespace std;
 
@@ -20,9 +21,15 @@ public:
 
 	//Non Player Controlled methods
 	void update();
+	void handlePlayerMovementEvent(SDL_Event* event);
+	void updatePlayer();
+	void updatePlayerMovement();
+	void addWeapon(string, float, float);
 
 	GameObjectDefinition* definition;
 
+	int direction, strafe;
+	Weapon * weapon;
 	string 	currentAnimationState;
 	float angleAdjustment; //When rendering this object, adjust the angle by this degree. Added for reusing wall textures
 
@@ -45,7 +52,7 @@ public:
 		ySize,
 		initPosX,
 		initPosY,
-		playerSpeed,
+		speed,
 		friction,
 		density,
 		linearDamping,

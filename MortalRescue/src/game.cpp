@@ -62,9 +62,13 @@ bool Game::init()
 		this->gameObjectManager.init();
 
 		//Create the main player object
+		/*
 		PlayerObject* playerObject = 
 			(PlayerObject*)Game::gameObjectManager.buildGameObject("GINA_64", 5, 5);
-		this->player = (PlayerObject*)playerObject;
+		*/
+		GameObject* playerObject =Game::gameObjectManager.buildGameObject("GINA_64", 5, 5);
+
+		this->player = playerObject;
 		this->player->direction = 0;
 		this->player->strafe = 0;
 		playerObject->currentAnimationState = "IDLE";
@@ -289,7 +293,7 @@ Game::~Game()
 	SDL_DestroyWindow(this->pWindow);
 	SDL_Quit();
 
-	//delete this->player;
+	delete this->player;
 
 	//Free All textures
 	this->textureManager.clean();

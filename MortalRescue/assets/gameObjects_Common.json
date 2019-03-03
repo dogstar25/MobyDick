@@ -6,7 +6,7 @@
       "texture": "TX_BOWMAN1",
       "xSize": 2.56,
       "ySize": 2.56,
-      "playerSpeed": 20.4, //change to walkforce
+      "speed": 20.4, //change to walkforce
       "physicsObject": {
         "type": "B2_DYNAMIC",
         "friction": 0.3,
@@ -20,7 +20,7 @@
       "description": "Player Pistol Lady",
       "xSize": 2.56,
       "ySize": 2.56,
-      "playerSpeed": 0.5, //change name to walkforce
+      "speed": 0.5, //change name to walkforce
       "physicsObject": {
         "type": "B2_DYNAMIC",
         "friction": 0.0,
@@ -40,7 +40,6 @@
     {
       "id": "ROCK",
       "description": "A Red Rock",
-      "playerSpeed": 0.5, //change name to walkforce
       "physicsObject": {
         "type": "B2_DYNAMIC",
         "friction": 0.3,
@@ -73,7 +72,7 @@
     {
       "id": "SWORDLADY",
       "description": "SwordLady",
-      "playerSpeed": 0.5, //change name to walkforce
+      "speed": 0.5,
       "xSize": 2.56, //meters which translates to 64px
       "ySize": 1.75,
       "physicsObject": {
@@ -105,7 +104,7 @@
       "texture": "TX_WALLBRICK_1",
       "xSize": 0,
       "ySize": 0,
-      "playerSpeed": 3
+      "speed": 3
 
     },
     {
@@ -121,7 +120,7 @@
       "texture": "TX_SPACESHIP1",
       "xSize": 1.28,
       "ySize": 1.28,
-      "playerSpeed": 10.1
+      "speed": 10.1
     },
     {
       "id": "BULLET1",
@@ -157,7 +156,7 @@
       },
       "xSize": 2.56,
       "ySize": 2.56,
-      "playerSpeed": 9.5,
+      "speed": 9.5,
       "animations": [
         {
           "id": "RUN",

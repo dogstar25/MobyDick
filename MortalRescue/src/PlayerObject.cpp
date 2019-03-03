@@ -167,6 +167,6 @@ PlayerObject::~PlayerObject()
 {
 
 	//int todd = 1;
-	delete weapon;
+	delete this->weapon;
 
 }

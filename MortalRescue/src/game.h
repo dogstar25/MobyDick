@@ -26,7 +26,7 @@
 //forward declations
 struct Clock;
 struct Config;
-class PlayerObject;
+//class PlayerObject;
 class LevelManager;
 class GameObject;
 
@@ -45,8 +45,6 @@ public:
 	void render();
 	void update();
 	void handleEvents();
-	void clean();
-	void testBlocks(SDL_Event*, b2World*);
 	void buildLevel(string);
 	void initWorldBounds();
 
@@ -77,7 +75,7 @@ private:
 
 	//Vector of all game objects
 	//vector<GameObject*> gameObjects;
-	PlayerObject* player;
+	GameObject* player;
 
 	//Collision contact listener
 	GameObjectContactListener gameObjectContactListner;

@@ -2,6 +2,7 @@
 #include "GameObjectManager.h"
 #include "TextureManager.h"
 #include "GameObject.h"
+#include "PlayerObject.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -23,10 +24,10 @@ bool GameObjectManager::init()
 GameObject* GameObjectManager::buildGameObject(string gameObjectId, int xMapPos, int yMapPos,
 											float angleAdjust)
 {
+	
 	GameObject* gameObject;
-	GameObjectDefinition* gameObjectDefinition;
-
 	gameObject = new GameObject;
+	GameObjectDefinition* gameObjectDefinition;
 	gameObjectDefinition = this->gameObjectDefinitions[gameObjectId];
 
 	gameObject->definition = gameObjectDefinition;
@@ -212,7 +213,6 @@ b2Body * GameObjectManager::buildB2Body(GameObjectDefinition* gameObjectDefiniti
 
 void GameObjectManager::load(string gameObjectAssetsFilename)
 {
-
 	//Read file and stream it to a JSON object
 	Json::Value root;
 	string filename = "assets/" + gameObjectAssetsFilename + ".json";
@@ -227,7 +227,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		gameObjectDefinition = new GameObjectDefinition();
 		gameObjectDefinition->id = itr["id"].asString();
 		gameObjectDefinition->description = itr["description"].asString();
-		gameObjectDefinition->playerSpeed = itr["playerSpeed"].asDouble();
+		gameObjectDefinition->speed = itr["speed"].asDouble();
 		gameObjectDefinition->xSize = itr["xSize"].asFloat();
 		gameObjectDefinition->ySize = itr["ySize"].asFloat();
 		gameObjectDefinition->texture = itr["texture"].asString();
