@@ -1,10 +1,14 @@
-#include "TextureManager.h"
-#include "game.h"
-
 #include <iostream>
 #include <fstream>
 #include <math.h>
 #include <list>
+
+#include <SDL_ttf.h>
+
+#include "TextureManager.h"
+#include "game.h"
+
+
 
 
 
@@ -111,9 +115,11 @@ bool TextureManager::loadTextures()
 
 	//Get and store config values
 	string filename, id;
+	int size;
 	bool retainSurface = false;
 	SDL_Surface* surface;
 	SDL_Texture* texture;
+	TTF_Font* fontObject;
 	Texture* textureObject;
 
 
@@ -141,7 +147,21 @@ bool TextureManager::loadTextures()
 			SDL_FreeSurface(surface);
 		}
 		
-		this->textureMap[id]= textureObject;
+		this->textureMap.emplace(id, textureObject);
+
+	}
+
+
+	//Loop through every font defined and store it in the main font map
+	for (auto itr : root["fonts"])
+	{
+		id = itr["id"].asString();
+		filename = itr["filename"].asString();
+		size = itr["size"].asInt();
+
+		TTF_Font* fontObject = TTF_OpenFont(filename.c_str(), size);
+
+		this->fontMap.emplace(id, fontObject);
 
 	}
 
@@ -159,6 +179,11 @@ Texture * TextureManager::getTexture(string id)
 	}
 
 	return textureObject;
+}
+
+TTF_Font* TextureManager::getFont(string id)
+{
+	return this->fontMap[id];
 }
 
 bool TextureManager::present()

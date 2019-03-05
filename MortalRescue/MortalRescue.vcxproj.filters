@@ -163,4 +163,7 @@
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\arial.ttf" />
+  </ItemGroup>
 </Project>
