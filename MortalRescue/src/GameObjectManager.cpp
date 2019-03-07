@@ -21,12 +21,12 @@ bool GameObjectManager::init()
 	return true;
 }
 
-GameObject* GameObjectManager::buildGameObject(string gameObjectId, int xMapPos, int yMapPos,
+unique_ptr<GameObject> GameObjectManager::buildGameObject(string gameObjectId, int xMapPos, int yMapPos,
 											float angleAdjust)
 {
 	
-	GameObject* gameObject;
-	gameObject = new GameObject;
+	unique_ptr<GameObject> gameObject;
+	gameObject = make_unique< GameObject>();
 	GameObjectDefinition* gameObjectDefinition;
 	gameObjectDefinition = this->gameObjectDefinitions[gameObjectId];
 
@@ -49,14 +49,14 @@ GameObject* GameObjectManager::buildGameObject(string gameObjectId, int xMapPos,
 	gameObject->definition->initPosY = (yMapPos * gameObject->definition->ySize) + (gameObject->definition->ySize/2);
 
 	//Get pointer to the texture
-	gameObject->staticTexture = Game::textureManager.getTexture(gameObjectDefinition->texture)->texture;
+	gameObject->staticTexture = Game::textureManager.getTexture(gameObjectDefinition->texture)->sdlTexture;
 
 	//Build the box2d object
 	if (gameObjectDefinition->isPhysicsObject == true)
 	{
 		gameObject->physicsBody = buildB2Body(gameObjectDefinition);
 		//Add a reference to the gameObject itself to the physics object for collision helping logic later
-		gameObject->physicsBody->SetUserData(gameObject);
+		gameObject->physicsBody->SetUserData(gameObject.get());
 
 	}
 
@@ -94,7 +94,7 @@ GameObjectAnimation* GameObjectManager::buildAnimation(GameObjectDefinition* gam
 	animation->speed = speed;
 
 	//Get pointer to textture
-	animation->texture = Game::textureManager.getTexture(textureId)->texture;
+	animation->texture = Game::textureManager.getTexture(textureId)->sdlTexture;
 
 	//Calculate how many columns and rows this animation texture has
 	int width, height;

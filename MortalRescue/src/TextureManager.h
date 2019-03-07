@@ -16,7 +16,6 @@ class Texture;
 
 using namespace std;
 
-
 class TextureManager
 {
 
@@ -41,7 +40,7 @@ public:
 private:
 
 	SDL_Renderer* pRenderer;
-	map<string, Texture*> textureMap;
+	map<string, unique_ptr<Texture>> textureMap;
 	map<string, TTF_Font*> fontMap;
 	bool loadTextures();
 	
@@ -51,7 +50,7 @@ class Texture
 {
 public:
 
-	SDL_Texture* texture;
+	SDL_Texture* sdlTexture;
 	SDL_Surface* surface;
 
 

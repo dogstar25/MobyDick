@@ -19,7 +19,7 @@ Config Game::config;
 Camera Game::camera;
 SDL_Rect Game::worldBounds;
 b2World* Game::physicsWorld;
-vector<GameObject*> Game::gameObjects;
+vector<unique_ptr<GameObject>> Game::gameObjects;
 
 using namespace chrono_literals;
 
@@ -62,20 +62,16 @@ bool Game::init()
 		this->gameObjectManager.init();
 
 		//Create the main player object
-		/*
-		PlayerObject* playerObject = 
-			(PlayerObject*)Game::gameObjectManager.buildGameObject("GINA_64", 5, 5);
-		*/
-		GameObject* playerObject =Game::gameObjectManager.buildGameObject("GINA_64", 5, 5);
-
-		this->player = playerObject;
-		this->player->direction = 0;
-		this->player->strafe = 0;
+		unique_ptr<GameObject> playerObject = 
+			Game::gameObjectManager.buildGameObject("GINA_64", 5, 5);
+		playerObject->direction = 0;
+		playerObject->strafe = 0;
 		playerObject->currentAnimationState = "IDLE";
 		// Add a weapon that will have bullet origin that is located half way
 		// in the X position and halfway in the Y position from this objects origin
 		playerObject->addWeapon("BULLET1", .50, .50);
-		
+		this->player = move(playerObject);
+
 		//Set the mouse mode
 		SDL_ShowCursor(false);
 		SDL_SetRelativeMouseMode(SDL_TRUE);
@@ -144,11 +140,11 @@ void Game::render() {
 	Game::textureManager.clear();
 
 	//render the player
-	Game::textureManager.render(this->player);
+	Game::textureManager.render(this->player.get());
 	
 	//Render all of the game objects
 	for (auto & gameObject : gameObjects) {
-		Game::textureManager.render(gameObject);
+		Game::textureManager.render(gameObject.get());
 	}
 
 	//DebugDraw
@@ -228,7 +224,7 @@ void Game::buildLevel(string levelId)
 	this->currentLevel = levelId;
 	Level* level = Game::levelManager.levels[levelId];
 	LevelObject* levelObject;
-	GameObject* gameObject;
+	unique_ptr<GameObject> gameObject;
 
 	for (int y = 0; y < level->height; y++)
 	{
@@ -241,14 +237,14 @@ void Game::buildLevel(string levelId)
 				gameObject = Game::gameObjectManager.buildGameObject(levelObject->gameObjectId,
 					x, y, levelObject->angleAdjustment);
 
-				this->gameObjects.push_back(gameObject);
-
 				//Use the first level object found to determine and store the tile width and height for the map
 				if (level->tileHeight == 0 and level->tileWidth == 0)
 				{
 					level->tileWidth = gameObject->definition->xSize * Game::config.scaleFactor;
 					level->tileHeight = gameObject->definition->ySize * Game::config.scaleFactor;
 				}
+
+				this->gameObjects.push_back(move(gameObject));
 
 			}
 
@@ -293,18 +289,6 @@ Game::~Game()
 	SDL_DestroyWindow(this->pWindow);
 	SDL_Quit();
 
-	delete this->player;
-
-	//Free All textures
-	this->textureManager.clean();
-
-	//Delete all game Objects
-	for (auto gameObject : this->gameObjects) {
-
-		delete gameObject;
-
-	}
-	
 	this->gameObjects.clear();
 
 	//Delete box2d world - should delete all bodies and fixtures within
