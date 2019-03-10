@@ -8,10 +8,10 @@
   "physics": {
     "gravity": {
       "x": 0.0,
-      "y": 0.0
+      "y": 0.8
     },
     "timeStep": 0.016, // 1/60 or 1/30
-    "velocityIterations": 6,
+    "velocityIterations": 5,
     "positionIterations": 2,
     "box2dScale": 25, //Box2D. This game will be 25 pixels per meter which is a factor of .04 derived from 1/25
     "debugDrawMode":  false

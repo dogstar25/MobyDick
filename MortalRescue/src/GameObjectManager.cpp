@@ -190,7 +190,7 @@ b2Body * GameObjectManager::buildB2Body(GameObjectDefinition* gameObjectDefiniti
 	// Misc properties
 	fixtureDef.density = gameObjectDefinition->density;
 	fixtureDef.friction = gameObjectDefinition->friction;
-	fixtureDef.restitution = .1;
+	fixtureDef.restitution = 0.0;
 
 	// Add the shape to the body.
 	body->CreateFixture(&fixtureDef);

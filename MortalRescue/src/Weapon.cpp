@@ -46,11 +46,11 @@ void Weapon::fire()
 		dy = sin(this->weaponWieldingObject->physicsBody->GetAngle()) * 25; // Y-component.
 		b2Vec2 velocityVector = b2Vec2(dx, dy);
 
-		float angle = this->weaponWieldingObject->physicsBody->GetAngle();
+		//float angle = this->weaponWieldingObject->physicsBody->GetAngle();
 		//cout << "fire location" << positionVector.x << " " << positionVector.y << "\n";
 		//cout << "position" << positionVector.x << " " << positionVector.y << "\n";
-
-		bullet->physicsBody->SetTransform(positionVector, angle);
+		bullet->physicsBody->SetFixedRotation(true);
+		bullet->physicsBody->SetTransform(positionVector, bullet->physicsBody->GetAngle());
 		bullet->physicsBody->SetLinearVelocity(velocityVector);
 		bullet->currentAnimationState = "ACTIVE";
 		Game::gameObjects.push_back(move(bullet));

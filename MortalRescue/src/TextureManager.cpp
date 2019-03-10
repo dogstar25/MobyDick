@@ -80,7 +80,6 @@ bool TextureManager::render(GameObject* gameObject)
 		//Render th the page
 		SDL_RenderCopyEx(pRenderer, texure, textureSourceRect, &destRect, angle,
 			NULL, SDL_FLIP_NONE);
-
 	}
 
 	//std::cout << "Dest X is " << destRect.x << " \n";
