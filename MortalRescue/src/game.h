@@ -62,7 +62,7 @@ public:
 	static Camera camera;
 	static SDL_Rect worldBounds;
 	static b2World* physicsWorld;
-	static vector<GameObject*> gameObjects;
+	static vector <unique_ptr<GameObject>> gameObjects;
 
 	
 private:
@@ -75,7 +75,8 @@ private:
 
 	//Vector of all game objects
 	//vector<GameObject*> gameObjects;
-	GameObject* player;
+	//GameObject* player;
+	unique_ptr<GameObject> player;
 
 	//Collision contact listener
 	GameObjectContactListener gameObjectContactListner;

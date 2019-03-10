@@ -1,10 +1,15 @@
-#include "TextureManager.h"
-#include "game.h"
-
 #include <iostream>
 #include <fstream>
 #include <math.h>
 #include <list>
+
+#include <SDL_ttf.h>
+
+#include "TextureManager.h"
+#include "game.h"
+
+
+
 
 
 
@@ -75,7 +80,6 @@ bool TextureManager::render(GameObject* gameObject)
 		//Render th the page
 		SDL_RenderCopyEx(pRenderer, texure, textureSourceRect, &destRect, angle,
 			NULL, SDL_FLIP_NONE);
-
 	}
 
 	//std::cout << "Dest X is " << destRect.x << " \n";
@@ -111,27 +115,30 @@ bool TextureManager::loadTextures()
 
 	//Get and store config values
 	string filename, id;
+	int size;
 	bool retainSurface = false;
+
 	SDL_Surface* surface;
-	SDL_Texture* texture;
-	Texture* textureObject;
+	SDL_Texture* sdlTexture;
+	unique_ptr<Texture> textureObject;
+	TTF_Font* fontObject;
 
 
 	//Loop through every texture defined in the config file, create a texture object
 	//and store it in the main texture map
 	for(auto itr : root["textures"])
 	{
-
-		textureObject = new Texture();
+		//textureObject = new Texture();
+		textureObject = make_unique<Texture>();
 
 		id = itr["id"].asString();
 		filename = itr["filename"].asString();
 		retainSurface = itr["retainSurface"].asBool();
 
 		surface = IMG_Load(filename.c_str());
-		texture = SDL_CreateTextureFromSurface(this->pRenderer, surface);
+		sdlTexture = SDL_CreateTextureFromSurface(this->pRenderer, surface),
 
-		textureObject->texture = texture;
+		textureObject->sdlTexture = sdlTexture;
 		if (retainSurface == true)
 		{
 			textureObject->surface = surface;
@@ -140,8 +147,23 @@ bool TextureManager::loadTextures()
 		{
 			SDL_FreeSurface(surface);
 		}
-		
-		this->textureMap[id]= textureObject;
+
+		this->textureMap.emplace(id, move(textureObject));
+		textureObject.reset();
+
+	}
+
+
+	//Loop through every font defined and store it in the main font map
+	for (auto itr : root["fonts"])
+	{
+		id = itr["id"].asString();
+		filename = itr["filename"].asString();
+		size = itr["size"].asInt();
+
+		TTF_Font* fontObject = TTF_OpenFont(filename.c_str(), size);
+
+		this->fontMap.emplace(id, fontObject);
 
 	}
 
@@ -152,13 +174,18 @@ Texture * TextureManager::getTexture(string id)
 {
 	Texture* textureObject;
 
-	textureObject = this->textureMap[id];
+	textureObject = this->textureMap[id].get();
 	if (textureObject == NULL)
 	{
-		textureObject = this->textureMap["TX_DEFAULT"];
+		textureObject = this->textureMap["TX_DEFAULT"].get();
 	}
 
 	return textureObject;
+}
+
+TTF_Font* TextureManager::getFont(string id)
+{
+	return this->fontMap[id];
 }
 
 bool TextureManager::present()
@@ -235,28 +262,6 @@ void TextureManager::drawLine(b2Vec2 start, b2Vec2 end)
 
 }
 
-void TextureManager::clean()
-{
-
-	for (auto textureItem : this->textureMap)
-	{
-		if (textureItem.second != NULL) {
-
-			if (textureItem.second->surface != NULL) {
-				SDL_FreeSurface(textureItem.second->surface);
-			}
-			SDL_DestroyTexture(textureItem.second->texture);
-
-		}
-
-
-	}
-
-	this->textureMap.clear();
-
-}
-
-
 TextureManager::TextureManager()
 {
 
@@ -264,6 +269,19 @@ TextureManager::TextureManager()
 TextureManager::~TextureManager()
 {
 
+	for (auto&& textureItem : this->textureMap) {
+		//pointer->functionOfYourClass();
+		if (textureItem.second != NULL) {
+
+			if (textureItem.second->surface != NULL) {
+				SDL_FreeSurface(textureItem.second->surface);
+			}
+			SDL_DestroyTexture(textureItem.second->sdlTexture);
+
+		}
+	}
+
+	this->textureMap.clear();
 	
 }
 

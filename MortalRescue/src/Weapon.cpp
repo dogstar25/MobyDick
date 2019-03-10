@@ -27,33 +27,33 @@ void Weapon::init(string bulletGameObjectId, GameObject* weaponWieldingObject, f
 
 }
 
+
+
 void Weapon::fire()
 {
 
-	GameObject* bullet;
-	bullet = Game::gameObjectManager.buildGameObject(this->bulletGameObjectId, 0, 0, 0);
+	unique_ptr<GameObject> bullet;
 
-	float dx = this->weaponWieldingObject->physicsBody->GetTransform().p.x + cos(this->weaponWieldingObject->physicsBody->GetAngle());
-	float dy = this->weaponWieldingObject->physicsBody->GetTransform().p.y + sin(this->weaponWieldingObject->physicsBody->GetAngle());
+	for (int x = 0; x < 50; x++) {
+		bullet = Game::gameObjectManager.buildGameObject(this->bulletGameObjectId, 0, 0, 0);
 
-	b2Vec2 positionVector = b2Vec2(dx, dy);
+		float dx = this->weaponWieldingObject->physicsBody->GetTransform().p.x + cos(this->weaponWieldingObject->physicsBody->GetAngle());
+		float dy = this->weaponWieldingObject->physicsBody->GetTransform().p.y + sin(this->weaponWieldingObject->physicsBody->GetAngle());
 
-	dx = cos(this->weaponWieldingObject->physicsBody->GetAngle()) * 25 ; // make speed configurable
-	dy = sin(this->weaponWieldingObject->physicsBody->GetAngle()) * 25; // Y-component.
-	b2Vec2 velocityVector = b2Vec2(dx, dy);
+		b2Vec2 positionVector = b2Vec2(dx, dy);
 
-	float angle = this->weaponWieldingObject->physicsBody->GetAngle();
-	//cout << "fire location" << positionVector.x << " " << positionVector.y << "\n";
-	//cout << "position" << positionVector.x << " " << positionVector.y << "\n";
-	
-	cout << "good 2\n";
-	bullet->physicsBody->SetTransform(positionVector, angle);
-	bullet->physicsBody->SetLinearVelocity(velocityVector);
-	bullet->currentAnimationState = "ACTIVE";
-	Game::gameObjects.push_back(bullet);
+		dx = cos(this->weaponWieldingObject->physicsBody->GetAngle()) * 25; // make speed configurable
+		dy = sin(this->weaponWieldingObject->physicsBody->GetAngle()) * 25; // Y-component.
+		b2Vec2 velocityVector = b2Vec2(dx, dy);
 
-
-	cout << "good 3\n";
-
+		//float angle = this->weaponWieldingObject->physicsBody->GetAngle();
+		//cout << "fire location" << positionVector.x << " " << positionVector.y << "\n";
+		//cout << "position" << positionVector.x << " " << positionVector.y << "\n";
+		bullet->physicsBody->SetFixedRotation(true);
+		bullet->physicsBody->SetTransform(positionVector, bullet->physicsBody->GetAngle());
+		bullet->physicsBody->SetLinearVelocity(velocityVector);
+		bullet->currentAnimationState = "ACTIVE";
+		Game::gameObjects.push_back(move(bullet));
+	}
 
 }

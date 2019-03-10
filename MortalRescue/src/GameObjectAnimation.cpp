@@ -1,6 +1,6 @@
 #include "GameObjectAnimation.h"
 #include "GameObject.h"
-#include "game.h";
+#include "game.h"
 
 void GameObjectAnimation::animate(GameObject* gameObject)
 {

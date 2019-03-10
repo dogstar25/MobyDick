@@ -109,9 +109,14 @@
       "retainSurface": true
     }
 
+  ],
 
-
-
-
+  "fonts": [
+    {
+      "id": "FONT_ARIAL_REG",
+      "description": "Arial Regular",
+      "filename": "assets/arial.ttf",
+      "size":  16
+    }
   ]
 }

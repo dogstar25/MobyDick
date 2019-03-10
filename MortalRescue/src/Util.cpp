@@ -5,7 +5,6 @@
 #include <random>
 
 
-
 int Util::generateRandomNumber(int min, int max)
 {
 

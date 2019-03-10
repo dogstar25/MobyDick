@@ -145,6 +145,20 @@
       ]
     },
     {
+      "id": "BULLET2",
+      "description": "Bullet 2",
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "density": 3.0,
+        "linearDamping": 0.0,
+        "angularDamping": 0.0
+      },
+      "texture": "TX_BULLLET1",
+      "xSize": 0.10,
+      "ySize": 0.10
+    },
+    {
       "id": "GINA_64",
       "description": "Gina 64",
       "physicsObject": {
