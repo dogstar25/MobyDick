@@ -12,6 +12,7 @@
 
 
 
+
 bool TextureManager::init(SDL_Window* pWindow)
 {
 
@@ -79,7 +80,6 @@ bool TextureManager::render(GameObject* gameObject)
 		//Render th the page
 		SDL_RenderCopyEx(pRenderer, texure, textureSourceRect, &destRect, angle,
 			NULL, SDL_FLIP_NONE);
-
 	}
 
 	//std::cout << "Dest X is " << destRect.x << " \n";
@@ -117,27 +117,28 @@ bool TextureManager::loadTextures()
 	string filename, id;
 	int size;
 	bool retainSurface = false;
+
 	SDL_Surface* surface;
-	SDL_Texture* texture;
+	SDL_Texture* sdlTexture;
+	unique_ptr<Texture> textureObject;
 	TTF_Font* fontObject;
-	Texture* textureObject;
 
 
 	//Loop through every texture defined in the config file, create a texture object
 	//and store it in the main texture map
 	for(auto itr : root["textures"])
 	{
-
-		textureObject = new Texture();
+		//textureObject = new Texture();
+		textureObject = make_unique<Texture>();
 
 		id = itr["id"].asString();
 		filename = itr["filename"].asString();
 		retainSurface = itr["retainSurface"].asBool();
 
 		surface = IMG_Load(filename.c_str());
-		texture = SDL_CreateTextureFromSurface(this->pRenderer, surface);
+		sdlTexture = SDL_CreateTextureFromSurface(this->pRenderer, surface),
 
-		textureObject->texture = texture;
+		textureObject->sdlTexture = sdlTexture;
 		if (retainSurface == true)
 		{
 			textureObject->surface = surface;
@@ -146,8 +147,9 @@ bool TextureManager::loadTextures()
 		{
 			SDL_FreeSurface(surface);
 		}
-		
-		this->textureMap.emplace(id, textureObject);
+
+		this->textureMap.emplace(id, move(textureObject));
+		textureObject.reset();
 
 	}
 
@@ -172,10 +174,10 @@ Texture * TextureManager::getTexture(string id)
 {
 	Texture* textureObject;
 
-	textureObject = this->textureMap[id];
+	textureObject = this->textureMap[id].get();
 	if (textureObject == NULL)
 	{
-		textureObject = this->textureMap["TX_DEFAULT"];
+		textureObject = this->textureMap["TX_DEFAULT"].get();
 	}
 
 	return textureObject;
@@ -260,28 +262,6 @@ void TextureManager::drawLine(b2Vec2 start, b2Vec2 end)
 
 }
 
-void TextureManager::clean()
-{
-
-	for (auto textureItem : this->textureMap)
-	{
-		if (textureItem.second != NULL) {
-
-			if (textureItem.second->surface != NULL) {
-				SDL_FreeSurface(textureItem.second->surface);
-			}
-			SDL_DestroyTexture(textureItem.second->texture);
-
-		}
-
-
-	}
-
-	this->textureMap.clear();
-
-}
-
-
 TextureManager::TextureManager()
 {
 
@@ -289,6 +269,19 @@ TextureManager::TextureManager()
 TextureManager::~TextureManager()
 {
 
+	for (auto&& textureItem : this->textureMap) {
+		//pointer->functionOfYourClass();
+		if (textureItem.second != NULL) {
+
+			if (textureItem.second->surface != NULL) {
+				SDL_FreeSurface(textureItem.second->surface);
+			}
+			SDL_DestroyTexture(textureItem.second->sdlTexture);
+
+		}
+	}
+
+	this->textureMap.clear();
 	
 }
 
