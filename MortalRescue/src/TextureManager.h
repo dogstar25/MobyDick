@@ -29,13 +29,12 @@ public:
 	bool render(b2Body* body);
 	bool present();
 	bool clear();
-	Texture* getTexture(string id);
+	const Texture* getTexture(string id);
 	TTF_Font* getFont(string id);
 
 	void drawPoly(b2Body* body);
 	void drawPoints(SDL_Point *);
 	void drawLine(b2Vec2, b2Vec2);
-	void clean();
 
 private:
 

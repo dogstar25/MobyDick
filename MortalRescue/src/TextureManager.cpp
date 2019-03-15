@@ -170,7 +170,7 @@ bool TextureManager::loadTextures()
 	return true;
 }
 
-Texture * TextureManager::getTexture(string id)
+const Texture * TextureManager::getTexture(string id)
 {
 	Texture* textureObject;
 

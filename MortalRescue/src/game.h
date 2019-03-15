@@ -48,7 +48,9 @@ public:
 	void buildLevel(string);
 	void initWorldBounds();
 
-	bool running() { return bRunning; }
+	//Current Game State
+	int gameState;
+
 	int fps, awakeCount;
 	string currentLevel;
 	DebugDraw debugDraw;
@@ -63,6 +65,18 @@ public:
 	static SDL_Rect worldBounds;
 	static b2World* physicsWorld;
 	static vector <unique_ptr<GameObject>> gameObjects;
+
+	/*
+	Main Game State
+	*/
+	enum State {
+
+		QUIT = 0,
+		PLAY = 1,
+		PAUSE = 2,
+		SETTINGS = 3
+
+	};
 
 	
 private:
@@ -80,9 +94,6 @@ private:
 
 	//Collision contact listener
 	GameObjectContactListener gameObjectContactListner;
-
-	//Game States
-	bool bRunning;
 
 	//Box2d Physics
 	b2Vec2 gravity;

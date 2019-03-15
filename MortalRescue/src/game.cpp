@@ -69,7 +69,7 @@ bool Game::init()
 		playerObject->currentAnimationState = "IDLE";
 		// Add a weapon that will have bullet origin that is located half way
 		// in the X position and halfway in the Y position from this objects origin
-		playerObject->addWeapon("BULLET2", .50, .50);
+		playerObject->addWeapon("BULLET1", .50, .50);
 		this->player = move(playerObject);
 
 		//Set the mouse mode
@@ -94,7 +94,7 @@ bool Game::init()
 		//Initialize the clock object
 		clock.init();
 
-		bRunning = true;
+		this->gameState = this->PLAY;
 
 	}
 
@@ -190,7 +190,7 @@ void Game::handleEvents() {
 
 		switch (event.type) {
 		case SDL_QUIT:
-			bRunning = false;
+			this->gameState = QUIT;
 			break;
 
 		case SDL_KEYDOWN:

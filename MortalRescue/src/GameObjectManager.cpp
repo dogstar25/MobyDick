@@ -156,14 +156,9 @@ b2Body * GameObjectManager::buildB2Body(GameObjectDefinition* gameObjectDefiniti
 	bodyDef.position.Set(gameObjectDefinition->initPosX , gameObjectDefinition->initPosY);
 	b2Body* body = Game::physicsWorld->CreateBody(&bodyDef);
 
-
-
-
 	b2Shape* shape;
 	b2PolygonShape box;
 	b2CircleShape circle;
-
-
 
 	//Temp - Circle shape for player
 	if (gameObjectDefinition->id == "GINA_64") {
@@ -192,6 +187,13 @@ b2Body * GameObjectManager::buildB2Body(GameObjectDefinition* gameObjectDefiniti
 	fixtureDef.friction = gameObjectDefinition->friction;
 	fixtureDef.restitution = 0.0;
 
+	/*
+	if (gameObjectDefinition->id == "BULLET2")
+	{
+ 		fixtureDef.filter.groupIndex = -1;
+	}
+	*/
+
 	// Add the shape to the body.
 	body->CreateFixture(&fixtureDef);
 
@@ -199,13 +201,7 @@ b2Body * GameObjectManager::buildB2Body(GameObjectDefinition* gameObjectDefiniti
 	body->SetAngularDamping(gameObjectDefinition->angularDamping);
 	Game::physicsWorld->SetAutoClearForces(true);
 
-	/*
-	if (gameObjectDefinition->id != "SPACESHIP1")
-	{
-		body->SetActive(false);
-		body->SetAwake(false);
-	}
-	*/
+	
 	this->box2dBodyCount++;
 	return body;
 

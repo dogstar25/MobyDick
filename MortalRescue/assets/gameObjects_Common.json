@@ -125,6 +125,7 @@
     {
       "id": "BULLET1",
       "description": "Bullet 1",
+      "speed":  25,
       "physicsObject": {
         "type": "B2_DYNAMIC",
         "friction": 0.0,
@@ -147,6 +148,7 @@
     {
       "id": "BULLET2",
       "description": "Bullet 2",
+      "speed": 25,
       "physicsObject": {
         "type": "B2_DYNAMIC",
         "friction": 0.0,
