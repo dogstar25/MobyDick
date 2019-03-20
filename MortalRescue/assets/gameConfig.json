@@ -5,6 +5,7 @@
     "height": 720
   },
   "mouseSensitivity": 1.7,
+  "gameLoopStep": 16, //in miliseconds
   "physics": {
     "gravity": {
       "x": 0.0,

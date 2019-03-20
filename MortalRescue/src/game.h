@@ -18,6 +18,7 @@
 #include "GameObjectContactListener.h"
 #include "Camera.h"
 #include "DebugDraw.h"
+#include "Settings.h"
 
 //wow!
 //#include <gl/GL.h>
@@ -40,8 +41,12 @@ public:
 	Game();
 	~Game();
 
-	bool init();
 
+	void play();
+	void settingsMenu();
+
+
+	bool init();
 	void render();
 	void update();
 	void handleEvents();
@@ -51,7 +56,7 @@ public:
 	//Current Game State
 	int gameState;
 
-	int fps, awakeCount;
+	int fps, awakeCount, gameLoopStep;
 	string currentLevel;
 	DebugDraw debugDraw;
 
@@ -95,6 +100,9 @@ private:
 	//Collision contact listener
 	GameObjectContactListener gameObjectContactListner;
 
+	//Settings Object
+	Settings settings;
+
 	//Box2d Physics
 	b2Vec2 gravity;
 	bool debugDrawMode;
@@ -115,11 +123,12 @@ struct Clock
 	steady_clock::time_point end_time;
 	std::chrono::duration<double> time_diff;
 	std::chrono::duration<double> fps_time_accum;
+	std::chrono::duration<double> gameloop_time_accum;
 
 	void init()
 	{
 		current_frame_cnt = 0;
-		fps_time_accum = fps_time_accum.zero();
+		fps_time_accum = 0ns;
 		begin_time = steady_clock::now();
 	}
 	void tick()
@@ -127,7 +136,9 @@ struct Clock
 		end_time = steady_clock::now();
 		time_diff = end_time - begin_time;
 		begin_time = end_time;
+
 		fps_time_accum += time_diff;
+		gameloop_time_accum += time_diff;
 	}
 
 	void calcFps()
@@ -136,11 +147,15 @@ struct Clock
 		if (current_frame_cnt >= 100)
 		{
 			fps = current_frame_cnt / fps_time_accum.count();
-			fps_time_accum *= 0;
+			fps_time_accum = 0ns;
 			current_frame_cnt = 0;
 		}
 	}
 
+	void resetGameLoopTimeAccum()
+	{
+		gameloop_time_accum = 0ns;
+	}
 
 };
 

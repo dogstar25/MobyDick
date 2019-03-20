@@ -23,6 +23,9 @@ vector<unique_ptr<GameObject>> Game::gameObjects;
 
 using namespace chrono_literals;
 
+/*
+Initialize Game
+*/
 bool Game::init()
 {
 
@@ -30,16 +33,17 @@ bool Game::init()
 	getConfig();
 
 	//Initialize world
-	if (SDL_Init(SDL_INIT_EVERYTHING) == 0) 
+	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
-		printf("SDL_Init success\n");
+		//Init Game State
+		this->gameState = this->PLAY;
 
 		//Create the game window
 		pWindow = SDL_CreateWindow(this->gameTitle.c_str(),
 			this->windowXpos,
 			this->windowYPos,
-			this->camera.frame.w, 
-			this->camera.frame.h, 
+			this->camera.frame.w,
+			this->camera.frame.h,
 			SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 
 		//Initialize the textture manager
@@ -62,7 +66,7 @@ bool Game::init()
 		this->gameObjectManager.init();
 
 		//Create the main player object
-		unique_ptr<GameObject> playerObject = 
+		unique_ptr<GameObject> playerObject =
 			Game::gameObjectManager.buildGameObject("GINA_64", 5, 5);
 		playerObject->direction = 0;
 		playerObject->strafe = 0;
@@ -87,27 +91,61 @@ bool Game::init()
 
 		//set camera to center on player object
 		this->camera.setPosition((this->player->physicsBody->GetPosition().x *  Game::config.scaleFactor) -
-									(camera.frame.w / 2),
-								 (this->player->physicsBody->GetPosition().y *  Game::config.scaleFactor) -
-									(camera.frame.h / 2));
+			(camera.frame.w / 2),
+			(this->player->physicsBody->GetPosition().y *  Game::config.scaleFactor) -
+			(camera.frame.h / 2));
 
 		//Initialize the clock object
 		clock.init();
 
-		this->gameState = this->PLAY;
-
+		//initialize settings menu
+		this->settings.init();
 	}
-
-
-	//Add a few objects to the world
-	/*
-	GameObject *gameObject=nullptr;
-	gameObject = Game::gameObjectManager.buildGameObject("BOWMAN", 1, 1);
-	this->gameObjects.push_back(gameObject);
-	*/
 
 	return true;
 }
+
+/*
+Main Play Loop
+*/
+void Game::play()
+{
+
+	//Get the value for how often to update and render the game
+	std::chrono::duration<double> milisecsPerUpdate = std::chrono::milliseconds(this->gameLoopStep);
+
+	//Capture the amount of time that has passed since last loop and accumulate time for both
+	//the FPS calculation and the game loop timer
+	clock.tick();
+
+	//Only update and render if we have passed the 60 fps time passage
+	if (clock.gameloop_time_accum >= milisecsPerUpdate)
+	{
+		//Handle updating objects positions and physics
+		update();
+
+		//render everything
+		render();
+
+		//Increment frame counter and calculate FPS and reset the gameloop timer
+		clock.current_frame_cnt++;
+		clock.calcFps();
+		clock.resetGameLoopTimeAccum();
+	}
+
+}
+
+/*
+Settings Menus
+*/
+void Game::settingsMenu()
+{
+	this->settings.run();
+
+	this->gameState = PLAY;
+	
+}
+
 
 void Game::update() {
 
@@ -128,8 +166,6 @@ void Game::update() {
 		gameObject->update();
 	}
 	
-	//cout << "awake count " << this->awakeCount << "\n";
-
 	this->physicsWorld->Step(this->timeStep, this->velocityIterations, this->positionIterations);
 
 }
@@ -168,6 +204,7 @@ bool Game::getConfig()
 
 	//Get and store config values
 	this->gameTitle = root["gameTitle"].asString();
+	this->gameLoopStep = root["gameLoopStep"].asInt();
 	this->gravity.Set(root["physics"]["gravity"]["x"].asInt(), root["physics"]["gravity"]["y"].asFloat());
 
 	this->timeStep = root["physics"]["timeStep"].asFloat();
@@ -188,18 +225,16 @@ void Game::handleEvents() {
 	SDL_Event event;
 	if (SDL_PollEvent(&event)) {
 
-		switch (event.type) {
+		switch (event.type) 
+		{
 		case SDL_QUIT:
 			this->gameState = QUIT;
-			break;
-
 		case SDL_KEYDOWN:
 		case SDL_KEYUP:
 		case SDL_MOUSEMOTION:
 			if ((char)event.key.keysym.sym == SDLK_ESCAPE && event.type == SDL_KEYDOWN)
 			{
-				event.type = SDL_QUIT;
-				SDL_PushEvent(&event);
+				this->gameState = SETTINGS;
 			}
 			else
 			{

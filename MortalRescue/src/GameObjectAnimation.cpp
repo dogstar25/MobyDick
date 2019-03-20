@@ -12,7 +12,6 @@ void GameObjectAnimation::animate(GameObject* gameObject)
 	if (time_diff.count() >= this->speed)
 	{
 		time_snapshot = now_time;
-		//std::cout << "animate time is " << time_diff.count() << "\n";
 
 		//Increment animation frame counter and reset if it exceeds last one
 		this->currentAnimFrame += 1;
