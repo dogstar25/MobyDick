@@ -4,7 +4,7 @@
 class GameObject;
 //class Weapon;
 
-class PlayerObject :public GameObject
+class PlayerObject : public GameObject
 {
 public:
 
@@ -14,10 +14,11 @@ public:
 	//strafe 1 is strafe left, -1 is strafe right
 
 	PlayerObject();
+	//~PlayerObject();
 	~PlayerObject();
 
+	void update();
 	void handlePlayerMovementEvent(SDL_Event* event);
-	void updatePlayer();
 	void updatePlayerMovement();
 	void addWeapon(string, float,float);
 

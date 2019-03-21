@@ -12,31 +12,37 @@ class Weapon;
 
 using namespace std;
 
+/*
+Game Object Types
+*/
+enum GameObjectType {
+
+	PRIMITIVE_OBJECT = 0,  //p
+	WORLD_OBJECT = 1,    //majority of game objects - any physics object
+	PLAYER_OBJECT = 2,
+	UI_OBJECT = 3
+
+};
+
+
 class GameObject
 {
 public:
 
 	GameObject();
-	~GameObject();
+	virtual ~GameObject();
 
 	//Non Player Controlled methods
 	void update();
-	void handlePlayerMovementEvent(SDL_Event* event);
-	void updatePlayer();
-	void updatePlayerMovement();
-	void addWeapon(string, float, float);
+	void render();
 
 	GameObjectDefinition* definition;
 
-	int direction, strafe;
-	Weapon * weapon;
 	string 	currentAnimationState;
 	float angleAdjustment; //When rendering this object, adjust the angle by this degree. Added for reusing wall textures
 
 	SDL_Texture* staticTexture; //Used if this is not an animated object
 	b2Body* physicsBody;
-
-
 
 };
 

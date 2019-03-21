@@ -27,7 +27,7 @@
 //forward declations
 struct Clock;
 struct Config;
-//class PlayerObject;
+class PlayerObject;
 class LevelManager;
 class GameObject;
 
@@ -95,7 +95,7 @@ private:
 	//Vector of all game objects
 	//vector<GameObject*> gameObjects;
 	//GameObject* player;
-	unique_ptr<GameObject> player;
+	unique_ptr<PlayerObject> player;
 
 	//Collision contact listener
 	GameObjectContactListener gameObjectContactListner;

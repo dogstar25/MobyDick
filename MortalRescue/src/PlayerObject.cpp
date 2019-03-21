@@ -34,47 +34,47 @@ void PlayerObject::handlePlayerMovementEvent(SDL_Event* event)
 		this->strafe = -1;
 	}
 
-/*
-	if (event->type == SDL_KEYUP) {
-		
-		switch (event->key.keysym.sym) {
-		case SDLK_w:
-			//this->yDirection = 0;
-			this->direction = 0;
-			break;
-		case SDLK_s:
-			this->direction = 0;
-			break;
-		case SDLK_a:
-			this->strafe = 0;
-			break;
-		case SDLK_d:
-			this->strafe = 0;
-			break;
+	/*
+		if (event->type == SDL_KEYUP) {
+
+			switch (event->key.keysym.sym) {
+			case SDLK_w:
+				//this->yDirection = 0;
+				this->direction = 0;
+				break;
+			case SDLK_s:
+				this->direction = 0;
+				break;
+			case SDLK_a:
+				this->strafe = 0;
+				break;
+			case SDLK_d:
+				this->strafe = 0;
+				break;
+			}
 		}
-	}
-	
-	if (event->type == SDL_KEYDOWN) {
-		switch (event->key.keysym.sym) {
-		case SDLK_w:
-			//this->yDirection = -1;
-			this->direction = -1;
-			break;
-		case SDLK_s:
-			//this->yDirection = 1;
-			this->direction = 1;
-			break;
-		case SDLK_a:
-			//this->xDirection = -1;
-			this->strafe = 1;
-			break;
-		case SDLK_d:
-			//this->xDirection = 1;
-			this->strafe = -1;
-			break;
+
+		if (event->type == SDL_KEYDOWN) {
+			switch (event->key.keysym.sym) {
+			case SDLK_w:
+				//this->yDirection = -1;
+				this->direction = -1;
+				break;
+			case SDLK_s:
+				//this->yDirection = 1;
+				this->direction = 1;
+				break;
+			case SDLK_a:
+				//this->xDirection = -1;
+				this->strafe = 1;
+				break;
+			case SDLK_d:
+				//this->xDirection = 1;
+				this->strafe = -1;
+				break;
+			}
 		}
-	}
-*/
+	*/
 
 	//method 1
 	float angularVelocity = event->motion.xrel * Game::config.mouseSensitivity;
@@ -103,7 +103,7 @@ void PlayerObject::updatePlayerMovement()
 	Lots of tweeks can be down here depending on the game you are building for smoother movement
 	*/
 
-	float acceleration = this->definition->playerSpeed;
+	float acceleration = this->definition->speed;
 	float velocity = acceleration;
 
 	//Calc direction XY

@@ -21,12 +21,15 @@ bool GameObjectManager::init()
 	return true;
 }
 
-unique_ptr<GameObject> GameObjectManager::buildGameObject(string gameObjectId, int xMapPos, int yMapPos,
+GameObject* GameObjectManager::buildGameObject(string gameObjectId, int xMapPos, int yMapPos,
 											float angleAdjust)
 {
 	
-	unique_ptr<GameObject> gameObject;
-	gameObject = make_unique< GameObject>();
+	GameObject* gameObject;
+	gameObject = new GameObject();
+	PlayerObject* playerObject;
+	playerObject = new PlayerObject();
+
 	GameObjectDefinition* gameObjectDefinition;
 	gameObjectDefinition = this->gameObjectDefinitions[gameObjectId];
 
@@ -56,7 +59,7 @@ unique_ptr<GameObject> GameObjectManager::buildGameObject(string gameObjectId, i
 	{
 		gameObject->physicsBody = buildB2Body(gameObjectDefinition);
 		//Add a reference to the gameObject itself to the physics object for collision helping logic later
-		gameObject->physicsBody->SetUserData(gameObject.get());
+		gameObject->physicsBody->SetUserData(gameObject);
 
 	}
 
@@ -69,7 +72,7 @@ unique_ptr<GameObject> GameObjectManager::buildGameObject(string gameObjectId, i
 	}
 	*/
 
-	return gameObject;
+	return playerObject;
 
 }
 

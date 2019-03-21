@@ -66,8 +66,8 @@ bool Game::init()
 		this->gameObjectManager.init();
 
 		//Create the main player object
-		unique_ptr<GameObject> playerObject =
-			Game::gameObjectManager.buildGameObject("GINA_64", 5, 5);
+		PlayerObject* playerObject = static_cast<PlayerObject>(Game::gameObjectManager.buildGameObject("GINA_64", 5, 5));
+			
 		playerObject->direction = 0;
 		playerObject->strafe = 0;
 		playerObject->currentAnimationState = "IDLE";
@@ -260,6 +260,9 @@ void Game::buildLevel(string levelId)
 	Level* level = Game::levelManager.levels[levelId];
 	LevelObject* levelObject;
 	unique_ptr<GameObject> gameObject;
+	unique_ptr<PlayerObject> playerObject;
+
+	playerObject = make_unique< PlayerObject>(new PlayerObject());
 
 	for (int y = 0; y < level->height; y++)
 	{
@@ -280,6 +283,7 @@ void Game::buildLevel(string levelId)
 				}
 
 				this->gameObjects.push_back(move(gameObject));
+				this->gameObjects.push_back(move(playerObject));
 
 			}
 
