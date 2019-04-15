@@ -1,5 +1,6 @@
 #include "game.h"
 #include "PlayerObject.h"
+#include "WorldObject.h"
 #include "Weapon.h"
 
 #include <math.h>
@@ -87,15 +88,22 @@ void PlayerObject::handlePlayerMovementEvent(SDL_Event* event)
 }
 
 
-void PlayerObject::updatePlayer()
+void PlayerObject::update()
 {
 	//Call base game object update
-	this->update();
+	GameObject::update();
 
 	//Call all player movement updates
 	this->updatePlayerMovement();
 
 }
+
+void PlayerObject::render()
+{
+
+	Game::textureManager.renderWorldObject(dynamic_cast<WorldObject*>(this));
+}
+
 
 void PlayerObject::updatePlayerMovement()
 {

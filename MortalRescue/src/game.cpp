@@ -1,5 +1,6 @@
 #include "game.h"
 #include "PlayerObject.h"
+#include "WorldObject.h"
 #include "LevelManager.h"
 #include "TextureManager.h"
 #include "GameObjectManager.h"
@@ -8,6 +9,7 @@
 #include "Camera.h"
 #include "Weapon.h"
 //#include "vld.h"
+
 
 
 Clock Game::clock;
@@ -51,6 +53,7 @@ bool Game::init()
 
 		// Construct a world object, which will hold and simulate the rigid bodies.
 		this->physicsWorld = new b2World(this->gravity);
+		this->physicsWorld->SetAutoClearForces(true);
 		//Add a collision contact listener
 		this->physicsWorld->SetContactListener(&this->gameObjectContactListner);
 
@@ -66,15 +69,19 @@ bool Game::init()
 		this->gameObjectManager.init();
 
 		//Create the main player object
-		PlayerObject* playerObject = static_cast<PlayerObject>(Game::gameObjectManager.buildGameObject("GINA_64", 5, 5));
-			
-		playerObject->direction = 0;
-		playerObject->strafe = 0;
-		playerObject->currentAnimationState = "IDLE";
+		//this->player =
+		//	dynamic_cast<unique_ptr<PlayerObject>>(Game::gameObjectManager.buildGameObject("GINA_64", GameObjectType::PLAYER_OBJECT, 5, 5));
+		//this->player = make_unique<PlayerObject>(Game::gameObjectManager.buildGameObject("GINA_64", GameObjectType::PLAYER_OBJECT, 5, 5));
+		PlayerObject* test = dynamic_cast<PlayerObject*>(Game::gameObjectManager.buildGameObject("GINA_64", GameObjectType::PLAYER_OBJECT, 5, 5));
+		//this->player = make_unique<PlayerObject>(*test);
+		this->player = unique_ptr<PlayerObject>(test);
+
+		this->player->direction = 0;
+		this->player->strafe = 0;
+		this->player->currentAnimationState = "IDLE";
 		// Add a weapon that will have bullet origin that is located half way
 		// in the X position and halfway in the Y position from this objects origin
-		playerObject->addWeapon("BULLET1", .50, .50);
-		this->player = move(playerObject);
+		this->player->addWeapon("BULLET1", .50, .50);
 
 		//Set the mouse mode
 		SDL_ShowCursor(false);
@@ -150,7 +157,7 @@ void Game::settingsMenu()
 void Game::update() {
 
 	//Specifiaclly handle input and stuff for the one player gameObject
-	this->player->updatePlayer();
+	this->player->update();
 
 	//Update the camera frame to point to the new player position
 	this->camera.setPosition((this->player->physicsBody->GetPosition().x *  Game::config.scaleFactor) -
@@ -176,11 +183,11 @@ void Game::render() {
 	Game::textureManager.clear();
 
 	//render the player
-	Game::textureManager.render(this->player.get());
+	this->player->render();
 	
 	//Render all of the game objects
 	for (auto & gameObject : gameObjects) {
-		Game::textureManager.render(gameObject.get());
+		gameObject->render();
 	}
 
 	//DebugDraw
@@ -259,10 +266,9 @@ void Game::buildLevel(string levelId)
 	this->currentLevel = levelId;
 	Level* level = Game::levelManager.levels[levelId];
 	LevelObject* levelObject;
-	unique_ptr<GameObject> gameObject;
-	unique_ptr<PlayerObject> playerObject;
+	//unique_ptr<WorldObject> worldObject;
+	WorldObject* worldObject;
 
-	playerObject = make_unique< PlayerObject>(new PlayerObject());
 
 	for (int y = 0; y < level->height; y++)
 	{
@@ -272,18 +278,21 @@ void Game::buildLevel(string levelId)
 			if (level->levelObjects[x][y].gameObjectId.empty() == false)
 			{
 				levelObject = &level->levelObjects[x][y];
-				gameObject = Game::gameObjectManager.buildGameObject(levelObject->gameObjectId,
-					x, y, levelObject->angleAdjustment);
+				worldObject = dynamic_cast<WorldObject*>(
+					Game::gameObjectManager.buildGameObject(levelObject->gameObjectId, GameObjectType::WORLD_OBJECT,
+					x, y, levelObject->angleAdjustment));
 
 				//Use the first level object found to determine and store the tile width and height for the map
 				if (level->tileHeight == 0 and level->tileWidth == 0)
 				{
-					level->tileWidth = gameObject->definition->xSize * Game::config.scaleFactor;
-					level->tileHeight = gameObject->definition->ySize * Game::config.scaleFactor;
+					level->tileWidth = worldObject->definition->xSize * Game::config.scaleFactor;
+					level->tileHeight = worldObject->definition->ySize * Game::config.scaleFactor;
 				}
 
-				this->gameObjects.push_back(move(gameObject));
-				this->gameObjects.push_back(move(playerObject));
+				this->gameObjects.push_back(unique_ptr<WorldObject>(worldObject));
+
+				//this->player = unique_ptr<PlayerObject>(move(test));
+
 
 			}
 

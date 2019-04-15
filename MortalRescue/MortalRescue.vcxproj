@@ -185,10 +185,12 @@
     <ClCompile Include="src\LevelManager.cpp" />
     <ClCompile Include="src\MortalRescue.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\PlayerObject.cpp" />
     <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\Util.cpp" />
     <ClCompile Include="src\Weapon.cpp" />
+    <ClCompile Include="src\WorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
@@ -201,10 +203,12 @@
     <ClInclude Include="src\jsoncpp\json\json-forwards.h" />
     <ClInclude Include="src\jsoncpp\json\json.h" />
     <ClInclude Include="src\LevelManager.h" />
+    <ClInclude Include="src\PlayerObject.h" />
     <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\Util.h" />
     <ClInclude Include="src\Weapon.h" />
+    <ClInclude Include="src\WorldObject.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\gameObjects_Common.json" />

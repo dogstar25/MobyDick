@@ -4,6 +4,7 @@
 using namespace std;
 
 class GameObject;
+class PlayerObject;
 
 class Weapon
 {
@@ -12,10 +13,10 @@ public:
 	~Weapon();
 
 	void fire();
-	void init(string, GameObject*, float,float);
+	void init(string, PlayerObject*, float,float);
 
 
-	GameObject* weaponWieldingObject;
+	PlayerObject* weaponWieldingObject;
 	string bulletGameObjectId;
 	float xOffset, yOffset; //what offset from the weapon holding obejct to originate bullet from
 

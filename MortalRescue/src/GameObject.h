@@ -17,7 +17,7 @@ Game Object Types
 */
 enum GameObjectType {
 
-	PRIMITIVE_OBJECT = 0,  //p
+	BASE_OBJECT = 0,
 	WORLD_OBJECT = 1,    //majority of game objects - any physics object
 	PLAYER_OBJECT = 2,
 	UI_OBJECT = 3
@@ -32,7 +32,6 @@ public:
 	GameObject();
 	virtual ~GameObject();
 
-	//Non Player Controlled methods
 	void update();
 	void render();
 
@@ -42,7 +41,7 @@ public:
 	float angleAdjustment; //When rendering this object, adjust the angle by this degree. Added for reusing wall textures
 
 	SDL_Texture* staticTexture; //Used if this is not an animated object
-	b2Body* physicsBody;
+	
 
 };
 

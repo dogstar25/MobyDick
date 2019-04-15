@@ -10,6 +10,7 @@ public:
 
 	int direction, strafe;
 	Weapon * weapon;
+	b2Body* physicsBody;
 	//direction 1 is forward, -1 is backward
 	//strafe 1 is strafe left, -1 is strafe right
 
@@ -18,6 +19,7 @@ public:
 	~PlayerObject();
 
 	void update();
+	void render();
 	void handlePlayerMovementEvent(SDL_Event* event);
 	void updatePlayerMovement();
 	void addWeapon(string, float,float);

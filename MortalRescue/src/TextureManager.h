@@ -13,6 +13,7 @@
 //Forward declarations
 class GameObject;
 class Texture;
+class WorldObject;
 
 using namespace std;
 
@@ -25,7 +26,7 @@ public:
 	~TextureManager();
 
 	bool init(SDL_Window*);
-	bool render(GameObject* gameObject);
+	void renderWorldObject(WorldObject* worldObject);
 	bool render(b2Body* body);
 	bool present();
 	bool clear();

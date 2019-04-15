@@ -1,5 +1,7 @@
 #include "Weapon.h"
 #include "GameObject.h"
+#include "WorldObject.h"
+#include "PlayerObject.h"
 #include "game.h"
 #include <string>
 
@@ -14,7 +16,7 @@ Weapon::~Weapon()
 {
 }
 
-void Weapon::init(string bulletGameObjectId, GameObject* weaponWieldingObject, float xOffsetPct, float yOffsetPct)
+void Weapon::init(string bulletGameObjectId, PlayerObject* weaponWieldingObject, float xOffsetPct, float yOffsetPct)
 {
 	
 	this->bulletGameObjectId = bulletGameObjectId;
@@ -32,9 +34,10 @@ void Weapon::init(string bulletGameObjectId, GameObject* weaponWieldingObject, f
 void Weapon::fire()
 {
 
-	unique_ptr<GameObject> bullet;
+	 //bullet;
 
-	bullet = Game::gameObjectManager.buildGameObject(this->bulletGameObjectId, 0, 0, 0);
+	 WorldObject* bullet =
+		dynamic_cast<WorldObject*>(Game::gameObjectManager.buildGameObject(this->bulletGameObjectId, GameObjectType::WORLD_OBJECT, 0, 0, 0));
 
 	float dx = this->weaponWieldingObject->physicsBody->GetTransform().p.x + cos(this->weaponWieldingObject->physicsBody->GetAngle() );
 	float dy = this->weaponWieldingObject->physicsBody->GetTransform().p.y + sin(this->weaponWieldingObject->physicsBody->GetAngle() );
@@ -53,6 +56,7 @@ void Weapon::fire()
 	bullet->physicsBody->SetLinearVelocity(velocityVector);
 	bullet->currentAnimationState = "ACTIVE";
 
-	Game::gameObjects.push_back(move(bullet));
+	Game::gameObjects.push_back(unique_ptr<WorldObject>(bullet));
+	
 
 }

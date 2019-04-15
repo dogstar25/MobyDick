@@ -3,6 +3,7 @@
 #include "TextureManager.h"
 #include "GameObject.h"
 #include "PlayerObject.h"
+#include "WorldObject.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -21,25 +22,44 @@ bool GameObjectManager::init()
 	return true;
 }
 
-GameObject* GameObjectManager::buildGameObject(string gameObjectId, int xMapPos, int yMapPos,
+GameObject* GameObjectManager::buildGameObject(string gameObjectId, int type, int xMapPos, int yMapPos,
 											float angleAdjust)
 {
-	
-	GameObject* gameObject;
-	gameObject = new GameObject();
-	PlayerObject* playerObject;
-	playerObject = new PlayerObject();
+	//unique_ptr<PlayerObject> playerObject;
+	//unique_ptr<WorldObject> worldObject;
+	//unique_ptr<GameObject> gameObjectU;
 
+
+	GameObject* gameObject;
+	WorldObject* worldObject;
+	PlayerObject* playerObject;
 	GameObjectDefinition* gameObjectDefinition;
 	gameObjectDefinition = this->gameObjectDefinitions[gameObjectId];
+	gameObject = new GameObject();
 
-	gameObject->definition = gameObjectDefinition;
-
-	//Apply gameobject definition overrides values if passed
-	// usually for particular game tile position and angle
-	if (angleAdjust != 0)
+	switch (type)
 	{
-		gameObject->angleAdjustment = angleAdjust;
+	case GameObjectType::PLAYER_OBJECT:
+
+		playerObject = new PlayerObject();
+		
+		playerObject->definition = gameObjectDefinition;
+		playerObject->angleAdjustment = angleAdjust;
+		playerObject->physicsBody = buildB2Body(gameObjectDefinition);
+		playerObject->physicsBody->SetUserData(playerObject);
+		gameObject = playerObject;
+		break;
+	case GameObjectType::WORLD_OBJECT:
+		worldObject = new WorldObject();
+		worldObject->definition = gameObjectDefinition;
+		worldObject->angleAdjustment = angleAdjust;
+		worldObject->physicsBody = buildB2Body(gameObjectDefinition);
+		worldObject->physicsBody->SetUserData(worldObject);
+		gameObject = worldObject;
+		break;
+	default:
+		break;
+		
 	}
 
 	//Gameobject must be passed in it's starting position
@@ -54,15 +74,6 @@ GameObject* GameObjectManager::buildGameObject(string gameObjectId, int xMapPos,
 	//Get pointer to the texture
 	gameObject->staticTexture = Game::textureManager.getTexture(gameObjectDefinition->texture)->sdlTexture;
 
-	//Build the box2d object
-	if (gameObjectDefinition->isPhysicsObject == true)
-	{
-		gameObject->physicsBody = buildB2Body(gameObjectDefinition);
-		//Add a reference to the gameObject itself to the physics object for collision helping logic later
-		gameObject->physicsBody->SetUserData(gameObject);
-
-	}
-
 	//build the animation objects
 	/*
 	for (auto & gameObjectDefinitionAnimation : gameObjectDefinition->animations) {
@@ -72,8 +83,7 @@ GameObject* GameObjectManager::buildGameObject(string gameObjectId, int xMapPos,
 	}
 	*/
 
-	return playerObject;
-
+	return gameObject;
 }
 
 
@@ -202,8 +212,6 @@ b2Body * GameObjectManager::buildB2Body(GameObjectDefinition* gameObjectDefiniti
 
 	body->SetLinearDamping(gameObjectDefinition->linearDamping);
 	body->SetAngularDamping(gameObjectDefinition->angularDamping);
-	Game::physicsWorld->SetAutoClearForces(true);
-
 	
 	this->box2dBodyCount++;
 	return body;
