@@ -8,6 +8,7 @@
 #include <Box2D/Box2D.h>
 
 #include "GameObject.h"
+#include "PlayerObject.h"
 #include "SDL_ttf.h"
 
 //Forward declarations
@@ -26,7 +27,8 @@ public:
 	~TextureManager();
 
 	bool init(SDL_Window*);
-	void renderWorldObject(WorldObject* worldObject);
+	void render(WorldObject* gameObject);
+	void render(PlayerObject* gameObject);
 	bool render(b2Body* body);
 	bool present();
 	bool clear();

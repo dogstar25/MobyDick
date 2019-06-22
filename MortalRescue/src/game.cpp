@@ -72,9 +72,12 @@ bool Game::init()
 		//this->player =
 		//	dynamic_cast<unique_ptr<PlayerObject>>(Game::gameObjectManager.buildGameObject("GINA_64", GameObjectType::PLAYER_OBJECT, 5, 5));
 		//this->player = make_unique<PlayerObject>(Game::gameObjectManager.buildGameObject("GINA_64", GameObjectType::PLAYER_OBJECT, 5, 5));
-		PlayerObject* test = dynamic_cast<PlayerObject*>(Game::gameObjectManager.buildGameObject("GINA_64", GameObjectType::PLAYER_OBJECT, 5, 5));
+		//PlayerObject* test = dynamic_cast<PlayerObject*>(Game::gameObjectManager.buildGameObject("GINA_64", GameObjectType::PLAYER_OBJECT, 5, 5));
 		//this->player = make_unique<PlayerObject>(*test);
-		this->player = unique_ptr<PlayerObject>(test);
+		//this->player = unique_ptr<PlayerObject>(test);
+
+		PlayerObject* player = new PlayerObject("GINA_64", GameObjectType::PLAYER_OBJECT, 5, 5);
+		this->player = unique_ptr<PlayerObject>(player);
 
 		this->player->direction = 0;
 		this->player->strafe = 0;
@@ -278,9 +281,12 @@ void Game::buildLevel(string levelId)
 			if (level->levelObjects[x][y].gameObjectId.empty() == false)
 			{
 				levelObject = &level->levelObjects[x][y];
-				worldObject = dynamic_cast<WorldObject*>(
+				/*worldObject = dynamic_cast<WorldObject*>(
 					Game::gameObjectManager.buildGameObject(levelObject->gameObjectId, GameObjectType::WORLD_OBJECT,
 					x, y, levelObject->angleAdjustment));
+					*/
+
+				worldObject = new WorldObject(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
 
 				//Use the first level object found to determine and store the tile width and height for the map
 				if (level->tileHeight == 0 and level->tileWidth == 0)
@@ -290,9 +296,6 @@ void Game::buildLevel(string levelId)
 				}
 
 				this->gameObjects.push_back(unique_ptr<WorldObject>(worldObject));
-
-				//this->player = unique_ptr<PlayerObject>(move(test));
-
 
 			}
 

@@ -19,9 +19,7 @@ public:
 		
 
 	bool init();
-	b2Body* buildB2Body(GameObjectDefinition*);
 	GameObjectAnimation * buildAnimation(GameObjectDefinition*, string, string, int, float);
-	GameObject* buildGameObject(string , int, int, int, float=.0);
 	void load(string);
 
 	//Map of the definitions of all posible game objects in the game/level

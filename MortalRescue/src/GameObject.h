@@ -30,10 +30,11 @@ class GameObject
 public:
 
 	GameObject();
+	GameObject(string,int,int,int);
 	virtual ~GameObject();
 
-	void update();
-	void render();
+	virtual void update();
+	virtual void render();
 
 	GameObjectDefinition* definition;
 

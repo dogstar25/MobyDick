@@ -35,9 +35,7 @@ void Weapon::fire()
 {
 
 	 //bullet;
-
-	 WorldObject* bullet =
-		dynamic_cast<WorldObject*>(Game::gameObjectManager.buildGameObject(this->bulletGameObjectId, GameObjectType::WORLD_OBJECT, 0, 0, 0));
+	WorldObject* bullet = new WorldObject(this->bulletGameObjectId, 0, 0, 0);
 
 	float dx = this->weaponWieldingObject->physicsBody->GetTransform().p.x + cos(this->weaponWieldingObject->physicsBody->GetAngle() );
 	float dy = this->weaponWieldingObject->physicsBody->GetTransform().p.y + sin(this->weaponWieldingObject->physicsBody->GetAngle() );
