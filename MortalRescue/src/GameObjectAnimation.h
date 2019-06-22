@@ -5,6 +5,9 @@
 #include <chrono>
 
 class GameObject;
+class Game;
+
+extern Game* game;
 
 using namespace std::chrono;
 using namespace std;

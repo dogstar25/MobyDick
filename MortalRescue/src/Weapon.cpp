@@ -5,7 +5,7 @@
 #include "game.h"
 #include <string>
 
-
+extern Game* game;
 
 Weapon::Weapon()
 {
@@ -54,7 +54,11 @@ void Weapon::fire()
 	bullet->physicsBody->SetLinearVelocity(velocityVector);
 	bullet->currentAnimationState = "ACTIVE";
 
-	Game::gameObjects.push_back(unique_ptr<WorldObject>(bullet));
+	//Game::gameObjects.push_back(unique_ptr<WorldObject>(bullet));
+	game->addGameObject(bullet);
+
+	//Game::addGameObject(bullet);
+	
 	
 
 }

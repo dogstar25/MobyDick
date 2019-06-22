@@ -44,7 +44,7 @@ GameObjectAnimation* GameObjectManager::buildAnimation(GameObjectDefinition* gam
 	animation->speed = speed;
 
 	//Get pointer to textture
-	animation->texture = Game::textureManager.getTexture(textureId)->sdlTexture;
+	animation->texture = game->textureManager.getTexture(textureId)->sdlTexture;
 
 	//Calculate how many columns and rows this animation texture has
 	int width, height;
@@ -53,8 +53,8 @@ GameObjectAnimation* GameObjectManager::buildAnimation(GameObjectDefinition* gam
 
 	//Calculate nnumber of rows and columns - remember to convert the gameObject size to pixels first
 	int rows, columns;
-	columns = width / (gameObjectDefinition->xSize * Game::config.scaleFactor);
-	rows = height / (gameObjectDefinition->ySize * Game::config.scaleFactor);
+	columns = width / (gameObjectDefinition->xSize * game->config.scaleFactor);
+	rows = height / (gameObjectDefinition->ySize * game->config.scaleFactor);
 
 	//Calculate top left corner of each animation frame
 	SDL_Point point;
@@ -62,8 +62,8 @@ GameObjectAnimation* GameObjectManager::buildAnimation(GameObjectDefinition* gam
 	for (int rowIdx = 0; rowIdx < rows; rowIdx++) {
 		for (int colIdx = 0; colIdx < columns; colIdx++) {
 
-			point.x = colIdx * (gameObjectDefinition->xSize * Game::config.scaleFactor);
-			point.y = rowIdx * (gameObjectDefinition->ySize * Game::config.scaleFactor);
+			point.x = colIdx * (gameObjectDefinition->xSize * game->config.scaleFactor);
+			point.y = rowIdx * (gameObjectDefinition->ySize * game->config.scaleFactor);
 			//animation->animationFramePositions[frameCount] = point;
 			animation->animationFramePositions.push_back(point);
 
@@ -116,7 +116,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 			//color
 			if (itr["primativeColor"]["random"].asBool() == true)
 			{
-				gameObjectDefinition->primativeColor = Game::util.generateRandomColor();
+				gameObjectDefinition->primativeColor = game->util.generateRandomColor();
 			}
 			else
 			{

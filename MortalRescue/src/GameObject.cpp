@@ -25,7 +25,7 @@ GameObject::GameObject()
 
 GameObject::GameObject(string gameObjectId, int xMapPos, int yMapPos, int angleAdjust)
 {
-	this->definition = Game::gameObjectManager.gameObjectDefinitions[gameObjectId];;
+	this->definition = game->gameObjectManager.gameObjectDefinitions[gameObjectId];;
 
 	//Apply gameobject definition overrides values if passed
 	// usually for particular game tile position and angle
@@ -44,7 +44,7 @@ GameObject::GameObject(string gameObjectId, int xMapPos, int yMapPos, int angleA
 	this->definition->initPosY = (yMapPos * this->definition->ySize) + (this->definition->ySize / 2);
 
 	//Get pointer to the texture
-	this->staticTexture = Game::textureManager.getTexture(this->definition->texture)->sdlTexture;
+	this->staticTexture = game->textureManager.getTexture(this->definition->texture)->sdlTexture;
 
 }
 

@@ -15,8 +15,11 @@
 class GameObject;
 class Texture;
 class WorldObject;
+class Game;
 
 using namespace std;
+
+extern Game* game;
 
 class TextureManager
 {

@@ -8,20 +8,6 @@
 #include "Util.h"
 #include "Camera.h"
 #include "Weapon.h"
-//#include "vld.h"
-
-
-
-Clock Game::clock;
-Util Game::util;
-TextureManager Game::textureManager;
-GameObjectManager Game::gameObjectManager;
-LevelManager Game::levelManager;
-Config Game::config;
-Camera Game::camera;
-SDL_Rect Game::worldBounds;
-b2World* Game::physicsWorld;
-vector<unique_ptr<GameObject>> Game::gameObjects;
 
 using namespace chrono_literals;
 
@@ -48,10 +34,10 @@ bool Game::init()
 			this->camera.frame.h,
 			SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 
-		//Initialize the textture manager
+		//Initialize the texture manager
 		this->textureManager.init(pWindow);
 
-		// Construct a world object, which will hold and simulate the rigid bodies.
+		// Construct a physics world object, which will hold and simulate the physics objects.
 		this->physicsWorld = new b2World(this->gravity);
 		this->physicsWorld->SetAutoClearForces(true);
 		//Add a collision contact listener
@@ -65,17 +51,9 @@ bool Game::init()
 		}
 
 		//Initilaze the Game Object Manager
-		//This will hold all possible game objects that the game/level supports
 		this->gameObjectManager.init();
 
 		//Create the main player object
-		//this->player =
-		//	dynamic_cast<unique_ptr<PlayerObject>>(Game::gameObjectManager.buildGameObject("GINA_64", GameObjectType::PLAYER_OBJECT, 5, 5));
-		//this->player = make_unique<PlayerObject>(Game::gameObjectManager.buildGameObject("GINA_64", GameObjectType::PLAYER_OBJECT, 5, 5));
-		//PlayerObject* test = dynamic_cast<PlayerObject*>(Game::gameObjectManager.buildGameObject("GINA_64", GameObjectType::PLAYER_OBJECT, 5, 5));
-		//this->player = make_unique<PlayerObject>(*test);
-		//this->player = unique_ptr<PlayerObject>(test);
-
 		PlayerObject* player = new PlayerObject("GINA_64", GameObjectType::PLAYER_OBJECT, 5, 5);
 		this->player = unique_ptr<PlayerObject>(player);
 
@@ -91,7 +69,7 @@ bool Game::init()
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 
 		//Load level 1
-		Game::levelManager.loadLevel("TX_LEVEL1");
+		this->levelManager.loadLevel("TX_LEVEL1");
 		this->buildLevel("TX_LEVEL1");
 
 		this->initWorldBounds();
@@ -100,13 +78,13 @@ bool Game::init()
 		this->camera.init(&this->worldBounds);
 
 		//set camera to center on player object
-		this->camera.setPosition((this->player->physicsBody->GetPosition().x *  Game::config.scaleFactor) -
+		this->camera.setPosition((this->player->physicsBody->GetPosition().x *  this->config.scaleFactor) -
 			(camera.frame.w / 2),
-			(this->player->physicsBody->GetPosition().y *  Game::config.scaleFactor) -
+			(this->player->physicsBody->GetPosition().y *  this->config.scaleFactor) -
 			(camera.frame.h / 2));
 
 		//Initialize the clock object
-		clock.init();
+		this->clock.init();
 
 		//initialize settings menu
 		this->settings.init();
@@ -126,10 +104,10 @@ void Game::play()
 
 	//Capture the amount of time that has passed since last loop and accumulate time for both
 	//the FPS calculation and the game loop timer
-	clock.tick();
+	this->clock.tick();
 
 	//Only update and render if we have passed the 60 fps time passage
-	if (clock.gameloop_time_accum >= milisecsPerUpdate)
+	if (this->clock.gameloop_time_accum >= milisecsPerUpdate)
 	{
 		//Handle updating objects positions and physics
 		update();
@@ -138,9 +116,9 @@ void Game::play()
 		render();
 
 		//Increment frame counter and calculate FPS and reset the gameloop timer
-		clock.current_frame_cnt++;
-		clock.calcFps();
-		clock.resetGameLoopTimeAccum();
+		this->clock.current_frame_cnt++;
+		this->clock.calcFps();
+		this->clock.resetGameLoopTimeAccum();
 	}
 
 }
@@ -163,19 +141,19 @@ void Game::update() {
 	this->player->update();
 
 	//Update the camera frame to point to the new player position
-	this->camera.setPosition((this->player->physicsBody->GetPosition().x *  Game::config.scaleFactor) -
+	this->camera.setPosition((this->player->physicsBody->GetPosition().x *  this->config.scaleFactor) -
 		(camera.frame.w / 2),
-		(this->player->physicsBody->GetPosition().y *  Game::config.scaleFactor) -
+		(this->player->physicsBody->GetPosition().y *  this->config.scaleFactor) -
 		(camera.frame.h / 2));
 
 	//Update all of the other non player related update chores for each game object
 	this->awakeCount=0;
 	for (auto & gameObject : gameObjects)
 	{
-
 		gameObject->update();
 	}
 	
+	//Step the box2d physics world
 	this->physicsWorld->Step(this->timeStep, this->velocityIterations, this->positionIterations);
 
 }
@@ -203,6 +181,18 @@ void Game::render() {
 	Game::textureManager.present();
 
 }
+
+void Game::addGameObject(GameObject* gameObject)
+{
+	this->gameObjects.push_back(unique_ptr<GameObject>(gameObject));
+
+
+}
+void Game::addGameObject(WorldObject* gameObject)
+{
+	this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
+}
+
 
 bool Game::getConfig()
 {
@@ -254,7 +244,7 @@ void Game::handleEvents() {
 		case SDL_MOUSEBUTTONDOWN:
 			//this->testBlocks(&event, this->physicsWorld);
 			this->player->weapon->fire();
-			std::cout << "FPS is " << Game::clock.fps << "\n";
+			std::cout << "FPS is " << this->clock.fps << "\n";
 			std::cout << "bodycount is " << Game::gameObjectManager.box2dBodyCount << "\n";
 			std::cout << "gameobject count is " << Game::gameObjects.size() << "\n";
 			break;
@@ -267,7 +257,7 @@ void Game::handleEvents() {
 void Game::buildLevel(string levelId)
 {
 	this->currentLevel = levelId;
-	Level* level = Game::levelManager.levels[levelId];
+	Level* level = this->levelManager.levels[levelId];
 	LevelObject* levelObject;
 	//unique_ptr<WorldObject> worldObject;
 	WorldObject* worldObject;
@@ -281,28 +271,21 @@ void Game::buildLevel(string levelId)
 			if (level->levelObjects[x][y].gameObjectId.empty() == false)
 			{
 				levelObject = &level->levelObjects[x][y];
-				/*worldObject = dynamic_cast<WorldObject*>(
-					Game::gameObjectManager.buildGameObject(levelObject->gameObjectId, GameObjectType::WORLD_OBJECT,
-					x, y, levelObject->angleAdjustment));
-					*/
-
 				worldObject = new WorldObject(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
 
 				//Use the first level object found to determine and store the tile width and height for the map
 				if (level->tileHeight == 0 and level->tileWidth == 0)
 				{
-					level->tileWidth = worldObject->definition->xSize * Game::config.scaleFactor;
-					level->tileHeight = worldObject->definition->ySize * Game::config.scaleFactor;
+					level->tileWidth = worldObject->definition->xSize * this->config.scaleFactor;
+					level->tileHeight = worldObject->definition->ySize * this->config.scaleFactor;
 				}
 
-				this->gameObjects.push_back(unique_ptr<WorldObject>(worldObject));
+				this->addGameObject(worldObject);
 
 			}
 
 		}
 	}
-
-	int todd = 1;
 }
 
 void Game::initWorldBounds()

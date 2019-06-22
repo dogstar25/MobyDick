@@ -36,8 +36,8 @@ void LevelManager::loadLevel(string levelId)
 	SDL_Surface* surface;
 
 	//I am representing the level grid as a png image file 
-	levelImage = Game::textureManager.getTexture(levelId)->sdlTexture;
-	surface = Game::textureManager.getTexture(levelId)->surface;
+	levelImage = game->textureManager.getTexture(levelId)->sdlTexture;
+	surface = game->textureManager.getTexture(levelId)->surface;
 
 	//Create the level object
 	Level* level = new Level();

@@ -10,6 +10,8 @@
 class GameObjectDefinition;
 class Weapon;
 
+extern Game* game;
+
 using namespace std;
 
 /*

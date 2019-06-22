@@ -9,6 +9,7 @@ class GameObjectDefinition;
 class GameObject;
 class GameObjectAnimation;
 
+extern Game* game;
 using namespace std;
 
 class GameObjectManager

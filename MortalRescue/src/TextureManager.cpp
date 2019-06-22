@@ -36,10 +36,10 @@ void TextureManager::render(WorldObject* gameObject)
 	SDL_Rect srcRect, destRect;
 
 	//calculate the destination rectangle - must convert meters to pixels with scale factor
-	destRect.w = (gameObject->definition->xSize * Game::config.scaleFactor);
-	destRect.h = (gameObject->definition->ySize * Game::config.scaleFactor);
-	destRect.x = round((gameObject->physicsBody->GetPosition().x *  Game::config.scaleFactor) - (destRect.w / 2));
-	destRect.y = round((gameObject->physicsBody->GetPosition().y *  Game::config.scaleFactor) - (destRect.h / 2));
+	destRect.w = (gameObject->definition->xSize * game->config.scaleFactor);
+	destRect.h = (gameObject->definition->ySize * game->config.scaleFactor);
+	destRect.x = round((gameObject->physicsBody->GetPosition().x *  game->config.scaleFactor) - (destRect.w / 2));
+	destRect.y = round((gameObject->physicsBody->GetPosition().y *  game->config.scaleFactor) - (destRect.h / 2));
 
 
 	float angle = gameObject->physicsBody->GetAngle();
@@ -49,8 +49,8 @@ void TextureManager::render(WorldObject* gameObject)
 	//this->angle = angle;
 
 	//Adjust position based on current camera position - offset
-	destRect.x -= Game::camera.frame.x;
-	destRect.y -= Game::camera.frame.y;
+	destRect.x -= game->camera.frame.x;
+	destRect.y -= game->camera.frame.y;
 
 	//If this is a primitive shape object just drawa a rectangle
 	if (gameObject->definition->isPrimitiveShape == true)
@@ -90,56 +90,7 @@ void TextureManager::render(WorldObject* gameObject)
 void TextureManager::render(PlayerObject* gameObject)
 {
 
-	SDL_Rect srcRect, destRect;
-
-	//calculate the destination rectangle - must convert meters to pixels with scale factor
-	destRect.w = (gameObject->definition->xSize * Game::config.scaleFactor);
-	destRect.h = (gameObject->definition->ySize * Game::config.scaleFactor);
-	destRect.x = round((gameObject->physicsBody->GetPosition().x *  Game::config.scaleFactor) - (destRect.w / 2));
-	destRect.y = round((gameObject->physicsBody->GetPosition().y *  Game::config.scaleFactor) - (destRect.h / 2));
-
-
-	float angle = gameObject->physicsBody->GetAngle();
-
-	angle = angle * 180 / M_PI;
-	angle = angle += gameObject->angleAdjustment;
-	//this->angle = angle;
-
-	//Adjust position based on current camera position - offset
-	destRect.x -= Game::camera.frame.x;
-	destRect.y -= Game::camera.frame.y;
-
-	//If this is a primitive shape object just drawa a rectangle
-	if (gameObject->definition->isPrimitiveShape == true)
-	{
-		SDL_SetRenderDrawColor(pRenderer,
-			gameObject->definition->primativeColor.r,
-			gameObject->definition->primativeColor.g,
-			gameObject->definition->primativeColor.b,
-			gameObject->definition->primativeColor.a);
-		SDL_RenderFillRect(pRenderer, &destRect);
-		//drawPoly(gameObject->physicsBody);
-	}
-	else
-	{
-		//If this is animated object then get its current animation frame texture, 
-		// otherwise get its static texture
-		SDL_Texture* texure = NULL;
-		SDL_Rect *textureSourceRect = NULL;
-		if (gameObject->definition->isAnimated) {
-
-			texure = gameObject->definition->animations[gameObject->currentAnimationState]->texture;
-			textureSourceRect = &gameObject->definition->animations[gameObject->currentAnimationState]->currentTextureAnimationSrcRect;
-		}
-		else {
-
-			texure = gameObject->staticTexture;
-		}
-
-		//Render th the page
-		SDL_RenderCopyEx(pRenderer, texure, textureSourceRect, &destRect, angle,
-			NULL, SDL_FLIP_NONE);
-	}
+	this->render(static_cast<WorldObject*>(gameObject));
 
 
 }
@@ -269,8 +220,8 @@ void TextureManager::drawPoly(b2Body* body)
 				firstFound = true;
 			}
 
-			point.x = vector.x * Game::config.scaleFactor;
-			point.y = vector.y * Game::config.scaleFactor;
+			point.x = vector.x * game->config.scaleFactor;
+			point.y = vector.y * game->config.scaleFactor;
 			points[i] = point;
 		}
 

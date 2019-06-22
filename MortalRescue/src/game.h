@@ -14,6 +14,7 @@
 
 #include "Util.h"
 #include "TextureManager.h"
+#include "LevelManager.h"
 #include "GameObjectManager.h"
 #include "GameObjectContactListener.h"
 #include "Camera.h"
@@ -22,98 +23,6 @@
 
 //wow!
 //#include <gl/GL.h>
-
-
-//forward declations
-struct Clock;
-struct Config;
-class PlayerObject;
-class LevelManager;
-class GameObject;
-
-using namespace std;
-using namespace std::chrono;
-
-
-class Game {
-
-public:
-	Game();
-	~Game();
-
-
-	void play();
-	void settingsMenu();
-
-
-	bool init();
-	void render();
-	void update();
-	void handleEvents();
-	void buildLevel(string);
-	void initWorldBounds();
-
-	//Current Game State
-	int gameState;
-
-	int fps, awakeCount, gameLoopStep;
-	string currentLevel;
-	DebugDraw debugDraw;
-
-	static Clock clock;
-	static Util util;
-	static TextureManager textureManager;
-	static GameObjectManager gameObjectManager;
-	static LevelManager levelManager;
-	static Config config;
-	static Camera camera;
-	static SDL_Rect worldBounds;
-	static b2World* physicsWorld;
-	static vector <unique_ptr<GameObject>> gameObjects;
-
-	/*
-	Main Game State
-	*/
-	enum State {
-
-		QUIT = 0,
-		PLAY = 1,
-		PAUSE = 2,
-		SETTINGS = 3
-
-	};
-
-	
-private:
-	//Main screen and window stuff
-	SDL_Window* pWindow;
-	string gameTitle;
-	Uint32 windowXpos= SDL_WINDOWPOS_CENTERED, windowYPos= SDL_WINDOWPOS_CENTERED;
-	Uint32 windowFlags= SDL_WINDOW_RESIZABLE;
-	float mouseSensitivity;
-
-	//Vector of all game objects
-	//vector<GameObject*> gameObjects;
-	//GameObject* player;
-	unique_ptr<PlayerObject> player;
-
-	//Collision contact listener
-	GameObjectContactListener gameObjectContactListner;
-
-	//Settings Object
-	Settings settings;
-
-	//Box2d Physics
-	b2Vec2 gravity;
-	bool debugDrawMode;
-	float timeStep;
-	int velocityIterations,
-		positionIterations;
-
-	//Private Methods
-	bool getConfig();
-
-};
 
 struct Clock
 {
@@ -166,5 +75,93 @@ public:
 	float32 mouseSensitivity;
 
 };
+
+//forward declations
+class PlayerObject;
+class GameObject;
+
+using namespace std;
+using namespace std::chrono;
+
+
+class Game {
+
+/*
+Main Game State
+*/
+
+
+public:
+
+	enum State {
+
+		QUIT = 0,
+		PLAY = 1,
+		PAUSE = 2,
+		SETTINGS = 3
+
+	};
+
+	Game();
+	~Game();
+
+	void play();
+	void settingsMenu();
+
+	bool init();
+	void render();
+	void update();
+	void handleEvents();
+	void buildLevel(string);
+	void initWorldBounds();
+	void addGameObject(GameObject* gameObject);
+	void addGameObject(WorldObject* gameObject);
+	bool getConfig();
+
+	//Current Game State
+	int gameState;
+
+	int fps, awakeCount, gameLoopStep;
+	string currentLevel;
+	DebugDraw debugDraw;
+
+	Clock clock;
+	Util util;
+	TextureManager textureManager;
+	GameObjectManager gameObjectManager;
+	LevelManager levelManager;
+	GameObjectContactListener gameObjectContactListner;
+
+	Config config;
+	Camera camera;
+	SDL_Rect worldBounds;
+	b2World* physicsWorld;
+	
+	//Main screen and window stuff
+	SDL_Window* pWindow;
+	string gameTitle;
+	Uint32 windowXpos= SDL_WINDOWPOS_CENTERED, windowYPos= SDL_WINDOWPOS_CENTERED;
+	Uint32 windowFlags= SDL_WINDOW_RESIZABLE;
+	float mouseSensitivity;
+
+	//Vector of all game objects
+	vector <unique_ptr<GameObject>> gameObjects;
+	unique_ptr<PlayerObject> player;
+
+	//Settings Object
+	Settings settings;
+
+	//Box2d Physics
+	b2Vec2 gravity;
+	bool debugDrawMode;
+	float timeStep;
+	int velocityIterations,
+		positionIterations;
+
+
+};
+
+
+
 
 

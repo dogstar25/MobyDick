@@ -5,6 +5,7 @@ using namespace std;
 
 class GameObject;
 class PlayerObject;
+class Game;
 
 class Weapon
 {

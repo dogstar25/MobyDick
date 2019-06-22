@@ -46,7 +46,7 @@ void WorldObject::update()
 void WorldObject::render()
 {
 
-	Game::textureManager.render(this);
+	game->textureManager.render(this);
 }
 
 b2Body * WorldObject::buildB2Body(GameObjectDefinition* gameObjectDefinition)
@@ -67,7 +67,7 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* gameObjectDefinition)
 	}
 
 	bodyDef.position.Set(gameObjectDefinition->initPosX, gameObjectDefinition->initPosY);
-	b2Body* body = Game::physicsWorld->CreateBody(&bodyDef);
+	b2Body* body = game->physicsWorld->CreateBody(&bodyDef);
 
 	b2Shape* shape;
 	b2PolygonShape box;

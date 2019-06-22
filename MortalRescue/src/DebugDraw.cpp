@@ -3,6 +3,8 @@
 
 #include <SDL.h>
 
+extern Game* game;
+
 void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
 
@@ -30,12 +32,12 @@ void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, cons
 		b2Vec2 vector = vertices[i];
 
 		//Adjust points based on Gamescale
-		point.x = vector.x * Game::config.scaleFactor;
-		point.y = vector.y * Game::config.scaleFactor;
+		point.x = vector.x * game->config.scaleFactor;
+		point.y = vector.y * game->config.scaleFactor;
 
 		//Adjust position based on current camera position - offset
-		point.x -= Game::camera.frame.x;
-		point.y -= Game::camera.frame.y;
+		point.x -= game->camera.frame.x;
+		point.y -= game->camera.frame.y;
 
 		//If this is the first point, then save it
 		if (firstFound == false) {
@@ -50,7 +52,7 @@ void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, cons
 	//Add the first point to the end to complete closed shape
 	points[vertexCount] = firstPoint;
 
-	Game::textureManager.drawPoints(points);
+	game->textureManager.drawPoints(points);
 
 	delete[] points;
 }
@@ -66,13 +68,13 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Ve
 
 	//convert to propert game scale
 	b2Vec2 newCenter = center;
-	newCenter.x *= Game::config.scaleFactor;
-	newCenter.y *= Game::config.scaleFactor;
-	radius *= Game::config.scaleFactor;
+	newCenter.x *= game->config.scaleFactor;
+	newCenter.y *= game->config.scaleFactor;
+	radius *= game->config.scaleFactor;
 
 	//Adjust position based on current camera position - offset
-	newCenter.x -= Game::camera.frame.x;
-	newCenter.y -= Game::camera.frame.y;
+	newCenter.x -= game->camera.frame.x;
+	newCenter.y -= game->camera.frame.y;
 
 	int  sides = (2 * M_PI) * radius / 2;
 
@@ -91,7 +93,7 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Ve
 		end = end + newCenter;
 		angle += d_a;
 		
-		Game::textureManager.drawLine(start, end);
+		game->textureManager.drawLine(start, end);
 	}
 
 
