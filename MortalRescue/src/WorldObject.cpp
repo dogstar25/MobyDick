@@ -16,6 +16,8 @@ WorldObject::WorldObject(string gameObjectId, int xMapPos, int yMapPos, int angl
 	if (this->definition->isPhysicsObject == true)
 	{
 		this->physicsBody = buildB2Body(this->definition);
+		b2Vec2 positionVector = b2Vec2( this->xPos, this->yPos);
+		this->physicsBody->SetTransform(positionVector, angleAdjust * DEGTORAD);
 		//Add a reference to the gameObject itself to the physics object for collision helping logic later
 		this->physicsBody->SetUserData(this);
 
@@ -66,20 +68,19 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* gameObjectDefinition)
 		bodyDef.type = b2_dynamicBody;
 	}
 
-	bodyDef.position.Set(gameObjectDefinition->initPosX, gameObjectDefinition->initPosY);
+	//Default the position to zero.
+	bodyDef.position.SetZero();
 	b2Body* body = game->physicsWorld->CreateBody(&bodyDef);
 
 	b2Shape* shape;
 	b2PolygonShape box;
 	b2CircleShape circle;
 
-	//Temp - Circle shape for player
-	if (gameObjectDefinition->id == "GINA_64") {
-
-		//circle.m_p.Set(2.0f, 3.0f);
-		circle.m_radius = .96f;
+	//Collision shape - will default to a rectangle
+	if(gameObjectDefinition->collisionShape.compare("B2_CIRCLE") == 0) 
+	{
+		circle.m_radius = gameObjectDefinition->collisionRadius;
 		shape = &circle;
-
 	}
 	else
 	{
@@ -88,7 +89,6 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* gameObjectDefinition)
 		float32 YSize = gameObjectDefinition->ySize / 2;
 		box.SetAsBox(xSize, YSize);
 		shape = &box;
-		//std::cout << "BuildBox size for " << gameObjectDefinition->id << " was " << xSize << "\n";
 	}
 
 	// Define the body fixture.
@@ -99,13 +99,6 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* gameObjectDefinition)
 	fixtureDef.density = gameObjectDefinition->density;
 	fixtureDef.friction = gameObjectDefinition->friction;
 	fixtureDef.restitution = 0.0;
-
-	/*
-	if (gameObjectDefinition->id == "BULLET2")
-	{
-		fixtureDef.filter.groupIndex = -1;
-	}
-	*/
 
 	// Add the shape to the body.
 	body->CreateFixture(&fixtureDef);

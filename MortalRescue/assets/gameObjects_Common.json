@@ -20,11 +20,13 @@
       "description": "Player Pistol Lady",
       "xSize": 2.56,
       "ySize": 2.56,
-      "speed": 0.5, //change name to walkforce
+      "speed": 9.5, //change name to walkforce
       "physicsObject": {
         "type": "B2_DYNAMIC",
+        "collisionShape": "B2_CIRCLE",
+        "collisionRadius":  0.96,
         "friction": 0.0,
-        "density": 1.5,
+        "density": 5.5,
         "linearDamping": 0.2,
         "angularDamping": 0.5
       },
@@ -34,7 +36,14 @@
           "texture": "TX_PISTOLLADY_64_RUN",
           "speed": 0.03, //time in seconds for each frame. Lower the faster
           "frames": 16
+        },
+        {
+          "id": "IDLE",
+          "texture": "TX_GINA_64_IDLE",
+          "speed": 0.10, //time in seconds for each frame. Lower the faster
+          "frames": 1
         }
+
       ]
     },
     {
@@ -165,6 +174,8 @@
       "description": "Gina 64",
       "physicsObject": {
         "type": "B2_DYNAMIC",
+        "collisionShape": "B2_CIRCLE",
+        "collisionRadius": 0.96,
         "friction": 0.0,
         "density": 5.5,
         "linearDamping": 0.2,

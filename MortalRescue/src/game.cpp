@@ -55,6 +55,7 @@ bool Game::init()
 
 		//Create the main player object
 		PlayerObject* player = new PlayerObject("GINA_64", GameObjectType::PLAYER_OBJECT, 5, 5);
+
 		this->player = unique_ptr<PlayerObject>(player);
 
 		this->player->direction = 0;

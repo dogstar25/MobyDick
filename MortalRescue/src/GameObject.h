@@ -8,7 +8,6 @@
 
 //Forward declarations
 class GameObjectDefinition;
-class Weapon;
 
 extern Game* game;
 
@@ -25,7 +24,14 @@ enum GameObjectType {
 	UI_OBJECT = 3
 
 };
+enum GameObjectShape {
 
+	RECTANGLE = 0,
+	CIRCLE = 1
+
+};
+
+static const float DEGTORAD = 0.0174532925199432957f;
 
 class GameObject
 {
@@ -40,10 +46,11 @@ public:
 
 	GameObjectDefinition* definition;
 
+	float xPos, yPos, angle;
 	string 	currentAnimationState;
-	float angleAdjustment; //When rendering this object, adjust the angle by this degree. Added for reusing wall textures
 
 	SDL_Texture* staticTexture; //Used if this is not an animated object
+	
 	
 
 };
@@ -58,17 +65,17 @@ public:
 	float
 		xSize,
 		ySize,
-		initPosX,
-		initPosY,
 		speed,
 		friction,
 		density,
 		linearDamping,
+		collisionRadius,
 		angularDamping;
 	string
 		id,
 		description,
 		physicsType,
+		collisionShape,
 		texture;
 	bool
 		isAnimated,

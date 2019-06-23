@@ -41,12 +41,9 @@ void TextureManager::render(WorldObject* gameObject)
 	destRect.x = round((gameObject->physicsBody->GetPosition().x *  game->config.scaleFactor) - (destRect.w / 2));
 	destRect.y = round((gameObject->physicsBody->GetPosition().y *  game->config.scaleFactor) - (destRect.h / 2));
 
-
+	//Get the angle of the object and convert it from Radians to Degrees for SDL
 	float angle = gameObject->physicsBody->GetAngle();
-
 	angle = angle * 180 / M_PI;
-	angle = angle += gameObject->angleAdjustment;
-	//this->angle = angle;
 
 	//Adjust position based on current camera position - offset
 	destRect.x -= game->camera.frame.x;
@@ -79,7 +76,7 @@ void TextureManager::render(WorldObject* gameObject)
 			texure = gameObject->staticTexture;
 		}
 
-		//Render th the page
+		//Render the texture
 		SDL_RenderCopyEx(pRenderer, texure, textureSourceRect, &destRect, angle,
 			NULL, SDL_FLIP_NONE);
 	}

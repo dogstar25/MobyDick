@@ -28,7 +28,7 @@
       "id": "TX_PISTOLLADY_64_RUN",
       "description": "Pistol Lady Run 64px",
       "filename": "assets/pistolLady64_Run.png",
-      "retainSurface": false
+      "retainSurface": true
     },
     {
       "id": "TX_PISTOLLADY_128_RUN",

@@ -54,11 +54,7 @@ void Weapon::fire()
 	bullet->physicsBody->SetLinearVelocity(velocityVector);
 	bullet->currentAnimationState = "ACTIVE";
 
-	//Game::gameObjects.push_back(unique_ptr<WorldObject>(bullet));
+	//Add the bullet object to the main gameObject collection
 	game->addGameObject(bullet);
-
-	//Game::addGameObject(bullet);
-	
-	
 
 }

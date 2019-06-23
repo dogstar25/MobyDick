@@ -136,6 +136,8 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 			gameObjectDefinition->linearDamping = itr["physicsObject"]["linearDamping"].asFloat();
 			gameObjectDefinition->angularDamping = itr["physicsObject"]["angularDamping"].asFloat();
 			gameObjectDefinition->physicsType = itr["physicsObject"]["type"].asString();
+			gameObjectDefinition->collisionShape = itr["physicsObject"]["collisionShape"].asString();
+			gameObjectDefinition->collisionRadius = itr["physicsObject"]["collisionRadius"].asFloat();
 
 		}
 
