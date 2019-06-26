@@ -15,12 +15,6 @@ void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2C
 void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
 
-	/*
-	
-	THIS IS ACTUALLY DRAWING A POLY OUTLINE
-	
-	*/
-
 	SDL_Point *points = new SDL_Point[vertexCount + 1];
 
 	SDL_Point firstPoint;

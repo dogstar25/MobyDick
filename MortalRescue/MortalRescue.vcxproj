@@ -219,9 +219,11 @@
     <None Include="assets\textureAssets.json" />
     <None Include="assets\gameConfig.json" />
     <None Include="assets\textureAssets_Test.json" />
+    <None Include="libfreetype-6.dll" />
     <None Include="libpng16-16.dll" />
     <None Include="SDL2.dll" />
     <None Include="SDL2_image.dll" />
+    <None Include="SDL2_ttf.dll" />
     <None Include="zlib1.dll" />
   </ItemGroup>
   <ItemGroup>

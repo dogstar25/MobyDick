@@ -56,7 +56,7 @@ bool Game::init()
 		//Create the main player object
 		PlayerObject* player = new PlayerObject("GINA_64", GameObjectType::PLAYER_OBJECT, 5, 5);
 
-		this->player = unique_ptr<PlayerObject>(player);
+		this->player = make_unique<PlayerObject>(*player);
 
 		this->player->direction = 0;
 		this->player->strafe = 0;
@@ -185,13 +185,14 @@ void Game::render() {
 
 void Game::addGameObject(GameObject* gameObject)
 {
-	this->gameObjects.push_back(unique_ptr<GameObject>(gameObject));
+	this->gameObjects.push_back(make_unique<GameObject>(*gameObject));
 
 
 }
 void Game::addGameObject(WorldObject* gameObject)
 {
-	this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
+	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
+	this->gameObjects.push_back(make_unique<WorldObject>(*gameObject));
 }
 
 

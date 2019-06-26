@@ -127,6 +127,8 @@
     <None Include="assets\gameObjects_Level1.json" />
     <None Include="assets\gameObjects_Test.json" />
     <None Include="assets\textureAssets_Test.json" />
+    <None Include="libfreetype-6.dll" />
+    <None Include="SDL2_ttf.dll" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png">

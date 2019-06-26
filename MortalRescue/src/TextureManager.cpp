@@ -11,18 +11,12 @@
 
 
 
-
-
-
 bool TextureManager::init(SDL_Window* pWindow)
 {
 
 	//Create the main renderer
 	pRenderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 0);
-
-	//SDL_RenderSetScale(pRenderer, (1/Game::config.scaleFactor), (1/Game::config.scaleFactor));
-	//SDL_RenderSetScale(pRenderer, 2 ,2);
 
 	//Load all of the textures for the game
 	loadTextures();
@@ -49,38 +43,23 @@ void TextureManager::render(WorldObject* gameObject)
 	destRect.x -= game->camera.frame.x;
 	destRect.y -= game->camera.frame.y;
 
-	//If this is a primitive shape object just drawa a rectangle
-	if (gameObject->definition->isPrimitiveShape == true)
-	{
-		SDL_SetRenderDrawColor(pRenderer,
-			gameObject->definition->primativeColor.r,
-			gameObject->definition->primativeColor.g,
-			gameObject->definition->primativeColor.b,
-			gameObject->definition->primativeColor.a);
-		SDL_RenderFillRect(pRenderer, &destRect);
-		//drawPoly(gameObject->physicsBody);
+	//If this is animated object then get its current animation frame texture, 
+	// otherwise get its static texture
+	SDL_Texture* texure = NULL;
+	SDL_Rect *textureSourceRect = NULL;
+	if (gameObject->definition->isAnimated) {
+
+		texure = gameObject->definition->animations[gameObject->currentAnimationState]->texture;
+		textureSourceRect = &gameObject->definition->animations[gameObject->currentAnimationState]->currentTextureAnimationSrcRect;
 	}
-	else
-	{
-		//If this is animated object then get its current animation frame texture, 
-		// otherwise get its static texture
-		SDL_Texture* texure = NULL;
-		SDL_Rect *textureSourceRect = NULL;
-		if (gameObject->definition->isAnimated) {
+	else {
 
-			texure = gameObject->definition->animations[gameObject->currentAnimationState]->texture;
-			textureSourceRect = &gameObject->definition->animations[gameObject->currentAnimationState]->currentTextureAnimationSrcRect;
-		}
-		else {
-
-			texure = gameObject->staticTexture;
-		}
-
-		//Render the texture
-		SDL_RenderCopyEx(pRenderer, texure, textureSourceRect, &destRect, angle,
-			NULL, SDL_FLIP_NONE);
+		texure = gameObject->staticTexture;
 	}
 
+	//Render the texture
+	SDL_RenderCopyEx(pRenderer, texure, textureSourceRect, &destRect, angle,
+		NULL, SDL_FLIP_NONE);
 
 }
 
