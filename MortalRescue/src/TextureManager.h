@@ -32,6 +32,7 @@ public:
 	bool init(SDL_Window*);
 	void render(WorldObject* gameObject);
 	void render(PlayerObject* gameObject);
+	void render(GameObject* gameObject);
 	bool render(b2Body* body);
 	bool present();
 	bool clear();
@@ -46,7 +47,6 @@ private:
 
 	SDL_Renderer* pRenderer;
 	map<string, unique_ptr<Texture>> textureMap;
-	map<string, TTF_Font*> fontMap;
 	bool loadTextures();
 	
 };

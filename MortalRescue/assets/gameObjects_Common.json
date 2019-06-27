@@ -24,7 +24,7 @@
       "physicsObject": {
         "type": "B2_DYNAMIC",
         "collisionShape": "B2_CIRCLE",
-        "collisionRadius":  0.96,
+        "collisionRadius": 0.96,
         "friction": 0.0,
         "density": 5.5,
         "linearDamping": 0.2,
@@ -134,7 +134,7 @@
     {
       "id": "BULLET1",
       "description": "Bullet 1",
-      "speed":  25,
+      "speed": 25,
       "physicsObject": {
         "type": "B2_DYNAMIC",
         "friction": 0.0,
@@ -199,9 +199,12 @@
         }
 
       ]
+    },
+    {
+      "id": "FPS_LABEL",
+      "description": "FPA Label",
+      "texture": "TX_DEBUG_FPS_LABEL"
     }
-
-
 
   ]
 }

@@ -213,12 +213,10 @@
   <ItemGroup>
     <None Include="assets\gameObjects_Common.json" />
     <None Include="assets\gameObjects_Level1.json" />
-    <None Include="assets\gameObjects_Test.json" />
     <None Include="assets\level1.ase" />
     <None Include="assets\level_test.ase" />
     <None Include="assets\textureAssets.json" />
     <None Include="assets\gameConfig.json" />
-    <None Include="assets\textureAssets_Test.json" />
     <None Include="libfreetype-6.dll" />
     <None Include="libpng16-16.dll" />
     <None Include="SDL2.dll" />

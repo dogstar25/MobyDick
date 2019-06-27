@@ -23,6 +23,9 @@ bool Game::init()
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
+		//Init font library
+		TTF_Init();
+
 		//Init Game State
 		this->gameState = this->PLAY;
 
@@ -54,7 +57,7 @@ bool Game::init()
 		this->gameObjectManager.init();
 
 		//Create the main player object
-		PlayerObject* player = new PlayerObject("GINA_64", GameObjectType::PLAYER_OBJECT, 5, 5);
+		PlayerObject* player = new PlayerObject("GINA_64", 5, 5, 0);
 
 		this->player = make_unique<PlayerObject>(*player);
 
@@ -64,6 +67,18 @@ bool Game::init()
 		// Add a weapon that will have bullet origin that is located half way
 		// in the X position and halfway in the Y position from this objects origin
 		this->player->addWeapon("BULLET1", .50, .50);
+
+
+
+
+		//CREATE A TEST TEXT ITEM
+		GameObject* textObject = new GameObject("FPS_LABEL", 55, 55, 0);
+		this->addGameObject(textObject);
+
+
+
+
+
 
 		//Set the mouse mode
 		SDL_ShowCursor(false);
@@ -324,6 +339,7 @@ Game::~Game()
 	//Delete SDL stuff
 	SDL_DestroyWindow(this->pWindow);
 	SDL_Quit();
+	TTF_Quit();
 
 	this->gameObjects.clear();
 

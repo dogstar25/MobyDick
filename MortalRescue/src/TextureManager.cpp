@@ -71,6 +71,32 @@ void TextureManager::render(PlayerObject* gameObject)
 
 }
 
+void TextureManager::render(GameObject* gameObject)
+{
+
+	SDL_Rect srcRect, destRect;
+
+	//calculate the destination rectangle - must convert meters to pixels with scale factor
+	int texW = 0;
+	int texH = 0;
+	SDL_QueryTexture(gameObject->staticTexture, NULL, NULL, &texW, &texH);
+
+	destRect.w = texW;
+	destRect.h = texH;
+	destRect.x = gameObject->xPos; //times the map grid size?
+	destRect.y = gameObject->xPos; //times the map grid size?
+
+	SDL_Texture* texure = gameObject->staticTexture;
+	SDL_Rect *textureSourceRect = NULL;
+
+	//Render the texture
+	//SDL_RenderCopy(pRenderer, texure, textureSourceRect, &destRect);
+	SDL_RenderCopyEx(pRenderer, texure, textureSourceRect, &destRect, 0,
+		NULL, SDL_FLIP_NONE);
+
+
+}
+
 bool TextureManager::loadTextures()
 {
 
@@ -90,7 +116,6 @@ bool TextureManager::loadTextures()
 	unique_ptr<Texture> textureObject;
 	TTF_Font* fontObject;
 
-
 	//Loop through every texture defined in the config file, create a texture object
 	//and store it in the main texture map
 	for(auto itr : root["textures"])
@@ -102,9 +127,22 @@ bool TextureManager::loadTextures()
 		filename = itr["filename"].asString();
 		retainSurface = itr["retainSurface"].asBool();
 
-		surface = IMG_Load(filename.c_str());
-		sdlTexture = SDL_CreateTextureFromSurface(this->pRenderer, surface),
+		if (itr["textTexture"].isNull() == false)
+		{
+			SDL_Color color = { 255, 255, 154 };
+			size = itr["textTexture"]["size"].asInt();
+			TTF_Font* fontObject = TTF_OpenFont(filename.c_str(), size);
+			string labelText = itr["textTexture"]["label"].asString();
+			surface = TTF_RenderText_Solid(fontObject, labelText.c_str(), color);
+			TTF_CloseFont(fontObject);
+			string test = TTF_GetError();
+		}
+		else
+		{
+			surface = IMG_Load(filename.c_str());
+		}
 
+		sdlTexture = SDL_CreateTextureFromSurface(this->pRenderer, surface);
 		textureObject->sdlTexture = sdlTexture;
 		if (retainSurface == true)
 		{
@@ -121,18 +159,7 @@ bool TextureManager::loadTextures()
 	}
 
 
-	//Loop through every font defined and store it in the main font map
-	for (auto itr : root["fonts"])
-	{
-		id = itr["id"].asString();
-		filename = itr["filename"].asString();
-		size = itr["size"].asInt();
 
-		TTF_Font* fontObject = TTF_OpenFont(filename.c_str(), size);
-
-		this->fontMap.emplace(id, fontObject);
-
-	}
 
 	return true;
 }
@@ -148,11 +175,6 @@ const Texture * TextureManager::getTexture(string id)
 	}
 
 	return textureObject;
-}
-
-TTF_Font* TextureManager::getFont(string id)
-{
-	return this->fontMap[id];
 }
 
 bool TextureManager::present()

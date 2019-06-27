@@ -16,8 +16,12 @@ void GameObject::update()
 void GameObject::render()
 {
 
+	game->textureManager.render(this);
 
 }
+
+
+
 GameObject::GameObject()
 {
 
@@ -35,8 +39,8 @@ GameObject::GameObject(string gameObjectId, int xMapPos, int yMapPos, int angleA
 	// We need it centered on the grid location
 	//so add half of the object size so that the object will be placed with its top left corner in the grid location
 	//we specify
-	this->xPos = (xMapPos * this->definition->xSize) + (this->definition->xSize / 2);
-	this->yPos = (yMapPos * this->definition->ySize) + (this->definition->ySize / 2);
+	this->xPos = xMapPos;
+	this->yPos = yMapPos;
 
 	//Get pointer to the texture
 	this->staticTexture = game->textureManager.getTexture(this->definition->texture)->sdlTexture;

@@ -3,44 +3,37 @@
     {
       "id": "TX_DEFAULT",
       "description": "Default Texure",
-      "filename": "assets/tile1.png",
-      "retainSurface": true
+      "filename": "assets/tile1.png"
     },
     {
       "id": "TX_BOWMAN1",
       "description": "single bowman image",
-      "filename": "assets/bowman1.png",
-      "retainSurface": false
+      "filename": "assets/bowman1.png"
     },
     {
       "id": "TX_TILE1",
       "description": "TILE 1",
-      "filename": "assets/tile1.png",
-      "retainSurface": false
+      "filename": "assets/tile1.png"
     },
     {
       "id": "TX_SWORDLADY1_IDLE",
       "description": "Sword lady idle",
-      "filename": "assets/swordLady64_Idle.png",
-      "retainSurface": false
+      "filename": "assets/swordLady64_Idle.png"
     },
     {
       "id": "TX_PISTOLLADY_64_RUN",
       "description": "Pistol Lady Run 64px",
-      "filename": "assets/pistolLady64_Run.png",
-      "retainSurface": true
+      "filename": "assets/pistolLady64_Run.png"
     },
     {
       "id": "TX_PISTOLLADY_128_RUN",
       "description": "Pistol Lady Run 128px",
-      "filename": "assets/pistolLady128_Run.png",
-      "retainSurface": false
+      "filename": "assets/pistolLady128_Run.png"
     },
     {
       "id": "TX_SPACESHIP1",
       "description": "Test spaceship 64px",
-      "filename": "assets/spaceship1.png",
-      "retainSurface": false
+      "filename": "assets/spaceship1.png"
     },
     {
       "id": "TX_LEVEL1",
@@ -57,66 +50,57 @@
     {
       "id": "TX_WALL1_COLUMN",
       "description": "Wall 1 Column",
-      "filename": "assets/wall1_column.png",
-      "retainSurface": true
+      "filename": "assets/wall1_column.png"
     },
     {
       "id": "TX_WALL1_CORNER",
       "description": "Wall 1 Corner",
-      "filename": "assets/wall1_corner.png",
-      "retainSurface": true
+      "filename": "assets/wall1_corner.png"
     },
     {
       "id": "TX_WALL1_HALL",
       "description": "Wall 1 Hall",
-      "filename": "assets/wall1_hall.png",
-      "retainSurface": true
+      "filename": "assets/wall1_hall.png"
     },
     {
       "id": "TX_WALL1_OPEN",
       "description": "Wall 1 Open",
-      "filename": "assets/wall1_open.png",
-      "retainSurface": true
+      "filename": "assets/wall1_open.png"
     },
     {
       "id": "TX_WALL1_WALL",
       "description": "Wall 1 Wall",
-      "filename": "assets/wall1_wall.png",
-      "retainSurface": true
+      "filename": "assets/wall1_wall.png"
     },
     {
       "id": "TX_WALL1_END",
       "description": "Wall 1 End",
-      "filename": "assets/wall1_end.png",
-      "retainSurface": true
+      "filename": "assets/wall1_end.png"
     },
     {
       "id": "TX_BULLLET1",
       "description": "Bullet 1",
-      "filename": "assets/bullet1.png",
-      "retainSurface": true
+      "filename": "assets/bullet1.png"
     },
     {
       "id": "TX_GINA_64_RUN",
       "description": "Gina Run 64",
-      "filename": "assets/gina_Run_64.png",
-      "retainSurface": true
+      "filename": "assets/gina_Run_64.png"
     },
     {
       "id": "TX_GINA_64_IDLE",
       "description": "Gina Idle 64",
-      "filename": "assets/gina_Idle_64.png",
-      "retainSurface": true
-    }
-
-  ],
-
-  "fonts": [
+      "filename": "assets/gina_Idle_64.png"
+    },
     {
-      "id": "FONT_ARIAL_REG",
-      "description": "Arial Regular",
+      "id": "TX_DEBUG_FPS_LABEL",
+      "description": "Debug FPS label",
       "filename": "assets/arial.ttf",
-      "size":  16
+      "textTexture": {
+        "size": 72,
+        "label": "FPS"
+      }
     }
   ]
+
 }
