@@ -177,7 +177,7 @@ void Game::update() {
 void Game::render() {
 
 	//Clear teh graphics display
-	Game::textureManager.clear();
+	this->textureManager.clear();
 
 	//render the player
 	this->player->render();
@@ -194,7 +194,7 @@ void Game::render() {
 	}
 
 	//Push all drawn things to the graphics display
-	Game::textureManager.present();
+	this->textureManager.present();
 
 }
 

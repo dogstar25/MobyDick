@@ -97,7 +97,7 @@
       "description": "Debug FPS label",
       "filename": "assets/arial.ttf",
       "textTexture": {
-        "size": 72,
+        "size": 32,
         "label": "FPS"
       }
     }
