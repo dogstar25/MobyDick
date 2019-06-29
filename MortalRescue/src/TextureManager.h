@@ -37,9 +37,11 @@ public:
 	void render(TextObject* gameObject);
 	bool present();
 	bool clear();
-	const Texture* getTexture(string id);
+	Texture* getTexture(string id);
 	TTF_Font* getFont(string id);
 
+	Texture* updateDynamicTextTexture(TextObject*);
+	SDL_Surface* generateTextSurface(SDL_Color, int, string, string);
 	void drawPoly(b2Body* body);
 	void drawPoints(SDL_Point *);
 	void drawLine(b2Vec2, b2Vec2);
@@ -58,7 +60,14 @@ public:
 
 	SDL_Texture* sdlTexture;
 	SDL_Surface* surface;
+	SDL_Color color;
 
+	string
+		filename;
+	bool
+		retainSurface;
+	int
+		textSize;
 
 };
 

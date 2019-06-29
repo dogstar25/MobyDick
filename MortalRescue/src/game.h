@@ -17,6 +17,7 @@
 #include "LevelManager.h"
 #include "GameObjectManager.h"
 #include "GameObjectContactListener.h"
+#include "DynamicTextManager.h"
 #include "Camera.h"
 #include "DebugDraw.h"
 #include "Settings.h"
@@ -80,6 +81,7 @@ public:
 class PlayerObject;
 class GameObject;
 
+
 using namespace std;
 using namespace std::chrono;
 
@@ -133,6 +135,7 @@ public:
 	GameObjectManager gameObjectManager;
 	LevelManager levelManager;
 	GameObjectContactListener gameObjectContactListner;
+	DynamicTextManager dynamicTextManager;
 
 	Config config;
 	Camera camera;

@@ -107,6 +107,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		gameObjectDefinition->xSize = itr["xSize"].asFloat();
 		gameObjectDefinition->ySize = itr["ySize"].asFloat();
 		gameObjectDefinition->texture = itr["texture"].asString();
+		gameObjectDefinition->isDynamicText = itr["dynamicText"].asBool();
 
 		//If this has a textture then get and store it
 		if (itr["primativeShape"].isNull() == false)

@@ -56,7 +56,7 @@ void TextureManager::render(WorldObject* gameObject)
 	}
 	else {
 
-		texure = gameObject->staticTexture;
+		texure = gameObject->texture->sdlTexture;
 	}
 
 	//Render the texture
@@ -83,7 +83,7 @@ void TextureManager::render(GameObject* gameObject)
 	destRect.x = gameObject->xPos;
 	destRect.y = gameObject->yPos;
 
-	SDL_Texture* texure = gameObject->staticTexture;
+	SDL_Texture* texure = gameObject->texture->sdlTexture;
 	SDL_Rect *textureSourceRect = NULL;
 
 	//Render the texture
@@ -102,14 +102,14 @@ void TextureManager::render(TextObject* gameObject)
 	//calculate the destination rectangle - must convert meters to pixels with scale factor
 	int texW = 0;
 	int texH = 0;
-	SDL_QueryTexture(gameObject->staticTexture, NULL, NULL, &texW, &texH);
+	SDL_QueryTexture(gameObject->texture->sdlTexture, NULL, NULL, &texW, &texH);
 
 	destRect.w = texW;
 	destRect.h = texH;
 	destRect.x = gameObject->xPos;
 	destRect.y = gameObject->yPos;
 
-	SDL_Texture* texure = gameObject->staticTexture;
+	SDL_Texture* texure = gameObject->texture->sdlTexture;
 	SDL_Rect *textureSourceRect = NULL;
 
 	//Render the texture
@@ -147,17 +147,18 @@ bool TextureManager::loadTextures()
 
 		id = itr["id"].asString();
 		filename = itr["filename"].asString();
+		textureObject->filename = filename;
 		retainSurface = itr["retainSurface"].asBool();
 
 		if (itr["textTexture"].isNull() == false)
 		{
 			SDL_Color color = { 255, 255, 154 };
+			textureObject->color = color;
 			size = itr["textTexture"]["size"].asInt();
-			TTF_Font* fontObject = TTF_OpenFont(filename.c_str(), size);
+			textureObject->textSize = size;
 			string labelText = itr["textTexture"]["label"].asString();
-			surface = TTF_RenderText_Solid(fontObject, labelText.c_str(), color);
-			TTF_CloseFont(fontObject);
-			string test = TTF_GetError();
+
+			surface = this->generateTextSurface(color, size, filename, labelText);
 		}
 		else
 		{
@@ -169,6 +170,7 @@ bool TextureManager::loadTextures()
 		if (retainSurface == true)
 		{
 			textureObject->surface = surface;
+			
 		}
 		else
 		{
@@ -186,7 +188,60 @@ bool TextureManager::loadTextures()
 	return true;
 }
 
-const Texture * TextureManager::getTexture(string id)
+SDL_Surface* TextureManager::generateTextSurface(SDL_Color color, int textSize, string fontFilename, string text)
+{
+
+	SDL_Surface* surface;
+
+	TTF_Font* fontObject = TTF_OpenFont(fontFilename.c_str(), textSize);
+	surface = TTF_RenderText_Solid(fontObject, text.c_str(), color);
+	TTF_CloseFont(fontObject);
+	string test = TTF_GetError();
+
+	return surface;
+
+}
+
+
+
+
+Texture* TextureManager::updateDynamicTextTexture(TextObject *gameObject)
+{
+
+	textItem* newText;
+	Texture* textureObject;
+	SDL_Surface* surface;
+
+	//newText = game->dynamicTextManager.textItems[gameObject->definition->id].get();
+	newText = game->dynamicTextManager.getTextItem(gameObject->definition->id);
+
+
+	if (newText->hasChanged == true)
+	{
+
+		surface = this->generateTextSurface(gameObject->texture->color, 
+			gameObject->texture->textSize, gameObject->texture->filename,
+			newText->text);
+		textureObject = gameObject->texture;
+		textureObject->sdlTexture = SDL_CreateTextureFromSurface(this->pRenderer, surface);
+		SDL_FreeSurface(surface);
+
+	}
+	else
+	{
+		textureObject = gameObject->texture;
+
+		//TODO:set a flag at game object level so that the TextureManager::render(TextObject* gameObject) doesnt have to 
+		// do SDL_QueryTexture
+	}
+		
+	return textureObject;
+
+}
+
+
+
+Texture * TextureManager::getTexture(string id)
 {
 	Texture* textureObject;
 

@@ -5,6 +5,7 @@
 #include "LevelManager.h"
 #include "TextureManager.h"
 #include "GameObjectManager.h"
+#include "DynamicTextManager.h"
 #include "GameObject.h"
 #include "Util.h"
 #include "Camera.h"
@@ -92,16 +93,17 @@ bool Game::init()
 
 
 	//CREATE A TEST TEXT ITEM
-	TextObject* textObject = new TextObject("FPS_LABEL", 1, 15, 0);
+	TextObject* textObject = new TextObject("FPS_LABEL", 0, 0, 0);
 	this->addGameObject(textObject);
+	//CREATE A DYNAMIC TEST TEXT ITEM
+	this->dynamicTextManager.updateText("FPS_VALUE", "this is text");
+	TextObject* textObject2 = new TextObject("FPS_VALUE", 0, 1, 0);
+	this->addGameObject(textObject2);
 
 
 	//CREATE A TEST ITEM
-	GameObject* testObject = new GameObject("WALL_BRICK_1", 1, 1, 0);
-	this->addGameObject(testObject);
-
-
-
+	//GameObject* testObject = new GameObject("WALL_BRICK_1", 1, 1, 0);
+	//this->addGameObject(testObject);
 
 
 
@@ -135,6 +137,12 @@ void Game::play()
 		this->clock.current_frame_cnt++;
 		this->clock.calcFps();
 		this->clock.resetGameLoopTimeAccum();
+
+		char buffer[256]; sprintf_s(buffer, "%06d", this->clock.fps);
+		string fps(buffer);
+
+		this->dynamicTextManager.updateText("FPS_VALUE", fps);
+
 	}
 
 }
@@ -290,8 +298,6 @@ void Game::buildWorld(string levelId)
 
 	//Build the actual level gameobjects
 	this->buildLevel("TX_LEVEL1");
-
-
 
 }
 

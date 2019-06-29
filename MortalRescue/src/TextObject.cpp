@@ -9,6 +9,8 @@ TextObject::TextObject(string gameObjectId, int xMapPos, int yMapPos, int angleA
 	GameObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
 {
 
+	this->isDynamic = this->definition->isDynamicText;
+
 }
 
 
@@ -20,6 +22,11 @@ void TextObject::update()
 {
 
 	//if dynamic go get new text
+	if (this->isDynamic == true)
+	{
+		this->texture = game->textureManager.updateDynamicTextTexture(this);
+		 
+	}
 
 }
 

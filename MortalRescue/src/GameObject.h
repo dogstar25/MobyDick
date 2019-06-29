@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObjectAnimation.h"
+#include "TextureManager.h"
 
 #include <map> 
 #include <SDL.h>
@@ -8,6 +9,7 @@
 
 //Forward declarations
 class GameObjectDefinition;
+class Texture;
 
 extern Game* game;
 
@@ -49,7 +51,7 @@ public:
 	float xPos, yPos, angle;
 	string 	currentAnimationState;
 
-	SDL_Texture* staticTexture; //Used if this is not an animated object
+	Texture* texture;
 
 };
 
@@ -79,7 +81,8 @@ public:
 		isAnimated,
 		isPhysicsObject,
 		isPrimitiveShape,
-		isPlayerObject;
+		isPlayerObject,
+		isDynamicText;
 
 	SDL_Color primativeColor; //If object is a primative shape, what color is it
 	map<string, GameObjectAnimation*> animations;

@@ -170,9 +170,16 @@
     },
     {
       "id": "FPS_LABEL",
-      "description": "FPA Label",
+      "description": "FPS Label",
       "texture": "TX_DEBUG_FPS_LABEL"
+    },
+    {
+      "id": "FPS_VALUE",
+      "description": "FPS Value Text",
+      "texture": "TX_DYNAMIC_ARIAL",
+      "dynamicText": true
     }
+
 
   ]
 }

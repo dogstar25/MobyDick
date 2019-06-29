@@ -14,5 +14,7 @@ public:
 	void update();
 	void render();
 
+	bool isDynamic;
+
 };
 
