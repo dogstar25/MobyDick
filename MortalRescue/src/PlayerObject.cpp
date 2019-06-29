@@ -174,17 +174,9 @@ PlayerObject::PlayerObject()
 PlayerObject::PlayerObject(string gameObjectId, int xMapPos, int yMapPos, int angleAdjust) : 
 	WorldObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
 {
-	int x = 0;
-	//build the animation objects
-	/*
-	for (auto & gameObjectDefinitionAnimation : gameObjectDefinition->animations) {
-
-		gameObject->animations[gameObjectDefinitionAnimation.second.id] = gameObjectDefinitionAnimation.second;
-
-	}
-	*/
 
 }
+
 PlayerObject::~PlayerObject()
 {
 

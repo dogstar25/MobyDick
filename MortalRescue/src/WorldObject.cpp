@@ -19,19 +19,15 @@ WorldObject::WorldObject(string gameObjectId, int xMapPos, int yMapPos, int angl
 	// We need it centered on the grid location
 	//so add half of the object size so that the object will be placed with its top left corner in the grid location
 	//we specify
-	this->xPos = (xMapPos * this->definition->xSize) + (this->definition->xSize / 2);
-	this->yPos = (yMapPos * this->definition->ySize) + (this->definition->ySize / 2);
+	this->xPos = (xMapPos * (game->worldGridSize.w / game->config.scaleFactor)) + (this->definition->xSize / 2);
+	this->yPos = (yMapPos * (game->worldGridSize.h / game->config.scaleFactor)) + (this->definition->ySize / 2);
 
-	//Build the box2d object
-	if (this->definition->isPhysicsObject == true)
-	{
-		this->physicsBody = buildB2Body(this->definition);
-		b2Vec2 positionVector = b2Vec2( this->xPos, this->yPos);
-		this->physicsBody->SetTransform(positionVector, angleAdjust * DEGTORAD);
-		//Add a reference to the gameObject itself to the physics object for collision helping logic later
-		this->physicsBody->SetUserData(this);
-
-	}
+	//Build box2d related stuff
+	this->physicsBody = buildB2Body(this->definition);
+	b2Vec2 positionVector = b2Vec2( this->xPos, this->yPos);
+	this->physicsBody->SetTransform(positionVector, angleAdjust * DEGTORAD);
+	//Add a reference to the gameObject itself to the physics object for collision helping logic later
+	this->physicsBody->SetUserData(this);
 
 	//build the animation objects
 	/*

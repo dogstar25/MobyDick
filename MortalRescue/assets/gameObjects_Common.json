@@ -84,37 +84,20 @@
       "speed": 0.5,
       "xSize": 2.56, //meters which translates to 64px
       "ySize": 1.75,
-      "physicsObject": {
-        "type": "B2_DYNAMIC",
-        "friction": 0.3,
-        "density": 10.5,
-        "linearDamping": 0.2,
-        "angularDamping": 0.5
-      },
       "animations": [
         {
           "id": "IDLE",
           "texture": "TX_SWORDLADY1_IDLE",
           "speed": 0.06, //time in seconds for each frame. Lower the faster
           "frames": 19
-        },
-        {
-          "id": "RUN",
-          "texture": "TX_SWORDLADY1_RUN",
-          "speed": 0.06,
-          "frames": 5
         }
       ]
     },
     {
       "id": "WALL_BRICK_1",
       "description": "Wall brick 1",
-      "type": "B2_STATIC",
-      "texture": "TX_WALLBRICK_1",
-      "xSize": 0,
-      "ySize": 0,
-      "speed": 3
-
+      "xSize": 64,
+      "ySize": 64
     },
     {
       "id": "SPACESHIP1",
@@ -148,26 +131,11 @@
       "animations": [
         {
           "id": "ACTIVE",
-          "texture": "TX_BULLLET1",
+          "texture": "TX_BULLET1",
           "speed": 0.02, //time in seconds for each frame. Lower the faster
           "frames": 4
         }
       ]
-    },
-    {
-      "id": "BULLET2",
-      "description": "Bullet 2",
-      "speed": 25,
-      "physicsObject": {
-        "type": "B2_DYNAMIC",
-        "friction": 0.0,
-        "density": 3.0,
-        "linearDamping": 0.0,
-        "angularDamping": 0.0
-      },
-      "texture": "TX_BULLLET1",
-      "xSize": 0.10,
-      "ySize": 0.10
     },
     {
       "id": "GINA_64",

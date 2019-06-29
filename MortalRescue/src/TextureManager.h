@@ -8,13 +8,14 @@
 #include <Box2D/Box2D.h>
 
 #include "GameObject.h"
-#include "PlayerObject.h"
 #include "SDL_ttf.h"
 
 //Forward declarations
 class GameObject;
 class Texture;
+class PlayerObject;
 class WorldObject;
+class TextObject;
 class Game;
 
 using namespace std;
@@ -33,7 +34,7 @@ public:
 	void render(WorldObject* gameObject);
 	void render(PlayerObject* gameObject);
 	void render(GameObject* gameObject);
-	bool render(b2Body* body);
+	void render(TextObject* gameObject);
 	bool present();
 	bool clear();
 	const Texture* getTexture(string id);

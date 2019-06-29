@@ -11,6 +11,7 @@ public:
 
 	void update();
 	void render();
+
 	b2Body* buildB2Body(GameObjectDefinition*);
 
 	b2Body* physicsBody;

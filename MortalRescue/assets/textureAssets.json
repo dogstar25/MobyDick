@@ -6,6 +6,15 @@
       "filename": "assets/tile1.png"
     },
     {
+      "id": "TX_DEFAULT_LABEL",
+      "description": "Default text label",
+      "filename": "assets/arial.ttf",
+      "textTexture": {
+        "size": 16,
+        "label": "Missing Text"
+      }
+    },
+    {
       "id": "TX_BOWMAN1",
       "description": "single bowman image",
       "filename": "assets/bowman1.png"
@@ -78,7 +87,7 @@
       "filename": "assets/wall1_end.png"
     },
     {
-      "id": "TX_BULLLET1",
+      "id": "TX_BULLET1",
       "description": "Bullet 1",
       "filename": "assets/bullet1.png"
     },

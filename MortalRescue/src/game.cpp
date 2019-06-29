@@ -1,5 +1,6 @@
 #include "game.h"
 #include "PlayerObject.h"
+#include "TextObject.h"
 #include "WorldObject.h"
 #include "LevelManager.h"
 #include "TextureManager.h"
@@ -56,55 +57,54 @@ bool Game::init()
 		//Initilaze the Game Object Manager
 		this->gameObjectManager.init();
 
-		//Create the main player object
-		PlayerObject* player = new PlayerObject("GINA_64", 5, 5, 0);
-
-		this->player = make_unique<PlayerObject>(*player);
-
-		this->player->direction = 0;
-		this->player->strafe = 0;
-		this->player->currentAnimationState = "IDLE";
-		// Add a weapon that will have bullet origin that is located half way
-		// in the X position and halfway in the Y position from this objects origin
-		this->player->addWeapon("BULLET1", .50, .50);
-
-
-
-
-		//CREATE A TEST TEXT ITEM
-		GameObject* textObject = new GameObject("FPS_LABEL", 55, 55, 0);
-		this->addGameObject(textObject);
-
-
-
-
-
-
 		//Set the mouse mode
 		SDL_ShowCursor(false);
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 
-		//Load level 1
-		this->levelManager.loadLevel("TX_LEVEL1");
-		this->buildLevel("TX_LEVEL1");
-
-		this->initWorldBounds();
-
-		//Init Camera
-		this->camera.init(&this->worldBounds);
-
-		//set camera to center on player object
-		this->camera.setPosition((this->player->physicsBody->GetPosition().x *  this->config.scaleFactor) -
-			(camera.frame.w / 2),
-			(this->player->physicsBody->GetPosition().y *  this->config.scaleFactor) -
-			(camera.frame.h / 2));
+		//Build the world for a particular level
+		this->buildWorld("TX_LEVEL1");
 
 		//Initialize the clock object
 		this->clock.init();
 
 		//initialize settings menu
 		this->settings.init();
+
 	}
+
+	//Create the main player object
+	PlayerObject* player = new PlayerObject("GINA_64", 10, 10, 0);
+
+	this->player = make_unique<PlayerObject>(*player);
+
+	this->player->direction = 0;
+	this->player->strafe = 0;
+	this->player->currentAnimationState = "IDLE";
+	// Add a weapon that will have bullet origin that is located half way
+	// in the X position and halfway in the Y position from this objects origin
+	this->player->addWeapon("BULLET1", .50, .50);
+
+	//set camera to center on player object
+	this->camera.setPosition((this->player->physicsBody->GetPosition().x *  this->config.scaleFactor) -
+		(camera.frame.w / 2),
+		(this->player->physicsBody->GetPosition().y *  this->config.scaleFactor) -
+		(camera.frame.h / 2));
+
+
+	//CREATE A TEST TEXT ITEM
+	TextObject* textObject = new TextObject("FPS_LABEL", 1, 15, 0);
+	this->addGameObject(textObject);
+
+
+	//CREATE A TEST ITEM
+	GameObject* testObject = new GameObject("WALL_BRICK_1", 1, 1, 0);
+	this->addGameObject(testObject);
+
+
+
+
+
+
 
 	return true;
 }
@@ -204,12 +204,18 @@ void Game::addGameObject(GameObject* gameObject)
 
 
 }
+
 void Game::addGameObject(WorldObject* gameObject)
 {
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
 	this->gameObjects.push_back(make_unique<WorldObject>(*gameObject));
 }
 
+void Game::addGameObject(TextObject* gameObject)
+{
+	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
+	this->gameObjects.push_back(make_unique<TextObject>(*gameObject));
+}
 
 bool Game::getConfig()
 {
@@ -271,13 +277,32 @@ void Game::handleEvents() {
 	}
 }
 
+void Game::buildWorld(string levelId)
+{
+	//load all of the information needed to build the level
+	this->levelManager.loadLevel("TX_LEVEL1");
+
+	//Initialize world bounds and gridsize based on current level loaded info
+	this->initWorldBounds();
+
+	//Init Camera
+	this->camera.init(&this->worldBounds);
+
+	//Build the actual level gameobjects
+	this->buildLevel("TX_LEVEL1");
+
+
+
+}
+
+
+
 void Game::buildLevel(string levelId)
 {
-	this->currentLevel = levelId;
 	Level* level = this->levelManager.levels[levelId];
 	LevelObject* levelObject;
 	//unique_ptr<WorldObject> worldObject;
-	WorldObject* worldObject;
+	WorldObject* gameObject;
 
 
 	for (int y = 0; y < level->height; y++)
@@ -288,16 +313,9 @@ void Game::buildLevel(string levelId)
 			if (level->levelObjects[x][y].gameObjectId.empty() == false)
 			{
 				levelObject = &level->levelObjects[x][y];
-				worldObject = new WorldObject(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
+				gameObject = new WorldObject(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
 
-				//Use the first level object found to determine and store the tile width and height for the map
-				if (level->tileHeight == 0 and level->tileWidth == 0)
-				{
-					level->tileWidth = worldObject->definition->xSize * this->config.scaleFactor;
-					level->tileHeight = worldObject->definition->ySize * this->config.scaleFactor;
-				}
-
-				this->addGameObject(worldObject);
+				this->addGameObject(gameObject);
 
 			}
 
@@ -328,6 +346,8 @@ void Game::initWorldBounds()
 	this->worldBounds.y = 0;
 	this->worldBounds.w = width;
 	this->worldBounds.h = height;
+	this->worldGridSize.w = this->levelManager.levels[this->currentLevel]->tileWidth;
+	this->worldGridSize.h = this->levelManager.levels[this->currentLevel]->tileHeight;
 
 }
 

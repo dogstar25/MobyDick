@@ -115,8 +115,10 @@ public:
 	void buildLevel(string);
 	void initWorldBounds();
 	void addGameObject(GameObject* gameObject);
+	void addGameObject(TextObject* gameObject);
 	void addGameObject(WorldObject* gameObject);
 	bool getConfig();
+	void buildWorld(string);
 
 	//Current Game State
 	int gameState;
@@ -135,6 +137,7 @@ public:
 	Config config;
 	Camera camera;
 	SDL_Rect worldBounds;
+	SDL_Rect worldGridSize;
 	b2World* physicsWorld;
 	
 	//Main screen and window stuff

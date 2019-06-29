@@ -35,6 +35,9 @@ void LevelManager::loadLevel(string levelId)
 	SDL_Color *color;
 	SDL_Surface* surface;
 
+	//Set the games current level
+	game->currentLevel = levelId;
+
 	//I am representing the level grid as a png image file 
 	levelImage = game->textureManager.getTexture(levelId)->sdlTexture;
 	surface = game->textureManager.getTexture(levelId)->surface;
@@ -42,6 +45,7 @@ void LevelManager::loadLevel(string levelId)
 	//Create the level object
 	Level* level = new Level();
 	level->id = levelId;
+
 	level->width = surface->w;
 	level->height = surface->h;
 
@@ -63,8 +67,18 @@ void LevelManager::loadLevel(string levelId)
 			//and createTile game object
 			LevelObject levelObject = *determineTile(x, y, surface);
 
-			//Add gameObject to array
+			//Add levelItem to array
 			this->levels[levelId]->levelObjects[x][y] = levelObject;
+
+			//use the first levelItem to determine the tile size of the level and world
+			if (x == 0 && y == 0)
+			{
+				
+				level->tileWidth = game->gameObjectManager.gameObjectDefinitions[levelObject.gameObjectId]->xSize 
+					* game->config.scaleFactor;
+				level->tileHeight = game->gameObjectManager.gameObjectDefinitions[levelObject.gameObjectId]->ySize
+					* game->config.scaleFactor;
+			}
 		}
 	}
 

@@ -50,8 +50,6 @@ public:
 	string 	currentAnimationState;
 
 	SDL_Texture* staticTexture; //Used if this is not an animated object
-	
-	
 
 };
 

@@ -20,8 +20,6 @@ void GameObject::render()
 
 }
 
-
-
 GameObject::GameObject()
 {
 
@@ -33,14 +31,8 @@ GameObject::GameObject(string gameObjectId, int xMapPos, int yMapPos, int angleA
 
 	this->angle = angleAdjust;
 
-	//Gameobject must be passed in it's starting position
-	//Multiply the size times the x,y position in the map grid that represents the world
-	//When buildB2Body executes, it will build the box2d object centered on the x,y position we give,
-	// We need it centered on the grid location
-	//so add half of the object size so that the object will be placed with its top left corner in the grid location
-	//we specify
-	this->xPos = xMapPos;
-	this->yPos = yMapPos;
+	this->xPos = xMapPos * game->worldGridSize.w;
+	this->yPos = yMapPos * game->worldGridSize.h;
 
 	//Get pointer to the texture
 	this->staticTexture = game->textureManager.getTexture(this->definition->texture)->sdlTexture;

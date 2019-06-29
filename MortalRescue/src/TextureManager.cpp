@@ -7,6 +7,8 @@
 
 #include "TextureManager.h"
 #include "game.h"
+#include "PlayerObject.h"
+#include "TextObject.h"
 #include "WorldObject.h"
 
 
@@ -76,15 +78,10 @@ void TextureManager::render(GameObject* gameObject)
 
 	SDL_Rect srcRect, destRect;
 
-	//calculate the destination rectangle - must convert meters to pixels with scale factor
-	int texW = 0;
-	int texH = 0;
-	SDL_QueryTexture(gameObject->staticTexture, NULL, NULL, &texW, &texH);
-
-	destRect.w = texW;
-	destRect.h = texH;
-	destRect.x = gameObject->xPos; //times the map grid size?
-	destRect.y = gameObject->xPos; //times the map grid size?
+	destRect.w = gameObject->definition->xSize;
+	destRect.h = gameObject->definition->xSize;
+	destRect.x = gameObject->xPos;
+	destRect.y = gameObject->yPos;
 
 	SDL_Texture* texure = gameObject->staticTexture;
 	SDL_Rect *textureSourceRect = NULL;
@@ -97,6 +94,31 @@ void TextureManager::render(GameObject* gameObject)
 
 }
 
+void TextureManager::render(TextObject* gameObject)
+{
+
+	SDL_Rect srcRect, destRect;
+
+	//calculate the destination rectangle - must convert meters to pixels with scale factor
+	int texW = 0;
+	int texH = 0;
+	SDL_QueryTexture(gameObject->staticTexture, NULL, NULL, &texW, &texH);
+
+	destRect.w = texW;
+	destRect.h = texH;
+	destRect.x = gameObject->xPos;
+	destRect.y = gameObject->yPos;
+
+	SDL_Texture* texure = gameObject->staticTexture;
+	SDL_Rect *textureSourceRect = NULL;
+
+	//Render the texture
+	//SDL_RenderCopy(pRenderer, texure, textureSourceRect, &destRect);
+	SDL_RenderCopyEx(pRenderer, texure, textureSourceRect, &destRect, 0,
+		NULL, SDL_FLIP_NONE);
+
+
+}
 bool TextureManager::loadTextures()
 {
 
