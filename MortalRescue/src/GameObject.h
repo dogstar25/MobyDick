@@ -76,7 +76,7 @@ public:
 		description,
 		physicsType,
 		collisionShape,
-		texture;
+		textureId;
 	bool
 		isAnimated,
 		isPhysicsObject,

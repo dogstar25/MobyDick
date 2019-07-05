@@ -63,6 +63,10 @@ void TextureManager::render(WorldObject* gameObject)
 	SDL_RenderCopyEx(pRenderer, texure, textureSourceRect, &destRect, angle,
 		NULL, SDL_FLIP_NONE);
 
+	//Need support for a primitive worldobject, or maybe game object, that simply fills a rectangle with a color
+	// to be used for UI Panles
+	//SDL_RenderFillRect
+
 }
 
 void TextureManager::render(PlayerObject* gameObject)
@@ -152,13 +156,15 @@ bool TextureManager::loadTextures()
 
 		if (itr["textTexture"].isNull() == false)
 		{
-			SDL_Color color = { 255, 255, 154 };
+			SDL_Color color = { 255, 255, 255 };
 			textureObject->color = color;
 			size = itr["textTexture"]["size"].asInt();
 			textureObject->textSize = size;
 			string labelText = itr["textTexture"]["label"].asString();
 
 			surface = this->generateTextSurface(color, size, filename, labelText);
+
+			//SDL_RenderFillRect(pRenderer, &destRect)
 		}
 		else
 		{
@@ -180,6 +186,8 @@ bool TextureManager::loadTextures()
 		this->textureMap.emplace(id, move(textureObject));
 		textureObject.reset();
 
+
+		//SDL_TextureAccess
 	}
 
 

@@ -75,7 +75,7 @@ GameObjectAnimation* GameObjectManager::buildAnimation(GameObjectDefinition* gam
 		}
 	}
 	
-	//DRUNK: Initialze the current source rect to the first animation frame
+	//TODO: Initialze the current source rect to the first animation frame
 	//SDL_Rect* sourceRect = nullptr;
 	//animation->currentTextureAnimationSrcRect
 
@@ -106,7 +106,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		gameObjectDefinition->speed = itr["speed"].asDouble();
 		gameObjectDefinition->xSize = itr["xSize"].asFloat();
 		gameObjectDefinition->ySize = itr["ySize"].asFloat();
-		gameObjectDefinition->texture = itr["texture"].asString();
+		gameObjectDefinition->textureId = itr["texture"].asString();
 		gameObjectDefinition->isDynamicText = itr["dynamicText"].asBool();
 
 		//If this has a textture then get and store it

@@ -93,13 +93,25 @@ bool Game::init()
 
 
 	//CREATE A TEST TEXT ITEM
-	TextObject* textObject = new TextObject("FPS_LABEL", 0, 0, 0);
+	TextObject* textObject = new TextObject("FPS_LABEL", 1, 0, 0);
 	this->addGameObject(textObject);
 	//CREATE A DYNAMIC TEST TEXT ITEM
 	this->dynamicTextManager.updateText("FPS_VALUE", "this is text");
-	TextObject* textObject2 = new TextObject("FPS_VALUE", 0, 1, 0);
-	this->addGameObject(textObject2);
+	textObject = new TextObject("FPS_VALUE", 1, 1, 0);
+	this->addGameObject(textObject);
 
+
+
+	//CREATE A TEST TEXT ITEM
+//	textObject = new TextObject("BULLET_LOCATION_LABEL", 2, 0, 0);
+	//this->addGameObject(textObject);
+	//CREATE A DYNAMIC TEST TEXT ITEM
+	this->dynamicTextManager.updateText("BULLETX", "this is text");
+	textObject = new TextObject("BULLETX", 1, 2, 0);
+	this->addGameObject(textObject);
+	this->dynamicTextManager.updateText("BULLETY", "this is text");
+	textObject = new TextObject("BULLETY", 1, 3, 0);
+	this->addGameObject(textObject);
 
 	//CREATE A TEST ITEM
 	//GameObject* testObject = new GameObject("WALL_BRICK_1", 1, 1, 0);

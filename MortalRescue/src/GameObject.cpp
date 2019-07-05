@@ -35,7 +35,7 @@ GameObject::GameObject(string gameObjectId, int xMapPos, int yMapPos, int angleA
 	this->yPos = yMapPos * game->worldGridSize.h;
 
 	//Get pointer to the texture
-	this->texture = game->textureManager.getTexture(this->definition->texture);
+	this->texture = game->textureManager.getTexture(this->definition->textureId);
 
 }
 

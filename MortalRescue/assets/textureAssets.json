@@ -112,7 +112,7 @@
     },
     {
       "id": "TX_DYNAMIC_ARIAL",
-      "description": "Debug FPS label",
+      "description": "Debug FPS Value",
       "filename": "assets/arial.ttf",
       "textTexture": {
         "size": 32,

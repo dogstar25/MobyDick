@@ -5,6 +5,10 @@
 DynamicTextManager::DynamicTextManager()
 {
 
+	textItem* item = new textItem();
+	item->text = "defaultText";
+	item->hasChanged = true;
+	this->textItems["DEFAULT"] = make_unique<textItem>(*item);
 
 }
 
@@ -22,7 +26,7 @@ textItem* DynamicTextManager::getTextItem(string id)
 	if (this->textItems[id] == NULL)
 	{
 
-		//createa  new default text item???
+		textItem = this->textItems["DEFAULT"].get();
 
 	}
 	else
