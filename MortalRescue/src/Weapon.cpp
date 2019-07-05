@@ -72,6 +72,6 @@ void Weapon::fire()
 	bullet->currentAnimationState = "ACTIVE";
 
 	//Add the bullet object to the main gameObject collection
-	game->addGameObject(bullet);
+	game->addGameObject(bullet, game->MAIN);
 
 }

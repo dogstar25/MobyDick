@@ -11,6 +11,7 @@
 #include <ctime>
 #include <ratio>
 #include <chrono>
+#include <array>
 
 #include "Util.h"
 #include "TextureManager.h"
@@ -104,6 +105,15 @@ public:
 
 	};
 
+	enum GameOjectLayer {
+
+		BACKGROUND = 0,
+		MAIN = 1,
+		TEXT = 2,
+		DEBUG = 3,
+	};
+	static const int MAX_LAYERS = 4;
+
 	Game();
 	~Game();
 
@@ -116,9 +126,9 @@ public:
 	void handleEvents();
 	void buildLevel(string);
 	void initWorldBounds();
-	void addGameObject(GameObject* gameObject);
-	void addGameObject(TextObject* gameObject);
-	void addGameObject(WorldObject* gameObject);
+	void addGameObject(GameObject* gameObject, int);
+	void addGameObject(TextObject* gameObject, int);
+	void addGameObject(WorldObject* gameObject, int);
 	bool getConfig();
 	void buildWorld(string);
 
@@ -150,8 +160,9 @@ public:
 	Uint32 windowFlags= SDL_WINDOW_RESIZABLE;
 	float mouseSensitivity;
 
-	//Vector of all game objects
-	vector <unique_ptr<GameObject>> gameObjects;
+	//Array of Vectors of all game objects
+	//Each array level is a layer containing a vector of all game obejcts for that layer
+	array <vector <unique_ptr<GameObject>>, MAX_LAYERS> gameObjects;
 	unique_ptr<PlayerObject> player;
 
 	//Settings Object

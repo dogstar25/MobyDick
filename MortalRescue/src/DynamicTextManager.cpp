@@ -23,15 +23,17 @@ textItem* DynamicTextManager::getTextItem(string id)
 {
 	textItem* textItem;
 
-	if (this->textItems[id] == NULL)
+	auto iter = this->textItems.find(id);
+
+	if (iter != this->textItems.end())
 	{
 
-		textItem = this->textItems["DEFAULT"].get();
+		textItem = this->textItems[id].get();
 
 	}
 	else
 	{
-		textItem = this->textItems[id].get();
+		textItem = this->textItems["DEFAULT"].get();
 	}
 
 	return textItem;

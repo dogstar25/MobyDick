@@ -111,8 +111,8 @@
       }
     },
     {
-      "id": "TX_DYNAMIC_ARIAL",
-      "description": "Debug FPS Value",
+      "id": "TX_FONT_ARIAL",
+      "description": "Font texture Arial",
       "filename": "assets/arial.ttf",
       "textTexture": {
         "size": 32,

@@ -10,6 +10,11 @@ TextObject::TextObject(string gameObjectId, int xMapPos, int yMapPos, int angleA
 {
 
 	this->isDynamic = this->definition->isDynamicText;
+	//Default the texture if this is a dynamic text texture
+	if (this->isDynamic == true)
+	{
+		this->texture = game->textureManager.getTexture("TX_FONT_ARIAL");
+	}
 
 }
 

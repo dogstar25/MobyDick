@@ -73,6 +73,10 @@ bool Game::init()
 
 	}
 
+	//Allocate the array of vectors for all game objects
+	//this->gameObjects = vector<unique_ptr<GameObject>>[this->MAX_LAYERS];
+
+
 	//Create the main player object
 	PlayerObject* player = new PlayerObject("GINA_64", 10, 10, 0);
 
@@ -93,25 +97,14 @@ bool Game::init()
 
 
 	//CREATE A TEST TEXT ITEM
-	TextObject* textObject = new TextObject("FPS_LABEL", 1, 0, 0);
-	this->addGameObject(textObject);
+	TextObject* textObject = new TextObject("FPS_LABEL", 0, 0, 0);
+	this->addGameObject(textObject, this->TEXT);
 	//CREATE A DYNAMIC TEST TEXT ITEM
-	this->dynamicTextManager.updateText("FPS_VALUE", "this is text");
-	textObject = new TextObject("FPS_VALUE", 1, 1, 0);
-	this->addGameObject(textObject);
+	//this->dynamicTextManager.updateText("FPS_VALUE", "this is text");
+	textObject = new TextObject("FPS_VALUE", 0, 1, 0);
+	this->addGameObject(textObject, this->TEXT);
 
 
-
-	//CREATE A TEST TEXT ITEM
-//	textObject = new TextObject("BULLET_LOCATION_LABEL", 2, 0, 0);
-	//this->addGameObject(textObject);
-	//CREATE A DYNAMIC TEST TEXT ITEM
-	this->dynamicTextManager.updateText("BULLETX", "this is text");
-	textObject = new TextObject("BULLETX", 1, 2, 0);
-	this->addGameObject(textObject);
-	this->dynamicTextManager.updateText("BULLETY", "this is text");
-	textObject = new TextObject("BULLETY", 1, 3, 0);
-	this->addGameObject(textObject);
 
 	//CREATE A TEST ITEM
 	//GameObject* testObject = new GameObject("WALL_BRICK_1", 1, 1, 0);
@@ -183,12 +176,18 @@ void Game::update() {
 		(camera.frame.h / 2));
 
 	//Update all of the other non player related update chores for each game object
+	// Game objects are stored in layers
 	this->awakeCount=0;
-	for (auto & gameObject : gameObjects)
+	for (auto & gameObjectLayer : gameObjects)
 	{
-		gameObject->update();
+
+		for (auto & gameObject : gameObjectLayer)
+		{
+			gameObject->update();
+		}
+
 	}
-	
+
 	//Step the box2d physics world
 	this->physicsWorld->Step(this->timeStep, this->velocityIterations, this->positionIterations);
 
@@ -203,8 +202,14 @@ void Game::render() {
 	this->player->render();
 	
 	//Render all of the game objects
-	for (auto & gameObject : gameObjects) {
-		gameObject->render();
+	for (auto & gameObjectLayer : gameObjects)
+	{
+
+		for (auto & gameObject : gameObjectLayer)
+		{
+			gameObject->render();
+		}
+
 	}
 
 	//DebugDraw
@@ -218,23 +223,23 @@ void Game::render() {
 
 }
 
-void Game::addGameObject(GameObject* gameObject)
+void Game::addGameObject(GameObject* gameObject, int layer)
 {
-	this->gameObjects.push_back(make_unique<GameObject>(*gameObject));
+	this->gameObjects[layer].push_back(make_unique<GameObject>(*gameObject));
 
 
 }
 
-void Game::addGameObject(WorldObject* gameObject)
+void Game::addGameObject(WorldObject* gameObject, int layer)
 {
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	this->gameObjects.push_back(make_unique<WorldObject>(*gameObject));
+	this->gameObjects[layer].push_back(make_unique<WorldObject>(*gameObject));
 }
 
-void Game::addGameObject(TextObject* gameObject)
+void Game::addGameObject(TextObject* gameObject, int layer)
 {
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	this->gameObjects.push_back(make_unique<TextObject>(*gameObject));
+	this->gameObjects[layer].push_back(make_unique<TextObject>(*gameObject));
 }
 
 bool Game::getConfig()
@@ -333,7 +338,7 @@ void Game::buildLevel(string levelId)
 				levelObject = &level->levelObjects[x][y];
 				gameObject = new WorldObject(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
 
-				this->addGameObject(gameObject);
+				this->addGameObject(gameObject, this->MAIN);
 
 			}
 
@@ -379,7 +384,10 @@ Game::~Game()
 	SDL_Quit();
 	TTF_Quit();
 
-	this->gameObjects.clear();
+	for (int x=0 ; x < this->MAX_LAYERS; x++)
+	{
+		this->gameObjects[x].clear();
+	}
 
 	//Delete box2d world - should delete all bodies and fixtures within
 	delete this->physicsWorld;

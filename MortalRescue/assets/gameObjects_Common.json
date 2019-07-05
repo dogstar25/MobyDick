@@ -178,21 +178,7 @@
       "description": "FPS Value Text",
       "texture": "TX_DYNAMIC_ARIAL",
       "dynamicText": true
-    },
-    {
-      "id": "BULLETX",
-      "description": "FPS Value Text",
-      "texture": "TX_DYNAMIC_ARIAL",
-      "dynamicText": true
-    },
-    {
-      "id": "BULLETY",
-      "description": "FPS Value Text",
-      "texture": "TX_DYNAMIC_ARIAL",
-      "dynamicText": true
     }
-
-
 
   ]
 }
