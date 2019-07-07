@@ -223,6 +223,8 @@ void TextureManager::addTexture(string id, Texture* texture)
 
 	//this->gameObjects[layer].push_back(make_unique<TextObject>(*gameObject));
 
+	//memory leak here
+	//this->textureMap.erase(id);
 	this->textureMap.emplace(id, make_unique<Texture>(*texture));
 
 
@@ -238,6 +240,14 @@ Texture* TextureManager::generateTextTexture(GameObject* textObject, string newT
 	SDL_Texture* sdlTexture;
 
 
+	//Get the existing dynamic texture from the map and free its sdl texture first
+	//TODO; try to make SDLTexture pointer a smart poiinter and maybe this step isnt required
+	Texture * existingTexture = textObject->texture;
+	if(existingTexture != NULL)
+		{
+			SDL_DestroyTexture(existingTexture->sdlTexture);
+		}
+		
 	SDL_Color color = { textObject->definition->textDetails.color.r, 
 		textObject->definition->textDetails.color.g,
 		textObject->definition->textDetails.color.b,
@@ -261,6 +271,7 @@ Texture* TextureManager::generateTextTexture(GameObject* textObject, string newT
 	string test = TTF_GetError();
 
 	sdlTexture = SDL_CreateTextureFromSurface(this->pRenderer, surface);
+	SDL_FreeSurface(surface);
 
 	texture->sdlTexture = sdlTexture;
 

@@ -102,8 +102,8 @@ bool Game::init()
 	this->addGameObject(textObject, this->TEXT);
 
 	//CREATE A DYNAMIC TEST TEXT ITEM
-	//DynamicTextObject* dynamicTextObject = new DynamicTextObject("FPS_VALUE", 0, 1, 0);
-	//this->addGameObject(dynamicTextObject, this->TEXT);
+	DynamicTextObject* dynamicTextObject = new DynamicTextObject("FPS_VALUE", 0, 1, 0);
+	this->addGameObject(dynamicTextObject, this->TEXT);
 
 	//CREATE A TEST ITEM
 	//GameObject* testObject = new GameObject("WALL_BRICK_1", 1, 1, 0);
