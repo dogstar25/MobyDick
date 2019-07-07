@@ -22,6 +22,7 @@
 #include "Camera.h"
 #include "DebugDraw.h"
 #include "Settings.h"
+#include "DebugPanel.h"
 
 //wow!
 //#include <gl/GL.h>
@@ -75,6 +76,8 @@ struct Config
 public:
 	float32 scaleFactor;
 	float32 mouseSensitivity;
+	bool debugPanel;
+	SDL_Point debugPanelLocation;
 
 };
 
@@ -128,6 +131,7 @@ public:
 	void initWorldBounds();
 	void addGameObject(GameObject* gameObject, int);
 	void addGameObject(TextObject* gameObject, int);
+	void addGameObject(DynamicTextObject* gameObject, int);
 	void addGameObject(WorldObject* gameObject, int);
 	bool getConfig();
 	void buildWorld(string);
@@ -167,10 +171,11 @@ public:
 
 	//Settings Object
 	Settings settings;
+	DebugPanel* debugPanel;
 
 	//Box2d Physics
 	b2Vec2 gravity;
-	bool debugDrawMode;
+	bool b2DebugDrawMode;
 	float timeStep;
 	int velocityIterations,
 		positionIterations;

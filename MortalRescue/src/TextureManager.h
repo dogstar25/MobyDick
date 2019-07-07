@@ -16,6 +16,7 @@ class Texture;
 class PlayerObject;
 class WorldObject;
 class TextObject;
+class DynamicTextObject;
 class Game;
 
 using namespace std;
@@ -35,13 +36,18 @@ public:
 	void render(PlayerObject* gameObject);
 	void render(GameObject* gameObject);
 	void render(TextObject* gameObject);
+	void render(DynamicTextObject* gameObject);
+	void renderTextTexture(SDL_Texture*, float, float);
 	bool present();
 	bool clear();
 	Texture* getTexture(string id);
-	TTF_Font* getFont(string id);
+	Texture* getTexture(GameObject*);
+	void addTexture(string, Texture*);
+	string getFont(string id);
 
-	Texture* updateDynamicTextTexture(TextObject*);
+	Texture* updateDynamicTextTexture(DynamicTextObject*);
 	SDL_Surface* generateTextSurface(SDL_Color, int, string, string);
+	Texture* generateTextTexture(GameObject*, string newText= std::string());
 	void drawPoly(b2Body* body);
 	void drawPoints(SDL_Point *);
 	void drawLine(b2Vec2, b2Vec2);
@@ -50,6 +56,7 @@ private:
 
 	SDL_Renderer* pRenderer;
 	map<string, unique_ptr<Texture>> textureMap;
+	map<string, string> fontMap;
 	bool loadTextures();
 	
 };
@@ -60,14 +67,6 @@ public:
 
 	SDL_Texture* sdlTexture;
 	SDL_Surface* surface;
-	SDL_Color color;
-
-	string
-		filename;
-	bool
-		retainSurface;
-	int
-		textSize;
 
 };
 

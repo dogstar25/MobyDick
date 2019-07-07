@@ -100,24 +100,13 @@
       "id": "TX_GINA_64_IDLE",
       "description": "Gina Idle 64",
       "filename": "assets/gina_Idle_64.png"
-    },
+    }
+  ],
+  "fonts": [
     {
-      "id": "TX_DEBUG_FPS_LABEL",
-      "description": "Debug FPS label",
-      "filename": "assets/arial.ttf",
-      "textTexture": {
-        "size": 32,
-        "label": "FPS"
-      }
-    },
-    {
-      "id": "TX_FONT_ARIAL",
-      "description": "Font texture Arial",
-      "filename": "assets/arial.ttf",
-      "textTexture": {
-        "size": 32,
-        "label": "default"
-      }
+      "id": "FONT_ARIAL_REG",
+      "description": "Arial Regular",
+      "filename": "assets/arial.ttf"
     }
   ]
 

@@ -33,6 +33,16 @@ enum GameObjectShape {
 
 };
 
+struct TextDetails {
+
+	SDL_Color color;
+	int size;
+	bool isDynamic;
+	string fontId;
+	string label;
+
+};
+
 static const float DEGTORAD = 0.0174532925199432957f;
 
 class GameObject
@@ -82,8 +92,9 @@ public:
 		isPhysicsObject,
 		isPrimitiveShape,
 		isPlayerObject,
-		isDynamicText;
+		isTextObject;
 
+	TextDetails textDetails;
 	SDL_Color primativeColor; //If object is a primative shape, what color is it
 	map<string, GameObjectAnimation*> animations;
 

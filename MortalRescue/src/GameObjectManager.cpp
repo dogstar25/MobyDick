@@ -107,7 +107,6 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		gameObjectDefinition->xSize = itr["xSize"].asFloat();
 		gameObjectDefinition->ySize = itr["ySize"].asFloat();
 		gameObjectDefinition->textureId = itr["texture"].asString();
-		gameObjectDefinition->isDynamicText = itr["dynamicText"].asBool();
 
 		//If this has a textture then get and store it
 		if (itr["primativeShape"].isNull() == false)
@@ -139,6 +138,32 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 			gameObjectDefinition->physicsType = itr["physicsObject"]["type"].asString();
 			gameObjectDefinition->collisionShape = itr["physicsObject"]["collisionShape"].asString();
 			gameObjectDefinition->collisionRadius = itr["physicsObject"]["collisionRadius"].asFloat();
+
+		}
+
+		//If this is a text object then store text details
+		if (itr["text"].isNull() == false)
+		{
+			gameObjectDefinition->isTextObject = true;
+			gameObjectDefinition->textDetails.label = itr["text"]["label"].asString();
+			gameObjectDefinition->textDetails.fontId = itr["text"]["font"].asString();
+			gameObjectDefinition->textDetails.isDynamic = itr["text"]["dynamic"].asBool();
+			gameObjectDefinition->textDetails.size = itr["text"]["size"].asInt();
+			if (itr["text"]["color"].isNull() == false)
+			{
+				gameObjectDefinition->textDetails.color.a = itr["text"]["color"]["alpha"].asInt();
+				gameObjectDefinition->textDetails.color.r = itr["text"]["color"]["red"].asInt();
+				gameObjectDefinition->textDetails.color.g = itr["text"]["color"]["green"].asInt();
+				gameObjectDefinition->textDetails.color.b = itr["text"]["color"]["blue"].asInt();
+			}
+			else
+			{
+				gameObjectDefinition->textDetails.color.a = 255;
+				gameObjectDefinition->textDetails.color.r = 255;
+				gameObjectDefinition->textDetails.color.g = 255;
+				gameObjectDefinition->textDetails.color.b = 255;
+
+			}
 
 		}
 

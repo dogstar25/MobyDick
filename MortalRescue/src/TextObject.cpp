@@ -9,12 +9,9 @@ TextObject::TextObject(string gameObjectId, int xMapPos, int yMapPos, int angleA
 	GameObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
 {
 
-	this->isDynamic = this->definition->isDynamicText;
-	//Default the texture if this is a dynamic text texture
-	if (this->isDynamic == true)
-	{
-		this->texture = game->textureManager.getTexture("TX_FONT_ARIAL");
-	}
+	//Get or Generate the text texture
+	this->texture = game->textureManager.getTexture(this);
+
 
 }
 
@@ -25,13 +22,6 @@ TextObject::~TextObject()
 
 void TextObject::update()
 {
-
-	//if dynamic go get new text
-	if (this->isDynamic == true)
-	{
-		this->texture = game->textureManager.updateDynamicTextTexture(this);
-		 
-	}
 
 }
 

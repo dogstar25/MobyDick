@@ -1,6 +1,7 @@
 #include "game.h"
 #include "PlayerObject.h"
 #include "TextObject.h"
+#include "DynamicTextObject.h"
 #include "WorldObject.h"
 #include "LevelManager.h"
 #include "TextureManager.h"
@@ -49,7 +50,7 @@ bool Game::init()
 		this->physicsWorld->SetContactListener(&this->gameObjectContactListner);
 
 		//Debug Mode
-		if (this->debugDrawMode == true)
+		if (this->b2DebugDrawMode == true)
 		{
 			this->debugDraw.SetFlags(DebugDraw::e_shapeBit);
 			this->physicsWorld->SetDebugDraw(&this->debugDraw);
@@ -99,16 +100,22 @@ bool Game::init()
 	//CREATE A TEST TEXT ITEM
 	TextObject* textObject = new TextObject("FPS_LABEL", 0, 0, 0);
 	this->addGameObject(textObject, this->TEXT);
+
 	//CREATE A DYNAMIC TEST TEXT ITEM
-	//this->dynamicTextManager.updateText("FPS_VALUE", "this is text");
-	textObject = new TextObject("FPS_VALUE", 0, 1, 0);
-	this->addGameObject(textObject, this->TEXT);
-
-
+	//DynamicTextObject* dynamicTextObject = new DynamicTextObject("FPS_VALUE", 0, 1, 0);
+	//this->addGameObject(dynamicTextObject, this->TEXT);
 
 	//CREATE A TEST ITEM
 	//GameObject* testObject = new GameObject("WALL_BRICK_1", 1, 1, 0);
-	//this->addGameObject(testObject);
+	//this->addGameObject(testObject, this->MAIN) ;
+
+	//Create the debug panel if its turned on
+	if (this->config.debugPanel == true)
+	{
+
+		this->debugPanel = new DebugPanel();
+
+	}
 
 
 
@@ -130,8 +137,8 @@ void Game::play()
 	this->clock.tick();
 
 	//Only update and render if we have passed the 60 fps time passage
-	if (this->clock.gameloop_time_accum >= milisecsPerUpdate)
-	{
+	//if (this->clock.gameloop_time_accum >= milisecsPerUpdate)
+	//{
 		//Handle updating objects positions and physics
 		update();
 
@@ -148,7 +155,7 @@ void Game::play()
 
 		this->dynamicTextManager.updateText("FPS_VALUE", fps);
 
-	}
+	//}
 
 }
 
@@ -213,7 +220,7 @@ void Game::render() {
 	}
 
 	//DebugDraw
-	if (this->debugDrawMode == true)
+	if (this->b2DebugDrawMode == true)
 	{
 		this->physicsWorld->DrawDebugData();
 	}
@@ -242,6 +249,12 @@ void Game::addGameObject(TextObject* gameObject, int layer)
 	this->gameObjects[layer].push_back(make_unique<TextObject>(*gameObject));
 }
 
+void Game::addGameObject(DynamicTextObject* gameObject, int layer)
+{
+	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
+	this->gameObjects[layer].push_back(make_unique<DynamicTextObject>(*gameObject));
+}
+
 bool Game::getConfig()
 {
 	//Read file and stream it to a JSON object
@@ -258,10 +271,13 @@ bool Game::getConfig()
 	this->timeStep = root["physics"]["timeStep"].asFloat();
 	this->velocityIterations = root["physics"]["velocityIterations"].asInt();
 	this->positionIterations = root["physics"]["positionIterations"].asInt();
-	this->debugDrawMode = root["physics"]["debugDrawMode"].asBool(); 
+	this->b2DebugDrawMode = root["physics"]["b2DebugDrawMode"].asBool();
 
 	this->config.scaleFactor = root["physics"]["box2dScale"].asFloat();
 	this->config.mouseSensitivity = root["mouseSensitivity"].asFloat();
+	this->config.debugPanel = root["debugPanel"]["show"].asBool();
+	this->config.debugPanelLocation.x = root["debugPanel"]["xPos"].asInt();
+	this->config.debugPanelLocation.y = root["debugPanel"]["yPos"].asInt();
 
 	this->camera.frame.w = root["camera"]["width"].asInt();
 	this->camera.frame.h = root["camera"]["height"].asInt();

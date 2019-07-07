@@ -171,13 +171,27 @@
     {
       "id": "FPS_LABEL",
       "description": "FPS Label",
-      "texture": "TX_DEBUG_FPS_LABEL"
+      "text": {
+        "label": "FPS",
+        "dynamic": false,
+        "font": "FONT_ARIAL_REG",
+        "size": 32
+      }
     },
     {
       "id": "FPS_VALUE",
       "description": "FPS Value Text",
-      "texture": "TX_DYNAMIC_ARIAL",
-      "dynamicText": true
+      "text": {
+        "dynamic": true,
+        "font": "FONT_ARIAL_REG",
+        "size": 32,
+        "color": {
+          "red": 255,
+          "green": 255,
+          "blue": 255,
+          "alpha": 255
+        }
+      }
     }
 
   ]

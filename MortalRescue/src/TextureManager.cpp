@@ -9,6 +9,7 @@
 #include "game.h"
 #include "PlayerObject.h"
 #include "TextObject.h"
+#include "DynamicTextObject.h"
 #include "WorldObject.h"
 
 
@@ -77,6 +78,14 @@ void TextureManager::render(PlayerObject* gameObject)
 
 }
 
+void TextureManager::render(DynamicTextObject* gameObject)
+{
+
+	this->renderTextTexture(gameObject->texture->sdlTexture, gameObject->xPos, gameObject->yPos);
+
+
+}
+
 void TextureManager::render(GameObject* gameObject)
 {
 
@@ -101,19 +110,26 @@ void TextureManager::render(GameObject* gameObject)
 void TextureManager::render(TextObject* gameObject)
 {
 
+	this->renderTextTexture(gameObject->texture->sdlTexture, gameObject->xPos, gameObject->yPos);
+
+}
+
+void TextureManager::renderTextTexture(SDL_Texture* texture, float xPos, float yPos)
+{
+
 	SDL_Rect srcRect, destRect;
 
 	//calculate the destination rectangle - must convert meters to pixels with scale factor
 	int texW = 0;
 	int texH = 0;
-	SDL_QueryTexture(gameObject->texture->sdlTexture, NULL, NULL, &texW, &texH);
+	SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
 
 	destRect.w = texW;
 	destRect.h = texH;
-	destRect.x = gameObject->xPos;
-	destRect.y = gameObject->yPos;
+	destRect.x = xPos;
+	destRect.y = yPos;
 
-	SDL_Texture* texure = gameObject->texture->sdlTexture;
+	SDL_Texture* texure = texture;
 	SDL_Rect *textureSourceRect = NULL;
 
 	//Render the texture
@@ -123,6 +139,9 @@ void TextureManager::render(TextObject* gameObject)
 
 
 }
+
+
+
 bool TextureManager::loadTextures()
 {
 
@@ -151,25 +170,9 @@ bool TextureManager::loadTextures()
 
 		id = itr["id"].asString();
 		filename = itr["filename"].asString();
-		textureObject->filename = filename;
 		retainSurface = itr["retainSurface"].asBool();
 
-		if (itr["textTexture"].isNull() == false)
-		{
-			SDL_Color color = { 255, 255, 255 };
-			textureObject->color = color;
-			size = itr["textTexture"]["size"].asInt();
-			textureObject->textSize = size;
-			string labelText = itr["textTexture"]["label"].asString();
-
-			surface = this->generateTextSurface(color, size, filename, labelText);
-
-			//SDL_RenderFillRect(pRenderer, &destRect)
-		}
-		else
-		{
-			surface = IMG_Load(filename.c_str());
-		}
+		surface = IMG_Load(filename.c_str());
 
 		sdlTexture = SDL_CreateTextureFromSurface(this->pRenderer, surface);
 		textureObject->sdlTexture = sdlTexture;
@@ -186,11 +189,16 @@ bool TextureManager::loadTextures()
 		this->textureMap.emplace(id, move(textureObject));
 		textureObject.reset();
 
-
-		//SDL_TextureAccess
 	}
 
+	// Loop through every font defined and store it in the main font map
+		for (auto itr : root["fonts"])
+		{
+			id = itr["id"].asString();
+			filename = itr["filename"].asString();
+			this->fontMap.emplace(id, filename);
 
+		}
 
 
 	return true;
@@ -210,10 +218,65 @@ SDL_Surface* TextureManager::generateTextSurface(SDL_Color color, int textSize, 
 
 }
 
+void TextureManager::addTexture(string id, Texture* texture)
+{
+
+	//this->gameObjects[layer].push_back(make_unique<TextObject>(*gameObject));
+
+	this->textureMap.emplace(id, make_unique<Texture>(*texture));
+
+
+}
 
 
 
-Texture* TextureManager::updateDynamicTextTexture(TextObject *gameObject)
+Texture* TextureManager::generateTextTexture(GameObject* textObject, string newText)
+{
+
+	SDL_Surface* surface;
+	Texture* texture = new Texture();
+	SDL_Texture* sdlTexture;
+
+
+	SDL_Color color = { textObject->definition->textDetails.color.r, 
+		textObject->definition->textDetails.color.g,
+		textObject->definition->textDetails.color.b,
+		textObject->definition->textDetails.color.a };
+
+	int textSize = textObject->definition->textDetails.size;
+	string fontFile = this->getFont(textObject->definition->textDetails.fontId);
+	string textValue = string();
+	if (newText.empty() == false)
+	{
+		textValue = newText;
+	}
+	else
+	{
+		textValue = textObject->definition->textDetails.label;
+	}
+
+	TTF_Font* fontObject = TTF_OpenFont(fontFile.c_str(), textSize);
+	surface = TTF_RenderText_Solid(fontObject, textValue.c_str(), color);
+	TTF_CloseFont(fontObject);
+	string test = TTF_GetError();
+
+	sdlTexture = SDL_CreateTextureFromSurface(this->pRenderer, surface);
+
+	texture->sdlTexture = sdlTexture;
+
+	//Add it to the main texture map
+	//Append "TEXTURE" to gameobejct id to create textture id
+	string textureId = textObject->definition->id + "_TEXT_TEXTURE";
+	this->addTexture(textureId, texture);
+	return 	texture;
+	
+
+}
+
+
+
+
+Texture* TextureManager::updateDynamicTextTexture(DynamicTextObject *gameObject)
 {
 
 	textItem* newText;
@@ -227,12 +290,7 @@ Texture* TextureManager::updateDynamicTextTexture(TextObject *gameObject)
 	if (newText->hasChanged == true)
 	{
 
-		surface = this->generateTextSurface(gameObject->texture->color, 
-			gameObject->texture->textSize, gameObject->texture->filename,
-			newText->text);
-		textureObject = gameObject->texture;
-		textureObject->sdlTexture = SDL_CreateTextureFromSurface(this->pRenderer, surface);
-		SDL_FreeSurface(surface);
+		textureObject = generateTextTexture(gameObject, newText->text);
 
 	}
 	else
@@ -247,16 +305,58 @@ Texture* TextureManager::updateDynamicTextTexture(TextObject *gameObject)
 
 }
 
+string TextureManager::getFont(string id)
+{
+	string fontFile;
 
+	auto iter = this->fontMap.find(id);
+
+	if (iter != this->fontMap.end())
+	{
+		//fontFile = this->fontMap[id];
+		fontFile = iter->second;
+	}
+	else ///default
+	{
+		fontFile = this->fontMap["FONT_ARIAL_REG"];
+	}
+
+	return fontFile;
+}
 
 Texture * TextureManager::getTexture(string id)
 {
 	Texture* textureObject;
 
-	textureObject = this->textureMap[id].get();
-	if (textureObject == NULL)
+	auto iter = this->textureMap.find(id);
+
+	if (iter != this->textureMap.end())
+	{
+		textureObject = iter->second.get();
+	}
+	else
 	{
 		textureObject = this->textureMap["TX_DEFAULT"].get();
+	}
+
+	return textureObject;
+}
+
+Texture * TextureManager::getTexture(GameObject* textObject)
+{
+	Texture* textureObject;
+
+	//Do we already have a texture stored for this gameobject definition
+	string textureId = textObject->definition->id + "_TEXT_TEXTURE";
+	auto iter = this->textureMap.find(textureId);
+
+	if (iter != this->textureMap.end())
+	{
+		textureObject = iter->second.get();
+	}
+	else
+	{
+		textureObject = this->generateTextTexture(textObject);
 	}
 
 	return textureObject;
