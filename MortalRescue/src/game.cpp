@@ -1,7 +1,6 @@
 #include "game.h"
 #include "PlayerObject.h"
 #include "TextObject.h"
-#include "DynamicTextObject.h"
 #include "WorldObject.h"
 #include "LevelManager.h"
 #include "TextureManager.h"
@@ -102,7 +101,7 @@ bool Game::init()
 	this->addGameObject(textObject, this->TEXT);
 
 	//CREATE A DYNAMIC TEST TEXT ITEM
-	DynamicTextObject* dynamicTextObject = new DynamicTextObject("FPS_VALUE", 0, 1, 0);
+	TextObject* dynamicTextObject = new TextObject("FPS_VALUE", 0, 1, 0);
 	this->addGameObject(dynamicTextObject, this->TEXT);
 
 	//CREATE A TEST ITEM
@@ -137,8 +136,8 @@ void Game::play()
 	this->clock.tick();
 
 	//Only update and render if we have passed the 60 fps time passage
-	//if (this->clock.gameloop_time_accum >= milisecsPerUpdate)
-	//{
+	if (this->clock.gameloop_time_accum >= milisecsPerUpdate)
+	{
 		//Handle updating objects positions and physics
 		update();
 
@@ -155,7 +154,7 @@ void Game::play()
 
 		this->dynamicTextManager.updateText("FPS_VALUE", fps);
 
-	//}
+	}
 
 }
 
@@ -247,12 +246,6 @@ void Game::addGameObject(TextObject* gameObject, int layer)
 {
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
 	this->gameObjects[layer].push_back(make_unique<TextObject>(*gameObject));
-}
-
-void Game::addGameObject(DynamicTextObject* gameObject, int layer)
-{
-	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	this->gameObjects[layer].push_back(make_unique<DynamicTextObject>(*gameObject));
 }
 
 bool Game::getConfig()

@@ -24,7 +24,7 @@ public:
 
 	//vector <unique_ptr<GameObject>> gameObjects;
 
-	void updateText(string, string);
+	bool updateText(string, string);
 	textItem* getTextItem(string);
 
 

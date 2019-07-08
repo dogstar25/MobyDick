@@ -41,8 +41,10 @@ textItem* DynamicTextManager::getTextItem(string id)
 }
 
 
-void DynamicTextManager::updateText(string id, string newText)
+bool DynamicTextManager::updateText(string id, string newText)
 {
+
+	bool wasFound = false;
 
 	//If the text item is already in the map, then update it, otherwise create it
 	auto iter = this->textItems.find(id);
@@ -59,6 +61,8 @@ void DynamicTextManager::updateText(string id, string newText)
 			iter->second->hasChanged = false;
 		}
 
+		wasFound = true;
+
 	}
 	else
 	{
@@ -67,5 +71,7 @@ void DynamicTextManager::updateText(string id, string newText)
 		item->hasChanged = true;
 		this->textItems[id] = make_unique<textItem>(*item);
 	}
+
+	return wasFound;
 
 }

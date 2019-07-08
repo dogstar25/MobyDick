@@ -27,7 +27,18 @@ GameObject::GameObject()
 
 GameObject::GameObject(string gameObjectId, int xMapPos, int yMapPos, int angleAdjust)
 {
-	this->definition = game->gameObjectManager.gameObjectDefinitions[gameObjectId];;
+
+	//is this a debug object then get the default debug definition but change its 
+	//id value to the one we passed in
+	if (gameObjectId.rfind("DEBUG_", 0) == 0)
+	{
+		this->definition = game->gameObjectManager.gameObjectDefinitions["DEBUG_ITEM"];
+		this->definition->id = gameObjectId;
+	}
+	else
+	{
+		this->definition = game->gameObjectManager.gameObjectDefinitions[gameObjectId];
+	}
 
 	this->angle = angleAdjust;
 

@@ -131,7 +131,6 @@ public:
 	void initWorldBounds();
 	void addGameObject(GameObject* gameObject, int);
 	void addGameObject(TextObject* gameObject, int);
-	void addGameObject(DynamicTextObject* gameObject, int);
 	void addGameObject(WorldObject* gameObject, int);
 	bool getConfig();
 	void buildWorld(string);

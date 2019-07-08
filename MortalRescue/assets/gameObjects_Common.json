@@ -192,6 +192,15 @@
           "alpha": 255
         }
       }
+    },
+    {
+      "id": "DEBUG_ITEM",
+      "description": "Debug Item",
+      "text": {
+        "dynamic": true,
+        "font": "FONT_ARIAL_REG",
+        "size": 32
+      }
     }
 
   ]

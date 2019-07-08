@@ -9,7 +9,6 @@
 #include "game.h"
 #include "PlayerObject.h"
 #include "TextObject.h"
-#include "DynamicTextObject.h"
 #include "WorldObject.h"
 
 
@@ -78,14 +77,6 @@ void TextureManager::render(PlayerObject* gameObject)
 
 }
 
-void TextureManager::render(DynamicTextObject* gameObject)
-{
-
-	this->renderTextTexture(gameObject->texture->sdlTexture, gameObject->xPos, gameObject->yPos);
-
-
-}
-
 void TextureManager::render(GameObject* gameObject)
 {
 
@@ -110,26 +101,19 @@ void TextureManager::render(GameObject* gameObject)
 void TextureManager::render(TextObject* gameObject)
 {
 
-	this->renderTextTexture(gameObject->texture->sdlTexture, gameObject->xPos, gameObject->yPos);
-
-}
-
-void TextureManager::renderTextTexture(SDL_Texture* texture, float xPos, float yPos)
-{
-
 	SDL_Rect srcRect, destRect;
 
 	//calculate the destination rectangle - must convert meters to pixels with scale factor
 	int texW = 0;
 	int texH = 0;
-	SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
+	SDL_QueryTexture(gameObject->texture->sdlTexture, NULL, NULL, &texW, &texH);
 
 	destRect.w = texW;
 	destRect.h = texH;
-	destRect.x = xPos;
-	destRect.y = yPos;
+	destRect.x = gameObject->xPos;
+	destRect.y = gameObject->yPos;
 
-	SDL_Texture* texure = texture;
+	SDL_Texture* texure = gameObject->texture->sdlTexture;
 	SDL_Rect *textureSourceRect = NULL;
 
 	//Render the texture
@@ -137,9 +121,7 @@ void TextureManager::renderTextTexture(SDL_Texture* texture, float xPos, float y
 	SDL_RenderCopyEx(pRenderer, texure, textureSourceRect, &destRect, 0,
 		NULL, SDL_FLIP_NONE);
 
-
 }
-
 
 
 bool TextureManager::loadTextures()
@@ -287,7 +269,7 @@ Texture* TextureManager::generateTextTexture(GameObject* textObject, string newT
 
 
 
-Texture* TextureManager::updateDynamicTextTexture(DynamicTextObject *gameObject)
+Texture* TextureManager::updateDynamicTextTexture(TextObject *gameObject)
 {
 
 	textItem* newText;

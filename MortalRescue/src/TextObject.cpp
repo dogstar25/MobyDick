@@ -12,7 +12,6 @@ TextObject::TextObject(string gameObjectId, int xMapPos, int yMapPos, int angleA
 	//Get or Generate the text texture
 	this->texture = game->textureManager.getTexture(this);
 
-
 }
 
 
@@ -22,6 +21,11 @@ TextObject::~TextObject()
 
 void TextObject::update()
 {
+
+	if (this->definition->textDetails.isDynamic == true)
+	{
+		this->texture = game->textureManager.updateDynamicTextTexture(this);
+	}
 
 }
 

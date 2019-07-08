@@ -46,15 +46,15 @@ void Weapon::fire()
 	dy = dy + sin(this->weaponWieldingObject->physicsBody->GetAngle());
 	//dx = dx + 1;
 	//dy = dy + 1;
-	/*
+	
 	char buffer[256]; sprintf_s(buffer, "%06f", dx);
 	string text(buffer);
 	game->debugPanel->addItem("BULLETX", text);
 
 	buffer[256]; sprintf_s(buffer, "%06f", dy);
 	string text2(buffer);
-	game->debugPanel->addItem("BULLETX", text2);
-	*/
+	game->debugPanel->addItem("BULLETY", text2);
+	
 
 
 

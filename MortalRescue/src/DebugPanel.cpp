@@ -10,7 +10,9 @@ DebugPanel::DebugPanel()
 	this->location.x = game->config.debugPanelLocation.x;
 	this->location.y = game->config.debugPanelLocation.y;
 
-	contentOffset = 1;
+	this->contentOffset = 1;
+	this->itemCount = 0;
+
 }
 
 
@@ -20,21 +22,35 @@ DebugPanel::~DebugPanel()
 
 void DebugPanel::addItem(string id, string value)
 {
-	//Add a seq number to the Id to always make sure that the id is unique
-	string newId = id + std::to_string(this->itemCount);
 
-	//Calculate the position of the debug text item
-	int xPos = this->location.x + this->contentOffset;
-	int yPos = this->location.y += this->itemCount + this->contentOffset;
+	int yPos, xPos;
 
-	TextObject* textObject = new TextObject(newId, xPos, yPos, 0);
-	game->addGameObject(textObject, game->DEBUG);
+	//Prefix DEBUG to the id
+	string newId = "DEBUG_" + id;
 
-	//Add the dynamic text itself to the dynamic text manager
-	game->dynamicTextManager.updateText("newId", value);
+	//Build the new text using the id as a label
+	string newText = id + " : " + value;
 
-	this->itemCount++;
+	//Add or update the dynamic text itself to the dynamic text manager
+	bool alreadyExists = game->dynamicTextManager.updateText(newId, newText);
 
+	if (alreadyExists == false)
+	{
+		//Calculate the position of the debug text item
+		int xPos = this->location.x + this->contentOffset;
+		if (itemCount == 0) {
+			yPos = this->location.y += this->itemCount + this->contentOffset;
+		}
+		else
+		{
+			yPos = this->location.y += this->itemCount;
+		}
+
+		TextObject* textObject = new TextObject(newId, xPos, yPos, 0);
+		game->addGameObject(textObject, game->DEBUG);
+
+		this->itemCount++;
+	}
 
 
 }
