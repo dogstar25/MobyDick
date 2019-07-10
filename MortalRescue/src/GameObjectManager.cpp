@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "PlayerObject.h"
 #include "WorldObject.h"
+#include "GameObjectDefinition.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -12,79 +13,32 @@
 #include <iostream>
 #include <fstream>
 
+
+GameObjectManager::GameObjectManager()
+{
+
+}
+
+GameObjectManager::~GameObjectManager()
+{
+
+	//clean and delete all of the game objects
+	/*
+	for (auto gameObjectDefinition : this->gameObjectDefinitions) {
+
+		delete gameObjectDefinition.second;
+	}
+	*/
+	this->gameObjectDefinitions.clear();
+}
+
 bool GameObjectManager::init()
 {
 	load("gameObjects_Common");
 	load("gameObjects_Level1");
-	//load("gameObjects_Test");
-	
 
 	return true;
 }
-
-
-
-/*
-
-
-Build Animation object
-
-
-*/
-GameObjectAnimation* GameObjectManager::buildAnimation(GameObjectDefinition* gameObjectDefinition,
-														string id, string textureId, int frames,
-														float speed)
-{
-
-	GameObjectAnimation* animation=nullptr;
-	animation = new GameObjectAnimation();
-
-	animation->id = id;
-	animation->frameCount = frames;
-	animation->speed = speed;
-
-	//Get pointer to textture
-	animation->texture = game->textureManager.getTexture(textureId)->sdlTexture;
-
-	//Calculate how many columns and rows this animation texture has
-	int width, height;
-	//First get width of textture
-	SDL_QueryTexture(animation->texture, NULL, NULL, &width, &height);
-
-	//Calculate nnumber of rows and columns - remember to convert the gameObject size to pixels first
-	int rows, columns;
-	columns = width / (gameObjectDefinition->xSize * game->config.scaleFactor);
-	rows = height / (gameObjectDefinition->ySize * game->config.scaleFactor);
-
-	//Calculate top left corner of each animation frame
-	SDL_Point point;
-	int frameCount = 0;
-	for (int rowIdx = 0; rowIdx < rows; rowIdx++) {
-		for (int colIdx = 0; colIdx < columns; colIdx++) {
-
-			point.x = colIdx * (gameObjectDefinition->xSize * game->config.scaleFactor);
-			point.y = rowIdx * (gameObjectDefinition->ySize * game->config.scaleFactor);
-			//animation->animationFramePositions[frameCount] = point;
-			animation->animationFramePositions.push_back(point);
-
-			//do not exceed the maximum number of frames that this texture holds
-			frameCount++;
-			if (frameCount >= animation->frameCount) {
-				break;
-			}
-		}
-	}
-	
-	//TODO: Initialze the current source rect to the first animation frame
-	//SDL_Rect* sourceRect = nullptr;
-	//animation->currentTextureAnimationSrcRect
-
-	return animation;
-
-
-
-}
-
 
 
 void GameObjectManager::load(string gameObjectAssetsFilename)
@@ -188,20 +142,62 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 	}
 }
 
-GameObjectManager::GameObjectManager() 
+/*
+Build Animation object
+*/
+GameObjectAnimation* GameObjectManager::buildAnimation(GameObjectDefinition* gameObjectDefinition,
+	string id, string textureId, int frames,
+	float speed)
 {
 
-}
+	GameObjectAnimation* animation = nullptr;
+	animation = new GameObjectAnimation();
 
-GameObjectManager::~GameObjectManager() 
-{
+	animation->id = id;
+	animation->frameCount = frames;
+	animation->speed = speed;
 
-	//clean and delete all of the game objects
-	/*
-	for (auto gameObjectDefinition : this->gameObjectDefinitions) {
+	//Get pointer to textture
+	animation->texture = game->textureManager.getTexture(textureId)->sdlTexture;
 
-		delete gameObjectDefinition.second;
+	//Calculate how many columns and rows this animation texture has
+	int width, height;
+	//First get width of textture
+	SDL_QueryTexture(animation->texture, NULL, NULL, &width, &height);
+
+	//Calculate nnumber of rows and columns - remember to convert the gameObject size to pixels first
+	int rows, columns;
+	columns = width / (gameObjectDefinition->xSize * game->config.scaleFactor);
+	rows = height / (gameObjectDefinition->ySize * game->config.scaleFactor);
+
+	//Calculate top left corner of each animation frame
+	SDL_Point point;
+	int frameCount = 0;
+	for (int rowIdx = 0; rowIdx < rows; rowIdx++) {
+		for (int colIdx = 0; colIdx < columns; colIdx++) {
+
+			point.x = colIdx * (gameObjectDefinition->xSize * game->config.scaleFactor);
+			point.y = rowIdx * (gameObjectDefinition->ySize * game->config.scaleFactor);
+			//animation->animationFramePositions[frameCount] = point;
+			animation->animationFramePositions.push_back(point);
+
+			//do not exceed the maximum number of frames that this texture holds
+			frameCount++;
+			if (frameCount >= animation->frameCount) {
+				break;
+			}
+		}
 	}
-	*/
-	this->gameObjectDefinitions.clear();
+
+	//TODO: Initialze the current source rect to the first animation frame
+	//SDL_Rect* sourceRect = nullptr;
+	//animation->currentTextureAnimationSrcRect
+
+	return animation;
+
+
+
 }
+
+
+

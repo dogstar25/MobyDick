@@ -2,8 +2,32 @@
 #include "PlayerObject.h"
 #include "WorldObject.h"
 #include "Weapon.h"
+#include "GameObjectDefinition.h";
 
 #include <math.h>
+
+PlayerObject::PlayerObject()
+{
+}
+
+PlayerObject::PlayerObject(string gameObjectId, int xMapPos, int yMapPos, int angleAdjust) :
+	WorldObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
+{
+
+	this->direction = 0;
+	this->strafe = 0;
+	this->currentAnimationState = "IDLE";
+
+
+}
+
+PlayerObject::~PlayerObject()
+{
+
+	//int todd = 1;
+	delete this->weapon;
+
+}
 
 void PlayerObject::handlePlayerMovementEvent(SDL_Event* event)
 {
@@ -111,7 +135,7 @@ void PlayerObject::updatePlayerMovement()
 	Lots of tweeks can be down here depending on the game you are building for smoother movement
 	*/
 
-	float acceleration = this->definition->speed;
+	float acceleration = this->speed;
 	float velocity = acceleration;
 
 	//Calc direction XY
@@ -167,22 +191,5 @@ void PlayerObject::addWeapon(string bulletGameObjectId, float xWeaponOffsetPct, 
 
 }
 
-PlayerObject::PlayerObject()
-{
-}
-
-PlayerObject::PlayerObject(string gameObjectId, int xMapPos, int yMapPos, int angleAdjust) : 
-	WorldObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
-{
-
-}
-
-PlayerObject::~PlayerObject()
-{
-
-	//int todd = 1;
-	delete this->weapon;
-
-}
 
 

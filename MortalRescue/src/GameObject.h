@@ -33,16 +33,6 @@ enum GameObjectShape {
 
 };
 
-struct TextDetails {
-
-	SDL_Color color;
-	int size;
-	bool isDynamic;
-	string fontId;
-	string label;
-
-};
-
 static const float DEGTORAD = 0.0174532925199432957f;
 
 class GameObject
@@ -56,48 +46,27 @@ public:
 	virtual void update();
 	virtual void render();
 
-	GameObjectDefinition* definition;
-
-	float xPos, yPos, angle;
-	string 	currentAnimationState;
-
-	Texture* texture;
-
-};
-
-class GameObjectDefinition
-{
-public:
-
-	GameObjectDefinition();
-	~GameObjectDefinition();
-
-	float
+	//Object Attrbutes
+	string 
+		id,
+		definitionId,
+		currentAnimationState;
+	bool
+		isAnimated;
+	SDL_Color 
+		color;
+	float 
+		xPos,
+		yPos,
 		xSize,
 		ySize,
-		speed,
-		friction,
-		density,
-		linearDamping,
-		collisionRadius,
-		angularDamping;
-	string
-		id,
-		description,
-		physicsType,
-		collisionShape,
-		textureId;
-	bool
-		isAnimated,
-		isPhysicsObject,
-		isPrimitiveShape,
-		isPlayerObject,
-		isTextObject;
+		angle;
 
-	TextDetails textDetails;
-	SDL_Color primativeColor; //If object is a primative shape, what color is it
+	Texture* texture;
+	//pointer to the definition
+	GameObjectDefinition* definition;
+
 	map<string, GameObjectAnimation*> animations;
-
 
 };
 

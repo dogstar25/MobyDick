@@ -23,8 +23,8 @@ void Weapon::init(string bulletGameObjectId, PlayerObject* weaponWieldingObject,
 	this->weaponWieldingObject = weaponWieldingObject;
 
 	//Calulate the actual offest amount using the percentages that were sent in
-	this->xOffset = xOffsetPct * this->weaponWieldingObject->definition->xSize;
-	this->yOffset = yOffsetPct * this->weaponWieldingObject->definition->ySize;
+	this->xOffset = xOffsetPct * this->weaponWieldingObject->xSize;
+	this->yOffset = yOffsetPct * this->weaponWieldingObject->ySize;
 
 
 }
@@ -42,11 +42,12 @@ void Weapon::fire()
 
 
 
-	dx = dx + cos(this->weaponWieldingObject->physicsBody->GetAngle());
-	dy = dy + sin(this->weaponWieldingObject->physicsBody->GetAngle());
+	//dx = dx + cos(this->weaponWieldingObject->physicsBody->GetAngle());
+	//dy = dy + sin(this->weaponWieldingObject->physicsBody->GetAngle());
 	//dx = dx + 1;
 	//dy = dy + 1;
 	
+	/*
 	char buffer[256]; sprintf_s(buffer, "%06f", dx);
 	string text(buffer);
 	game->debugPanel->addItem("BULLETX", text);
@@ -54,14 +55,14 @@ void Weapon::fire()
 	buffer[256]; sprintf_s(buffer, "%06f", dy);
 	string text2(buffer);
 	game->debugPanel->addItem("BULLETY", text2);
-	
+	*/
 
 
 
 	b2Vec2 positionVector = b2Vec2(dx, dy);
 
-	dx = cos(this->weaponWieldingObject->physicsBody->GetAngle()) * bullet->definition->speed; // make speed configurable
-	dy = sin(this->weaponWieldingObject->physicsBody->GetAngle()) * bullet->definition->speed; // Y-component.
+	dx = cos(this->weaponWieldingObject->physicsBody->GetAngle()) * bullet->speed; // make speed configurable
+	dy = sin(this->weaponWieldingObject->physicsBody->GetAngle()) * bullet->speed; // Y-component.
 	b2Vec2 velocityVector = b2Vec2(dx, dy);
 
 	float angle = this->weaponWieldingObject->physicsBody->GetAngle();

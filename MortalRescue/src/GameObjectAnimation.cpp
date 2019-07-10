@@ -28,8 +28,8 @@ void GameObjectAnimation::animate(GameObject* gameObject)
 		rect.y = this->animationFramePositions[currentAnimFrame].y;
 
 		//todo:find way to not have to pass in gameObject for this
-		rect.w = gameObject->definition->xSize * game->config.scaleFactor;
-		rect.h = gameObject->definition->ySize * game->config.scaleFactor;
+		rect.w = gameObject->xSize * game->config.scaleFactor;
+		rect.h = gameObject->ySize * game->config.scaleFactor;
 
 		this->currentTextureAnimationSrcRect = rect;
 

@@ -15,5 +15,7 @@ public:
 	b2Body* buildB2Body(GameObjectDefinition*);
 
 	b2Body* physicsBody;
+
+	float speed;
 };
 

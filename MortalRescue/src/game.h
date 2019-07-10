@@ -161,6 +161,7 @@ public:
 	string gameTitle;
 	Uint32 windowXpos= SDL_WINDOWPOS_CENTERED, windowYPos= SDL_WINDOWPOS_CENTERED;
 	Uint32 windowFlags= SDL_WINDOW_RESIZABLE;
+	int gameObjectCount;
 	float mouseSensitivity;
 
 	//Array of Vectors of all game objects

@@ -39,13 +39,13 @@ public:
 	bool present();
 	bool clear();
 	Texture* getTexture(string id);
-	Texture* getTexture(GameObject*);
+	Texture* getTexture(TextObject*);
 	void addTexture(string, Texture*);
 	string getFont(string id);
 
 	Texture* updateDynamicTextTexture(TextObject*);
 	SDL_Surface* generateTextSurface(SDL_Color, int, string, string);
-	Texture* generateTextTexture(GameObject*, string newText= std::string());
+	Texture* generateTextTexture(TextObject*);
 	void drawPoly(b2Body* body);
 	void drawPoints(SDL_Point *);
 	void drawLine(b2Vec2, b2Vec2);

@@ -21,6 +21,7 @@ bool Game::init()
 
 	//Get all of the configuration values
 	getConfig();
+	gameObjectCount = 0;
 
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
@@ -79,12 +80,8 @@ bool Game::init()
 
 	//Create the main player object
 	PlayerObject* player = new PlayerObject("GINA_64", 10, 10, 0);
-
 	this->player = make_unique<PlayerObject>(*player);
 
-	this->player->direction = 0;
-	this->player->strafe = 0;
-	this->player->currentAnimationState = "IDLE";
 	// Add a weapon that will have bullet origin that is located half way
 	// in the X position and halfway in the Y position from this objects origin
 	this->player->addWeapon("BULLET1", .50, .50);
@@ -94,7 +91,6 @@ bool Game::init()
 		(camera.frame.w / 2),
 		(this->player->physicsBody->GetPosition().y *  this->config.scaleFactor) -
 		(camera.frame.h / 2));
-
 
 	//CREATE A TEST TEXT ITEM
 	TextObject* textObject = new TextObject("FPS_LABEL", 0, 0, 0);
@@ -232,7 +228,7 @@ void Game::render() {
 void Game::addGameObject(GameObject* gameObject, int layer)
 {
 	this->gameObjects[layer].push_back(make_unique<GameObject>(*gameObject));
-
+	this->gameObjectCount++;
 
 }
 
@@ -240,12 +236,14 @@ void Game::addGameObject(WorldObject* gameObject, int layer)
 {
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
 	this->gameObjects[layer].push_back(make_unique<WorldObject>(*gameObject));
+	this->gameObjectCount++;
 }
 
 void Game::addGameObject(TextObject* gameObject, int layer)
 {
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
 	this->gameObjects[layer].push_back(make_unique<TextObject>(*gameObject));
+	this->gameObjectCount++;
 }
 
 bool Game::getConfig()
@@ -301,9 +299,6 @@ void Game::handleEvents() {
 		case SDL_MOUSEBUTTONDOWN:
 			//this->testBlocks(&event, this->physicsWorld);
 			this->player->weapon->fire();
-			std::cout << "FPS is " << this->clock.fps << "\n";
-			std::cout << "bodycount is " << Game::gameObjectManager.box2dBodyCount << "\n";
-			std::cout << "gameobject count is " << Game::gameObjects.size() << "\n";
 			break;
 		default:
 			break;

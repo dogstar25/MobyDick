@@ -3,8 +3,9 @@
 #include <string>
 #include <map>
 
+#include "GameObjectDefinition.h"
+
 //Forward declarations
-class GameObjectDefinition;
 class GameObject;
 class GameObjectAnimation;
 
@@ -24,7 +25,6 @@ public:
 
 	//Map of the definitions of all posible game objects in the game/level
 	map<string, GameObjectDefinition*> gameObjectDefinitions;
-	int box2dBodyCount;
 
 private:
 	

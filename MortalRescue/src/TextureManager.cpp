@@ -32,8 +32,8 @@ void TextureManager::render(WorldObject* gameObject)
 	SDL_Rect srcRect, destRect;
 
 	//calculate the destination rectangle - must convert meters to pixels with scale factor
-	destRect.w = (gameObject->definition->xSize * game->config.scaleFactor);
-	destRect.h = (gameObject->definition->ySize * game->config.scaleFactor);
+	destRect.w = (gameObject->xSize * game->config.scaleFactor);
+	destRect.h = (gameObject->ySize * game->config.scaleFactor);
 	destRect.x = round((gameObject->physicsBody->GetPosition().x *  game->config.scaleFactor) - (destRect.w / 2));
 	destRect.y = round((gameObject->physicsBody->GetPosition().y *  game->config.scaleFactor) - (destRect.h / 2));
 
@@ -49,10 +49,10 @@ void TextureManager::render(WorldObject* gameObject)
 	// otherwise get its static texture
 	SDL_Texture* texure = NULL;
 	SDL_Rect *textureSourceRect = NULL;
-	if (gameObject->definition->isAnimated) {
+	if (gameObject->isAnimated) {
 
-		texure = gameObject->definition->animations[gameObject->currentAnimationState]->texture;
-		textureSourceRect = &gameObject->definition->animations[gameObject->currentAnimationState]->currentTextureAnimationSrcRect;
+		texure = gameObject->animations[gameObject->currentAnimationState]->texture;
+		textureSourceRect = &gameObject->animations[gameObject->currentAnimationState]->currentTextureAnimationSrcRect;
 	}
 	else {
 
@@ -82,8 +82,8 @@ void TextureManager::render(GameObject* gameObject)
 
 	SDL_Rect srcRect, destRect;
 
-	destRect.w = gameObject->definition->xSize;
-	destRect.h = gameObject->definition->xSize;
+	destRect.w = gameObject->xSize;
+	destRect.h = gameObject->xSize;
 	destRect.x = gameObject->xPos;
 	destRect.y = gameObject->yPos;
 
@@ -186,20 +186,6 @@ bool TextureManager::loadTextures()
 	return true;
 }
 
-SDL_Surface* TextureManager::generateTextSurface(SDL_Color color, int textSize, string fontFilename, string text)
-{
-
-	SDL_Surface* surface;
-
-	TTF_Font* fontObject = TTF_OpenFont(fontFilename.c_str(), textSize);
-	surface = TTF_RenderText_Solid(fontObject, text.c_str(), color);
-	TTF_CloseFont(fontObject);
-	string test = TTF_GetError();
-
-	return surface;
-
-}
-
 void TextureManager::addTexture(string id, Texture* texture)
 {
 
@@ -214,41 +200,23 @@ void TextureManager::addTexture(string id, Texture* texture)
 
 
 
-Texture* TextureManager::generateTextTexture(GameObject* textObject, string newText)
+Texture* TextureManager::generateTextTexture(TextObject* textObject)
 {
 
 	SDL_Surface* surface;
 	Texture* texture = new Texture();
 	SDL_Texture* sdlTexture;
 
+	SDL_Color color = { textObject->color.r, 
+		textObject->color.g,
+		textObject->color.b,
+		textObject->color.a };
 
-	//Get the existing dynamic texture from the map and free its sdl texture first
-	//TODO; try to make SDLTexture pointer a smart poiinter and maybe this step isnt required
-	Texture * existingTexture = textObject->texture;
-	if(existingTexture != NULL)
-		{
-			SDL_DestroyTexture(existingTexture->sdlTexture);
-		}
-		
-	SDL_Color color = { textObject->definition->textDetails.color.r, 
-		textObject->definition->textDetails.color.g,
-		textObject->definition->textDetails.color.b,
-		textObject->definition->textDetails.color.a };
-
-	int textSize = textObject->definition->textDetails.size;
-	string fontFile = this->getFont(textObject->definition->textDetails.fontId);
-	string textValue = string();
-	if (newText.empty() == false)
-	{
-		textValue = newText;
-	}
-	else
-	{
-		textValue = textObject->definition->textDetails.label;
-	}
+	int textSize = textObject->xSize; // default to x size
+	string fontFile = this->getFont(textObject->fontId);
 
 	TTF_Font* fontObject = TTF_OpenFont(fontFile.c_str(), textSize);
-	surface = TTF_RenderText_Solid(fontObject, textValue.c_str(), color);
+	surface = TTF_RenderText_Solid(fontObject, textObject->textValue.c_str(), color);
 	TTF_CloseFont(fontObject);
 	string test = TTF_GetError();
 
@@ -259,17 +227,14 @@ Texture* TextureManager::generateTextTexture(GameObject* textObject, string newT
 
 	//Add it to the main texture map
 	//Append "TEXTURE" to gameobejct id to create textture id
-	string textureId = textObject->definition->id + "_TEXT_TEXTURE";
+	string textureId = textObject->id + "_TEXT_TEXTURE";
 	this->addTexture(textureId, texture);
 	return 	texture;
 	
-
 }
 
 
-
-
-Texture* TextureManager::updateDynamicTextTexture(TextObject *gameObject)
+Texture* TextureManager::updateDynamicTextTexture(TextObject *textObject)
 {
 
 	textItem* newText;
@@ -277,18 +242,23 @@ Texture* TextureManager::updateDynamicTextTexture(TextObject *gameObject)
 	SDL_Surface* surface;
 
 	//newText = game->dynamicTextManager.textItems[gameObject->definition->id].get();
-	newText = game->dynamicTextManager.getTextItem(gameObject->definition->id);
-
+	newText = game->dynamicTextManager.getTextItem(textObject->definitionId);
 
 	if (newText->hasChanged == true)
 	{
 
-		textureObject = generateTextTexture(gameObject, newText->text);
+		//Destroy this texture from the map before we generate a new one - memory leak otherwise
+		SDL_DestroyTexture(textObject->texture->sdlTexture);
+
+		//Build new texture
+		textObject->textValue = newText->text;
+		textureObject = generateTextTexture(textObject);
+		newText->hasChanged = false;
 
 	}
 	else
 	{
-		textureObject = gameObject->texture;
+		textureObject = textObject->texture;
 
 		//TODO:set a flag at game object level so that the TextureManager::render(TextObject* gameObject) doesnt have to 
 		// do SDL_QueryTexture
@@ -319,7 +289,7 @@ string TextureManager::getFont(string id)
 
 Texture * TextureManager::getTexture(string id)
 {
-	Texture* textureObject;
+	Texture* textureObject=NULL;
 
 	auto iter = this->textureMap.find(id);
 
@@ -335,25 +305,7 @@ Texture * TextureManager::getTexture(string id)
 	return textureObject;
 }
 
-Texture * TextureManager::getTexture(GameObject* textObject)
-{
-	Texture* textureObject;
 
-	//Do we already have a texture stored for this gameobject definition
-	string textureId = textObject->definition->id + "_TEXT_TEXTURE";
-	auto iter = this->textureMap.find(textureId);
-
-	if (iter != this->textureMap.end())
-	{
-		textureObject = iter->second.get();
-	}
-	else
-	{
-		textureObject = this->generateTextTexture(textObject);
-	}
-
-	return textureObject;
-}
 
 bool TextureManager::present()
 {

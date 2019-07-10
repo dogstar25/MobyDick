@@ -14,5 +14,10 @@ public:
 	void update();
 	void render();
 
+	bool isDynamic;
+	string fontId;
+	string textValue;
+		
+
 };
 
