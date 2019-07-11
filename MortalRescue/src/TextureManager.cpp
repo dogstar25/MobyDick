@@ -193,7 +193,8 @@ void TextureManager::addTexture(string id, Texture* texture)
 
 	//memory leak here
 	//this->textureMap.erase(id);
-	this->textureMap.emplace(id, make_unique<Texture>(*texture));
+	this->textureMap.insert_or_assign(id, make_unique<Texture>(*texture));
+	//this->textureMap.emplace(id, make_unique<Texture>(*texture));
 
 
 }

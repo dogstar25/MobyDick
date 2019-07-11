@@ -16,8 +16,7 @@ public:
 	void addItem(string, string);
 
 	SDL_Point location;
-	int itemCount,
-		contentOffset;
+	int itemCount;
 	//map <string,string>debugItems;
 
 

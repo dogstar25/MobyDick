@@ -10,7 +10,6 @@ DebugPanel::DebugPanel()
 	this->location.x = game->config.debugPanelLocation.x;
 	this->location.y = game->config.debugPanelLocation.y;
 
-	this->contentOffset = 1;
 	this->itemCount = 0;
 
 }
@@ -37,14 +36,8 @@ void DebugPanel::addItem(string id, string value)
 	if (alreadyExists == false)
 	{
 		//Calculate the position of the debug text item
-		int xPos = this->location.x + this->contentOffset;
-		if (itemCount == 0) {
-			yPos = this->location.y += this->itemCount + this->contentOffset;
-		}
-		else
-		{
-			yPos = this->location.y += this->itemCount;
-		}
+		xPos = this->location.x;
+		yPos = this->location.y += this->itemCount;
 
 		TextObject* textObject = new TextObject(newId, xPos, yPos, 0);
 		game->addGameObject(textObject, game->DEBUG);

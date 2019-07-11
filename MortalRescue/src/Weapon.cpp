@@ -47,7 +47,6 @@ void Weapon::fire()
 	//dx = dx + 1;
 	//dy = dy + 1;
 	
-	/*
 	char buffer[256]; sprintf_s(buffer, "%06f", dx);
 	string text(buffer);
 	game->debugPanel->addItem("BULLETX", text);
@@ -55,7 +54,7 @@ void Weapon::fire()
 	buffer[256]; sprintf_s(buffer, "%06f", dy);
 	string text2(buffer);
 	game->debugPanel->addItem("BULLETY", text2);
-	*/
+	
 
 
 
