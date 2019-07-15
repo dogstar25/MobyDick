@@ -33,28 +33,43 @@ void Weapon::init(string bulletGameObjectId, PlayerObject* weaponWieldingObject,
 
 void Weapon::fire()
 {
-
-	 //bullet;
+	//bullet;
 	WorldObject* bullet = new WorldObject(this->bulletGameObjectId, 0, 0, 0);
 
-	float dx = this->weaponWieldingObject->physicsBody->GetTransform().p.x + cos(this->weaponWieldingObject->physicsBody->GetAngle() );
-	float dy = this->weaponWieldingObject->physicsBody->GetTransform().p.y + sin(this->weaponWieldingObject->physicsBody->GetAngle() );
 
 
 
-	//dx = dx + cos(this->weaponWieldingObject->physicsBody->GetAngle());
-	//dy = dy + sin(this->weaponWieldingObject->physicsBody->GetAngle());
-	//dx = dx + 1;
-	//dy = dy + 1;
-	
-	char buffer[256]; sprintf_s(buffer, "%06f", dx);
+
+
+
+	float dx = this->weaponWieldingObject->physicsBody->GetTransform().p.x +
+		cos(this->weaponWieldingObject->physicsBody->GetAngle());
+	float dy = this->weaponWieldingObject->physicsBody->GetTransform().p.y +
+		sin(this->weaponWieldingObject->physicsBody->GetAngle());
+
+	/* remove offfset logic for now*/
+	float xAdj = cos(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->xOffset);
+	float yAdj = sin(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->yOffset);
+	/*
+	dx += xAdj;
+	dy += yAdj;
+	*/
+
+	char buffer[256]; sprintf_s(buffer, "%06f", this->weaponWieldingObject->physicsBody->GetTransform().p.x);
 	string text(buffer);
-	game->debugPanel->addItem("BULLETX", text);
+	game->debugPanel->addItem("PLAYERX", text);
 
-	buffer[256]; sprintf_s(buffer, "%06f", dy);
+	buffer[256]; sprintf_s(buffer, "%06f", this->weaponWieldingObject->physicsBody->GetTransform().p.y);
 	string text2(buffer);
-	game->debugPanel->addItem("BULLETY", text2);
-	
+	game->debugPanel->addItem("PLAYERY", text2);
+
+	buffer[256]; sprintf_s(buffer, "%06f", xAdj);
+	string text3(buffer);
+	game->debugPanel->addItem("BULLETX", text3);
+
+	buffer[256]; sprintf_s(buffer, "%06f", yAdj);
+	string text4(buffer);
+	game->debugPanel->addItem("BULLETY", text4);
 
 
 
@@ -71,6 +86,7 @@ void Weapon::fire()
 	bullet->physicsBody->SetTransform(positionVector, angle);
 	bullet->physicsBody->SetLinearVelocity(velocityVector);
 	bullet->currentAnimationState = "ACTIVE";
+	///bullet->physicsBody->SetBullet(true);
 
 	//Add the bullet object to the main gameObject collection
 	game->addGameObject(bullet, game->MAIN);

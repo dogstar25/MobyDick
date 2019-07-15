@@ -84,7 +84,7 @@ bool Game::init()
 
 	// Add a weapon that will have bullet origin that is located half way
 	// in the X position and halfway in the Y position from this objects origin
-	this->player->addWeapon("BULLET1", .50, .50);
+	this->player->addWeapon("BULLET1", 0, 0);
 
 	//set camera to center on player object
 	this->camera.setPosition((this->player->physicsBody->GetPosition().x *  this->config.scaleFactor) -
@@ -147,8 +147,14 @@ void Game::play()
 
 		char buffer[256]; sprintf_s(buffer, "%06d", this->clock.fps);
 		string fps(buffer);
-
 		this->dynamicTextManager.updateText("FPS_VALUE", fps);
+
+		//Debug stuff
+		buffer[256]; sprintf_s(buffer, "%06d", this->gameObjectCount);
+		string text(buffer);
+		game->debugPanel->addItem("OBJECT_COUNT", text);
+
+
 
 	}
 
@@ -189,6 +195,10 @@ void Game::update() {
 		}
 
 	}
+
+	//particleManager.update() // spin through list of particle taks to execute, like
+	// exposions and emitters
+
 
 	//Step the box2d physics world
 	this->physicsWorld->Step(this->timeStep, this->velocityIterations, this->positionIterations);
@@ -298,7 +308,9 @@ void Game::handleEvents() {
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			//this->testBlocks(&event, this->physicsWorld);
-			this->player->weapon->fire();
+			for (int x = 0; x < 20; x++) {
+				this->player->weapon->fire();
+			}
 			break;
 		default:
 			break;
