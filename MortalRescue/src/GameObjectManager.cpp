@@ -137,6 +137,13 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 			}
 		}
 
+		//Particle attributes
+		if (itr["particle"].isNull() == false)
+		{
+			gameObjectDefinition->isParticle = true;
+			gameObjectDefinition->lifetime = itr["particle"]["lifetime"].asFloat();
+		}
+
 		this->gameObjectDefinitions[gameObjectDefinition->id] = gameObjectDefinition;
 
 	}

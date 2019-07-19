@@ -135,7 +135,10 @@
           "speed": 0.02, //time in seconds for each frame. Lower the faster
           "frames": 4
         }
-      ]
+      ],
+      "particle": {
+        "lifetime": 3
+      }
     },
     {
       "id": "GINA_64",

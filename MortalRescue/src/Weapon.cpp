@@ -1,6 +1,7 @@
 #include "Weapon.h"
 #include "GameObject.h"
 #include "WorldObject.h"
+#include "ParticleObject.h"
 #include "PlayerObject.h"
 #include "game.h"
 #include <string>
@@ -34,13 +35,8 @@ void Weapon::init(string bulletGameObjectId, PlayerObject* weaponWieldingObject,
 void Weapon::fire()
 {
 	//bullet;
-	WorldObject* bullet = new WorldObject(this->bulletGameObjectId, 0, 0, 0);
-
-
-
-
-
-
+	ParticleObject* bullet = new ParticleObject(this->bulletGameObjectId, 0, 0, 0);
+	//ParticleObject* bullet = game->objectPoolManager.get(this->bulletGameObjectId);
 
 	float dx = this->weaponWieldingObject->physicsBody->GetTransform().p.x +
 		cos(this->weaponWieldingObject->physicsBody->GetAngle());
@@ -55,23 +51,15 @@ void Weapon::fire()
 	dy += yAdj;
 	*/
 
-	char buffer[256]; sprintf_s(buffer, "%06f", this->weaponWieldingObject->physicsBody->GetTransform().p.x);
-	string text(buffer);
-	game->debugPanel->addItem("PLAYERX", text);
-
-	buffer[256]; sprintf_s(buffer, "%06f", this->weaponWieldingObject->physicsBody->GetTransform().p.y);
-	string text2(buffer);
-	game->debugPanel->addItem("PLAYERY", text2);
-
-	buffer[256]; sprintf_s(buffer, "%06f", xAdj);
-	string text3(buffer);
-	game->debugPanel->addItem("BULLETX", text3);
-
-	buffer[256]; sprintf_s(buffer, "%06f", yAdj);
-	string text4(buffer);
-	game->debugPanel->addItem("BULLETY", text4);
-
-
+	////////
+	// DEBUG VALUES
+	game->debugPanel->addItem("PLAYERX", 
+		to_string(this->weaponWieldingObject->physicsBody->GetTransform().p.x));
+	game->debugPanel->addItem("PLAYERY", 
+		to_string(this->weaponWieldingObject->physicsBody->GetTransform().p.y));
+	game->debugPanel->addItem("BULLETX", to_string(xAdj));
+	game->debugPanel->addItem("BULLETY", to_string(yAdj));
+	//////////
 
 	b2Vec2 positionVector = b2Vec2(dx, dy);
 

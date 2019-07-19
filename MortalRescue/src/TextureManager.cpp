@@ -10,6 +10,7 @@
 #include "PlayerObject.h"
 #include "TextObject.h"
 #include "WorldObject.h"
+#include "ParticleObject.h"
 
 
 
@@ -70,6 +71,14 @@ void TextureManager::render(WorldObject* gameObject)
 }
 
 void TextureManager::render(PlayerObject* gameObject)
+{
+
+	this->render(static_cast<WorldObject*>(gameObject));
+
+
+}
+
+void TextureManager::render(ParticleObject* gameObject)
 {
 
 	this->render(static_cast<WorldObject*>(gameObject));
@@ -181,7 +190,6 @@ bool TextureManager::loadTextures()
 			this->fontMap.emplace(id, filename);
 
 		}
-
 
 	return true;
 }

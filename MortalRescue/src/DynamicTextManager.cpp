@@ -56,10 +56,6 @@ bool DynamicTextManager::updateText(string id, string newText)
 			iter->second->text = newText;
 			iter->second->hasChanged = true;
 		}
-		else
-		{
-			iter->second->hasChanged = false;
-		}
 
 		wasFound = true;
 

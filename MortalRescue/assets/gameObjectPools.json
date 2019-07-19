@@ -1,0 +1,10 @@
+{
+  "gameObjectPools": [
+    {
+      "id": "BULLET1_POOL",
+      "gameObjectId": "BULLET1",
+      "lifetime":  4,
+      "maxItems": 100
+    }
+  ]
+}

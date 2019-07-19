@@ -2,6 +2,7 @@
 #include "PlayerObject.h"
 #include "TextObject.h"
 #include "WorldObject.h"
+#include "ParticleObject.h"
 #include "LevelManager.h"
 #include "TextureManager.h"
 #include "GameObjectManager.h"
@@ -12,6 +13,7 @@
 #include "Weapon.h"
 
 using namespace chrono_literals;
+using namespace std;
 
 /*
 Initialize Game
@@ -58,6 +60,9 @@ bool Game::init()
 
 		//Initilaze the Game Object Manager
 		this->gameObjectManager.init();
+
+		//Initilaze the Particle Pool Manager
+		this->objectPoolManager.init();
 
 		//Set the mouse mode
 		SDL_ShowCursor(false);
@@ -183,27 +188,27 @@ void Game::update() {
 		(this->player->physicsBody->GetPosition().y *  this->config.scaleFactor) -
 		(camera.frame.h / 2));
 
+	//particleManager.update() // spin through list of particle taks to execute, like
+	// exposions and emitters
+
+
 	//Update all of the other non player related update chores for each game object
 	// Game objects are stored in layers
-	this->awakeCount=0;
 	for (auto & gameObjectLayer : gameObjects)
 	{
-
 		for (auto & gameObject : gameObjectLayer)
 		{
 			gameObject->update();
 		}
-
 	}
-
-	//particleManager.update() // spin through list of particle taks to execute, like
-	// exposions and emitters
 
 
 	//Step the box2d physics world
 	this->physicsWorld->Step(this->timeStep, this->velocityIterations, this->positionIterations);
 
 }
+
+
 
 void Game::render() {
 
@@ -235,8 +240,11 @@ void Game::render() {
 
 }
 
+
+
 void Game::addGameObject(GameObject* gameObject, int layer)
 {
+
 	this->gameObjects[layer].push_back(make_unique<GameObject>(*gameObject));
 	this->gameObjectCount++;
 
@@ -244,8 +252,22 @@ void Game::addGameObject(GameObject* gameObject, int layer)
 
 void Game::addGameObject(WorldObject* gameObject, int layer)
 {
+
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
 	this->gameObjects[layer].push_back(make_unique<WorldObject>(*gameObject));
+	this->gameObjectCount++;
+}
+
+void Game::addGameObject(ParticleObject* gameObject, int layer)
+{
+	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
+	this->gameObjects[layer].push_back(make_unique<ParticleObject>(*gameObject));
+	this->gameObjectCount++;
+}
+
+void Game::addGameObject(unique_ptr<ParticleObject> gameObject, int layer)
+{
+	this->gameObjects[layer].push_back(move(gameObject));
 	this->gameObjectCount++;
 }
 
@@ -254,6 +276,14 @@ void Game::addGameObject(TextObject* gameObject, int layer)
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
 	this->gameObjects[layer].push_back(make_unique<TextObject>(*gameObject));
 	this->gameObjectCount++;
+}
+
+void Game::removeGameObject(unique_ptr<ParticleObject> gameObject, int layer)
+{
+	//this->gameObjects[layer].erase(gameObject);
+
+
+	this->gameObjectCount--;
 }
 
 bool Game::getConfig()
@@ -308,7 +338,7 @@ void Game::handleEvents() {
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			//this->testBlocks(&event, this->physicsWorld);
-			for (int x = 0; x < 20; x++) {
+			for (int x = 0; x < 2; x++) {
 				this->player->weapon->fire();
 			}
 			break;

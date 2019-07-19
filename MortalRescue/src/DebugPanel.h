@@ -14,7 +14,6 @@ public:
 	~DebugPanel();
 
 	void addItem(string, string);
-
 	SDL_Point location;
 	int itemCount;
 	//map <string,string>debugItems;

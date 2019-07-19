@@ -75,6 +75,12 @@
     <ClCompile Include="src\GameObjectDefinition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ParticleObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ObjectPoolManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h">
@@ -137,6 +143,12 @@
     <ClInclude Include="src\GameObjectDefinition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ParticleObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ObjectPoolManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\textureAssets.json" />
@@ -151,6 +163,7 @@
     <None Include="assets\gameObjects_Level1.json" />
     <None Include="libfreetype-6.dll" />
     <None Include="SDL2_ttf.dll" />
+    <None Include="assets\gameObjectPools.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png">

@@ -30,7 +30,7 @@ GameObject::GameObject()
 GameObject::GameObject(string gameObjectId, int xMapPos, int yMapPos, int angleAdjust)
 {
 	//set the id and it will be unique for every game object in the game
-	this->id = gameObjectId + std::to_string(game->gameObjectCount);
+	this->id = gameObjectId + to_string(game->gameObjectCount);
 	//this->id = gameObjectId;
 	this->definitionId = gameObjectId;
 
@@ -47,6 +47,7 @@ GameObject::GameObject(string gameObjectId, int xMapPos, int yMapPos, int angleA
 	}
 
 	this->angle = angleAdjust;
+	this->removeFromWorld = false;
 
 	this->xPos = xMapPos * game->worldGridSize.w;
 	this->yPos = yMapPos * game->worldGridSize.h;

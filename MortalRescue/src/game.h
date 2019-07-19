@@ -19,6 +19,7 @@
 #include "GameObjectManager.h"
 #include "GameObjectContactListener.h"
 #include "DynamicTextManager.h"
+#include "ObjectPoolManager.h"
 #include "Camera.h"
 #include "DebugDraw.h"
 #include "Settings.h"
@@ -84,6 +85,7 @@ public:
 //forward declations
 class PlayerObject;
 class GameObject;
+class ParticleObject;
 
 
 using namespace std;
@@ -132,6 +134,9 @@ public:
 	void addGameObject(GameObject* gameObject, int);
 	void addGameObject(TextObject* gameObject, int);
 	void addGameObject(WorldObject* gameObject, int);
+	void addGameObject(ParticleObject* gameObject, int);
+	void addGameObject(unique_ptr<ParticleObject> gameObject, int);
+	void removeGameObject(unique_ptr<ParticleObject> gameObject, int);
 	bool getConfig();
 	void buildWorld(string);
 
@@ -149,6 +154,7 @@ public:
 	LevelManager levelManager;
 	GameObjectContactListener gameObjectContactListner;
 	DynamicTextManager dynamicTextManager;
+	ObjectPoolManager objectPoolManager;
 
 	Config config;
 	Camera camera;

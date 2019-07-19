@@ -38,13 +38,15 @@ public:
 		density,
 		linearDamping,
 		collisionRadius,
-		angularDamping;
+		angularDamping,
+		lifetime;
 	bool
 		isAnimated,
 		isPhysicsObject,
 		isPrimitiveShape,
 		isPlayerObject,
-		isTextObject;
+		isTextObject,
+		isParticle;
 
 	TextDetails textDetails;
 	SDL_Color primativeColor; //If object is a primative shape, what color is it

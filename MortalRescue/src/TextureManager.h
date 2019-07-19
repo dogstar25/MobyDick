@@ -16,6 +16,7 @@ class Texture;
 class PlayerObject;
 class WorldObject;
 class TextObject;
+class ParticleObject;
 class Game;
 
 using namespace std;
@@ -35,6 +36,7 @@ public:
 	void render(PlayerObject* gameObject);
 	void render(GameObject* gameObject);
 	void render(TextObject* gameObject);
+	void render(ParticleObject* gameObject);
 	void renderTextTexture(SDL_Texture*, float, float);
 	bool present();
 	bool clear();

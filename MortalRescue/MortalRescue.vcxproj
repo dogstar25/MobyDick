@@ -188,6 +188,8 @@
     <ClCompile Include="src\LevelManager.cpp" />
     <ClCompile Include="src\MortalRescue.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\ObjectPoolManager.cpp" />
+    <ClCompile Include="src\ParticleObject.cpp" />
     <ClCompile Include="src\PlayerObject.cpp" />
     <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\TextObject.cpp" />
@@ -210,6 +212,8 @@
     <ClInclude Include="src\jsoncpp\json\json-forwards.h" />
     <ClInclude Include="src\jsoncpp\json\json.h" />
     <ClInclude Include="src\LevelManager.h" />
+    <ClInclude Include="src\ObjectPoolManager.h" />
+    <ClInclude Include="src\ParticleObject.h" />
     <ClInclude Include="src\PlayerObject.h" />
     <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\TextObject.h" />
@@ -219,6 +223,7 @@
     <ClInclude Include="src\WorldObject.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\gameObjectPools.json" />
     <None Include="assets\gameObjects_Common.json" />
     <None Include="assets\gameObjects_Level1.json" />
     <None Include="assets\level1.ase" />
