@@ -19,7 +19,9 @@ public:
 	void update();
 	void render();
 
-	float lifetime, lifetimeRemaining;
+	//float lifetime, lifetimeRemaining;
+	duration<float, milli> lifetime;
+	duration<float, milli> lifetimeRemaining;
 	bool isAvailable;
 	string poolId;
 

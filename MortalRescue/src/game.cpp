@@ -7,6 +7,7 @@
 #include "TextureManager.h"
 #include "GameObjectManager.h"
 #include "DynamicTextManager.h"
+#include "GameObjectCollection.h"
 #include "GameObject.h"
 #include "Util.h"
 #include "Camera.h"
@@ -14,6 +15,7 @@
 
 using namespace chrono_literals;
 using namespace std;
+
 
 /*
 Initialize Game
@@ -97,7 +99,7 @@ bool Game::init()
 		(this->player->physicsBody->GetPosition().y *  this->config.scaleFactor) -
 		(camera.frame.h / 2));
 
-	//CREATE A TEST TEXT ITEM
+	//CREATE A TEST TEXT ITEM          
 	TextObject* textObject = new TextObject("FPS_LABEL", 0, 0, 0);
 	this->addGameObject(textObject, this->TEXT);
 
@@ -176,6 +178,15 @@ void Game::settingsMenu()
 	
 }
 
+//Removal loop to delete all expired objects from the world
+/*
+bool Game::removePredicate(const unique_ptr<GameObject>& gameObject)
+{
+	return gameObject->removeFromWorld == true;
+};
+*/
+
+
 
 void Game::update() {
 
@@ -194,14 +205,52 @@ void Game::update() {
 
 	//Update all of the other non player related update chores for each game object
 	// Game objects are stored in layers
-	for (auto & gameObjectLayer : gameObjects)
+	for (auto & gameObjectCollection : this->gameCollections)
 	{
-		for (auto & gameObject : gameObjectLayer)
+		//Update normal game objects
+		for (auto & gameObject : gameObjectCollection.gameObjects)
 		{
 			gameObject->update();
 		}
-	}
 
+		ParticleObject* particleObject = NULL;
+		ParticleObject* particleObjectRemoved = NULL;
+
+		//Update particle game objects
+		//for (auto & particleObject : gameObjectCollection.particleObjects)
+		for (int x=0;x<gameObjectCollection.particleObjects.size();x++)
+		{
+
+			//If particle is expired, reset it and remove from teh game world list
+			//The pointer and objectitself will remain in the pool
+			
+			particleObject = gameObjectCollection.particleObjects[x];
+
+			if (particleObject->removeFromWorld == true)
+			{
+				particleObjectRemoved = particleObject;
+				game->objectPoolManager.reset(particleObject);
+				std:swap(gameObjectCollection.particleObjects[x], 
+					gameObjectCollection.particleObjects[gameObjectCollection.particleObjects.size()-1]);
+				gameObjectCollection.particleObjects.resize(gameObjectCollection.particleObjects.size() - 1);
+			}
+			else
+			{
+				particleObject->update();
+			}
+
+		}
+
+		if (gameObjectCollection.particleObjects.capacity() > 0) {
+			game->debugPanel->addItem("PARTICLE_CAPACITY",
+				to_string(gameObjectCollection.particleObjects.capacity()));
+			game->debugPanel->addItem("PARTICLE_VECTOR_SIZE",
+				to_string(gameObjectCollection.particleObjects.size()));
+		}
+
+		gameObjectCollection.particleObjects.shrink_to_fit();
+
+	}
 
 	//Step the box2d physics world
 	this->physicsWorld->Step(this->timeStep, this->velocityIterations, this->positionIterations);
@@ -219,12 +268,15 @@ void Game::render() {
 	this->player->render();
 	
 	//Render all of the game objects
-	for (auto & gameObjectLayer : gameObjects)
+	for (auto & gameObjectCollection : gameCollections)
 	{
-
-		for (auto & gameObject : gameObjectLayer)
+		for (auto & gameObject : gameObjectCollection.gameObjects)
 		{
 			gameObject->render();
+		}
+		for (auto & particleObject : gameObjectCollection.particleObjects)
+		{
+			particleObject->render();
 		}
 
 	}
@@ -245,7 +297,8 @@ void Game::render() {
 void Game::addGameObject(GameObject* gameObject, int layer)
 {
 
-	this->gameObjects[layer].push_back(make_unique<GameObject>(*gameObject));
+	//this->gameObjects[layer].push_back(make_unique<GameObject>(*gameObject));
+	this->gameCollections[layer].gameObjects.push_back(make_unique<GameObject>(*gameObject));
 	this->gameObjectCount++;
 
 }
@@ -254,37 +307,25 @@ void Game::addGameObject(WorldObject* gameObject, int layer)
 {
 
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	this->gameObjects[layer].push_back(make_unique<WorldObject>(*gameObject));
+	this->gameCollections[layer].gameObjects.push_back(make_unique<WorldObject>(*gameObject));
 	this->gameObjectCount++;
 }
 
 void Game::addGameObject(ParticleObject* gameObject, int layer)
 {
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	this->gameObjects[layer].push_back(make_unique<ParticleObject>(*gameObject));
-	this->gameObjectCount++;
-}
-
-void Game::addGameObject(unique_ptr<ParticleObject> gameObject, int layer)
-{
-	this->gameObjects[layer].push_back(move(gameObject));
+	gameObject->time_snapshot = steady_clock::now();
+	this->gameCollections[layer].particleObjects.push_back(gameObject);
 	this->gameObjectCount++;
 }
 
 void Game::addGameObject(TextObject* gameObject, int layer)
 {
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	this->gameObjects[layer].push_back(make_unique<TextObject>(*gameObject));
+	this->gameCollections[layer].gameObjects.push_back(make_unique<TextObject>(*gameObject));
 	this->gameObjectCount++;
 }
 
-void Game::removeGameObject(unique_ptr<ParticleObject> gameObject, int layer)
-{
-	//this->gameObjects[layer].erase(gameObject);
-
-
-	this->gameObjectCount--;
-}
 
 bool Game::getConfig()
 {
@@ -338,7 +379,7 @@ void Game::handleEvents() {
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			//this->testBlocks(&event, this->physicsWorld);
-			for (int x = 0; x < 2; x++) {
+			for (int x = 0; x < 20; x++) {
 				this->player->weapon->fire();
 			}
 			break;
@@ -432,7 +473,8 @@ Game::~Game()
 
 	for (int x=0 ; x < this->MAX_LAYERS; x++)
 	{
-		this->gameObjects[x].clear();
+		this->gameCollections[x].gameObjects.clear();
+		this->gameCollections[x].particleObjects.clear();
 	}
 
 	//Delete box2d world - should delete all bodies and fixtures within

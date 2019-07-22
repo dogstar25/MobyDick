@@ -12,6 +12,7 @@
 #include <ratio>
 #include <chrono>
 #include <array>
+#include <forward_list>
 
 #include "Util.h"
 #include "TextureManager.h"
@@ -24,6 +25,7 @@
 #include "DebugDraw.h"
 #include "Settings.h"
 #include "DebugPanel.h"
+#include "GameObjectCollection.h"
 
 //wow!
 //#include <gl/GL.h>
@@ -135,10 +137,10 @@ public:
 	void addGameObject(TextObject* gameObject, int);
 	void addGameObject(WorldObject* gameObject, int);
 	void addGameObject(ParticleObject* gameObject, int);
-	void addGameObject(unique_ptr<ParticleObject> gameObject, int);
-	void removeGameObject(unique_ptr<ParticleObject> gameObject, int);
 	bool getConfig();
 	void buildWorld(string);
+
+	//bool removePredicate(const GameObject&);
 
 	//Current Game State
 	int gameState;
@@ -170,10 +172,12 @@ public:
 	int gameObjectCount;
 	float mouseSensitivity;
 
-	//Array of Vectors of all game objects
-	//Each array level is a layer containing a vector of all game obejcts for that layer
-	array <vector <unique_ptr<GameObject>>, MAX_LAYERS> gameObjects;
+	//Fixed array of Layers
+	//Each layer contains a GameObjectCollection
+	array <GameObjectCollection, MAX_LAYERS> gameCollections;
 	unique_ptr<PlayerObject> player;
+
+
 
 	//Settings Object
 	Settings settings;

@@ -20,6 +20,7 @@ void ObjectPoolManager::init()
 	ParticleObject* particle;
 	int maxItems;
 	float lifetime;
+	duration<float, milli> lifetimeDur;
 
 
 	//Loop through every texture defined in the config file, create a texture object
@@ -35,7 +36,10 @@ void ObjectPoolManager::init()
 		for (int index = 0; index < maxItems; index++) {
 			particle = new ParticleObject(gameObjectId, -50, -50, 0);
 			particle->isAvailable = true;
-			particle->lifetime = lifetime;
+			//convert seconds into miliseconds
+			//lifetimeDur = std::chrono::duration<float>(lifetime);
+			//particle->lifetime = std::chrono::duration_cast<milliseconds>(lifetimeDur);
+			particle->lifetime = particle->lifetimeRemaining = std::chrono::duration<float>(lifetime);
 			particle->poolId = poolId;
 			particle->physicsBody->SetActive(false);
 			objectPool[gameObjectId].push_back(particle);
@@ -70,30 +74,19 @@ ObjectPoolManager::~ObjectPoolManager()
 ParticleObject* ObjectPoolManager::get(string particleId)
 {
 	ParticleObject* availParticle=NULL;
-	float oldestLifetime = 0;
-	int oldestLifetimeIndex=0;
-
+	
 	for (auto particle : this->objectPool[particleId])
 	{
 		if (particle->isAvailable == true)
 		{
-			availParticle = particle;
 			particle->isAvailable = false;
+			particle->physicsBody->SetActive(true);
+			availParticle = particle;
 			break;
-		}
-		else
-		{
-			if (particle->lifetime > oldestLifetime)
-			{
-				availParticle = particle;
-			}
 		}
 	}
 
-	availParticle->physicsBody->SetActive(true);
-
 	return (availParticle);
-	
 
 }
 
@@ -102,8 +95,10 @@ void ObjectPoolManager::reset(ParticleObject* particle)
 
 	b2Vec2 velocityVector = b2Vec2(0, 0);
 	b2Vec2 positionVector = b2Vec2(-50, -50);
-
+	
+	particle->removeFromWorld = false;
 	particle->lifetimeRemaining = particle->lifetime;
+
 	particle->physicsBody->SetTransform(positionVector, 0);
 	particle->physicsBody->SetLinearVelocity(velocityVector);
 	particle->physicsBody->SetActive(false);

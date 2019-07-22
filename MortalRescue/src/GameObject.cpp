@@ -75,6 +75,10 @@ GameObject::GameObject(string gameObjectId, int xMapPos, int yMapPos, int angleA
 
 GameObject::~GameObject()
 {
+
+	this->animations.clear();
+
+
 }
 
 
