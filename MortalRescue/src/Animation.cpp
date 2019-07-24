@@ -1,8 +1,8 @@
-#include "GameObjectAnimation.h"
+#include "Animation.h"
 #include "GameObject.h"
 #include "game.h"
 
-void GameObjectAnimation::animate(GameObject* gameObject)
+void Animation::animate(GameObject* gameObject)
 {
 	//check the clock and see if enough time as gone by
 	steady_clock::time_point now_time = steady_clock::now();

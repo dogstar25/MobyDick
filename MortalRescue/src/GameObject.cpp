@@ -2,7 +2,7 @@
 #include "game.h"
 #include "Weapon.h"
 #include "GameObjectDefinition.h"
-#include "GameObjectAnimation.h"
+#include "Animation.h"
 
 
 void GameObject::update()

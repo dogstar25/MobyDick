@@ -2,8 +2,9 @@
 #include <string>
 #include <map>
 #include <SDL.h>
+#include <cstddef>
 
-#include "GameObjectAnimation.h"
+#include "Animation.h"
 
 using namespace std;
 
@@ -47,10 +48,12 @@ public:
 		isPlayerObject,
 		isTextObject,
 		isParticle;
+	short
+		collisionGroup; // objects with same negative group value will not collide
 
 	TextDetails textDetails;
 	SDL_Color primativeColor; //If object is a primative shape, what color is it
-	map<string, GameObjectAnimation*> animations;
+	map<string, Animation*> animations;
 
 
 };

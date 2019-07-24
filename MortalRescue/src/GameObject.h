@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObjectAnimation.h"
+#include "Animation.h"
 #include "TextureManager.h"
 
 #include <map> 
@@ -26,6 +26,11 @@ enum GameObjectType {
 	UI_OBJECT = 3
 
 };
+enum EntityCategory {
+	BOUNDARY = 0x0001,
+	PARTICLE_BULLET = 0x0002
+};
+
 enum GameObjectShape {
 
 	RECTANGLE = 0,
@@ -67,7 +72,7 @@ public:
 	//pointer to the definition
 	GameObjectDefinition* definition;
 
-	map<string, GameObjectAnimation*> animations;
+	map<string, Animation*> animations;
 
 };
 

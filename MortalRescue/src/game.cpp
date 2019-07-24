@@ -108,8 +108,9 @@ bool Game::init()
 	this->addGameObject(dynamicTextObject, this->TEXT);
 
 	//CREATE A TEST ITEM
-	//GameObject* testObject = new GameObject("WALL_BRICK_1", 1, 1, 0);
-	//this->addGameObject(testObject, this->MAIN) ;
+	WorldObject* testObject = new WorldObject("SWORDLADY", 2, 2, 0);
+	testObject->currentAnimationState = "IDLE";
+	this->addGameObject(testObject, this->MAIN) ;
 
 	//Create the debug panel if its turned on
 	if (this->config.debugPanel == true)

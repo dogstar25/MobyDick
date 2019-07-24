@@ -92,6 +92,8 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 			gameObjectDefinition->physicsType = itr["physicsObject"]["type"].asString();
 			gameObjectDefinition->collisionShape = itr["physicsObject"]["collisionShape"].asString();
 			gameObjectDefinition->collisionRadius = itr["physicsObject"]["collisionRadius"].asFloat();
+			gameObjectDefinition->collisionGroup = itr["physicsObject"]["collisionGroup"].asInt();
+
 
 		}
 
@@ -125,7 +127,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		if (itr["animations"].isNull() == false)
 		{
 			gameObjectDefinition->isAnimated = true;
-			GameObjectAnimation* animation;
+			Animation* animation;
 			for (auto animItr : itr["animations"])
 			{
 				string texture = animItr["texture"].asString();
@@ -145,13 +147,13 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 /*
 Build Animation object
 */
-GameObjectAnimation* GameObjectManager::buildAnimation(GameObjectDefinition* gameObjectDefinition,
+Animation* GameObjectManager::buildAnimation(GameObjectDefinition* gameObjectDefinition,
 	string id, string textureId, int frames,
 	float speed)
 {
 
-	GameObjectAnimation* animation = nullptr;
-	animation = new GameObjectAnimation();
+	Animation* animation = nullptr;
+	animation = new Animation();
 
 	animation->id = id;
 	animation->frameCount = frames;

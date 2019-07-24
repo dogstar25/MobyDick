@@ -123,7 +123,8 @@
         "friction": 0.0,
         "density": 5.5,
         "linearDamping": 0.0,
-        "angularDamping": 10.0
+        "angularDamping": 10.0,
+        "collisionGroup": -2
       },
       "texture": "TX_BULLET1",
       "xSize": 0.24,

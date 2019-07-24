@@ -12,7 +12,7 @@ extern Game* game;
 using namespace std::chrono;
 using namespace std;
 
-class GameObjectAnimation
+class Animation
 {
 public:
 	string id;

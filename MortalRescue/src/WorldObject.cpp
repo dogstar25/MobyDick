@@ -102,6 +102,10 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 	fixtureDef.density = definition->density;
 	fixtureDef.friction = definition->friction;
 	fixtureDef.restitution = 0.0;
+	//collision group
+	fixtureDef.filter.groupIndex = definition->collisionGroup;
+
+
 
 	// Add the shape to the body.
 	body->CreateFixture(&fixtureDef);

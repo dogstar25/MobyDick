@@ -183,7 +183,7 @@
     <ClCompile Include="src\DebugPanel.cpp" />
     <ClCompile Include="src\DynamicTextManager.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
-    <ClCompile Include="src\GameObjectAnimation.cpp" />
+    <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\GameObjectCollection.cpp" />
     <ClCompile Include="src\GameObjectContactListener.cpp" />
     <ClCompile Include="src\GameObjectDefinition.cpp" />
@@ -209,7 +209,7 @@
     <ClInclude Include="src\DynamicTextManager.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\GameObject.h" />
-    <ClInclude Include="src\GameObjectAnimation.h" />
+    <ClInclude Include="src\Animation.h" />
     <ClInclude Include="src\GameObjectCollection.h" />
     <ClInclude Include="src\GameObjectContactListener.h" />
     <ClInclude Include="src\GameObjectDefinition.h" />

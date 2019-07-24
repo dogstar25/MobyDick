@@ -7,7 +7,7 @@
 
 //Forward declarations
 class GameObject;
-class GameObjectAnimation;
+class Animation;
 
 extern Game* game;
 using namespace std;
@@ -20,7 +20,7 @@ public:
 		
 
 	bool init();
-	GameObjectAnimation * buildAnimation(GameObjectDefinition*, string, string, int, float);
+	Animation * buildAnimation(GameObjectDefinition*, string, string, int, float);
 	void load(string);
 
 	//Map of the definitions of all posible game objects in the game/level
