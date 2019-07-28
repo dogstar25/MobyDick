@@ -26,6 +26,7 @@
 #include "Settings.h"
 #include "DebugPanel.h"
 #include "GameObjectCollection.h"
+#include "ParticleMachine.h"
 
 //wow!
 //#include <gl/GL.h>
@@ -88,6 +89,7 @@ public:
 class PlayerObject;
 class GameObject;
 class ParticleObject;
+class ParticleMachine;
 
 
 using namespace std;
@@ -139,6 +141,7 @@ public:
 	void addGameObject(ParticleObject* gameObject, int);
 	bool getConfig();
 	void buildWorld(string);
+	void testExplosion(SDL_Event*);
 
 	//bool removePredicate(const GameObject&);
 
@@ -157,6 +160,7 @@ public:
 	GameObjectContactListener gameObjectContactListner;
 	DynamicTextManager dynamicTextManager;
 	ObjectPoolManager objectPoolManager;
+	ParticleMachine particleMachine;
 
 	Config config;
 	Camera camera;

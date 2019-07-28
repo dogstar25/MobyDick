@@ -2,7 +2,7 @@
 #include <forward_list>
 #include <list>
 #include <memory>
-#include <array>
+#include <vector>
 
 #include "GameObject.h"
 #include "ParticleObject.h"

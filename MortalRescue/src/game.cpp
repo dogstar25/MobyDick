@@ -8,10 +8,12 @@
 #include "GameObjectManager.h"
 #include "DynamicTextManager.h"
 #include "GameObjectCollection.h"
+#include "ParticleMachine.h"
 #include "GameObject.h"
 #include "Util.h"
 #include "Camera.h"
 #include "Weapon.h"
+#include "Explosion.h"
 
 using namespace chrono_literals;
 using namespace std;
@@ -67,8 +69,8 @@ bool Game::init()
 		this->objectPoolManager.init();
 
 		//Set the mouse mode
-		SDL_ShowCursor(false);
-		SDL_SetRelativeMouseMode(SDL_TRUE);
+		//SDL_ShowCursor(false);
+		//SDL_SetRelativeMouseMode(SDL_TRUE);
 
 		//Build the world for a particular level
 		this->buildWorld("TX_LEVEL1");
@@ -200,9 +202,8 @@ void Game::update() {
 		(this->player->physicsBody->GetPosition().y *  this->config.scaleFactor) -
 		(camera.frame.h / 2));
 
-	//particleManager.update() // spin through list of particle taks to execute, like
-	// exposions and emitters
-
+	// spin through list of particle taks to execute, like exposions and emitters
+	this->particleMachine.update(); 
 
 	//Update all of the other non player related update chores for each game object
 	// Game objects are stored in layers
@@ -380,9 +381,13 @@ void Game::handleEvents() {
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			//this->testBlocks(&event, this->physicsWorld);
-			for (int x = 0; x < 20; x++) {
+			//for (int x = 0; x < 20; x++) {
 				this->player->weapon->fire();
-			}
+			//}
+
+				this->testExplosion(&event);
+
+
 			break;
 		default:
 			break;
@@ -490,4 +495,14 @@ Game::Game()
 
 }
 
+void Game::testExplosion(SDL_Event* event)
+{
+	float x, y;
+	x = event->button.x / Game::config.scaleFactor;
+	y = event->button.y / Game::config.scaleFactor;
+	Explosion* explosion = new Explosion("BULLET1", x, y, 2, 10, 150, 0, 360, true);
+	this->particleMachine.add(explosion);
+
+
+}
 
