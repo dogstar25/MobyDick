@@ -27,100 +27,298 @@ bool TextureManager::init(SDL_Window* pWindow)
 	return true;
 }
 
-void TextureManager::render(WorldObject* gameObject)
+
+void TextureManager::getRenderDestRect(GameObject* gameObject, SDL_Rect* destRect)
 {
 
-	SDL_Rect srcRect, destRect;
+	destRect->w = gameObject->xSize;
+	destRect->h = gameObject->xSize;
+	destRect->x = gameObject->xPos;
+	destRect->y = gameObject->yPos;
 
-	//calculate the destination rectangle - must convert meters to pixels with scale factor
-	destRect.w = (gameObject->xSize * game->config.scaleFactor);
-	destRect.h = (gameObject->ySize * game->config.scaleFactor);
-	destRect.x = round((gameObject->physicsBody->GetPosition().x *  game->config.scaleFactor) - (destRect.w / 2));
-	destRect.y = round((gameObject->physicsBody->GetPosition().y *  game->config.scaleFactor) - (destRect.h / 2));
+	return;
 
-	//Get the angle of the object and convert it from Radians to Degrees for SDL
-	float angle = gameObject->physicsBody->GetAngle();
-	angle = angle * 180 / M_PI;
+}
+
+/*
+void TextureManager::getRenderDestRect(WorldObject* gameObject, SDL_Rect* destRect)
+{
+
+	destRect->w = (gameObject->xSize * game->config.scaleFactor);
+	destRect->h = (gameObject->ySize * game->config.scaleFactor);
+	destRect->x = round((gameObject->physicsBody->GetPosition().x *  game->config.scaleFactor) - (destRect->w / 2));
+	destRect->y = round((gameObject->physicsBody->GetPosition().y *  game->config.scaleFactor) - (destRect->h / 2));
 
 	//Adjust position based on current camera position - offset
-	destRect.x -= game->camera.frame.x;
-	destRect.y -= game->camera.frame.y;
+	destRect->x -= game->camera.frame.x;
+	destRect->y -= game->camera.frame.y;
 
-	//If this is animated object then get its current animation frame texture, 
-	// otherwise get its static texture
-	SDL_Texture* texure = NULL;
-	SDL_Rect *textureSourceRect = NULL;
-	if (gameObject->isAnimated) {
 
-		texure = gameObject->animations[gameObject->currentAnimationState]->texture;
-		textureSourceRect = &gameObject->animations[gameObject->currentAnimationState]->currentTextureAnimationSrcRect;
-	}
-	else {
-
-		texure = gameObject->texture->sdlTexture;
-	}
-
-	//Render the texture
-	SDL_RenderCopyEx(pRenderer, texure, textureSourceRect, &destRect, angle,
-		NULL, SDL_FLIP_NONE);
-
-	//Need support for a primitive worldobject, or maybe game object, that simply fills a rectangle with a color
-	// to be used for UI Panles
-	//SDL_RenderFillRect
+	return;
 
 }
-
-void TextureManager::render(PlayerObject* gameObject)
+*/
+/*
+void TextureManager::getRenderDestRect(TextObject* gameObject, SDL_Rect* destRect)
 {
-
-	this->render(static_cast<WorldObject*>(gameObject));
-
-
-}
-
-void TextureManager::render(ParticleObject* gameObject)
-{
-
-	this->render(static_cast<WorldObject*>(gameObject));
-
-
-}
-
-void TextureManager::render(GameObject* gameObject)
-{
-
-	SDL_Rect srcRect, destRect;
-
-	destRect.w = gameObject->xSize;
-	destRect.h = gameObject->xSize;
-	destRect.x = gameObject->xPos;
-	destRect.y = gameObject->yPos;
-
-	SDL_Texture* texure = gameObject->texture->sdlTexture;
-	SDL_Rect *textureSourceRect = NULL;
-
-	//Render the texture
-	//SDL_RenderCopy(pRenderer, texure, textureSourceRect, &destRect);
-	SDL_RenderCopyEx(pRenderer, texure, textureSourceRect, &destRect, 0,
-		NULL, SDL_FLIP_NONE);
-
-
-}
-
-void TextureManager::render(TextObject* gameObject)
-{
-
-	SDL_Rect srcRect, destRect;
 
 	//calculate the destination rectangle - must convert meters to pixels with scale factor
 	int texW = 0;
 	int texH = 0;
 	SDL_QueryTexture(gameObject->texture->sdlTexture, NULL, NULL, &texW, &texH);
 
-	destRect.w = texW;
-	destRect.h = texH;
-	destRect.x = gameObject->xPos;
-	destRect.y = gameObject->yPos;
+	destRect->w = texW;
+	destRect->h = texH;
+	destRect->x = gameObject->xPos;
+	destRect->y = gameObject->yPos;
+
+	return;
+
+}
+*/
+/*
+void TextureManager::getRenderDestRect(PlayerObject* gameObject, SDL_Rect* destRect)
+{
+
+	//Use same as World Object
+	this->getRenderDestRect(static_cast<WorldObject*>(gameObject), destRect);
+	
+
+}
+
+void TextureManager::getRenderDestRect(ParticleObject* gameObject, SDL_Rect* destRect)
+{
+
+	//Use same as World Object
+	this->getRenderDestRect(static_cast<WorldObject*>(gameObject), destRect);
+
+
+}
+*/
+/*
+void TextureManager::getRenderTexture(GameObject* gameObject, SDL_Texture* texture, SDL_Rect* textureSrcRect)
+{
+
+	textureSrcRect = NULL;
+	if (gameObject->isAnimated) {
+
+		texture = gameObject->animations[gameObject->currentAnimationState]->texture;
+		textureSrcRect = &gameObject->animations[gameObject->currentAnimationState]->currentTextureAnimationSrcRect;
+	}
+	else {
+
+		texture = gameObject->texture->sdlTexture;
+	}
+
+
+}
+*/
+
+/*
+void TextureManager::getRenderTexture(WorldObject* gameObject, SDL_Texture* texture, SDL_Rect* textureSrcRect)
+{
+
+	//Use same as Game Object
+	this->getRenderTexture(static_cast<GameObject*>(gameObject), texture, textureSrcRect);
+
+
+}
+
+void TextureManager::getRenderTexture(PlayerObject* gameObject, SDL_Texture* texture, SDL_Rect* textureSrcRect)
+{
+
+	//Use same as Game Object
+	this->getRenderTexture(static_cast<GameObject*>(gameObject), texture, textureSrcRect);
+
+
+}
+*/
+
+void TextureManager::renderTexture(SDL_Texture* texture, SDL_Rect* textureSourceRect, SDL_Rect* destRect, float angle)
+{
+
+	//Render the texture
+	SDL_RenderCopyEx(this->pRenderer, texture, textureSourceRect, destRect, angle, NULL, SDL_FLIP_NONE);
+
+}
+
+
+/*
+void TextureManager::render(GameObject* gameObject)
+{
+
+	SDL_Rect srcRect, destRect;
+
+	//Get value of destination rectangle for render
+	getRenderDestRect(gameObject, &destRect);
+
+	SDL_Texture* texture = gameObject->texture->sdlTexture;
+	SDL_Rect *textureSourceRect;
+	getRenderTexture(gameObject, texture, textureSourceRect);
+
+	//Render the texture
+	SDL_RenderCopyEx(pRenderer, texture, textureSourceRect, &destRect, 0,
+		NULL, SDL_FLIP_NONE);
+
+}
+*/
+
+/*
+void TextureManager::render(WorldObject* gameObject)
+{
+
+	SDL_Rect srcRect, destRect;
+
+	//Get value of destination rectangle for render
+	getRenderDestRect(gameObject, &destRect);
+
+	//Get the angle of the object and convert it from Radians to Degrees for SDL
+	float angle = gameObject->physicsBody->GetAngle();
+	angle = angle * 180 / M_PI;
+
+	//Get the textture and if its animated, the texture source rectanle
+	SDL_Texture* texture = gameObject->texture->sdlTexture;
+	SDL_Rect *textureSourceRect;
+	getRenderTexture(gameObject, texture, textureSourceRect);
+
+	//Render the texture
+	SDL_RenderCopyEx(pRenderer, texture, textureSourceRect, &destRect, angle,
+		NULL, SDL_FLIP_NONE);
+
+
+	//Need support for a primitive worldobject, or maybe game object, that simply fills a rectangle with a color
+	// to be used for UI Panels
+	//SDL_RenderFillRect
+
+}
+*/
+/*
+void TextureManager::render(PlayerObject* gameObject)
+{
+
+	SDL_Rect srcRect, destRect;
+
+	//Get value of destination rectangle for render
+	getRenderDestRect(gameObject, &destRect);
+
+	//Get the angle of the object and convert it from Radians to Degrees for SDL
+	float angle = gameObject->physicsBody->GetAngle();
+	angle = angle * 180 / M_PI;
+
+	//If this is animated object then get its current animation frame texture, 
+	// otherwise get its static texture
+	SDL_Texture* texture = NULL;
+	SDL_Rect *textureSourceRect = NULL;
+	if (gameObject->isAnimated) {
+
+		texture = gameObject->animations[gameObject->currentAnimationState]->texture;
+		textureSourceRect = &gameObject->animations[gameObject->currentAnimationState]->currentTextureAnimationSrcRect;
+	}
+	else {
+
+		texture = gameObject->texture->sdlTexture;
+	}
+
+
+	//test. copy the texture to new object first so we can muck with it without affecting other obejcts sharing the same texture
+
+	//SDL_SetTextureAlphaMod(texture, randomInt); //seems helpful for particles
+
+	//SDL_GetTextureColorMod(texture, &r, &g, &b);
+	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD); //alpha ADD seems good for particles
+	//SDL_RenderSetScale(pRenderer, randomInt, randomInt); // nope
+
+
+	if (gameObject->definitionId == "PARTICLE_SMOKE_1") {
+
+		int randomR = game->util.generateRandomNumber(204, 224);
+		int randomG = game->util.generateRandomNumber(8, 89);
+		int randomB = game->util.generateRandomNumber(8, 11);
+		SDL_SetTextureColorMod(texture, randomR, randomG, randomB); // doesnt seem helpful for particles
+	}
+
+
+	//Render the texture
+	SDL_RenderCopyEx(pRenderer, texture, textureSourceRect, &destRect, angle,
+		NULL, SDL_FLIP_NONE);
+
+
+	//Need support for a primitive worldobject, or maybe game object, that simply fills a rectangle with a color
+	// to be used for UI Panels
+	//SDL_RenderFillRect
+	//this->render(static_cast<WorldObject*>(gameObject));
+
+
+}
+*/
+
+/*
+void TextureManager::render(ParticleObject* gameObject)
+{
+
+	SDL_Rect srcRect, destRect;
+
+	//Get value of destination rectangle for render
+	getRenderDestRect(gameObject, &destRect);
+
+	//Get the angle of the object and convert it from Radians to Degrees for SDL
+	float angle = gameObject->physicsBody->GetAngle();
+	angle = angle * 180 / M_PI;
+
+	//If this is animated object then get its current animation frame texture, 
+	// otherwise get its static texture
+	SDL_Texture* texture = NULL;
+	SDL_Rect *textureSourceRect = NULL;
+	if (gameObject->isAnimated) {
+
+		texture = gameObject->animations[gameObject->currentAnimationState]->texture;
+		textureSourceRect = &gameObject->animations[gameObject->currentAnimationState]->currentTextureAnimationSrcRect;
+	}
+	else {
+
+		texture = gameObject->texture->sdlTexture;
+	}
+
+
+	//test. copy the texture to new object first so we can muck with it without affecting other obejcts sharing the same texture
+
+	//SDL_SetTextureAlphaMod(texture, randomInt); //seems helpful for particles
+
+	//SDL_GetTextureColorMod(texture, &r, &g, &b);
+	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD); //alpha ADD seems good for particles
+	//SDL_RenderSetScale(pRenderer, randomInt, randomInt); // nope
+
+
+	if (gameObject->definitionId == "PARTICLE_SMOKE_1") {
+
+		int randomR = game->util.generateRandomNumber(204, 224);
+		int randomG = game->util.generateRandomNumber(8, 89);
+		int randomB = game->util.generateRandomNumber(8, 11);
+		SDL_SetTextureColorMod(texture, randomR, randomG, randomB); // doesnt seem helpful for particles
+	}
+
+
+	//Render the texture
+	SDL_RenderCopyEx(pRenderer, texture, textureSourceRect, &destRect, angle,
+		NULL, SDL_FLIP_NONE);
+
+
+	//Need support for a primitive worldobject, or maybe game object, that simply fills a rectangle with a color
+	// to be used for UI Panels
+	//SDL_RenderFillRect
+	//this->render(static_cast<WorldObject*>(gameObject));
+
+
+}
+*/
+/*
+void TextureManager::render(TextObject* gameObject)
+{
+
+	SDL_Rect srcRect, destRect;
+
+	//Get value of destination rectangle for render
+	getRenderDestRect(gameObject, &destRect);
 
 	SDL_Texture* texure = gameObject->texture->sdlTexture;
 	SDL_Rect *textureSourceRect = NULL;
@@ -131,6 +329,7 @@ void TextureManager::render(TextObject* gameObject)
 		NULL, SDL_FLIP_NONE);
 
 }
+*/
 
 
 bool TextureManager::loadTextures()
@@ -288,13 +487,14 @@ string TextureManager::getFont(string id)
 		//fontFile = this->fontMap[id];
 		fontFile = iter->second;
 	}
-	else ///default
+	else //default
 	{
 		fontFile = this->fontMap["FONT_ARIAL_REG"];
 	}
 
 	return fontFile;
 }
+
 
 Texture * TextureManager::getTexture(string id)
 {

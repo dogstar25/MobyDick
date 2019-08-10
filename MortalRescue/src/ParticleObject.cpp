@@ -61,7 +61,42 @@ void ParticleObject::update()
 
 void ParticleObject::render()
 {
+	SDL_Rect *textureSourceRect = NULL, destRect;
+	SDL_Texture* texture = NULL;
 
-	game->textureManager.render(this);
+	//Get render destination rectangle
+	this->getRenderDestRect(&destRect);
+
+	//Get texture
+	texture = this->getRenderTexture(texture);
+
+	//Get render texture src rectangle
+	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
+
+
+	//SDL_SetTextureAlphaMod(texture, randomInt); //seems helpful for particles
+
+	//SDL_GetTextureColorMod(texture, &r, &g, &b);
+	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD); //alpha ADD seems good for particles
+	//SDL_RenderSetScale(pRenderer, randomInt, randomInt); // nope
+
+
+	if (this->definitionId == "PARTICLE_SMOKE_1") {
+
+		int randomR = game->util.generateRandomNumber(204, 224);
+		int randomG = game->util.generateRandomNumber(8, 89);
+		int randomB = game->util.generateRandomNumber(8, 11);
+		SDL_SetTextureColorMod(texture, randomR, randomG, randomB); // doesnt seem helpful for particles
+
+	}
+
+
+
+
+	//Get the angle of the object and convert it from Radians to Degrees for SDL
+	float angle = this->physicsBody->GetAngle();
+	angle = angle * 180 / M_PI;
+
+	WorldObject::render();
 }
 

@@ -35,6 +35,7 @@ GameObjectManager::~GameObjectManager()
 bool GameObjectManager::init()
 {
 	load("gameObjects_Common");
+	load("particleObjects");
 	load("gameObjects_Level1");
 
 	return true;

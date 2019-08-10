@@ -15,6 +15,7 @@
 #include "Weapon.h"
 #include "Explosion.h"
 
+
 using namespace chrono_literals;
 using namespace std;
 
@@ -86,6 +87,12 @@ bool Game::init()
 	//Allocate the array of vectors for all game objects
 	//this->gameObjects = vector<unique_ptr<GameObject>>[this->MAX_LAYERS];
 
+	//CREATE A TEST ITEM
+	WorldObject* testObject = new WorldObject("SWORDLADY", 2, 2, 0);
+	testObject->currentAnimationState = "IDLE";
+	this->addGameObject(testObject, this->MAIN);
+
+
 
 	//Create the main player object
 	PlayerObject* player = new PlayerObject("GINA_64", 10, 10, 0);
@@ -109,10 +116,8 @@ bool Game::init()
 	TextObject* dynamicTextObject = new TextObject("FPS_VALUE", 0, 1, 0);
 	this->addGameObject(dynamicTextObject, this->TEXT);
 
-	//CREATE A TEST ITEM
-	WorldObject* testObject = new WorldObject("SWORDLADY", 2, 2, 0);
-	testObject->currentAnimationState = "IDLE";
-	this->addGameObject(testObject, this->MAIN) ;
+	WorldObject* testObject2 = new WorldObject("PARTICLE_SMOKE_1", 4, 4, 0);
+	this->addGameObject(testObject2, this->MAIN);
 
 	//Create the debug panel if its turned on
 	if (this->config.debugPanel == true)
@@ -155,14 +160,10 @@ void Game::play()
 		this->clock.calcFps();
 		this->clock.resetGameLoopTimeAccum();
 
-		char buffer[256]; sprintf_s(buffer, "%06d", this->clock.fps);
-		string fps(buffer);
-		this->dynamicTextManager.updateText("FPS_VALUE", fps);
+		this->dynamicTextManager.updateText("FPS_VALUE", to_string(this->clock.fps));
 
 		//Debug stuff
-		buffer[256]; sprintf_s(buffer, "%06d", this->gameObjectCount);
-		string text(buffer);
-		game->debugPanel->addItem("OBJECT_COUNT", text);
+		game->debugPanel->addItem("OBJECT_COUNT", to_string(this->gameObjectCount));
 
 
 
@@ -242,14 +243,14 @@ void Game::update() {
 			}
 
 		}
-
+		
 		if (gameObjectCollection.particleObjects.capacity() > 0) {
 			game->debugPanel->addItem("PARTICLE_CAPACITY",
 				to_string(gameObjectCollection.particleObjects.capacity()));
 			game->debugPanel->addItem("PARTICLE_VECTOR_SIZE",
 				to_string(gameObjectCollection.particleObjects.size()));
 		}
-
+		
 		gameObjectCollection.particleObjects.shrink_to_fit();
 
 	}
@@ -382,7 +383,7 @@ void Game::handleEvents() {
 		case SDL_MOUSEBUTTONDOWN:
 			//this->testBlocks(&event, this->physicsWorld);
 			//for (int x = 0; x < 20; x++) {
-				this->player->weapon->fire();
+				//this->player->weapon->fire();
 			//}
 
 				this->testExplosion(&event);
@@ -500,9 +501,18 @@ void Game::testExplosion(SDL_Event* event)
 	float x, y;
 	x = event->button.x / Game::config.scaleFactor;
 	y = event->button.y / Game::config.scaleFactor;
-	Explosion* explosion = new Explosion("BULLET1", x, y, 2, 10, 150, 0, 360, true);
+
+	//Adjust position based on current camera position - offset
+	//x -= game->camera.frame.x;
+	//y -= game->camera.frame.y;
+
+	Explosion* explosion = new Explosion("PARTICLE_SMOKE_1", x, y, 15, 15, 100, 0, 360, true);
 	this->particleMachine.add(explosion);
 
+
+
+//	explosion = new Explosion("BULLET1", x, y, 5, 35, 20, 0, 360, true);
+	//this->particleMachine.add(explosion);
 
 }
 

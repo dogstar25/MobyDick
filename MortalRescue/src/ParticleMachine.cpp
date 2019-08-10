@@ -60,7 +60,7 @@ void ParticleMachine::runExplosions()
 
 				particle->physicsBody->SetTransform(positionVector, 0);
 				particle->physicsBody->SetLinearVelocity(velocityVector);
-				particle->physicsBody->SetBullet(true);
+				//particle->physicsBody->SetBullet(true);
 				//particle->physicsBody->ser
 				particle->currentAnimationState = "ACTIVE";
 

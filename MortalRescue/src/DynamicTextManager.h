@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string>
 #include <map>
+#include <memory>
 
 using namespace std;
 

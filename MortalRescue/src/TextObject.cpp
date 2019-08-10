@@ -43,10 +43,40 @@ void TextObject::update()
 
 }
 
+SDL_Rect* TextObject::getRenderDestRect(SDL_Rect* destRect)
+{
+
+	//calculate the destination rectangle - must convert meters to pixels with scale factor
+	int texW = 0;
+	int texH = 0;
+	SDL_QueryTexture(this->texture->sdlTexture, NULL, NULL, &texW, &texH);
+
+	destRect->w = texW;
+	destRect->h = texH;
+	destRect->x = this->xPos;
+	destRect->y = this->yPos;
+
+	return destRect;
+
+}
+
 void TextObject::render()
 {
 
-	game->textureManager.render(this);
+	SDL_Rect *textureSourceRect = NULL, destRect;
+	SDL_Texture* texture = NULL;
+
+	//Get render destination rectangle
+	this->getRenderDestRect(&destRect);
+
+	//Get texture
+	texture = GameObject::getRenderTexture(texture);
+
+	//Get render texture src rectangle
+	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
+
+	game->textureManager.renderTexture(texture, textureSourceRect, &destRect, 0);
+
 
 }
 

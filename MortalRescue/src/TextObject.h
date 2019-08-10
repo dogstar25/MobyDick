@@ -13,6 +13,7 @@ public:
 
 	void update();
 	void render();
+	SDL_Rect* getRenderDestRect(SDL_Rect* );
 
 	bool isDynamic;
 	string fontId;

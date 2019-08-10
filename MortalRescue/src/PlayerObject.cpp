@@ -124,8 +124,7 @@ void PlayerObject::update()
 
 void PlayerObject::render()
 {
-
-	game->textureManager.render(this);
+	WorldObject::render();
 }
 
 

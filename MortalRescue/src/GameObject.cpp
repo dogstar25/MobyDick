@@ -15,10 +15,60 @@ void GameObject::update()
 
 }
 
-void GameObject::render()
+SDL_Rect* GameObject::getRenderDestRect(SDL_Rect *destRect)
+{
+	destRect->w = this->xSize;
+	destRect->h = this->ySize;
+	destRect->x = this->xPos;
+	destRect->y = this->yPos;
+
+	return destRect;
+
+}
+
+SDL_Rect*  GameObject::getRenderTextureRect(SDL_Rect* textureSrcRect)
 {
 
-	game->textureManager.render(this);
+	if (this->isAnimated) {
+
+		textureSrcRect = &this->animations[this->currentAnimationState]->currentTextureAnimationSrcRect;
+	}
+
+	return textureSrcRect;
+
+}
+
+SDL_Texture * GameObject::getRenderTexture(SDL_Texture * aTexture)
+{
+	if (this->isAnimated) {
+
+		aTexture = this->animations[this->currentAnimationState]->texture;
+	}
+	else {
+
+		aTexture = this->texture->sdlTexture;
+	}
+
+	return aTexture;
+
+}
+
+void GameObject::render()
+{
+	SDL_Rect *textureSourceRect = NULL, destRect;
+	SDL_Texture* texture=NULL;
+
+	//Get render destination rectangle
+	this->getRenderDestRect(&destRect);
+
+	//Get texture
+	texture = this->getRenderTexture(texture);
+
+	//Get render texture src rectangle
+	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
+
+
+	game->textureManager.renderTexture(texture, textureSourceRect, &destRect, 0);
 
 }
 

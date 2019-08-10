@@ -7,12 +7,13 @@
 
 #include <iostream>
 #include <fstream>
-#include <stdio.h>
+#include <cstdio>
 #include <ctime>
 #include <ratio>
 #include <chrono>
 #include <array>
 #include <forward_list>
+#include <string>
 
 #include "Util.h"
 #include "TextureManager.h"

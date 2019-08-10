@@ -153,9 +153,8 @@
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
@@ -165,6 +164,7 @@
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <OmitFramePointers>false</OmitFramePointers>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -235,6 +235,7 @@
     <None Include="assets\gameObjects_Level1.json" />
     <None Include="assets\level1.ase" />
     <None Include="assets\level_test.ase" />
+    <None Include="assets\particleObjects.json" />
     <None Include="assets\textureAssets.json" />
     <None Include="assets\gameConfig.json" />
     <None Include="libfreetype-6.dll" />
@@ -251,6 +252,7 @@
     <Image Include="assets\gina_Run_64.png" />
     <Image Include="assets\level1.png" />
     <Image Include="assets\level_test.png" />
+    <Image Include="assets\particle1.png" />
     <Image Include="assets\pistolLady128_Run.png" />
     <Image Include="assets\pistolLady64_Run.png" />
     <Image Include="assets\spaceship1.png" />

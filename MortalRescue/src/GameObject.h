@@ -51,6 +51,10 @@ public:
 	virtual void update();
 	virtual void render();
 
+	virtual SDL_Rect*  getRenderDestRect(SDL_Rect*);
+	virtual SDL_Texture* getRenderTexture(SDL_Texture *);
+	virtual SDL_Rect* getRenderTextureRect(SDL_Rect*);
+
 	//Object Attrbutes
 	string 
 		id,

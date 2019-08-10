@@ -100,7 +100,13 @@
       "id": "TX_GINA_64_IDLE",
       "description": "Gina Idle 64",
       "filename": "assets/gina_Idle_64.png"
+    },
+    {
+      "id": "TX_SMOKE_PARTICLE_1",
+      "description": "Smoke particle",
+      "filename": "assets/particle1.png"
     }
+
   ],
   "fonts": [
     {

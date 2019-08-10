@@ -48,10 +48,43 @@ void WorldObject::update()
 
 }
 
+SDL_Rect* WorldObject::getRenderDestRect(SDL_Rect* destRect)
+{
+	destRect->w = (this->xSize * game->config.scaleFactor);
+	destRect->h = (this->ySize * game->config.scaleFactor);
+	destRect->x = round((this->physicsBody->GetPosition().x *  game->config.scaleFactor) - (destRect->w / 2));
+	destRect->y = round((this->physicsBody->GetPosition().y *  game->config.scaleFactor) - (destRect->h / 2));
+
+	//Adjust position based on current camera position - offset
+	destRect->x -= game->camera.frame.x;
+	destRect->y -= game->camera.frame.y;
+
+	return destRect;
+}
+
+
 void WorldObject::render()
 {
+	SDL_Rect *textureSourceRect = NULL, destRect;
+	SDL_Texture* texture = NULL;
 
-	game->textureManager.render(this);
+	//Get render destination rectangle
+	this->getRenderDestRect(&destRect);
+
+	//Get texture
+
+	texture = this->getRenderTexture(texture);
+
+	//Get render texture src rectangle
+	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
+
+
+	//Get the angle of the object and convert it from Radians to Degrees for SDL
+	float angle = this->physicsBody->GetAngle();
+	angle = angle * 180 / M_PI;
+
+	game->textureManager.renderTexture(texture, textureSourceRect, &destRect, angle);
+
 }
 
 b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
