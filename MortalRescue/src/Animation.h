@@ -3,6 +3,7 @@
 #include <SDL.h>
 #include <map>
 #include <chrono>
+#include <string>
 
 class GameObject;
 class Game;

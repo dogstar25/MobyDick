@@ -32,7 +32,7 @@ void ParticleMachine::runExplosions()
 		float particleAngle;
 		for (int i = 0; i < explosion->particleCount; i++)
 		{
-			ParticleObject* particle = game->objectPoolManager.get(explosion->particleId);
+			ParticleObject* particle = game->objectPoolManager.get(explosion->poolId);
 
 			if (particle != NULL)
 			{
@@ -62,7 +62,7 @@ void ParticleMachine::runExplosions()
 				particle->physicsBody->SetLinearVelocity(velocityVector);
 				//particle->physicsBody->SetBullet(true);
 				//particle->physicsBody->ser
-				particle->currentAnimationState = "ACTIVE";
+				//particle->currentAnimationState = "ACTIVE";
 
 
 				//todo
@@ -111,3 +111,59 @@ void ParticleMachine::add(Explosion* explosion)
 
 
 }
+
+
+void ParticleMachine::emit(
+	string poolId,
+	int originX,
+	int originY,
+	int forceMin,
+	int forceMax,
+	float lifetimeMin,
+	float lifetimeMax,
+	bool alphaFade,
+	int angleMin,
+	int angleMax,
+	float particleSizeMin,
+	float particleSizeMax,
+	SDL_Color colorRangeBegin,
+	SDL_Color colorRangeEnd,
+	int particleSpawnCountMin,
+	int particleSpawnCountMax
+)
+{
+
+	float angleRange = angleMax - angleMin;
+	float particleAngle;
+	int particleCount = game->util.generateRandomNumber(particleSpawnCountMin, particleSpawnCountMax);
+	for (int i = 0; i < particleCount; i++)
+	{
+		
+		ParticleObject* particle = game->objectPoolManager.get(poolId);
+
+		if (particle != NULL)
+		{
+			int force = game->util.generateRandomNumber(forceMin, forceMax);
+
+			particleAngle = ((float)i / (float)particleCount) * angleRange;
+			particleAngle = angleMin + particleAngle;
+			particleAngle = particleAngle * DEGTORAD;
+
+			float velocityX = 0;
+			float velocityY = 0;
+			velocityX = cos(particleAngle) * force;
+			velocityY = sin(particleAngle) * force;
+
+			b2Vec2 positionVector = b2Vec2(originX, originY);
+			b2Vec2 velocityVector = b2Vec2(velocityX, velocityY);
+
+			particle->physicsBody->SetTransform(positionVector, 0);
+			particle->physicsBody->SetLinearVelocity(velocityVector);
+
+			game->addGameObject(particle, game->MAIN);
+		}
+
+	}
+
+}
+

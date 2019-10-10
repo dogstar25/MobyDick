@@ -183,6 +183,7 @@
     <None Include="SDL2_ttf.dll" />
     <None Include="assets\gameObjectPools.json" />
     <None Include="assets\particleObjects.json" />
+    <None Include="assets\particleEmitter.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png">

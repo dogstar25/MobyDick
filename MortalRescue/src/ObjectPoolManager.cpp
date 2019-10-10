@@ -42,7 +42,7 @@ void ObjectPoolManager::init()
 			particle->lifetime = particle->lifetimeRemaining = std::chrono::duration<float>(lifetime);
 			particle->poolId = poolId;
 			particle->physicsBody->SetActive(false);
-			objectPool[gameObjectId].push_back(particle);
+			objectPool[poolId].push_back(particle);
 		}
 
 	}
@@ -71,11 +71,11 @@ ObjectPoolManager::~ObjectPoolManager()
 	
 }
 
-ParticleObject* ObjectPoolManager::get(string particleId)
+ParticleObject* ObjectPoolManager::get(string poolId)
 {
 	ParticleObject* availParticle=NULL;
 	
-	for (auto particle : this->objectPool[particleId])
+	for (auto particle : this->objectPool[poolId])
 	{
 		if (particle->isAvailable == true)
 		{

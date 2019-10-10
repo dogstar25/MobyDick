@@ -81,17 +81,14 @@ void ParticleObject::render()
 	//SDL_RenderSetScale(pRenderer, randomInt, randomInt); // nope
 
 
-	if (this->definitionId == "PARTICLE_SMOKE_1") {
-
+//	if (CHECK A NEEDED ISCOLOR VARIABLE FLAG) {
+	/*
 		int randomR = game->util.generateRandomNumber(204, 224);
 		int randomG = game->util.generateRandomNumber(8, 89);
 		int randomB = game->util.generateRandomNumber(8, 11);
-		SDL_SetTextureColorMod(texture, randomR, randomG, randomB); // doesnt seem helpful for particles
-
-	}
-
-
-
+		SDL_SetTextureColorMod(texture, randomR, randomG, randomB);
+*/
+	//}
 
 	//Get the angle of the object and convert it from Radians to Degrees for SDL
 	float angle = this->physicsBody->GetAngle();

@@ -7,8 +7,8 @@
       "speed": 50,
       "physicsObject": {
         "type": "B2_DYNAMIC",
-        "collisionShape": "B2_CIRCLE",
-        "collisionRadius": 0.16,
+//        "collisionShape": "B2_CIRCLE",
+//        "collisionRadius": 0.16,
         "friction": 0.0,
         "density": 0.5,
         "linearDamping": 0.0,
@@ -16,8 +16,8 @@
         "collisionGroup": -3
       },
       "texture": "TX_SMOKE_PARTICLE_1",
-      "xSize": 0.64,
-      "ySize": 0.64
+      "xSize": 0.28,
+      "ySize": 0.28
     }
   ]
 

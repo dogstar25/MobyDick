@@ -116,8 +116,12 @@ bool Game::init()
 	TextObject* dynamicTextObject = new TextObject("FPS_VALUE", 0, 1, 0);
 	this->addGameObject(dynamicTextObject, this->TEXT);
 
-	WorldObject* testObject2 = new WorldObject("PARTICLE_SMOKE_1", 4, 4, 0);
-	this->addGameObject(testObject2, this->MAIN);
+	//test spaceships
+	WorldObject* spaceshipObject = new WorldObject("SPACESHIP1", 4, 4, 0);
+	this->addGameObject(spaceshipObject, this->MAIN);
+	spaceshipObject = new WorldObject("SPACESHIP1", 8, 8, 0);
+	this->addGameObject(spaceshipObject, this->MAIN);
+
 
 	//Create the debug panel if its turned on
 	if (this->config.debugPanel == true)
@@ -203,7 +207,7 @@ void Game::update() {
 		(this->player->physicsBody->GetPosition().y *  this->config.scaleFactor) -
 		(camera.frame.h / 2));
 
-	// spin through list of particle taks to execute, like exposions and emitters
+	// spin through list of particle tasks to execute, like exposions and emitters
 	this->particleMachine.update(); 
 
 	//Update all of the other non player related update chores for each game object
@@ -216,11 +220,10 @@ void Game::update() {
 			gameObject->update();
 		}
 
+		//Update particle game objects
 		ParticleObject* particleObject = NULL;
 		ParticleObject* particleObjectRemoved = NULL;
 
-		//Update particle game objects
-		//for (auto & particleObject : gameObjectCollection.particleObjects)
 		for (int x=0;x<gameObjectCollection.particleObjects.size();x++)
 		{
 
@@ -244,6 +247,7 @@ void Game::update() {
 
 		}
 		
+		//Debug messages
 		if (gameObjectCollection.particleObjects.capacity() > 0) {
 			game->debugPanel->addItem("PARTICLE_CAPACITY",
 				to_string(gameObjectCollection.particleObjects.capacity()));
@@ -251,6 +255,7 @@ void Game::update() {
 				to_string(gameObjectCollection.particleObjects.size()));
 		}
 		
+		//resize the particle vector in case items were removed
 		gameObjectCollection.particleObjects.shrink_to_fit();
 
 	}
@@ -277,11 +282,12 @@ void Game::render() {
 		{
 			gameObject->render();
 		}
+		
 		for (auto & particleObject : gameObjectCollection.particleObjects)
 		{
 			particleObject->render();
 		}
-
+		
 	}
 
 	//DebugDraw
@@ -501,14 +507,36 @@ void Game::testExplosion(SDL_Event* event)
 	float x, y;
 	x = event->button.x / Game::config.scaleFactor;
 	y = event->button.y / Game::config.scaleFactor;
+	SDL_Color colorMin = {204,8,8,255};
+	SDL_Color colorMax = { 224,89,11,255 };
 
 	//Adjust position based on current camera position - offset
 	//x -= game->camera.frame.x;
 	//y -= game->camera.frame.y;
 
-	Explosion* explosion = new Explosion("PARTICLE_SMOKE_1", x, y, 15, 15, 100, 0, 360, true);
-	this->particleMachine.add(explosion);
+	//Explosion* explosion = new Explosion("PARTICLE1_POOL", x, y, 5, 5, 9, 265, 275, true);
+	//this->particleMachine.add(explosion);
+	this->particleMachine.emit(
+		"PARTICLE1_POOL",
+		x,	// X position
+		y,	//Y Position
+		5,	//Force Min
+		10,	//force Max
+		0,	//Lifetime Min
+		0,	//Lifetime Max
+		true,	// Alpha fade
+		0,	//Angle min
+		360,	//Angle Max
+		0,	//Size Min
+		0,	//Size Max
+		colorMin,	//Color Min
+		colorMax,	//Color Max
+		10,	//Particle count min
+		200	//Particle count max
+	);	
 
+
+	
 
 
 //	explosion = new Explosion("BULLET1", x, y, 5, 35, 20, 0, 360, true);

@@ -7,10 +7,10 @@ Explosion::Explosion()
 {
 }
 
-Explosion::Explosion(string particleId, float originX, float originY, float forceMin, float forceMax, int particleCount, int angleMin, int angleMax, bool uniform)
+Explosion::Explosion(string poolId, float originX, float originY, float forceMin, float forceMax, int particleCount, int angleMin, int angleMax, bool uniform)
 {
 
-	this->particleId = particleId;
+	this->poolId = poolId;
 	this->forceMin = forceMin;
 	this->forceMax = forceMax;
 	this->particleCount = particleCount;

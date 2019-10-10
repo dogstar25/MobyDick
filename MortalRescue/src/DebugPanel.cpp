@@ -22,29 +22,31 @@ DebugPanel::~DebugPanel()
 void DebugPanel::addItem(string id, string value)
 {
 
-	int yPos, xPos;
+	if (game->config.debugPanel == true) {
 
-	//Prefix DEBUG to the id
-	string newId = "DEBUG_" + id;
+		int yPos, xPos;
 
-	//Build the new text using the id as a label
-	string newText = id + " : " + value;
+		//Prefix DEBUG to the id
+		string newId = "DEBUG_" + id;
 
-	//Add or update the dynamic text itself to the dynamic text manager
-	bool alreadyExists = game->dynamicTextManager.updateText(newId, newText);
+		//Build the new text using the id as a label
+		string newText = id + " : " + value;
 
-	if (alreadyExists == false)
-	{
+		//Add or update the dynamic text itself to the dynamic text manager
+		bool alreadyExists = game->dynamicTextManager.updateText(newId, newText);
 
-		//Calculate the position of the debug text item
-		xPos = this->location.x;
-		yPos = this->location.y + this->itemCount;
+		if (alreadyExists == false)
+		{
 
-		TextObject* textObject = new TextObject(newId, xPos, yPos, 0);
-		game->addGameObject(textObject, game->DEBUG);
+			//Calculate the position of the debug text item
+			xPos = this->location.x;
+			yPos = this->location.y + this->itemCount;
 
-		this->itemCount++;
+			TextObject* textObject = new TextObject(newId, xPos, yPos, 0);
+			game->addGameObject(textObject, game->DEBUG);
+
+			this->itemCount++;
+		}
+
 	}
-
-
 }

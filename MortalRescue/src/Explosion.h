@@ -11,7 +11,7 @@ public:
 
 
 	string 
-		particleId;
+		poolId;
 
 	short 
 		forceMin,

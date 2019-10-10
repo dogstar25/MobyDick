@@ -76,6 +76,7 @@ public:
 	//pointer to the definition
 	GameObjectDefinition* definition;
 
+	//If animated, will contain all animations
 	map<string, Animation*> animations;
 
 };
