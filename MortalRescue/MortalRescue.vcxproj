@@ -176,7 +176,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Explosion.cpp" />
+    <ClCompile Include="src\ParticleEmission.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\DebugDraw.cpp" />
     <ClCompile Include="src\DebugPanel.cpp" />
@@ -203,7 +203,7 @@
     <ClCompile Include="src\WorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Explosion.h" />
+    <ClInclude Include="src\ParticleEmission.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\DebugDraw.h" />
     <ClInclude Include="src\DebugPanel.h" />

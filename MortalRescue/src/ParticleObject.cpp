@@ -44,7 +44,7 @@ void ParticleObject::update()
 
 		//reset the particle object
 		//game->objectPoolManager.reset(this);
-		game->debugPanel->addItem("RESET_PARTICLE", "TRUE");
+		//game->debugPanel->addItem("RESET_PARTICLE", "TRUE");
 
 		//Mark this object for removal so that the removal loop will delete it
 		this->removeFromWorld = true;
@@ -53,7 +53,15 @@ void ParticleObject::update()
 	else
 	{
 		this->time_snapshot = now_time;
-		game->debugPanel->addItem("RESET_PARTICLE", "FALSE");
+		//game->debugPanel->addItem("RESET_PARTICLE", "FALSE");
+
+		//If this particle should fade over time, then adjust its alpha value
+		if (this->isLifetimeAlphaFade)
+		{
+			this->color.a = 255 * ( this->lifetimeRemaining / this->lifetime);
+		}
+
+
 	}
 	
 
@@ -74,21 +82,12 @@ void ParticleObject::render()
 	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
 
 
-	//SDL_SetTextureAlphaMod(texture, randomInt); //seems helpful for particles
+	SDL_SetTextureAlphaMod(texture, this->color.a); //seems helpful for particles
 
-	//SDL_GetTextureColorMod(texture, &r, &g, &b);
 	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD); //alpha ADD seems good for particles
-	//SDL_RenderSetScale(pRenderer, randomInt, randomInt); // nope
 
-
-//	if (CHECK A NEEDED ISCOLOR VARIABLE FLAG) {
-	/*
-		int randomR = game->util.generateRandomNumber(204, 224);
-		int randomG = game->util.generateRandomNumber(8, 89);
-		int randomB = game->util.generateRandomNumber(8, 11);
-		SDL_SetTextureColorMod(texture, randomR, randomG, randomB);
-*/
-	//}
+	//Set the render color based on the partticles' color
+	SDL_SetTextureColorMod(texture, this->color.r, this->color.g, this->color.b);
 
 	//Get the angle of the object and convert it from Radians to Degrees for SDL
 	float angle = this->physicsBody->GetAngle();

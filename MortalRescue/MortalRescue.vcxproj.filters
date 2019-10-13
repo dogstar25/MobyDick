@@ -87,7 +87,7 @@
     <ClCompile Include="src\ParticleMachine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Explosion.cpp">
+    <ClCompile Include="src\ParticleEmission.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -164,7 +164,7 @@
     <ClInclude Include="src\ParticleMachine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Explosion.h">
+    <ClInclude Include="src\ParticleEmission.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

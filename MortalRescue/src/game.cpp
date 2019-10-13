@@ -13,7 +13,7 @@
 #include "Util.h"
 #include "Camera.h"
 #include "Weapon.h"
-#include "Explosion.h"
+#include "ParticleEmission.h"
 
 
 using namespace chrono_literals;
@@ -507,28 +507,26 @@ void Game::testExplosion(SDL_Event* event)
 	float x, y;
 	x = event->button.x / Game::config.scaleFactor;
 	y = event->button.y / Game::config.scaleFactor;
-	SDL_Color colorMin = {204,8,8,255};
-	SDL_Color colorMax = { 224,89,11,255 };
+	SDL_Color colorMin = {1,1,1,255};
+	SDL_Color colorMax = { 225,255,255,255 };
 
 	//Adjust position based on current camera position - offset
-	//x -= game->camera.frame.x;
-	//y -= game->camera.frame.y;
+	x -= game->camera.frame.x;
+	y -= game->camera.frame.y;
 
-	//Explosion* explosion = new Explosion("PARTICLE1_POOL", x, y, 5, 5, 9, 265, 275, true);
-	//this->particleMachine.add(explosion);
 	this->particleMachine.emit(
 		"PARTICLE1_POOL",
 		x,	// X position
 		y,	//Y Position
 		5,	//Force Min
 		10,	//force Max
-		0,	//Lifetime Min
-		0,	//Lifetime Max
+		0.5,	//Lifetime Min
+		5.5,	//Lifetime Max
 		true,	// Alpha fade
 		0,	//Angle min
 		360,	//Angle Max
-		0,	//Size Min
-		0,	//Size Max
+		0.28,	//Size Min
+		0.75,	//Size Max
 		colorMin,	//Color Min
 		colorMax,	//Color Max
 		10,	//Particle count min
@@ -536,11 +534,25 @@ void Game::testExplosion(SDL_Event* event)
 	);	
 
 
-	
-
-
-//	explosion = new Explosion("BULLET1", x, y, 5, 35, 20, 0, 360, true);
-	//this->particleMachine.add(explosion);
+	ParticleEmission *particleEmission = new ParticleEmission(
+		"PARTICLE1_POOL",
+		x,	// X position
+		y,	//Y Position
+		5,	//Force Min
+		10,	//force Max
+		0,	//Lifetime Min
+		0,	//Lifetime Max
+		false,	// Alpha fade
+		0,	//Angle min
+		180,	//Angle Max
+		0.28,	//Size Min
+		0.75,	//Size Max
+		colorMin,	//Color Min
+		colorMax,	//Color Max
+		10,	//Particle count min
+		200	//Particle count max
+	);
+	this->particleMachine.add(particleEmission);
 
 }
 

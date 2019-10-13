@@ -1,7 +1,7 @@
 #include <Box2D/Box2D.h>
 
 #include "ParticleMachine.h"
-#include "Explosion.h"
+#include "ParticleEmission.h"
 #include "game.h"
 
 
@@ -17,96 +17,46 @@ ParticleMachine::~ParticleMachine()
 
 void ParticleMachine::update()
 {
-	this->runExplosions();
+	this->runParticleEmissions();
 
 }
 
-void ParticleMachine::runExplosions()
+void ParticleMachine::runParticleEmissions()
 {
-	Explosion* explosion=NULL;
+	ParticleEmission* particleEmission =NULL;
 
-	while (this->explosions.empty() == false)
+	while (this->particleEmissions.empty() == false)
 	{
-		explosion = this->explosions.back();
-		float angleRange = explosion->angleMax - explosion->angleMin;
-		float particleAngle;
-		for (int i = 0; i < explosion->particleCount; i++)
-		{
-			ParticleObject* particle = game->objectPoolManager.get(explosion->poolId);
+		particleEmission = this->particleEmissions.back();
 
-			if (particle != NULL)
-			{
-				//float angle = (i / explosion->particleCount) * angleRange;
-				particleAngle = ((float)i / (float)explosion->particleCount) * angleRange;
+		this->emit(
+			"PARTICLE1_POOL",
+			particleEmission->originX,	// X position
+			particleEmission->originY,	//Y Position
+			particleEmission->forceMin,	//Force Min
+			particleEmission->forceMax,	//force Max
+			particleEmission->lifetimeMin,	//Lifetime Min
+			particleEmission->lifetimeMax,	//Lifetime Max
+			particleEmission->alphaFade,	// Alpha fade
+			particleEmission->angleMin,	//Angle min
+			particleEmission->angleMax,	//Angle Max
+			particleEmission->particleSizeMin,	//Size Min
+			particleEmission->particleSizeMax,	//Size Max
+			particleEmission->colorRangeBegin,	//Color Min
+			particleEmission->colorRangeEnd,	//Color Max
+			particleEmission->particleCountMin,	//Particle count min
+			particleEmission->particleCountMax	//Particle count max
+		);
 
-				particleAngle = explosion->angleMin + particleAngle;
-				particleAngle = particleAngle * DEGTORAD;
-
-				float velocityX = 0;
-				float velocityY = 0;
-				if (explosion->forceMax != explosion->forceMin) 
-				{
-					velocityX = cos(particleAngle) * game->util.generateRandomNumber(explosion->forceMin, explosion->forceMax);
-					velocityY = sin(particleAngle) * game->util.generateRandomNumber(explosion->forceMin, explosion->forceMax);
-				}
-				else
-				{
-					velocityX = cos(particleAngle) * explosion->forceMax;
-					velocityY = sin(particleAngle) * explosion->forceMax;
-				}
-
-				b2Vec2 positionVector = b2Vec2(explosion->originX, explosion->originY);
-				b2Vec2 velocityVector = b2Vec2(velocityX, velocityY);
-
-				particle->physicsBody->SetTransform(positionVector, 0);
-				particle->physicsBody->SetLinearVelocity(velocityVector);
-				//particle->physicsBody->SetBullet(true);
-				//particle->physicsBody->ser
-				//particle->currentAnimationState = "ACTIVE";
-
-
-				//todo
-				//SDL_SetTextureAlphaMod
-				//SDL_SetTextureColorMod
-
-
-
-
-				game->addGameObject(particle, game->MAIN);
-			}
-			//game->debugPanel->addItem("NEW_EXPLOSION_PARTICLE", to_string(true));
-
-		}
-
-
-		this->explosions.pop_back();
+		this->particleEmissions.pop_back();
 	}
 
-	/*
-	for (auto & explosion : this->explosions)
-	{
-		for (int i=0;i<explosion->particleCount;i++)
-		{
-			game->debugPanel->addItem("NEW_EXPLOSION_PARTICLE", to_string(true));
-		}
-
-	}
-	*/
 }
 
-void ParticleMachine::execute( Explosion* explosion)
+void ParticleMachine::add(ParticleEmission* particleEmission)
 {
 
-	
-
-
-
-}
-
-void ParticleMachine::add(Explosion* explosion)
-{
-
-	this->explosions.push_back(explosion);
+	this->particleEmissions.push_back(particleEmission);
 
 
 
@@ -133,33 +83,117 @@ void ParticleMachine::emit(
 )
 {
 
+	//Calculate the range of the angle in which the particles will be emitted
 	float angleRange = angleMax - angleMin;
 	float particleAngle;
-	int particleCount = game->util.generateRandomNumber(particleSpawnCountMin, particleSpawnCountMax);
+
+	//If the particle count min and max are different, then generate a random count
+	//otherwise just use the max
+	int particleCount = 0;
+	if (particleSpawnCountMin != particleSpawnCountMax)
+	{
+		particleCount = game->util.generateRandomNumber(particleSpawnCountMin, particleSpawnCountMax);
+	}
+	else
+	{
+		particleCount = particleSpawnCountMax;
+	}
+	
+	//Emit each of the particles
 	for (int i = 0; i < particleCount; i++)
 	{
 		
+		//Get the particle object from the pre-populated particle pool
 		ParticleObject* particle = game->objectPoolManager.get(poolId);
 
+		//If the returned particle is null, then the pool has run out, so do nothing
 		if (particle != NULL)
 		{
-			int force = game->util.generateRandomNumber(forceMin, forceMax);
+			//Generate a random force
+			int force = 0;
+			if (forceMin != forceMax)
+			{
+				force = game->util.generateRandomNumber(forceMin, forceMax);
+			}
+			else
+			{
+				force = forceMax;
+			}
 
+			//Set lifetime alpha fade flag
+			particle->isLifetimeAlphaFade = alphaFade;
+
+			//Set the color of the particle. Randomize the color values if they are different
+			SDL_Color color = {255,255,255,255};
+			if (colorRangeBegin.r != colorRangeEnd.r)
+			{
+				color.r = game->util.generateRandomNumber(colorRangeBegin.r, colorRangeEnd.r);
+			}
+			if (colorRangeBegin.g != colorRangeEnd.g)
+			{
+				color.g = game->util.generateRandomNumber(colorRangeBegin.g, colorRangeEnd.g);
+			}
+			if (colorRangeBegin.b != colorRangeEnd.b)
+			{
+				color.b = game->util.generateRandomNumber(colorRangeBegin.b, colorRangeEnd.b);
+			}
+			particle->color = color;
+
+			//Set the size of the particle. If zero is passed in then default to the particle size
+			//in th eparticle definition
+			float particleSize = 0;
+			if (particleSizeMin != 0 && particleSizeMax != 0)
+			{
+				if (particleSizeMin != particleSizeMax)
+				{
+					particleSize = game->util.generateRandomNumber(particleSizeMin, particleSizeMax);
+				}
+				else
+				{
+					particleSize = particleSizeMax;
+				}
+
+				particle->xSize = particleSize;
+				particle->ySize = particleSize;
+				
+			}
+
+			//Set the particles lifetime in miliseconds. If a zero is passed in, then it will remain the value 
+			//when it was built freom the pool definition
+			float particleLifetime = 0;
+			if (lifetimeMin != 0 and lifetimeMax != 0)
+			{
+				if (lifetimeMin != lifetimeMax)
+				{
+					particleLifetime = game->util.generateRandomNumber(lifetimeMin, lifetimeMax);
+				}
+				else
+				{
+					particleLifetime = lifetimeMax;
+				}
+
+				particle->lifetime = particle->lifetimeRemaining = std::chrono::duration<float>(particleLifetime);
+			}
+			
+
+			//Calculate the emit angle/direction that the particle will travel in
 			particleAngle = ((float)i / (float)particleCount) * angleRange;
 			particleAngle = angleMin + particleAngle;
 			particleAngle = particleAngle * DEGTORAD;
 
-			float velocityX = 0;
-			float velocityY = 0;
-			velocityX = cos(particleAngle) * force;
-			velocityY = sin(particleAngle) * force;
-
-			b2Vec2 positionVector = b2Vec2(originX, originY);
+			//Calculate velocity vector
+			float velocityX = cos(particleAngle) * force;
+			float velocityY = sin(particleAngle) * force;
 			b2Vec2 velocityVector = b2Vec2(velocityX, velocityY);
 
+			//create the starting position vector of the particle
+			b2Vec2 positionVector = b2Vec2(originX, originY);
+
+			//Set both eh starting position and the velocity of th eparticle
 			particle->physicsBody->SetTransform(positionVector, 0);
 			particle->physicsBody->SetLinearVelocity(velocityVector);
 
+			//Add the particle to the game world
 			game->addGameObject(particle, game->MAIN);
 		}
 

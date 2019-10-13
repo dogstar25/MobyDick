@@ -8,17 +8,22 @@
 int Util::generateRandomNumber(int min, int max)
 {
 
-	//int r = rand() % 20;
 	std::random_device rd;
 	std::mt19937 mt(rd());
 	std::uniform_real_distribution<double> dist(min, max);
 
 	return (int)dist(mt);
-
-
-
 }
 
+float Util::generateRandomNumber(float min, float max)
+{
+
+	std::random_device rd;
+	std::mt19937 mt(rd());
+	std::uniform_real_distribution<double> dist(min, max);
+
+	return (float)dist(mt);
+}
 
 SDL_Color Util::generateRandomColor()
 {

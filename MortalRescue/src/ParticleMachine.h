@@ -2,7 +2,7 @@
 #include <vector>
 #include <SDL_image.h>
 
-#include "Explosion.h";
+#include "ParticleEmission.h";
 
 using namespace std;
 
@@ -13,13 +13,10 @@ public:
 	~ParticleMachine();
 	void update();
 	
-	void runExplosions();
-	void execute(Explosion*);
-	void add(Explosion*);
+	void runParticleEmissions();
+	void add(ParticleEmission*);
 
-	vector <Explosion*> explosions;
-
-
+	vector <ParticleEmission*> particleEmissions;
 
 	void emit(
 		string poolId,
@@ -39,10 +36,6 @@ public:
 		int particleSpawnCountMin,
 		int particleSpawnCountMax
 	);
-
-
-
-
 
 };
 

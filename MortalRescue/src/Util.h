@@ -9,6 +9,7 @@ public:
 	
 
 	int generateRandomNumber(int min, int max);
+	float generateRandomNumber(float min, float max);
 	SDL_Color generateRandomColor();
 	float radiansToDegrees(float angleInRadians);
 	
