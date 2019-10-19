@@ -74,12 +74,9 @@ void GameObjectContactListener::BeginContact(b2Contact* contact) {
 		//We will do a ray trace from this position towards the play object untl it is no long inside the wall
 		findWallImpactPoint(worldPoint, game->player.get());
 
-
 		//temp color code
 		SDL_Color colorMin = { 1,1,1,255 };
 		SDL_Color colorMax = { 225,255,255,255 };
-
-
 
 		ParticleEmission* particleEmission = new ParticleEmission(
 			"PARTICLE1_POOL",
