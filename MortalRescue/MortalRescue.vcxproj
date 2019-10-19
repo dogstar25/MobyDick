@@ -23,33 +23,32 @@
     <ProjectGuid>{C372AC28-E57D-497E-94AF-505083CFEBE0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>MortalRescue</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -72,15 +71,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>C:\projects\Chipmunk2D\src\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>C:\projects\Chipmunk2D\src\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -91,33 +94,36 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\projects\Chipmunk2D\include;C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;chipmunk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\projects\Chipmunk2D\src\Debug;C:\projects\libraries\SDL2_image\lib\x86;C:\projects\libraries\SDL2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\projects\Box2D;C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;%(AdditionalIncludeDirectories);C:\projects\libraries\SDL2_ttf-2.0.15\include</AdditionalIncludeDirectories>
+      <CompileAs>Default</CompileAs>
+      <OmitFramePointers>false</OmitFramePointers>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\projects\libraries\SDL2_ttf-2.0.15\lib\x64;C:\projects\Box2D\Build\bin\x86_64\Debug;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -131,69 +137,137 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\projects\Chipmunk2D\include;C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <CompileAs>Default</CompileAs>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;chipmunk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\projects\Chipmunk2D\src\Debug;C:\projects\libraries\SDL2_image\lib\x86;C:\projects\libraries\SDL2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\projects\Box2D;C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;C:\projects\libraries\Visual Leak Detector\include;%(AdditionalIncludeDirectories);C:\projects\libraries\SDL2_ttf-2.0.15\include</AdditionalIncludeDirectories>
+      <CompileAs>Default</CompileAs>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <OmitFramePointers>false</OmitFramePointers>
+      <Optimization>MaxSpeed</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <EnableCOMDATFolding>false</EnableCOMDATFolding>
+      <OptimizeReferences>false</OptimizeReferences>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\projects\libraries\SDL2_ttf-2.0.15\lib\x64;C:\projects\Box2D\Build\bin\x86_64\Release;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\ParticleEmission.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\DebugDraw.cpp" />
+    <ClCompile Include="src\DebugPanel.cpp" />
+    <ClCompile Include="src\DynamicTextManager.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
-    <ClCompile Include="src\GameObjectAnimation.cpp" />
+    <ClCompile Include="src\Animation.cpp" />
+    <ClCompile Include="src\GameObjectCollection.cpp" />
+    <ClCompile Include="src\GameObjectContactListener.cpp" />
+    <ClCompile Include="src\GameObjectDefinition.cpp" />
     <ClCompile Include="src\GameObjectManager.cpp" />
     <ClCompile Include="src\jsoncpp\jsoncpp.cpp" />
+    <ClCompile Include="src\LevelManager.cpp" />
     <ClCompile Include="src\MortalRescue.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\ObjectPoolManager.cpp" />
+    <ClCompile Include="src\ParticleMachine.cpp" />
+    <ClCompile Include="src\ParticleObject.cpp" />
+    <ClCompile Include="src\PlayerObject.cpp" />
+    <ClCompile Include="src\Settings.cpp" />
+    <ClCompile Include="src\TextObject.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
+    <ClCompile Include="src\Util.cpp" />
+    <ClCompile Include="src\Weapon.cpp" />
+    <ClCompile Include="src\WorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ParticleEmission.h" />
+    <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\DebugDraw.h" />
+    <ClInclude Include="src\DebugPanel.h" />
+    <ClInclude Include="src\DynamicTextManager.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\GameObject.h" />
-    <ClInclude Include="src\GameObjectAnimation.h" />
+    <ClInclude Include="src\Animation.h" />
+    <ClInclude Include="src\GameObjectCollection.h" />
+    <ClInclude Include="src\GameObjectContactListener.h" />
+    <ClInclude Include="src\GameObjectDefinition.h" />
     <ClInclude Include="src\GameObjectManager.h" />
     <ClInclude Include="src\jsoncpp\json\json-forwards.h" />
     <ClInclude Include="src\jsoncpp\json\json.h" />
+    <ClInclude Include="src\LevelManager.h" />
+    <ClInclude Include="src\ObjectPoolManager.h" />
+    <ClInclude Include="src\ParticleMachine.h" />
+    <ClInclude Include="src\ParticleObject.h" />
+    <ClInclude Include="src\PlayerObject.h" />
+    <ClInclude Include="src\Settings.h" />
+    <ClInclude Include="src\TextObject.h" />
     <ClInclude Include="src\TextureManager.h" />
+    <ClInclude Include="src\Util.h" />
+    <ClInclude Include="src\Weapon.h" />
+    <ClInclude Include="src\WorldObject.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\gameObjectAssets.json" />
+    <None Include="assets\gameObjectPools.json" />
+    <None Include="assets\gameObjects_Common.json" />
+    <None Include="assets\gameObjects_Level1.json" />
+    <None Include="assets\level1.ase" />
+    <None Include="assets\level_test.ase" />
+    <None Include="assets\particleEmitter.json" />
+    <None Include="assets\particleObjects.json" />
     <None Include="assets\textureAssets.json" />
-    <None Include="config\gameConfig.json" />
+    <None Include="assets\gameConfig.json" />
+    <None Include="libfreetype-6.dll" />
     <None Include="libpng16-16.dll" />
     <None Include="SDL2.dll" />
     <None Include="SDL2_image.dll" />
+    <None Include="SDL2_ttf.dll" />
     <None Include="zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png" />
+    <Image Include="assets\bullet1.png" />
+    <Image Include="assets\gina_Idle_64.png" />
+    <Image Include="assets\gina_Run_64.png" />
+    <Image Include="assets\level1.png" />
+    <Image Include="assets\level_test.png" />
+    <Image Include="assets\particle1.png" />
+    <Image Include="assets\pistolLady128_Run.png" />
+    <Image Include="assets\pistolLady64_Run.png" />
+    <Image Include="assets\spaceship1.png" />
     <Image Include="assets\swordLady64_Idle.png" />
+    <Image Include="assets\tile1.png" />
+    <Image Include="assets\wall1_column.png" />
+    <Image Include="assets\wall1_corner.png" />
+    <Image Include="assets\wall1_end.png" />
+    <Image Include="assets\wall1_hall.png" />
+    <Image Include="assets\wall1_open.png" />
+    <Image Include="assets\wall1_wall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\arial.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

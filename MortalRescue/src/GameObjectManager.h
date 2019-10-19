@@ -1,15 +1,15 @@
 #pragma once
-#include <string>
-#include "GameObject.h"
-#include <SDL.h>
-#include <SDL_image.h>
-#include <json/json.h>
 #include <stdio.h>
 #include <string>
 #include <map>
-#include <iostream>
-#include <fstream>
-#include "TextureManager.h"
+
+#include "GameObjectDefinition.h"
+
+//Forward declarations
+class GameObject;
+class Animation;
+
+extern Game* game;
 using namespace std;
 
 class GameObjectManager
@@ -17,11 +17,16 @@ class GameObjectManager
 public:
 	GameObjectManager();
 	~GameObjectManager();
+		
 
-	bool init(TextureManager*);
-	GameObject* getGameObject(string id);
+	bool init();
+	Animation * buildAnimation(GameObjectDefinition*, string, string, int, float);
+	void load(string);
+
+	//Map of the definitions of all posible game objects in the game/level
+	map<string, GameObjectDefinition*> gameObjectDefinitions;
 
 private:
-	map<string, GameObject> gameObjectMap;
+	
 };
 

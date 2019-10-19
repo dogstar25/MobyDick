@@ -1,16 +1,119 @@
 {
   "textures": [
     {
+      "id": "TX_DEFAULT",
+      "description": "Default Texure",
+      "filename": "assets/tile1.png"
+    },
+    {
+      "id": "TX_DEFAULT_LABEL",
+      "description": "Default text label",
+      "filename": "assets/arial.ttf",
+      "textTexture": {
+        "size": 16,
+        "label": "Missing Text"
+      }
+    },
+    {
       "id": "TX_BOWMAN1",
       "description": "single bowman image",
-      "static": false,
       "filename": "assets/bowman1.png"
     },
     {
+      "id": "TX_TILE1",
+      "description": "TILE 1",
+      "filename": "assets/tile1.png"
+    },
+    {
       "id": "TX_SWORDLADY1_IDLE",
-      "description": "SWORD LADY IDLE",
-      "static": false,
+      "description": "Sword lady idle",
       "filename": "assets/swordLady64_Idle.png"
+    },
+    {
+      "id": "TX_PISTOLLADY_64_RUN",
+      "description": "Pistol Lady Run 64px",
+      "filename": "assets/pistolLady64_Run.png"
+    },
+    {
+      "id": "TX_PISTOLLADY_128_RUN",
+      "description": "Pistol Lady Run 128px",
+      "filename": "assets/pistolLady128_Run.png"
+    },
+    {
+      "id": "TX_SPACESHIP1",
+      "description": "Test spaceship 64px",
+      "filename": "assets/spaceship1.png"
+    },
+    {
+      "id": "TX_LEVEL1",
+      "description": "Level 1 Map",
+      "filename": "assets/level1.png",
+      "retainSurface": true
+    },
+    {
+      "id": "TX_LEVEL_TEST",
+      "description": "Test Level Map",
+      "filename": "assets/level_test.png",
+      "retainSurface": true
+    },
+    {
+      "id": "TX_WALL1_COLUMN",
+      "description": "Wall 1 Column",
+      "filename": "assets/wall1_column.png"
+    },
+    {
+      "id": "TX_WALL1_CORNER",
+      "description": "Wall 1 Corner",
+      "filename": "assets/wall1_corner.png"
+    },
+    {
+      "id": "TX_WALL1_HALL",
+      "description": "Wall 1 Hall",
+      "filename": "assets/wall1_hall.png"
+    },
+    {
+      "id": "TX_WALL1_OPEN",
+      "description": "Wall 1 Open",
+      "filename": "assets/wall1_open.png"
+    },
+    {
+      "id": "TX_WALL1_WALL",
+      "description": "Wall 1 Wall",
+      "filename": "assets/wall1_wall.png"
+    },
+    {
+      "id": "TX_WALL1_END",
+      "description": "Wall 1 End",
+      "filename": "assets/wall1_end.png"
+    },
+    {
+      "id": "TX_BULLET1",
+      "description": "Bullet 1",
+      "filename": "assets/bullet1.png"
+    },
+    {
+      "id": "TX_GINA_64_RUN",
+      "description": "Gina Run 64",
+      "filename": "assets/gina_Run_64.png"
+    },
+    {
+      "id": "TX_GINA_64_IDLE",
+      "description": "Gina Idle 64",
+      "filename": "assets/gina_Idle_64.png"
+    },
+    {
+      "id": "TX_SMOKE_PARTICLE_1",
+      "description": "Smoke particle",
+      "filename": "assets/particle1.png"
+    }
+
+  ],
+  "fonts": [
+    {
+      "id": "FONT_ARIAL_REG",
+      "description": "Arial Regular",
+      "filename": "assets/arial.ttf"
     }
   ]
+
 }

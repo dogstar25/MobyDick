@@ -30,10 +30,64 @@
     <ClCompile Include="src\GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObjectAnimation.cpp">
+    <ClCompile Include="src\GameObjectManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObjectManager.cpp">
+    <ClCompile Include="src\Util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\LevelManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Weapon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObjectContactListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DebugDraw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlayerObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WorldObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DynamicTextManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DebugPanel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObjectDefinition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ParticleObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ObjectPoolManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObjectCollection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ParticleMachine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ParticleEmission.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,21 +107,83 @@
     <ClInclude Include="src\GameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObjectAnimation.h">
+    <ClInclude Include="src\GameObjectManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObjectManager.h">
+    <ClInclude Include="src\Util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\LevelManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Weapon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObjectContactListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DebugDraw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlayerObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WorldObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DynamicTextManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DebugPanel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObjectDefinition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ObjectPoolManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObjectCollection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleMachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleEmission.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\textureAssets.json" />
-    <None Include="assets\gameObjectAssets.json" />
     <None Include="libpng16-16.dll" />
     <None Include="SDL2.dll" />
     <None Include="SDL2_image.dll" />
     <None Include="zlib1.dll" />
-    <None Include="config\gameConfig.json" />
+    <None Include="assets\gameConfig.json" />
+    <None Include="assets\level1.ase" />
+    <None Include="assets\level_test.ase" />
+    <None Include="assets\gameObjects_Common.json" />
+    <None Include="assets\gameObjects_Level1.json" />
+    <None Include="libfreetype-6.dll" />
+    <None Include="SDL2_ttf.dll" />
+    <None Include="assets\gameObjectPools.json" />
+    <None Include="assets\particleObjects.json" />
+    <None Include="assets\particleEmitter.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png">
@@ -76,5 +192,56 @@
     <Image Include="assets\swordLady64_Idle.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\level1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\pistolLady64_Run.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\pistolLady128_Run.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\spaceship1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\tile1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\level_test.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_column.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_corner.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_end.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_hall.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_open.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_wall.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\gina_Idle_64.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\gina_Run_64.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\bullet1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\particle1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\arial.ttf" />
   </ItemGroup>
 </Project>

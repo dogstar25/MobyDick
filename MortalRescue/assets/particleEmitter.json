@@ -1,0 +1,34 @@
+{
+  "partcleEmitters": [
+    {
+      "id": "PARTICLE_EMITTER_1",
+      "description": "Default Emitter",
+      "particleId": "PARTICLE_SMOKE_1",
+      "forceMin": 5,
+      "forceMax": 10,
+      "lifetimeMin": 1.25,
+      "lifetimeMax": 3.25,
+      "alphaFade": true,
+      "angleMin": 260,
+      "angleMax": 280,
+      "particleSizeMin": 0.32,
+      "particleSizeMax": 1.28,
+      "colorMin": {
+        "red": 204,
+        "green": 8,
+        "blue": 8,
+        "alpha": 255
+      },
+      "colorMax": {
+        "red": 224,
+        "green": 8,
+        "blue": 8,
+        "alpha": 255
+      },
+      "particleSpawnCountMin": 1,
+      "particleSpawnCountMax": 12
+
+    }
+  ]
+
+}

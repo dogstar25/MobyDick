@@ -1,0 +1,209 @@
+{
+  "gameObjects": [
+    {
+      "id": "BOWMAN",
+      "description": "Player Bowman",
+      "texture": "TX_BOWMAN1",
+      "xSize": 2.56,
+      "ySize": 2.56,
+      "speed": 20.4, //change to walkforce
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.3,
+        "density": 0.5,
+        "linearDamping": 0.1,
+        "angularDamping": 0.5
+      }
+    },
+    {
+      "id": "PISTOLLADY",
+      "description": "Player Pistol Lady",
+      "xSize": 2.56,
+      "ySize": 2.56,
+      "speed": 9.5, //change name to walkforce
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "collisionShape": "B2_CIRCLE",
+        "collisionRadius": 0.96,
+        "friction": 0.0,
+        "density": 5.5,
+        "linearDamping": 0.2,
+        "angularDamping": 0.5
+      },
+      "animations": [
+        {
+          "id": "RUN",
+          "texture": "TX_PISTOLLADY_64_RUN",
+          "speed": 0.03, //time in seconds for each frame. Lower the faster
+          "frames": 16
+        },
+        {
+          "id": "IDLE",
+          "texture": "TX_GINA_64_IDLE",
+          "speed": 0.10, //time in seconds for each frame. Lower the faster
+          "frames": 1
+        }
+
+      ]
+    },
+    {
+      "id": "ROCK",
+      "description": "A Red Rock",
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.3,
+        "density": 0.5,
+        "linearDamping": 0.1,
+        "angularDamping": 0.1
+      },
+      "primativeColor": {
+        "red": 255,
+        "green": 0,
+        "blue": 0,
+        "alpha": 0,
+        "random": true
+      },
+      "primativeShape": "RECTANGLE",
+      "xSize": 2,
+      "ySize": 2
+    },
+    {
+      "description": "Ground",
+      "id": "GROUND1",
+      "physicsObject": {
+        "type": "B2_STATIC",
+        "friction": 0.3
+      },
+      "texture": "TX_TILE1",
+      "xSize": 32,
+      "ySize": 5
+    },
+    {
+      "id": "SWORDLADY",
+      "description": "SwordLady",
+      "speed": 0.5,
+      "xSize": 2.56, //meters which translates to 64px
+      "ySize": 1.75,
+      "animations": [
+        {
+          "id": "IDLE",
+          "texture": "TX_SWORDLADY1_IDLE",
+          "speed": 0.06, //time in seconds for each frame. Lower the faster
+          "frames": 19
+        }
+      ]
+    },
+    {
+      "id": "WALL_BRICK_1",
+      "description": "Wall brick 1",
+      "xSize": 64,
+      "ySize": 64
+    },
+    {
+      "id": "SPACESHIP1",
+      "description": "Space Ship 1",
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "density": 5.5,
+        "linearDamping": 0.1,
+        "angularDamping": 20.5
+      },
+      "texture": "TX_SPACESHIP1",
+      "xSize": 1.28,
+      "ySize": 1.28,
+      "speed": 10.1
+    },
+    {
+      "id": "BULLET1",
+      "description": "Bullet 1",
+      "speed": 50,
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "restitution": 3.5,
+        "density": 0.5,
+        "linearDamping": 1.0,
+        "angularDamping": 5.0,
+        "collisionGroup": -3
+      },
+      //"texture": "TX_BULLET1",
+      "xSize": 0.24,
+      "ySize": 0.12,
+      "animations": [
+        {
+          "id": "ACTIVE",
+          "texture": "TX_BULLET1",
+          "speed": 0.02, //time in seconds for each frame. Lower the faster
+          "frames": 4
+        }
+      ]
+    },
+    {
+      "id": "GINA_64",
+      "description": "Gina 64",
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "collisionShape": "B2_CIRCLE",
+        "collisionRadius": 0.96,
+        "friction": 0.0,
+        "density": 5.5,
+        "linearDamping": 0.2,
+        "angularDamping": 10.0
+      },
+      "xSize": 2.56,
+      "ySize": 2.56,
+      "speed": 9.5,
+      "animations": [
+        {
+          "id": "RUN",
+          "texture": "TX_GINA_64_RUN",
+          "speed": 0.10, //time in seconds for each frame. Lower the faster
+          "frames": 4
+        },
+        {
+          "id": "IDLE",
+          "texture": "TX_GINA_64_IDLE",
+          "speed": 0.10, //time in seconds for each frame. Lower the faster
+          "frames": 1
+        }
+
+      ]
+    },
+    {
+      "id": "FPS_LABEL",
+      "description": "FPS Label",
+      "text": {
+        "label": "FPS",
+        "dynamic": false,
+        "font": "FONT_ARIAL_REG",
+        "size": 32
+      }
+    },
+    {
+      "id": "FPS_VALUE",
+      "description": "FPS Value Text",
+      "text": {
+        "dynamic": true,
+        "font": "FONT_ARIAL_REG",
+        "size": 32,
+        "color": {
+          "red": 255,
+          "green": 255,
+          "blue": 255,
+          "alpha": 255
+        }
+      }
+    },
+    {
+      "id": "DEBUG_ITEM",
+      "description": "Debug Item",
+      "text": {
+        "dynamic": true,
+        "font": "FONT_ARIAL_REG",
+        "size": 32
+      }
+    }
+ 
+  ]
+}

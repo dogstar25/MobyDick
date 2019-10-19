@@ -1,23 +1,36 @@
-#ifndef __Game__
-#define __Game__
+#pragma once
 
-#include <string>
+#include <json/json.h>
+#include <Box2D/Box2D.h>
 #include <SDL.h>
 #include <SDL_image.h>
-#include "TextureManager.h"
-#include "GameObjectManager.h"
-#include "GameObject.h"
-#include <json/json.h>
+
 #include <iostream>
 #include <fstream>
-#include "game.h"
-#include <stdio.h>
+//#include <cstdio>
 #include <ctime>
 #include <ratio>
 #include <chrono>
+#include <array>
+#include <forward_list>
+#include <string>
 
-using namespace std;
-using namespace std::chrono;
+#include "Util.h"
+#include "TextureManager.h"
+#include "LevelManager.h"
+#include "GameObjectManager.h"
+#include "GameObjectContactListener.h"
+#include "DynamicTextManager.h"
+#include "ObjectPoolManager.h"
+#include "Camera.h"
+#include "DebugDraw.h"
+#include "Settings.h"
+#include "DebugPanel.h"
+#include "GameObjectCollection.h"
+#include "ParticleMachine.h"
+
+//wow!
+//#include <gl/GL.h>
 
 struct Clock
 {
@@ -27,11 +40,12 @@ struct Clock
 	steady_clock::time_point end_time;
 	std::chrono::duration<double> time_diff;
 	std::chrono::duration<double> fps_time_accum;
+	std::chrono::duration<double> gameloop_time_accum;
 
 	void init()
 	{
 		current_frame_cnt = 0;
-		fps_time_accum = fps_time_accum.zero();
+		fps_time_accum = 0ns;
 		begin_time = steady_clock::now();
 	}
 	void tick()
@@ -39,63 +53,152 @@ struct Clock
 		end_time = steady_clock::now();
 		time_diff = end_time - begin_time;
 		begin_time = end_time;
+
 		fps_time_accum += time_diff;
+		gameloop_time_accum += time_diff;
 	}
 
 	void calcFps()
 	{
+		//Every 100 frames calculate how long it took to come up with FPS average
 		if (current_frame_cnt >= 100)
 		{
 			fps = current_frame_cnt / fps_time_accum.count();
-			fps_time_accum *=0;
+			fps_time_accum = 0ns;
 			current_frame_cnt = 0;
 		}
 	}
 
+	void resetGameLoopTimeAccum()
+	{
+		gameloop_time_accum = 0ns;
+	}
 
 };
+
+struct Config
+{
+public:
+	float32 scaleFactor;
+	float32 mouseSensitivity;
+	bool debugPanel;
+	SDL_Point debugPanelLocation;
+
+};
+
+//forward declations
+class PlayerObject;
+class GameObject;
+class ParticleObject;
+class ParticleMachine;
+
+
+using namespace std;
+using namespace std::chrono;
+
 
 class Game {
 
+/*
+Main Game State
+*/
+
+
 public:
-	Game() {}
-	~Game() {}
+
+	enum State {
+
+		QUIT = 0,
+		PLAY = 1,
+		PAUSE = 2,
+		SETTINGS = 3
+
+	};
+
+	enum GameOjectLayer {
+
+		BACKGROUND = 0,
+		MAIN = 1,
+		TEXT = 2,
+		DEBUG = 3,
+	};
+	static const int MAX_LAYERS = 4;
+
+	Game();
+	~Game();
+
+	void play();
+	void settingsMenu();
 
 	bool init();
-
 	void render();
 	void update();
 	void handleEvents();
-	void clean();
+	void buildLevel(string);
+	void initWorldBounds();
+	void addGameObject(GameObject* gameObject, int);
+	void addGameObject(TextObject* gameObject, int);
+	void addGameObject(WorldObject* gameObject, int);
+	void addGameObject(ParticleObject* gameObject, int);
+	bool getConfig();
+	void buildWorld(string);
+	void testExplosion(SDL_Event*);
 
-	bool running() { return m_bRunning; }
-	static Clock clock;
+	//bool removePredicate(const GameObject&);
 
-	int fps = 0;
+	//Current Game State
+	int gameState;
 
-	
+	int fps, awakeCount, gameLoopStep;
+	string currentLevel;
+	DebugDraw debugDraw;
 
-private:
-	//Game Window Settings
-	//string windowTitle;
-	string windowTitle, gameTitle, playerGameObjectId;
-	int screenWidth, screenHeight;
-	Uint32 windowXpos= SDL_WINDOWPOS_CENTERED, windowYPos= SDL_WINDOWPOS_CENTERED;
-	Uint32 windowFlags= SDL_WINDOW_RESIZABLE;
-
-	//Manager objects
+	Clock clock;
+	Util util;
 	TextureManager textureManager;
 	GameObjectManager gameObjectManager;
+	LevelManager levelManager;
+	GameObjectContactListener gameObjectContactListner;
+	DynamicTextManager dynamicTextManager;
+	ObjectPoolManager objectPoolManager;
+	ParticleMachine particleMachine;
+
+	Config config;
+	Camera camera;
+	SDL_Rect worldBounds;
+	SDL_Rect worldGridSize;
+	b2World* physicsWorld;
 	
-
-	vector<GameObject> gameObjects;
-	GameObject* player;
-		
+	//Main screen and window stuff
 	SDL_Window* pWindow;
-	bool m_bRunning;
+	string gameTitle;
+	Uint32 windowXpos= SDL_WINDOWPOS_CENTERED, windowYPos= SDL_WINDOWPOS_CENTERED;
+	Uint32 windowFlags= SDL_WINDOW_RESIZABLE;
+	int gameObjectCount;
+	float mouseSensitivity;
 
-	bool getConfig();
+	//Fixed array of Layers
+	//Each layer contains a GameObjectCollection
+	array <GameObjectCollection, MAX_LAYERS> gameCollections;
+	unique_ptr<PlayerObject> player;
+
+
+
+	//Settings Object
+	Settings settings;
+	DebugPanel* debugPanel;
+
+	//Box2d Physics
+	b2Vec2 gravity;
+	bool b2DebugDrawMode;
+	float timeStep;
+	int velocityIterations,
+		positionIterations;
+
+
 };
 
-#endif
+
+
+
 

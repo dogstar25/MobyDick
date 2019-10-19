@@ -1,78 +1,138 @@
 #include "GameObject.h"
 #include "game.h"
-#include <SDL.h>
+#include "Weapon.h"
+#include "GameObjectDefinition.h"
+#include "Animation.h"
 
-
-
-GameObject::GameObject()
-{
-}
-
-
-GameObject::~GameObject()
-{
-}
-
-void GameObject::handleEvent(SDL_Event* event)
-{
-
-	if (event->type == SDL_KEYDOWN) {
-		switch (event->key.keysym.sym) {
-		case SDLK_w:
-			this->yVelocity = -1;
-			break;
-		case SDLK_s:
-			this->yVelocity = 1;
-			break;
-		case SDLK_a:
-			this->xVelocity = -1;
-			break;
-		case SDLK_d:
-			this->xVelocity = 1;
-			break;
-		}
-	}
-	else if (event->type == SDL_KEYUP) {
-
-		switch (event->key.keysym.sym) {
-		case SDLK_w:
-			this->yVelocity = 0;
-			break;
-		case SDLK_s:
-			this->yVelocity = 0;
-		case SDLK_a:
-			this->xVelocity = 0;
-		case SDLK_d:
-			this->xVelocity = 0;
-			break;
-		}
-
-	}
-}
 
 void GameObject::update()
 {
-
-	//printf("SDL Delta Ticks %d\n", Game::clock.deltaTime);
-	//this->xPos += this->xVelocity * (this->speed * Game::clock.deltaTime);
-	//this->yPos += this->yVelocity * (this->speed * Game::clock.deltaTime);
-	//printf("delta is %d\n", Game::clock.delta_time);
-	this->xPos += round(this->xVelocity * (this->speed));
-	this->yPos += round(this->yVelocity * (this->speed));
-
-	//printf("Performance COunter is  %d\n", Game::clock.NOW);
-	//printf("Performance Frequency is %d\n", Game::clock.PerfFreq);
+	//If this object is animated, then animate it
+	if(this->isAnimated) {
+		this->animations[this->currentAnimationState]->animate(this);
+	}
 
 
 }
 
-void GameObject::init()
+SDL_Rect* GameObject::getRenderDestRect(SDL_Rect *destRect)
+{
+	destRect->w = this->xSize;
+	destRect->h = this->ySize;
+	destRect->x = this->xPos;
+	destRect->y = this->yPos;
+
+	return destRect;
+
+}
+
+SDL_Rect*  GameObject::getRenderTextureRect(SDL_Rect* textureSrcRect)
 {
 
-	this->xVelocity = 0;;
-	this->yVelocity = 0;;
+	if (this->isAnimated) {
+
+		textureSrcRect = &this->animations[this->currentAnimationState]->currentTextureAnimationSrcRect;
+	}
+
+	return textureSrcRect;
 
 }
+
+SDL_Texture * GameObject::getRenderTexture(SDL_Texture * aTexture)
+{
+	if (this->isAnimated) {
+
+		aTexture = this->animations[this->currentAnimationState]->texture;
+	}
+	else {
+
+		aTexture = this->texture->sdlTexture;
+	}
+
+	return aTexture;
+
+}
+
+void GameObject::render()
+{
+	SDL_Rect *textureSourceRect = NULL, destRect;
+	SDL_Texture* texture=NULL;
+
+	//Get render destination rectangle
+	this->getRenderDestRect(&destRect);
+
+	//Get texture
+	texture = this->getRenderTexture(texture);
+
+	//Get render texture src rectangle
+	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
+
+
+	game->textureManager.renderTexture(texture, textureSourceRect, &destRect, 0);
+
+}
+
+GameObject::GameObject()
+{
+
+}
+
+GameObject::GameObject(string gameObjectId, int xMapPos, int yMapPos, int angleAdjust)
+{
+	//set the id and it will be unique for every game object in the game
+	this->id = gameObjectId + to_string(game->gameObjectCount);
+	//this->id = gameObjectId;
+	this->definitionId = gameObjectId;
+
+	//is this a debug object then get the default debug definition but change its 
+	//id value to the one we passed in
+	if (gameObjectId.rfind("DEBUG_", 0) == 0)
+	{
+		//this->definition = game->gameObjectManager.gameObjectDefinitions["DEBUG_ITEM"];
+		definition = game->gameObjectManager.gameObjectDefinitions["DEBUG_ITEM"];;
+	}
+	else
+	{
+		definition = game->gameObjectManager.gameObjectDefinitions[gameObjectId];
+	}
+
+	this->angle = angleAdjust;
+	this->removeFromWorld = false;
+
+	this->xPos = xMapPos * game->worldGridSize.w;
+	this->yPos = yMapPos * game->worldGridSize.h;
+	this->xSize = definition->xSize;
+	this->ySize = definition->ySize;
+
+	//Get pointer to the texture
+	this->texture = game->textureManager.getTexture(definition->textureId);
+
+	//get the animation objects
+	if (definition->animations.size() > 0)
+	{
+		this->isAnimated = true;
+		for (auto& animation : definition->animations) {
+
+			//this->animations[animation.second.id] = animation.second;
+			this->animations.emplace(animation.second->id, animation.second);
+
+		}
+	}
+
+
+
+}
+
+GameObject::~GameObject()
+{
+
+	this->animations.clear();
+
+
+}
+
+
+
 
 
 
