@@ -70,15 +70,15 @@ bool Game::init()
 		this->objectPoolManager.init();
 
 		//Set the mouse mode
-		//SDL_ShowCursor(false);
-		//SDL_SetRelativeMouseMode(SDL_TRUE);
+		SDL_ShowCursor(false);
+		SDL_SetRelativeMouseMode(SDL_TRUE);
 
 		//Build the world for a particular level
 		this->buildWorld("TX_LEVEL1");
 
 		//Initialize the clock object
 		this->clock.init();
-
+		
 		//initialize settings menu
 		this->settings.init();
 
@@ -87,10 +87,7 @@ bool Game::init()
 	//Allocate the array of vectors for all game objects
 	//this->gameObjects = vector<unique_ptr<GameObject>>[this->MAX_LAYERS];
 
-	//CREATE A TEST ITEM
-	WorldObject* testObject = new WorldObject("SWORDLADY", 2, 2, 0);
-	testObject->currentAnimationState = "IDLE";
-	this->addGameObject(testObject, this->MAIN);
+	
 
 
 
@@ -392,8 +389,8 @@ void Game::handleEvents() {
 				//this->player->weapon->fire();
 			//}
 
-				this->testExplosion(&event);
-
+				//this->testExplosion(&event);
+			this->player->weapon->fireOld();
 
 			break;
 		default:
@@ -519,21 +516,23 @@ void Game::testExplosion(SDL_Event* event)
 		x,	// X position
 		y,	//Y Position
 		5,	//Force Min
-		10,	//force Max
+		30,	//force Max
 		0.5,	//Lifetime Min
 		5.5,	//Lifetime Max
-		true,	// Alpha fade
+		false,	// Alpha fade
 		0,	//Angle min
 		360,	//Angle Max
 		0.28,	//Size Min
 		0.75,	//Size Max
 		colorMin,	//Color Min
 		colorMax,	//Color Max
-		10,	//Particle count min
+		100,	//Particle count min
 		200	//Particle count max
 	);	
 
-
+/*
+Main particle Emission function
+*/
 	ParticleEmission *particleEmission = new ParticleEmission(
 		"PARTICLE1_POOL",
 		x,	// X position
@@ -552,7 +551,7 @@ void Game::testExplosion(SDL_Event* event)
 		10,	//Particle count min
 		200	//Particle count max
 	);
-	this->particleMachine.add(particleEmission);
+	//this->particleMachine.add(particleEmission);
 
 }
 

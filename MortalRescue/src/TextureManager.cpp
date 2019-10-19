@@ -519,7 +519,7 @@ Texture * TextureManager::getTexture(string id)
 bool TextureManager::present()
 {
 	SDL_RenderPresent(pRenderer);
-	SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 0);
+	SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
 
 	return true;
 }

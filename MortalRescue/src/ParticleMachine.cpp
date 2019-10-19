@@ -65,8 +65,8 @@ void ParticleMachine::add(ParticleEmission* particleEmission)
 
 void ParticleMachine::emit(
 	string poolId,
-	int originX,
-	int originY,
+	float originX,
+	float originY,
 	int forceMin,
 	int forceMax,
 	float lifetimeMin,
@@ -98,11 +98,11 @@ void ParticleMachine::emit(
 	{
 		particleCount = particleSpawnCountMax;
 	}
-	
+
 	//Emit each of the particles
 	for (int i = 0; i < particleCount; i++)
 	{
-		
+
 		//Get the particle object from the pre-populated particle pool
 		ParticleObject* particle = game->objectPoolManager.get(poolId);
 
@@ -124,7 +124,7 @@ void ParticleMachine::emit(
 			particle->isLifetimeAlphaFade = alphaFade;
 
 			//Set the color of the particle. Randomize the color values if they are different
-			SDL_Color color = {255,255,255,255};
+			SDL_Color color = { 255,255,255,255 };
 			if (colorRangeBegin.r != colorRangeEnd.r)
 			{
 				color.r = game->util.generateRandomNumber(colorRangeBegin.r, colorRangeEnd.r);
@@ -155,7 +155,7 @@ void ParticleMachine::emit(
 
 				particle->xSize = particleSize;
 				particle->ySize = particleSize;
-				
+
 			}
 
 			//Set the particles lifetime in miliseconds. If a zero is passed in, then it will remain the value 
@@ -174,7 +174,7 @@ void ParticleMachine::emit(
 
 				particle->lifetime = particle->lifetimeRemaining = std::chrono::duration<float>(particleLifetime);
 			}
-			
+
 
 			//Calculate the emit angle/direction that the particle will travel in
 			particleAngle = ((float)i / (float)particleCount) * angleRange;
@@ -190,14 +190,52 @@ void ParticleMachine::emit(
 			b2Vec2 positionVector = b2Vec2(originX, originY);
 
 			//Set both eh starting position and the velocity of th eparticle
-			particle->physicsBody->SetTransform(positionVector, 0);
+			particle->physicsBody->SetTransform(positionVector, particleAngle);
 			particle->physicsBody->SetLinearVelocity(velocityVector);
+			//particle->physicsBody->SetBullet(true);
+
+			//
+			particle->currentAnimationState = "ACTIVE";
 
 			//Add the particle to the game world
 			game->addGameObject(particle, game->MAIN);
 		}
 
 	}
+}
+
+void ParticleMachine::fireBullet(
+	string poolId,
+	int originX,
+	int originY,
+	int angle,
+	int force)
+{
+
+	SDL_Color defaultColor = {255,255,255,255};
+
+	this->emit(
+		poolId,
+		originX,	// X position
+		originY,	//Y Position
+		force,	//Force Min
+		force,	//force Max
+		0,	//Lifetime Min
+		0,	//Lifetime Max
+		false,	// Alpha fade
+		angle,	//Angle min
+		angle,	//Angle Max
+		0,	//Size Min
+		0,	//Size Max
+		defaultColor,	//Color Min
+		defaultColor,	//Color Max
+		1,	//Particle count min
+		1	//Particle count max
+	);
+
+
+
 
 }
+
 

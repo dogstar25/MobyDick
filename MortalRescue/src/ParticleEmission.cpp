@@ -9,8 +9,8 @@ ParticleEmission::ParticleEmission()
 
 ParticleEmission::ParticleEmission(
 	string poolId,
-	int originX,
-	int originY,
+	float originX,
+	float originY,
 	int forceMin,
 	int forceMax,
 	float lifetimeMin,
@@ -31,8 +31,8 @@ ParticleEmission::ParticleEmission(
 	this->originY = originY;
 	this->forceMin = forceMin;
 	this->forceMax = forceMax;
-	this->lifetimeMin = forceMax;
-	this->lifetimeMax = forceMax;
+	this->lifetimeMin = lifetimeMin;
+	this->lifetimeMax = lifetimeMax;
 	this->alphaFade = alphaFade;
 	this->angleMax = angleMax;
 	this->particleSizeMin = particleSizeMin;

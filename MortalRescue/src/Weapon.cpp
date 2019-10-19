@@ -32,25 +32,30 @@ void Weapon::init(string bulletGameObjectId, PlayerObject* weaponWieldingObject,
 
 
 
-void Weapon::fire()
+void Weapon::fireOld()
 {
 	//bullet;
 	//ParticleObject* bullet = new ParticleObject(this->bulletGameObjectId, 0, 0, 0);
-	ParticleObject* bullet = game->objectPoolManager.get(this->bulletGameObjectId);
+	ParticleObject* bullet = game->objectPoolManager.get("BULLET1_POOL");
 	if (bullet != NULL) {
 
+		//Calculate the origin of the bullet
 		float dx = this->weaponWieldingObject->physicsBody->GetTransform().p.x +
 			cos(this->weaponWieldingObject->physicsBody->GetAngle());
 		float dy = this->weaponWieldingObject->physicsBody->GetTransform().p.y +
 			sin(this->weaponWieldingObject->physicsBody->GetAngle());
 
-		/* remove offfset logic for now*/
+		//Calculate offset values of bullet spawning origin adding an offset for the fireing object
+		/* remove offfset logic for now
 		float xAdj = cos(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->xOffset);
 		float yAdj = sin(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->yOffset);
-		/*
+*/
+		float xAdj = cos(this->weaponWieldingObject->physicsBody->GetAngle()) *(1);
+		float yAdj = sin(this->weaponWieldingObject->physicsBody->GetAngle()) *(1);
+
 		dx += xAdj;
 		dy += yAdj;
-		*/
+		
 
 		////////
 		// DEBUG VALUES
@@ -73,10 +78,39 @@ void Weapon::fire()
 		bullet->physicsBody->SetTransform(positionVector, angle);
 		bullet->physicsBody->SetLinearVelocity(velocityVector);
 		bullet->currentAnimationState = "ACTIVE";
-		///bullet->physicsBody->SetBullet(true);
+		bullet->physicsBody->SetBullet(true);
+
+		bullet->color = { 255,255,255,255 };
 
 		//Add the bullet object to the main gameObject collection
 		game->addGameObject(bullet, game->MAIN);
 	}
 
+
+}
+
+void Weapon::fire()
+{
+	//Calculate the origin of the bullet
+	float dx = this->weaponWieldingObject->physicsBody->GetTransform().p.x +
+		cos(this->weaponWieldingObject->physicsBody->GetAngle());
+	float dy = this->weaponWieldingObject->physicsBody->GetTransform().p.y +
+		sin(this->weaponWieldingObject->physicsBody->GetAngle());
+
+	//Calculate offset values of bullet spawning origin adding an offset for the fireing object
+	/* remove offfset logic for now
+	float xAdj = cos(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->xOffset);
+	float yAdj = sin(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->yOffset);
+	dx += xAdj;
+	dy += yAdj;
+	*/
+
+	game->particleMachine.fireBullet
+	(
+		"BULLET1_POOL", 
+		dx, 
+		dy, 
+		game->util.radiansToDegrees(this->weaponWieldingObject->physicsBody->GetAngle()), 
+		50
+	);
 }

@@ -36,6 +36,7 @@ public:
 		ySize,
 		speed,
 		friction,
+		restitution,
 		density,
 		linearDamping,
 		collisionRadius,

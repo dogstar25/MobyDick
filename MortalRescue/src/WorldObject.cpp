@@ -134,7 +134,7 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 	// Misc properties
 	fixtureDef.density = definition->density;
 	fixtureDef.friction = definition->friction;
-	fixtureDef.restitution = 0.0;
+	fixtureDef.restitution = definition->restitution;
 	//collision group
 	fixtureDef.filter.groupIndex = definition->collisionGroup;
 

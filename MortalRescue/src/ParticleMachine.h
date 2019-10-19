@@ -15,13 +15,20 @@ public:
 	
 	void runParticleEmissions();
 	void add(ParticleEmission*);
+	void fireBullet(
+		string poolId,
+		int originX,
+		int originY,
+		int angle,
+		int force
+	);
 
 	vector <ParticleEmission*> particleEmissions;
 
 	void emit(
 		string poolId,
-		int originX,
-		int originY,
+		float originX,
+		float originY,
 		int forceMin,
 		int forceMax,
 		float lifetimeMin,

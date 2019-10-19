@@ -13,6 +13,7 @@ public:
 	Weapon();
 	~Weapon();
 
+	void fireOld();
 	void fire();
 	void init(string, PlayerObject*, float,float);
 

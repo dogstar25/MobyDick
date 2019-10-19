@@ -87,6 +87,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		{
 			gameObjectDefinition->isPhysicsObject = true;
 			gameObjectDefinition->friction = itr["physicsObject"]["friction"].asFloat();
+			gameObjectDefinition->restitution = itr["physicsObject"]["restitution"].asFloat();
 			gameObjectDefinition->density = itr["physicsObject"]["density"].asFloat();
 			gameObjectDefinition->linearDamping = itr["physicsObject"]["linearDamping"].asFloat();
 			gameObjectDefinition->angularDamping = itr["physicsObject"]["angularDamping"].asFloat();

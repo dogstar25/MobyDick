@@ -7,10 +7,11 @@
       "speed": 50,
       "physicsObject": {
         "type": "B2_DYNAMIC",
-//        "collisionShape": "B2_CIRCLE",
-//        "collisionRadius": 0.16,
+        //        "collisionShape": "B2_CIRCLE",
+        //        "collisionRadius": 0.16,
         "friction": 0.0,
-        "density": 0.5,
+        "density": 1.5,
+        "restitution": 1.5,
         "linearDamping": 0.0,
         "angularDamping": 0.0,
         "collisionGroup": -3

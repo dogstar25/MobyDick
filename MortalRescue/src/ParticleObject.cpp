@@ -14,7 +14,7 @@ ParticleObject::ParticleObject(string gameObjectId, int xMapPos, int yMapPos, in
 	WorldObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
 {
 
-	//this->time_snapshot = steady_clock::now();
+	//this->physicsBody->SetBullet(true);
 
 
 

@@ -10,8 +10,8 @@ public:
 	ParticleEmission();
 	ParticleEmission(
 		string poolId,
-		int originX,
-		int originY,
+		float originX,
+		float originY,
 		int forceMin,
 		int forceMax,
 		float lifetimeMin,
