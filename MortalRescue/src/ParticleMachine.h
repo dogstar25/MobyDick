@@ -19,7 +19,7 @@ public:
 		string poolId,
 		int originX,
 		int originY,
-		int angle,
+		float angle,
 		int force
 	);
 

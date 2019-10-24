@@ -23,7 +23,7 @@ void ParticleMachine::update()
 
 void ParticleMachine::runParticleEmissions()
 {
-	ParticleEmission* particleEmission =NULL;
+	ParticleEmission* particleEmission = NULL;
 
 	while (this->particleEmissions.empty() == false)
 	{
@@ -86,6 +86,9 @@ void ParticleMachine::emit(
 	//Calculate the range of the angle in which the particles will be emitted
 	float angleRange = angleMax - angleMin;
 	float particleAngle;
+
+	std::cout << "angleMin1 is " << angleMin << "\n";
+
 
 	//If the particle count min and max are different, then generate a random count
 	//otherwise just use the max
@@ -181,6 +184,9 @@ void ParticleMachine::emit(
 			particleAngle = angleMin + particleAngle;
 			particleAngle = particleAngle * DEGTORAD;
 
+			std::cout << "angleMin is " << angleMin << "\n";
+			//particleAngle = 1;
+
 			//Calculate velocity vector
 			float velocityX = cos(particleAngle) * force;
 			float velocityY = sin(particleAngle) * force;
@@ -208,7 +214,7 @@ void ParticleMachine::fireBullet(
 	string poolId,
 	int originX,
 	int originY,
-	int angle,
+	float angle,
 	int force)
 {
 

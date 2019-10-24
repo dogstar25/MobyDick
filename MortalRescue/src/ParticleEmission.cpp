@@ -16,8 +16,8 @@ ParticleEmission::ParticleEmission(
 	float lifetimeMin,
 	float lifetimeMax,
 	bool alphaFade,
-	int angleMin,
-	int angleMax,
+	float angleMin,
+	float angleMax,
 	float particleSizeMin,
 	float particleSizeMax,
 	SDL_Color colorRangeBegin,
@@ -34,6 +34,7 @@ ParticleEmission::ParticleEmission(
 	this->lifetimeMin = lifetimeMin;
 	this->lifetimeMax = lifetimeMax;
 	this->alphaFade = alphaFade;
+	this->angleMin = angleMin;
 	this->angleMax = angleMax;
 	this->particleSizeMin = particleSizeMin;
 	this->particleSizeMax = particleSizeMax;

@@ -54,50 +54,54 @@ void GameObjectContactListener::BeginContact(b2Contact* contact) {
 	contact->GetWorldManifold(&worldManifold);
 	b2Vec2 worldPoint = worldManifold.points[0];
 
-	if (gameObjectA->definition->id == "BULLET1" ||
-		gameObjectB->definition->id == "BULLET1")
+	if (gameObjectA != NULL && gameObjectB != NULL)
 	{
-		if (gameObjectA->definition->id == "BULLET1") {
-			gameObjectA->removeFromWorld = true;
+		if (gameObjectA->definition->id == "BULLET1" ||
+			gameObjectB->definition->id == "BULLET1")
+		{
+			if (gameObjectA->definition->id == "BULLET1") {
+				gameObjectA->removeFromWorld = true;
+
+			}
+			if (gameObjectB->definition->id == "BULLET1") {
+				gameObjectB->removeFromWorld = true;
+
+			}
+
+			//use the collision point for the particle emission
+			x = worldPoint.x;
+			y = worldPoint.y;
+
+			//This position might be "inside" of the wall object
+			//We will do a ray trace from this position towards the play object untl it is no long inside the wall
+			//findWallImpactPoint(worldPoint, game->player.get());
+
+			//temp color code
+			SDL_Color colorMin = { 1,1,1,255 };
+			SDL_Color colorMax = { 225,255,255,255 };
+
 			
-		}
-		if (gameObjectB->definition->id == "BULLET1") {
-			gameObjectB->removeFromWorld = true;
+			ParticleEmission* particleEmission = new ParticleEmission(
+				"PARTICLE1_POOL",
+				x,	// X position
+				y,	//Y Position
+				5,	//Force Min
+				5,	//force Max
+				0.1,	//Lifetime Min
+				0.1,	//Lifetime Max
+				true,	// Alpha fade
+				0,	//Angle min
+				360,	//Angle Max
+				0.28,	//Size Min
+				0.28,	//Size Max
+				colorMin,	//Color Min
+				colorMax,	//Color Max
+				6,	//Particle count min
+				6	//Particle count max
+			);
+			game->particleMachine.add(particleEmission);
 
 		}
-
-		//use the collision point for the particle emission
-		x = worldPoint.x;
-		y = worldPoint.y;
-
-		//This position might be "inside" of the wall object
-		//We will do a ray trace from this position towards the play object untl it is no long inside the wall
-		findWallImpactPoint(worldPoint, game->player.get());
-
-		//temp color code
-		SDL_Color colorMin = { 1,1,1,255 };
-		SDL_Color colorMax = { 225,255,255,255 };
-
-		ParticleEmission* particleEmission = new ParticleEmission(
-			"PARTICLE1_POOL",
-			x,	// X position
-			y,	//Y Position
-			5,	//Force Min
-			10,	//force Max
-			0.1,	//Lifetime Min
-			0.2,	//Lifetime Max
-			true,	// Alpha fade
-			0,	//Angle min
-			360,	//Angle Max
-			0.28,	//Size Min
-			0.35,	//Size Max
-			colorMin,	//Color Min
-			colorMax,	//Color Max
-			2,	//Particle count min
-			25	//Particle count max
-		);
-		game->particleMachine.add(particleEmission);
-
 	}
 
 }
