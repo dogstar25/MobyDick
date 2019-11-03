@@ -113,11 +113,15 @@ bool Game::init()
 	TextObject* dynamicTextObject = new TextObject("FPS_VALUE", 0, 1, 0);
 	this->addGameObject(dynamicTextObject, this->TEXT);
 
-	//test spaceships
 	WorldObject* spaceshipObject = new WorldObject("SPACESHIP1", 4, 4, 0);
 	this->addGameObject(spaceshipObject, this->MAIN);
 	spaceshipObject = new WorldObject("SPACESHIP1", 8, 8, 0);
 	this->addGameObject(spaceshipObject, this->MAIN);
+
+	//GameObject
+	GameObject* testObject = new GameObject("SWORDLADY", 1, 1, 0);
+	testObject->currentAnimationState = "IDLE";
+	this->addGameObject(testObject, this->MAIN);
 
 
 	//Create the debug panel if its turned on
@@ -163,11 +167,6 @@ void Game::play()
 
 		this->dynamicTextManager.updateText("FPS_VALUE", to_string(this->clock.fps));
 
-		//Debug stuff
-		game->debugPanel->addItem("OBJECT_COUNT", to_string(this->gameObjectCount));
-
-
-
 	}
 
 }
@@ -183,13 +182,7 @@ void Game::settingsMenu()
 	
 }
 
-//Removal loop to delete all expired objects from the world
-/*
-bool Game::removePredicate(const unique_ptr<GameObject>& gameObject)
-{
-	return gameObject->removeFromWorld == true;
-};
-*/
+
 
 
 

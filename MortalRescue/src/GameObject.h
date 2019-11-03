@@ -62,7 +62,8 @@ public:
 		currentAnimationState;
 	bool
 		isAnimated,
-		removeFromWorld; // when this is true the removal loop should remove it from the main game world collection
+		removeFromWorld;
+
 	SDL_Color 
 		color;
 	float 

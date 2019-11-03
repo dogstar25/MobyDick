@@ -77,7 +77,7 @@ void GameObjectContactListener::BeginContact(b2Contact* contact) {
 			//findWallImpactPoint(worldPoint, game->player.get());
 
 			//temp color code
-			SDL_Color colorMin = { 1,1,1,255 };
+			SDL_Color colorMin = { 0,0,0,255 };
 			SDL_Color colorMax = { 225,255,255,255 };
 
 			
@@ -86,18 +86,18 @@ void GameObjectContactListener::BeginContact(b2Contact* contact) {
 				x,	// X position
 				y,	//Y Position
 				5,	//Force Min
-				5,	//force Max
-				0.1,	//Lifetime Min
-				0.1,	//Lifetime Max
+				19,	//force Max
+				0.15,	//Lifetime Min
+				0.15,	//Lifetime Max
 				true,	// Alpha fade
 				0,	//Angle min
 				360,	//Angle Max
 				0.28,	//Size Min
-				0.28,	//Size Max
+				0.48,	//Size Max
 				colorMin,	//Color Min
 				colorMax,	//Color Max
 				6,	//Particle count min
-				6	//Particle count max
+				20	//Particle count max
 			);
 			game->particleMachine.add(particleEmission);
 

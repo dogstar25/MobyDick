@@ -2,7 +2,7 @@
 #include <vector>
 #include <SDL_image.h>
 
-#include "ParticleEmission.h";
+#include "ParticleEmission.h"
 
 using namespace std;
 

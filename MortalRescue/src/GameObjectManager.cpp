@@ -62,6 +62,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		gameObjectDefinition->xSize = itr["xSize"].asFloat();
 		gameObjectDefinition->ySize = itr["ySize"].asFloat();
 		gameObjectDefinition->textureId = itr["texture"].asString();
+		gameObjectDefinition->absolutePositioning = itr["absolutePositioning"].asBool();
 
 		//If this has a textture then get and store it
 		if (itr["primativeShape"].isNull() == false)

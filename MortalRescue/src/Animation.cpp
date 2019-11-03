@@ -7,7 +7,6 @@ void Animation::animate(GameObject* gameObject)
 	//check the clock and see if enough time as gone by
 	steady_clock::time_point now_time = steady_clock::now();
 	std::chrono::duration<double> time_diff = now_time - this->time_snapshot;
-	//std::cout << "timediff is " << time_diff.count() << "\n";
 
 	if (time_diff.count() >= this->speed)
 	{
