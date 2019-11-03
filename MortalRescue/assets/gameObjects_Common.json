@@ -84,6 +84,7 @@
       "speed": 0.5,
       "xSize": 2.56, //meters which translates to 64px
       "ySize": 1.75,
+      "absolutePositioning":  false,
       "animations": [
         {
           "id": "IDLE",

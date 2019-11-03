@@ -184,9 +184,6 @@ void ParticleMachine::emit(
 			particleAngle = angleMin + particleAngle;
 			particleAngle = particleAngle * DEGTORAD;
 
-			std::cout << "angleMin is " << angleMin << "\n";
-			//particleAngle = 1;
-
 			//Calculate velocity vector
 			float velocityX = cos(particleAngle) * force;
 			float velocityY = sin(particleAngle) * force;
@@ -200,7 +197,7 @@ void ParticleMachine::emit(
 			particle->physicsBody->SetLinearVelocity(velocityVector);
 			//particle->physicsBody->SetBullet(true);
 
-			//
+			//set animation state to active
 			particle->currentAnimationState = "ACTIVE";
 
 			//Add the particle to the game world

@@ -17,10 +17,18 @@ void GameObject::update()
 
 SDL_Rect* GameObject::getRenderDestRect(SDL_Rect *destRect)
 {
-	destRect->w = this->xSize;
-	destRect->h = this->ySize;
+	destRect->w = this->xSize * game->config.scaleFactor;
+	destRect->h = this->ySize * game->config.scaleFactor;
+
 	destRect->x = this->xPos;
 	destRect->y = this->yPos;
+
+	//Adjust position based on current camera position only if we want to
+	if (this->definition->absolutePositioning == false)
+	{
+		destRect->x -= game->camera.frame.x;
+		destRect->y -= game->camera.frame.y;
+	}
 
 	return destRect;
 

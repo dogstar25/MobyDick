@@ -48,7 +48,8 @@ public:
 		isPrimitiveShape,
 		isPlayerObject,
 		isTextObject,
-		isParticle;
+		isParticle,
+		absolutePositioning;
 	short
 		collisionGroup; // objects with same negative group value will not collide
 
