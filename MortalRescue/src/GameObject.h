@@ -1,11 +1,15 @@
 #pragma once
-#include "Animation.h"
-#include "TextureManager.h"
+#include <array>
 
 #include <map> 
 #include <SDL.h>
 #include <string>
 #include <Box2D/Box2D.h>
+
+#include "Animation.h"
+#include "TextureManager.h"
+
+
 
 //Forward declarations
 class GameObjectDefinition;
@@ -38,7 +42,22 @@ enum GameObjectShape {
 
 };
 
+enum ChildObjectPosition {
+
+	TOP_LEFT = 1,
+	TOP = 2,
+	TOP_RIGHT = 3,
+	LEFT = 4,
+	CENTER = 5,
+	RIGHT = 6,
+	BOTTOM_LEFT = 7,
+	BOTTOM = 8,
+	BOTTOM_RIGHT = 9,
+
+};
+
 static const float DEGTORAD = 0.0174532925199432957f;
+static const int CHILD_POSITIONS = 9;
 
 class GameObject
 {
@@ -79,6 +98,9 @@ public:
 
 	//If animated, will contain all animations
 	map<string, Animation*> animations;
+
+	//Child Object count
+	array <int, CHILD_POSITIONS> childObjectCount;
 
 };
 

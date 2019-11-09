@@ -20,11 +20,14 @@ public:
 		
 
 	bool init();
-	Animation * buildAnimation(GameObjectDefinition*, string, string, int, float);
 	void load(string);
+	GameObjectDefinition* getDefinition(string);
 
 	//Map of the definitions of all posible game objects in the game/level
 	map<string, GameObjectDefinition*> gameObjectDefinitions;
+	
+	//build animations and shit
+	Animation* buildAnimation(GameObjectDefinition*, string, string, int, float);
 
 private:
 	

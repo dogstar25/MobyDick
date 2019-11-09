@@ -24,7 +24,6 @@
 #include "ObjectPoolManager.h"
 #include "Camera.h"
 #include "DebugDraw.h"
-#include "Settings.h"
 #include "DebugPanel.h"
 #include "GameObjectCollection.h"
 #include "ParticleMachine.h"
@@ -110,8 +109,7 @@ public:
 
 		QUIT = 0,
 		PLAY = 1,
-		PAUSE = 2,
-		SETTINGS = 3
+		PAUSE = 2
 
 	};
 
@@ -132,6 +130,7 @@ public:
 
 	bool init();
 	void render();
+	void renderCollection(array<GameObjectCollection, MAX_LAYERS>*);
 	void update();
 	void handleEvents();
 	void buildLevel(string);
@@ -182,10 +181,6 @@ public:
 	array <GameObjectCollection, MAX_LAYERS> gameCollections;
 	unique_ptr<PlayerObject> player;
 
-
-
-	//Settings Object
-	Settings settings;
 	DebugPanel* debugPanel;
 
 	//Box2d Physics

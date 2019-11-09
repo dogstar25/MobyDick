@@ -8,17 +8,21 @@
 void GameObject::update()
 {
 	//If this object is animated, then animate it
-	if(this->isAnimated) {
+	if(this->definition->isAnimated) {
 		this->animations[this->currentAnimationState]->animate(this);
 	}
+
+	//If this object has a label, then updates the labels position to reflect
+	//the possible new position of the gameObject
+
 
 
 }
 
 SDL_Rect* GameObject::getRenderDestRect(SDL_Rect *destRect)
 {
-	destRect->w = this->xSize * game->config.scaleFactor;
-	destRect->h = this->ySize * game->config.scaleFactor;
+	destRect->w = this->xSize;
+	destRect->h = this->ySize;
 
 	destRect->x = this->xPos;
 	destRect->y = this->yPos;
@@ -37,7 +41,7 @@ SDL_Rect* GameObject::getRenderDestRect(SDL_Rect *destRect)
 SDL_Rect*  GameObject::getRenderTextureRect(SDL_Rect* textureSrcRect)
 {
 
-	if (this->isAnimated) {
+	if (this->definition->isAnimated) {
 
 		textureSrcRect = &this->animations[this->currentAnimationState]->currentTextureAnimationSrcRect;
 	}
@@ -48,7 +52,7 @@ SDL_Rect*  GameObject::getRenderTextureRect(SDL_Rect* textureSrcRect)
 
 SDL_Texture * GameObject::getRenderTexture(SDL_Texture * aTexture)
 {
-	if (this->isAnimated) {
+	if (this->definition->isAnimated) {
 
 		aTexture = this->animations[this->currentAnimationState]->texture;
 	}
@@ -69,14 +73,23 @@ void GameObject::render()
 	//Get render destination rectangle
 	this->getRenderDestRect(&destRect);
 
-	//Get texture
-	texture = this->getRenderTexture(texture);
+	//If this is a primitive, then render a rectangle with the objects primitive color
+	//Othwise, render the texture
+	if (this->definition->isPrimitive == true)
+	{
+		game->textureManager.render(&destRect, this->definition->color);
+	}
+	else
+	{
+		//Get texture
+		texture = this->getRenderTexture(texture);
 
-	//Get render texture src rectangle
-	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
+		//Get render texture src rectangle
+		textureSourceRect = this->getRenderTextureRect(textureSourceRect);
 
-
-	game->textureManager.renderTexture(texture, textureSourceRect, &destRect, 0);
+		game->textureManager.render(texture, textureSourceRect, &destRect, 0);
+	}
+	
 
 }
 
@@ -118,7 +131,6 @@ GameObject::GameObject(string gameObjectId, int xMapPos, int yMapPos, int angleA
 	//get the animation objects
 	if (definition->animations.size() > 0)
 	{
-		this->isAnimated = true;
 		for (auto& animation : definition->animations) {
 
 			//this->animations[animation.second.id] = animation.second;

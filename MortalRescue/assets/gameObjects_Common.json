@@ -49,23 +49,16 @@
     {
       "id": "ROCK",
       "description": "A Red Rock",
-      "physicsObject": {
-        "type": "B2_DYNAMIC",
-        "friction": 0.3,
-        "density": 0.5,
-        "linearDamping": 0.1,
-        "angularDamping": 0.1
-      },
       "primativeColor": {
         "red": 255,
         "green": 0,
         "blue": 0,
         "alpha": 0,
-        "random": true
+        "random": false
       },
       "primativeShape": "RECTANGLE",
-      "xSize": 2,
-      "ySize": 2
+      "xSize": 128,
+      "ySize": 512
     },
     {
       "description": "Ground",
@@ -82,8 +75,8 @@
       "id": "SWORDLADY",
       "description": "SwordLady",
       "speed": 0.5,
-      "xSize": 2.56, //meters which translates to 64px
-      "ySize": 1.75,
+      "xSize": 64, //meters which translates to 64px
+      "ySize": 43.75,
       "absolutePositioning":  false,
       "animations": [
         {
@@ -175,7 +168,7 @@
       "id": "FPS_LABEL",
       "description": "FPS Label",
       "text": {
-        "label": "FPS",
+        "value": "FPS",
         "dynamic": false,
         "font": "FONT_ARIAL_REG",
         "size": 32
@@ -190,8 +183,8 @@
         "size": 32,
         "color": {
           "red": 255,
-          "green": 255,
-          "blue": 255,
+          "green": 0,
+          "blue": 0,
           "alpha": 255
         }
       }

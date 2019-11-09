@@ -14,7 +14,7 @@ struct TextDetails {
 	int size;
 	bool isDynamic;
 	string fontId;
-	string label;
+	string value;
 
 };
 
@@ -45,7 +45,7 @@ public:
 	bool
 		isAnimated,
 		isPhysicsObject,
-		isPrimitiveShape,
+		isPrimitive,
 		isPlayerObject,
 		isTextObject,
 		isParticle,
@@ -54,7 +54,7 @@ public:
 		collisionGroup; // objects with same negative group value will not collide
 
 	TextDetails textDetails;
-	SDL_Color primativeColor; //If object is a primative shape, what color is it
+	SDL_Color color; //If object is a primative shape, what color is it
 	map<string, Animation*> animations;
 
 

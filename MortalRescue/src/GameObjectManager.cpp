@@ -37,6 +37,7 @@ bool GameObjectManager::init()
 	load("gameObjects_Common");
 	load("particleObjects");
 	load("gameObjects_Level1");
+	load("GUIObjects");
 
 	return true;
 }
@@ -64,22 +65,22 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		gameObjectDefinition->textureId = itr["texture"].asString();
 		gameObjectDefinition->absolutePositioning = itr["absolutePositioning"].asBool();
 
-		//If this has a textture then get and store it
-		if (itr["primativeShape"].isNull() == false)
+		//If this is a primitive, then it has no texture and needs a color
+		if (itr["primative"].isNull() == false)
 		{
-			gameObjectDefinition->isPrimitiveShape = true;
+			gameObjectDefinition->isPrimitive = true;
 
 			//color
-			if (itr["primativeColor"]["random"].asBool() == true)
+			if (itr["color"]["random"].asBool() == true)
 			{
-				gameObjectDefinition->primativeColor = game->util.generateRandomColor();
+				gameObjectDefinition->color = game->util.generateRandomColor();
 			}
 			else
 			{
-				gameObjectDefinition->primativeColor.r = itr["primativeColor"]["red"].asInt();
-				gameObjectDefinition->primativeColor.g = itr["primativeColor"]["green"].asInt();
-				gameObjectDefinition->primativeColor.b = itr["primativeColor"]["blue"].asInt();
-				gameObjectDefinition->primativeColor.a = itr["primativeColor"]["alpha"].asInt();
+				gameObjectDefinition->color.r = itr["primative"]["color"]["red"].asInt();
+				gameObjectDefinition->color.g = itr["primative"]["color"]["green"].asInt();
+				gameObjectDefinition->color.b = itr["primative"]["color"]["blue"].asInt();
+				gameObjectDefinition->color.a = itr["primative"]["color"]["alpha"].asInt();
 			}
 		}
 
@@ -104,7 +105,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		if (itr["text"].isNull() == false)
 		{
 			gameObjectDefinition->isTextObject = true;
-			gameObjectDefinition->textDetails.label = itr["text"]["label"].asString();
+			gameObjectDefinition->textDetails.value = itr["text"]["value"].asString();
 			gameObjectDefinition->textDetails.fontId = itr["text"]["font"].asString();
 			gameObjectDefinition->textDetails.isDynamic = itr["text"]["dynamic"].asBool();
 			gameObjectDefinition->textDetails.size = itr["text"]["size"].asInt();
@@ -120,6 +121,29 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 				gameObjectDefinition->textDetails.color.a = 255;
 				gameObjectDefinition->textDetails.color.r = 255;
 				gameObjectDefinition->textDetails.color.g = 255;
+				gameObjectDefinition->textDetails.color.b = 255;
+
+			}
+
+		}
+
+		//If this is a GUI object then store text details
+		if (itr["GUI"].isNull() == false)
+		{
+			gameObjectDefinition->textDetails.value = itr["text"]["value"].asString();
+			gameObjectDefinition->textDetails.fontId = itr["text"]["font"].asString();
+			if (itr["text"]["color"].isNull() == false)
+			{
+				gameObjectDefinition->textDetails.color.a = itr["text"]["color"]["alpha"].asInt();
+				gameObjectDefinition->textDetails.color.r = itr["text"]["color"]["red"].asInt();
+				gameObjectDefinition->textDetails.color.g = itr["text"]["color"]["green"].asInt();
+				gameObjectDefinition->textDetails.color.b = itr["text"]["color"]["blue"].asInt();
+			}
+			else // default to grey
+			{
+				gameObjectDefinition->textDetails.color.a = 206;
+				gameObjectDefinition->textDetails.color.r = 205;
+				gameObjectDefinition->textDetails.color.g = 211;
 				gameObjectDefinition->textDetails.color.b = 255;
 
 			}
@@ -172,8 +196,17 @@ Animation* GameObjectManager::buildAnimation(GameObjectDefinition* gameObjectDef
 
 	//Calculate nnumber of rows and columns - remember to convert the gameObject size to pixels first
 	int rows, columns;
-	columns = width / (gameObjectDefinition->xSize * game->config.scaleFactor);
-	rows = height / (gameObjectDefinition->ySize * game->config.scaleFactor);
+	if (gameObjectDefinition->isPhysicsObject == true)
+	{
+		columns = width / (gameObjectDefinition->xSize * game->config.scaleFactor);
+		rows = height / (gameObjectDefinition->ySize * game->config.scaleFactor);
+	}
+	else
+	{
+		columns = width / (gameObjectDefinition->xSize);
+		rows = height / (gameObjectDefinition->ySize);
+
+	}
 
 	//Calculate top left corner of each animation frame
 	SDL_Point point;
@@ -181,8 +214,17 @@ Animation* GameObjectManager::buildAnimation(GameObjectDefinition* gameObjectDef
 	for (int rowIdx = 0; rowIdx < rows; rowIdx++) {
 		for (int colIdx = 0; colIdx < columns; colIdx++) {
 
-			point.x = colIdx * (gameObjectDefinition->xSize * game->config.scaleFactor);
-			point.y = rowIdx * (gameObjectDefinition->ySize * game->config.scaleFactor);
+			if (gameObjectDefinition->isPhysicsObject == true)
+			{
+				point.x = colIdx * (gameObjectDefinition->xSize * game->config.scaleFactor);
+				point.y = rowIdx * (gameObjectDefinition->ySize * game->config.scaleFactor);
+			}
+			else
+			{
+				point.x = colIdx * (gameObjectDefinition->xSize);
+				point.y = rowIdx * (gameObjectDefinition->ySize);
+
+			}
 			//animation->animationFramePositions[frameCount] = point;
 			animation->animationFramePositions.push_back(point);
 
@@ -204,5 +246,17 @@ Animation* GameObjectManager::buildAnimation(GameObjectDefinition* gameObjectDef
 
 }
 
+/*
+	Retrieve the GameObjetc Definition
+*/
+GameObjectDefinition* GameObjectManager::getDefinition(string definitionId)
+{
+
+	//TODO: return game object definition
+
+	return this->gameObjectDefinitions[definitionId];
+
+
+}
 
 

@@ -14,6 +14,7 @@
 #include "Camera.h"
 #include "Weapon.h"
 #include "ParticleEmission.h"
+#include "GUIEvent.h"
 
 
 using namespace chrono_literals;
@@ -79,9 +80,6 @@ bool Game::init()
 		//Initialize the clock object
 		this->clock.init();
 		
-		//initialize settings menu
-		this->settings.init();
-
 	}
 
 	//Allocate the array of vectors for all game objects
@@ -122,7 +120,6 @@ bool Game::init()
 	GameObject* testObject = new GameObject("SWORDLADY", 1, 1, 0);
 	testObject->currentAnimationState = "IDLE";
 	this->addGameObject(testObject, this->MAIN);
-
 
 	//Create the debug panel if its turned on
 	if (this->config.debugPanel == true)
@@ -171,22 +168,10 @@ void Game::play()
 
 }
 
-/*
-Settings Menus
-*/
-void Game::settingsMenu()
-{
-	this->settings.run();
-
-	this->gameState = PLAY;
-	
-}
-
-
-
 
 
 void Game::update() {
+
 
 	//Specifiaclly handle input and stuff for the one player gameObject
 	this->player->update();
@@ -265,20 +250,8 @@ void Game::render() {
 	//render the player
 	this->player->render();
 	
-	//Render all of the game objects
-	for (auto & gameObjectCollection : gameCollections)
-	{
-		for (auto & gameObject : gameObjectCollection.gameObjects)
-		{
-			gameObject->render();
-		}
-		
-		for (auto & particleObject : gameObjectCollection.particleObjects)
-		{
-			particleObject->render();
-		}
-		
-	}
+	//Render all of the game objects in thew world
+	renderCollection(&this->gameCollections);
 
 	//DebugDraw
 	if (this->b2DebugDrawMode == true)
@@ -291,6 +264,24 @@ void Game::render() {
 
 }
 
+void Game::renderCollection(array<GameObjectCollection, MAX_LAYERS>* gameObjectCollection)
+{
+
+	//Render all of the game objects
+	for (auto& collection : *gameObjectCollection)
+	{
+		for (auto& gameObject : collection.gameObjects)
+		{
+			gameObject->render();
+		}
+
+		for (auto& particleObject : collection.particleObjects)
+		{
+			particleObject->render();
+		}
+
+	}
+}
 
 
 void Game::addGameObject(GameObject* gameObject, int layer)
@@ -369,7 +360,9 @@ void Game::handleEvents() {
 		case SDL_MOUSEMOTION:
 			if ((char)event.key.keysym.sym == SDLK_ESCAPE && event.type == SDL_KEYDOWN)
 			{
-				this->gameState = SETTINGS;
+				unique_ptr<GUIEvent> guiEvent = make_unique<GUIEvent>("GUIPausePanel");
+				guiEvent->run();
+
 			}
 			else
 			{

@@ -32,25 +32,8 @@ public:
 	~TextureManager();
 
 	bool init(SDL_Window*);
-	void render(GameObject* gameObject);
-	void render(PlayerObject* gameObject);
-	void render(WorldObject* gameObject);
-	void render(TextObject* gameObject);
-	void render(ParticleObject* gameObject);
-	void renderTexture(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* destRect, float angle );
-
-	void getRenderDestRect(GameObject * gameObject, SDL_Rect*);
-	void getRenderDestRect(PlayerObject * gameObject, SDL_Rect*);
-	void getRenderDestRect(WorldObject * gameObject, SDL_Rect*);
-	void getRenderDestRect(TextObject * gameObject, SDL_Rect*);
-	void getRenderDestRect(ParticleObject * gameObject, SDL_Rect*);
-	void getRenderTexture(GameObject * gameObject, SDL_Texture*, SDL_Rect*);
-	void getRenderTexture(WorldObject * gameObject, SDL_Texture*, SDL_Rect*);
-	void getRenderTexture(PlayerObject * gameObject, SDL_Texture*, SDL_Rect*);
-	void getRenderTexture(TextObject * gameObject, SDL_Texture*, SDL_Rect*);
-	void getRenderTexture(ParticleObject * gameObject, SDL_Texture*, SDL_Rect*);
-
-
+	void render(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* destRect, float angle );
+	void render(SDL_Rect* destRect, SDL_Color color);
 
 	bool present();
 	bool clear();

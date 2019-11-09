@@ -25,6 +25,10 @@ WorldObject::WorldObject(string gameObjectId, int xMapPos, int yMapPos, int angl
 	this->xPos = (xMapPos * (game->worldGridSize.w / game->config.scaleFactor)) + (definition->xSize / 2);
 	this->yPos = (yMapPos * (game->worldGridSize.h / game->config.scaleFactor)) + (definition->ySize / 2);
 
+	//Size
+	this->xSize = definition->xSize * game->config.scaleFactor;
+	this->ySize = definition->ySize * game->config.scaleFactor;
+
 	//speed
 	this->speed = definition->speed;
 
@@ -50,10 +54,14 @@ void WorldObject::update()
 
 SDL_Rect* WorldObject::getRenderDestRect(SDL_Rect* destRect)
 {
-	destRect->w = (this->xSize * game->config.scaleFactor);
-	destRect->h = (this->ySize * game->config.scaleFactor);
-	destRect->x = round((this->physicsBody->GetPosition().x *  game->config.scaleFactor) - (destRect->w / 2));
-	destRect->y = round((this->physicsBody->GetPosition().y *  game->config.scaleFactor) - (destRect->h / 2));
+	destRect->w = this->xSize;
+	destRect->h = this->ySize;
+
+	//World objects position from box2d is the center of the object
+	//So, we need to adjust the rectangle top left corner to be
+	//the render point for SDL
+	destRect->x = round((this->physicsBody->GetPosition().x *  game->config.scaleFactor) - (this->xSize / 2));
+	destRect->y = round((this->physicsBody->GetPosition().y *  game->config.scaleFactor) - (this->ySize / 2));
 
 	//Adjust position based on current camera position - offset
 	destRect->x -= game->camera.frame.x;
@@ -83,7 +91,7 @@ void WorldObject::render()
 	float angle = this->physicsBody->GetAngle();
 	angle = angle * 180 / M_PI;
 
-	game->textureManager.renderTexture(texture, textureSourceRect, &destRect, angle);
+	game->textureManager.render(texture, textureSourceRect, &destRect, angle);
 
 }
 

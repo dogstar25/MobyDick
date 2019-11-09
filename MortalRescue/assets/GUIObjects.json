@@ -1,0 +1,25 @@
+{
+  "gameObjects": [
+    {
+      "id": "GUIPausePanel",
+      "description": "Pause Panel",
+      "xSize": 128,
+      "ySize": 512,
+      "absolutePositioning": true,
+      "primative": {
+        "color": {
+          "red": 255,
+          "green": 255,
+          "blue": 50,
+          "alpha": 255
+        },
+        "childObjects": [
+          {
+            "gameObjectId": "SWORDLADY",
+            "location": 5
+          }
+        ]
+      }
+    }
+  ]
+}

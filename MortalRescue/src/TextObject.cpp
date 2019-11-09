@@ -11,7 +11,7 @@ TextObject::TextObject(string gameObjectId, int xMapPos, int yMapPos, int angleA
 {
 
 	this->isDynamic = definition->textDetails.isDynamic;
-	this->textValue = definition->textDetails.label;
+	this->textValue = definition->textDetails.value;
 
 	//Use the text size value for both x and y size of the gameobject
 	this->xSize = definition->textDetails.size;
@@ -75,7 +75,7 @@ void TextObject::render()
 	//Get render texture src rectangle
 	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
 
-	game->textureManager.renderTexture(texture, textureSourceRect, &destRect, 0);
+	game->textureManager.render(texture, textureSourceRect, &destRect, 0);
 
 
 }
