@@ -52,6 +52,7 @@ public:
 		linearDamping,
 		collisionRadius,
 		angularDamping,
+		childPadding,
 		lifetime;
 	bool
 		isAnimated,

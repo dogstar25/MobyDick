@@ -12,14 +12,52 @@
           "green": 255,
           "blue": 50,
           "alpha": 255
+        }
+      },
+      "childPadding": 8,
+      "childObjects": [
+        {
+          "gameObjectId": "GUIButton",
+          "position": 5,
+          "absolutePositioning": true,
+          "gameObjectType": "GAME_OBJECT"
         },
-        "childObjects": [
-          {
-            "gameObjectId": "SWORDLADY",
-            "location": 5
-          }
-        ]
-      }
+        {
+          "gameObjectId": "GUIButton",
+          "position": 5,
+          "absolutePositioning": true,
+          "gameObjectType": "GAME_OBJECT"
+        },
+        {
+          "gameObjectId": "GUIButton",
+          "position": 5,
+          "absolutePositioning": true,
+          "gameObjectType": "GAME_OBJECT"
+        }
+      ]
+    },
+    {
+      "id": "GUIButton",
+      "description": "Test Button",
+      "xSize": 64,
+      "ySize": 32,
+      "absolutePositioning": true,
+      "primative": {
+        "color": {
+          "red": 255,
+          "green": 0,
+          "blue": 0,
+          "alpha": 255
+        }
+      },
+      "childObjects": [
+        {
+          "gameObjectId": "PLAYER_LABEL",
+          "position": 5,
+          "absolutePositioning": true,
+          "gameObjectType": "TEXT_OBJECT"
+        }
+      ]
     }
   ]
 }

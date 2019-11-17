@@ -20,16 +20,17 @@
       "id": "ROCK",
       "type": "GAME_OBJECT",
       "description": "A Red Rock",
-      "primativeColor": {
-        "red": 255,
-        "green": 0,
-        "blue": 0,
-        "alpha": 0,
-        "random": false
+      "primative": {
+        "color": {
+          "red": 255,
+          "green": 255,
+          "blue": 50,
+          "alpha": 255,
+          "random": true
+        }
       },
-      "primativeShape": "RECTANGLE",
-      "xSize": 32,
-      "ySize": 32
+        "xSize": 32,
+        "ySize": 32
     },
     {
       "id": "SWORDLADY",
@@ -120,15 +121,40 @@
         }
 
       ],
+      "childPadding":  8,
       "childObjects": [
         {
           "gameObjectId": "PLAYER_LABEL",
-          "position": 2,
+          "position": 1,
           "absolutePositioning": true,
           "gameObjectType": "TEXT_OBJECT"
         },
         {
-          "gameObjectId": "FPS_LABEL",
+          "gameObjectId": "PLAYER_LABEL",
+          "position": 1,
+          "absolutePositioning": true,
+          "gameObjectType": "TEXT_OBJECT"
+        },
+        {
+          "gameObjectId": "PLAYER_LABEL",
+          "position": 5,
+          "absolutePositioning": true,
+          "gameObjectType": "TEXT_OBJECT"
+        },
+        {
+          "gameObjectId": "PLAYER_LABEL",
+          "position": 5,
+          "absolutePositioning": true,
+          "gameObjectType": "TEXT_OBJECT"
+        },
+        {
+          "gameObjectId": "PLAYER_LABEL",
+          "position": 7,
+          "absolutePositioning": true,
+          "gameObjectType": "TEXT_OBJECT"
+        },
+        {
+          "gameObjectId": "PLAYER_LABEL",
           "position": 7,
           "absolutePositioning": true,
           "gameObjectType": "TEXT_OBJECT"

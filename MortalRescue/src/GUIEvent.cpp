@@ -40,11 +40,7 @@ GUIEvent::GUIEvent(string guiObjectId)
 
 
 	//Panel game object
-	GameObject* guiPanel = new GameObject(
-		"GUIPausePanel", 
-		posX,
-		posY,
-		0);
+	GameObject* guiPanel = game->gameObjectManager.buildGameObject <GameObject>("GUIPausePanel", posX, posY, 0);
 
 	this->uiObjectCollections[game->MAIN].gameObjects.push_back(make_unique<GameObject>(*guiPanel));
 
@@ -87,7 +83,16 @@ void GUIEvent::run()
 
 void GUIEvent::update()
 {
+	//Update all of the GUI Event gameObjects
+	for (auto& gameObjectCollection : this->uiObjectCollections)
+	{
+		//Update normal game objects
+		for (auto& gameObject : gameObjectCollection.gameObjects)
+		{
+			gameObject->update();
+		}
 
+	}
 }
 
 void GUIEvent::render()
@@ -95,7 +100,7 @@ void GUIEvent::render()
 
 	game->textureManager.clear();
 
-	//Render all of the game objects in thew world
+	//Render all of the game objects in the world
 	game->renderCollection(&game->gameCollections);
 
 	//Render all of the GUI Event game objects

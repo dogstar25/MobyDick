@@ -178,7 +178,10 @@ void GameObject::addWeapon(string bulletGameObjectId, float xWeaponOffsetPct, fl
 
 b2Vec2 GameObject::calcChildPosition(
 	b2Vec2 childSize, 
-	short position,  
+	int locationSlot,
+	int childNumber,
+	int childCount,
+	float padding,
 	bool absolutePositioning, 
 	SDL_Rect parentPosition)
 {
@@ -192,7 +195,7 @@ b2Vec2 GameObject::calcChildPosition(
 	parentCenter.Set(x,y);
 
 	//Different calcs for the different 9 possible positions
-	switch(position){
+	switch(locationSlot){
 		case 1:
 			x = parentPosition.x - childSize.x;
 			y = parentPosition.y - childSize.y;
@@ -232,11 +235,41 @@ b2Vec2 GameObject::calcChildPosition(
 
 	}
 
+	childPosition.x = x;
+	childPosition.y = y;
+
 	//Adjust the position if there are multiple children in the same position
+	if (childCount > 1)
+	{
+		float oddEvenadjustValue = 0;
+		int stepCount = 0;
+		b2Vec2 firstChildPosition;
 
+		//calculate vertical step adjustment depending on even or odd
+		if (childCount % 2 == 0)
+		{
+			//isEvenNumber
+			oddEvenadjustValue = (childSize.y + padding) / 2 ;
+		}
+		else
+		{
+			oddEvenadjustValue = childSize.y + padding;
+		}
 
+		//calculate number of steps to take to place 1st child object
+		stepCount = childCount / 2;
 
+		//Calculate 1st child object position based on the previous childPosition calculated
+		//values based on location slot
+		firstChildPosition.x = childPosition.x;
+		firstChildPosition.y = childPosition.y - oddEvenadjustValue - ((childSize.y + padding) * stepCount);
 
+		//Calculate our current child object position using the stepSize and the
+		//position of the first child position
+		x = firstChildPosition.x;
+		y = firstChildPosition.y + ((childSize.y+padding) * childNumber);
+
+	}
 
 	childPosition.x = x;
 	childPosition.y = y;
@@ -248,25 +281,40 @@ b2Vec2 GameObject::calcChildPosition(
 
 void GameObject::updateChildObjects()
 {
-	short location = 0;
+	short locationSlot = 0;
 	b2Vec2 newChildPosition, childSize;
 	SDL_Rect parentPositionRect, childPositionRect;
 
 	for (auto& childLocations : this->childObjects)
 	{
-		location++;
+		locationSlot++;
 		int childNumber = 0;
+
+		if (this->definition->id.compare("GUIPausePanel") == 0)
+		{
+			int todd = 1;
+		}
+
+
 		for (auto& childObject : childLocations)
 		{
 			childNumber++;
-			int childrenCount = childLocations.size();
+			int childCount = childLocations.size();
 			parentPositionRect = this->getRenderDestRect();
 			childSize.Set(childObject->xSize, childObject->ySize);
 
 			//TODO: should be able to pass in the number of children in this position and what number in line
 			// this child is into calcChildPosition
 			newChildPosition = 
-				childObject->calcChildPosition(childSize, location, false, parentPositionRect);
+				childObject->calcChildPosition(	
+					childSize,		
+					locationSlot,
+					childNumber,
+					childCount,
+					this->definition->childPadding,
+					false, 
+					parentPositionRect);
+
 			childObject->setPosition(newChildPosition, 0);
 
 			childObject->update();
