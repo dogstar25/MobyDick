@@ -11,7 +11,7 @@
       "x": 0.0,
       "y": 0.0
     },
-    "b2DebugDrawMode": false,
+    "b2DebugDrawMode": true,
     "timeStep": 0.016, // 1/60 or 1/30
     "velocityIterations": 6,
     "positionIterations": 2,

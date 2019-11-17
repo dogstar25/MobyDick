@@ -78,7 +78,7 @@ public:
 	virtual void addWeapon(string, float, float);
 	void renderChildObjects();
 	void updateChildObjects();
-	b2Vec2 calcChildPosition(b2Vec2, short, bool,SDL_Rect);
+	b2Vec2 calcChildPosition(b2Vec2, int, int, int, float,bool,SDL_Rect);
 	void buildChildren();
 	
 
