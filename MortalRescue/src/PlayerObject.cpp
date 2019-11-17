@@ -24,7 +24,6 @@ PlayerObject::PlayerObject(string gameObjectId, int xMapPos, int yMapPos, int an
 PlayerObject::~PlayerObject()
 {
 
-	//int todd = 1;
 	delete this->weapon;
 
 }

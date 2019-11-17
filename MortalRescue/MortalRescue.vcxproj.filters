@@ -51,9 +51,6 @@
     <ClCompile Include="src\DebugDraw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Settings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\PlayerObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -88,6 +85,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ParticleEmission.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUIEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,9 +128,6 @@
     <ClInclude Include="src\DebugDraw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Settings.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\PlayerObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -167,6 +164,9 @@
     <ClInclude Include="src\ParticleEmission.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\GUIEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\textureAssets.json" />
@@ -184,6 +184,7 @@
     <None Include="assets\gameObjectPools.json" />
     <None Include="assets\particleObjects.json" />
     <None Include="assets\particleEmitter.json" />
+    <None Include="assets\GUIObjects.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png">

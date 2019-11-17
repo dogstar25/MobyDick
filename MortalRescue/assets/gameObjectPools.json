@@ -9,7 +9,7 @@
     {
       "id": "PARTICLE1_POOL",
       "gameObjectId": "PARTICLE_SMOKE_1",
-      "lifetime": 0.55,
+      "lifetime": 2.55,
       "maxItems": 3200
     }
   ]

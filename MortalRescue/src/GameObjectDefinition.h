@@ -14,9 +14,19 @@ struct TextDetails {
 	int size;
 	bool isDynamic;
 	string fontId;
-	string label;
+	string value;
 
 };
+
+struct ChildObjectDetails
+{
+	string gameObjectId;
+	short position;
+	bool absolutePositioning;
+	string gameObjectType;
+
+};
+
 
 class GameObjectDefinition
 {
@@ -27,6 +37,7 @@ public:
 
 	string
 		id,
+		type,
 		description,
 		physicsType,
 		collisionShape,
@@ -45,17 +56,20 @@ public:
 	bool
 		isAnimated,
 		isPhysicsObject,
-		isPrimitiveShape,
+		isPrimitive,
 		isPlayerObject,
 		isTextObject,
 		isParticle,
+		hasChildObjects,
 		absolutePositioning;
 	short
 		collisionGroup; // objects with same negative group value will not collide
 
 	TextDetails textDetails;
-	SDL_Color primativeColor; //If object is a primative shape, what color is it
+	SDL_Color color; //If object is a primative shape, what color is it
 	map<string, Animation*> animations;
+	vector<ChildObjectDetails> childObjectDefinitions;
+
 
 
 };

@@ -14,6 +14,7 @@
 #include "Camera.h"
 #include "Weapon.h"
 #include "ParticleEmission.h"
+#include "GUIEvent.h"
 
 
 using namespace chrono_literals;
@@ -79,25 +80,34 @@ bool Game::init()
 		//Initialize the clock object
 		this->clock.init();
 		
-		//initialize settings menu
-		this->settings.init();
-
 	}
 
 	//Allocate the array of vectors for all game objects
 	//this->gameObjects = vector<unique_ptr<GameObject>>[this->MAX_LAYERS];
 
 	
-
+	GameObject* gameObject = NULL;
+	PlayerObject* playerObject = NULL;
+	WorldObject* worldObject = NULL;
+	TextObject* textObject = NULL;
 
 
 	//Create the main player object
+	/*
 	PlayerObject* player = new PlayerObject("GINA_64", 10, 10, 0);
 	this->player = make_unique<PlayerObject>(*player);
+	*/
+	
+	playerObject = gameObjectManager.buildGameObject <PlayerObject>("GINA_64", 10, 10, 0);
+	this->player = make_unique<PlayerObject>(*playerObject);
+	
+
+	//PlayerObject* playerObject = gameObjectManager.createGameObject("GINA_64", 10, 10, 0);
+	//this->player = make_unique<PlayerObject>(*gameObject);
 
 	// Add a weapon that will have bullet origin that is located half way
 	// in the X position and halfway in the Y position from this objects origin
-	this->player->addWeapon("BULLET1", 0, 0);
+	//this->player->addWeapon("BULLET1", 0, 0);
 
 	//set camera to center on player object
 	this->camera.setPosition((this->player->physicsBody->GetPosition().x *  this->config.scaleFactor) -
@@ -106,23 +116,33 @@ bool Game::init()
 		(camera.frame.h / 2));
 
 	//CREATE A TEST TEXT ITEM          
-	TextObject* textObject = new TextObject("FPS_LABEL", 0, 0, 0);
+	/*TextObject* textObject = new TextObject("FPS_LABEL", 0, 0, 0);
+	this->addGameObject(textObject, this->TEXT);
+	*/
+	textObject = gameObjectManager.buildGameObject <TextObject>("FPS_LABEL", 0, 0, 0);
 	this->addGameObject(textObject, this->TEXT);
 
 	//CREATE A DYNAMIC TEST TEXT ITEM
-	TextObject* dynamicTextObject = new TextObject("FPS_VALUE", 0, 1, 0);
+	/*TextObject* dynamicTextObject = new TextObject("FPS_VALUE", 0, 1, 0);
 	this->addGameObject(dynamicTextObject, this->TEXT);
+	*/
+	//gameObjectManager.buildGameObject("FPS_VALUE", this->TEXT, 0, 1, 0);
+	textObject = gameObjectManager.buildGameObject <TextObject>("FPS_VALUE", 0, 1, 0);
+	this->addGameObject(textObject, this->TEXT);
 
-	WorldObject* spaceshipObject = new WorldObject("SPACESHIP1", 4, 4, 0);
+
+	/*WorldObject* spaceshipObject = new WorldObject("SPACESHIP1", 4, 4, 0);
 	this->addGameObject(spaceshipObject, this->MAIN);
 	spaceshipObject = new WorldObject("SPACESHIP1", 8, 8, 0);
 	this->addGameObject(spaceshipObject, this->MAIN);
-
-	//GameObject
-	GameObject* testObject = new GameObject("SWORDLADY", 1, 1, 0);
-	testObject->currentAnimationState = "IDLE";
-	this->addGameObject(testObject, this->MAIN);
-
+	*/
+	/*
+	worldObject = gameObjectManager.buildGameObject <WorldObject> ("SPACESHIP1", 8, 8, 0);
+	this->addGameObject(worldObject, this->MAIN);
+	*/
+	gameObject = gameObjectManager.buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
+	this->addGameObject(gameObject, this->DEBUG);
+	
 
 	//Create the debug panel if its turned on
 	if (this->config.debugPanel == true)
@@ -137,6 +157,7 @@ bool Game::init()
 
 	return true;
 }
+
 
 /*
 Main Play Loop
@@ -171,22 +192,10 @@ void Game::play()
 
 }
 
-/*
-Settings Menus
-*/
-void Game::settingsMenu()
-{
-	this->settings.run();
-
-	this->gameState = PLAY;
-	
-}
-
-
-
 
 
 void Game::update() {
+
 
 	//Specifiaclly handle input and stuff for the one player gameObject
 	this->player->update();
@@ -265,20 +274,8 @@ void Game::render() {
 	//render the player
 	this->player->render();
 	
-	//Render all of the game objects
-	for (auto & gameObjectCollection : gameCollections)
-	{
-		for (auto & gameObject : gameObjectCollection.gameObjects)
-		{
-			gameObject->render();
-		}
-		
-		for (auto & particleObject : gameObjectCollection.particleObjects)
-		{
-			particleObject->render();
-		}
-		
-	}
+	//Render all of the game objects in thew world
+	renderCollection(&this->gameCollections);
 
 	//DebugDraw
 	if (this->b2DebugDrawMode == true)
@@ -291,6 +288,24 @@ void Game::render() {
 
 }
 
+void Game::renderCollection(array<GameObjectCollection, MAX_LAYERS>* gameObjectCollection)
+{
+
+	//Render all of the game objects
+	for (auto& collection : *gameObjectCollection)
+	{
+		for (auto& gameObject : collection.gameObjects)
+		{
+			gameObject->render();
+		}
+
+		for (auto& particleObject : collection.particleObjects)
+		{
+			particleObject->render();
+		}
+
+	}
+}
 
 
 void Game::addGameObject(GameObject* gameObject, int layer)
@@ -369,7 +384,9 @@ void Game::handleEvents() {
 		case SDL_MOUSEMOTION:
 			if ((char)event.key.keysym.sym == SDLK_ESCAPE && event.type == SDL_KEYDOWN)
 			{
-				this->gameState = SETTINGS;
+				unique_ptr<GUIEvent> guiEvent = make_unique<GUIEvent>("GUIPausePanel");
+				guiEvent->run();
+
 			}
 			else
 			{
@@ -415,7 +432,7 @@ void Game::buildLevel(string levelId)
 	Level* level = this->levelManager.levels[levelId];
 	LevelObject* levelObject;
 	//unique_ptr<WorldObject> worldObject;
-	WorldObject* gameObject;
+	WorldObject *worldObject;
 
 
 	for (int y = 0; y < level->height; y++)
@@ -426,9 +443,9 @@ void Game::buildLevel(string levelId)
 			if (level->levelObjects[x][y].gameObjectId.empty() == false)
 			{
 				levelObject = &level->levelObjects[x][y];
-				gameObject = new WorldObject(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
 
-				this->addGameObject(gameObject, this->MAIN);
+				worldObject = gameObjectManager.buildGameObject <WorldObject>(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
+				this->addGameObject(worldObject, this->MAIN);
 
 			}
 

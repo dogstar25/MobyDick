@@ -26,8 +26,7 @@ int main(int argc, char *args[])
 		switch (game->gameState)
 		{
 		case Game::PAUSE:
-		case Game::SETTINGS:
-				game->settingsMenu();
+			//this may be not needed
 				break;
 
 		case Game::PLAY:

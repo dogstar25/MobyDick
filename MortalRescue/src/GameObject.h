@@ -1,17 +1,20 @@
 #pragma once
-#include "Animation.h"
-#include "TextureManager.h"
+#include <array>
 
 #include <map> 
 #include <SDL.h>
 #include <string>
 #include <Box2D/Box2D.h>
 
+//#include "Animation.h"
+#include "TextureManager.h"
+
+
 //Forward declarations
 class GameObjectDefinition;
 class Texture;
-
-extern Game* game;
+class TextObject;
+class Animation;
 
 using namespace std;
 
@@ -20,10 +23,10 @@ Game Object Types
 */
 enum GameObjectType {
 
-	BASE_OBJECT = 0,
+	GAME_OBJECT = 0,
 	WORLD_OBJECT = 1,    //majority of game objects - any physics object
 	PLAYER_OBJECT = 2,
-	UI_OBJECT = 3
+	TEXT_OBJECT = 3
 
 };
 enum EntityCategory {
@@ -38,7 +41,22 @@ enum GameObjectShape {
 
 };
 
+enum ChildObjectPosition {
+
+	TOP_LEFT = 1,
+	TOP = 2,
+	TOP_RIGHT = 3,
+	LEFT = 4,
+	CENTER = 5,
+	RIGHT = 6,
+	BOTTOM_LEFT = 7,
+	BOTTOM = 8,
+	BOTTOM_RIGHT = 9,
+
+};
+
 static const float DEGTORAD = 0.0174532925199432957f;
+static const short CHILD_POSITIONS = 9;
 
 class GameObject
 {
@@ -51,9 +69,18 @@ public:
 	virtual void update();
 	virtual void render();
 
-	virtual SDL_Rect*  getRenderDestRect(SDL_Rect*);
+	virtual SDL_Rect  getRenderDestRect();
 	virtual SDL_Texture* getRenderTexture(SDL_Texture *);
 	virtual SDL_Rect* getRenderTextureRect(SDL_Rect*);
+	virtual void setPosition(b2Vec2, float);
+
+	void addChildObject(GameObject*, short);
+	virtual void addWeapon(string, float, float);
+	void renderChildObjects();
+	void updateChildObjects();
+	b2Vec2 calcChildPosition(b2Vec2, short, bool,SDL_Rect);
+	void buildChildren();
+	
 
 	//Object Attrbutes
 	string 
@@ -62,7 +89,8 @@ public:
 		currentAnimationState;
 	bool
 		isAnimated,
-		removeFromWorld;
+		removeFromWorld,
+		isChildObject;
 
 	SDL_Color 
 		color;
@@ -80,6 +108,10 @@ public:
 	//If animated, will contain all animations
 	map<string, Animation*> animations;
 
+	//Child Object collection
+	array <vector<shared_ptr<GameObject>>, CHILD_POSITIONS> childObjects;
+	//array <vector<GameObject*>, CHILD_POSITIONS> childObjects;
+	
 };
 
 

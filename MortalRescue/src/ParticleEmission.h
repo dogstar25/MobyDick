@@ -37,15 +37,15 @@ public:
 		forceMin,
 		forceMax,
 		particleCountMin,
-		particleCountMax,
-		lifetimeMin,
-		lifetimeMax;
+		particleCountMax;
 
 	float
 		angleMin,
 		angleMax,
 		originX,
 		originY,
+		lifetimeMin,
+		lifetimeMax,
 		particleSizeMin,
 		particleSizeMax;
 

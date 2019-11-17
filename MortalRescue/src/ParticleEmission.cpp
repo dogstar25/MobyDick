@@ -39,7 +39,6 @@ ParticleEmission::ParticleEmission(
 	this->particleSizeMin = particleSizeMin;
 	this->particleSizeMax = particleSizeMax;
 	this->colorRangeBegin = colorRangeBegin;
-	this->lifetimeMax = forceMax;
 	this->colorRangeEnd = colorRangeEnd;
 	this->particleCountMin = particleCountMin;
 	this->particleCountMax = particleCountMax;

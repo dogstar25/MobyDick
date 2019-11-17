@@ -87,9 +87,6 @@ void ParticleMachine::emit(
 	float angleRange = angleMax - angleMin;
 	float particleAngle;
 
-	std::cout << "angleMin1 is " << angleMin << "\n";
-
-
 	//If the particle count min and max are different, then generate a random count
 	//otherwise just use the max
 	int particleCount = 0;
@@ -156,8 +153,8 @@ void ParticleMachine::emit(
 					particleSize = particleSizeMax;
 				}
 
-				particle->xSize = particleSize;
-				particle->ySize = particleSize;
+				particle->xSize = particleSize * game->config.scaleFactor;
+				particle->ySize = particleSize * game->config.scaleFactor;
 
 			}
 

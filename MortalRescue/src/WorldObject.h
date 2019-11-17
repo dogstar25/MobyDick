@@ -11,7 +11,8 @@ public:
 
 	void update();
 	void render();
-	SDL_Rect*  getRenderDestRect(SDL_Rect*);
+	void setPosition(b2Vec2, float);
+	SDL_Rect  getRenderDestRect();
 
 	b2Body* buildB2Body(GameObjectDefinition*);
 
