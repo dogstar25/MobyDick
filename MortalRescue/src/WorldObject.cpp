@@ -46,26 +46,40 @@ WorldObject::~WorldObject()
 }
 
 
+void WorldObject::setPosition(b2Vec2 position, float angle)
+{
+	b2Vec2 newlocation;
+	newlocation.x = position.x / game->config.scaleFactor;
+	newlocation.y = position.y / game->config.scaleFactor;
+
+	this->physicsBody->SetTransform(newlocation, angle);
+}
+
 void WorldObject::update()
 {
 	GameObject::update();
 
 }
 
-SDL_Rect* WorldObject::getRenderDestRect(SDL_Rect* destRect)
+SDL_Rect WorldObject::getRenderDestRect()
 {
-	destRect->w = this->xSize;
-	destRect->h = this->ySize;
+	SDL_Rect destRect;
+	
+	destRect.w = this->xSize;
+	destRect.h = this->ySize;
 
 	//World objects position from box2d is the center of the object
 	//So, we need to adjust the rectangle top left corner to be
 	//the render point for SDL
-	destRect->x = round((this->physicsBody->GetPosition().x *  game->config.scaleFactor) - (this->xSize / 2));
-	destRect->y = round((this->physicsBody->GetPosition().y *  game->config.scaleFactor) - (this->ySize / 2));
+	destRect.x = round((this->physicsBody->GetPosition().x *  game->config.scaleFactor) - (this->xSize / 2));
+	destRect.y = round((this->physicsBody->GetPosition().y *  game->config.scaleFactor) - (this->ySize / 2));
 
 	//Adjust position based on current camera position - offset
-	destRect->x -= game->camera.frame.x;
-	destRect->y -= game->camera.frame.y;
+	if (this->isChildObject == false)
+	{
+		destRect.x -= game->camera.frame.x;
+		destRect.y -= game->camera.frame.y;
+	}
 
 	return destRect;
 }
@@ -77,21 +91,26 @@ void WorldObject::render()
 	SDL_Texture* texture = NULL;
 
 	//Get render destination rectangle
-	this->getRenderDestRect(&destRect);
+	destRect = this->getRenderDestRect();
 
 	//Get texture
-
 	texture = this->getRenderTexture(texture);
 
 	//Get render texture src rectangle
 	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
-
 
 	//Get the angle of the object and convert it from Radians to Degrees for SDL
 	float angle = this->physicsBody->GetAngle();
 	angle = angle * 180 / M_PI;
 
 	game->textureManager.render(texture, textureSourceRect, &destRect, angle);
+
+	//Loop through any possible child objects, in all 9 positions, and render them too
+	if (this->definition->hasChildObjects == true)
+	{
+		GameObject::renderChildObjects();
+	}
+
 
 }
 

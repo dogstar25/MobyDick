@@ -133,13 +133,20 @@ Texture* TextureManager::generateTextTexture(TextObject* textObject)
 		textObject->color.b,
 		textObject->color.a };
 
-	int textSize = textObject->xSize; // default to x size
+	int textSize = textObject->definition->textDetails.size; // default to x size
 	string fontFile = this->getFont(textObject->fontId);
 
 	TTF_Font* fontObject = TTF_OpenFont(fontFile.c_str(), textSize);
 	surface = TTF_RenderText_Solid(fontObject, textObject->textValue.c_str(), color);
 	TTF_CloseFont(fontObject);
 	string test = TTF_GetError();
+
+	//Set the size of the textObject now that its texture has been generated
+	if (surface != NULL)
+	{
+		textObject->xSize = surface->w;
+		textObject->ySize = surface->h;
+	}
 
 	sdlTexture = SDL_CreateTextureFromSurface(this->pRenderer, surface);
 	SDL_FreeSurface(surface);

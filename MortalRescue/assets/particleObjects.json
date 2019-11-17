@@ -3,6 +3,7 @@
     {
 
       "id": "PARTICLE_SMOKE_1",
+      "type": "PARTICLE_OBJECT",
       "description": "Smoke Particle 1",
       "speed": 50,
       "physicsObject": {

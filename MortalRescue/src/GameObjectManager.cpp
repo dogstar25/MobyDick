@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "PlayerObject.h"
 #include "WorldObject.h"
+#include "TextObject.h"
 #include "GameObjectDefinition.h"
 
 #include <SDL.h>
@@ -31,6 +32,7 @@ GameObjectManager::~GameObjectManager()
 	*/
 	this->gameObjectDefinitions.clear();
 }
+
 
 bool GameObjectManager::init()
 {
@@ -64,6 +66,9 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		gameObjectDefinition->ySize = itr["ySize"].asFloat();
 		gameObjectDefinition->textureId = itr["texture"].asString();
 		gameObjectDefinition->absolutePositioning = itr["absolutePositioning"].asBool();
+
+		//Game Object Type
+		gameObjectDefinition->type = itr["type"].asString();
 
 		//If this is a primitive, then it has no texture and needs a color
 		if (itr["primative"].isNull() == false)
@@ -166,6 +171,22 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 			}
 		}
 
+		//Child Objects
+		if (itr["childObjects"].isNull() == false)
+		{
+			gameObjectDefinition->hasChildObjects = true;
+			ChildObjectDetails childDetails;
+			for (auto childItr : itr["childObjects"])
+			{
+				childDetails.gameObjectId = childItr["gameObjectId"].asString();
+				childDetails.position = childItr["position"].asInt();
+				childDetails.absolutePositioning = childItr["absolutePositioning"].asBool();
+				childDetails.gameObjectType = childItr["gameObjectType"].asString();
+				gameObjectDefinition->childObjectDefinitions.push_back(childDetails);
+			}
+		}
+
+
 		this->gameObjectDefinitions[gameObjectDefinition->id] = gameObjectDefinition;
 
 	}
@@ -252,11 +273,18 @@ Animation* GameObjectManager::buildAnimation(GameObjectDefinition* gameObjectDef
 GameObjectDefinition* GameObjectManager::getDefinition(string definitionId)
 {
 
-	//TODO: return game object definition
-
-	return this->gameObjectDefinitions[definitionId];
-
+	if (this->gameObjectDefinitions.find(definitionId) == this->gameObjectDefinitions.end())
+	{
+		return NULL;
+	}
+	else
+	{
+		return this->gameObjectDefinitions[definitionId];
+	}
 
 }
+
+
+
 
 

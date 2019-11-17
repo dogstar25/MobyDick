@@ -126,8 +126,6 @@ public:
 	~Game();
 
 	void play();
-	void settingsMenu();
-
 	bool init();
 	void render();
 	void renderCollection(array<GameObjectCollection, MAX_LAYERS>*);
@@ -135,6 +133,7 @@ public:
 	void handleEvents();
 	void buildLevel(string);
 	void initWorldBounds();
+
 	void addGameObject(GameObject* gameObject, int);
 	void addGameObject(TextObject* gameObject, int);
 	void addGameObject(WorldObject* gameObject, int);

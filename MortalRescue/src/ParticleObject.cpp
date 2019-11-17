@@ -73,7 +73,7 @@ void ParticleObject::render()
 	SDL_Texture* texture = NULL;
 
 	//Get render destination rectangle
-	this->getRenderDestRect(&destRect);
+	destRect = this->getRenderDestRect();
 
 	//Get texture
 	texture = this->getRenderTexture(texture);

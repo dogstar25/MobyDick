@@ -18,6 +18,16 @@ struct TextDetails {
 
 };
 
+struct ChildObjectDetails
+{
+	string gameObjectId;
+	short position;
+	bool absolutePositioning;
+	string gameObjectType;
+
+};
+
+
 class GameObjectDefinition
 {
 public:
@@ -27,6 +37,7 @@ public:
 
 	string
 		id,
+		type,
 		description,
 		physicsType,
 		collisionShape,
@@ -49,6 +60,7 @@ public:
 		isPlayerObject,
 		isTextObject,
 		isParticle,
+		hasChildObjects,
 		absolutePositioning;
 	short
 		collisionGroup; // objects with same negative group value will not collide
@@ -56,6 +68,8 @@ public:
 	TextDetails textDetails;
 	SDL_Color color; //If object is a primative shape, what color is it
 	map<string, Animation*> animations;
+	vector<ChildObjectDetails> childObjectDefinitions;
+
 
 
 };
