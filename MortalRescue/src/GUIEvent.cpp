@@ -127,12 +127,17 @@ void GUIEvent::handleInput()
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-
-			//change the game menu state to exit and send the event
+			break;
+		case SDL_MOUSEMOTION:
+			game->mouseLocation.Set(event.motion.x, event.motion.y);
+			break;
+		case SDL_QUIT:
 			state = EXITGUI;
 			event.type = SDL_QUIT;
 			SDL_PushEvent(&event);
+
 			break;
+
 		}
 	}
 

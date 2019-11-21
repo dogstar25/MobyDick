@@ -66,6 +66,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		gameObjectDefinition->ySize = itr["ySize"].asFloat();
 		gameObjectDefinition->textureId = itr["texture"].asString();
 		gameObjectDefinition->absolutePositioning = itr["absolutePositioning"].asBool();
+		gameObjectDefinition->renderOutline = itr["renderOutline"].asBool();;
 
 		//Game Object Type
 		gameObjectDefinition->type = itr["type"].asString();
@@ -106,6 +107,13 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 
 		}
 
+		//If this object is a selectable or clickable object
+		if (itr["uiEvents"].isNull() == false)
+		{
+			gameObjectDefinition->isMouseSelectable = true;
+			gameObjectDefinition->onClickAction = itr["uiEvents"]["onClickAction"].asString();
+
+		}
 		//If this is a text object then store text details
 		if (itr["text"].isNull() == false)
 		{

@@ -165,8 +165,6 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 	//collision group
 	fixtureDef.filter.groupIndex = definition->collisionGroup;
 
-
-
 	// Add the shape to the body.
 	body->CreateFixture(&fixtureDef);
 

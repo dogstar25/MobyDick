@@ -87,8 +87,8 @@ void GameObjectContactListener::BeginContact(b2Contact* contact) {
 				y,	//Y Position
 				5,	//Force Min
 				19,	//force Max
-				2.55,	//Lifetime Min
-				2.55,	//Lifetime Max
+				1.55,	//Lifetime Min
+				3.55,	//Lifetime Max
 				true,	// Alpha fade
 				0,	//Angle min
 				360,	//Angle Max

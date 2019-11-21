@@ -93,21 +93,9 @@ bool Game::init()
 
 
 	//Create the main player object
-	/*
-	PlayerObject* player = new PlayerObject("GINA_64", 10, 10, 0);
-	this->player = make_unique<PlayerObject>(*player);
-	*/
-	
 	playerObject = gameObjectManager.buildGameObject <PlayerObject>("GINA_64", 10, 10, 0);
 	this->player = make_unique<PlayerObject>(*playerObject);
-	
-
-	//PlayerObject* playerObject = gameObjectManager.createGameObject("GINA_64", 10, 10, 0);
-	//this->player = make_unique<PlayerObject>(*gameObject);
-
-	// Add a weapon that will have bullet origin that is located half way
-	// in the X position and halfway in the Y position from this objects origin
-	//this->player->addWeapon("BULLET1", 0, 0);
+	this->player->addWeapon("BULLET1", 0, 0);
 
 	//set camera to center on player object
 	this->camera.setPosition((this->player->physicsBody->GetPosition().x *  this->config.scaleFactor) -
@@ -116,36 +104,16 @@ bool Game::init()
 		(camera.frame.h / 2));
 
 	//CREATE A TEST TEXT ITEM          
-	/*TextObject* textObject = new TextObject("FPS_LABEL", 0, 0, 0);
-	this->addGameObject(textObject, this->TEXT);
-	*/
 	textObject = gameObjectManager.buildGameObject <TextObject>("FPS_LABEL", 0, 0, 0);
 	this->addGameObject(textObject, this->TEXT);
 
 	//CREATE A DYNAMIC TEST TEXT ITEM
-	/*TextObject* dynamicTextObject = new TextObject("FPS_VALUE", 0, 1, 0);
-	this->addGameObject(dynamicTextObject, this->TEXT);
-	*/
-	//gameObjectManager.buildGameObject("FPS_VALUE", this->TEXT, 0, 1, 0);
 	textObject = gameObjectManager.buildGameObject <TextObject>("FPS_VALUE", 0, 1, 0);
 	this->addGameObject(textObject, this->TEXT);
 
-
-	/*WorldObject* spaceshipObject = new WorldObject("SPACESHIP1", 4, 4, 0);
-	this->addGameObject(spaceshipObject, this->MAIN);
-	spaceshipObject = new WorldObject("SPACESHIP1", 8, 8, 0);
-	this->addGameObject(spaceshipObject, this->MAIN);
-	*/
-	/*
-	worldObject = gameObjectManager.buildGameObject <WorldObject> ("SPACESHIP1", 8, 8, 0);
-	this->addGameObject(worldObject, this->MAIN);
-	*/
 	gameObject = gameObjectManager.buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
 	this->addGameObject(gameObject, this->MAIN);
 	
-	gameObject = gameObjectManager.buildGameObject <GameObject>("GUIPausePanel", 3, 3, 0);
-	this->addGameObject(gameObject, this->MAIN);
-
 	//Create the debug panel if its turned on
 	if (this->config.debugPanel == true)
 	{
@@ -153,9 +121,6 @@ bool Game::init()
 		this->debugPanel = new DebugPanel();
 
 	}
-
-
-
 
 	return true;
 }
@@ -375,6 +340,7 @@ bool Game::getConfig()
 
 void Game::handleEvents() {
 	SDL_Event event;
+
 	if (SDL_PollEvent(&event)) {
 
 		switch (event.type) 
@@ -392,6 +358,7 @@ void Game::handleEvents() {
 			}
 			else
 			{
+				this->mouseLocation.Set(event.motion.x, event.motion.y);
 				this->player->handlePlayerMovementEvent(&event);
 			}
 			break;

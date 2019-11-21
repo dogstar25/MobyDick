@@ -15,6 +15,18 @@ void GameObject::update()
 		this->animations[this->currentAnimationState]->animate(this);
 	}
 
+	//Update the mouse state
+	if (SDL_GetRelativeMouseMode() == SDL_FALSE)
+	{
+		this->updateMouseState();
+	}
+
+	//This object was clicked, so push whatever event is tied to its onClick event property
+	if (this->mouseState == this->MOUSE_CLICKED)
+	{
+		this->onMouseClickEvent();
+	}
+
 	//Loop through any possible child objects, in all 9 positions, and update their
 	// position to reflect parent objects position
 	if (this->definition->hasChildObjects == true)
@@ -97,6 +109,29 @@ void GameObject::render()
 		textureSourceRect = this->getRenderTextureRect(textureSourceRect);
 
 		game->textureManager.render(texture, textureSourceRect, &destRect, 0);
+	}
+
+	//test outlining object
+	if (this->definition->isMouseSelectable)
+	{
+		if (this->mouseState == this->MOUSE_HOVER)
+		{
+			this->onMouseHoverRender();
+		}
+		else if (this->mouseState == this->MOUSE_HOLD)
+		{
+			this->onMouseHoldRender();
+		}
+		else if (this->mouseState == this->MOUSE_CLICKED)
+		{
+			this->onMouseClickRender();
+		}
+	}
+
+	//Outline th object if defined
+	if (this->definition->renderOutline)
+	{
+		game->textureManager.outLineObject(this, 2);
 	}
 
 	//Loop through any possible child objects, in all 9 positions, and render them too
@@ -399,6 +434,87 @@ void GameObject::addChildObject(GameObject* childObject, short position)
 	//this->childObjects[__int64(position)-1].push_back(childObject);
 
 }
+
+void GameObject::onMouseHoverRender()
+{
+
+	game->textureManager.outLineObject(this, 2);
+
+
+}
+
+void GameObject::onMouseClickRender()
+{
+
+	game->textureManager.outLineObject(this, 6);
+
+}
+
+void GameObject::onMouseHoldRender()
+{
+	game->textureManager.outLineObject(this, 2);
+}
+
+void GameObject::onMouseClickEvent()
+{
+
+	//Temporay - call quit - replace with specific onClickAction
+	SDL_Event event;
+	event.type = SDL_QUIT;
+	SDL_PushEvent(&event);
+}
+
+void GameObject::updateMouseState()
+{
+	SDL_Rect gameObjectDrawRect;
+	gameObjectDrawRect = this->getRenderDestRect();
+	bool isHovered = false;
+
+	//Is mouse over the object
+	if (game->mouseLocation.x >= gameObjectDrawRect.x &&
+		game->mouseLocation.x <= gameObjectDrawRect.x + gameObjectDrawRect.w &&
+		game->mouseLocation.y >= gameObjectDrawRect.y &&
+		game->mouseLocation.y <= gameObjectDrawRect.y + gameObjectDrawRect.h)
+	{
+
+		//was this object clicked?
+		if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) 
+		{
+
+			//Was this object already in a hold state, meaning user is holding mouse clicked on object
+			if (this->mouseState == this->MOUSE_HOLD)
+			{
+				//stay in "hold" state while user is holding click on object
+				while (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) 
+				{
+					SDL_PumpEvents();
+				}
+
+				//User has released mouse so now execute the object onClick event
+				//this->onMouseClick();
+				this->mouseState = this->MOUSE_CLICKED;
+
+			}
+			else
+			{
+				this->mouseState = this->MOUSE_HOLD;
+			}
+
+		}
+		else
+		{
+			this->mouseState = this->MOUSE_HOVER;
+		}
+	}
+	else
+	{
+		this->mouseState = this->MOUSE_NONE;
+	}
+
+
+}
+
+
 
 
 

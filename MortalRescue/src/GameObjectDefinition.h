@@ -41,7 +41,8 @@ public:
 		description,
 		physicsType,
 		collisionShape,
-		textureId;
+		textureId,
+		onClickAction;
 	float
 		xSize,
 		ySize,
@@ -61,8 +62,10 @@ public:
 		isPlayerObject,
 		isTextObject,
 		isParticle,
+		isMouseSelectable,
 		hasChildObjects,
-		absolutePositioning;
+		absolutePositioning,
+		renderOutline;
 	short
 		collisionGroup; // objects with same negative group value will not collide
 

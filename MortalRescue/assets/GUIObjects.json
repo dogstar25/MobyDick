@@ -4,17 +4,18 @@
       "id": "GUIPausePanel",
       "description": "Pause Panel",
       "xSize": 128,
-      "ySize": 512,
+      "ySize": 164,
       "absolutePositioning": true,
       "primative": {
         "color": {
-          "red": 255,
-          "green": 255,
-          "blue": 50,
-          "alpha": 255
+          "red": 0,
+          "green": 0,
+          "blue": 0,
+          "alpha": 100
         }
       },
       "childPadding": 8,
+      "renderOutline":  true,
       "childObjects": [
         {
           "gameObjectId": "GUIButton",
@@ -42,12 +43,15 @@
       "xSize": 64,
       "ySize": 32,
       "absolutePositioning": true,
+      "uiEvents": {
+        "onClickAction": "QUIT"
+      },
       "primative": {
         "color": {
-          "red": 255,
+          "red": 0,
           "green": 0,
           "blue": 0,
-          "alpha": 255
+          "alpha": 100
         }
       },
       "childObjects": [

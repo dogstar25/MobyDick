@@ -48,6 +48,8 @@ public:
 	void drawPoly(b2Body* body);
 	void drawPoints(SDL_Point *);
 	void drawLine(b2Vec2, b2Vec2);
+	void outLineObject(GameObject* gameObject, float lineSize);
+	void outLineObject(WorldObject* gameObject);
 
 private:
 
