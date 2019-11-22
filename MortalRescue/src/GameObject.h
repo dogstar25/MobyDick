@@ -29,31 +29,6 @@ enum GameObjectType {
 	TEXT_OBJECT = 3
 
 };
-enum EntityCategory {
-	BOUNDARY = 0x0001,
-	PARTICLE_BULLET = 0x0002
-};
-
-enum GameObjectShape {
-
-	RECTANGLE = 0,
-	CIRCLE = 1
-
-};
-
-enum ChildObjectPosition {
-
-	TOP_LEFT = 1,
-	TOP = 2,
-	TOP_RIGHT = 3,
-	LEFT = 4,
-	CENTER = 5,
-	RIGHT = 6,
-	BOTTOM_LEFT = 7,
-	BOTTOM = 8,
-	BOTTOM_RIGHT = 9,
-
-};
 
 static const float DEGTORAD = 0.0174532925199432957f;
 static const short CHILD_POSITIONS = 9;
@@ -61,6 +36,15 @@ static const short CHILD_POSITIONS = 9;
 class GameObject
 {
 public:
+
+	enum GameObjectMouseState {
+
+		MOUSE_NONE = 0,
+		MOUSE_HOVER = 1,
+		MOUSE_HOLD = 2,
+		MOUSE_CLICKED = 3
+
+	};
 
 	GameObject();
 	GameObject(string,int,int,int);
@@ -73,12 +57,19 @@ public:
 	virtual SDL_Texture* getRenderTexture(SDL_Texture *);
 	virtual SDL_Rect* getRenderTextureRect(SDL_Rect*);
 	virtual void setPosition(b2Vec2, float);
+	virtual void addWeapon(string, float, float);
+	virtual void onMouseHoverRender();
+	virtual void onMouseClickRender();
+	virtual void onMouseHoldRender();
+	virtual void onMouseClickEvent();
+	void updateMouseState();
+
 
 	void addChildObject(GameObject*, short);
-	virtual void addWeapon(string, float, float);
+	
 	void renderChildObjects();
 	void updateChildObjects();
-	b2Vec2 calcChildPosition(b2Vec2, short, bool,SDL_Rect);
+	b2Vec2 calcChildPosition(b2Vec2, int, int, int, float,bool,SDL_Rect);
 	void buildChildren();
 	
 
@@ -100,6 +91,9 @@ public:
 		xSize,
 		ySize,
 		angle;
+
+	int
+		mouseState;
 
 	Texture* texture;
 	//pointer to the definition

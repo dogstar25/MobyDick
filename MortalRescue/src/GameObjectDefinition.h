@@ -2,9 +2,11 @@
 #include <string>
 #include <map>
 #include <SDL.h>
+#include <Box2D/Box2D.h>
 #include <cstddef>
 
 #include "Animation.h"
+
 
 using namespace std;
 
@@ -41,7 +43,8 @@ public:
 		description,
 		physicsType,
 		collisionShape,
-		textureId;
+		textureId,
+		onClickAction;
 	float
 		xSize,
 		ySize,
@@ -52,6 +55,7 @@ public:
 		linearDamping,
 		collisionRadius,
 		angularDamping,
+		childPadding,
 		lifetime;
 	bool
 		isAnimated,
@@ -60,10 +64,12 @@ public:
 		isPlayerObject,
 		isTextObject,
 		isParticle,
+		isMouseSelectable,
 		hasChildObjects,
-		absolutePositioning;
-	short
-		collisionGroup; // objects with same negative group value will not collide
+		absolutePositioning,
+		renderOutline;
+	uint16
+		collisionCategory;
 
 	TextDetails textDetails;
 	SDL_Color color; //If object is a primative shape, what color is it

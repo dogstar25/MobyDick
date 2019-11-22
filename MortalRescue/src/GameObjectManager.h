@@ -38,7 +38,6 @@ public:
 	{
 
 		gameObjectType* gameObject = new gameObjectType(gameObjectId, xMapPos, yMapPos, angle);
-		gameObject->addWeapon("BULLET1", 0, 0);
 		gameObject->buildChildren();
 
 

@@ -15,6 +15,18 @@ void GameObject::update()
 		this->animations[this->currentAnimationState]->animate(this);
 	}
 
+	//Update the mouse state
+	if (SDL_GetRelativeMouseMode() == SDL_FALSE)
+	{
+		this->updateMouseState();
+	}
+
+	//This object was clicked, so push whatever event is tied to its onClick event property
+	if (this->mouseState == this->MOUSE_CLICKED)
+	{
+		this->onMouseClickEvent();
+	}
+
 	//Loop through any possible child objects, in all 9 positions, and update their
 	// position to reflect parent objects position
 	if (this->definition->hasChildObjects == true)
@@ -99,6 +111,29 @@ void GameObject::render()
 		game->textureManager.render(texture, textureSourceRect, &destRect, 0);
 	}
 
+	//test outlining object
+	if (this->definition->isMouseSelectable)
+	{
+		if (this->mouseState == this->MOUSE_HOVER)
+		{
+			this->onMouseHoverRender();
+		}
+		else if (this->mouseState == this->MOUSE_HOLD)
+		{
+			this->onMouseHoldRender();
+		}
+		else if (this->mouseState == this->MOUSE_CLICKED)
+		{
+			this->onMouseClickRender();
+		}
+	}
+
+	//Outline th object if defined
+	if (this->definition->renderOutline)
+	{
+		game->textureManager.outLineObject(this, 2);
+	}
+
 	//Loop through any possible child objects, in all 9 positions, and render them too
 	if (this->definition->hasChildObjects == true)
 	{
@@ -178,7 +213,10 @@ void GameObject::addWeapon(string bulletGameObjectId, float xWeaponOffsetPct, fl
 
 b2Vec2 GameObject::calcChildPosition(
 	b2Vec2 childSize, 
-	short position,  
+	int locationSlot,
+	int childNumber,
+	int childCount,
+	float padding,
 	bool absolutePositioning, 
 	SDL_Rect parentPosition)
 {
@@ -192,7 +230,7 @@ b2Vec2 GameObject::calcChildPosition(
 	parentCenter.Set(x,y);
 
 	//Different calcs for the different 9 possible positions
-	switch(position){
+	switch(locationSlot){
 		case 1:
 			x = parentPosition.x - childSize.x;
 			y = parentPosition.y - childSize.y;
@@ -232,11 +270,41 @@ b2Vec2 GameObject::calcChildPosition(
 
 	}
 
+	childPosition.x = x;
+	childPosition.y = y;
+
 	//Adjust the position if there are multiple children in the same position
+	if (childCount > 1)
+	{
+		float oddEvenadjustValue = 0;
+		int stepCount = 0;
+		b2Vec2 firstChildPosition;
 
+		//calculate vertical step adjustment depending on even or odd
+		if (childCount % 2 == 0)
+		{
+			//isEvenNumber
+			oddEvenadjustValue = (childSize.y + padding) / 2 ;
+		}
+		else
+		{
+			oddEvenadjustValue = childSize.y + padding;
+		}
 
+		//calculate number of steps to take to place 1st child object
+		stepCount = childCount / 2;
 
+		//Calculate 1st child object position based on the previous childPosition calculated
+		//values based on location slot
+		firstChildPosition.x = childPosition.x;
+		firstChildPosition.y = childPosition.y - oddEvenadjustValue - ((childSize.y + padding) * stepCount);
 
+		//Calculate our current child object position using the stepSize and the
+		//position of the first child position
+		x = firstChildPosition.x;
+		y = firstChildPosition.y + ((childSize.y+padding) * childNumber);
+
+	}
 
 	childPosition.x = x;
 	childPosition.y = y;
@@ -248,25 +316,40 @@ b2Vec2 GameObject::calcChildPosition(
 
 void GameObject::updateChildObjects()
 {
-	short location = 0;
+	short locationSlot = 0;
 	b2Vec2 newChildPosition, childSize;
 	SDL_Rect parentPositionRect, childPositionRect;
 
 	for (auto& childLocations : this->childObjects)
 	{
-		location++;
+		locationSlot++;
 		int childNumber = 0;
+
+		if (this->definition->id.compare("GUIPausePanel") == 0)
+		{
+			int todd = 1;
+		}
+
+
 		for (auto& childObject : childLocations)
 		{
 			childNumber++;
-			int childrenCount = childLocations.size();
+			int childCount = childLocations.size();
 			parentPositionRect = this->getRenderDestRect();
 			childSize.Set(childObject->xSize, childObject->ySize);
 
 			//TODO: should be able to pass in the number of children in this position and what number in line
 			// this child is into calcChildPosition
 			newChildPosition = 
-				childObject->calcChildPosition(childSize, location, false, parentPositionRect);
+				childObject->calcChildPosition(	
+					childSize,		
+					locationSlot,
+					childNumber,
+					childCount,
+					this->definition->childPadding,
+					false, 
+					parentPositionRect);
+
 			childObject->setPosition(newChildPosition, 0);
 
 			childObject->update();
@@ -351,6 +434,91 @@ void GameObject::addChildObject(GameObject* childObject, short position)
 	//this->childObjects[__int64(position)-1].push_back(childObject);
 
 }
+
+void GameObject::onMouseHoverRender()
+{
+
+	game->textureManager.outLineObject(this, 2);
+
+
+}
+
+void GameObject::onMouseClickRender()
+{
+
+	game->textureManager.outLineObject(this, 6);
+
+}
+
+void GameObject::onMouseHoldRender()
+{
+	game->textureManager.outLineObject(this, 2);
+}
+
+void GameObject::onMouseClickEvent()
+{
+	string* actionCode;
+
+	actionCode = new string(this->definition->onClickAction);
+	SDL_Event event;
+	event.user.data1 = static_cast<void*>(actionCode);
+	event.type = SDL_USEREVENT;
+	SDL_PushEvent(&event);
+}
+
+void GameObject::updateMouseState()
+{
+	SDL_Rect gameObjectDrawRect;
+	gameObjectDrawRect = this->getRenderDestRect();
+	bool isHovered = false;
+
+	if (this->definition->isMouseSelectable == true)
+	{
+		//Is mouse over the object
+		if (game->mouseLocation.x >= gameObjectDrawRect.x &&
+			game->mouseLocation.x <= gameObjectDrawRect.x + gameObjectDrawRect.w &&
+			game->mouseLocation.y >= gameObjectDrawRect.y &&
+			game->mouseLocation.y <= gameObjectDrawRect.y + gameObjectDrawRect.h)
+		{
+
+			//was this object clicked?
+			if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
+			{
+
+				//Was this object already in a hold state, meaning user is holding mouse clicked on object
+				if (this->mouseState == this->MOUSE_HOLD)
+				{
+					//stay in "hold" state while user is holding click on object
+					while (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
+					{
+						SDL_PumpEvents();
+					}
+
+					//User has released mouse so now execute the object onClick event
+					//this->onMouseClick();
+					this->mouseState = this->MOUSE_CLICKED;
+
+				}
+				else
+				{
+					this->mouseState = this->MOUSE_HOLD;
+				}
+
+			}
+			else
+			{
+				this->mouseState = this->MOUSE_HOVER;
+			}
+		}
+		else
+		{
+			this->mouseState = this->MOUSE_NONE;
+		}
+	}
+
+}
+
+
 
 
 

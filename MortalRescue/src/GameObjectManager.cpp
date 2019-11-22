@@ -66,6 +66,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		gameObjectDefinition->ySize = itr["ySize"].asFloat();
 		gameObjectDefinition->textureId = itr["texture"].asString();
 		gameObjectDefinition->absolutePositioning = itr["absolutePositioning"].asBool();
+		gameObjectDefinition->renderOutline = itr["renderOutline"].asBool();;
 
 		//Game Object Type
 		gameObjectDefinition->type = itr["type"].asString();
@@ -76,7 +77,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 			gameObjectDefinition->isPrimitive = true;
 
 			//color
-			if (itr["color"]["random"].asBool() == true)
+			if (itr["primative"]["color"]["random"].asBool() == true)
 			{
 				gameObjectDefinition->color = game->util.generateRandomColor();
 			}
@@ -101,11 +102,18 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 			gameObjectDefinition->physicsType = itr["physicsObject"]["type"].asString();
 			gameObjectDefinition->collisionShape = itr["physicsObject"]["collisionShape"].asString();
 			gameObjectDefinition->collisionRadius = itr["physicsObject"]["collisionRadius"].asFloat();
-			gameObjectDefinition->collisionGroup = itr["physicsObject"]["collisionGroup"].asInt();
+			gameObjectDefinition->collisionCategory = itr["physicsObject"]["collisionCategory"].asInt();
 
 
 		}
 
+		//If this object is a selectable or clickable object
+		if (itr["uiEvents"].isNull() == false)
+		{
+			gameObjectDefinition->isMouseSelectable = true;
+			gameObjectDefinition->onClickAction = itr["uiEvents"]["onClickAction"].asString();
+
+		}
 		//If this is a text object then store text details
 		if (itr["text"].isNull() == false)
 		{
@@ -132,29 +140,6 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 
 		}
 
-		//If this is a GUI object then store text details
-		if (itr["GUI"].isNull() == false)
-		{
-			gameObjectDefinition->textDetails.value = itr["text"]["value"].asString();
-			gameObjectDefinition->textDetails.fontId = itr["text"]["font"].asString();
-			if (itr["text"]["color"].isNull() == false)
-			{
-				gameObjectDefinition->textDetails.color.a = itr["text"]["color"]["alpha"].asInt();
-				gameObjectDefinition->textDetails.color.r = itr["text"]["color"]["red"].asInt();
-				gameObjectDefinition->textDetails.color.g = itr["text"]["color"]["green"].asInt();
-				gameObjectDefinition->textDetails.color.b = itr["text"]["color"]["blue"].asInt();
-			}
-			else // default to grey
-			{
-				gameObjectDefinition->textDetails.color.a = 206;
-				gameObjectDefinition->textDetails.color.r = 205;
-				gameObjectDefinition->textDetails.color.g = 211;
-				gameObjectDefinition->textDetails.color.b = 255;
-
-			}
-
-		}
-
 		//Store Animations
 		if (itr["animations"].isNull() == false)
 		{
@@ -172,6 +157,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		}
 
 		//Child Objects
+		gameObjectDefinition->childPadding = itr["childPadding"].asFloat();
 		if (itr["childObjects"].isNull() == false)
 		{
 			gameObjectDefinition->hasChildObjects = true;

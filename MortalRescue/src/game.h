@@ -173,7 +173,10 @@ public:
 	Uint32 windowXpos= SDL_WINDOWPOS_CENTERED, windowYPos= SDL_WINDOWPOS_CENTERED;
 	Uint32 windowFlags= SDL_WINDOW_RESIZABLE;
 	int gameObjectCount;
+
+	//mouse
 	float mouseSensitivity;
+	b2Vec2 mouseLocation, mouseClickLocation;
 
 	//Fixed array of Layers
 	//Each layer contains a GameObjectCollection

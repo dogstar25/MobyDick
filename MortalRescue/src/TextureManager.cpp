@@ -298,6 +298,7 @@ void TextureManager::drawPoly(b2Body* body)
 
 void TextureManager::drawPoints(SDL_Point *points)
 {
+
 	SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
 	SDL_RenderDrawLines(this->pRenderer, points, 5);
 
@@ -307,6 +308,59 @@ void TextureManager::drawLine(b2Vec2 start, b2Vec2 end)
 {
 	SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
 	SDL_RenderDrawLine(pRenderer, start.x, start.y, end.x, end.y);
+
+}
+
+void TextureManager::outLineObject(GameObject* gameObject, float lineSize)
+{
+
+	SDL_Point* points = new SDL_Point[4];
+	vector<SDL_Point> points2;
+	SDL_Rect gameObjectDrawRect = gameObject->getRenderDestRect();
+	float saveScaleX, saveScaleY;
+
+	SDL_Point point;
+
+	//topleft
+	point.x = gameObjectDrawRect.x / lineSize;
+	point.y = gameObjectDrawRect.y / lineSize;
+	points[0] = point;
+	points2.push_back(point);
+
+	//topright
+	point.x = (gameObjectDrawRect.x + gameObjectDrawRect.w) / lineSize;
+	point.y = gameObjectDrawRect.y / lineSize;
+	points2.push_back(point);
+
+	//bottomright
+	point.x = (gameObjectDrawRect.x + gameObjectDrawRect.w) / lineSize;
+	point.y = (gameObjectDrawRect.y + gameObjectDrawRect.h) / lineSize;
+	points2.push_back(point);
+
+	//bottomleft
+	point.x = gameObjectDrawRect.x / lineSize;
+	point.y = (gameObjectDrawRect.y + gameObjectDrawRect.h) / lineSize;
+	points2.push_back(point);
+
+	//add the topleft as last point to complete the shape
+	point.x = gameObjectDrawRect.x / lineSize;
+	point.y = gameObjectDrawRect.y / lineSize;
+	points[0] = point;
+	points2.push_back(point);
+
+	//Set render scale to match linesize passed in
+	SDL_RenderGetScale(this->pRenderer, &saveScaleX, &saveScaleY);
+	SDL_RenderSetScale(this->pRenderer, lineSize, lineSize);
+	this->drawPoints(points2.data());
+
+	//Rest Scale to whatever is was before
+	SDL_RenderSetScale(this->pRenderer, saveScaleX, saveScaleY);
+
+
+}
+
+void TextureManager::outLineObject(WorldObject* gameObject)
+{
 
 }
 
