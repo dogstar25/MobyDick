@@ -135,6 +135,26 @@ void GUIEvent::handleInput()
 			state = EXITGUI;
 			event.type = SDL_QUIT;
 			SDL_PushEvent(&event);
+			break;
+		case SDL_USEREVENT:
+			string* actionCode = static_cast<string*>(event.user.data1);
+			if (actionCode != NULL && actionCode->empty() == false)
+			{
+				if (actionCode->compare("CONTINUE") == 0)
+				{
+					state = EXITGUI;
+
+				}
+				else if (actionCode->compare("QUIT") == 0)
+				{
+					state = EXITGUI;
+					event.type = SDL_QUIT;
+					SDL_PushEvent(&event);
+
+				}
+
+				delete event.user.data1;
+			}
 
 			break;
 

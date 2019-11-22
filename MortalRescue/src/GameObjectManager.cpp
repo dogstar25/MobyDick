@@ -102,7 +102,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 			gameObjectDefinition->physicsType = itr["physicsObject"]["type"].asString();
 			gameObjectDefinition->collisionShape = itr["physicsObject"]["collisionShape"].asString();
 			gameObjectDefinition->collisionRadius = itr["physicsObject"]["collisionRadius"].asFloat();
-			gameObjectDefinition->collisionGroup = itr["physicsObject"]["collisionGroup"].asInt();
+			gameObjectDefinition->collisionCategory = itr["physicsObject"]["collisionCategory"].asInt();
 
 
 		}

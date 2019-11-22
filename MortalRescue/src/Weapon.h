@@ -16,6 +16,7 @@ public:
 	void fireOld();
 	void fire();
 	void init(string, PlayerObject*, float,float);
+	
 
 
 	PlayerObject* weaponWieldingObject;

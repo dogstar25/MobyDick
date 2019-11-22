@@ -457,10 +457,12 @@ void GameObject::onMouseHoldRender()
 
 void GameObject::onMouseClickEvent()
 {
+	string* actionCode;
 
-	//Temporay - call quit - replace with specific onClickAction
+	actionCode = new string(this->definition->onClickAction);
 	SDL_Event event;
-	event.type = SDL_QUIT;
+	event.user.data1 = static_cast<void*>(actionCode);
+	event.type = SDL_USEREVENT;
 	SDL_PushEvent(&event);
 }
 
@@ -470,47 +472,49 @@ void GameObject::updateMouseState()
 	gameObjectDrawRect = this->getRenderDestRect();
 	bool isHovered = false;
 
-	//Is mouse over the object
-	if (game->mouseLocation.x >= gameObjectDrawRect.x &&
-		game->mouseLocation.x <= gameObjectDrawRect.x + gameObjectDrawRect.w &&
-		game->mouseLocation.y >= gameObjectDrawRect.y &&
-		game->mouseLocation.y <= gameObjectDrawRect.y + gameObjectDrawRect.h)
+	if (this->definition->isMouseSelectable == true)
 	{
-
-		//was this object clicked?
-		if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) 
+		//Is mouse over the object
+		if (game->mouseLocation.x >= gameObjectDrawRect.x &&
+			game->mouseLocation.x <= gameObjectDrawRect.x + gameObjectDrawRect.w &&
+			game->mouseLocation.y >= gameObjectDrawRect.y &&
+			game->mouseLocation.y <= gameObjectDrawRect.y + gameObjectDrawRect.h)
 		{
 
-			//Was this object already in a hold state, meaning user is holding mouse clicked on object
-			if (this->mouseState == this->MOUSE_HOLD)
+			//was this object clicked?
+			if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
 			{
-				//stay in "hold" state while user is holding click on object
-				while (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT)) 
-				{
-					SDL_PumpEvents();
-				}
 
-				//User has released mouse so now execute the object onClick event
-				//this->onMouseClick();
-				this->mouseState = this->MOUSE_CLICKED;
+				//Was this object already in a hold state, meaning user is holding mouse clicked on object
+				if (this->mouseState == this->MOUSE_HOLD)
+				{
+					//stay in "hold" state while user is holding click on object
+					while (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
+					{
+						SDL_PumpEvents();
+					}
+
+					//User has released mouse so now execute the object onClick event
+					//this->onMouseClick();
+					this->mouseState = this->MOUSE_CLICKED;
+
+				}
+				else
+				{
+					this->mouseState = this->MOUSE_HOLD;
+				}
 
 			}
 			else
 			{
-				this->mouseState = this->MOUSE_HOLD;
+				this->mouseState = this->MOUSE_HOVER;
 			}
-
 		}
 		else
 		{
-			this->mouseState = this->MOUSE_HOVER;
+			this->mouseState = this->MOUSE_NONE;
 		}
 	}
-	else
-	{
-		this->mouseState = this->MOUSE_NONE;
-	}
-
 
 }
 

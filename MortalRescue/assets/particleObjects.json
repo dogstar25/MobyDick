@@ -15,7 +15,7 @@
         "restitution": 1.5,
         "linearDamping": 0.0,
         "angularDamping": 0.0,
-        "collisionGroup": -3
+        "collisionCategory": 16
       },
       "texture": "TX_SMOKE_PARTICLE_1",
       "xSize": 0.28,

@@ -2,9 +2,11 @@
 #include <string>
 #include <map>
 #include <SDL.h>
+#include <Box2D/Box2D.h>
 #include <cstddef>
 
 #include "Animation.h"
+
 
 using namespace std;
 
@@ -66,8 +68,8 @@ public:
 		hasChildObjects,
 		absolutePositioning,
 		renderOutline;
-	short
-		collisionGroup; // objects with same negative group value will not collide
+	uint16
+		collisionCategory;
 
 	TextDetails textDetails;
 	SDL_Color color; //If object is a primative shape, what color is it

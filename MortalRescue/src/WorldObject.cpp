@@ -162,8 +162,11 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 	fixtureDef.density = definition->density;
 	fixtureDef.friction = definition->friction;
 	fixtureDef.restitution = definition->restitution;
-	//collision group
-	fixtureDef.filter.groupIndex = definition->collisionGroup;
+
+	//collision category
+	fixtureDef.filter.categoryBits = definition->collisionCategory;
+	uint16 mask = this->setCollisionMask(definition->collisionCategory);
+	fixtureDef.filter.maskBits = mask;
 
 	// Add the shape to the body.
 	body->CreateFixture(&fixtureDef);
@@ -173,5 +176,42 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 
 	//this->box2dBodyCount++;
 	return body;
+
+}
+
+uint16 WorldObject::setCollisionMask(uint16 category)
+{
+	uint16 mask=0;
+
+	switch(category) {
+	case PLAYER:
+		mask = WALL | PARTICLE1 | PARTICLE2 | PARTICLE3 | ENEMY_FRAME;
+		break;
+	case WALL:
+		mask = PLAYER | PARTICLE1 | PARTICLE2 | PARTICLE3 | ENEMY_FRAME | PLAYER_BULLET;
+		break;
+	case PLAYER_BULLET:
+		mask = ENEMY_ARMOR | WALL;
+		break;
+	case PARTICLE1:
+		mask = WALL | PLAYER | ENEMY_ARMOR;
+		break;
+	case PARTICLE2:
+		mask = WALL | PLAYER | ENEMY_ARMOR;
+		break;
+	case PARTICLE3:
+		mask = WALL | PLAYER | ENEMY_ARMOR;
+		break;
+	case ENEMY_FRAME:
+		mask = WALL | PLAYER ;
+		break;
+	case ENEMY_ARMOR:
+		mask = PLAYER_BULLET | PARTICLE1 | PARTICLE2 | PARTICLE3;
+		break;
+
+
+	}
+		
+	return mask;
 
 }
