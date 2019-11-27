@@ -69,7 +69,7 @@ public:
 	
 	void renderChildObjects();
 	void updateChildObjects();
-	b2Vec2 calcChildPosition(b2Vec2, int, int, int, float,bool,SDL_Rect);
+	b2Vec2 calcChildPosition(b2Vec2, int, int, int, float,bool,float,SDL_Rect);
 	void buildChildren();
 	
 

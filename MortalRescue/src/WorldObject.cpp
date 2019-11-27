@@ -57,7 +57,13 @@ void WorldObject::setPosition(b2Vec2 position, float angle)
 
 void WorldObject::update()
 {
+	//transfer the angle from the physics body to the main game 
+	//object so that certain gamObject logic will work for all
+	this->angle = this->physicsBody->GetAngle();
+
+
 	GameObject::update();
+
 
 }
 

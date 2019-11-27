@@ -108,7 +108,10 @@ void GameObject::render()
 		//Get render texture src rectangle
 		textureSourceRect = this->getRenderTextureRect(textureSourceRect);
 
-		game->textureManager.render(texture, textureSourceRect, &destRect, 0);
+		//All angles on objects should be in radians to kep consistency with box2d objects
+		//it needs to be converted to degrees for SDL to display
+		float angle = game->util.radiansToDegrees(this->angle);
+		game->textureManager.render(texture, textureSourceRect, &destRect, angle);
 	}
 
 	//test outlining object
@@ -173,6 +176,7 @@ GameObject::GameObject(string gameObjectId, int xMapPos, int yMapPos, int angleA
 	this->ySize = definition->ySize;
 
 	//calculate position
+
 	b2Vec2 position(xMapPos * game->worldGridSize.w, yMapPos * game->worldGridSize.h);
 	this->setPosition(position, angleAdjust);
 
@@ -201,6 +205,7 @@ void GameObject::setPosition(b2Vec2 position, float angle)
 {
 	this->xPos = position.x;
 	this->yPos = position.y;
+
 	this->angle = angle;
 }
 
@@ -217,7 +222,8 @@ b2Vec2 GameObject::calcChildPosition(
 	int childNumber,
 	int childCount,
 	float padding,
-	bool absolutePositioning, 
+	bool childRelativePositioning, 
+	float parentAngle,
 	SDL_Rect parentPosition)
 {
 	b2Vec2 childPosition;
@@ -225,18 +231,18 @@ b2Vec2 GameObject::calcChildPosition(
 
 	//Calculate center of parent
 	b2Vec2 parentCenter;
-	x = parentPosition.x + (parentPosition.w / 2) -(childSize.x/2);
-	y = parentPosition.y + (parentPosition.h / 2) -(childSize.y/2 );
+	x = parentPosition.x + (parentPosition.w / 2);
+	y = parentPosition.y + (parentPosition.h / 2);
 	parentCenter.Set(x,y);
 
 	//Different calcs for the different 9 possible positions
 	switch(locationSlot){
 		case 1:
-			x = parentPosition.x - childSize.x;
+ 			x = parentPosition.x - childSize.x;
 			y = parentPosition.y - childSize.y;
 			break;
 		case 2:
-			x = parentCenter.x;
+			x = parentCenter.x - (childSize.x / 2);
 			y = parentPosition.y - childSize.y;
 			break;
 		case 3:
@@ -245,22 +251,22 @@ b2Vec2 GameObject::calcChildPosition(
 			break;
 		case 4:
 			x = parentPosition.x - childSize.x;
-			y = parentCenter.y;
+			y = parentCenter.y - (childSize.y / 2);
 			break;
 		case 5:
-			x = parentCenter.x;
-			y = parentCenter.y;
+			x = parentCenter.x - (childSize.x / 2);
+			y = parentCenter.y - (childSize.y / 2);
 			break;
 		case 6:
 			x = parentPosition.x + parentPosition.w;
-			y = parentCenter.y;
+			y = parentCenter.y - (childSize.y / 2);
 			break;
 		case 7:
 			x = parentPosition.x - childSize.x;
 			y = parentPosition.y + parentPosition.h;
 			break;
 		case 8:
-			x = parentCenter.x;
+			x = parentCenter.x - (childSize.x / 2);
 			y = parentPosition.y + parentPosition.h;
 			break;
 		case 9:
@@ -272,6 +278,14 @@ b2Vec2 GameObject::calcChildPosition(
 
 	childPosition.x = x;
 	childPosition.y = y;
+
+	/*
+	
+	
+	NEED TO ADJUST ACCORDING TO CAMERA - ISSUE SHOWED UP WHEN CHILDREN OBJECTS WERE WORLD OBJECTS
+	
+	
+	*/
 
 	//Adjust the position if there are multiple children in the same position
 	if (childCount > 1)
@@ -305,6 +319,36 @@ b2Vec2 GameObject::calcChildPosition(
 		y = firstChildPosition.y + ((childSize.y+padding) * childNumber);
 
 	}
+
+	//If not absolute positioning then apply the parent object angle 
+	//THIS IS NOT WORKING
+	if (childRelativePositioning == true)
+	{
+
+		//calculate distance from parent center to child center
+		b2Vec2 distance;
+		distance.x = parentCenter.x - x;
+		distance.y = parentCenter.y - y;
+
+		//float xAdj = (cos(parentAngle) + parentCenterTopLeft.x) - distance.x;
+		//float yAdj = (sin(parentAngle) + parentCenterTopLeft.y) - distance.y;
+
+		//float xAdjShouldBe = x - xAdj;
+		//float yAdjShouldBe = y - yAdj;
+
+		//Adjust the angle
+		float xAdj2 = (cos(parentAngle) * -1);
+		float yAdj2 = (sin(parentAngle) * -1);
+
+		//Adjust the position
+
+
+
+		
+		x += xAdj2;
+		y += yAdj2;
+	}
+
 
 	childPosition.x = x;
 	childPosition.y = y;
@@ -347,10 +391,18 @@ void GameObject::updateChildObjects()
 					childNumber,
 					childCount,
 					this->definition->childPadding,
-					false, 
+					this->definition->childPositionRelative,
+					this->angle,
 					parentPositionRect);
 
-			childObject->setPosition(newChildPosition, 0);
+			if (this->definition->childPositionRelative == true)
+			{
+				childObject->setPosition(newChildPosition, this->angle);
+			}
+			else
+			{
+				childObject->setPosition(newChildPosition, 0);
+			}
 
 			childObject->update();
 		}

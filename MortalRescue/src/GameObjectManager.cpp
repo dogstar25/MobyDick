@@ -158,6 +158,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 
 		//Child Objects
 		gameObjectDefinition->childPadding = itr["childPadding"].asFloat();
+		gameObjectDefinition->childPositionRelative = itr["childPositionRelative"].asBool();
 		if (itr["childObjects"].isNull() == false)
 		{
 			gameObjectDefinition->hasChildObjects = true;

@@ -15,12 +15,12 @@
         }
       },
       "childPadding": 8,
+      "childPositionRelative": false,
       "renderOutline": true,
       "childObjects": [
         {
           "gameObjectId": "ContinueButton",
           "position": 5,
-          "absolutePositioning": true,
           "gameObjectType": "GAME_OBJECT"
         },
         {

@@ -114,7 +114,7 @@ void PlayerObject::handlePlayerMovementEvent(SDL_Event* event)
 void PlayerObject::update()
 {
 	//Call base game object update
-	GameObject::update();
+	WorldObject::update();
 
 	//Call all player movement updates
 	this->updatePlayerMovement();
