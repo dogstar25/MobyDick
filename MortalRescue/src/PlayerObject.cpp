@@ -114,10 +114,15 @@ void PlayerObject::handlePlayerMovementEvent(SDL_Event* event)
 void PlayerObject::update()
 {
 	//Call base game object update
-	GameObject::update();
+	WorldObject::update();
 
 	//Call all player movement updates
 	this->updatePlayerMovement();
+
+//test
+	game->debugPanel->addItem("PLAYERX", to_string(this->physicsBody->GetTransform().p.x));
+	game->debugPanel->addItem("PLAYERY", to_string(this->physicsBody->GetTransform().p.y));
+
 
 }
 

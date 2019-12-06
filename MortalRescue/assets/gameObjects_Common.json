@@ -29,8 +29,8 @@
           "random": true
         }
       },
-        "xSize": 32,
-        "ySize": 32
+      "xSize": 32,
+      "ySize": 32
     },
     {
       "id": "SWORDLADY",
@@ -51,24 +51,45 @@
     },
     {
       "id": "SPACESHIP1",
-      "type": "WORLD_OBJECT",
+      "type": "GAME_OBJECT",
       "description": "Space Ship 1",
-      "physicsObject": {
-        "type": "B2_DYNAMIC",
-        "friction": 0.0,
-        "density": 5.5,
-        "linearDamping": 0.1,
-        "angularDamping": 20.5,
-        "collisionCategory": 1
-      },
       "texture": "TX_SPACESHIP1",
-      "xSize": 1.28,
-      "ySize": 1.28,
+      "absolutePositioning": false,
+      "xSize": 32,
+      "ySize": 32,
       "speed": 10.1
     },
     {
-      "id": "BULLET1",
+      "id": "ARMORTEST1",
       "type": "WORLD_OBJECT",
+      "description": "Armor test 1",
+      "texture": "TX_DEFAULT",
+      "absolutePositioning": false,
+      "xSize": 2.56,
+      "ySize": 2.56,
+      "renderOutline": true,
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "restitution": 3.5,
+        "density": 0.5,
+        "linearDamping": 1.0,
+        "angularDamping": 5.0,
+        "collisionCategory": 256
+      }
+    },
+    {
+      "id": "ARMORTEST2",
+      "type": "GAME_OBJECT",
+      "description": "Armor test 2",
+      "texture": "TX_DEFAULT",
+      "absolutePositioning": false,
+      "xSize": 64,
+      "ySize": 64,
+      "renderOutline": true
+    },
+    {
+      "id": "BULLET1",
       "description": "Bullet 1",
       "speed": 50,
       "physicsObject": {
@@ -97,8 +118,8 @@
       "description": "Gina 64",
       "physicsObject": {
         "type": "B2_DYNAMIC",
-        "collisionShape": "B2_CIRCLE",
-        "collisionRadius": 0.96,
+        "collisionShape": "B2_RECTANGLE",
+        "collisionRadius": 1.28,
         "friction": 0.0,
         "density": 5.5,
         "linearDamping": 0.2,
@@ -123,44 +144,16 @@
         }
 
       ],
-      "childPadding":  8,
+      "childPadding": 8,
+      "childPositionRelative": true,
       "childObjects": [
         {
-          "gameObjectId": "PLAYER_LABEL",
+          "gameObjectId": "ARMORTEST1",
           "position": 1,
-          "absolutePositioning": true,
-          "gameObjectType": "TEXT_OBJECT"
-        },
-        {
-          "gameObjectId": "PLAYER_LABEL",
-          "position": 1,
-          "absolutePositioning": true,
-          "gameObjectType": "TEXT_OBJECT"
-        },
-        {
-          "gameObjectId": "PLAYER_LABEL",
-          "position": 5,
-          "absolutePositioning": true,
-          "gameObjectType": "TEXT_OBJECT"
-        },
-        {
-          "gameObjectId": "PLAYER_LABEL",
-          "position": 5,
-          "absolutePositioning": true,
-          "gameObjectType": "TEXT_OBJECT"
-        },
-        {
-          "gameObjectId": "PLAYER_LABEL",
-          "position": 7,
-          "absolutePositioning": true,
-          "gameObjectType": "TEXT_OBJECT"
-        },
-        {
-          "gameObjectId": "PLAYER_LABEL",
-          "position": 7,
-          "absolutePositioning": true,
-          "gameObjectType": "TEXT_OBJECT"
+          "gameObjectType": "WORLD_OBJECT"
         }
+
+
       ]
     },
     {
@@ -179,10 +172,10 @@
       "type": "TEXT_OBJECT",
       "description": "Player Label",
       "text": {
-        "value": "Gina",
+        "value": "Player 1",
         "dynamic": false,
         "font": "FONT_ARIAL_REG",
-        "size": 22
+        "size": 11
       }
     },
     {
@@ -208,7 +201,7 @@
       "text": {
         "dynamic": true,
         "font": "FONT_ARIAL_REG",
-        "size": 32
+        "size": 16
       }
     }
 

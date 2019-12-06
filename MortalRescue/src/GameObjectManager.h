@@ -34,7 +34,7 @@ public:
 	Has to be inline because its a templated function
 	*/
 	template <typename gameObjectType>
-	inline gameObjectType* buildGameObject(string gameObjectId, int xMapPos, int yMapPos, int angle)
+	inline gameObjectType* buildGameObject(string gameObjectId, float xMapPos, float yMapPos, float angle)
 	{
 
 		gameObjectType* gameObject = new gameObjectType(gameObjectId, xMapPos, yMapPos, angle);

@@ -35,14 +35,9 @@ void ObjectPoolManager::init()
 
 		for (int index = 0; index < maxItems; index++) {
 			particle = new ParticleObject(gameObjectId, -50, -50, 0);
-			/*game->gameObjectManager.buildGameObject(
-				gameObjectId, game->MAIN, x, y, levelObject->angleAdjustment);
-				*/
 
 			particle->isAvailable = true;
 			//convert seconds into miliseconds
-			//lifetimeDur = std::chrono::duration<float>(lifetime);
-			//particle->lifetime = std::chrono::duration_cast<milliseconds>(lifetimeDur);
 			particle->lifetime = particle->lifetimeRemaining = std::chrono::duration<float>(lifetime);
 			particle->poolId = poolId;
 			particle->physicsBody->SetActive(false);

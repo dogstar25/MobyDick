@@ -17,7 +17,7 @@ class WorldObject :	public GameObject
 {
 public:
 	WorldObject();
-	WorldObject(string,int,int,int);
+	WorldObject(string, float, float, float);
 	~WorldObject();
 
 	void update();

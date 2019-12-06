@@ -213,14 +213,6 @@ void Game::update() {
 
 		}
 		
-		//Debug messages
-		if (gameObjectCollection.particleObjects.capacity() > 0) {
-			game->debugPanel->addItem("PARTICLE_CAPACITY",
-				to_string(gameObjectCollection.particleObjects.capacity()));
-			game->debugPanel->addItem("PARTICLE_VECTOR_SIZE",
-				to_string(gameObjectCollection.particleObjects.size()));
-		}
-		
 		//resize the particle vector in case items were removed
 		gameObjectCollection.particleObjects.shrink_to_fit();
 
@@ -331,6 +323,7 @@ bool Game::getConfig()
 	this->config.debugPanel = root["debugPanel"]["show"].asBool();
 	this->config.debugPanelLocation.x = root["debugPanel"]["xPos"].asInt();
 	this->config.debugPanelLocation.y = root["debugPanel"]["yPos"].asInt();
+	this->config.debugPanelFontSize = root["debugPanel"]["fontSize"].asInt();
 
 	this->camera.frame.w = root["camera"]["width"].asInt();
 	this->camera.frame.h = root["camera"]["height"].asInt();

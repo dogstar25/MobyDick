@@ -47,7 +47,7 @@ public:
 	};
 
 	GameObject();
-	GameObject(string,int,int,int);
+	GameObject(string,float,float,float);
 	virtual ~GameObject();
 
 	virtual void update();
@@ -64,12 +64,11 @@ public:
 	virtual void onMouseClickEvent();
 	void updateMouseState();
 
-
 	void addChildObject(GameObject*, short);
 	
 	void renderChildObjects();
 	void updateChildObjects();
-	b2Vec2 calcChildPosition(b2Vec2, int, int, int, float,bool,SDL_Rect);
+	b2Vec2 calcChildPosition(b2Vec2, int, int, int, float,bool,float,SDL_Rect);
 	void buildChildren();
 	
 

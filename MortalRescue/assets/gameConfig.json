@@ -4,7 +4,7 @@
     "width": 1280,
     "height": 720
   },
-  "mouseSensitivity": 2.2,
+  "mouseSensitivity": 1.2,
   "gameLoopStep": 16, //in miliseconds
   "physics": {
     "gravity": {
@@ -18,9 +18,10 @@
     "box2dScale": 25 //Box2D. This game will be 25 pixels per meter which is a factor of .04 derived from 1/25
   },
   "debugPanel": {
-    "show": false,
+    "show": true,
     "xPos": 1,
-    "yPos": 3
+    "yPos": 3,
+    "fontSize": 16
   }
 }
   

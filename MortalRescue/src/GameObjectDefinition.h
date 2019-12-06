@@ -67,7 +67,8 @@ public:
 		isMouseSelectable,
 		hasChildObjects,
 		absolutePositioning,
-		renderOutline;
+		renderOutline,
+		childPositionRelative;
 	uint16
 		collisionCategory;
 

@@ -47,23 +47,16 @@ void Weapon::fireOld()
 
 		//Calculate offset values of bullet spawning origin adding an offset for the fireing object
 		/* remove offfset logic for now
+		
 		float xAdj = cos(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->xOffset);
 		float yAdj = sin(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->yOffset);
-*/
+		*/
 		float xAdj = cos(this->weaponWieldingObject->physicsBody->GetAngle()) *(1);
 		float yAdj = sin(this->weaponWieldingObject->physicsBody->GetAngle()) *(1);
 
 		dx += xAdj;
 		dy += yAdj;
-		
 
-		////////
-		// DEBUG VALUES
-		game->debugPanel->addItem("PLAYERX",
-			to_string(this->weaponWieldingObject->physicsBody->GetTransform().p.x));
-		game->debugPanel->addItem("PLAYERY",
-			to_string(this->weaponWieldingObject->physicsBody->GetTransform().p.y));
-		//////////
 
 		b2Vec2 positionVector = b2Vec2(dx, dy);
 

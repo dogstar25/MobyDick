@@ -20,12 +20,22 @@ DebugPanel::~DebugPanel()
 {
 }
 
+void DebugPanel::addItem(string id, float value, int decDigits)
+{
+	string debugValue = game->util.floatToString(value, decDigits);
+	DebugPanel::addItem(id, debugValue);
+
+}
+
 void DebugPanel::addItem(string id, string value)
 {
 
 	if (game->config.debugPanel == true) {
 
-		int yPos, xPos;
+		float yPos, xPos;
+
+		//Get the base definition for debug text items
+		GameObjectDefinition* definition = game->gameObjectManager.gameObjectDefinitions["DEBUG_ITEM"];;
 
 		//Prefix DEBUG to the id
 		string newId = "DEBUG_" + id;
@@ -41,7 +51,8 @@ void DebugPanel::addItem(string id, string value)
 
 			//Calculate the position of the debug text item
 			xPos = this->location.x;
-			yPos = this->location.y + this->itemCount;
+			//yPos = this->location.y + this->itemCount * (.5);
+			yPos = this->location.y + this->itemCount * ((float)definition->textDetails.size / (float)game->worldGridSize.h);
 			/*
 			TextObject* textObject = new TextObject(newId, xPos, yPos, 0);
 			game->addGameObject(textObject, game->DEBUG);
