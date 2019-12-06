@@ -10,21 +10,9 @@ WorldObject::WorldObject()
 
 }
 
-WorldObject::WorldObject(string gameObjectId, int xMapPos, int yMapPos, int angleAdjust) :
+WorldObject::WorldObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
 	GameObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
 {
-	//pointer to the definition
-	//GameObjectDefinition* definition = game->gameObjectManager.gameObjectDefinitions[gameObjectId];
-
-	//Gameobject must be passed in it's starting position
-	//Multiply the size times the x,y position in the map grid that represents the world
-	//When buildB2Body executes, it will build the box2d object centered on the x,y position we give,
-	// We need it centered on the grid location
-	//so add half of the object size so that the object will be placed with its top left corner in the grid location
-	//we specify
-	this->xPos = (xMapPos * (game->worldGridSize.w / game->config.scaleFactor)) + (definition->xSize / 2);
-	this->yPos = (yMapPos * (game->worldGridSize.h / game->config.scaleFactor)) + (definition->ySize / 2);
-
 	//Size
 	this->xSize = definition->xSize * game->config.scaleFactor;
 	this->ySize = definition->ySize * game->config.scaleFactor;
@@ -34,8 +22,16 @@ WorldObject::WorldObject(string gameObjectId, int xMapPos, int yMapPos, int angl
 
 	//Build box2d related stuff
 	this->physicsBody = buildB2Body(definition);
-	b2Vec2 positionVector = b2Vec2( this->xPos, this->yPos);
-	this->physicsBody->SetTransform(positionVector, angleAdjust * DEGTORAD);
+
+	//Gameobject must be passed in it's starting position
+	//Multiply the size times the x,y position in the map grid that represents the world
+	//When buildB2Body executes, it will build the box2d object centered on the x,y position we give,
+	// We need it centered on the grid location
+	//so add half of the object size so that the object will be placed with its top left corner in the grid location
+	//we specify
+	b2Vec2 position(xMapPos * game->worldGridSize.w, yMapPos * game->worldGridSize.h);
+	this->setPosition(position, angleAdjust * DEGTORAD);
+
 	//Add a reference to the gameObject itself to the physics object for collision helping logic later
 	this->physicsBody->SetUserData(this);
 
@@ -49,10 +45,10 @@ WorldObject::~WorldObject()
 void WorldObject::setPosition(b2Vec2 position, float angle)
 {
 	b2Vec2 newlocation;
-	newlocation.x = position.x / game->config.scaleFactor;
-	newlocation.y = position.y / game->config.scaleFactor;
+	newlocation.x = (position.x / game->config.scaleFactor) + (definition->xSize / 2);
+	newlocation.y = (position.y / game->config.scaleFactor) + (definition->ySize / 2);
 
-	this->physicsBody->SetTransform(newlocation, angle);
+	this->physicsBody->SetTransform(newlocation, angle );
 }
 
 void WorldObject::update()
@@ -60,6 +56,9 @@ void WorldObject::update()
 	//transfer the angle from the physics body to the main game 
 	//object so that certain gamObject logic will work for all
 	this->angle = this->physicsBody->GetAngle();
+	//this->xPos = this->physicsBody->GetTransform().p.x;
+	//this->yPos = this->physicsBody->GetTransform().p.y;
+
 
 
 	GameObject::update();
@@ -81,12 +80,12 @@ SDL_Rect WorldObject::getRenderDestRect()
 	destRect.y = round((this->physicsBody->GetPosition().y *  game->config.scaleFactor) - (this->ySize / 2));
 
 	//Adjust position based on current camera position - offset
-	if (this->isChildObject == false)
+/*	if (this->isChildObject == false)
 	{
 		destRect.x -= game->camera.frame.x;
 		destRect.y -= game->camera.frame.y;
 	}
-
+	*/
 	return destRect;
 }
 
@@ -98,6 +97,11 @@ void WorldObject::render()
 
 	//Get render destination rectangle
 	destRect = this->getRenderDestRect();
+
+	//Adjust for camera
+	destRect.x -= game->camera.frame.x;
+	destRect.y -= game->camera.frame.y;
+
 
 	//Get texture
 	texture = this->getRenderTexture(texture);
@@ -197,7 +201,7 @@ uint16 WorldObject::setCollisionMask(uint16 category)
 		mask = PLAYER | PARTICLE1 | PARTICLE2 | PARTICLE3 | ENEMY_FRAME | PLAYER_BULLET;
 		break;
 	case PLAYER_BULLET:
-		mask = ENEMY_ARMOR | WALL;
+		mask = WALL;
 		break;
 	case PARTICLE1:
 		mask = WALL | PLAYER | ENEMY_ARMOR;
@@ -212,7 +216,7 @@ uint16 WorldObject::setCollisionMask(uint16 category)
 		mask = WALL | PLAYER ;
 		break;
 	case ENEMY_ARMOR:
-		mask = PLAYER_BULLET | PARTICLE1 | PARTICLE2 | PARTICLE3;
+		mask = PLAYER_BULLET;
 		break;
 
 

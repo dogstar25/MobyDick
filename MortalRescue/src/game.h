@@ -82,6 +82,8 @@ public:
 	float32 mouseSensitivity;
 	bool debugPanel;
 	SDL_Point debugPanelLocation;
+	int debugPanelFontSize;
+
 
 };
 

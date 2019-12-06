@@ -4,14 +4,14 @@
     "width": 1280,
     "height": 720
   },
-  "mouseSensitivity": 2.2,
+  "mouseSensitivity": 1.2,
   "gameLoopStep": 16, //in miliseconds
   "physics": {
     "gravity": {
       "x": 0.0,
       "y": 0.0
     },
-    "b2DebugDrawMode": true,
+    "b2DebugDrawMode": false,
     "timeStep": 0.016, // 1/60 or 1/30
     "velocityIterations": 6,
     "positionIterations": 2,
@@ -20,7 +20,8 @@
   "debugPanel": {
     "show": true,
     "xPos": 1,
-    "yPos": 3
+    "yPos": 3,
+    "fontSize": 16
   }
 }
   

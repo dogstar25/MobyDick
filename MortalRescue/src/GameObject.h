@@ -47,7 +47,7 @@ public:
 	};
 
 	GameObject();
-	GameObject(string,int,int,int);
+	GameObject(string,float,float,float);
 	virtual ~GameObject();
 
 	virtual void update();
@@ -63,7 +63,6 @@ public:
 	virtual void onMouseHoldRender();
 	virtual void onMouseClickEvent();
 	void updateMouseState();
-
 
 	void addChildObject(GameObject*, short);
 	

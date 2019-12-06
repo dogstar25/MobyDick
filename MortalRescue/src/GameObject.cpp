@@ -34,6 +34,14 @@ void GameObject::update()
 		updateChildObjects();
 	}
 
+	//test
+	if (this->isChildObject == true)
+	{
+			//game->debugPanel->addItem("CHILDX",	to_string(this->xPos));
+			//game->debugPanel->addItem("CHILDY", to_string(this->yPos));
+
+	}
+
 
 
 }
@@ -49,12 +57,12 @@ SDL_Rect GameObject::getRenderDestRect()
 	destRect.y = this->yPos;
 
 	//Adjust position based on current camera position only if we want to
-	if (this->definition->absolutePositioning == false && this->isChildObject == false)
+	/*if (this->definition->absolutePositioning == false && this->isChildObject == false)
 	{
 		destRect.x -= game->camera.frame.x;
 		destRect.y -= game->camera.frame.y;
 	}
-
+	*/
 	return destRect;
 
 }
@@ -93,6 +101,12 @@ void GameObject::render()
 
 	//Get render destination rectangle
 	destRect = this->getRenderDestRect();
+
+	if (this->definition->absolutePositioning == false)
+	{
+		destRect.x -= game->camera.frame.x;
+		destRect.y -= game->camera.frame.y;
+	}
 
 	//If this is a primitive, then render a rectangle with the objects primitive color
 	//Othwise, render the texture
@@ -151,8 +165,13 @@ GameObject::GameObject()
 
 }
 
-GameObject::GameObject(string gameObjectId, int xMapPos, int yMapPos, int angleAdjust)
+GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust)
 {
+
+	//calculate position
+	b2Vec2 position(xMapPos * game->worldGridSize.w, yMapPos * game->worldGridSize.h);
+	this->setPosition(position, angleAdjust);
+
 	//set the id and it will be unique for every game object in the game
 	this->id = gameObjectId + to_string(game->gameObjectCount);
 	//this->id = gameObjectId;
@@ -175,11 +194,6 @@ GameObject::GameObject(string gameObjectId, int xMapPos, int yMapPos, int angleA
 	this->xSize = definition->xSize;
 	this->ySize = definition->ySize;
 
-	//calculate position
-
-	b2Vec2 position(xMapPos * game->worldGridSize.w, yMapPos * game->worldGridSize.h);
-	this->setPosition(position, angleAdjust);
-
 	//Get pointer to the texture
 	this->texture = game->textureManager.getTexture(definition->textureId);
 
@@ -197,7 +211,6 @@ GameObject::GameObject(string gameObjectId, int xMapPos, int yMapPos, int angleA
 		this->currentAnimationState = "IDLE";
 	}
 
-//	buildChildren();
 
 }
 
@@ -279,13 +292,6 @@ b2Vec2 GameObject::calcChildPosition(
 	childPosition.x = x;
 	childPosition.y = y;
 
-	/*
-	
-	
-	NEED TO ADJUST ACCORDING TO CAMERA - ISSUE SHOWED UP WHEN CHILDREN OBJECTS WERE WORLD OBJECTS
-	
-	
-	*/
 
 	//Adjust the position if there are multiple children in the same position
 	if (childCount > 1)
@@ -325,28 +331,50 @@ b2Vec2 GameObject::calcChildPosition(
 	if (childRelativePositioning == true)
 	{
 
+		game->debugPanel->addItem("Parent Angle", parentAngle, 1);
+		game->debugPanel->addItem("Parent Angle Degrees", game->util.radiansToDegrees(parentAngle), 1);
+		game->debugPanel->addItem("Parent Angle Cosine", cos(parentAngle), 1);
+		game->debugPanel->addItem("Parent Angle Sine", sin(parentAngle), 1);
+		
 		//calculate distance from parent center to child center
 		b2Vec2 distance;
-		distance.x = parentCenter.x - x;
-		distance.y = parentCenter.y - y;
+		distance.x = (x + childSize.x) - parentCenter.x;
+		distance.y = -(y + childSize.y) - parentCenter.y;
 
-		//float xAdj = (cos(parentAngle) + parentCenterTopLeft.x) - distance.x;
-		//float yAdj = (sin(parentAngle) + parentCenterTopLeft.y) - distance.y;
+		//Calculate the ANGL where the child stars out
+		float origChildAngle = atan2(distance.x, distance.y);
 
-		//float xAdjShouldBe = x - xAdj;
-		//float yAdjShouldBe = y - yAdj;
+		//calculate angle difference (could be no change if sitting at zero
+		float angleDiff = origChildAngle - parentAngle;
+
+		//calc new position using angleDiff
+		float xAdj2 = distance.x * tan(angleDiff);
+		float yAdj2 = distance.y * tan(angleDiff);
+
+
+
+
+		//xAdj2 = parentPosition.x * cos(parentAngle) - parentPosition.y * sin(parentAngle) + x;
+		//xAdj2 = parentPosition.x * sin(parentAngle) + parentPosition.y * cos(parentAngle) + y;
+		//xAdj2 = (x - parentCenter.x) * cos(parentAngle) - (y - parentCenter.y) * sin(parentAngle) + parentCenter.x;
+		//xAdj2 = (x - parentCenter.x) * sin(parentAngle) + (y - parentCenter.y) * cos(parentAngle) + parentCenter.y;
+
+		//float xAdj = (cos(parentAngle) + childSize.x) * cos(parentAngle);
+		//float yAdj = (sin(parentAngle) + childSize.y) * sin(parentAngle);
 
 		//Adjust the angle
-		float xAdj2 = (cos(parentAngle) * -1);
-		float yAdj2 = (sin(parentAngle) * -1);
+
 
 		//Adjust the position
 
 
 
 		
-		x += xAdj2;
-		y += yAdj2;
+		//x += xAdj2;
+		//y += yAdj2;
+
+		x += cos(parentAngle) * game->config.scaleFactor;
+		y += sin(parentAngle) * game->config.scaleFactor;
 	}
 
 

@@ -10,12 +10,13 @@ ParticleObject::ParticleObject()
 {
 }
 
-ParticleObject::ParticleObject(string gameObjectId, int xMapPos, int yMapPos, int angleAdjust) :
+ParticleObject::ParticleObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
 	WorldObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
 {
-
-	//this->physicsBody->SetBullet(true);
-
+	//initialize stuff
+	this->isAvailable = false;
+	this->isLifetimeAlphaFade = false;
+	this->lifetimeRemaining = this->lifetime = std::chrono::duration<float>(0);
 
 
 }

@@ -119,6 +119,11 @@ void PlayerObject::update()
 	//Call all player movement updates
 	this->updatePlayerMovement();
 
+//test
+	game->debugPanel->addItem("PLAYERX", to_string(this->physicsBody->GetTransform().p.x));
+	game->debugPanel->addItem("PLAYERY", to_string(this->physicsBody->GetTransform().p.y));
+
+
 }
 
 void PlayerObject::render()

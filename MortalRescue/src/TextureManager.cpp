@@ -137,7 +137,8 @@ Texture* TextureManager::generateTextTexture(TextObject* textObject)
 	string fontFile = this->getFont(textObject->fontId);
 
 	TTF_Font* fontObject = TTF_OpenFont(fontFile.c_str(), textSize);
-	surface = TTF_RenderText_Solid(fontObject, textObject->textValue.c_str(), color);
+	//surface = TTF_RenderText_Solid(fontObject, textObject->textValue.c_str(), color);
+	surface = TTF_RenderText_Blended(fontObject, textObject->textValue.c_str(), color);
 	TTF_CloseFont(fontObject);
 	string test = TTF_GetError();
 
@@ -172,7 +173,7 @@ Texture* TextureManager::updateDynamicTextTexture(TextObject *textObject)
 	//newText = game->dynamicTextManager.textItems[gameObject->definition->id].get();
 	newText = game->dynamicTextManager.getTextItem(textObject->definitionId);
 
-	if (newText->hasChanged == true)
+	if (newText->hasChanged == true /* and has the timestamp lapsed */ )
 	{
 
 		//Destroy this texture from the map before we generate a new one - memory leak otherwise
@@ -320,6 +321,14 @@ void TextureManager::outLineObject(GameObject* gameObject, float lineSize)
 	float saveScaleX, saveScaleY;
 
 	SDL_Point point;
+
+	//Adjust for camera
+	if (gameObject->definition->absolutePositioning == false)
+	{
+		gameObjectDrawRect.x -= game->camera.frame.x;
+		gameObjectDrawRect.y -= game->camera.frame.y;
+	}
+
 
 	//topleft
 	point.x = gameObjectDrawRect.x / lineSize;

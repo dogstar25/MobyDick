@@ -13,7 +13,7 @@ class ParticleObject :
 {
 public:
 	ParticleObject();
-	ParticleObject(string, int, int, int);
+	ParticleObject(string, float, float, float);
 	~ParticleObject();
 
 	void update();

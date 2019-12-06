@@ -3,7 +3,10 @@
 #include <SDL.h>
 
 #include <random>
+#include <sstream>
+#include <string>
 
+using namespace std;
 
 int Util::generateRandomNumber(int min, int max)
 {
@@ -49,16 +52,15 @@ float Util::radiansToDegrees(float angleInRadians)
 
 }
 
-
-Matrix::Matrix() {
-
+string Util::floatToString(float x, int decDigits) 
+{
+	stringstream ss;
+	ss << fixed;
+	ss.precision(decDigits); // set # places after decimal
+	ss << x;
+	return ss.str();
 }
 
-Matrix::Matrix(int width, int height) {
-
-	///data = new 
-
-}
 
 
 

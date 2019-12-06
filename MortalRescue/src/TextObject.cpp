@@ -2,7 +2,7 @@
 #include "game.h"
 
 
-TextObject::TextObject(string gameObjectId, int xMapPos, int yMapPos, int angleAdjust) :
+TextObject::TextObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
 	GameObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
 {
 
@@ -13,6 +13,20 @@ TextObject::TextObject(string gameObjectId, int xMapPos, int yMapPos, int angleA
 	this->xSize = this->definition->textDetails.size;
 	this->ySize = this->definition->textDetails.size;
 
+	//If the text item is actually smaller than the gridsize, adjust the position to reflect that
+	float adjPosX=0;
+	float adjPosY=0;
+	/*
+	if (this->xSize < game->worldGridSize.w)
+	{
+		this->xPos -= (game->worldGridSize.w) - this->xSize);
+	}
+	
+	if (this->ySize < game->worldGridSize.h)
+	{
+		this->yPos -= (game->worldGridSize.h - (this->ySize+ game->worldGridSize.h));
+	}
+	*/
 	this->color = { this->definition->textDetails.color.r,
 		this->definition->textDetails.color.g,
 		this->definition->textDetails.color.b,

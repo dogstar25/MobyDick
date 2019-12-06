@@ -118,8 +118,8 @@
       "description": "Gina 64",
       "physicsObject": {
         "type": "B2_DYNAMIC",
-        "collisionShape": "B2_CIRCLE",
-        "collisionRadius": 0.96,
+        "collisionShape": "B2_RECTANGLE",
+        "collisionRadius": 1.28,
         "friction": 0.0,
         "density": 5.5,
         "linearDamping": 0.2,
@@ -145,52 +145,12 @@
 
       ],
       "childPadding": 8,
-      "childPositionRelative": false,
+      "childPositionRelative": true,
       "childObjects": [
         {
           "gameObjectId": "ARMORTEST1",
           "position": 1,
-          "gameObjectType": "GAME_OBJECT"
-        },
-        {
-          "gameObjectId": "ARMORTEST2",
-          "position": 2,
-          "gameObjectType": "GAME_OBJECT"
-        },
-        {
-          "gameObjectId": "ARMORTEST2",
-          "position": 3,
-          "gameObjectType": "GAME_OBJECT"
-        },
-        {
-          "gameObjectId": "ARMORTEST2",
-          "position": 4,
-          "gameObjectType": "GAME_OBJECT"
-        },
-        {
-          "gameObjectId": "ARMORTEST2",
-          "position": 5,
-          "gameObjectType": "GAME_OBJECT"
-        },
-        {
-          "gameObjectId": "ARMORTEST2",
-          "position": 6,
-          "gameObjectType": "GAME_OBJECT"
-        },
-        {
-          "gameObjectId": "ARMORTEST2",
-          "position": 7,
-          "gameObjectType": "GAME_OBJECT"
-        },
-        {
-          "gameObjectId": "ARMORTEST2",
-          "position": 8,
-          "gameObjectType": "GAME_OBJECT"
-        },
-        {
-          "gameObjectId": "ARMORTEST2",
-          "position": 9,
-          "gameObjectType": "GAME_OBJECT"
+          "gameObjectType": "WORLD_OBJECT"
         }
 
 
@@ -241,7 +201,7 @@
       "text": {
         "dynamic": true,
         "font": "FONT_ARIAL_REG",
-        "size": 32
+        "size": 16
       }
     }
 

@@ -58,14 +58,6 @@ void Weapon::fireOld()
 		dy += yAdj;
 
 
-		////////
-		// DEBUG VALUES
-		game->debugPanel->addItem("PLAYERX",
-			to_string(this->weaponWieldingObject->physicsBody->GetTransform().p.x));
-		game->debugPanel->addItem("PLAYERY",
-			to_string(this->weaponWieldingObject->physicsBody->GetTransform().p.y));
-		//////////
-
 		b2Vec2 positionVector = b2Vec2(dx, dy);
 
 		dx = cos(this->weaponWieldingObject->physicsBody->GetAngle()) * bullet->speed; // make speed configurable

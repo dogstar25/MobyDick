@@ -4,7 +4,7 @@
 class TextObject :	public GameObject
 {
 public:
-	TextObject(string, int, int, int);
+	TextObject(string, float, float, float);
 	virtual ~TextObject();
 
 	void update();
