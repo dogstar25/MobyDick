@@ -45,6 +45,9 @@ WorldObject::~WorldObject()
 void WorldObject::setPosition(b2Vec2 position, float angle)
 {
 	b2Vec2 newlocation;
+	//newlocation.x = (position.x / game->config.scaleFactor);
+	//newlocation.y = (position.y / game->config.scaleFactor);
+
 	newlocation.x = (position.x / game->config.scaleFactor) + (definition->xSize / 2);
 	newlocation.y = (position.y / game->config.scaleFactor) + (definition->ySize / 2);
 

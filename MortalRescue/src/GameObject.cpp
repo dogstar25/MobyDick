@@ -324,6 +324,7 @@ b2Vec2 GameObject::calcChildPosition(
 		x = firstChildPosition.x;
 		y = firstChildPosition.y + ((childSize.y+padding) * childNumber);
 
+
 	}
 
 	//If not absolute positioning then apply the parent object angle 
@@ -331,50 +332,31 @@ b2Vec2 GameObject::calcChildPosition(
 	if (childRelativePositioning == true)
 	{
 
-		game->debugPanel->addItem("Parent Angle", parentAngle, 1);
-		game->debugPanel->addItem("Parent Angle Degrees", game->util.radiansToDegrees(parentAngle), 1);
-		game->debugPanel->addItem("Parent Angle Cosine", cos(parentAngle), 1);
-		game->debugPanel->addItem("Parent Angle Sine", sin(parentAngle), 1);
-		
-		//calculate distance from parent center to child center
-		b2Vec2 distance;
-		distance.x = (x + childSize.x) - parentCenter.x;
-		distance.y = -(y + childSize.y) - parentCenter.y;
+		//calculate child center
+		b2Vec2 childCenter(x+(childSize.x/2), y+(childSize.y/2));
 
-		//Calculate the ANGL where the child stars out
-		float origChildAngle = atan2(distance.x, distance.y);
+		//calculate radius of circle defined by parent and initial child position
+		//This is the hypotenus
+		float radius=0;
+		radius = sqrt( powf((childCenter.x - parentCenter.x),2) + powf((childCenter.y-parentCenter.y),2) );
 
-		//calculate angle difference (could be no change if sitting at zero
-		float angleDiff = origChildAngle - parentAngle;
+		//calculate the angle of where child is at
+		float childAngle = atan2(childCenter.x - parentCenter.x, childCenter.y - parentCenter.y);
 
-		//calc new position using angleDiff
-		float xAdj2 = distance.x * tan(angleDiff);
-		float yAdj2 = distance.y * tan(angleDiff);
+		//adjust by 90%
+		childAngle += 90 * DEGTORAD;
 
+		//add parent angle
+		float newAngle = childAngle + parentAngle;
+		float xAdj = (radius * cos(newAngle));
+		float yAdj = (radius * sin(newAngle));
 
+		x = xAdj + parentCenter.x;
+		y = yAdj + parentCenter.y;
 
-
-		//xAdj2 = parentPosition.x * cos(parentAngle) - parentPosition.y * sin(parentAngle) + x;
-		//xAdj2 = parentPosition.x * sin(parentAngle) + parentPosition.y * cos(parentAngle) + y;
-		//xAdj2 = (x - parentCenter.x) * cos(parentAngle) - (y - parentCenter.y) * sin(parentAngle) + parentCenter.x;
-		//xAdj2 = (x - parentCenter.x) * sin(parentAngle) + (y - parentCenter.y) * cos(parentAngle) + parentCenter.y;
-
-		//float xAdj = (cos(parentAngle) + childSize.x) * cos(parentAngle);
-		//float yAdj = (sin(parentAngle) + childSize.y) * sin(parentAngle);
-
-		//Adjust the angle
-
-
-		//Adjust the position
-
-
-
-		
-		//x += xAdj2;
-		//y += yAdj2;
-
-		x += cos(parentAngle) * game->config.scaleFactor;
-		y += sin(parentAngle) * game->config.scaleFactor;
+		//Adjust so that position is top left corner of child object
+		x -= (childSize.x/2);
+		y -= (childSize.y/2);
 	}
 
 
@@ -426,6 +408,7 @@ void GameObject::updateChildObjects()
 			if (this->definition->childPositionRelative == true)
 			{
 				childObject->setPosition(newChildPosition, this->angle);
+
 			}
 			else
 			{

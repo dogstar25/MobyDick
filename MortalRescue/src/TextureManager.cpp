@@ -173,8 +173,14 @@ Texture* TextureManager::updateDynamicTextTexture(TextObject *textObject)
 	//newText = game->dynamicTextManager.textItems[gameObject->definition->id].get();
 	newText = game->dynamicTextManager.getTextItem(textObject->definitionId);
 
-	if (newText->hasChanged == true /* and has the timestamp lapsed */ )
+	//check the clock and see if enough time as gone by
+	steady_clock::time_point now_time = steady_clock::now();
+	std::chrono::duration<double> time_diff = now_time - newText->time_snapshot;
+
+	if (newText->hasChanged == true && time_diff.count() > .2)
 	{
+		//update the timestamp
+		newText->time_snapshot = now_time;
 
 		//Destroy this texture from the map before we generate a new one - memory leak otherwise
 		SDL_DestroyTexture(textObject->texture->sdlTexture);
