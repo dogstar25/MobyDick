@@ -71,10 +71,10 @@
       "physicsObject": {
         "type": "B2_DYNAMIC",
         "friction": 0.0,
-        "restitution": 3.5,
-        "density": 0.5,
-        "linearDamping": 1.0,
-        "angularDamping": 5.0,
+        "restitution": 0.0,
+        "density": 0.1,
+        "linearDamping": 0.0,
+        "angularDamping": 0.0,
         "collisionCategory": 256
       }
     },
@@ -86,7 +86,7 @@
       "absolutePositioning": false,
       "xSize": 64,
       "ySize": 64,
-      "renderOutline": true
+      "renderOutline": false
     },
     {
       "id": "BULLET1",
@@ -148,12 +148,50 @@
       "childPositionRelative": true,
       "childObjects": [
         {
-          "gameObjectId": "ARMORTEST1",
+          "gameObjectId": "ARMORTEST2",
           "position": 1,
-          "gameObjectType": "WORLD_OBJECT"
+          "gameObjectType": "GAME_OBJECT"
+        },
+        {
+          "gameObjectId": "ARMORTEST2",
+          "position": 2,
+          "gameObjectType": "GAME_OBJECT"
+        },
+        {
+          "gameObjectId": "ARMORTEST2",
+          "position": 3,
+          "gameObjectType": "GAME_OBJECT"
+        },
+        {
+          "gameObjectId": "ARMORTEST2",
+          "position": 4,
+          "gameObjectType": "GAME_OBJECT"
+        },
+        {
+          "gameObjectId": "ARMORTEST2",
+          "position": 5,
+          "gameObjectType": "GAME_OBJECT"
+        },
+        {
+          "gameObjectId": "ARMORTEST2",
+          "position": 6,
+          "gameObjectType": "GAME_OBJECT"
+        },
+        {
+          "gameObjectId": "ARMORTEST2",
+          "position": 7,
+          "gameObjectType": "GAME_OBJECT"
+        },
+        {
+          "gameObjectId": "ARMORTEST2",
+          "position": 8,
+          "gameObjectType": "GAME_OBJECT"
+        },
+        {
+          "gameObjectId": "ARMORTEST2",
+          "position": 9,
+          "gameObjectType": "GAME_OBJECT"
         }
-
-
       ]
     },
     {

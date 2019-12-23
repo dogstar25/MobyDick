@@ -45,14 +45,15 @@ void Weapon::fireOld()
 		float dy = this->weaponWieldingObject->physicsBody->GetTransform().p.y +
 			sin(this->weaponWieldingObject->physicsBody->GetAngle());
 
+		float angleT = this->weaponWieldingObject->physicsBody->GetAngle();
 		//Calculate offset values of bullet spawning origin adding an offset for the fireing object
 		/* remove offfset logic for now
 		
 		float xAdj = cos(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->xOffset);
 		float yAdj = sin(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->yOffset);
 		*/
-		float xAdj = cos(this->weaponWieldingObject->physicsBody->GetAngle()) *(1);
-		float yAdj = sin(this->weaponWieldingObject->physicsBody->GetAngle()) *(1);
+		float xAdj = cos(this->weaponWieldingObject->physicsBody->GetAngle()) *(64/25);
+		float yAdj = sin(this->weaponWieldingObject->physicsBody->GetAngle()) *(64/25);
 
 		dx += xAdj;
 		dy += yAdj;
@@ -69,7 +70,7 @@ void Weapon::fireOld()
 		//cout << "position" << positionVector.x << " " << positionVector.y << "\n";
 		//bullet->physicsBody->SetFixedRotation(true);
 		bullet->physicsBody->SetTransform(positionVector, angle);
-		bullet->physicsBody->SetLinearVelocity(velocityVector);
+		//bullet->physicsBody->SetLinearVelocity(velocityVector);
 		bullet->currentAnimationState = "ACTIVE";
 		bullet->physicsBody->SetBullet(true);
 
