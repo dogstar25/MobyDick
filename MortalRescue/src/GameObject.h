@@ -53,6 +53,7 @@ public:
 	virtual void update();
 	virtual void render();
 
+	virtual SDL_Rect  getPositionRect();
 	virtual SDL_Rect  getRenderDestRect();
 	virtual SDL_Texture* getRenderTexture(SDL_Texture *);
 	virtual SDL_Rect* getRenderTextureRect(SDL_Rect*);
@@ -64,8 +65,6 @@ public:
 	virtual void onMouseClickEvent();
 	void updateMouseState();
 
-	void addChildObject(GameObject*, short);
-	
 	void renderChildObjects();
 	void updateChildObjects();
 	b2Vec2 calcChildPosition(b2Vec2, int, int, int, float,bool,float,SDL_Rect);

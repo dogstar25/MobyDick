@@ -70,7 +70,7 @@ void Weapon::fireOld()
 		//cout << "position" << positionVector.x << " " << positionVector.y << "\n";
 		//bullet->physicsBody->SetFixedRotation(true);
 		bullet->physicsBody->SetTransform(positionVector, angle);
-		//bullet->physicsBody->SetLinearVelocity(velocityVector);
+		bullet->physicsBody->SetLinearVelocity(velocityVector);
 		bullet->currentAnimationState = "ACTIVE";
 		bullet->physicsBody->SetBullet(true);
 

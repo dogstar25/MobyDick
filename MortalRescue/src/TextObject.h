@@ -9,7 +9,9 @@ public:
 
 	void update();
 	void render();
+	SDL_Rect getPositionRect();
 	SDL_Rect getRenderDestRect();
+
 
 	bool isDynamic;
 	string fontId;

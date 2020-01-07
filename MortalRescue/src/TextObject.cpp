@@ -53,19 +53,37 @@ void TextObject::update()
 
 }
 
-SDL_Rect TextObject::getRenderDestRect()
+SDL_Rect TextObject::getPositionRect()
 {
-	SDL_Rect destRect;
+	SDL_Rect positionRect;
 
-	//calculate the destination rectangle - must convert meters to pixels with scale factor
+	//calculate the destination rectangle
+	//Use query texture to get size of the generated text object
 	int texW = 0;
 	int texH = 0;
 	SDL_QueryTexture(this->texture->sdlTexture, NULL, NULL, &texW, &texH);
 
-	destRect.w = texW;
-	destRect.h = texH;
-	destRect.x = this->xPos;
-	destRect.y = this->yPos;
+	positionRect.w = texW;
+	positionRect.h = texH;
+	positionRect.x = this->xPos;
+	positionRect.y = this->yPos;
+
+	return positionRect;
+}
+
+SDL_Rect TextObject::getRenderDestRect()
+{
+	SDL_Rect destRect;
+
+	//Get the position/size rectangle of the object
+	destRect = this->getPositionRect();
+
+	//adjust render position X and Y for camera if not an absolute positioned object
+	if (this->definition->absolutePositioning == false)
+	{
+		destRect.x -= game->camera.frame.x;
+		destRect.y -= game->camera.frame.y;
+	}
 
 	return destRect;
 
