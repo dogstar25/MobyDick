@@ -234,8 +234,8 @@
     <None Include="assets\gameObjects_Common.json" />
     <None Include="assets\gameObjects_Level1.json" />
     <None Include="assets\GUIObjects.json" />
-    <None Include="assets\level1.ase" />
-    <None Include="assets\level_test.ase" />
+    <None Include="assets\blueprints\level1.ase" />
+    <None Include="assets\blueprints\level_test.ase" />
     <None Include="assets\particleEmitter.json" />
     <None Include="assets\particleObjects.json" />
     <None Include="assets\textureAssets.json" />
@@ -252,8 +252,8 @@
     <Image Include="assets\bullet1.png" />
     <Image Include="assets\gina_Idle_64.png" />
     <Image Include="assets\gina_Run_64.png" />
-    <Image Include="assets\level1.png" />
-    <Image Include="assets\level_test.png" />
+    <Image Include="assets\blueprints\level1.png" />
+    <Image Include="assets\blueprints\level_test.png" />
     <Image Include="assets\particle1.png" />
     <Image Include="assets\pistolLady128_Run.png" />
     <Image Include="assets\pistolLady64_Run.png" />

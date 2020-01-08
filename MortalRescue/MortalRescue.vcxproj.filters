@@ -175,8 +175,6 @@
     <None Include="SDL2_image.dll" />
     <None Include="zlib1.dll" />
     <None Include="assets\gameConfig.json" />
-    <None Include="assets\level1.ase" />
-    <None Include="assets\level_test.ase" />
     <None Include="assets\gameObjects_Common.json" />
     <None Include="assets\gameObjects_Level1.json" />
     <None Include="libfreetype-6.dll" />
@@ -185,15 +183,14 @@
     <None Include="assets\particleObjects.json" />
     <None Include="assets\particleEmitter.json" />
     <None Include="assets\GUIObjects.json" />
+    <None Include="assets\blueprints\level_test.ase" />
+    <None Include="assets\blueprints\level1.ase" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\swordLady64_Idle.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\level1.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\pistolLady64_Run.png">
@@ -206,9 +203,6 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\tile1.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\level_test.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\wall1_column.png">
@@ -239,6 +233,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\particle1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprints\level_test.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprints\level1.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

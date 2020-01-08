@@ -38,13 +38,13 @@
     {
       "id": "TX_LEVEL1",
       "description": "Level 1 Map",
-      "filename": "assets/level1.png",
+      "filename": "assets/blueprints/level1.png",
       "retainSurface": true
     },
     {
       "id": "TX_LEVEL_TEST",
       "description": "Test Level Map",
-      "filename": "assets/level_test.png",
+      "filename": "assets/blueprints/level_test.png",
       "retainSurface": true
     },
     {
