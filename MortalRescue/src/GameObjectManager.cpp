@@ -167,7 +167,6 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 			{
 				childDetails.gameObjectId = childItr["gameObjectId"].asString();
 				childDetails.position = childItr["position"].asInt();
-				childDetails.absolutePositioning = childItr["absolutePositioning"].asBool();
 				childDetails.gameObjectType = childItr["gameObjectType"].asString();
 				gameObjectDefinition->childObjectDefinitions.push_back(childDetails);
 			}

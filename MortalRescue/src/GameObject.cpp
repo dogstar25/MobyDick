@@ -27,42 +27,43 @@ void GameObject::update()
 		this->onMouseClickEvent();
 	}
 
-	//Loop through any possible child objects, in all 9 positions, and update their
+	//Loop through any possible child objects and update their
 	// position to reflect parent objects position
 	if (this->definition->hasChildObjects == true)
 	{
 		updateChildObjects();
 	}
 
-	//test
-	if (this->isChildObject == true)
-	{
-			//game->debugPanel->addItem("CHILDX",	to_string(this->xPos));
-			//game->debugPanel->addItem("CHILDY", to_string(this->yPos));
+}
 
-	}
+SDL_Rect GameObject::getPositionRect()
+{
+	SDL_Rect positionRect;
 
+	positionRect.w = this->xSize;
+	positionRect.h = this->ySize;
 
+	positionRect.x = this->xPos;
+	positionRect.y = this->yPos;
+
+	return positionRect;
 
 }
 
 SDL_Rect GameObject::getRenderDestRect()
 {
-	SDL_Rect destRect;
+	SDL_Rect destRect{};
 
-	destRect.w = this->xSize;
-	destRect.h = this->ySize;
+	//Get the position/size rectangle of the object
+	destRect = this->getPositionRect();
 
-	destRect.x = this->xPos;
-	destRect.y = this->yPos;
-
-	//Adjust position based on current camera position only if we want to
-	/*if (this->definition->absolutePositioning == false && this->isChildObject == false)
+	//adjust render position X and Y for camera if not an absolute positioned object
+	if (this->definition->absolutePositioning == false)
 	{
 		destRect.x -= game->camera.frame.x;
 		destRect.y -= game->camera.frame.y;
 	}
-	*/
+
 	return destRect;
 
 }
@@ -101,12 +102,6 @@ void GameObject::render()
 
 	//Get render destination rectangle
 	destRect = this->getRenderDestRect();
-
-	if (this->definition->absolutePositioning == false)
-	{
-		destRect.x -= game->camera.frame.x;
-		destRect.y -= game->camera.frame.y;
-	}
 
 	//If this is a primitive, then render a rectangle with the objects primitive color
 	//Othwise, render the texture
@@ -321,19 +316,18 @@ b2Vec2 GameObject::calcChildPosition(
 
 		//Calculate our current child object position using the stepSize and the
 		//position of the first child position
-		x = firstChildPosition.x;
-		y = firstChildPosition.y + ((childSize.y+padding) * childNumber);
+		childPosition.x = firstChildPosition.x;
+		childPosition.y = firstChildPosition.y + ((childSize.y+padding) * childNumber);
 
 
 	}
 
 	//If not absolute positioning then apply the parent object angle 
-	//THIS IS NOT WORKING
 	if (childRelativePositioning == true)
 	{
 
 		//calculate child center
-		b2Vec2 childCenter(x+(childSize.x/2), y+(childSize.y/2));
+		b2Vec2 childCenter(childPosition.x+(childSize.x/2), childPosition.y+(childSize.y/2));
 
 		//calculate radius of circle defined by parent and initial child position
 		//This is the hypotenus
@@ -341,27 +335,31 @@ b2Vec2 GameObject::calcChildPosition(
 		radius = sqrt( powf((childCenter.x - parentCenter.x),2) + powf((childCenter.y-parentCenter.y),2) );
 
 		//calculate the angle of where child is at
-		float childAngle = atan2(childCenter.x - parentCenter.x, childCenter.y - parentCenter.y);
+		y = childCenter.y - parentCenter.y;
+		x = childCenter.x - parentCenter.x;
+		float childAngle = atan2(childCenter.y - parentCenter.y, childCenter.x - parentCenter.x);
+
+		float childAngleDegrees = game->util.radiansToDegrees(childAngle);
 
 		//adjust by 90%
-		childAngle += 90 * DEGTORAD;
+		//childAngle += 180 * DEGTORAD;
 
 		//add parent angle
 		float newAngle = childAngle + parentAngle;
 		float xAdj = (radius * cos(newAngle));
 		float yAdj = (radius * sin(newAngle));
 
-		x = xAdj + parentCenter.x;
-		y = yAdj + parentCenter.y;
+		childPosition.x = xAdj + parentCenter.x;
+		childPosition.y = yAdj + parentCenter.y;
 
 		//Adjust so that position is top left corner of child object
-		x -= (childSize.x/2);
-		y -= (childSize.y/2);
+		childPosition.x -= (childSize.x/2);
+		childPosition.y -= (childSize.y/2);
 	}
 
 
-	childPosition.x = x;
-	childPosition.y = y;
+	//childPosition.x = x;
+	//childPosition.y = y;
 
 
 	return childPosition;
@@ -379,17 +377,11 @@ void GameObject::updateChildObjects()
 		locationSlot++;
 		int childNumber = 0;
 
-		if (this->definition->id.compare("GUIPausePanel") == 0)
-		{
-			int todd = 1;
-		}
-
-
 		for (auto& childObject : childLocations)
 		{
 			childNumber++;
 			int childCount = childLocations.size();
-			parentPositionRect = this->getRenderDestRect();
+			parentPositionRect = this->getPositionRect();
 			childSize.Set(childObject->xSize, childObject->ySize);
 
 			//TODO: should be able to pass in the number of children in this position and what number in line
@@ -405,6 +397,7 @@ void GameObject::updateChildObjects()
 					this->angle,
 					parentPositionRect);
 
+			// Should this child match the angle of the parent
 			if (this->definition->childPositionRelative == true)
 			{
 				childObject->setPosition(newChildPosition, this->angle);
@@ -415,6 +408,9 @@ void GameObject::updateChildObjects()
 				childObject->setPosition(newChildPosition, 0);
 			}
 
+			//Since the child is a game object itself, call the update function for it
+			//This acts as a recursive call when you have children objects 
+			//within children objects
 			childObject->update();
 		}
 	}
@@ -444,7 +440,7 @@ void GameObject::buildChildren()
 	for (ChildObjectDetails childDefinition : this->definition->childObjectDefinitions)
 	{
 		string childObjectId = childDefinition.gameObjectId;
-		int position = childDefinition.position;
+		unsigned int position = childDefinition.position;
 
 		GameObjectDefinition* definition = game->gameObjectManager.getDefinition(childObjectId);
 
@@ -488,13 +484,6 @@ GameObject::~GameObject()
 
 	this->animations.clear();
 
-
-}
-
-void GameObject::addChildObject(GameObject* childObject, short position)
-{
-
-	//this->childObjects[__int64(position)-1].push_back(childObject);
 
 }
 

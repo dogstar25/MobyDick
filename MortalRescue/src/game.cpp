@@ -113,7 +113,10 @@ bool Game::init()
 
 	gameObject = gameObjectManager.buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
 	this->addGameObject(gameObject, this->MAIN);
-	
+
+	gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK", 13, 13, 0);
+	this->addGameObject(gameObject, this->MAIN);
+
 	//Create the debug panel if its turned on
 	if (this->config.debugPanel == true)
 	{

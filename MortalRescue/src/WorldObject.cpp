@@ -69,26 +69,33 @@ void WorldObject::update()
 
 }
 
-SDL_Rect WorldObject::getRenderDestRect()
+SDL_Rect WorldObject::getPositionRect()
 {
-	SDL_Rect destRect;
-	
-	destRect.w = this->xSize;
-	destRect.h = this->ySize;
+	SDL_Rect positionRect;
+
+	positionRect.w = this->xSize;
+	positionRect.h = this->ySize;
 
 	//World objects position from box2d is the center of the object
 	//So, we need to adjust the rectangle top left corner to be
 	//the render point for SDL
-	destRect.x = round((this->physicsBody->GetPosition().x *  game->config.scaleFactor) - (this->xSize / 2));
-	destRect.y = round((this->physicsBody->GetPosition().y *  game->config.scaleFactor) - (this->ySize / 2));
+	positionRect.x = round((this->physicsBody->GetPosition().x * game->config.scaleFactor) - (this->xSize / 2));
+	positionRect.y = round((this->physicsBody->GetPosition().y * game->config.scaleFactor) - (this->ySize / 2));
+	return positionRect;
+
+}
+
+SDL_Rect WorldObject::getRenderDestRect()
+{
+	SDL_Rect destRect;
+	
+
+	destRect = this->getPositionRect();
 
 	//Adjust position based on current camera position - offset
-/*	if (this->isChildObject == false)
-	{
-		destRect.x -= game->camera.frame.x;
-		destRect.y -= game->camera.frame.y;
-	}
-	*/
+	destRect.x -= game->camera.frame.x;
+	destRect.y -= game->camera.frame.y;
+
 	return destRect;
 }
 
@@ -100,11 +107,6 @@ void WorldObject::render()
 
 	//Get render destination rectangle
 	destRect = this->getRenderDestRect();
-
-	//Adjust for camera
-	destRect.x -= game->camera.frame.x;
-	destRect.y -= game->camera.frame.y;
-
 
 	//Get texture
 	texture = this->getRenderTexture(texture);

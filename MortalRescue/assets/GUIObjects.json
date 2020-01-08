@@ -26,13 +26,11 @@
         {
           "gameObjectId": "QuitButton",
           "position": 5,
-          "absolutePositioning": true,
           "gameObjectType": "GAME_OBJECT"
         },
         {
           "gameObjectId": "SettingsButton",
           "position": 5,
-          "absolutePositioning": true,
           "gameObjectType": "GAME_OBJECT"
         }
       ]
@@ -58,7 +56,6 @@
         {
           "gameObjectId": "QUIT_LABEL",
           "position": 5,
-          "absolutePositioning": true,
           "gameObjectType": "TEXT_OBJECT"
         }
       ]
@@ -85,7 +82,6 @@
         {
           "gameObjectId": "CONTINUE_LABEL",
           "position": 5,
-          "absolutePositioning": true,
           "gameObjectType": "TEXT_OBJECT"
         }
       ]
@@ -112,7 +108,6 @@
         {
           "gameObjectId": "SETTINGS_LABEL",
           "position": 5,
-          "absolutePositioning": true,
           "gameObjectType": "TEXT_OBJECT"
         }
       ]
@@ -121,6 +116,7 @@
       "id": "QUIT_LABEL",
       "type": "TEXT_OBJECT",
       "description": "Quit Button Label",
+      "absolutePositioning": true,
       "text": {
         "value": "Quit",
         "dynamic": false,
@@ -133,6 +129,7 @@
       "id": "CONTINUE_LABEL",
       "type": "TEXT_OBJECT",
       "description": "Continue Button Label",
+      "absolutePositioning": true,
       "text": {
         "value": "Continue",
         "dynamic": false,
@@ -144,6 +141,7 @@
       "id": "SETTINGS_LABEL",
       "type": "TEXT_OBJECT",
       "description": "Settings Button Label",
+      "absolutePositioning": true,
       "text": {
         "value": "Settings",
         "dynamic": false,

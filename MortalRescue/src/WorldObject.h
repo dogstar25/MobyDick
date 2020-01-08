@@ -23,7 +23,8 @@ public:
 	void update();
 	void render();
 	void setPosition(b2Vec2, float);
-	SDL_Rect  getRenderDestRect();
+	SDL_Rect  getRenderDestRect(); 
+	SDL_Rect  getPositionRect();
 
 	b2Body* buildB2Body(GameObjectDefinition*);
 	uint16 setCollisionMask(uint16 category);

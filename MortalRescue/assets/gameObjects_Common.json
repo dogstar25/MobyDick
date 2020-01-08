@@ -22,15 +22,15 @@
       "description": "A Red Rock",
       "primative": {
         "color": {
-          "red": 255,
-          "green": 255,
+          "red": 212,
+          "green": 202,
           "blue": 50,
-          "alpha": 255,
-          "random": true
+          "alpha": 100,
+          "random": false
         }
       },
-      "xSize": 32,
-      "ySize": 32
+      "xSize": 128,
+      "ySize": 128
     },
     {
       "id": "SWORDLADY",
@@ -148,56 +148,58 @@
       "childPositionRelative": true,
       "childObjects": [
         {
-          "gameObjectId": "ARMORTEST2",
+          "gameObjectId": "ARMORTEST1",
           "position": 1,
-          "gameObjectType": "GAME_OBJECT"
+          "gameObjectType": "WORLD_OBJECT"
         },
         {
-          "gameObjectId": "ARMORTEST2",
+          "gameObjectId": "ARMORTEST1",
           "position": 2,
-          "gameObjectType": "GAME_OBJECT"
+          "gameObjectType": "WORLD_OBJECT"
         },
         {
-          "gameObjectId": "ARMORTEST2",
+          "gameObjectId": "ARMORTEST1",
           "position": 3,
-          "gameObjectType": "GAME_OBJECT"
+          "gameObjectType": "WORLD_OBJECT"
         },
         {
-          "gameObjectId": "ARMORTEST2",
+          "gameObjectId": "ARMORTEST1",
           "position": 4,
-          "gameObjectType": "GAME_OBJECT"
+          "gameObjectType": "WORLD_OBJECT"
         },
         {
-          "gameObjectId": "ARMORTEST2",
+          "gameObjectId": "ARMORTEST1",
           "position": 5,
-          "gameObjectType": "GAME_OBJECT"
+          "gameObjectType": "WORLD_OBJECT"
         },
         {
-          "gameObjectId": "ARMORTEST2",
+          "gameObjectId": "ARMORTEST1",
           "position": 6,
-          "gameObjectType": "GAME_OBJECT"
+          "gameObjectType": "WORLD_OBJECT"
         },
         {
-          "gameObjectId": "ARMORTEST2",
+          "gameObjectId": "ARMORTEST1",
           "position": 7,
-          "gameObjectType": "GAME_OBJECT"
+          "gameObjectType": "WORLD_OBJECT"
         },
         {
-          "gameObjectId": "ARMORTEST2",
+          "gameObjectId": "ARMORTEST1",
           "position": 8,
-          "gameObjectType": "GAME_OBJECT"
+          "gameObjectType": "WORLD_OBJECT"
         },
         {
-          "gameObjectId": "ARMORTEST2",
+          "gameObjectId": "ARMORTEST1",
           "position": 9,
-          "gameObjectType": "GAME_OBJECT"
+          "gameObjectType": "WORLD_OBJECT"
         }
       ]
+
     },
     {
       "id": "FPS_LABEL",
       "type": "TEXT_OBJECT",
       "description": "FPS Label",
+      "absolutePositioning": true,
       "text": {
         "value": "FPS",
         "dynamic": false,
@@ -209,17 +211,19 @@
       "id": "PLAYER_LABEL",
       "type": "TEXT_OBJECT",
       "description": "Player Label",
+      "absolutePositioning": false,
       "text": {
         "value": "Player 1",
         "dynamic": false,
         "font": "FONT_ARIAL_REG",
-        "size": 11
+        "size": 12
       }
     },
     {
       "id": "FPS_VALUE",
       "type": "TEXT_OBJECT",
       "description": "FPS Value Text",
+      "absolutePositioning": true,
       "text": {
         "dynamic": true,
         "font": "FONT_ARIAL_REG",
