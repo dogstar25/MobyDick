@@ -36,8 +36,8 @@
       "filename": "assets/spaceship1.png"
     },
     {
-      "id": "TX_LEVEL1",
-      "description": "Level 1 Map",
+      "id": "TX_LEVEL1_BLUEPRINT",
+      "description": "Level 1 Bluprint",
       "filename": "assets/blueprints/level1.png",
       "retainSurface": true
     },
@@ -96,7 +96,14 @@
       "id": "TX_SMOKE_PARTICLE_1",
       "description": "Smoke particle",
       "filename": "assets/particle1.png"
+    },
+    {
+      "id": "TX_DRONE1_BLUEPRINT",
+      "description": "Drone 1 Blueprint",
+      "filename": "assets/blueprints/drone1_blueprint.png",
+      "retainSurface": true
     }
+
 
   ],
   "fonts": [

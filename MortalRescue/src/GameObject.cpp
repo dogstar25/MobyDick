@@ -185,7 +185,6 @@ GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float 
 	}
 
 	this->removeFromWorld = false;
-	this->isChildObject = false;
 	this->xSize = definition->xSize;
 	this->ySize = definition->ySize;
 
@@ -206,6 +205,8 @@ GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float 
 		this->currentAnimationState = "IDLE";
 	}
 
+	//Build children if they exist
+	this->buildChildren();
 
 }
 
@@ -451,7 +452,6 @@ void GameObject::buildChildren()
 			{
 				TextObject* textObject =
 					game->gameObjectManager.buildGameObject<TextObject>(childObjectId, 2, 2, 0);
-				textObject->isChildObject = true;
 				this->childObjects[position - 1].push_back(make_shared<TextObject>(*textObject));
 
 			}
@@ -459,7 +459,6 @@ void GameObject::buildChildren()
 			{
 				WorldObject* worldObject =
 					game->gameObjectManager.buildGameObject<WorldObject>(childObjectId, -5, -5, 0);
-				worldObject->isChildObject = true;
 				this->childObjects[position - 1].push_back(make_shared<WorldObject>(*worldObject));
 			}
 			else //default to GAME_OBJECT
@@ -467,7 +466,6 @@ void GameObject::buildChildren()
 
 				GameObject* gameObject =
 					game->gameObjectManager.buildGameObject<GameObject>(childObjectId, -5, -5, 0);
-				gameObject->isChildObject = true;
 				this->childObjects[position - 1].push_back(make_shared<GameObject>(*gameObject));
 			}
 

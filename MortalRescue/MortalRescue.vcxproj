@@ -176,6 +176,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CompositeObject.cpp" />
     <ClCompile Include="src\GUIEvent.cpp" />
     <ClCompile Include="src\ParticleEmission.cpp" />
     <ClCompile Include="src\Camera.cpp" />
@@ -203,6 +204,7 @@
     <ClCompile Include="src\WorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CompositeObject.h" />
     <ClInclude Include="src\GUIEvent.h" />
     <ClInclude Include="src\ParticleEmission.h" />
     <ClInclude Include="src\Camera.h" />
@@ -230,6 +232,7 @@
     <ClInclude Include="src\WorldObject.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\blueprints\drone1_blueprint.aseprite" />
     <None Include="assets\gameObjectPools.json" />
     <None Include="assets\gameObjects_Common.json" />
     <None Include="assets\gameObjects_Level1.json" />
@@ -248,6 +251,7 @@
     <None Include="zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\blueprints\drone1_blueprint.png" />
     <Image Include="assets\bowman1.png" />
     <Image Include="assets\bullet1.png" />
     <Image Include="assets\gina_Idle_64.png" />
@@ -257,6 +261,9 @@
     <Image Include="assets\particle1.png" />
     <Image Include="assets\pistolLady128_Run.png" />
     <Image Include="assets\pistolLady64_Run.png" />
+    <Image Include="assets\redArmor.png" />
+    <Image Include="assets\redArmorAngle.png" />
+    <Image Include="assets\redArmorPiece.png" />
     <Image Include="assets\spaceship1.png" />
     <Image Include="assets\swordLady64_Idle.png" />
     <Image Include="assets\tile1.png" />

@@ -5,6 +5,7 @@
 #include "PlayerObject.h"
 #include "WorldObject.h"
 #include "TextObject.h"
+#include "CompositeObject.h"
 #include "GameObjectDefinition.h"
 
 #include <SDL.h>

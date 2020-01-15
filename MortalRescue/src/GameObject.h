@@ -78,8 +78,7 @@ public:
 		currentAnimationState;
 	bool
 		isAnimated,
-		removeFromWorld,
-		isChildObject;
+		removeFromWorld;
 
 	SDL_Color 
 		color;

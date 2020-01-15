@@ -52,8 +52,11 @@ void Weapon::fireOld()
 		float xAdj = cos(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->xOffset);
 		float yAdj = sin(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->yOffset);
 		*/
-		float xAdj = cos(this->weaponWieldingObject->physicsBody->GetAngle()) *(64/25);
-		float yAdj = sin(this->weaponWieldingObject->physicsBody->GetAngle()) *(64/25);
+		//float xAdj = cos(this->weaponWieldingObject->physicsBody->GetAngle()) *(64/25);
+		//float yAdj = sin(this->weaponWieldingObject->physicsBody->GetAngle()) *(64/25);
+
+		float xAdj = 0;
+		float yAdj = 0;
 
 		dx += xAdj;
 		dy += yAdj;
@@ -75,6 +78,12 @@ void Weapon::fireOld()
 		bullet->physicsBody->SetBullet(true);
 
 		bullet->color = { 255,255,255,255 };
+
+
+		game->debugPanel->addItem("FireOldX", to_string(positionVector.x));
+		game->debugPanel->addItem("FireOldY", to_string(positionVector.y));
+		game->debugPanel->addItem("FireOldAngle", to_string(angle));
+
 
 		//Add the bullet object to the main gameObject collection
 		game->addGameObject(bullet, game->MAIN);

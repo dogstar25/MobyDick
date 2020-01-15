@@ -90,6 +90,9 @@
     <ClCompile Include="src\GUIEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\CompositeObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h">
@@ -167,6 +170,9 @@
     <ClInclude Include="src\GUIEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\CompositeObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\textureAssets.json" />
@@ -185,6 +191,7 @@
     <None Include="assets\GUIObjects.json" />
     <None Include="assets\blueprints\level_test.ase" />
     <None Include="assets\blueprints\level1.ase" />
+    <None Include="assets\blueprints\drone1_blueprint.aseprite" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png">
@@ -239,6 +246,18 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\blueprints\level1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\redArmor.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\redArmorAngle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\redArmorPiece.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprints\drone1_blueprint.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

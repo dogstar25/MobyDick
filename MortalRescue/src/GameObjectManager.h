@@ -38,8 +38,6 @@ public:
 	{
 
 		gameObjectType* gameObject = new gameObjectType(gameObjectId, xMapPos, yMapPos, angle);
-		gameObject->buildChildren();
-
 
 		//string test = typeid(gameObject).name();
 		return gameObject;

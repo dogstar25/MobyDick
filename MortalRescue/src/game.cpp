@@ -3,6 +3,7 @@
 #include "TextObject.h"
 #include "WorldObject.h"
 #include "ParticleObject.h"
+#include "CompositeObject.h"
 #include "LevelManager.h"
 #include "TextureManager.h"
 #include "GameObjectManager.h"
@@ -75,7 +76,7 @@ bool Game::init()
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 
 		//Build the world for a particular level
-		this->buildWorld("TX_LEVEL1");
+		this->buildWorld("TX_LEVEL1_BLUEPRINT");
 
 		//Initialize the clock object
 		this->clock.init();
@@ -114,8 +115,18 @@ bool Game::init()
 	gameObject = gameObjectManager.buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
 	this->addGameObject(gameObject, this->MAIN);
 
-	gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK", 13, 13, 0);
+	gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK128", 13, 13, 0);
 	this->addGameObject(gameObject, this->MAIN);
+
+	gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK8", 11, 11, 0);
+	this->addGameObject(gameObject, this->MAIN);
+
+	gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK4", 10, 10, 0);
+	this->addGameObject(gameObject, this->MAIN);
+
+	gameObject = gameObjectManager.buildGameObject <CompositeObject>("DRONE", 11, 11, 0);
+	this->addGameObject(gameObject, this->MAIN);
+
 
 	//Create the debug panel if its turned on
 	if (this->config.debugPanel == true)
@@ -365,7 +376,8 @@ void Game::handleEvents() {
 			//}
 
 				//this->testExplosion(&event);
-			this->player->weapon->fireOld();
+			//this->player->weapon->fireOld();
+			this->player->weapon->fire();
 
 			break;
 		default:
@@ -377,7 +389,7 @@ void Game::handleEvents() {
 void Game::buildWorld(string levelId)
 {
 	//load all of the information needed to build the level
-	this->levelManager.loadLevel("TX_LEVEL1");
+	this->levelManager.loadLevelBlueprint("TX_LEVEL1_BLUEPRINT");
 
 	//Initialize world bounds and gridsize based on current level loaded info
 	this->initWorldBounds();
@@ -386,7 +398,7 @@ void Game::buildWorld(string levelId)
 	this->camera.init(&this->worldBounds);
 
 	//Build the actual level gameobjects
-	this->buildLevel("TX_LEVEL1");
+	this->buildLevel("TX_LEVEL1_BLUEPRINT");
 
 }
 

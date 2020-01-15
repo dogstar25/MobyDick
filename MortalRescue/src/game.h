@@ -100,10 +100,6 @@ using namespace std::chrono;
 
 class Game {
 
-/*
-Main Game State
-*/
-
 
 public:
 

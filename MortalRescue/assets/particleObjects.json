@@ -20,6 +20,30 @@
       "texture": "TX_SMOKE_PARTICLE_1",
       "xSize": 0.28,
       "ySize": 0.28
+    },
+    {
+      "id": "BULLET1",
+      "description": "Bullet 1",
+      "speed": 50,
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 1.0,
+        "restitution": 0.0,
+        "density": 12.5,
+        "linearDamping": 0.0,
+        "angularDamping": 12.0,
+        "collisionCategory": 8
+      },
+      "xSize": 0.24,
+      "ySize": 0.12,
+      "animations": [
+        {
+          "id": "ACTIVE",
+          "texture": "TX_BULLET1",
+          "speed": 0.02, //time in seconds for each frame. Lower the faster
+          "frames": 4
+        }
+      ]
     }
   ]
 

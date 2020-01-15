@@ -27,7 +27,7 @@ static const unsigned char bottomWall = 0b0111;
 static const unsigned char leftWall = 0b1110;
 static const unsigned char column = 0b0000;
 
-void LevelManager::loadLevel(string levelId)
+void LevelManager::loadLevelBlueprint(string levelId)
 {
 
 	SDL_Texture* levelImage;

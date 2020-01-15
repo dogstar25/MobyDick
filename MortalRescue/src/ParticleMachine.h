@@ -17,8 +17,8 @@ public:
 	void add(ParticleEmission*);
 	void fireBullet(
 		string poolId,
-		int originX,
-		int originY,
+		float originX,
+		float originY,
 		float angle,
 		int force
 	);
