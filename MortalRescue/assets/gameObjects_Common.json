@@ -227,10 +227,52 @@
       "ySize": 5.12,
       "speed": 11.5,
       "composite": {
-        "blueprint": "drone1.png"
+        "levels": [
+          {
+            "level": 1,
+            "strength": 4,
+            "color": {
+              "red": 255,
+              "green": 0,
+              "blue": 0,
+              "alpha": 255
+            }
+          },
+          {
+            "level": 2,
+            "strength": 5,
+            "color": {
+              "red": 255,
+              "green": 0,
+              "blue": 0,
+              "alpha": 255
+            }
+          }
+        ],
+        "blueprint": {
+          "texture": "TX_DRONE1_BLUEPRINT",
+          "legend": [
+            {
+              "color": {
+                "red": 255,
+                "green": 0,
+                "blue": 0,
+                "alpha": 255
+              },
+              "gameObjectId": "FULL_PIECE"
+            },
+            {
+              "color": {
+                "red": 255,
+                "green": 0,
+                "blue": 0,
+                "alpha": 255
+              },
+              "gameObjectId": "ANGLE1_PIECE"
+            }
+          ]
+        }
       }
-
     }
-
   ]
 }

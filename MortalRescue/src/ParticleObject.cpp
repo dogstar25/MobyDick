@@ -82,12 +82,14 @@ void ParticleObject::render()
 	//Get render texture src rectangle
 	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
 
+	//
+	//TODO:Can we move the next 3 lines with color change to the worlObject render and then just use worldObjectRender
+	//
+	SDL_SetTextureAlphaMod(texture, this->color.a);
 
-	SDL_SetTextureAlphaMod(texture, this->color.a); //seems helpful for particles
+	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD);
 
-	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD); //alpha ADD seems good for particles
-
-	//Set the render color based on the partticles' color
+	//Set the render color based on the objects color
 	SDL_SetTextureColorMod(texture, this->color.r, this->color.g, this->color.b);
 
 	//Get the angle of the object and convert it from Radians to Degrees for SDL

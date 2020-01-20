@@ -181,7 +181,6 @@
     <None Include="SDL2_image.dll" />
     <None Include="zlib1.dll" />
     <None Include="assets\gameConfig.json" />
-    <None Include="assets\gameObjects_Common.json" />
     <None Include="assets\gameObjects_Level1.json" />
     <None Include="libfreetype-6.dll" />
     <None Include="SDL2_ttf.dll" />
@@ -192,6 +191,7 @@
     <None Include="assets\blueprints\level_test.ase" />
     <None Include="assets\blueprints\level1.ase" />
     <None Include="assets\blueprints\drone1_blueprint.aseprite" />
+    <None Include="assets\gameObjects_Common.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png">

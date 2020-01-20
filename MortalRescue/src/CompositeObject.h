@@ -13,16 +13,18 @@ using namespace std;
 
 class GameObjectPiece
 {
+
 	bool isDestroyed;
-	bool shouldLevelUp;
-	short level;
+	b2Vec2 parentPositionOffset;
+	short maxlevel;
+	short currentlevel;
+
 	float levelUpSpeed;
-	shared_ptr<GameObject>gameObject;
 	steady_clock::time_point time_snapshot;
 
-
+	shared_ptr<GameObject>gameObject;
+	
 };
-
 
 
 class CompositeObject :
