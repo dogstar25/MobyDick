@@ -75,6 +75,16 @@ struct Clock
 
 };
 
+
+/*
+Operator overloaded functions
+*/
+
+static bool operator ==(SDL_Color a, SDL_Color b) 
+{
+	return (a.r == b.r) && (a.g == b.g) && (a.b == b.b);
+}
+
 struct Config
 {
 public:

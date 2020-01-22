@@ -70,31 +70,11 @@ void ParticleObject::update()
 
 void ParticleObject::render()
 {
-	SDL_Rect *textureSourceRect = NULL, destRect;
 	SDL_Texture* texture = NULL;
 
-	//Get render destination rectangle
-	destRect = this->getRenderDestRect();
-
-	//Get texture
+	//Set particles texture to a blend mode
 	texture = this->getRenderTexture(texture);
-
-	//Get render texture src rectangle
-	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
-
-	//
-	//TODO:Can we move the next 3 lines with color change to the worlObject render and then just use worldObjectRender
-	//
-	SDL_SetTextureAlphaMod(texture, this->color.a);
-
 	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD);
-
-	//Set the render color based on the objects color
-	SDL_SetTextureColorMod(texture, this->color.r, this->color.g, this->color.b);
-
-	//Get the angle of the object and convert it from Radians to Degrees for SDL
-	float angle = this->physicsBody->GetAngle();
-	angle = angle * 180 / M_PI;
 
 	WorldObject::render();
 }

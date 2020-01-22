@@ -11,17 +11,13 @@ class GameObject;
 using namespace std::chrono;
 using namespace std;
 
-class GameObjectPiece
+struct GameObjectPiece
 {
 
 	bool isDestroyed;
 	b2Vec2 parentPositionOffset;
-	short maxlevel;
 	short currentlevel;
-
-	float levelUpSpeed;
 	steady_clock::time_point time_snapshot;
-
 	shared_ptr<GameObject>gameObject;
 	
 };
@@ -40,6 +36,10 @@ public:
 	SDL_Color angleTopRight = { 255,209,0,255 };
 	SDL_Color angleTopLeft = { 255,128,164,255 };
 
+	short maxlevel;
+	float levelUpSpeed;
+
+
 	CompositeObject();
 	CompositeObject(string, float, float, float);
 	~CompositeObject();
@@ -47,12 +47,11 @@ public:
 	void update();
 	void render();
 	void buildComposite();
+	void buildPiece(CompositeLegendItem, int,int);
 	void updatePieces();
 
 	//Collection of all of the gameObjects that make up this composite object
 	vector<GameObjectPiece>pieces;
-
-	Texture* blueprint;
 
 };
 

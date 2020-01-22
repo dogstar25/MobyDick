@@ -12,14 +12,14 @@
         //        "collisionRadius": 0.16,
         "friction": 0.0,
         "density": 1.5,
-        "restitution": 1.5,
+        "restitution": 0.1,
         "linearDamping": 0.0,
         "angularDamping": 0.0,
         "collisionCategory": 16
       },
       "texture": "TX_SMOKE_PARTICLE_1",
-      "xSize": 0.28,
-      "ySize": 0.28
+      "xSize": 1.28,
+      "ySize": 1.28
     },
     {
       "id": "BULLET1",

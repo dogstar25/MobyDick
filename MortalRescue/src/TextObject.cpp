@@ -104,7 +104,7 @@ void TextObject::render()
 	//Get render texture src rectangle
 	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
 
-	game->textureManager.render(texture, textureSourceRect, &destRect, 0);
+	game->textureManager.render(texture, this->color, textureSourceRect, &destRect, 0);
 
 
 }

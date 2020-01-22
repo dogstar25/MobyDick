@@ -103,25 +103,16 @@ void GameObject::render()
 	//Get render destination rectangle
 	destRect = this->getRenderDestRect();
 
-	//If this is a primitive, then render a rectangle with the objects primitive color
-	//Othwise, render the texture
-	if (this->definition->isPrimitive == true)
-	{
-		game->textureManager.render(&destRect, this->definition->color);
-	}
-	else
-	{
-		//Get texture
-		texture = this->getRenderTexture(texture);
+	//Get texture
+	texture = this->getRenderTexture(texture);
 
-		//Get render texture src rectangle
-		textureSourceRect = this->getRenderTextureRect(textureSourceRect);
+	//Get render texture src rectangle
+	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
 
-		//All angles on objects should be in radians to kep consistency with box2d objects
-		//it needs to be converted to degrees for SDL to display
-		float angle = game->util.radiansToDegrees(this->angle);
-		game->textureManager.render(texture, textureSourceRect, &destRect, angle);
-	}
+	//All angles on objects should be in radians to kep consistency with box2d objects
+	//it needs to be converted to degrees for SDL to display
+	float angle = game->util.radiansToDegrees(this->angle);
+	game->textureManager.render(texture, this->color, textureSourceRect, &destRect, angle);
 
 	//test outlining object
 	if (this->definition->isMouseSelectable)
@@ -187,6 +178,9 @@ GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float 
 	this->removeFromWorld = false;
 	this->xSize = definition->xSize;
 	this->ySize = definition->ySize;
+
+	//color
+	this->color = definition->color;
 
 	//Get pointer to the texture
 	this->texture = game->textureManager.getTexture(definition->textureId);

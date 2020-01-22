@@ -18,14 +18,13 @@
     {
       "id": "ROCK128",
       "description": "A Red Rock",
-      "primative": {
-        "color": {
-          "red": 12,
-          "green": 122,
-          "blue": 200,
-          "alpha": 5,
-          "random": false
-        }
+      "texture": "TX_SQUARE_128",
+      "color": {
+        "red": 12,
+        "green": 122,
+        "blue": 200,
+        "alpha": 200,
+        "random": false
       },
       "xSize": 128,
       "ySize": 128
@@ -33,14 +32,12 @@
     {
       "id": "ROCK8",
       "description": "A Red Rock",
-      "primative": {
-        "color": {
-          "red": 12,
-          "green": 122,
-          "blue": 200,
-          "alpha": 5,
-          "random": false
-        }
+      "color": {
+        "red": 255,
+        "green": 0,
+        "blue": 0,
+        "alpha": 255,
+        "random": false
       },
       "xSize": 8,
       "ySize": 8
@@ -48,14 +45,12 @@
     {
       "id": "ROCK4",
       "description": "A Red Rock",
-      "primative": {
-        "color": {
-          "red": 12,
-          "green": 122,
-          "blue": 200,
-          "alpha": 5,
-          "random": false
-        }
+      "color": {
+        "red": 12,
+        "green": 122,
+        "blue": 200,
+        "alpha": 5,
+        "random": false
       },
       "xSize": 4,
       "ySize": 4
@@ -210,68 +205,6 @@
         "dynamic": true,
         "font": "FONT_ARIAL_REG",
         "size": 16
-      }
-    },
-    {
-      "id": "DRONE",
-      "description": "Enemy Guard Drone",
-      "physicsObject": {
-        "type": "B2_DYNAMIC",
-        "friction": 0.0,
-        "density": 5.5,
-        "linearDamping": 0.2,
-        "angularDamping": 10.0,
-        "collisionCategory": 2
-      },
-      "xSize": 5.12,
-      "ySize": 5.12,
-      "speed": 11.5,
-      "composite": {
-        "levels": [
-          {
-            "level": 1,
-            "strength": 4,
-            "color": {
-              "red": 255,
-              "green": 0,
-              "blue": 0,
-              "alpha": 255
-            }
-          },
-          {
-            "level": 2,
-            "strength": 5,
-            "color": {
-              "red": 255,
-              "green": 0,
-              "blue": 0,
-              "alpha": 255
-            }
-          }
-        ],
-        "blueprint": {
-          "texture": "TX_DRONE1_BLUEPRINT",
-          "legend": [
-            {
-              "color": {
-                "red": 255,
-                "green": 0,
-                "blue": 0,
-                "alpha": 255
-              },
-              "gameObjectId": "FULL_PIECE"
-            },
-            {
-              "color": {
-                "red": 255,
-                "green": 0,
-                "blue": 0,
-                "alpha": 255
-              },
-              "gameObjectId": "ANGLE1_PIECE"
-            }
-          ]
-        }
       }
     }
   ]

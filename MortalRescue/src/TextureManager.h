@@ -32,7 +32,7 @@ public:
 	~TextureManager();
 
 	bool init(SDL_Window*);
-	void render(SDL_Texture* texture, SDL_Rect* srcRect, SDL_Rect* destRect, float angle );
+	void render(SDL_Texture* texture, SDL_Color color, SDL_Rect* srcRect, SDL_Rect* destRect, float angle );
 	void render(SDL_Rect* destRect, SDL_Color color);
 
 	bool present();

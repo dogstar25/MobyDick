@@ -37,10 +37,11 @@ GameObjectManager::~GameObjectManager()
 
 bool GameObjectManager::init()
 {
-	load("gameObjects_Common");
-	load("particleObjects");
-	load("gameObjects_Level1");
-	load("GUIObjects");
+	load("gameObjectDefinitions/commonObjects");
+	load("gameObjectDefinitions/particleObjects");
+	load("gameObjectDefinitions/level1Objects");
+	load("gameObjectDefinitions/GUIObjects");
+	load("gameObjectDefinitions/compositeObjects");
 
 	return true;
 }
@@ -72,24 +73,30 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		//Game Object Type
 		gameObjectDefinition->type = itr["type"].asString();
 
-		//If this is a primitive, then it has no texture and needs a color
-		if (itr["primative"].isNull() == false)
+		//color
+		if (itr["color"].isNull() == false)
 		{
-			gameObjectDefinition->isPrimitive = true;
-
-			//color
-			if (itr["primative"]["color"]["random"].asBool() == true)
+			if (itr["color"]["random"].isNull() == false &&
+				itr["color"]["random"].asBool() == true)
 			{
-				gameObjectDefinition->color = game->util.generateRandomColor();
+					gameObjectDefinition->color = game->util.generateRandomColor();
 			}
 			else
 			{
-				gameObjectDefinition->color.r = itr["primative"]["color"]["red"].asInt();
-				gameObjectDefinition->color.g = itr["primative"]["color"]["green"].asInt();
-				gameObjectDefinition->color.b = itr["primative"]["color"]["blue"].asInt();
-				gameObjectDefinition->color.a = itr["primative"]["color"]["alpha"].asInt();
+				gameObjectDefinition->color.r = itr["color"]["red"].asInt();
+				gameObjectDefinition->color.g = itr["color"]["green"].asInt();
+				gameObjectDefinition->color.b = itr["color"]["blue"].asInt();
+				gameObjectDefinition->color.a = itr["color"]["alpha"].asInt();
 			}
 		}
+		else //default to white
+		{
+			gameObjectDefinition->color.r = 255;
+			gameObjectDefinition->color.g = 255;
+			gameObjectDefinition->color.b = 255;
+			gameObjectDefinition->color.a = 255;
+		}
+
 
 		//If this is a physics object then build the box2d body
 		if (itr["physicsObject"].isNull() == false)
@@ -173,6 +180,34 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 			}
 		}
 
+		//CompositeObject Details
+		if (itr["composite"].isNull() == false)
+		{
+			gameObjectDefinition->isCompositeObject = true;
+
+			//Composite bluprint textureId
+			gameObjectDefinition->compositeDetails.blueprint.textureId =
+				itr["composite"]["blueprint"]["texture"].asString();
+
+			//loop though all legend items that define how the composite should be built
+			CompositeLegendItem legendItem;
+			for (auto legendItr : itr["composite"]["blueprint"]["legend"])
+			{
+				//GameObjectId
+				legendItem.gameObjectId = legendItr["gameObjectId"].asString();
+
+				//GameObject type
+				legendItem.gameObjectType = legendItr["gameObjectType"].asString();
+				//color
+				legendItem.color.r = legendItr["color"]["red"].asInt();
+				legendItem.color.g = legendItr["color"]["green"].asInt();
+				legendItem.color.b = legendItr["color"]["blue"].asInt();
+				legendItem.color.a = legendItr["color"]["alpha"].asInt();
+
+				gameObjectDefinition->compositeDetails.blueprint.legend.push_back(legendItem);
+
+			}
+		}
 
 		this->gameObjectDefinitions[gameObjectDefinition->id] = gameObjectDefinition;
 

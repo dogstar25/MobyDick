@@ -118,7 +118,7 @@ void WorldObject::render()
 	float angle = this->physicsBody->GetAngle();
 	angle = angle * 180 / M_PI;
 
-	game->textureManager.render(texture, textureSourceRect, &destRect, angle);
+	game->textureManager.render(texture, this->color, textureSourceRect, &destRect, angle);
 
 	//Loop through any possible child objects, in all 9 positions, and render them too
 	if (this->definition->hasChildObjects == true)
