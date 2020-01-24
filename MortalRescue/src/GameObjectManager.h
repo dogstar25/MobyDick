@@ -4,6 +4,7 @@
 #include <map>
 
 #include "TextObject.h"
+//#include "CompositeObject.h"
 
 #include "GameObjectDefinition.h"
 

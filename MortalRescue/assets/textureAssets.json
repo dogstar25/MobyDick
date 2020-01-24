@@ -98,6 +98,11 @@
       "filename": "assets/particle1.png"
     },
     {
+      "id": "TX_SMOKE_PARTICLE_2",
+      "description": "Glow particle",
+      "filename": "assets/particle2.png"
+    },
+    {
       "id": "TX_DRONE1_BLUEPRINT",
       "description": "Drone 1 Blueprint",
       "filename": "assets/blueprints/drone1_blueprint.png",

@@ -86,9 +86,9 @@ void GameObjectContactListener::BeginContact(b2Contact* contact) {
 				x,	// X position
 				y,	//Y Position
 				5,	//Force Min
-				19,	//force Max
-				1.55,	//Lifetime Min
-				3.55,	//Lifetime Max
+				5,	//force Max
+				0.55,	//Lifetime Min
+				1.55,	//Lifetime Max
 				true,	// Alpha fade
 				0,	//Angle min
 				360,	//Angle Max
@@ -97,7 +97,7 @@ void GameObjectContactListener::BeginContact(b2Contact* contact) {
 				colorMin,	//Color Min
 				colorMax,	//Color Max
 				40,	//Particle count min
-				100	//Particle count max
+				50	//Particle count max
 			);
 			game->particleMachine.add(particleEmission);
 

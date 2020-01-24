@@ -101,6 +101,7 @@ public:
 class PlayerObject;
 class GameObject;
 class ParticleObject;
+class CompositeObject;
 class ParticleMachine;
 
 
@@ -146,6 +147,7 @@ public:
 	void addGameObject(TextObject* gameObject, int);
 	void addGameObject(WorldObject* gameObject, int);
 	void addGameObject(ParticleObject* gameObject, int);
+	void addGameObject(CompositeObject* gameObject, int);
 	bool getConfig();
 	void buildWorld(string);
 	void testExplosion(SDL_Event*);

@@ -29,14 +29,11 @@ void CompositeObject::render()
 {
 	WorldObject::render();
 
-	/* from particle render
-	SDL_SetTextureAlphaMod(texture, this->color.a); //seems helpful for particles
-
-	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD); //alpha ADD seems good for particles
-
-	//Set the render color based on the partticles' color
-	SDL_SetTextureColorMod(texture, this->color.r, this->color.g, this->color.b);
-	*/
+	for (auto pieceObject : this->pieces)
+	{
+		pieceObject.gameObject->render();
+	}
+	
 
 }
 
@@ -111,17 +108,41 @@ void CompositeObject::buildPiece(CompositeLegendItem legendItem, int xPos, int y
 		}
 
 	//calculate the X,Y offset position in relating to the base object
-	SDL_Rect parentPositionRect = this->getPositionRect();
-	xOffset = parentPositionRect.x + (xPos * piece.gameObject->xSize);
-	yOffset = parentPositionRect.y + (yPos * piece.gameObject->ySize);
+	//SDL_Rect parentPositionRect = this->getPositionRect();
+	//xOffset = parentPositionRect.x + (xPos * piece.gameObject->xSize);
+	//yOffset = parentPositionRect.y + (yPos * piece.gameObject->ySize);
+
+	xOffset = xPos * piece.gameObject->xSize;
+	yOffset = yPos * piece.gameObject->ySize;
 
 	piece.parentPositionOffset.x = xOffset;
 	piece.parentPositionOffset.y = yOffset;
+
+	//Temp color setting
+	piece.gameObject->color = { 255,0,0,255 };
+
+	this->pieces.push_back(piece);
 
 }
 
 void CompositeObject::updatePieces()
 {
+	b2Vec2 piecePosition{ 0,0 };
+
+	for (auto pieceObject : this->pieces)
+	{
+
+		//calculate the X,Y offset position in relating to the base object
+		SDL_Rect parentPositionRect = this->getPositionRect();
+
+		//piecePosition
+		piecePosition.x = parentPositionRect.x + pieceObject.parentPositionOffset.x;
+		piecePosition.y = parentPositionRect.y + pieceObject.parentPositionOffset.y;
+
+		pieceObject.gameObject->setPosition(piecePosition, 0);
+
+
+	}
 
 
 

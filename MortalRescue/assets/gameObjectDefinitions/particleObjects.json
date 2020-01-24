@@ -17,13 +17,20 @@
         "angularDamping": 0.0,
         "collisionCategory": 16
       },
-      "texture": "TX_SMOKE_PARTICLE_1",
+      "texture": "TX_SMOKE_PARTICLE_2",
+      "color": {
+        "red": 214,
+        "green": 36,
+        "blue": 17,
+        "alpha": 175
+      },
       "xSize": 1.28,
       "ySize": 1.28
     },
     {
       "id": "BULLET1",
       "description": "Bullet 1",
+      "type": "WORLD_OBJECT",
       "speed": 50,
       "physicsObject": {
         "type": "B2_DYNAMIC",

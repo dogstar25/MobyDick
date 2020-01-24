@@ -3,6 +3,7 @@
     {
       "id": "GUIPausePanel",
       "description": "Pause Panel",
+      "type": "GAME_OBJECT",
       "xSize": 176,
       "ySize": 164,
       "absolutePositioning": true,
@@ -18,24 +19,22 @@
       "childObjects": [
         {
           "gameObjectId": "ContinueButton",
-          "position": 5,
-          "gameObjectType": "GAME_OBJECT"
+          "position": 5
         },
         {
           "gameObjectId": "QuitButton",
-          "position": 5,
-          "gameObjectType": "GAME_OBJECT"
+          "position": 5
         },
         {
           "gameObjectId": "SettingsButton",
-          "position": 5,
-          "gameObjectType": "GAME_OBJECT"
+          "position": 5
         }
       ]
     },
     {
       "id": "QuitButton",
       "description": "Quit Button",
+      "type": "GAME_OBJECT",
       "xSize": 128,
       "ySize": 32,
       "absolutePositioning": true,
@@ -51,8 +50,7 @@
       "childObjects": [
         {
           "gameObjectId": "QUIT_LABEL",
-          "position": 5,
-          "gameObjectType": "TEXT_OBJECT"
+          "position": 5
         }
       ]
     },
@@ -60,6 +58,7 @@
     {
       "id": "ContinueButton",
       "description": "Continue Button",
+      "type": "GAME_OBJECT",
       "xSize": 128,
       "ySize": 32,
       "absolutePositioning": true,
@@ -75,8 +74,7 @@
       "childObjects": [
         {
           "gameObjectId": "CONTINUE_LABEL",
-          "position": 5,
-          "gameObjectType": "TEXT_OBJECT"
+          "position": 5
         }
       ]
     },
@@ -84,6 +82,7 @@
     {
       "id": "SettingsButton",
       "description": "Settings Button",
+      "type": "GAME_OBJECT",
       "xSize": 128,
       "ySize": 32,
       "absolutePositioning": true,
@@ -99,8 +98,7 @@
       "childObjects": [
         {
           "gameObjectId": "SETTINGS_LABEL",
-          "position": 5,
-          "gameObjectType": "TEXT_OBJECT"
+          "position": 5
         }
       ]
     },

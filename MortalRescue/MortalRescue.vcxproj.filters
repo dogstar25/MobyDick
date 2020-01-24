@@ -278,6 +278,9 @@
     <Image Include="assets\pieceFull_8.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\particle2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\arial.ttf" />

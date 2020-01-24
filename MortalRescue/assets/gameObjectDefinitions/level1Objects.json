@@ -12,8 +12,8 @@
       },
       "texture": "TX_WALL1_OPEN",
       "color": {
-        "red": 139,
-        "green": 172,
+        "red": 38,
+        "green": 195,
         "blue": 15,
         "alpha": 255,
         "random": false
@@ -32,8 +32,8 @@
       },
       "texture": "TX_WALL1_COLUMN",
       "color": {
-        "red": 139,
-        "green": 172,
+        "red": 38,
+        "green": 195,
         "blue": 15,
         "alpha": 255,
         "random": false
@@ -52,8 +52,8 @@
       },
       "texture": "TX_WALL1_CORNER",
       "color": {
-        "red": 139,
-        "green": 172,
+        "red": 38,
+        "green": 195,
         "blue": 15,
         "alpha": 255,
         "random": false
@@ -72,8 +72,8 @@
       },
       "texture": "TX_WALL1_END",
       "color": {
-        "red": 139,
-        "green": 172,
+        "red": 38,
+        "green": 195,
         "blue": 15,
         "alpha": 255,
         "random": false
@@ -92,8 +92,8 @@
       },
       "texture": "TX_WALL1_HALL",
       "color": {
-        "red": 139,
-        "green": 172,
+        "red": 38,
+        "green": 195,
         "blue": 15,
         "alpha": 255,
         "random": false
@@ -112,8 +112,8 @@
       },
       "texture": "TX_WALL1_WALL",
       "color": {
-        "red": 139,
-        "green": 172,
+        "red": 38,
+        "green": 195,
         "blue": 15,
         "alpha": 255,
         "random": false

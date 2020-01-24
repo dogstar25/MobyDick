@@ -13,7 +13,6 @@
 #include "ParticleObject.h"
 
 
-
 bool TextureManager::init(SDL_Window* pWindow)
 {
 

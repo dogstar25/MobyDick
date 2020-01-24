@@ -199,30 +199,30 @@ uint16 WorldObject::setCollisionMask(uint16 category)
 	uint16 mask=0;
 
 	switch(category) {
-	case PLAYER:
-		mask = WALL | PARTICLE1 | PARTICLE2 | PARTICLE3 | ENEMY_FRAME;
-		break;
-	case WALL:
-		mask = PLAYER | PARTICLE1 | PARTICLE2 | PARTICLE3 | ENEMY_FRAME | PLAYER_BULLET;
-		break;
-	case PLAYER_BULLET:
-		mask = WALL;
-		break;
-	case PARTICLE1:
-		mask = WALL | PLAYER | ENEMY_ARMOR;
-		break;
-	case PARTICLE2:
-		mask = WALL | PLAYER | ENEMY_ARMOR;
-		break;
-	case PARTICLE3:
-		mask = WALL | PLAYER | ENEMY_ARMOR;
-		break;
-	case ENEMY_FRAME:
-		mask = WALL | PLAYER ;
-		break;
-	case ENEMY_ARMOR:
-		mask = PLAYER_BULLET;
-		break;
+		case PLAYER:
+			mask = WALL | PARTICLE1 | PARTICLE2 | PARTICLE3 | ENEMY_FRAME;
+			break;
+		case WALL:
+			mask = PLAYER | PARTICLE1 | PARTICLE2 | PARTICLE3 | ENEMY_FRAME | PLAYER_BULLET;
+			break;
+		case PLAYER_BULLET:
+			mask = WALL;
+			break;
+		case PARTICLE1:
+			mask = WALL | PLAYER | ENEMY_ARMOR;
+			break;
+		case PARTICLE2:
+			mask = WALL | PLAYER | ENEMY_ARMOR;
+			break;
+		case PARTICLE3:
+			mask = WALL | PLAYER | ENEMY_ARMOR;
+			break;
+		case ENEMY_FRAME:
+			mask = WALL | PLAYER ;
+			break;
+		case ENEMY_ARMOR:
+			mask = PLAYER_BULLET;
+			break;
 
 
 	}

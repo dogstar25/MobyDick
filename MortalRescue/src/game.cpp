@@ -91,6 +91,7 @@ bool Game::init()
 	PlayerObject* playerObject = NULL;
 	WorldObject* worldObject = NULL;
 	TextObject* textObject = NULL;
+	CompositeObject* compositeObject = NULL;
 
 
 	//Create the main player object
@@ -115,17 +116,15 @@ bool Game::init()
 	gameObject = gameObjectManager.buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
 	this->addGameObject(gameObject, this->MAIN);
 
-	gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK128", 13, 13, 0);
-	this->addGameObject(gameObject, this->MAIN);
+	//gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK128", 13, 13, 0);
+	//this->addGameObject(gameObject, this->MAIN);
 
-	gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK8", 11, 11, 0);
-	this->addGameObject(gameObject, this->MAIN);
+	worldObject = gameObjectManager.buildGameObject <WorldObject>("WALL1_HALL", 4, 4, 0);
+	worldObject->xSize = 384;
+	this->addGameObject(worldObject, this->MAIN);
 
-	gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK4", 10, 10, 0);
-	this->addGameObject(gameObject, this->MAIN);
-
-	gameObject = gameObjectManager.buildGameObject <CompositeObject>("DRONE", 11, 11, 0);
-	this->addGameObject(gameObject, this->MAIN);
+	compositeObject = gameObjectManager.buildGameObject <CompositeObject>("DRONE", 11, 11, 0);
+	this->addGameObject(compositeObject, this->MAIN);
 
 
 	//Create the debug panel if its turned on
@@ -313,6 +312,13 @@ void Game::addGameObject(TextObject* gameObject, int layer)
 	this->gameObjectCount++;
 }
 
+void Game::addGameObject(CompositeObject* gameObject, int layer)
+{
+
+	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
+	this->gameCollections[layer].gameObjects.push_back(make_unique<CompositeObject>(*gameObject));
+	this->gameObjectCount++;
+}
 
 bool Game::getConfig()
 {
