@@ -95,7 +95,7 @@ bool Game::init()
 
 
 	//Create the main player object
-	playerObject = gameObjectManager.buildGameObject <PlayerObject>("GINA_64", 10, 10, 0);
+	playerObject = gameObjectManager.buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
 	this->player = make_unique<PlayerObject>(*playerObject);
 	this->player->addWeapon("BULLET1", 0, 0);
 
@@ -119,8 +119,7 @@ bool Game::init()
 	//gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK128", 13, 13, 0);
 	//this->addGameObject(gameObject, this->MAIN);
 
-	worldObject = gameObjectManager.buildGameObject <WorldObject>("WALL1_HALL", 4, 4, 0);
-	worldObject->xSize = 384;
+	worldObject = gameObjectManager.buildGameObject <WorldObject>("FULL_PIECE", 4, 4, 0);
 	this->addGameObject(worldObject, this->MAIN);
 
 	compositeObject = gameObjectManager.buildGameObject <CompositeObject>("DRONE", 11, 11, 0);

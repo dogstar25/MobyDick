@@ -109,6 +109,12 @@
       "retainSurface": true
     },
     {
+      "id": "TX_DRONE1_TEST",
+      "description": "Drone 1 Test Blueprint",
+      "filename": "assets/blueprints/drone1_test.png",
+      "retainSurface": true
+    },
+    {
       "id": "TX_SQUARE_128",
       "description": "128 x 128 square",
       "filename": "assets/square_128.png"

@@ -23,6 +23,7 @@ public:
 	void update();
 	void render();
 	void setPosition(b2Vec2, float);
+	void setActive(bool);
 	SDL_Rect  getRenderDestRect(); 
 	SDL_Rect  getPositionRect();
 
@@ -32,5 +33,8 @@ public:
 	b2Body* physicsBody;
 
 	float speed;
+	float strength; // used for bullets and piece objects to determine destruction criteria
+	
+
 };
 

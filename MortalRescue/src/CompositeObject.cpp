@@ -31,7 +31,11 @@ void CompositeObject::render()
 
 	for (auto pieceObject : this->pieces)
 	{
-		pieceObject.gameObject->render();
+		if(pieceObject.isDestroyed == false)
+		{
+			pieceObject.gameObject->render();
+		}
+		
 	}
 	
 
@@ -97,14 +101,14 @@ void CompositeObject::buildPiece(CompositeLegendItem legendItem, int xPos, int y
 		{
 		WorldObject* worldObject =
 			game->gameObjectManager.buildGameObject<WorldObject>(legendItem.gameObjectId, -5, -5, 0);
-		piece.gameObject = make_shared<WorldObject>(*worldObject);
+		piece.gameObject = worldObject;
 		
 		}
 	else //default to GAME_OBJECT
 		{
 		GameObject* gameObject =
 			game->gameObjectManager.buildGameObject<GameObject>(legendItem.gameObjectId, -5, -5, 0);
-		piece.gameObject = make_shared<GameObject>(*gameObject);
+		piece.gameObject = gameObject;
 		}
 
 	//calculate the X,Y offset position in relating to the base object
@@ -121,29 +125,71 @@ void CompositeObject::buildPiece(CompositeLegendItem legendItem, int xPos, int y
 	//Temp color setting
 	piece.gameObject->color = { 255,0,0,255 };
 
+	//Temp adjust render size
+	//piece.gameObject->xSize += 2;
+	//piece.gameObject->ySize += 2;
+
 	this->pieces.push_back(piece);
 
 }
 
 void CompositeObject::updatePieces()
 {
-	b2Vec2 piecePosition{ 0,0 };
-
-	for (auto pieceObject : this->pieces)
+	for (auto& pieceObject : this->pieces)
 	{
 
-		//calculate the X,Y offset position in relating to the base object
-		SDL_Rect parentPositionRect = this->getPositionRect();
+		//Update the state of the piece
+		this->updatePieceState(pieceObject);
 
-		//piecePosition
-		piecePosition.x = parentPositionRect.x + pieceObject.parentPositionOffset.x;
-		piecePosition.y = parentPositionRect.y + pieceObject.parentPositionOffset.y;
+		//Update the position of the piece
+		this->updatePiecePosition(pieceObject);
 
-		pieceObject.gameObject->setPosition(piecePosition, 0);
-
+		//The piece object itself is a gameObject that should have its update called
+		pieceObject.gameObject->update();
 
 	}
 
 
 
+}
+
+void CompositeObject::updatePieceState(GameObjectPiece& piece)
+{
+
+	//Should this object be removed?
+	if (piece.gameObject->removeFromWorld == true)
+	{
+		piece.gameObject->setActive(false);
+		//piece.isDestroyed = true;
+		piece.gameObject->color = { 0,255,0,255 };
+	}
+
+
+}
+
+void CompositeObject::updatePiecePosition(GameObjectPiece& piece)
+{
+
+	b2Vec2 piecePosition{ 0,0 };
+	b2Vec2 adjustment{ 0,0 };
+
+	//calculate the X,Y offset position in relating to the base object
+	SDL_Rect parentPositionRect = this->getPositionRect();
+
+	//piecePositions
+	SDL_Rect piecePositionRect{};
+	piecePositionRect.x = parentPositionRect.x + piece.parentPositionOffset.x;
+	piecePositionRect.y = parentPositionRect.y + piece.parentPositionOffset.y;
+	piecePositionRect.w = piece.gameObject->xSize;
+	piecePositionRect.h = piece.gameObject->ySize;
+
+	//Adjust the piece position based on the base objects rotation/angle
+	adjustment = this->matchParentRotation(piecePositionRect, parentPositionRect, this->angle);
+	piecePositionRect.x += adjustment.x;
+	piecePositionRect.y += adjustment.y;
+
+	//Create a vec position object to pass to setPosition
+	piecePosition.x = piecePositionRect.x;
+	piecePosition.y = piecePositionRect.y;
+	piece.gameObject->setPosition(piecePosition, this->angle);
 }

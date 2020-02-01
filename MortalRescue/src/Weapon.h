@@ -13,8 +13,8 @@ public:
 	Weapon();
 	~Weapon();
 
-	void fireOld();
 	void fire();
+	void fireEmitter();
 	void init(string, PlayerObject*, float,float);
 	
 
@@ -22,6 +22,7 @@ public:
 	PlayerObject* weaponWieldingObject;
 	string bulletGameObjectId;
 	float xOffset, yOffset; //what offset from the weapon holding obejct to originate bullet from
+	float stength;
 
 };
 

@@ -104,10 +104,6 @@ void PlayerObject::handlePlayerMovementEvent(SDL_Event* event)
 	float angularVelocity = event->motion.xrel * game->config.mouseSensitivity;
 	this->physicsBody->SetAngularVelocity(angularVelocity);
 
-	//method 2
-	//float desiredAngle = atan2f(-event->motion.x, event->motion.y);
-	//this->physicsBody->SetTransform(this->physicsBody->GetPosition(), desiredAngle);
-
 }
 
 

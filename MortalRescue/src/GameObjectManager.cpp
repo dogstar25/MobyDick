@@ -68,7 +68,10 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		gameObjectDefinition->ySize = itr["ySize"].asFloat();
 		gameObjectDefinition->textureId = itr["texture"].asString();
 		gameObjectDefinition->absolutePositioning = itr["absolutePositioning"].asBool();
-		gameObjectDefinition->renderOutline = itr["renderOutline"].asBool();;
+		gameObjectDefinition->renderOutline = itr["renderOutline"].asBool();
+
+		gameObjectDefinition->xRenderAdjustment = itr["xRenderAdjustment"].asFloat();
+		gameObjectDefinition->yRenderAdjustment = itr["yRenderAdjustment"].asFloat();
 
 		//Game Object Type
 		gameObjectDefinition->type = itr["type"].asString();

@@ -52,6 +52,9 @@ void WorldObject::setPosition(b2Vec2 position, float angle)
 	newlocation.y = (position.y / game->config.scaleFactor) + (definition->ySize / 2);
 
 	this->physicsBody->SetTransform(newlocation, angle );
+	//this->physicsBody->SetLinearVelocity(b2Vec2(0, 0));
+	//this->physicsBody->SetAngularVelocity(0);
+
 }
 
 void WorldObject::update()
@@ -89,8 +92,10 @@ SDL_Rect WorldObject::getRenderDestRect()
 {
 	SDL_Rect destRect;
 	
-
 	destRect = this->getPositionRect();
+	
+	destRect.w += this->definition->xRenderAdjustment;
+	destRect.h += this->definition->yRenderAdjustment;
 
 	//Adjust position based on current camera position - offset
 	destRect.x -= game->camera.frame.x;
@@ -206,16 +211,16 @@ uint16 WorldObject::setCollisionMask(uint16 category)
 			mask = PLAYER | PARTICLE1 | PARTICLE2 | PARTICLE3 | ENEMY_FRAME | PLAYER_BULLET;
 			break;
 		case PLAYER_BULLET:
-			mask = WALL;
+			mask = WALL | ENEMY_ARMOR;
 			break;
 		case PARTICLE1:
-			mask = WALL | PLAYER | ENEMY_ARMOR;
+			mask = WALL | PLAYER;
 			break;
 		case PARTICLE2:
-			mask = WALL | PLAYER | ENEMY_ARMOR;
+			mask = WALL | PLAYER;
 			break;
 		case PARTICLE3:
-			mask = WALL | PLAYER | ENEMY_ARMOR;
+			mask = WALL | PLAYER;
 			break;
 		case ENEMY_FRAME:
 			mask = WALL | PLAYER ;
@@ -230,3 +235,11 @@ uint16 WorldObject::setCollisionMask(uint16 category)
 	return mask;
 
 }
+
+void WorldObject::setActive(bool active)
+{
+
+	this->physicsBody->SetActive(active);
+
+}
+

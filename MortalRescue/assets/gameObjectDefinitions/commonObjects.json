@@ -131,7 +131,7 @@
         "friction": 0.0,
         "density": 5.5,
         "linearDamping": 0.2,
-        "angularDamping": 10.0,
+        "angularDamping": 100.0,
         "collisionCategory": 2
       },
       "xSize": 2.56,
@@ -157,7 +157,7 @@
       "childObjects": [
         {
           "gameObjectId": "PLAYER_LABEL",
-          "position": 3
+          "position": 1
         }
 
       ]

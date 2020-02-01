@@ -253,6 +253,7 @@
     <None Include="zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\blueprints\drone1_test.png" />
     <Image Include="assets\particle2.png" />
     <Image Include="assets\pieceAngle1_8.png" />
     <Image Include="assets\pieceAngle2_8.png" />

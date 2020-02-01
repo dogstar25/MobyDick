@@ -34,9 +34,9 @@
       "speed": 50,
       "physicsObject": {
         "type": "B2_DYNAMIC",
-        "friction": 1.0,
+        "friction": 0.0,
         "restitution": 0.0,
-        "density": 12.5,
+        "density": 0.05,
         "linearDamping": 0.0,
         "angularDamping": 12.0,
         "collisionCategory": 8

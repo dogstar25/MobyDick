@@ -86,7 +86,9 @@ public:
 		collisionRadius,
 		angularDamping,
 		childPadding,
-		lifetime;
+		lifetime,
+		xRenderAdjustment, 
+		yRenderAdjustment;
 	bool
 		isAnimated,
 		isPhysicsObject,

@@ -212,12 +212,6 @@ void ParticleMachine::fireBullet(
 	int force)
 {
 
-
-	game->debugPanel->addItem("ParticleX", to_string(originX));
-	game->debugPanel->addItem("ParticleY", to_string(originY));
-	game->debugPanel->addItem("ParticleAngle", to_string(angle));
-
-
 	SDL_Color defaultColor = {255,255,255,255};
 
 	this->emit(

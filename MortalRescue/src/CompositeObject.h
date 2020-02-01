@@ -18,7 +18,7 @@ struct GameObjectPiece
 	b2Vec2 parentPositionOffset;
 	short currentlevel;
 	steady_clock::time_point time_snapshot;
-	shared_ptr<GameObject>gameObject;
+	GameObject* gameObject;
 	
 };
 
@@ -49,6 +49,9 @@ public:
 	void buildComposite();
 	void buildPiece(CompositeLegendItem, int,int);
 	void updatePieces();
+
+	void updatePieceState(GameObjectPiece& piece);
+	void updatePiecePosition(GameObjectPiece& piece);
 
 	//Collection of all of the gameObjects that make up this composite object
 	vector<GameObjectPiece>pieces;
