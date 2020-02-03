@@ -158,7 +158,16 @@
         {
           "gameObjectId": "PLAYER_LABEL",
           "position": 1
+        },
+        {
+          "gameObjectId": "PLAYER_LABEL",
+          "position": 1
+        },
+        {
+          "gameObjectId": "PLAYER_LABEL",
+          "position": 1
         }
+
 
       ]
 

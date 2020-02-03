@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include "game.h"
 #include "GameObject.h"
 #include "GameObjectCollection.h"
 
@@ -21,7 +22,7 @@ public:
 	void handleInput();
 	void update();
 	void render();
-
+	
 
 	/*
 	Settings Menu State
@@ -34,7 +35,7 @@ public:
 	};
 
 	int state;
-	array <GameObjectCollection, 4> uiObjectCollections;
+	array <GameObjectCollection, Game::MAX_LAYERS> uiObjectCollections;
 
 };
 

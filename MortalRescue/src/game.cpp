@@ -119,8 +119,8 @@ bool Game::init()
 	//gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK128", 13, 13, 0);
 	//this->addGameObject(gameObject, this->MAIN);
 
-	worldObject = gameObjectManager.buildGameObject <WorldObject>("FULL_PIECE", 4, 4, 0);
-	this->addGameObject(worldObject, this->MAIN);
+	gameObject = gameObjectManager.buildGameObject <GameObject>("GUIPausePanel", 4, 4, 0);
+	this->addGameObject(gameObject, this->MAIN);
 
 	compositeObject = gameObjectManager.buildGameObject <CompositeObject>("DRONE", 11, 11, 0);
 	this->addGameObject(compositeObject, this->MAIN);
@@ -263,18 +263,17 @@ void Game::renderCollection(array<GameObjectCollection, MAX_LAYERS>* gameObjectC
 {
 
 	//Render all of the game objects
-	for (auto& collection : *gameObjectCollection)
+	for (const auto& collection : gameObjectCollection[0])
 	{
-		for (auto& gameObject : collection.gameObjects)
+		for (const auto& gameObject : collection.gameObjects)
 		{
 			gameObject->render();
 		}
 
-		for (auto& particleObject : collection.particleObjects)
+		for (const auto& particleObject : collection.particleObjects)
 		{
 			particleObject->render();
 		}
-
 	}
 }
 
@@ -366,6 +365,7 @@ void Game::handleEvents() {
 			{
 				unique_ptr<GUIEvent> guiEvent = make_unique<GUIEvent>("GUIPausePanel");
 				guiEvent->run();
+				guiEvent.release();
 
 			}
 			else

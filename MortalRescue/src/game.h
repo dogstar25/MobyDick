@@ -142,7 +142,7 @@ public:
 	void play();
 	bool init();
 	void render();
-	void renderCollection(array<GameObjectCollection, MAX_LAYERS>*);
+	static void renderCollection(array<GameObjectCollection, MAX_LAYERS>*);
 	void update();
 	void handleEvents();
 	void buildLevel(string);

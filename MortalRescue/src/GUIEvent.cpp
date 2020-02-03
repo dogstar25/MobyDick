@@ -8,7 +8,7 @@ GUIEvent::GUIEvent()
 GUIEvent::GUIEvent(string guiObjectId)
 {
 	this->state = ACTIVE;
-	cout << guiObjectId +"\n";
+	//cout << guiObjectId +"\n";
 
 	GameObjectDefinition* definition;
 	definition = game->gameObjectManager.gameObjectDefinitions[guiObjectId];
@@ -57,6 +57,7 @@ GUIEvent::~GUIEvent()
 	for (int x = 0; x < game->MAX_LAYERS; x++)
 	{
 		this->uiObjectCollections[x].gameObjects.clear();
+		this->uiObjectCollections[x].particleObjects.clear();
 	}
 
 
@@ -66,7 +67,7 @@ void GUIEvent::run()
 {
 
 	this->state = ACTIVE;
-	cout << "GUIEvent\n";
+	//cout << "GUIEvent\n";
 
 	while (this->state != EXITGUI)
 	{
@@ -101,10 +102,10 @@ void GUIEvent::render()
 	game->textureManager.clear();
 
 	//Render all of the game objects in the world
-	game->renderCollection(&game->gameCollections);
+	Game::renderCollection(&game->gameCollections);
 
 	//Render all of the GUI Event game objects
-	game->renderCollection(&this->uiObjectCollections);
+	Game::renderCollection(&uiObjectCollections);
 
 	game->textureManager.present();
 
