@@ -103,25 +103,16 @@ void GameObject::render()
 	//Get render destination rectangle
 	destRect = this->getRenderDestRect();
 
-	//If this is a primitive, then render a rectangle with the objects primitive color
-	//Othwise, render the texture
-	if (this->definition->isPrimitive == true)
-	{
-		game->textureManager.render(&destRect, this->definition->color);
-	}
-	else
-	{
-		//Get texture
-		texture = this->getRenderTexture(texture);
+	//Get texture
+	texture = this->getRenderTexture(texture);
 
-		//Get render texture src rectangle
-		textureSourceRect = this->getRenderTextureRect(textureSourceRect);
+	//Get render texture src rectangle
+	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
 
-		//All angles on objects should be in radians to kep consistency with box2d objects
-		//it needs to be converted to degrees for SDL to display
-		float angle = game->util.radiansToDegrees(this->angle);
-		game->textureManager.render(texture, textureSourceRect, &destRect, angle);
-	}
+	//All angles on objects should be in radians to kep consistency with box2d objects
+	//it needs to be converted to degrees for SDL to display
+	float angle = game->util.radiansToDegrees(this->angle);
+	game->textureManager.render(texture, this->color, textureSourceRect, &destRect, angle);
 
 	//test outlining object
 	if (this->definition->isMouseSelectable)
@@ -185,9 +176,11 @@ GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float 
 	}
 
 	this->removeFromWorld = false;
-	this->isChildObject = false;
 	this->xSize = definition->xSize;
 	this->ySize = definition->ySize;
+
+	//color
+	this->color = definition->color;
 
 	//Get pointer to the texture
 	this->texture = game->textureManager.getTexture(definition->textureId);
@@ -206,6 +199,8 @@ GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float 
 		this->currentAnimationState = "IDLE";
 	}
 
+	//Build children if they exist
+	this->buildChildren();
 
 }
 
@@ -232,33 +227,33 @@ b2Vec2 GameObject::calcChildPosition(
 	float padding,
 	bool childRelativePositioning, 
 	float parentAngle,
-	SDL_Rect parentPosition)
+	SDL_Rect parentPositionRect)
 {
-	b2Vec2 childPosition;
-	float x, y;
+	SDL_Rect childPositionRect{};
+	float x, y, xAdj=0, yAdj=0;
 
 	//Calculate center of parent
 	b2Vec2 parentCenter;
-	x = parentPosition.x + (parentPosition.w / 2);
-	y = parentPosition.y + (parentPosition.h / 2);
+	x = parentPositionRect.x + (parentPositionRect.w / 2);
+	y = parentPositionRect.y + (parentPositionRect.h / 2);
 	parentCenter.Set(x,y);
 
 	//Different calcs for the different 9 possible positions
 	switch(locationSlot){
 		case 1:
- 			x = parentPosition.x - childSize.x;
-			y = parentPosition.y - childSize.y;
+ 			x = parentPositionRect.x - childSize.x;
+			y = parentPositionRect.y - childSize.y;
 			break;
 		case 2:
 			x = parentCenter.x - (childSize.x / 2);
-			y = parentPosition.y - childSize.y;
+			y = parentPositionRect.y - childSize.y;
 			break;
 		case 3:
-			x = parentPosition.x + parentPosition.w;
-			y = parentPosition.y - childSize.y;
+			x = parentPositionRect.x + parentPositionRect.w;
+			y = parentPositionRect.y - childSize.y;
 			break;
 		case 4:
-			x = parentPosition.x - childSize.x;
+			x = parentPositionRect.x - childSize.x;
 			y = parentCenter.y - (childSize.y / 2);
 			break;
 		case 5:
@@ -266,27 +261,28 @@ b2Vec2 GameObject::calcChildPosition(
 			y = parentCenter.y - (childSize.y / 2);
 			break;
 		case 6:
-			x = parentPosition.x + parentPosition.w;
+			x = parentPositionRect.x + parentPositionRect.w;
 			y = parentCenter.y - (childSize.y / 2);
 			break;
 		case 7:
-			x = parentPosition.x - childSize.x;
-			y = parentPosition.y + parentPosition.h;
+			x = parentPositionRect.x - childSize.x;
+			y = parentPositionRect.y + parentPositionRect.h;
 			break;
 		case 8:
 			x = parentCenter.x - (childSize.x / 2);
-			y = parentPosition.y + parentPosition.h;
+			y = parentPositionRect.y + parentPositionRect.h;
 			break;
 		case 9:
-			x = parentPosition.x + parentPosition.w;
-			y = parentPosition.y + parentPosition.h;
+			x = parentPositionRect.x + parentPositionRect.w;
+			y = parentPositionRect.y + parentPositionRect.h;
 			break;
 
 	}
 
-	childPosition.x = x;
-	childPosition.y = y;
-
+	childPositionRect.x = x;
+	childPositionRect.y = y;
+	childPositionRect.w = childSize.x;
+	childPositionRect.h = childSize.y;
 
 	//Adjust the position if there are multiple children in the same position
 	if (childCount > 1)
@@ -311,60 +307,80 @@ b2Vec2 GameObject::calcChildPosition(
 
 		//Calculate 1st child object position based on the previous childPosition calculated
 		//values based on location slot
-		firstChildPosition.x = childPosition.x;
-		firstChildPosition.y = childPosition.y - oddEvenadjustValue - ((childSize.y + padding) * stepCount);
+		firstChildPosition.x = childPositionRect.x;
+		firstChildPosition.y = childPositionRect.y - oddEvenadjustValue - ((childSize.y + padding) * stepCount);
 
 		//Calculate our current child object position using the stepSize and the
 		//position of the first child position
-		childPosition.x = firstChildPosition.x;
-		childPosition.y = firstChildPosition.y + ((childSize.y+padding) * childNumber);
+		childPositionRect.x = firstChildPosition.x;
+		childPositionRect.y = firstChildPosition.y + ((childSize.y+padding) * childNumber);
 
 
 	}
 
-	//If not absolute positioning then apply the parent object angle 
 	if (childRelativePositioning == true)
 	{
+		b2Vec2 adjustment{};
 
-		//calculate child center
-		b2Vec2 childCenter(childPosition.x+(childSize.x/2), childPosition.y+(childSize.y/2));
+		adjustment = this->matchParentRotation(
+			childPositionRect,
+			parentPositionRect,
+			parentAngle);
 
-		//calculate radius of circle defined by parent and initial child position
-		//This is the hypotenus
-		float radius=0;
-		radius = sqrt( powf((childCenter.x - parentCenter.x),2) + powf((childCenter.y-parentCenter.y),2) );
+		childPositionRect.x += adjustment.x;
+		childPositionRect.y += adjustment.y;
 
-		//calculate the angle of where child is at
-		y = childCenter.y - parentCenter.y;
-		x = childCenter.x - parentCenter.x;
-		float childAngle = atan2(childCenter.y - parentCenter.y, childCenter.x - parentCenter.x);
-
-		float childAngleDegrees = game->util.radiansToDegrees(childAngle);
-
-		//adjust by 90%
-		//childAngle += 180 * DEGTORAD;
-
-		//add parent angle
-		float newAngle = childAngle + parentAngle;
-		float xAdj = (radius * cos(newAngle));
-		float yAdj = (radius * sin(newAngle));
-
-		childPosition.x = xAdj + parentCenter.x;
-		childPosition.y = yAdj + parentCenter.y;
-
-		//Adjust so that position is top left corner of child object
-		childPosition.x -= (childSize.x/2);
-		childPosition.y -= (childSize.y/2);
 	}
 
-
-	//childPosition.x = x;
-	//childPosition.y = y;
+	b2Vec2 childPosition{};
+	childPosition.x = childPositionRect.x;
+	childPosition.y = childPositionRect.y;
 
 
 	return childPosition;
 	
 }
+
+b2Vec2 GameObject::matchParentRotation(SDL_Rect childPositionRect, SDL_Rect parentPositionRect, float parentAngle)
+{
+	b2Vec2 adjustment;
+
+	//calculate parent center
+	b2Vec2 parentCenter(parentPositionRect.x + (parentPositionRect.w / 2), parentPositionRect.y + (parentPositionRect.h / 2));
+
+	//calculate child center
+	b2Vec2 childCenter(childPositionRect.x + (childPositionRect.w / 2), childPositionRect.y + (childPositionRect.h / 2));
+
+	//calculate radius of circle defined by parent and initial child position
+	//This is the hypotenus
+	float radius = 0;
+	radius = sqrt(powf((childCenter.x - parentCenter.x), 2) + powf((childCenter.y - parentCenter.y), 2));
+
+	//calculate the angle of where child is at
+	float y = childCenter.y - parentCenter.y;
+	float x = childCenter.x - parentCenter.x;
+	float childAngle = atan2(childCenter.y - parentCenter.y, childCenter.x - parentCenter.x);
+
+	float childAngleDegrees = game->util.radiansToDegrees(childAngle);
+
+	//add parent angle
+	float newAngle = childAngle + parentAngle;
+	b2Vec2 newChildPosition{};
+	newChildPosition.x = (radius * cos(newAngle));
+	newChildPosition.y = (radius * sin(newAngle));
+
+	newChildPosition.x += parentCenter.x;
+	newChildPosition.y += parentCenter.y;
+
+	newChildPosition.x -= (childPositionRect.w / 2);
+	newChildPosition.y -= (childPositionRect.h / 2);
+
+	adjustment.x = newChildPosition.x - childPositionRect.x;
+	adjustment.y = newChildPosition.y - childPositionRect.y;
+
+	return adjustment;
+}
+
 
 void GameObject::updateChildObjects()
 {
@@ -451,7 +467,6 @@ void GameObject::buildChildren()
 			{
 				TextObject* textObject =
 					game->gameObjectManager.buildGameObject<TextObject>(childObjectId, 2, 2, 0);
-				textObject->isChildObject = true;
 				this->childObjects[position - 1].push_back(make_shared<TextObject>(*textObject));
 
 			}
@@ -459,7 +474,6 @@ void GameObject::buildChildren()
 			{
 				WorldObject* worldObject =
 					game->gameObjectManager.buildGameObject<WorldObject>(childObjectId, -5, -5, 0);
-				worldObject->isChildObject = true;
 				this->childObjects[position - 1].push_back(make_shared<WorldObject>(*worldObject));
 			}
 			else //default to GAME_OBJECT
@@ -467,7 +481,6 @@ void GameObject::buildChildren()
 
 				GameObject* gameObject =
 					game->gameObjectManager.buildGameObject<GameObject>(childObjectId, -5, -5, 0);
-				gameObject->isChildObject = true;
 				this->childObjects[position - 1].push_back(make_shared<GameObject>(*gameObject));
 			}
 
@@ -483,6 +496,11 @@ GameObject::~GameObject()
 {
 
 	this->animations.clear();
+
+	for (int x = 0; x < CHILD_POSITIONS; x++)
+	{
+		this->childObjects[x].clear();
+	}
 
 
 }
@@ -570,6 +588,10 @@ void GameObject::updateMouseState()
 
 }
 
+void GameObject::setActive(bool active)
+{
+
+}
 
 
 

@@ -3,6 +3,7 @@
 #include "TextObject.h"
 #include "WorldObject.h"
 #include "ParticleObject.h"
+#include "CompositeObject.h"
 #include "LevelManager.h"
 #include "TextureManager.h"
 #include "GameObjectManager.h"
@@ -75,7 +76,7 @@ bool Game::init()
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 
 		//Build the world for a particular level
-		this->buildWorld("TX_LEVEL1");
+		this->buildWorld("TX_LEVEL1_BLUEPRINT");
 
 		//Initialize the clock object
 		this->clock.init();
@@ -90,10 +91,11 @@ bool Game::init()
 	PlayerObject* playerObject = NULL;
 	WorldObject* worldObject = NULL;
 	TextObject* textObject = NULL;
+	CompositeObject* compositeObject = NULL;
 
 
 	//Create the main player object
-	playerObject = gameObjectManager.buildGameObject <PlayerObject>("GINA_64", 10, 10, 0);
+	playerObject = gameObjectManager.buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
 	this->player = make_unique<PlayerObject>(*playerObject);
 	this->player->addWeapon("BULLET1", 0, 0);
 
@@ -114,8 +116,15 @@ bool Game::init()
 	gameObject = gameObjectManager.buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
 	this->addGameObject(gameObject, this->MAIN);
 
-	gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK", 13, 13, 0);
-	this->addGameObject(gameObject, this->MAIN);
+	//gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK128", 13, 13, 0);
+	//this->addGameObject(gameObject, this->MAIN);
+
+	worldObject = gameObjectManager.buildGameObject <WorldObject>("FULL_PIECE", 4, 4, 0);
+	this->addGameObject(worldObject, this->MAIN);
+
+	compositeObject = gameObjectManager.buildGameObject <CompositeObject>("DRONE", 11, 11, 0);
+	this->addGameObject(compositeObject, this->MAIN);
+
 
 	//Create the debug panel if its turned on
 	if (this->config.debugPanel == true)
@@ -302,6 +311,13 @@ void Game::addGameObject(TextObject* gameObject, int layer)
 	this->gameObjectCount++;
 }
 
+void Game::addGameObject(CompositeObject* gameObject, int layer)
+{
+
+	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
+	this->gameCollections[layer].gameObjects.push_back(make_unique<CompositeObject>(*gameObject));
+	this->gameObjectCount++;
+}
 
 bool Game::getConfig()
 {
@@ -365,7 +381,8 @@ void Game::handleEvents() {
 			//}
 
 				//this->testExplosion(&event);
-			this->player->weapon->fireOld();
+			//this->player->weapon->fireOld();
+			this->player->weapon->fire();
 
 			break;
 		default:
@@ -377,7 +394,7 @@ void Game::handleEvents() {
 void Game::buildWorld(string levelId)
 {
 	//load all of the information needed to build the level
-	this->levelManager.loadLevel("TX_LEVEL1");
+	this->levelManager.loadLevelBlueprint("TX_LEVEL1_BLUEPRINT");
 
 	//Initialize world bounds and gridsize based on current level loaded info
 	this->initWorldBounds();
@@ -386,7 +403,7 @@ void Game::buildWorld(string levelId)
 	this->camera.init(&this->worldBounds);
 
 	//Build the actual level gameobjects
-	this->buildLevel("TX_LEVEL1");
+	this->buildLevel("TX_LEVEL1_BLUEPRINT");
 
 }
 
@@ -474,59 +491,5 @@ Game::Game()
 
 }
 
-void Game::testExplosion(SDL_Event* event)
-{
-	float x, y;
-	x = event->button.x / Game::config.scaleFactor;
-	y = event->button.y / Game::config.scaleFactor;
-	SDL_Color colorMin = {1,1,1,255};
-	SDL_Color colorMax = { 225,255,255,255 };
 
-	//Adjust position based on current camera position - offset
-	x -= game->camera.frame.x;
-	y -= game->camera.frame.y;
-
-	this->particleMachine.emit(
-		"PARTICLE1_POOL",
-		x,	// X position
-		y,	//Y Position
-		5,	//Force Min
-		30,	//force Max
-		0.5,	//Lifetime Min
-		5.5,	//Lifetime Max
-		false,	// Alpha fade
-		0,	//Angle min
-		360,	//Angle Max
-		0.28,	//Size Min
-		0.75,	//Size Max
-		colorMin,	//Color Min
-		colorMax,	//Color Max
-		100,	//Particle count min
-		200	//Particle count max
-	);	
-
-/*
-Main particle Emission function
-*/
-	ParticleEmission *particleEmission = new ParticleEmission(
-		"PARTICLE1_POOL",
-		x,	// X position
-		y,	//Y Position
-		5,	//Force Min
-		10,	//force Max
-		0,	//Lifetime Min
-		0,	//Lifetime Max
-		false,	// Alpha fade
-		0,	//Angle min
-		180,	//Angle Max
-		0.28,	//Size Min
-		0.75,	//Size Max
-		colorMin,	//Color Min
-		colorMax,	//Color Max
-		10,	//Particle count min
-		200	//Particle count max
-	);
-	//this->particleMachine.add(particleEmission);
-
-}
 

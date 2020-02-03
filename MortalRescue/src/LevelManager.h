@@ -36,7 +36,7 @@ public:
 
 	map<string, Level*> levels;
 
-	void loadLevel(string);
+	void loadLevelBlueprint(string);
 	LevelObject * determineTile(int,int,SDL_Surface*);
 
 };

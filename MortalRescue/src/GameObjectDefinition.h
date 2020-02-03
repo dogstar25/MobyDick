@@ -29,6 +29,38 @@ struct ChildObjectDetails
 
 };
 
+struct CompositeLevel
+{
+	short levelNum;
+	short strength;
+	SDL_Color color;
+};
+
+struct CompositeLegendItem
+{
+	SDL_Color color;
+	string gameObjectId;
+	string gameObjectType;
+};
+
+/*
+Texture file representing the maps of the composite object and the legend that has the info
+Of how to decipher the pixels in the blueprint texture
+*/
+struct CompositeBlueprint
+{
+	string textureId;
+	vector<CompositeLegendItem> legend;
+};
+
+struct CompositeDetails
+{
+	short maxlevel;
+	float levelUpSpeed;
+	vector<CompositeLevel> levels;
+	CompositeBlueprint blueprint;
+};
+
 
 class GameObjectDefinition
 {
@@ -56,14 +88,16 @@ public:
 		collisionRadius,
 		angularDamping,
 		childPadding,
-		lifetime;
+		lifetime,
+		xRenderAdjustment, 
+		yRenderAdjustment;
 	bool
 		isAnimated,
 		isPhysicsObject,
-		isPrimitive,
 		isPlayerObject,
 		isTextObject,
 		isParticle,
+		isCompositeObject,
 		isMouseSelectable,
 		hasChildObjects,
 		absolutePositioning,
@@ -72,8 +106,12 @@ public:
 	uint16
 		collisionCategory;
 
+	/*
+	Complex definition details
+	*/
 	TextDetails textDetails;
-	SDL_Color color; //If object is a primative shape, what color is it
+	CompositeDetails compositeDetails;
+	SDL_Color color; //The color to apply to the object
 	map<string, Animation*> animations;
 	vector<ChildObjectDetails> childObjectDefinitions;
 

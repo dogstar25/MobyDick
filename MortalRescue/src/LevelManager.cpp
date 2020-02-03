@@ -27,7 +27,7 @@ static const unsigned char bottomWall = 0b0111;
 static const unsigned char leftWall = 0b1110;
 static const unsigned char column = 0b0000;
 
-void LevelManager::loadLevel(string levelId)
+void LevelManager::loadLevelBlueprint(string levelId)
 {
 
 	SDL_Texture* levelImage;
@@ -109,7 +109,8 @@ LevelObject* LevelManager::determineTile(int x, int y, SDL_Surface* surface)
 
 	//If this is a wall, get the pixel to the left, right, top, and bottom 
 	//- check if we are on the edge while grabbing pixel 
-	if (memcmp(&currentPixelcolor, &BLACK, sizeof(SDL_Color)) == 0)
+	//if (memcmp(&currentPixelcolor, &BLACK, sizeof(SDL_Color)) == 0)
+	if (currentPixelcolor == BLACK)
 	{
 
 		if (x != 0) {
@@ -134,16 +135,16 @@ LevelObject* LevelManager::determineTile(int x, int y, SDL_Surface* surface)
 		}
 
 		//Set the bit mask to match which walls exist where
-		if (memcmp(&leftColor, &BLACK, sizeof(SDL_Color)) == 0) {
+		if (leftColor == BLACK) {
 			borderWalls |= wallOnLeft;
 		}
-		if (memcmp(&rightColor, &BLACK, sizeof(SDL_Color)) == 0) {
+		if (rightColor == BLACK) {
 			borderWalls |= wallOnRight;
 		}
-		if (memcmp(&topColor, &BLACK, sizeof(SDL_Color)) == 0) {
+		if (topColor == BLACK) {
 			borderWalls |= wallOnTop;
 		}
-		if (memcmp(&bottomColor, &BLACK, sizeof(SDL_Color)) == 0) {
+		if (bottomColor == BLACK) {
 			borderWalls |= wallOnBottom;
 		}
 

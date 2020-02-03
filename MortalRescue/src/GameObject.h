@@ -63,12 +63,15 @@ public:
 	virtual void onMouseClickRender();
 	virtual void onMouseHoldRender();
 	virtual void onMouseClickEvent();
+	virtual void setActive(bool);
 	void updateMouseState();
 
 	void renderChildObjects();
 	void updateChildObjects();
 	b2Vec2 calcChildPosition(b2Vec2, int, int, int, float,bool,float,SDL_Rect);
+	b2Vec2 matchParentRotation(SDL_Rect, SDL_Rect, float);
 	void buildChildren();
+	
 	
 
 	//Object Attrbutes
@@ -78,8 +81,7 @@ public:
 		currentAnimationState;
 	bool
 		isAnimated,
-		removeFromWorld,
-		isChildObject;
+		removeFromWorld;
 
 	SDL_Color 
 		color;

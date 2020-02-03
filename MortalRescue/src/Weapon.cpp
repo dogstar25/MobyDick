@@ -22,6 +22,7 @@ void Weapon::init(string bulletGameObjectId, PlayerObject* weaponWieldingObject,
 	
 	this->bulletGameObjectId = bulletGameObjectId;
 	this->weaponWieldingObject = weaponWieldingObject;
+	this->stength = 1;
 
 	//Calulate the actual offest amount using the percentages that were sent in
 	this->xOffset = xOffsetPct * this->weaponWieldingObject->xSize;
@@ -32,7 +33,7 @@ void Weapon::init(string bulletGameObjectId, PlayerObject* weaponWieldingObject,
 
 
 
-void Weapon::fireOld()
+void Weapon::fire()
 {
 	//bullet;
 	//ParticleObject* bullet = new ParticleObject(this->bulletGameObjectId, 0, 0, 0);
@@ -52,12 +53,15 @@ void Weapon::fireOld()
 		float xAdj = cos(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->xOffset);
 		float yAdj = sin(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->yOffset);
 		*/
-		float xAdj = cos(this->weaponWieldingObject->physicsBody->GetAngle()) *(64/25);
-		float yAdj = sin(this->weaponWieldingObject->physicsBody->GetAngle()) *(64/25);
+
+		float xAdj = 0;
+		float yAdj = 0;
 
 		dx += xAdj;
 		dy += yAdj;
 
+		//Bullet Strength
+		this->stength = this->stength;
 
 		b2Vec2 positionVector = b2Vec2(dx, dy);
 
@@ -66,9 +70,7 @@ void Weapon::fireOld()
 		b2Vec2 velocityVector = b2Vec2(dx, dy);
 
 		float angle = this->weaponWieldingObject->physicsBody->GetAngle();
-		//cout << "fire location" << positionVector.x << " " << positionVector.y << "\n";
-		//cout << "position" << positionVector.x << " " << positionVector.y << "\n";
-		//bullet->physicsBody->SetFixedRotation(true);
+		bullet->physicsBody->SetFixedRotation(true);
 		bullet->physicsBody->SetTransform(positionVector, angle);
 		bullet->physicsBody->SetLinearVelocity(velocityVector);
 		bullet->currentAnimationState = "ACTIVE";
@@ -83,7 +85,7 @@ void Weapon::fireOld()
 
 }
 
-void Weapon::fire()
+void Weapon::fireEmitter()
 {
 	//Calculate the origin of the bullet
 	float dx = this->weaponWieldingObject->physicsBody->GetTransform().p.x +
@@ -99,11 +101,12 @@ void Weapon::fire()
 	dy += yAdj;
 	*/
 
+	b2Vec2 origin = { dx,dy };
+
 	game->particleMachine.fireBullet
 	(
 		"BULLET1_POOL", 
-		dx, 
-		dy, 
+		origin,
 		game->util.radiansToDegrees(this->weaponWieldingObject->physicsBody->GetAngle()), 
 		50
 	);

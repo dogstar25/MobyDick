@@ -176,6 +176,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CompositeObject.cpp" />
     <ClCompile Include="src\GUIEvent.cpp" />
     <ClCompile Include="src\ParticleEmission.cpp" />
     <ClCompile Include="src\Camera.cpp" />
@@ -203,6 +204,7 @@
     <ClCompile Include="src\WorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CompositeObject.h" />
     <ClInclude Include="src\GUIEvent.h" />
     <ClInclude Include="src\ParticleEmission.h" />
     <ClInclude Include="src\Camera.h" />
@@ -230,14 +232,17 @@
     <ClInclude Include="src\WorldObject.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\gameObjectPools.json" />
-    <None Include="assets\gameObjects_Common.json" />
-    <None Include="assets\gameObjects_Level1.json" />
-    <None Include="assets\GUIObjects.json" />
-    <None Include="assets\level1.ase" />
-    <None Include="assets\level_test.ase" />
-    <None Include="assets\particleEmitter.json" />
-    <None Include="assets\particleObjects.json" />
+    <None Include="assets\blueprints\drone1_blueprint.aseprite" />
+    <None Include="assets\gameObjectDefinitions\objectPools.json" />
+    <None Include="assets\gameObjectDefinitions\commonObjects.json" />
+    <None Include="assets\gameObjectDefinitions\level1Objects.json" />
+    <None Include="assets\gameObjectDefinitions\GUIObjects.json" />
+    <None Include="assets\blueprints\level1.ase" />
+    <None Include="assets\blueprints\level_test.ase" />
+    <None Include="assets\gameObjectDefinitions\particleObjects.json" />
+    <None Include="assets\particleObjects.json">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </None>
     <None Include="assets\textureAssets.json" />
     <None Include="assets\gameConfig.json" />
     <None Include="libfreetype-6.dll" />
@@ -248,16 +253,29 @@
     <None Include="zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\blueprints\drone1_test.png" />
+    <Image Include="assets\enemyFrame1_128.png" />
+    <Image Include="assets\particle2.png" />
+    <Image Include="assets\pieceAngle1_8.png" />
+    <Image Include="assets\pieceAngle2_8.png" />
+    <Image Include="assets\pieceAngle3_8.png" />
+    <Image Include="assets\pieceAngle4_8.png" />
+    <Image Include="assets\blueprints\drone1_blueprint.png" />
     <Image Include="assets\bowman1.png" />
     <Image Include="assets\bullet1.png" />
+    <Image Include="assets\pieceFull_8.png" />
     <Image Include="assets\gina_Idle_64.png" />
     <Image Include="assets\gina_Run_64.png" />
-    <Image Include="assets\level1.png" />
-    <Image Include="assets\level_test.png" />
+    <Image Include="assets\blueprints\level1.png" />
+    <Image Include="assets\blueprints\level_test.png" />
     <Image Include="assets\particle1.png" />
     <Image Include="assets\pistolLady128_Run.png" />
     <Image Include="assets\pistolLady64_Run.png" />
+    <Image Include="assets\redArmor.png" />
+    <Image Include="assets\redArmorAngle.png" />
+    <Image Include="assets\redArmorPiece.png" />
     <Image Include="assets\spaceship1.png" />
+    <Image Include="assets\square_128.png" />
     <Image Include="assets\swordLady64_Idle.png" />
     <Image Include="assets\tile1.png" />
     <Image Include="assets\wall1_column.png" />
@@ -269,6 +287,9 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\arial.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="assets\gameObjectDefinitions\compositeObjects.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

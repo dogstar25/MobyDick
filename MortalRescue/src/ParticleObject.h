@@ -22,6 +22,7 @@ public:
 	duration<float, milli> lifetime;
 	duration<float, milli> lifetimeRemaining;
 	bool isLifetimeAlphaFade;
+	bool hasInfiniteLifetime;
 	bool isAvailable;
 	string poolId;
 

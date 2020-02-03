@@ -13,7 +13,6 @@
 #include "ParticleObject.h"
 
 
-
 bool TextureManager::init(SDL_Window* pWindow)
 {
 
@@ -28,8 +27,15 @@ bool TextureManager::init(SDL_Window* pWindow)
 }
 
 
-void TextureManager::render(SDL_Texture* texture, SDL_Rect* textureSourceRect, SDL_Rect* destRect, float angle)
+void TextureManager::render(SDL_Texture* texture, SDL_Color color, SDL_Rect* textureSourceRect, SDL_Rect* destRect, float angle)
 {
+	//Set the color
+	SDL_SetTextureAlphaMod(texture, color.a);
+
+	//SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD);
+
+	//Set the render color based on the objects color
+	SDL_SetTextureColorMod(texture, color.r, color.g, color.b);
 
 	//Render the texture
 	SDL_RenderCopyEx(this->pRenderer, texture, textureSourceRect, destRect, angle, NULL, SDL_FLIP_NONE);

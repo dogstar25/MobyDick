@@ -17,8 +17,7 @@ public:
 	void add(ParticleEmission*);
 	void fireBullet(
 		string poolId,
-		int originX,
-		int originY,
+		b2Vec2 origin,
 		float angle,
 		int force
 	);
@@ -27,8 +26,8 @@ public:
 
 	void emit(
 		string poolId,
-		float originX,
-		float originY,
+		b2Vec2 originMin,
+		b2Vec2 originMax,
 		int forceMin,
 		int forceMax,
 		float lifetimeMin,

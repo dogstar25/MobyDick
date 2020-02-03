@@ -2,6 +2,7 @@
 #include <string>
 
 #include <SDL.h>
+#include <Box2D/Box2D.h>
 
 using namespace std;
 class ParticleEmission
@@ -10,8 +11,8 @@ public:
 	ParticleEmission();
 	ParticleEmission(
 		string poolId,
-		float originX,
-		float originY,
+		b2Vec2 originMin,
+		b2Vec2 originMax,
 		int forceMin,
 		int forceMax,
 		float lifetimeMin,
@@ -30,6 +31,10 @@ public:
 	~ParticleEmission();
 
 
+	b2Vec2
+		originMin,
+		originMax;
+
 	string 
 		poolId;
 
@@ -42,8 +47,8 @@ public:
 	float
 		angleMin,
 		angleMax,
-		originX,
-		originY,
+		//originX,
+		//originY,
 		lifetimeMin,
 		lifetimeMax,
 		particleSizeMin,

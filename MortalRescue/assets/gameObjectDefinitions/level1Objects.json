@@ -11,6 +11,13 @@
         "collisionCategory": 4
       },
       "texture": "TX_WALL1_OPEN",
+      "color": {
+        "red": 38,
+        "green": 195,
+        "blue": 15,
+        "alpha": 255,
+        "random": false
+      },
       "xSize": 1.28,
       "ySize": 1.28
     },
@@ -24,6 +31,13 @@
         "collisionCategory": 4
       },
       "texture": "TX_WALL1_COLUMN",
+      "color": {
+        "red": 38,
+        "green": 195,
+        "blue": 15,
+        "alpha": 255,
+        "random": false
+      },
       "xSize": 1.28,
       "ySize": 1.28
     },
@@ -37,6 +51,13 @@
         "collisionCategory": 4
       },
       "texture": "TX_WALL1_CORNER",
+      "color": {
+        "red": 38,
+        "green": 195,
+        "blue": 15,
+        "alpha": 255,
+        "random": false
+      },
       "xSize": 1.28,
       "ySize": 1.28
     },
@@ -50,6 +71,13 @@
         "collisionCategory": 4
       },
       "texture": "TX_WALL1_END",
+      "color": {
+        "red": 38,
+        "green": 195,
+        "blue": 15,
+        "alpha": 255,
+        "random": false
+      },
       "xSize": 1.28,
       "ySize": 1.28
     },
@@ -63,6 +91,13 @@
         "collisionCategory": 4
       },
       "texture": "TX_WALL1_HALL",
+      "color": {
+        "red": 38,
+        "green": 195,
+        "blue": 15,
+        "alpha": 255,
+        "random": false
+      },
       "xSize": 1.28,
       "ySize": 1.28
     },
@@ -76,6 +111,13 @@
         "collisionCategory": 4
       },
       "texture": "TX_WALL1_WALL",
+      "color": {
+        "red": 38,
+        "green": 195,
+        "blue": 15,
+        "alpha": 255,
+        "random": false
+      },
       "xSize": 1.28,
       "ySize": 1.28
     }

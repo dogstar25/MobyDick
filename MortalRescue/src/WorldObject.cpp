@@ -52,6 +52,9 @@ void WorldObject::setPosition(b2Vec2 position, float angle)
 	newlocation.y = (position.y / game->config.scaleFactor) + (definition->ySize / 2);
 
 	this->physicsBody->SetTransform(newlocation, angle );
+	//this->physicsBody->SetLinearVelocity(b2Vec2(0, 0));
+	//this->physicsBody->SetAngularVelocity(0);
+
 }
 
 void WorldObject::update()
@@ -89,8 +92,10 @@ SDL_Rect WorldObject::getRenderDestRect()
 {
 	SDL_Rect destRect;
 	
-
 	destRect = this->getPositionRect();
+	
+	destRect.w += this->definition->xRenderAdjustment;
+	destRect.h += this->definition->yRenderAdjustment;
 
 	//Adjust position based on current camera position - offset
 	destRect.x -= game->camera.frame.x;
@@ -118,7 +123,7 @@ void WorldObject::render()
 	float angle = this->physicsBody->GetAngle();
 	angle = angle * 180 / M_PI;
 
-	game->textureManager.render(texture, textureSourceRect, &destRect, angle);
+	game->textureManager.render(texture, this->color, textureSourceRect, &destRect, angle);
 
 	//Loop through any possible child objects, in all 9 positions, and render them too
 	if (this->definition->hasChildObjects == true)
@@ -199,30 +204,33 @@ uint16 WorldObject::setCollisionMask(uint16 category)
 	uint16 mask=0;
 
 	switch(category) {
-	case PLAYER:
-		mask = WALL | PARTICLE1 | PARTICLE2 | PARTICLE3 | ENEMY_FRAME;
-		break;
-	case WALL:
-		mask = PLAYER | PARTICLE1 | PARTICLE2 | PARTICLE3 | ENEMY_FRAME | PLAYER_BULLET;
-		break;
-	case PLAYER_BULLET:
-		mask = WALL;
-		break;
-	case PARTICLE1:
-		mask = WALL | PLAYER | ENEMY_ARMOR;
-		break;
-	case PARTICLE2:
-		mask = WALL | PLAYER | ENEMY_ARMOR;
-		break;
-	case PARTICLE3:
-		mask = WALL | PLAYER | ENEMY_ARMOR;
-		break;
-	case ENEMY_FRAME:
-		mask = WALL | PLAYER ;
-		break;
-	case ENEMY_ARMOR:
-		mask = PLAYER_BULLET;
-		break;
+		case PLAYER:
+			mask = WALL | PARTICLE1 | PARTICLE2 | PARTICLE3 | ENEMY_FRAME | ENEMY_ARMOR_PIECE;
+			break;
+		case WALL:
+			mask = PLAYER | PARTICLE1 | PARTICLE2 | PARTICLE3 | ENEMY_FRAME | PLAYER_BULLET | ENEMY_ARMOR_PIECE;
+			break;
+		case PLAYER_BULLET:
+			mask = WALL | ENEMY_ARMOR;
+			break;
+		case PARTICLE1:
+			mask = WALL | PLAYER;
+			break;
+		case PARTICLE2:
+			mask = WALL | PLAYER;
+			break;
+		case PARTICLE3:
+			mask = WALL | PLAYER;
+			break;
+		case ENEMY_FRAME:
+			mask = WALL | PLAYER | ENEMY_ARMOR_PIECE;
+			break;
+		case ENEMY_ARMOR:
+			mask = PLAYER_BULLET;
+			break;
+		case ENEMY_ARMOR_PIECE:
+			mask = PLAYER | WALL | ENEMY_FRAME | ENEMY_ARMOR_PIECE;
+			break;
 
 
 	}
@@ -230,3 +238,11 @@ uint16 WorldObject::setCollisionMask(uint16 category)
 	return mask;
 
 }
+
+void WorldObject::setActive(bool active)
+{
+
+	this->physicsBody->SetActive(active);
+
+}
+

@@ -9,5 +9,11 @@ public:
 	void EndContact(b2Contact*);
 
 	b2Vec2 findWallImpactPoint(b2Vec2 worldPoint, PlayerObject* player);
+	void handleContact(WorldObject* contact1, WorldObject* contact2, b2Vec2 contactPoint);
+	void bulletWall(WorldObject* bullet, WorldObject* wall, b2Vec2 contactPoint);
+	void bulletPiece(WorldObject* bullet, WorldObject* wall, b2Vec2 contactPoint);
+	void playerBitPiece(WorldObject* player, WorldObject* bitPiece, b2Vec2 contactPoint);
+
+	
 };
 

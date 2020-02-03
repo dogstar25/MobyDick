@@ -2,8 +2,8 @@
   "gameObjects": [
     {
       "id": "BOWMAN",
-      "type": "WORLD_OBJECT",
       "description": "Player Bowman",
+      "type": "WORLD_OBJECT",
       "texture": "TX_BOWMAN1",
       "xSize": 2.56,
       "ySize": 2.56,
@@ -17,25 +17,67 @@
       }
     },
     {
-      "id": "ROCK",
-      "type": "GAME_OBJECT",
+      "id": "ROCK128",
       "description": "A Red Rock",
-      "primative": {
-        "color": {
-          "red": 212,
-          "green": 202,
-          "blue": 50,
-          "alpha": 100,
-          "random": false
-        }
+      "type": "GAME_OBJECT",
+      "texture": "TX_SQUARE_128",
+      "color": {
+        "red": 12,
+        "green": 122,
+        "blue": 200,
+        "alpha": 200,
+        "random": false
+      },
+      "xSize": 128,
+      "ySize": 128
+    },
+    {
+      "id": "ROCK8",
+      "description": "A Red Rock",
+      "type": "GAME_OBJECT",
+      "color": {
+        "red": 255,
+        "green": 0,
+        "blue": 0,
+        "alpha": 255,
+        "random": false
+      },
+      "xSize": 8,
+      "ySize": 8
+    },
+    {
+      "id": "ROCK4",
+      "description": "A Red Rock",
+      "type": "GAME_OBJECT",
+      "color": {
+        "red": 12,
+        "green": 122,
+        "blue": 200,
+        "alpha": 5,
+        "random": false
+      },
+      "xSize": 4,
+      "ySize": 4
+    },
+    {
+      "id": "PARTICLE_SMOKE_GLOW",
+      "description": "duh",
+      "type": "GAME_OBJECT",
+      "texture": "TX_SMOKE_PARTICLE_2",
+      "color": {
+        "red": 12,
+        "green": 122,
+        "blue": 200,
+        "alpha": 5,
+        "random": false
       },
       "xSize": 128,
       "ySize": 128
     },
     {
       "id": "SWORDLADY",
-      "type": "GAME_OBJECT",
       "description": "SwordLady",
+      "type": "GAME_OBJECT",
       "speed": 0.5,
       "xSize": 64, //meters which translates to 64px
       "ySize": 43.75,
@@ -50,19 +92,9 @@
       ]
     },
     {
-      "id": "SPACESHIP1",
-      "type": "GAME_OBJECT",
-      "description": "Space Ship 1",
-      "texture": "TX_SPACESHIP1",
-      "absolutePositioning": false,
-      "xSize": 32,
-      "ySize": 32,
-      "speed": 10.1
-    },
-    {
       "id": "ARMORTEST1",
-      "type": "WORLD_OBJECT",
       "description": "Armor test 1",
+      "type": "WORLD_OBJECT",
       "texture": "TX_DEFAULT",
       "absolutePositioning": false,
       "xSize": 2.56,
@@ -75,13 +107,13 @@
         "density": 0.1,
         "linearDamping": 0.0,
         "angularDamping": 0.0,
-        "collisionCategory": 256
+        "collisionCategory": 128
       }
     },
     {
       "id": "ARMORTEST2",
-      "type": "GAME_OBJECT",
       "description": "Armor test 2",
+      "type": "GAME_OBJECT",
       "texture": "TX_DEFAULT",
       "absolutePositioning": false,
       "xSize": 64,
@@ -89,41 +121,17 @@
       "renderOutline": false
     },
     {
-      "id": "BULLET1",
-      "description": "Bullet 1",
-      "speed": 50,
-      "physicsObject": {
-        "type": "B2_DYNAMIC",
-        "friction": 0.0,
-        "restitution": 3.5,
-        "density": 0.5,
-        "linearDamping": 1.0,
-        "angularDamping": 5.0,
-        "collisionCategory": 8
-      },
-      "xSize": 0.24,
-      "ySize": 0.12,
-      "animations": [
-        {
-          "id": "ACTIVE",
-          "texture": "TX_BULLET1",
-          "speed": 0.02, //time in seconds for each frame. Lower the faster
-          "frames": 4
-        }
-      ]
-    },
-    {
       "id": "GINA_64",
-      "type": "PLAYER_OBJECT",
       "description": "Gina 64",
+      "type": "PLAYER_OBJECT",
       "physicsObject": {
         "type": "B2_DYNAMIC",
-        "collisionShape": "B2_RECTANGLE",
+        "collisionShape": "B2_CIRCLE",
         "collisionRadius": 1.28,
-        "friction": 0.0,
+        "friction": 0.5,
         "density": 5.5,
         "linearDamping": 0.2,
-        "angularDamping": 10.0,
+        "angularDamping": 100.0,
         "collisionCategory": 2
       },
       "xSize": 2.56,
@@ -145,60 +153,20 @@
 
       ],
       "childPadding": 8,
-      "childPositionRelative": true,
+      "childPositionRelative": false,
       "childObjects": [
         {
-          "gameObjectId": "ARMORTEST1",
-          "position": 1,
-          "gameObjectType": "WORLD_OBJECT"
-        },
-        {
-          "gameObjectId": "ARMORTEST1",
-          "position": 2,
-          "gameObjectType": "WORLD_OBJECT"
-        },
-        {
-          "gameObjectId": "ARMORTEST1",
-          "position": 3,
-          "gameObjectType": "WORLD_OBJECT"
-        },
-        {
-          "gameObjectId": "ARMORTEST1",
-          "position": 4,
-          "gameObjectType": "WORLD_OBJECT"
-        },
-        {
-          "gameObjectId": "ARMORTEST1",
-          "position": 5,
-          "gameObjectType": "WORLD_OBJECT"
-        },
-        {
-          "gameObjectId": "ARMORTEST1",
-          "position": 6,
-          "gameObjectType": "WORLD_OBJECT"
-        },
-        {
-          "gameObjectId": "ARMORTEST1",
-          "position": 7,
-          "gameObjectType": "WORLD_OBJECT"
-        },
-        {
-          "gameObjectId": "ARMORTEST1",
-          "position": 8,
-          "gameObjectType": "WORLD_OBJECT"
-        },
-        {
-          "gameObjectId": "ARMORTEST1",
-          "position": 9,
-          "gameObjectType": "WORLD_OBJECT"
+          "gameObjectId": "PLAYER_LABEL",
+          "position": 1
         }
+
       ]
 
     },
     {
       "id": "FPS_LABEL",
-      "type": "TEXT_OBJECT",
       "description": "FPS Label",
+      "type": "TEXT_OBJECT",
       "absolutePositioning": true,
       "text": {
         "value": "FPS",
@@ -209,9 +177,8 @@
     },
     {
       "id": "PLAYER_LABEL",
-      "type": "TEXT_OBJECT",
       "description": "Player Label",
-      "absolutePositioning": false,
+      "type": "TEXT_OBJECT",
       "text": {
         "value": "Player 1",
         "dynamic": false,
@@ -221,8 +188,8 @@
     },
     {
       "id": "FPS_VALUE",
-      "type": "TEXT_OBJECT",
       "description": "FPS Value Text",
+      "type": "TEXT_OBJECT",
       "absolutePositioning": true,
       "text": {
         "dynamic": true,
@@ -238,14 +205,13 @@
     },
     {
       "id": "DEBUG_ITEM",
-      "type": "TEXT_OBJECT",
       "description": "Debug Item",
+      "type": "TEXT_OBJECT",
       "text": {
         "dynamic": true,
         "font": "FONT_ARIAL_REG",
         "size": 16
       }
     }
-
   ]
 }

@@ -75,6 +75,21 @@ struct Clock
 
 };
 
+
+/*
+Operator overloaded functions
+*/
+
+static bool operator ==(SDL_Color a, SDL_Color b) 
+{
+	return (a.r == b.r) && (a.g == b.g) && (a.b == b.b);
+}
+
+static bool operator !=(SDL_Color a, SDL_Color b)
+{
+	return (a.r != b.r) || (a.g != b.g) || (a.b != b.b);
+}
+
 struct Config
 {
 public:
@@ -91,6 +106,7 @@ public:
 class PlayerObject;
 class GameObject;
 class ParticleObject;
+class CompositeObject;
 class ParticleMachine;
 
 
@@ -99,10 +115,6 @@ using namespace std::chrono;
 
 
 class Game {
-
-/*
-Main Game State
-*/
 
 
 public:
@@ -140,6 +152,7 @@ public:
 	void addGameObject(TextObject* gameObject, int);
 	void addGameObject(WorldObject* gameObject, int);
 	void addGameObject(ParticleObject* gameObject, int);
+	void addGameObject(CompositeObject* gameObject, int);
 	bool getConfig();
 	void buildWorld(string);
 	void testExplosion(SDL_Event*);

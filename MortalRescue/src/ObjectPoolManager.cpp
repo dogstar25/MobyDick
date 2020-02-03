@@ -12,7 +12,7 @@ void ObjectPoolManager::init()
 
 	//Read file and stream it to a JSON object
 	Json::Value root;
-	ifstream ifs("assets/gameObjectPools.json");
+	ifstream ifs("assets/gameObjectDefinitions/objectPools.json");
 	ifs >> root;
 
 	//Get and store config values

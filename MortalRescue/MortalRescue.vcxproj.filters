@@ -90,6 +90,9 @@
     <ClCompile Include="src\GUIEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\CompositeObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\game.h">
@@ -167,6 +170,9 @@
     <ClInclude Include="src\GUIEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\CompositeObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\textureAssets.json" />
@@ -175,25 +181,23 @@
     <None Include="SDL2_image.dll" />
     <None Include="zlib1.dll" />
     <None Include="assets\gameConfig.json" />
-    <None Include="assets\level1.ase" />
-    <None Include="assets\level_test.ase" />
-    <None Include="assets\gameObjects_Common.json" />
-    <None Include="assets\gameObjects_Level1.json" />
     <None Include="libfreetype-6.dll" />
     <None Include="SDL2_ttf.dll" />
-    <None Include="assets\gameObjectPools.json" />
     <None Include="assets\particleObjects.json" />
-    <None Include="assets\particleEmitter.json" />
-    <None Include="assets\GUIObjects.json" />
+    <None Include="assets\blueprints\level_test.ase" />
+    <None Include="assets\blueprints\level1.ase" />
+    <None Include="assets\blueprints\drone1_blueprint.aseprite" />
+    <None Include="assets\gameObjectDefinitions\GUIObjects.json" />
+    <None Include="assets\gameObjectDefinitions\particleObjects.json" />
+    <None Include="assets\gameObjectDefinitions\objectPools.json" />
+    <None Include="assets\gameObjectDefinitions\commonObjects.json" />
+    <None Include="assets\gameObjectDefinitions\level1Objects.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\swordLady64_Idle.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\level1.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\pistolLady64_Run.png">
@@ -206,9 +210,6 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\tile1.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\level_test.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\wall1_column.png">
@@ -241,8 +242,56 @@
     <Image Include="assets\particle1.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\blueprints\level_test.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprints\level1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\redArmor.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\redArmorAngle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\redArmorPiece.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprints\drone1_blueprint.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\square_128.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\pieceAngle1_8.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\pieceAngle2_8.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\pieceAngle3_8.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\pieceAngle4_8.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\pieceFull_8.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\particle2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprints\drone1_test.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\enemyFrame1_128.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\arial.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="assets\gameObjectDefinitions\compositeObjects.json" />
   </ItemGroup>
 </Project>

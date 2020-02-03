@@ -4,6 +4,7 @@
 #include <map>
 
 #include "TextObject.h"
+//#include "CompositeObject.h"
 
 #include "GameObjectDefinition.h"
 
@@ -38,8 +39,6 @@ public:
 	{
 
 		gameObjectType* gameObject = new gameObjectType(gameObjectId, xMapPos, yMapPos, angle);
-		gameObject->buildChildren();
-
 
 		//string test = typeid(gameObject).name();
 		return gameObject;
