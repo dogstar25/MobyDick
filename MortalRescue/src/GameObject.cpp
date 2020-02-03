@@ -497,6 +497,11 @@ GameObject::~GameObject()
 
 	this->animations.clear();
 
+	for (int x = 0; x < CHILD_POSITIONS; x++)
+	{
+		this->childObjects[x].clear();
+	}
+
 
 }
 

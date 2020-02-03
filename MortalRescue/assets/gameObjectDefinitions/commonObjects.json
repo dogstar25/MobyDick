@@ -128,7 +128,7 @@
         "type": "B2_DYNAMIC",
         "collisionShape": "B2_CIRCLE",
         "collisionRadius": 1.28,
-        "friction": 0.0,
+        "friction": 0.5,
         "density": 5.5,
         "linearDamping": 0.2,
         "angularDamping": 100.0,

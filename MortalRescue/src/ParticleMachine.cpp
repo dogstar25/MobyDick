@@ -30,9 +30,9 @@ void ParticleMachine::runParticleEmissions()
 		particleEmission = this->particleEmissions.back();
 
 		this->emit(
-			"PARTICLE1_POOL",
-			particleEmission->originX,	// X position
-			particleEmission->originY,	//Y Position
+			particleEmission->poolId,
+			particleEmission->originMin,
+			particleEmission->originMax,
 			particleEmission->forceMin,	//Force Min
 			particleEmission->forceMax,	//force Max
 			particleEmission->lifetimeMin,	//Lifetime Min
@@ -65,8 +65,8 @@ void ParticleMachine::add(ParticleEmission* particleEmission)
 
 void ParticleMachine::emit(
 	string poolId,
-	float originX,
-	float originY,
+	b2Vec2 originMin,
+	b2Vec2 originMax,
 	int forceMin,
 	int forceMax,
 	float lifetimeMin,
@@ -88,7 +88,7 @@ void ParticleMachine::emit(
 	float particleAngle;
 
 	//If the particle count min and max are different, then generate a random count
-	//otherwise just use the max
+	//that is between min and max , otherwise just use the max
 	int particleCount = 0;
 	if (particleSpawnCountMin != particleSpawnCountMax)
 	{
@@ -125,17 +125,15 @@ void ParticleMachine::emit(
 
 			//Set the color of the particle. Randomize the color values if they are different
 			SDL_Color color = { 255,255,255,255 };
-			if (colorRangeBegin.r != colorRangeEnd.r)
+			if (colorRangeBegin != colorRangeEnd)
 			{
 				color.r = game->util.generateRandomNumber(colorRangeBegin.r, colorRangeEnd.r);
-			}
-			if (colorRangeBegin.g != colorRangeEnd.g)
-			{
 				color.g = game->util.generateRandomNumber(colorRangeBegin.g, colorRangeEnd.g);
-			}
-			if (colorRangeBegin.b != colorRangeEnd.b)
-			{
 				color.b = game->util.generateRandomNumber(colorRangeBegin.b, colorRangeEnd.b);
+			}
+			else
+			{
+				color = colorRangeBegin;
 			}
 			particle->color = color;
 
@@ -174,6 +172,10 @@ void ParticleMachine::emit(
 
 				particle->lifetime = particle->lifetimeRemaining = std::chrono::duration<float>(particleLifetime);
 			}
+			else
+			{
+				particle->hasInfiniteLifetime = true;
+			}
 
 
 			//Calculate the emit angle/direction that the particle will travel in
@@ -187,7 +189,16 @@ void ParticleMachine::emit(
 			b2Vec2 velocityVector = b2Vec2(velocityX, velocityY);
 
 			//create the starting position vector of the particle
-			b2Vec2 positionVector = b2Vec2(originX, originY);
+			b2Vec2 positionVector = {};
+			if (originMin != originMax)
+			{
+				positionVector.x = game->util.generateRandomNumber(originMin.x, originMax.x);
+				positionVector.y = game->util.generateRandomNumber(originMin.y, originMax.y);
+			}
+			else
+			{
+				positionVector = originMax;
+			}
 
 			//Set both eh starting position and the velocity of th eparticle
 			particle->physicsBody->SetTransform(positionVector, particleAngle);
@@ -206,8 +217,7 @@ void ParticleMachine::emit(
 
 void ParticleMachine::fireBullet(
 	string poolId,
-	float originX,
-	float originY,
+	b2Vec2 origin,
 	float angle,
 	int force)
 {
@@ -216,8 +226,8 @@ void ParticleMachine::fireBullet(
 
 	this->emit(
 		poolId,
-		originX,	// X position
-		originY,	//Y Position
+		origin,	// min origin position
+		origin,	// max origin position
 		force,	//Force Min
 		force,	//force Max
 		0,	//Lifetime Min

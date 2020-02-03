@@ -491,59 +491,5 @@ Game::Game()
 
 }
 
-void Game::testExplosion(SDL_Event* event)
-{
-	float x, y;
-	x = event->button.x / Game::config.scaleFactor;
-	y = event->button.y / Game::config.scaleFactor;
-	SDL_Color colorMin = {1,1,1,255};
-	SDL_Color colorMax = { 225,255,255,255 };
 
-	//Adjust position based on current camera position - offset
-	x -= game->camera.frame.x;
-	y -= game->camera.frame.y;
-
-	this->particleMachine.emit(
-		"PARTICLE1_POOL",
-		x,	// X position
-		y,	//Y Position
-		5,	//Force Min
-		30,	//force Max
-		0.5,	//Lifetime Min
-		5.5,	//Lifetime Max
-		false,	// Alpha fade
-		0,	//Angle min
-		360,	//Angle Max
-		0.28,	//Size Min
-		0.75,	//Size Max
-		colorMin,	//Color Min
-		colorMax,	//Color Max
-		100,	//Particle count min
-		200	//Particle count max
-	);	
-
-/*
-Main particle Emission function
-*/
-	ParticleEmission *particleEmission = new ParticleEmission(
-		"PARTICLE1_POOL",
-		x,	// X position
-		y,	//Y Position
-		5,	//Force Min
-		10,	//force Max
-		0,	//Lifetime Min
-		0,	//Lifetime Max
-		false,	// Alpha fade
-		0,	//Angle min
-		180,	//Angle Max
-		0.28,	//Size Min
-		0.75,	//Size Max
-		colorMin,	//Color Min
-		colorMax,	//Color Max
-		10,	//Particle count min
-		200	//Particle count max
-	);
-	//this->particleMachine.add(particleEmission);
-
-}
 

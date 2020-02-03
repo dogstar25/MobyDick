@@ -155,13 +155,30 @@ void CompositeObject::updatePieces()
 
 void CompositeObject::updatePieceState(GameObjectPiece& piece)
 {
+	//Get now time
+	steady_clock::time_point now_time = steady_clock::now();
 
 	//Should this object be removed?
 	if (piece.gameObject->removeFromWorld == true)
 	{
 		piece.gameObject->setActive(false);
-		//piece.isDestroyed = true;
-		piece.gameObject->color = { 0,255,0,255 };
+		piece.isDestroyed = true;
+		//piece.gameObject->color = { 0,255,0,255 };
+		piece.time_snapshot = now_time;
+	}
+
+	//Has enough time gone by to regenerate the next armor level
+	if (piece.isDestroyed == true)
+	{
+		duration<double, milli> timeDiffMilliSeconds = now_time - piece.time_snapshot;
+		if (timeDiffMilliSeconds.count() >= this->definition->compositeDetails.levelUpSpeed)
+		{
+
+			//write regen function
+
+		}
+
+
 	}
 
 

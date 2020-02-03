@@ -187,6 +187,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		if (itr["composite"].isNull() == false)
 		{
 			gameObjectDefinition->isCompositeObject = true;
+			gameObjectDefinition->compositeDetails.levelUpSpeed = itr["composite"]["levelUpSpeed"].asFloat();
 
 			//Composite bluprint textureId
 			gameObjectDefinition->compositeDetails.blueprint.textureId =
@@ -208,6 +209,14 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 				legendItem.color.a = legendItr["color"]["alpha"].asInt();
 
 				gameObjectDefinition->compositeDetails.blueprint.legend.push_back(legendItem);
+
+			}
+
+			//CompositeLegendItem legendItem;
+			for (auto levelItr : itr["composite"]["levels"])
+			{
+
+				//store  level stuff
 
 			}
 		}

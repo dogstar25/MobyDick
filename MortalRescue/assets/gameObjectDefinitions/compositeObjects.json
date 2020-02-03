@@ -4,19 +4,22 @@
       "id": "DRONE",
       "description": "Enemy Guard Drone",
       "type": "COMPOSITE_OBJECT",
-      "texture": "TX_SQUARE_128",
+      "texture": "TX_ENEMYFRAME1_128",
       "physicsObject": {
+        "collisionShape": "B2_CIRCLE",
+        "collisionRadius": 2.56,
         "type": "B2_DYNAMIC",
-        "friction": 0.0,
-        "density": 0.5,
+        "friction": 1.0,
+        "density": 2.5,
         "linearDamping": 0.2,
-        "angularDamping": 1.0,
+        "angularDamping": 0.1,
         "collisionCategory": 128
       },
       "xSize": 5.12,
       "ySize": 5.12,
       "speed": 11.5,
       "composite": {
+        "levelUpSpeed": 1,
         "blueprint": {
           "texture": "TX_DRONE1_BLUEPRINT",
           "legend": [
@@ -192,7 +195,25 @@
         "angularDamping": 0.0,
         "collisionCategory": 256
       }
+    },
+    {
+      "id": "ANGLE_BIT_PIECE",
+      "description": "Angle Bit Piece",
+      "type": "WORLD_OBJECT",
+      "texture": "TX_PIECE_ANGLE1_8",
+      "xSize": 0.16,
+      "ySize": 0.16,
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "restitution": 0.0,
+        "density": 0.1,
+        "linearDamping": 5.0,
+        "angularDamping": 5.0,
+        "collisionCategory": 512
+      }
     }
+
 
   ]
 

@@ -33,36 +33,29 @@ void ParticleObject::update()
 
 	duration<double, milli> timeDiffMilliSeconds = now_time - this->time_snapshot;
 
-	//debug
-	//game->debugPanel->addItem("LIFETIME", to_string(this->lifetime));
-	//game->debugPanel->addItem("PART_TIMEDIFF_MILI", to_string(timeDiffMilliSeconds.count()));
-	//game->debugPanel->addItem("PART_TIMEDIFF_SEC", to_string(timeDiffSeconds.count()));
-
-	this->lifetimeRemaining -= timeDiffMilliSeconds;
-
-	if (this->lifetimeRemaining.count() <= 0)
+	if (this->hasInfiniteLifetime == false)
 	{
+		this->lifetimeRemaining -= timeDiffMilliSeconds;
 
-		//reset the particle object
-		//game->objectPoolManager.reset(this);
-		//game->debugPanel->addItem("RESET_PARTICLE", "TRUE");
-
-		//Mark this object for removal so that the removal loop will delete it
-		this->removeFromWorld = true;
-
-	}
-	else
-	{
-		this->time_snapshot = now_time;
-		//game->debugPanel->addItem("RESET_PARTICLE", "FALSE");
-
-		//If this particle should fade over time, then adjust its alpha value
-		if (this->isLifetimeAlphaFade)
+		if (this->lifetimeRemaining.count() <= 0)
 		{
-			this->color.a = 255 * ( this->lifetimeRemaining / this->lifetime);
+
+			//Mark this object for removal so that the removal loop will delete it
+			this->removeFromWorld = true;
+
 		}
+		else
+		{
+			this->time_snapshot = now_time;
+
+			//If this particle should fade over time, then adjust its alpha value
+			if (this->isLifetimeAlphaFade)
+			{
+				this->color.a = 255 * (this->lifetimeRemaining / this->lifetime);
+			}
 
 
+		}
 	}
 	
 

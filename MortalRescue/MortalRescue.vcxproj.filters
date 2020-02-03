@@ -284,6 +284,9 @@
     <Image Include="assets\blueprints\drone1_test.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\enemyFrame1_128.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\arial.ttf" />

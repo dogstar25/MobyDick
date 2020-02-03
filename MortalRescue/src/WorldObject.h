@@ -10,7 +10,8 @@ enum worldObjectCategory {
 	PARTICLE2 = 32,
 	PARTICLE3 = 64,
 	ENEMY_FRAME = 128,
-	ENEMY_ARMOR = 256
+	ENEMY_ARMOR = 256,
+	ENEMY_ARMOR_PIECE = 512
 };
 
 class WorldObject :	public GameObject

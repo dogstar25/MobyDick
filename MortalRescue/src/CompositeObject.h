@@ -36,10 +36,6 @@ public:
 	SDL_Color angleTopRight = { 255,209,0,255 };
 	SDL_Color angleTopLeft = { 255,128,164,255 };
 
-	short maxlevel;
-	float levelUpSpeed;
-
-
 	CompositeObject();
 	CompositeObject(string, float, float, float);
 	~CompositeObject();

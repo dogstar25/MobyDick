@@ -132,8 +132,38 @@ void GameObjectContactListener::handleContact(WorldObject* contact1, WorldObject
 
 
 	}
+	if (contact1->definition->id.compare("GINA_64") == 0 ||
+		contact2->definition->id.compare("GINA_64") == 0)
+	{
+		//Bullet Wall contact
+		if (contact1->definition->id.compare("ANGLE_BIT_PIECE") == 0 ||
+			contact2->definition->id.compare("ANGLE_BIT_PIECE") == 0)
+		{
+			if (contact1->definition->id.compare("GINA_64") == 0) {
+				player = contact1;
+				piece = contact2;
+			}
+			else if (contact2->definition->id.compare("GINA_64") == 0) {
+				player = contact2;
+				piece = contact1;
+			}
+
+			this->playerBitPiece(player, piece, contactPoint);
+
+		}
+	}
+
 
 }
+
+void GameObjectContactListener::playerBitPiece(WorldObject* player, WorldObject* piece, b2Vec2 contactPoint)
+{
+	//Set flag for bullet to be removed from world
+	piece->removeFromWorld = true;
+
+}
+
+
 void GameObjectContactListener::bulletWall(WorldObject* bullet, WorldObject* wall, b2Vec2 contactPoint)
 {
 	//Set flag for bullet to be removed from world
@@ -142,7 +172,7 @@ void GameObjectContactListener::bulletWall(WorldObject* bullet, WorldObject* wal
 	//use the collision point for the particle emission
 	float x = contactPoint.x;
 	float y = contactPoint.y;
-
+	b2Vec2 particleOrigin = { x,y };
 	//This position might be "inside" of the wall object
 	//We will do a ray trace from this position towards the play object untl it is no long inside the wall
 	//findWallImpactPoint(worldPoint, game->player.get());
@@ -154,8 +184,8 @@ void GameObjectContactListener::bulletWall(WorldObject* bullet, WorldObject* wal
 
 	ParticleEmission* particleEmission = new ParticleEmission(
 		"PARTICLE1_POOL",
-		x,	// X position
-		y,	//Y Position
+		particleOrigin, //min position
+		particleOrigin,	//max position
 		5,	//Force Min
 		5,	//force Max
 		0.55,	//Lifetime Min
@@ -176,6 +206,9 @@ void GameObjectContactListener::bulletWall(WorldObject* bullet, WorldObject* wal
 
 void GameObjectContactListener::bulletPiece(WorldObject* bullet, WorldObject* piece, b2Vec2 contactPoint)
 {
+
+	ParticleEmission* particleEmission = NULL;
+
 	//Set flag for bullet to be removed from world
 	bullet->removeFromWorld = true;
 
@@ -185,21 +218,18 @@ void GameObjectContactListener::bulletPiece(WorldObject* bullet, WorldObject* pi
 	//use the collision point for the particle emission
 	float x = contactPoint.x;
 	float y = contactPoint.y;
-
-	//This position might be "inside" of the wall object
-	//We will do a ray trace from this position towards the play object untl it is no long inside the wall
-	//findWallImpactPoint(worldPoint, game->player.get());
+	b2Vec2 particleOrigin = {x,y};
 
 	//temp color code
 	SDL_Color colorMin = piece->color;
 	SDL_Color colorMax = piece->color;
 
-	ParticleEmission* particleEmission = new ParticleEmission(
+	particleEmission = new ParticleEmission(
 		"PARTICLE1_POOL",
-		x,	// X position
-		y,	//Y Position
+		particleOrigin, //min position
+		particleOrigin,	//max position
 		5,	//Force Min
-		5,	//force Max
+		15,	//force Max
 		0.55,	//Lifetime Min
 		1.55,	//Lifetime Max
 		true,	// Alpha fade
@@ -214,7 +244,27 @@ void GameObjectContactListener::bulletPiece(WorldObject* bullet, WorldObject* pi
 	);
 	game->particleMachine.add(particleEmission);
 	
-	
+
+	//Also emit 2 pieces that will remain on teh ground
+	particleEmission = new ParticleEmission(
+		"PIECES1_POOL",
+		particleOrigin, //min position
+		particleOrigin,	//max position
+		20,	//Force Min
+		50,	//force Max
+		0,	//Lifetime Min
+		0,	//Lifetime Max
+		false,	// Alpha fade
+		0,	//Angle min
+		360,	//Angle Max
+		0.16,	//Size Min
+		0.16,	//Size Max
+		colorMin,	//Color Min
+		colorMax,	//Color Max
+		2,	//Particle count min
+		2	//Particle count max
+	);
+	game->particleMachine.add(particleEmission);
 }
 
 b2Vec2 GameObjectContactListener::findWallImpactPoint(b2Vec2 worldPoint, PlayerObject* player)

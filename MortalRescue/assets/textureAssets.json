@@ -143,8 +143,12 @@
       "id": "TX_PIECE_ANGLE4_8",
       "description": "Angle",
       "filename": "assets/pieceAngle4_8.png"
+    },
+    {
+      "id": "TX_ENEMYFRAME1_128",
+      "description": "Angle",
+      "filename": "assets/enemyFrame1_128.png"
     }
-
   ],
   "fonts": [
     {

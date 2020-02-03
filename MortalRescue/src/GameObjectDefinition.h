@@ -55,6 +55,8 @@ struct CompositeBlueprint
 
 struct CompositeDetails
 {
+	short maxlevel;
+	float levelUpSpeed;
 	vector<CompositeLevel> levels;
 	CompositeBlueprint blueprint;
 };

@@ -101,11 +101,12 @@ void Weapon::fireEmitter()
 	dy += yAdj;
 	*/
 
+	b2Vec2 origin = { dx,dy };
+
 	game->particleMachine.fireBullet
 	(
 		"BULLET1_POOL", 
-		dx, 
-		dy, 
+		origin,
 		game->util.radiansToDegrees(this->weaponWieldingObject->physicsBody->GetAngle()), 
 		50
 	);
