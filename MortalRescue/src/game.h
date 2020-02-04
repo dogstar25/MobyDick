@@ -198,7 +198,7 @@ public:
 	array <GameObjectCollection, MAX_LAYERS> gameCollections;
 	unique_ptr<PlayerObject> player;
 
-	DebugPanel* debugPanel;
+	unique_ptr<DebugPanel> debugPanel;
 
 	//Box2d Physics
 	b2Vec2 gravity;

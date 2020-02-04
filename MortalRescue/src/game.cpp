@@ -119,9 +119,6 @@ bool Game::init()
 	//gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK128", 13, 13, 0);
 	//this->addGameObject(gameObject, this->MAIN);
 
-	gameObject = gameObjectManager.buildGameObject <GameObject>("GUIPausePanel", 4, 4, 0);
-	this->addGameObject(gameObject, this->MAIN);
-
 	compositeObject = gameObjectManager.buildGameObject <CompositeObject>("DRONE", 11, 11, 0);
 	this->addGameObject(compositeObject, this->MAIN);
 
@@ -130,7 +127,7 @@ bool Game::init()
 	if (this->config.debugPanel == true)
 	{
 
-		this->debugPanel = new DebugPanel();
+		this->debugPanel = make_unique<DebugPanel>();
 
 	}
 
@@ -263,7 +260,7 @@ void Game::renderCollection(array<GameObjectCollection, MAX_LAYERS>* gameObjectC
 {
 
 	//Render all of the game objects
-	for (const auto& collection : gameObjectCollection[0])
+	for (const auto& collection : *gameObjectCollection)
 	{
 		for (const auto& gameObject : collection.gameObjects)
 		{
@@ -375,19 +372,16 @@ void Game::handleEvents() {
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			//this->testBlocks(&event, this->physicsWorld);
-			//for (int x = 0; x < 20; x++) {
-				//this->player->weapon->fire();
-			//}
-
-				//this->testExplosion(&event);
-			//this->player->weapon->fireOld();
 			this->player->weapon->fire();
-
+			break;
+		case SDL_USEREVENT:
+			delete event.user.data1;
 			break;
 		default:
 			break;
 		}
+
+		
 	}
 }
 
@@ -481,6 +475,8 @@ Game::~Game()
 
 	//Delete box2d world - should delete all bodies and fixtures within
 	delete this->physicsWorld;
+
+
 
 }
 

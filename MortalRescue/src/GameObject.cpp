@@ -131,12 +131,12 @@ void GameObject::render()
 		}
 	}
 
-	//Outline th object if defined
+	//Outline the object if defined
 	if (this->definition->renderOutline)
 	{
 		game->textureManager.outLineObject(this, 2);
 	}
-
+	
 	//Loop through any possible child objects, in all 9 positions, and render them too
 	if (this->definition->hasChildObjects == true)
 	{

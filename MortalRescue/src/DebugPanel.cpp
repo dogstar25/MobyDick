@@ -53,10 +53,7 @@ void DebugPanel::addItem(string id, string value)
 			xPos = this->location.x;
 			//yPos = this->location.y + this->itemCount * (.5);
 			yPos = this->location.y + this->itemCount * ((float)definition->textDetails.size / (float)game->worldGridSize.h);
-			/*
-			TextObject* textObject = new TextObject(newId, xPos, yPos, 0);
-			game->addGameObject(textObject, game->DEBUG);
-			*/
+
 			TextObject* textObject = game->gameObjectManager.buildGameObject <TextObject>(newId, xPos, yPos, 0);
 			game->addGameObject(textObject, game->DEBUG);
 
