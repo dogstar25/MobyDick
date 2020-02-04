@@ -245,8 +245,8 @@ void GameObjectContactListener::bulletPiece(WorldObject* bullet, WorldObject* pi
 	game->particleMachine.add(particleEmission);
 
 	//Create some white smoke particles
-	colorMin = {255,255,255,255};
-	colorMax = { 255,255,255,255 };
+	colorMin = {255,255,255,100};
+	colorMax = { 255,255,255,200 };
 
 	particleEmission = new ParticleEmission(
 		"PARTICLE1_POOL",
@@ -256,7 +256,7 @@ void GameObjectContactListener::bulletPiece(WorldObject* bullet, WorldObject* pi
 		4,	//force Max
 		0.55,	//Lifetime Min
 		0.75,	//Lifetime Max
-		true,	// Alpha fade
+		false,	// Alpha fade
 		0,	//Angle min
 		360,	//Angle Max
 		1.00,	//Size Min

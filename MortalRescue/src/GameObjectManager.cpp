@@ -213,10 +213,18 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 			}
 
 			//CompositeLegendItem legendItem;
+			CompositeLevel compositeLevel;
 			for (auto levelItr : itr["composite"]["levels"])
 			{
+				compositeLevel.levelNum = levelItr["level"].asInt();
+				compositeLevel.strength = levelItr["strength"].asInt();
 
-				//store  level stuff
+				compositeLevel.color.r = levelItr["color"]["red"].asInt();
+				compositeLevel.color.g = levelItr["color"]["green"].asInt();
+				compositeLevel.color.b = levelItr["color"]["blue"].asInt();
+				compositeLevel.color.a = levelItr["color"]["alpha"].asInt();
+
+				gameObjectDefinition->compositeDetails.levels.push_back(compositeLevel);
 
 			}
 		}
