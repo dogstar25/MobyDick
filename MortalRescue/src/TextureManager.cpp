@@ -119,7 +119,7 @@ void TextureManager::addTexture(string id, Texture* texture)
 
 	//memory leak here
 	//this->textureMap.erase(id);
-	this->textureMap.insert_or_assign(id, make_unique<Texture>(*texture));
+	//this->textureMap.insert_or_assign(id, make_unique<Texture>(*texture));
 	//this->textureMap.emplace(id, make_unique<Texture>(*texture));
 
 
@@ -162,6 +162,7 @@ Texture* TextureManager::generateTextTexture(TextObject* textObject)
 
 	//Add it to the main texture map
 	//Append "TEXTURE" to gameobejct id to create textture id
+	//possible memory leak - delete texture before adding in case it is already there
 	string textureId = textObject->id + "_TEXT_TEXTURE";
 	this->addTexture(textureId, texture);
 	return 	texture;
@@ -327,11 +328,9 @@ void TextureManager::drawLine(b2Vec2 start, b2Vec2 end)
 void TextureManager::outLineObject(GameObject* gameObject, float lineSize)
 {
 
-	SDL_Point* points = new SDL_Point[4];
-	vector<SDL_Point> points2;
+	vector<SDL_Point> points;
 	SDL_Rect gameObjectDrawRect = gameObject->getRenderDestRect();
 	float saveScaleX, saveScaleY;
-
 	SDL_Point point;
 
 	//Adjust for camera
@@ -341,42 +340,40 @@ void TextureManager::outLineObject(GameObject* gameObject, float lineSize)
 		gameObjectDrawRect.y -= game->camera.frame.y;
 	}
 
-
 	//topleft
 	point.x = gameObjectDrawRect.x / lineSize;
 	point.y = gameObjectDrawRect.y / lineSize;
-	points[0] = point;
-	points2.push_back(point);
+	points.push_back(point);
 
 	//topright
 	point.x = (gameObjectDrawRect.x + gameObjectDrawRect.w) / lineSize;
 	point.y = gameObjectDrawRect.y / lineSize;
-	points2.push_back(point);
+	points.push_back(point);
 
 	//bottomright
 	point.x = (gameObjectDrawRect.x + gameObjectDrawRect.w) / lineSize;
 	point.y = (gameObjectDrawRect.y + gameObjectDrawRect.h) / lineSize;
-	points2.push_back(point);
+	points.push_back(point);
 
 	//bottomleft
 	point.x = gameObjectDrawRect.x / lineSize;
 	point.y = (gameObjectDrawRect.y + gameObjectDrawRect.h) / lineSize;
-	points2.push_back(point);
+	points.push_back(point);
 
 	//add the topleft as last point to complete the shape
 	point.x = gameObjectDrawRect.x / lineSize;
 	point.y = gameObjectDrawRect.y / lineSize;
-	points[0] = point;
-	points2.push_back(point);
+	points.push_back(point);
 
 	//Set render scale to match linesize passed in
 	SDL_RenderGetScale(this->pRenderer, &saveScaleX, &saveScaleY);
 	SDL_RenderSetScale(this->pRenderer, lineSize, lineSize);
-	this->drawPoints(points2.data());
+	this->drawPoints(points.data());
 
 	//Rest Scale to whatever is was before
 	SDL_RenderSetScale(this->pRenderer, saveScaleX, saveScaleY);
 
+	points.clear();
 
 }
 
@@ -389,6 +386,7 @@ TextureManager::TextureManager()
 {
 
 }
+
 TextureManager::~TextureManager()
 {
 

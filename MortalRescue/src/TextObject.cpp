@@ -48,6 +48,7 @@ void TextObject::update()
 
 	if (this->isDynamic == true)
 	{
+
 		this->texture = game->textureManager.updateDynamicTextTexture(this);
 	}
 

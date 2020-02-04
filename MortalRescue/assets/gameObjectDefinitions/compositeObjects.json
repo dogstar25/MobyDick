@@ -9,6 +9,7 @@
         "collisionShape": "B2_CIRCLE",
         "collisionRadius": 2.56,
         "type": "B2_DYNAMIC",
+        "restitution": 0.1,
         "friction": 1.0,
         "density": 2.5,
         "linearDamping": 0.2,
@@ -206,7 +207,7 @@
       "physicsObject": {
         "type": "B2_DYNAMIC",
         "friction": 0.0,
-        "restitution": 0.0,
+        "restitution": 0.5,
         "density": 0.1,
         "linearDamping": 5.0,
         "angularDamping": 5.0,

@@ -228,24 +228,49 @@ void GameObjectContactListener::bulletPiece(WorldObject* bullet, WorldObject* pi
 		"PARTICLE1_POOL",
 		particleOrigin, //min position
 		particleOrigin,	//max position
-		5,	//Force Min
-		15,	//force Max
+		10,	//Force Min
+		20,	//force Max
 		0.55,	//Lifetime Min
-		1.55,	//Lifetime Max
+		0.75,	//Lifetime Max
 		true,	// Alpha fade
 		0,	//Angle min
 		360,	//Angle Max
 		0.28,	//Size Min
-		1.48,	//Size Max
+		0.48,	//Size Max
+		colorMin,	//Color Min
+		colorMax,	//Color Max
+		10,	//Particle count min
+		25	//Particle count max
+	);
+	game->particleMachine.add(particleEmission);
+
+	//Create some white smoke particles
+	colorMin = {255,255,255,255};
+	colorMax = { 255,255,255,255 };
+
+	particleEmission = new ParticleEmission(
+		"PARTICLE1_POOL",
+		particleOrigin, //min position
+		particleOrigin,	//max position
+		2,	//Force Min
+		4,	//force Max
+		0.55,	//Lifetime Min
+		0.75,	//Lifetime Max
+		true,	// Alpha fade
+		0,	//Angle min
+		360,	//Angle Max
+		1.00,	//Size Min
+		1.25,	//Size Max
 		colorMin,	//Color Min
 		colorMax,	//Color Max
 		5,	//Particle count min
-		12	//Particle count max
+		10	//Particle count max
 	);
 	game->particleMachine.add(particleEmission);
-	
 
 	//Also emit 2 pieces that will remain on teh ground
+	colorMin = piece->color;
+	colorMax = piece->color;
 	particleEmission = new ParticleEmission(
 		"PIECES1_POOL",
 		particleOrigin, //min position
