@@ -14,9 +14,7 @@ public:
 	~Weapon();
 
 	void fire();
-	void fireEmitter();
 	void init(string, PlayerObject*, float,float);
-	
 
 
 	PlayerObject* weaponWieldingObject;

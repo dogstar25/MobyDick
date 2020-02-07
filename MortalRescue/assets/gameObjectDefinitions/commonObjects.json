@@ -157,7 +157,7 @@
       "childObjects": [
         {
           "gameObjectId": "PLAYER_LABEL",
-          "position": 3
+          "locationSlot": 3
         }
 
       ]

@@ -155,7 +155,6 @@ public:
 	void addGameObject(CompositeObject* gameObject, int);
 	bool getConfig();
 	void buildWorld(string);
-	void testExplosion(SDL_Event*);
 
 	//bool removePredicate(const GameObject&);
 

@@ -93,6 +93,8 @@ bool Game::init()
 	TextObject* textObject = NULL;
 	CompositeObject* compositeObject = NULL;
 
+	
+
 
 	//Create the main player object
 	playerObject = gameObjectManager.buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
@@ -121,7 +123,6 @@ bool Game::init()
 
 	compositeObject = gameObjectManager.buildGameObject <CompositeObject>("DRONE", 11, 11, 0);
 	this->addGameObject(compositeObject, this->MAIN);
-
 
 	//Create the debug panel if its turned on
 	if (this->config.debugPanel == true)
@@ -362,8 +363,6 @@ void Game::handleEvents() {
 			{
 				unique_ptr<GUIEvent> guiEvent = make_unique<GUIEvent>("GUIPausePanel");
 				guiEvent->run();
-				guiEvent.release();
-
 			}
 			else
 			{

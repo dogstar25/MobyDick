@@ -177,7 +177,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 			for (auto childItr : itr["childObjects"])
 			{
 				childDetails.gameObjectId = childItr["gameObjectId"].asString();
-				childDetails.position = childItr["position"].asInt();
+				childDetails.locationSlot = childItr["locationSlot"].asInt();
 				childDetails.gameObjectType = childItr["gameObjectType"].asString();
 				gameObjectDefinition->childObjectDefinitions.push_back(childDetails);
 			}

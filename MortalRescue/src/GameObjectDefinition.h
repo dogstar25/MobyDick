@@ -23,10 +23,8 @@ struct TextDetails {
 struct ChildObjectDetails
 {
 	string gameObjectId;
-	short position;
-	bool absolutePositioning;
-	string gameObjectType;
-
+	short locationSlot;
+	string gameObjectType;	
 };
 
 struct CompositeLevel

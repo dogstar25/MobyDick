@@ -85,29 +85,4 @@ void Weapon::fire()
 
 }
 
-void Weapon::fireEmitter()
-{
-	//Calculate the origin of the bullet
-	float dx = this->weaponWieldingObject->physicsBody->GetTransform().p.x +
-		cos(this->weaponWieldingObject->physicsBody->GetAngle());
-	float dy = this->weaponWieldingObject->physicsBody->GetTransform().p.y +
-		sin(this->weaponWieldingObject->physicsBody->GetAngle());
 
-	//Calculate offset values of bullet spawning origin adding an offset for the fireing object
-	/* remove offfset logic for now
-	float xAdj = cos(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->xOffset);
-	float yAdj = sin(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->yOffset);
-	dx += xAdj;
-	dy += yAdj;
-	*/
-
-	b2Vec2 origin = { dx,dy };
-
-	game->particleMachine.fireBullet
-	(
-		"BULLET1_POOL", 
-		origin,
-		game->util.radiansToDegrees(this->weaponWieldingObject->physicsBody->GetAngle()), 
-		50
-	);
-}

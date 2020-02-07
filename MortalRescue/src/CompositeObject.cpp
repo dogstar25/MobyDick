@@ -161,6 +161,7 @@ void CompositeObject::updatePieceState(GameObjectPiece& piece)
 	//Should this object be removed?
 	if (piece.gameObject->removeFromWorld == true)
 	{
+
 		piece.gameObject->setActive(false);
 		piece.isDestroyed = true;
 		//piece.gameObject->color = { 0,255,0,255 };

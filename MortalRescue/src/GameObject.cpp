@@ -219,127 +219,7 @@ void GameObject::addWeapon(string bulletGameObjectId, float xWeaponOffsetPct, fl
 
 }
 
-b2Vec2 GameObject::calcChildPosition(
-	b2Vec2 childSize, 
-	int locationSlot,
-	int childNumber,
-	int childCount,
-	float padding,
-	bool childRelativePositioning, 
-	float parentAngle,
-	SDL_Rect parentPositionRect)
-{
-	SDL_Rect childPositionRect{};
-	float x, y, xAdj=0, yAdj=0;
 
-	//Calculate center of parent
-	b2Vec2 parentCenter;
-	x = parentPositionRect.x + (parentPositionRect.w / 2);
-	y = parentPositionRect.y + (parentPositionRect.h / 2);
-	parentCenter.Set(x,y);
-
-	//Different calcs for the different 9 possible positions
-	switch(locationSlot){
-		case 1:
- 			x = parentPositionRect.x - childSize.x;
-			y = parentPositionRect.y - childSize.y;
-			break;
-		case 2:
-			x = parentCenter.x - (childSize.x / 2);
-			y = parentPositionRect.y - childSize.y;
-			break;
-		case 3:
-			x = parentPositionRect.x + parentPositionRect.w;
-			y = parentPositionRect.y - childSize.y;
-			break;
-		case 4:
-			x = parentPositionRect.x - childSize.x;
-			y = parentCenter.y - (childSize.y / 2);
-			break;
-		case 5:
-			x = parentCenter.x - (childSize.x / 2);
-			y = parentCenter.y - (childSize.y / 2);
-			break;
-		case 6:
-			x = parentPositionRect.x + parentPositionRect.w;
-			y = parentCenter.y - (childSize.y / 2);
-			break;
-		case 7:
-			x = parentPositionRect.x - childSize.x;
-			y = parentPositionRect.y + parentPositionRect.h;
-			break;
-		case 8:
-			x = parentCenter.x - (childSize.x / 2);
-			y = parentPositionRect.y + parentPositionRect.h;
-			break;
-		case 9:
-			x = parentPositionRect.x + parentPositionRect.w;
-			y = parentPositionRect.y + parentPositionRect.h;
-			break;
-
-	}
-
-	childPositionRect.x = x;
-	childPositionRect.y = y;
-	childPositionRect.w = childSize.x;
-	childPositionRect.h = childSize.y;
-
-	//Adjust the position if there are multiple children in the same position
-	if (childCount > 1)
-	{
-		float oddEvenadjustValue = 0;
-		int stepCount = 0;
-		b2Vec2 firstChildPosition;
-
-		//calculate vertical step adjustment depending on even or odd
-		if (childCount % 2 == 0)
-		{
-			//isEvenNumber
-			oddEvenadjustValue = (childSize.y + padding) / 2 ;
-		}
-		else
-		{
-			oddEvenadjustValue = childSize.y + padding;
-		}
-
-		//calculate number of steps to take to place 1st child object
-		stepCount = childCount / 2;
-
-		//Calculate 1st child object position based on the previous childPosition calculated
-		//values based on location slot
-		firstChildPosition.x = childPositionRect.x;
-		firstChildPosition.y = childPositionRect.y - oddEvenadjustValue - ((childSize.y + padding) * stepCount);
-
-		//Calculate our current child object position using the stepSize and the
-		//position of the first child position
-		childPositionRect.x = firstChildPosition.x;
-		childPositionRect.y = firstChildPosition.y + ((childSize.y+padding) * childNumber);
-
-
-	}
-
-	if (childRelativePositioning == true)
-	{
-		b2Vec2 adjustment{};
-
-		adjustment = this->matchParentRotation(
-			childPositionRect,
-			parentPositionRect,
-			parentAngle);
-
-		childPositionRect.x += adjustment.x;
-		childPositionRect.y += adjustment.y;
-
-	}
-
-	b2Vec2 childPosition{};
-	childPosition.x = childPositionRect.x;
-	childPosition.y = childPositionRect.y;
-
-
-	return childPosition;
-	
-}
 
 b2Vec2 GameObject::matchParentRotation(SDL_Rect childPositionRect, SDL_Rect parentPositionRect, float parentAngle)
 {
@@ -392,26 +272,14 @@ void GameObject::updateChildObjects()
 	{
 		locationSlot++;
 		int childNumber = 0;
+		int childCount = childLocations.size();
 
 		for (auto& childObject : childLocations)
 		{
 			childNumber++;
-			int childCount = childLocations.size();
-			parentPositionRect = this->getPositionRect();
-			childSize.Set(childObject->xSize, childObject->ySize);
 
-			//TODO: should be able to pass in the number of children in this position and what number in line
-			// this child is into calcChildPosition
-			newChildPosition = 
-				childObject->calcChildPosition(	
-					childSize,		
-					locationSlot,
-					childNumber,
-					childCount,
-					this->definition->childPadding,
-					this->definition->childPositionRelative,
-					this->angle,
-					parentPositionRect);
+			//Calculate child position
+			newChildPosition = this->calcChildPosition(childObject, locationSlot, childNumber, childCount);
 
 			// Should this child match the angle of the parent
 			if (this->definition->childPositionRelative == true)
@@ -456,7 +324,7 @@ void GameObject::buildChildren()
 	for (ChildObjectDetails childDefinition : this->definition->childObjectDefinitions)
 	{
 		string childObjectId = childDefinition.gameObjectId;
-		unsigned int position = childDefinition.position;
+		unsigned int locationSlot = childDefinition.locationSlot;
 
 		GameObjectDefinition* definition = game->gameObjectManager.getDefinition(childObjectId);
 
@@ -467,21 +335,21 @@ void GameObject::buildChildren()
 			{
 				TextObject* textObject =
 					game->gameObjectManager.buildGameObject<TextObject>(childObjectId, 2, 2, 0);
-				this->childObjects[position - 1].push_back(make_shared<TextObject>(*textObject));
+				this->childObjects[locationSlot - 1].push_back(make_shared<TextObject>(*textObject));
 
 			}
 			else if (definition->type.compare("WORLD_OBJECT") == 0)
 			{
 				WorldObject* worldObject =
 					game->gameObjectManager.buildGameObject<WorldObject>(childObjectId, -5, -5, 0);
-				this->childObjects[position - 1].push_back(make_shared<WorldObject>(*worldObject));
+				this->childObjects[locationSlot - 1].push_back(make_shared<WorldObject>(*worldObject));
 			}
 			else //default to GAME_OBJECT
 			{
 
 				GameObject* gameObject =
 					game->gameObjectManager.buildGameObject<GameObject>(childObjectId, -5, -5, 0);
-				this->childObjects[position - 1].push_back(make_shared<GameObject>(*gameObject));
+				this->childObjects[locationSlot - 1].push_back(make_shared<GameObject>(*gameObject));
 			}
 
 		}
@@ -489,7 +357,131 @@ void GameObject::buildChildren()
 
 }
 
+b2Vec2 GameObject::calcChildPosition(
+	shared_ptr<GameObject> child,
+	int locationSlot,
+	int childNumber,
+	int childCount)
+{
+	SDL_Rect childSize = {child->xSize, child->ySize};
+	SDL_Rect childPositionRect{};
+	float x, y, xAdj = 0, yAdj = 0;
 
+	SDL_Rect parentPositionRect = this->getPositionRect();
+
+	//Calculate center of parent
+	b2Vec2 parentCenter;
+	x = parentPositionRect.x + (parentPositionRect.w / 2);
+	y = parentPositionRect.y + (parentPositionRect.h / 2);
+	parentCenter.Set(x, y);
+
+	//Different calcs for the different 9 possible positions
+	switch (locationSlot) {
+	case 1:
+		x = parentPositionRect.x - childSize.x;
+		y = parentPositionRect.y - childSize.y;
+		break;
+	case 2:
+		x = parentCenter.x - (childSize.x / 2);
+		y = parentPositionRect.y - childSize.y;
+		break;
+	case 3:
+		x = parentPositionRect.x + parentPositionRect.w;
+		y = parentPositionRect.y - childSize.y;
+		break;
+	case 4:
+		x = parentPositionRect.x - childSize.x;
+		y = parentCenter.y - (childSize.y / 2);
+		break;
+	case 5:
+		x = parentCenter.x - (childSize.x / 2);
+		y = parentCenter.y - (childSize.y / 2);
+		break;
+	case 6:
+		x = parentPositionRect.x + parentPositionRect.w;
+		y = parentCenter.y - (childSize.y / 2);
+		break;
+	case 7:
+		x = parentPositionRect.x - childSize.x;
+		y = parentPositionRect.y + parentPositionRect.h;
+		break;
+	case 8:
+		x = parentCenter.x - (childSize.x / 2);
+		y = parentPositionRect.y + parentPositionRect.h;
+		break;
+	case 9:
+		x = parentPositionRect.x + parentPositionRect.w;
+		y = parentPositionRect.y + parentPositionRect.h;
+		break;
+
+	}
+
+	childPositionRect.x = x;
+	childPositionRect.y = y;
+	childPositionRect.w = childSize.x;
+	childPositionRect.h = childSize.y;
+
+	//Adjust the position if there are multiple children in the same position
+	if (childCount > 1)
+	{
+		float oddEvenadjustValue = 0;
+		int stepCount = 0;
+		b2Vec2 firstChildPosition;
+
+		//calculate vertical step adjustment depending on even or odd
+		if (childCount % 2 == 0)
+		{
+			//isEvenNumber
+			oddEvenadjustValue = (childSize.y + this->definition->childPadding) / 2;
+		}
+		else
+		{
+			oddEvenadjustValue = childSize.y + this->definition->childPadding;
+		}
+
+		//calculate number of steps to take to place 1st child object
+		stepCount = childCount / 2;
+
+		//Calculate 1st child object position based on the previous childPosition calculated
+		//values based on location slot
+		firstChildPosition.x =
+			childPositionRect.x;
+		firstChildPosition.y =
+			childPositionRect.y -
+			oddEvenadjustValue -
+			((childSize.y + this->definition->childPadding) * stepCount);
+
+		//Calculate our current child object position using the stepSize and the
+		//position of the first child position
+		childPositionRect.x = firstChildPosition.x;
+		childPositionRect.y =
+			firstChildPosition.y + ((childSize.y + this->definition->childPadding) * childNumber);
+
+
+	}
+
+	if (this->definition->childPositionRelative == true)
+	{
+		b2Vec2 adjustment{};
+
+		adjustment = this->matchParentRotation(
+			childPositionRect,
+			parentPositionRect,
+			this->angle);
+
+		childPositionRect.x += adjustment.x;
+		childPositionRect.y += adjustment.y;
+
+	}
+
+	b2Vec2 childPosition{};
+	childPosition.x = childPositionRect.x;
+	childPosition.y = childPositionRect.y;
+
+
+	return childPosition;
+
+}
 
 
 GameObject::~GameObject()
