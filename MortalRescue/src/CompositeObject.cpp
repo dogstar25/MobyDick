@@ -33,7 +33,7 @@ void CompositeObject::render()
 	{
 		if(pieceObject.isDestroyed == false)
 		{
-			pieceObject.gameObject->render();
+			pieceObject.pieceObject->render();
 		}
 		
 	}
@@ -97,33 +97,28 @@ void CompositeObject::buildPiece(CompositeLegendItem legendItem, int xPos, int y
 	/*
 	Build the game objects off screen. They will be placed in exect location duriing update loop
 	*/
-	if (legendItem.gameObjectType.compare("WORLD_OBJECT") == 0)
-		{
-		WorldObject* worldObject =
-			game->gameObjectManager.buildGameObject<WorldObject>(legendItem.gameObjectId, -5, -5, 0);
-		piece.gameObject = worldObject;
+	WorldObject* worldObject =
+		game->gameObjectManager.buildGameObject<WorldObject>(legendItem.gameObjectId, -5, -5, 0);
+	worldObject->strength = this->definition->compositeDetails.levels[0].strength;
+	piece.pieceObject = worldObject;
 		
-		}
-	else //default to GAME_OBJECT
-		{
-		GameObject* gameObject =
-			game->gameObjectManager.buildGameObject<GameObject>(legendItem.gameObjectId, -5, -5, 0);
-		piece.gameObject = gameObject;
-		}
 
 	//calculate the X,Y offset position in relating to the base object
 	//SDL_Rect parentPositionRect = this->getPositionRect();
 	//xOffset = parentPositionRect.x + (xPos * piece.gameObject->xSize);
 	//yOffset = parentPositionRect.y + (yPos * piece.gameObject->ySize);
 
-	xOffset = xPos * piece.gameObject->xSize;
-	yOffset = yPos * piece.gameObject->ySize;
+	xOffset = xPos * piece.pieceObject->xSize;
+	yOffset = yPos * piece.pieceObject->ySize;
 
 	piece.parentPositionOffset.x = xOffset;
 	piece.parentPositionOffset.y = yOffset;
 
 	//Temp color setting
-	piece.gameObject->color = { 255,0,0,255 };
+	piece.pieceObject->color = { 255,0,0,255 };
+
+	//Initialize color and strength to level 1
+	piece.pieceObject->color = this->definition->compositeDetails.levels[0].color;
 
 	//Temp adjust render size
 	//piece.gameObject->xSize += 2;
@@ -145,7 +140,7 @@ void CompositeObject::updatePieces()
 		this->updatePiecePosition(pieceObject);
 
 		//The piece object itself is a gameObject that should have its update called
-		pieceObject.gameObject->update();
+		pieceObject.pieceObject->update();
 
 	}
 
@@ -159,13 +154,13 @@ void CompositeObject::updatePieceState(GameObjectPiece& piece)
 	steady_clock::time_point now_time = steady_clock::now();
 
 	//Should this object be removed?
-	if (piece.gameObject->removeFromWorld == true)
+	if (piece.pieceObject->removeFromWorld == true)
 	{
 
-		piece.gameObject->setActive(false);
+		piece.pieceObject->setActive(false);
 		piece.isDestroyed = true;
-		//piece.gameObject->color = { 0,255,0,255 };
 		piece.time_snapshot = now_time;
+		piece.pieceObject->removeFromWorld = false;
 	}
 
 	//Has enough time gone by to regenerate the next armor level
@@ -176,7 +171,10 @@ void CompositeObject::updatePieceState(GameObjectPiece& piece)
 		{
 
 			//write regen function
-
+			piece.pieceObject->setActive(true);
+			piece.isDestroyed = false;
+			piece.pieceObject->color = { 0,0,255,255 };
+			piece.pieceObject->strength = 2;
 		}
 
 
@@ -198,8 +196,8 @@ void CompositeObject::updatePiecePosition(GameObjectPiece& piece)
 	SDL_Rect piecePositionRect{};
 	piecePositionRect.x = parentPositionRect.x + piece.parentPositionOffset.x;
 	piecePositionRect.y = parentPositionRect.y + piece.parentPositionOffset.y;
-	piecePositionRect.w = piece.gameObject->xSize;
-	piecePositionRect.h = piece.gameObject->ySize;
+	piecePositionRect.w = piece.pieceObject->xSize;
+	piecePositionRect.h = piece.pieceObject->ySize;
 
 	//Adjust the piece position based on the base objects rotation/angle
 	adjustment = this->matchParentRotation(piecePositionRect, parentPositionRect, this->angle);
@@ -209,5 +207,5 @@ void CompositeObject::updatePiecePosition(GameObjectPiece& piece)
 	//Create a vec position object to pass to setPosition
 	piecePosition.x = piecePositionRect.x;
 	piecePosition.y = piecePositionRect.y;
-	piece.gameObject->setPosition(piecePosition, this->angle);
+	piece.pieceObject->setPosition(piecePosition, this->angle);
 }

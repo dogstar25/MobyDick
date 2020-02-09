@@ -246,3 +246,16 @@ void WorldObject::setActive(bool active)
 
 }
 
+bool WorldObject::testStrength(int bulletStrength)
+{
+
+	if (bulletStrength >= this->strength) {
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+}
+

@@ -18,7 +18,7 @@ struct GameObjectPiece
 	b2Vec2 parentPositionOffset;
 	short currentlevel;
 	steady_clock::time_point time_snapshot;
-	GameObject* gameObject;
+	WorldObject* pieceObject;
 	
 };
 

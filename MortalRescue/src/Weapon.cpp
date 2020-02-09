@@ -8,8 +8,14 @@
 
 extern Game* game;
 
-Weapon::Weapon()
+Weapon::Weapon(string bulletPoolId, float strength, int levelUpTarget, int level)
 {
+
+	this->bulletPoolId = bulletPoolId;
+	this->strength = strength;
+	this->levelUpTarget = levelUpTarget;
+	this->level = level;
+
 }
 
 
@@ -17,59 +23,41 @@ Weapon::~Weapon()
 {
 }
 
-void Weapon::init(string bulletGameObjectId, PlayerObject* weaponWieldingObject, float xOffsetPct, float yOffsetPct)
-{
-	
-	this->bulletGameObjectId = bulletGameObjectId;
-	this->weaponWieldingObject = weaponWieldingObject;
-	this->stength = 1;
-
-	//Calulate the actual offest amount using the percentages that were sent in
-	this->xOffset = xOffsetPct * this->weaponWieldingObject->xSize;
-	this->yOffset = yOffsetPct * this->weaponWieldingObject->ySize;
 
 
-}
-
-
-
-void Weapon::fire()
+void Weapon::fire(b2Vec2 origin, float angle, float fireOffset)
 {
 	//bullet;
 	//ParticleObject* bullet = new ParticleObject(this->bulletGameObjectId, 0, 0, 0);
-	ParticleObject* bullet = game->objectPoolManager.get("BULLET1_POOL");
+	ParticleObject* bullet = game->objectPoolManager.get(this->bulletPoolId);
 	if (bullet != NULL) {
 
 		//Calculate the origin of the bullet
+		/*
 		float dx = this->weaponWieldingObject->physicsBody->GetTransform().p.x +
 			cos(this->weaponWieldingObject->physicsBody->GetAngle());
 		float dy = this->weaponWieldingObject->physicsBody->GetTransform().p.y +
 			sin(this->weaponWieldingObject->physicsBody->GetAngle());
-
-		float angleT = this->weaponWieldingObject->physicsBody->GetAngle();
-		//Calculate offset values of bullet spawning origin adding an offset for the fireing object
-		/* remove offfset logic for now
-		
-		float xAdj = cos(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->xOffset);
-		float yAdj = sin(this->weaponWieldingObject->physicsBody->GetAngle()) *(this->yOffset);
 		*/
+		float dx = origin.x + cos(angle);
+		float dy = origin.y + sin(angle);
 
-		float xAdj = 0;
-		float yAdj = 0;
+		//Calculate offset values of bullet spawning origin adding an offset for the fireing object
+		float xAdj = cos(angle) * (fireOffset);
+		float yAdj = sin(angle) * (fireOffset);
 
 		dx += xAdj;
 		dy += yAdj;
 
 		//Bullet Strength
-		this->stength = this->stength;
+		bullet->strength = this->strength;
 
 		b2Vec2 positionVector = b2Vec2(dx, dy);
 
-		dx = cos(this->weaponWieldingObject->physicsBody->GetAngle()) * bullet->speed; // make speed configurable
-		dy = sin(this->weaponWieldingObject->physicsBody->GetAngle()) * bullet->speed; // Y-component.
+		dx = cos(angle) * bullet->speed; // make speed configurable
+		dy = sin(angle) * bullet->speed; // Y-component.
 		b2Vec2 velocityVector = b2Vec2(dx, dy);
 
-		float angle = this->weaponWieldingObject->physicsBody->GetAngle();
 		bullet->physicsBody->SetFixedRotation(true);
 		bullet->physicsBody->SetTransform(positionVector, angle);
 		bullet->physicsBody->SetLinearVelocity(velocityVector);
@@ -82,6 +70,7 @@ void Weapon::fire()
 		game->addGameObject(bullet, game->MAIN);
 	}
 
+	
 
 }
 

@@ -99,7 +99,7 @@ bool Game::init()
 	//Create the main player object
 	playerObject = gameObjectManager.buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
 	this->player = make_unique<PlayerObject>(*playerObject);
-	this->player->addWeapon("BULLET1", 0, 0);
+	this->player->weapon = this->player->definition->weapons[1];
 
 	//set camera to center on player object
 	this->camera.setPosition((this->player->physicsBody->GetPosition().x *  this->config.scaleFactor) -
@@ -371,7 +371,7 @@ void Game::handleEvents() {
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			this->player->weapon->fire();
+			this->player->fire();
 			break;
 		case SDL_USEREVENT:
 			delete event.user.data1;

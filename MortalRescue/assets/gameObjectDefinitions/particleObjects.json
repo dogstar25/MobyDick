@@ -51,7 +51,58 @@
           "frames": 4
         }
       ]
+    },
+    {
+      "id": "BULLET2",
+      "description": "Bullet 2",
+      "type": "WORLD_OBJECT",
+      "speed": 75,
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "restitution": 0.0,
+        "density": 0.05,
+        "linearDamping": 0.0,
+        "angularDamping": 12.0,
+        "collisionCategory": 8
+      },
+      "xSize": 0.18,
+      "ySize": 0.6,
+      "animations": [
+        {
+          "id": "ACTIVE",
+          "texture": "TX_BULLET1",
+          "speed": 0.01, //time in seconds for each frame. Lower the faster
+          "frames": 4
+        }
+      ]
+    },
+    {
+      "id": "DEFLECT1",
+      "description": "Deflect",
+      "type": "WORLD_OBJECT",
+      "speed": 75,
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "restitution": 0.0,
+        "density": 0.05,
+        "linearDamping": 0.0,
+        "angularDamping": 12.0,
+        "collisionCategory": 16
+      },
+      "xSize": 2.56,
+      "ySize": 2.56,
+      "animations": [
+        {
+          "id": "ACTIVE",
+          "texture": "TX_DEFLECT1_64",
+          "speed": 0.01, //time in seconds for each frame. Lower the faster
+          "frames": 4
+        }
+      ]
     }
+
   ]
 
 }

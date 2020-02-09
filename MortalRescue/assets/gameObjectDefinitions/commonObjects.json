@@ -137,6 +137,7 @@
       "xSize": 2.56,
       "ySize": 2.56,
       "speed": 9.5,
+      "fireOffset": -0.5,
       "animations": [
         {
           "id": "RUN",
@@ -160,9 +161,22 @@
           "locationSlot": 3
         }
 
+      ],
+      "weapons": [
+        {
+          "level": 1,
+          "strength": 1,
+          "levelUpTarget": 25,
+          "bulletPoolId": "BULLET1_POOL"
+        },
+        {
+          "level": 2,
+          "strength": 2,
+          "levelUpTarget": 25,
+          "bulletPoolId": "BULLET2_POOL"
+        }
       ]
-
-    },
+     },
     {
       "id": "FPS_LABEL",
       "description": "FPS Label",

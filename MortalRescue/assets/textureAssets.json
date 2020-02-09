@@ -148,7 +148,13 @@
       "id": "TX_ENEMYFRAME1_128",
       "description": "Angle",
       "filename": "assets/enemyFrame1_128.png"
+    },
+    {
+      "id": "TX_DEFLECT1_64",
+      "description": "Deflect",
+      "filename": "assets/deflect1.png"
     }
+
   ],
   "fonts": [
     {

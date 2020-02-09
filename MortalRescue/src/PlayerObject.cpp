@@ -17,14 +17,13 @@ PlayerObject::PlayerObject(string gameObjectId, int xMapPos, int yMapPos, int an
 	this->direction = 0;
 	this->strafe = 0;
 	this->currentAnimationState = "IDLE";
-
+	this->pieceCollectedCount = 0;
 
 }
 
 PlayerObject::~PlayerObject()
 {
 
-	delete this->weapon;
 
 }
 
@@ -182,11 +181,18 @@ void PlayerObject::updatePlayerMovement()
 
 }
 
-void PlayerObject::addWeapon(string bulletGameObjectId, float xWeaponOffsetPct, float yWeaponOffsetPct)
+void PlayerObject::fire()
 {
+	
+	//Calculate the origin of the bullet
+	b2Vec2 origin = { this->physicsBody->GetTransform().p.x , this->physicsBody->GetTransform().p.y };
+	this->weapon->fire(origin, this->physicsBody->GetAngle(), this->definition->fireOffset);
 
-	this->weapon = new Weapon();
-	this->weapon->init(bulletGameObjectId, this, xWeaponOffsetPct, yWeaponOffsetPct);
+
+}
+
+void PlayerObject::weaponLevelUp()
+{
 
 }
 

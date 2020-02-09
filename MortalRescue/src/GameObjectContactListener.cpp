@@ -207,20 +207,33 @@ void GameObjectContactListener::bulletWall(WorldObject* bullet, WorldObject* wal
 void GameObjectContactListener::bulletPiece(WorldObject* bullet, WorldObject* piece, b2Vec2 contactPoint)
 {
 
-	ParticleEmission* particleEmission = NULL;
 
 	//Set flag for bullet to be removed from world
 	bullet->removeFromWorld = true;
 
 	//Set flag for piece to be removed from world
-	piece->removeFromWorld = true;
+	//only if bullet was strong enough
+	if (piece->testStrength(bullet->strength)) {
+		piece->removeFromWorld = true;
+		bulletPieceExplode(bullet,piece,contactPoint);
+	}
+	else
+	{
+		bulletPieceDeflect(bullet, piece, contactPoint);
+	}
+	
 
-	//use the collision point for the particle emission
+
+}
+
+void GameObjectContactListener::bulletPieceExplode(WorldObject* bullet, WorldObject* piece, b2Vec2 contactPoint)
+{
+	ParticleEmission* particleEmission = NULL;
+
 	float x = contactPoint.x;
 	float y = contactPoint.y;
-	b2Vec2 particleOrigin = {x,y};
+	b2Vec2 particleOrigin = { x,y };
 
-	//temp color code
 	SDL_Color colorMin = piece->color;
 	SDL_Color colorMax = piece->color;
 
@@ -245,7 +258,7 @@ void GameObjectContactListener::bulletPiece(WorldObject* bullet, WorldObject* pi
 	game->particleMachine.add(particleEmission);
 
 	//Create some white smoke particles
-	colorMin = {255,255,255,100};
+	colorMin = { 255,255,255,100 };
 	colorMax = { 255,255,255,200 };
 
 	particleEmission = new ParticleEmission(
@@ -290,6 +303,41 @@ void GameObjectContactListener::bulletPiece(WorldObject* bullet, WorldObject* pi
 		2	//Particle count max
 	);
 	game->particleMachine.add(particleEmission);
+
+}
+
+void GameObjectContactListener::bulletPieceDeflect(WorldObject* bullet, WorldObject* piece, b2Vec2 contactPoint)
+{
+	ParticleEmission* particleEmission = NULL;
+
+	float x = contactPoint.x;
+	float y = contactPoint.y;
+	b2Vec2 particleOrigin = { x,y };
+
+	SDL_Color colorMin = { 255,255,255,175 };
+	SDL_Color colorMax = { 255,255,255,175 };
+
+	particleEmission = new ParticleEmission(
+		"DEFLECT1_POOL",
+		particleOrigin, //min position
+		particleOrigin,	//max position
+		2,	//Force Min
+		3,	//force Max
+		0.10,	//Lifetime Min
+		0.25,	//Lifetime Max
+		true,	// Alpha fade
+		0,	//Angle min
+		360,	//Angle Max
+		2.56,	//Size Min
+		2.56,	//Size Max
+		colorMin,	//Color Min
+		colorMax,	//Color Max
+		2,	//Particle count min
+		3	//Particle count max
+	);
+	game->particleMachine.add(particleEmission);
+
+
 }
 
 b2Vec2 GameObjectContactListener::findWallImpactPoint(b2Vec2 worldPoint, PlayerObject* player)

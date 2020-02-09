@@ -72,6 +72,8 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 
 		gameObjectDefinition->xRenderAdjustment = itr["xRenderAdjustment"].asFloat();
 		gameObjectDefinition->yRenderAdjustment = itr["yRenderAdjustment"].asFloat();
+		gameObjectDefinition->fireOffset = itr["fireOffset"].asFloat();
+
 
 		//Game Object Type
 		gameObjectDefinition->type = itr["type"].asString();
@@ -200,8 +202,6 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 				//GameObjectId
 				legendItem.gameObjectId = legendItr["gameObjectId"].asString();
 
-				//GameObject type
-				legendItem.gameObjectType = legendItr["gameObjectType"].asString();
 				//color
 				legendItem.color.r = legendItr["color"]["red"].asInt();
 				legendItem.color.g = legendItr["color"]["green"].asInt();
@@ -228,6 +228,22 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 
 			}
 		}
+
+		shared_ptr<Weapon> weapon;
+		for (auto weaponItr : itr["weapons"])
+		{
+			int level = weaponItr["level"].asInt();
+
+			weapon = make_shared<Weapon>(
+				weaponItr["bulletPoolId"].asString(),
+				weaponItr["strength"].asFloat(),
+				weaponItr["levelUpTarget"].asInt(),
+				level
+				);
+			gameObjectDefinition->weapons.emplace(level, weapon);
+
+		}
+
 
 		this->gameObjectDefinitions[gameObjectDefinition->id] = gameObjectDefinition;
 
