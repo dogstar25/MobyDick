@@ -113,12 +113,12 @@ void GameObjectContactListener::handleContact(WorldObject* contact1, WorldObject
 			contact2->definition->id.compare(7, 5, "PIECE") == 0)
 		{
 			if (contact1->definition->id.compare("BULLET1") == 0 ||
-				contact2->definition->id.compare("BULLET2") == 0) {
+				contact1->definition->id.compare("BULLET2") == 0) {
 				bullet = contact1;
 				piece = contact2;
 			}
 			else if (contact2->definition->id.compare("BULLET1") == 0 ||
-					 contact1->definition->id.compare("BULLET2") == 0) 
+					 contact2->definition->id.compare("BULLET2") == 0) 
 			{
 				bullet = contact2;
 				piece = contact1;

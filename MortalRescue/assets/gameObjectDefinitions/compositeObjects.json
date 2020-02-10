@@ -19,6 +19,15 @@
       "xSize": 5.12,
       "ySize": 5.12,
       "speed": 11.5,
+      "childPadding": 8,
+      "childPositionRelative": true,
+      "childObjects": [
+        {
+          "gameObjectId": "SWORDLADY",
+          "locationSlot": 1
+        }
+
+      ],
       "composite": {
         "levelUpSpeed": 800,
         "blueprint": {
@@ -63,7 +72,7 @@
             {
               "gameObjectId": "ANGLE4_PIECE",
               "color": {
-                "red": 175,
+                "red": 255,
                 "green": 209,
                 "blue": 0,
                 "alpha": 255
@@ -106,9 +115,9 @@
             "level": 4,
             "strength": 25,
             "color": {
-              "red": 181,
-              "green": 25,
-              "blue": 88,
+              "red": 0,
+              "green": 255,
+              "blue": 0,
               "alpha": 255
             }
           }

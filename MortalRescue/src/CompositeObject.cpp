@@ -209,10 +209,12 @@ void CompositeObject::levelUp(GameObjectPiece& piece)
 	for (CompositeLevel level : this->definition->compositeDetails.levels)
 	{
 
+		piece.isDestroyed = false;
+
 		if( level.levelNum == nextLevel)
 		{
 			piece.currentlevel = level.levelNum;
-			piece.isDestroyed = false;
+//			piece.isDestroyed = false;
 
 			piece.pieceObject->color = level.color;
 			piece.pieceObject->strength = level.strength;
