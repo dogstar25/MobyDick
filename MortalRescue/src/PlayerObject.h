@@ -28,6 +28,8 @@ public:
 	void updatePlayerMovement();
 	void fire();
 	void weaponLevelUp();
+	void incrementPiecesCollected();
+	void setBox2DUserData(PlayerObject*);
 
 };
 

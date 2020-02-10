@@ -98,7 +98,10 @@ bool Game::init()
 
 	//Create the main player object
 	playerObject = gameObjectManager.buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
-	this->player = make_unique<PlayerObject>(*playerObject);
+	//playerObject->weapon = playerObject->definition->weapons[1];
+	//this->player = shared_ptr<PlayerObject>(playerObject);
+	this->player = playerObject;
+	//this->player->physicsBody->SetUserData(this->player);
 	this->player->weapon = this->player->definition->weapons[1];
 
 	//set camera to center on player object

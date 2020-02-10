@@ -120,10 +120,6 @@ void CompositeObject::buildPiece(CompositeLegendItem legendItem, int xPos, int y
 	//Initialize color and strength to level 1
 	piece.pieceObject->color = this->definition->compositeDetails.levels[0].color;
 
-	//Temp adjust render size
-	//piece.gameObject->xSize += 2;
-	//piece.gameObject->ySize += 2;
-
 	this->pieces.push_back(piece);
 
 }
@@ -170,13 +166,9 @@ void CompositeObject::updatePieceState(GameObjectPiece& piece)
 		if (timeDiffMilliSeconds.count() >= this->definition->compositeDetails.levelUpSpeed)
 		{
 
-			//write regen function
-			piece.pieceObject->setActive(true);
-			piece.isDestroyed = false;
-			piece.pieceObject->color = { 0,0,255,255 };
-			piece.pieceObject->strength = 2;
+			//Level up the piece object
+			this->levelUp(piece);
 		}
-
 
 	}
 
@@ -208,4 +200,27 @@ void CompositeObject::updatePiecePosition(GameObjectPiece& piece)
 	piecePosition.x = piecePositionRect.x;
 	piecePosition.y = piecePositionRect.y;
 	piece.pieceObject->setPosition(piecePosition, this->angle);
+}
+
+void CompositeObject::levelUp(GameObjectPiece& piece)
+{
+	int nextLevel = piece.currentlevel + 1;
+
+	for (CompositeLevel level : this->definition->compositeDetails.levels)
+	{
+
+		if( level.levelNum == nextLevel)
+		{
+			piece.currentlevel = level.levelNum;
+			piece.isDestroyed = false;
+
+			piece.pieceObject->color = level.color;
+			piece.pieceObject->strength = level.strength;
+			piece.pieceObject->setActive(true);
+		
+		}
+
+	}
+
+
 }

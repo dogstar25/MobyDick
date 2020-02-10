@@ -19,6 +19,8 @@ PlayerObject::PlayerObject(string gameObjectId, int xMapPos, int yMapPos, int an
 	this->currentAnimationState = "IDLE";
 	this->pieceCollectedCount = 0;
 
+
+
 }
 
 PlayerObject::~PlayerObject()
@@ -193,8 +195,38 @@ void PlayerObject::fire()
 
 void PlayerObject::weaponLevelUp()
 {
+	int level = weapon->getNextLevel();
 
+	auto iter = this->definition->weapons.find(level);
+
+	if (iter != this->definition->weapons.end())
+	{
+		//this->weapon = iter->second;
+		this->weapon = this->definition->weapons[level];
+	}
+	
 }
 
+void PlayerObject::incrementPiecesCollected()
+{
+
+	pieceCollectedCount += 1;
+	
+	//attemp to level up weapon
+	if (weapon->checkLevelUp(pieceCollectedCount) == true)
+	{
+		this->weaponLevelUp();
+		pieceCollectedCount = 0;
+	}
+	
+	
+}
+
+
+void PlayerObject::setBox2DUserData(PlayerObject* playerObject)
+{
+
+	this->physicsBody->SetUserData(playerObject);
+}
 
 

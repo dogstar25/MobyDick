@@ -28,6 +28,7 @@ public:
 	SDL_Rect  getRenderDestRect(); 
 	SDL_Rect  getPositionRect();
 	bool testStrength(int);
+	virtual void setBox2DUserData(WorldObject*);
 
 	b2Body* buildB2Body(GameObjectDefinition*);
 	uint16 setCollisionMask(uint16 category);

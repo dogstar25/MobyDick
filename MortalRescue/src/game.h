@@ -195,7 +195,7 @@ public:
 	//Fixed array of Layers
 	//Each layer contains a GameObjectCollection
 	array <GameObjectCollection, MAX_LAYERS> gameCollections;
-	unique_ptr<PlayerObject> player;
+	PlayerObject* player;
 
 	unique_ptr<DebugPanel> debugPanel;
 

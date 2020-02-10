@@ -48,6 +48,7 @@ public:
 
 	void updatePieceState(GameObjectPiece& piece);
 	void updatePiecePosition(GameObjectPiece& piece);
+	void levelUp(GameObjectPiece& piece);
 
 	//Collection of all of the gameObjects that make up this composite object
 	vector<GameObjectPiece>pieces;

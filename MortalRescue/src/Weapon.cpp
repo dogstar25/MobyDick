@@ -74,4 +74,24 @@ void Weapon::fire(b2Vec2 origin, float angle, float fireOffset)
 
 }
 
+bool Weapon::checkLevelUp(int pieceCount)
+{
+
+	if (pieceCount >= this->levelUpTarget)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+
+}
+
+int Weapon::getNextLevel()
+{
+
+	return this->level += 1;;
+
+}
 

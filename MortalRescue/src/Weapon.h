@@ -25,6 +25,8 @@ public:
 	~Weapon();
 
 	void fire(b2Vec2 origin, float angle, float fireOffset);
+	bool checkLevelUp(int);
+	int getNextLevel();
 
 
 };

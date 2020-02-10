@@ -63,7 +63,7 @@
             {
               "gameObjectId": "ANGLE4_PIECE",
               "color": {
-                "red": 255,
+                "red": 175,
                 "green": 209,
                 "blue": 0,
                 "alpha": 255
@@ -86,9 +86,29 @@
             "level": 2,
             "strength": 2,
             "color": {
-              "red": 255,
-              "green": 255,
+              "red": 129,
+              "green": 98,
               "blue": 0,
+              "alpha": 255
+            }
+          },
+          {
+            "level": 3,
+            "strength": 3,
+            "color": {
+              "red": 78,
+              "green": 100,
+              "blue": 88,
+              "alpha": 255
+            }
+          },
+          {
+            "level": 4,
+            "strength": 25,
+            "color": {
+              "red": 181,
+              "green": 25,
+              "blue": 88,
               "alpha": 255
             }
           }

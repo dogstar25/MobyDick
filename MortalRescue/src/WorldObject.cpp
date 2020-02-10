@@ -33,7 +33,8 @@ WorldObject::WorldObject(string gameObjectId, float xMapPos, float yMapPos, floa
 	this->setPosition(position, angleAdjust * DEGTORAD);
 
 	//Add a reference to the gameObject itself to the physics object for collision helping logic later
-	this->physicsBody->SetUserData(this);
+	//this->physicsBody->SetUserData(this);
+	this->setBox2DUserData(this);
 
 }
 
@@ -259,3 +260,9 @@ bool WorldObject::testStrength(int bulletStrength)
 
 }
 
+void WorldObject::setBox2DUserData(WorldObject* worldObject)
+{
+
+	this->physicsBody->SetUserData(worldObject);
+
+}
