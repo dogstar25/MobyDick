@@ -137,6 +137,7 @@
       "xSize": 2.56,
       "ySize": 2.56,
       "speed": 9.5,
+      "fireOffset": -0.5,
       "animations": [
         {
           "id": "RUN",
@@ -157,12 +158,31 @@
       "childObjects": [
         {
           "gameObjectId": "PLAYER_LABEL",
-          "position": 3
+          "locationSlot": 3
         }
 
+      ],
+      "weapons": [
+        {
+          "level": 1,
+          "strength": 1,
+          "levelUpTarget": 25,
+          "bulletPoolId": "BULLET1_POOL"
+        },
+        {
+          "level": 2,
+          "strength": 2,
+          "levelUpTarget": 25,
+          "bulletPoolId": "BULLET2_POOL"
+        },
+        {
+          "level": 3,
+          "strength": 5,
+          "levelUpTarget": 25,
+          "bulletPoolId": "BULLET2_POOL"
+        }
       ]
-
-    },
+     },
     {
       "id": "FPS_LABEL",
       "description": "FPS Label",
@@ -180,7 +200,7 @@
       "description": "Player Label",
       "type": "TEXT_OBJECT",
       "text": {
-        "value": "Player 1",
+        "value": "Player 100",
         "dynamic": false,
         "font": "FONT_ARIAL_REG",
         "size": 12

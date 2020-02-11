@@ -18,7 +18,7 @@ struct GameObjectPiece
 	b2Vec2 parentPositionOffset;
 	short currentlevel;
 	steady_clock::time_point time_snapshot;
-	GameObject* gameObject;
+	WorldObject* pieceObject;
 	
 };
 
@@ -48,6 +48,7 @@ public:
 
 	void updatePieceState(GameObjectPiece& piece);
 	void updatePiecePosition(GameObjectPiece& piece);
+	void levelUp(GameObjectPiece& piece);
 
 	//Collection of all of the gameObjects that make up this composite object
 	vector<GameObjectPiece>pieces;

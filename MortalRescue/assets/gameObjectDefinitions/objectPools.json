@@ -7,6 +7,12 @@
       "maxItems": 500
     },
     {
+      "id": "BULLET2_POOL",
+      "gameObjectId": "BULLET2",
+      "lifetime": 2.25,
+      "maxItems": 500
+    },
+    {
       "id": "PARTICLE1_POOL",
       "gameObjectId": "PARTICLE_SMOKE_1",
       "lifetime": 2.55,
@@ -17,6 +23,13 @@
       "gameObjectId": "ANGLE_BIT_PIECE",
       "lifetime": 0,
       "maxItems": 512
+    },
+    {
+      "id": "DEFLECT1_POOL",
+      "gameObjectId": "DEFLECT1",
+      "lifetime": 2.55,
+      "maxItems": 128
     }
+
   ]
 }

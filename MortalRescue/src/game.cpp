@@ -93,11 +93,16 @@ bool Game::init()
 	TextObject* textObject = NULL;
 	CompositeObject* compositeObject = NULL;
 
+	
+
 
 	//Create the main player object
 	playerObject = gameObjectManager.buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
-	this->player = make_unique<PlayerObject>(*playerObject);
-	this->player->addWeapon("BULLET1", 0, 0);
+	//playerObject->weapon = playerObject->definition->weapons[1];
+	//this->player = shared_ptr<PlayerObject>(playerObject);
+	this->player = playerObject;
+	//this->player->physicsBody->SetUserData(this->player);
+	this->player->weapon = this->player->definition->weapons[1];
 
 	//set camera to center on player object
 	this->camera.setPosition((this->player->physicsBody->GetPosition().x *  this->config.scaleFactor) -
@@ -121,7 +126,6 @@ bool Game::init()
 
 	compositeObject = gameObjectManager.buildGameObject <CompositeObject>("DRONE", 11, 11, 0);
 	this->addGameObject(compositeObject, this->MAIN);
-
 
 	//Create the debug panel if its turned on
 	if (this->config.debugPanel == true)
@@ -362,8 +366,6 @@ void Game::handleEvents() {
 			{
 				unique_ptr<GUIEvent> guiEvent = make_unique<GUIEvent>("GUIPausePanel");
 				guiEvent->run();
-				guiEvent.release();
-
 			}
 			else
 			{
@@ -372,7 +374,7 @@ void Game::handleEvents() {
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			this->player->weapon->fire();
+			this->player->fire();
 			break;
 		case SDL_USEREVENT:
 			delete event.user.data1;

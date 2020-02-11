@@ -254,6 +254,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\blueprints\drone1_test.png" />
+    <Image Include="assets\deflect1.png" />
     <Image Include="assets\enemyFrame1_128.png" />
     <Image Include="assets\particle2.png" />
     <Image Include="assets\pieceAngle1_8.png" />

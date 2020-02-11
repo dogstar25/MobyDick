@@ -17,6 +17,8 @@ PlayerObject::PlayerObject(string gameObjectId, int xMapPos, int yMapPos, int an
 	this->direction = 0;
 	this->strafe = 0;
 	this->currentAnimationState = "IDLE";
+	this->pieceCollectedCount = 0;
+
 
 
 }
@@ -24,7 +26,6 @@ PlayerObject::PlayerObject(string gameObjectId, int xMapPos, int yMapPos, int an
 PlayerObject::~PlayerObject()
 {
 
-	delete this->weapon;
 
 }
 
@@ -182,13 +183,50 @@ void PlayerObject::updatePlayerMovement()
 
 }
 
-void PlayerObject::addWeapon(string bulletGameObjectId, float xWeaponOffsetPct, float yWeaponOffsetPct)
+void PlayerObject::fire()
 {
+	
+	//Calculate the origin of the bullet
+	b2Vec2 origin = { this->physicsBody->GetTransform().p.x , this->physicsBody->GetTransform().p.y };
+	this->weapon->fire(origin, this->physicsBody->GetAngle(), this->definition->fireOffset);
 
-	this->weapon = new Weapon();
-	this->weapon->init(bulletGameObjectId, this, xWeaponOffsetPct, yWeaponOffsetPct);
 
 }
 
+void PlayerObject::weaponLevelUp()
+{
+	int level = weapon->getNextLevel();
+
+	auto iter = this->definition->weapons.find(level);
+
+	if (iter != this->definition->weapons.end())
+	{
+		//this->weapon = iter->second;
+		this->weapon = this->definition->weapons[level];
+	}
+	
+}
+
+void PlayerObject::incrementPiecesCollected()
+{
+
+	pieceCollectedCount += 1;
+	
+	//attemp to level up weapon
+	if (weapon->checkLevelUp(pieceCollectedCount) == true)
+	{
+		this->weaponLevelUp();
+		pieceCollectedCount = 0;
+	}
+	
+	
+}
+
+
+void PlayerObject::setBox2DUserData(PlayerObject* playerObject)
+{
+
+	this->physicsBody->SetUserData(playerObject);
+}
 
 

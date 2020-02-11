@@ -11,8 +11,12 @@ class PlayerObject : public WorldObject
 {
 public:
 
-	int direction, strafe;
-	Weapon * weapon;
+	int 
+		direction, 
+		strafe,
+		pieceCollectedCount;
+
+	shared_ptr<Weapon> weapon;
 
 	PlayerObject();
 	PlayerObject(string, int, int, int);
@@ -22,7 +26,10 @@ public:
 	void render();
 	void handlePlayerMovementEvent(SDL_Event* event);
 	void updatePlayerMovement();
-	void addWeapon(string, float,float);
+	void fire();
+	void weaponLevelUp();
+	void incrementPiecesCollected();
+	void setBox2DUserData(PlayerObject*);
 
 };
 

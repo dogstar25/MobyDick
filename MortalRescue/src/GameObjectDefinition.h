@@ -6,6 +6,7 @@
 #include <cstddef>
 
 #include "Animation.h"
+#include "Weapon.h">
 
 
 using namespace std;
@@ -23,10 +24,8 @@ struct TextDetails {
 struct ChildObjectDetails
 {
 	string gameObjectId;
-	short position;
-	bool absolutePositioning;
-	string gameObjectType;
-
+	short locationSlot;
+	string gameObjectType;	
 };
 
 struct CompositeLevel
@@ -40,7 +39,6 @@ struct CompositeLegendItem
 {
 	SDL_Color color;
 	string gameObjectId;
-	string gameObjectType;
 };
 
 /*
@@ -62,6 +60,10 @@ struct CompositeDetails
 };
 
 
+/*
+ToDO:All of the members should be const because they cannot be changed. If they can, then they need
+to move to the gameObject level
+*/
 class GameObjectDefinition
 {
 public:
@@ -90,7 +92,8 @@ public:
 		childPadding,
 		lifetime,
 		xRenderAdjustment, 
-		yRenderAdjustment;
+		yRenderAdjustment,
+		fireOffset;
 	bool
 		isAnimated,
 		isPhysicsObject,
@@ -114,6 +117,8 @@ public:
 	SDL_Color color; //The color to apply to the object
 	map<string, Animation*> animations;
 	vector<ChildObjectDetails> childObjectDefinitions;
+
+	map<int, shared_ptr<Weapon>> weapons;
 
 
 

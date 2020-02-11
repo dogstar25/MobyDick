@@ -19,14 +19,22 @@
       "xSize": 5.12,
       "ySize": 5.12,
       "speed": 11.5,
+      "childPadding": 8,
+      "childPositionRelative": true,
+      "childObjects": [
+        {
+          "gameObjectId": "SWORDLADY",
+          "locationSlot": 1
+        }
+
+      ],
       "composite": {
-        "levelUpSpeed": 1,
+        "levelUpSpeed": 800,
         "blueprint": {
           "texture": "TX_DRONE1_BLUEPRINT",
           "legend": [
             {
               "gameObjectId": "FULL_PIECE",
-              "gameObjectType": "WORLD_OBJECT",
               "color": {
                 "red": 127,
                 "green": 6,
@@ -36,7 +44,6 @@
             },
             {
               "gameObjectId": "ANGLE1_PIECE",
-              "gameObjectType": "WORLD_OBJECT",
               "color": {
                 "red": 214,
                 "green": 36,
@@ -46,7 +53,6 @@
             },
             {
               "gameObjectId": "ANGLE2_PIECE",
-              "gameObjectType": "WORLD_OBJECT",
               "color": {
                 "red": 255,
                 "green": 132,
@@ -56,7 +62,6 @@
             },
             {
               "gameObjectId": "ANGLE3_PIECE",
-              "gameObjectType": "WORLD_OBJECT",
               "color": {
                 "red": 255,
                 "green": 38,
@@ -66,7 +71,6 @@
             },
             {
               "gameObjectId": "ANGLE4_PIECE",
-              "gameObjectType": "WORLD_OBJECT",
               "color": {
                 "red": 255,
                 "green": 209,
@@ -79,7 +83,7 @@
         "levels": [
           {
             "level": 1,
-            "strength": 4,
+            "strength": 1,
             "color": {
               "red": 255,
               "green": 0,
@@ -89,9 +93,29 @@
           },
           {
             "level": 2,
-            "strength": 5,
+            "strength": 2,
             "color": {
-              "red": 255,
+              "red": 129,
+              "green": 98,
+              "blue": 0,
+              "alpha": 255
+            }
+          },
+          {
+            "level": 3,
+            "strength": 3,
+            "color": {
+              "red": 78,
+              "green": 100,
+              "blue": 88,
+              "alpha": 255
+            }
+          },
+          {
+            "level": 4,
+            "strength": 25,
+            "color": {
+              "red": 0,
               "green": 255,
               "blue": 0,
               "alpha": 255

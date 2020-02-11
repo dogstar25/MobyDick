@@ -30,22 +30,10 @@ public:
 
 void GameObjectContactListener::BeginContact(b2Contact* contact) {
 
-	//check if fixture A was a ball
-	WorldObject* gameObjectA = static_cast<WorldObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
-	if (gameObjectA)
-	{
-		//static_cast<GameObject*>(bodyUserData)->startContact();
-	}
 
-	//check if fixture B was a ball
+	//Get the 2 object pointers
+	WorldObject* gameObjectA = static_cast<WorldObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
 	WorldObject* gameObjectB = static_cast<WorldObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
-	if (gameObjectB)
-	{
-		//static_cast<GameObject*>(bodyUserData)->startContact();
-		//gameObjectB->physicsBody->SetActive(false);
-		//gameObjectB->physicsBody->SetAwake(false);
-		
-	}
 
 	float32 x = 0;
 	float32 y = 0;
@@ -65,63 +53,73 @@ void GameObjectContactListener::BeginContact(b2Contact* contact) {
 void GameObjectContactListener::EndContact(b2Contact* contact)
 {
 
-	//check if fixture A was a ball
-	WorldObject* gameObjectA = static_cast<WorldObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
-	if (gameObjectA)
-	{
-		//static_cast<GameObject*>(bodyUserData)->startContact();
-	}
-
-	//check if fixture B was a ball
-	WorldObject* gameObjectB = static_cast<WorldObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
-	if (gameObjectB)
-	{
-		//static_cast<GameObject*>(bodyUserData)->startContact();
-	}
-
 }
 
 
 
 void GameObjectContactListener::handleContact(WorldObject* contact1, WorldObject* contact2, b2Vec2 contactPoint)
 {
-	WorldObject* bullet=NULL, *wall = NULL, *player = NULL, *piece = NULL;
+	WorldObject* bullet=NULL, *wall = NULL, *piece = NULL;
+	PlayerObject* player = NULL;
 
 	/*
 		TODO. Create a Designation or Category variable to use to compare objects for contact
 				The id name is too arbitrary
+
+
+
+		02/09/2020: this is where things fail . bullet1 and bullet2 should both be considered bullets ( maybe from teh player only)
+
+
+			NOTES:first take the player back to a unique_ptr 
+			becasue that started this ertardedness,
+
+			Then to shared_ptr, whicj should be okay
+
+
+
+
 	
 	*/
 	if (contact1->definition->id.compare("BULLET1") == 0 ||
-		contact2->definition->id.compare("BULLET1") == 0)
+		contact2->definition->id.compare("BULLET1") == 0 ||
+		contact1->definition->id.compare("BULLET2") == 0 ||
+		contact2->definition->id.compare("BULLET2") == 0)
 	{
 		//Bullet Wall contact
-		if (contact1->definition->id.compare(0,4,"WALL") == 0 ||
+		if (contact1->definition->id.compare(0, 4, "WALL") == 0 ||
 			contact2->definition->id.compare(0, 4, "WALL") == 0)
 		{
-			if (contact1->definition->id.compare("BULLET1") == 0) {
+			if (contact1->definition->id.compare("BULLET1") == 0 ||
+				contact1->definition->id.compare("BULLET2") == 0)
+			{
 				bullet = contact1;
 				wall = contact2;
 			}
-			else if (contact2->definition->id.compare("BULLET1") == 0) {
+			else if (contact2->definition->id.compare("BULLET1") == 0 ||
+					 contact2->definition->id.compare("BULLET2") == 0) 
+			{
 				bullet = contact2;
 				wall = contact1;
 			}
 
 			this->bulletWall(bullet, wall, contactPoint);
-
 		}
+
 		//Bullet Piece contact
 		if (contact1->definition->id.compare(5, 5, "PIECE") == 0 ||
 			contact1->definition->id.compare(7, 5, "PIECE") == 0 ||
 			contact2->definition->id.compare(5, 5, "PIECE") == 0 ||
 			contact2->definition->id.compare(7, 5, "PIECE") == 0)
 		{
-			if (contact1->definition->id.compare("BULLET1") == 0) {
+			if (contact1->definition->id.compare("BULLET1") == 0 ||
+				contact1->definition->id.compare("BULLET2") == 0) {
 				bullet = contact1;
 				piece = contact2;
 			}
-			else if (contact2->definition->id.compare("BULLET1") == 0) {
+			else if (contact2->definition->id.compare("BULLET1") == 0 ||
+					 contact2->definition->id.compare("BULLET2") == 0) 
+			{
 				bullet = contact2;
 				piece = contact1;
 			}
@@ -129,7 +127,6 @@ void GameObjectContactListener::handleContact(WorldObject* contact1, WorldObject
 			this->bulletPiece(bullet, piece, contactPoint);
 
 		}
-
 
 	}
 	if (contact1->definition->id.compare("GINA_64") == 0 ||
@@ -140,15 +137,16 @@ void GameObjectContactListener::handleContact(WorldObject* contact1, WorldObject
 			contact2->definition->id.compare("ANGLE_BIT_PIECE") == 0)
 		{
 			if (contact1->definition->id.compare("GINA_64") == 0) {
-				player = contact1;
+				player = dynamic_cast<PlayerObject*>(contact1);
 				piece = contact2;
 			}
 			else if (contact2->definition->id.compare("GINA_64") == 0) {
-				player = contact2;
+				player = dynamic_cast<PlayerObject*>(contact2);
 				piece = contact1;
 			}
 
 			this->playerBitPiece(player, piece, contactPoint);
+
 
 		}
 	}
@@ -156,10 +154,11 @@ void GameObjectContactListener::handleContact(WorldObject* contact1, WorldObject
 
 }
 
-void GameObjectContactListener::playerBitPiece(WorldObject* player, WorldObject* piece, b2Vec2 contactPoint)
+void GameObjectContactListener::playerBitPiece(PlayerObject* player, WorldObject* piece, b2Vec2 contactPoint)
 {
 	//Set flag for bullet to be removed from world
 	piece->removeFromWorld = true;
+	player->incrementPiecesCollected();
 
 }
 
@@ -207,20 +206,33 @@ void GameObjectContactListener::bulletWall(WorldObject* bullet, WorldObject* wal
 void GameObjectContactListener::bulletPiece(WorldObject* bullet, WorldObject* piece, b2Vec2 contactPoint)
 {
 
-	ParticleEmission* particleEmission = NULL;
 
 	//Set flag for bullet to be removed from world
 	bullet->removeFromWorld = true;
 
 	//Set flag for piece to be removed from world
-	piece->removeFromWorld = true;
+	//only if bullet was strong enough
+	if (piece->testStrength(bullet->strength)) {
+		piece->removeFromWorld = true;
+		bulletPieceExplode(bullet,piece,contactPoint);
+	}
+	else
+	{
+		bulletPieceDeflect(bullet, piece, contactPoint);
+	}
+	
 
-	//use the collision point for the particle emission
+
+}
+
+void GameObjectContactListener::bulletPieceExplode(WorldObject* bullet, WorldObject* piece, b2Vec2 contactPoint)
+{
+	ParticleEmission* particleEmission = NULL;
+
 	float x = contactPoint.x;
 	float y = contactPoint.y;
-	b2Vec2 particleOrigin = {x,y};
+	b2Vec2 particleOrigin = { x,y };
 
-	//temp color code
 	SDL_Color colorMin = piece->color;
 	SDL_Color colorMax = piece->color;
 
@@ -245,7 +257,7 @@ void GameObjectContactListener::bulletPiece(WorldObject* bullet, WorldObject* pi
 	game->particleMachine.add(particleEmission);
 
 	//Create some white smoke particles
-	colorMin = {255,255,255,100};
+	colorMin = { 255,255,255,100 };
 	colorMax = { 255,255,255,200 };
 
 	particleEmission = new ParticleEmission(
@@ -290,6 +302,41 @@ void GameObjectContactListener::bulletPiece(WorldObject* bullet, WorldObject* pi
 		2	//Particle count max
 	);
 	game->particleMachine.add(particleEmission);
+
+}
+
+void GameObjectContactListener::bulletPieceDeflect(WorldObject* bullet, WorldObject* piece, b2Vec2 contactPoint)
+{
+	ParticleEmission* particleEmission = NULL;
+
+	float x = contactPoint.x;
+	float y = contactPoint.y;
+	b2Vec2 particleOrigin = { x,y };
+
+	SDL_Color colorMin = { 255,255,255,175 };
+	SDL_Color colorMax = { 255,255,255,175 };
+
+	particleEmission = new ParticleEmission(
+		"DEFLECT1_POOL",
+		particleOrigin, //min position
+		particleOrigin,	//max position
+		2,	//Force Min
+		3,	//force Max
+		0.10,	//Lifetime Min
+		0.25,	//Lifetime Max
+		true,	// Alpha fade
+		0,	//Angle min
+		360,	//Angle Max
+		2.56,	//Size Min
+		2.56,	//Size Max
+		colorMin,	//Color Min
+		colorMax,	//Color Max
+		2,	//Particle count min
+		3	//Particle count max
+	);
+	game->particleMachine.add(particleEmission);
+
+
 }
 
 b2Vec2 GameObjectContactListener::findWallImpactPoint(b2Vec2 worldPoint, PlayerObject* player)

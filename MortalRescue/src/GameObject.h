@@ -68,7 +68,7 @@ public:
 
 	void renderChildObjects();
 	void updateChildObjects();
-	b2Vec2 calcChildPosition(b2Vec2, int, int, int, float,bool,float,SDL_Rect);
+	b2Vec2 calcChildPosition(shared_ptr<GameObject>, int, int, int);
 	b2Vec2 matchParentRotation(SDL_Rect, SDL_Rect, float);
 	void buildChildren();
 	
@@ -104,7 +104,6 @@ public:
 
 	//Child Object collection
 	array <vector<shared_ptr<GameObject>>, CHILD_POSITIONS> childObjects;
-	//array <vector<GameObject*>, CHILD_POSITIONS> childObjects;
 	
 };
 
