@@ -200,7 +200,7 @@
       "description": "Player Label",
       "type": "TEXT_OBJECT",
       "text": {
-        "value": "Player 1",
+        "value": "Player 100",
         "dynamic": false,
         "font": "FONT_ARIAL_REG",
         "size": 12
