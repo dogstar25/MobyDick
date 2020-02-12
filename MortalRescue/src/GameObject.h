@@ -89,6 +89,7 @@ public:
 		yPos,
 		xSize,
 		ySize,
+		test,
 		angle;
 
 	int
