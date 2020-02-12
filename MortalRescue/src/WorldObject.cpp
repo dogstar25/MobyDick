@@ -30,7 +30,8 @@ WorldObject::WorldObject(string gameObjectId, float xMapPos, float yMapPos, floa
 	//so add half of the object size so that the object will be placed with its top left corner in the grid location
 	//we specify
 	b2Vec2 position(xMapPos * game->worldGridSize.w, yMapPos * game->worldGridSize.h);
-	this->setPosition(position, angleAdjust * DEGTORAD);
+	float angle = util::degreesToRadians(angleAdjust);
+	this->setPosition(position, angle);
 
 	//Add a reference to the gameObject itself to the physics object for collision helping logic later
 	//this->physicsBody->SetUserData(this);

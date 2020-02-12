@@ -92,7 +92,7 @@ void ParticleMachine::emit(
 	int particleCount = 0;
 	if (particleSpawnCountMin != particleSpawnCountMax)
 	{
-		particleCount = game->util.generateRandomNumber(particleSpawnCountMin, particleSpawnCountMax);
+		particleCount = util::generateRandomNumber(particleSpawnCountMin, particleSpawnCountMax);
 	}
 	else
 	{
@@ -113,7 +113,7 @@ void ParticleMachine::emit(
 			int force = 0;
 			if (forceMin != forceMax)
 			{
-				force = game->util.generateRandomNumber(forceMin, forceMax);
+				force = util::generateRandomNumber(forceMin, forceMax);
 			}
 			else
 			{
@@ -127,9 +127,9 @@ void ParticleMachine::emit(
 			SDL_Color color = { 255,255,255,255 };
 			if (colorRangeBegin != colorRangeEnd)
 			{
-				color.r = game->util.generateRandomNumber(colorRangeBegin.r, colorRangeEnd.r);
-				color.g = game->util.generateRandomNumber(colorRangeBegin.g, colorRangeEnd.g);
-				color.b = game->util.generateRandomNumber(colorRangeBegin.b, colorRangeEnd.b);
+				color.r = util::generateRandomNumber(colorRangeBegin.r, colorRangeEnd.r);
+				color.g = util::generateRandomNumber(colorRangeBegin.g, colorRangeEnd.g);
+				color.b = util::generateRandomNumber(colorRangeBegin.b, colorRangeEnd.b);
 			}
 			else
 			{
@@ -144,7 +144,7 @@ void ParticleMachine::emit(
 			{
 				if (particleSizeMin != particleSizeMax)
 				{
-					particleSize = game->util.generateRandomNumber(particleSizeMin, particleSizeMax);
+					particleSize = util::generateRandomNumber(particleSizeMin, particleSizeMax);
 				}
 				else
 				{
@@ -163,7 +163,7 @@ void ParticleMachine::emit(
 			{
 				if (lifetimeMin != lifetimeMax)
 				{
-					particleLifetime = game->util.generateRandomNumber(lifetimeMin, lifetimeMax);
+					particleLifetime = util::generateRandomNumber(lifetimeMin, lifetimeMax);
 				}
 				else
 				{
@@ -181,7 +181,7 @@ void ParticleMachine::emit(
 			//Calculate the emit angle/direction that the particle will travel in
 			particleAngle = ((float)i / (float)particleCount) * angleRange;
 			particleAngle = angleMin + particleAngle;
-			particleAngle = particleAngle * DEGTORAD;
+			particleAngle = util::degreesToRadians(particleAngle);
 
 			//Calculate velocity vector
 			float velocityX = cos(particleAngle) * force;
@@ -192,8 +192,8 @@ void ParticleMachine::emit(
 			b2Vec2 positionVector = {};
 			if (originMin != originMax)
 			{
-				positionVector.x = game->util.generateRandomNumber(originMin.x, originMax.x);
-				positionVector.y = game->util.generateRandomNumber(originMin.y, originMax.y);
+				positionVector.x = util::generateRandomNumber(originMin.x, originMax.x);
+				positionVector.y = util::generateRandomNumber(originMin.y, originMax.y);
 			}
 			else
 			{

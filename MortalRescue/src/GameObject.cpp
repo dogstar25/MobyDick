@@ -111,7 +111,7 @@ void GameObject::render()
 
 	//All angles on objects should be in radians to kep consistency with box2d objects
 	//it needs to be converted to degrees for SDL to display
-	float angle = game->util.radiansToDegrees(this->angle);
+	float angle = util::radiansToDegrees(this->angle);
 	game->textureManager.render(texture, this->color, textureSourceRect, &destRect, angle);
 
 	//test outlining object
@@ -241,7 +241,7 @@ b2Vec2 GameObject::matchParentRotation(SDL_Rect childPositionRect, SDL_Rect pare
 	float x = childCenter.x - parentCenter.x;
 	float childAngle = atan2(childCenter.y - parentCenter.y, childCenter.x - parentCenter.x);
 
-	float childAngleDegrees = game->util.radiansToDegrees(childAngle);
+	float childAngleDegrees = util::radiansToDegrees(childAngle);
 
 	//add parent angle
 	float newAngle = childAngle + parentAngle;
@@ -584,11 +584,3 @@ void GameObject::setActive(bool active)
 {
 
 }
-
-
-
-
-
-
-
-

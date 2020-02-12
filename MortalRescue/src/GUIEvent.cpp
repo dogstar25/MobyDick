@@ -42,7 +42,7 @@ GUIEvent::GUIEvent(string guiObjectId)
 	//Panel game object
 	GameObject* guiPanel = game->gameObjectManager.buildGameObject <GameObject>("GUIPausePanel", posX, posY, 0);
 
-	this->uiObjectCollections[game->MAIN].gameObjects.push_back(make_unique<GameObject>(*guiPanel));
+	this->uiObjectCollections[game->MAIN].gameObjects.push_back(guiPanel);
 
 }
 
@@ -54,7 +54,7 @@ GUIEvent::~GUIEvent()
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 
 	//Free the resources
-	for (int x = 0; x < game->MAX_LAYERS; x++)
+	for (int x = 0; x < constants::MAX_GAMEOBJECT_LAYERS; x++)
 	{
 		this->uiObjectCollections[x].gameObjects.clear();
 		this->uiObjectCollections[x].particleObjects.clear();

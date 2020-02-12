@@ -84,7 +84,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 			if (itr["color"]["random"].isNull() == false &&
 				itr["color"]["random"].asBool() == true)
 			{
-					gameObjectDefinition->color = game->util.generateRandomColor();
+					gameObjectDefinition->color = util::generateRandomColor();
 			}
 			else
 			{

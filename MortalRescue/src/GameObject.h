@@ -30,7 +30,6 @@ enum GameObjectType {
 
 };
 
-static const float DEGTORAD = 0.0174532925199432957f;
 static const short CHILD_POSITIONS = 9;
 
 class GameObject

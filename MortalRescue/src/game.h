@@ -16,6 +16,7 @@
 #include <string>
 
 #include "Util.h"
+#include "Constants.h"
 #include "TextureManager.h"
 #include "LevelManager.h"
 #include "GameObjectManager.h"
@@ -134,7 +135,6 @@ public:
 		TEXT = 2,
 		DEBUG = 3,
 	};
-	static const int MAX_LAYERS = 4;
 
 	Game();
 	~Game();
@@ -142,7 +142,7 @@ public:
 	void play();
 	bool init();
 	void render();
-	static void renderCollection(array<GameObjectCollection, MAX_LAYERS>*);
+	static void renderCollection(array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>*);
 	void update();
 	void handleEvents();
 	void buildLevel(string);
@@ -166,7 +166,6 @@ public:
 	DebugDraw debugDraw;
 
 	Clock clock;
-	Util util;
 	TextureManager textureManager;
 	GameObjectManager gameObjectManager;
 	LevelManager levelManager;
@@ -194,7 +193,7 @@ public:
 
 	//Fixed array of Layers
 	//Each layer contains a GameObjectCollection
-	array <GameObjectCollection, MAX_LAYERS> gameCollections;
+	array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS> gameCollections;
 	PlayerObject* player;
 
 	unique_ptr<DebugPanel> debugPanel;

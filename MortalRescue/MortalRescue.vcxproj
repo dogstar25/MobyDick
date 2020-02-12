@@ -205,6 +205,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CompositeObject.h" />
+    <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\GUIEvent.h" />
     <ClInclude Include="src\ParticleEmission.h" />
     <ClInclude Include="src\Camera.h" />

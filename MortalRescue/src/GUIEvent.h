@@ -35,7 +35,7 @@ public:
 	};
 
 	int state;
-	array <GameObjectCollection, Game::MAX_LAYERS> uiObjectCollections;
+	array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS> uiObjectCollections;
 
 };
 

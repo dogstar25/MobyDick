@@ -4,16 +4,15 @@
 
 using namespace std;
 
-class Util
+namespace util
 {
 
-public:
-
-	int generateRandomNumber(int min, int max);
-	float generateRandomNumber(float min, float max);
-	SDL_Color generateRandomColor();
-	float radiansToDegrees(float angleInRadians);
-	string floatToString(float x, int decDigits);
+	const int generateRandomNumber(int min, int max);
+	const float generateRandomNumber(float min, float max);
+	const SDL_Color generateRandomColor();
+	const float radiansToDegrees(float angleInRadians);
+	const float degreesToRadians(float angleInDegrees);
+	const string floatToString(float x, int decDigits);
 
 };
 

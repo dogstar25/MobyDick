@@ -1,14 +1,12 @@
 #include "Util.h"
 
-#include <SDL.h>
-
 #include <random>
 #include <sstream>
 #include <string>
 
 using namespace std;
 
-int Util::generateRandomNumber(int min, int max)
+const int util::generateRandomNumber(int min, int max)
 {
 
 	std::random_device rd;
@@ -18,7 +16,7 @@ int Util::generateRandomNumber(int min, int max)
 	return (int)dist(mt);
 }
 
-float Util::generateRandomNumber(float min, float max)
+const float util::generateRandomNumber(float min, float max)
 {
 
 	std::random_device rd;
@@ -28,7 +26,7 @@ float Util::generateRandomNumber(float min, float max)
 	return (float)dist(mt);
 }
 
-SDL_Color Util::generateRandomColor()
+const SDL_Color util::generateRandomColor()
 {
 	Uint8 red, green, blue, alpha;
 
@@ -45,14 +43,21 @@ SDL_Color Util::generateRandomColor()
 
 }
 
-float Util::radiansToDegrees(float angleInRadians)
+const float util::radiansToDegrees(float angleInRadians)
 {
 	float angle = angleInRadians / M_PI * 180;
 	return angle;
 
 }
 
-string Util::floatToString(float x, int decDigits) 
+const float util::degreesToRadians(float angleInDegrees)
+{
+	float angle = angleInDegrees * 0.0174532925199432957f;
+	return angle;
+
+}
+
+const string util::floatToString(float x, int decDigits)
 {
 	stringstream ss;
 	ss << fixed;

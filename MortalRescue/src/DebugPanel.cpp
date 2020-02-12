@@ -1,7 +1,9 @@
 #include "DebugPanel.h"
-
-//#include "TextObject.h"
+#include "Util.h"
 #include "game.h"
+
+
+
 
 
 
@@ -22,7 +24,7 @@ DebugPanel::~DebugPanel()
 
 void DebugPanel::addItem(string id, float value, int decDigits)
 {
-	string debugValue = game->util.floatToString(value, decDigits);
+	string debugValue = util::floatToString(value, decDigits);
 	DebugPanel::addItem(id, debugValue);
 
 }

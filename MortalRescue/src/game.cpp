@@ -260,7 +260,7 @@ void Game::render() {
 
 }
 
-void Game::renderCollection(array<GameObjectCollection, MAX_LAYERS>* gameObjectCollection)
+void Game::renderCollection(array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>* gameObjectCollection)
 {
 
 	//Render all of the game objects
@@ -283,7 +283,7 @@ void Game::addGameObject(GameObject* gameObject, int layer)
 {
 
 	//this->gameObjects[layer].push_back(make_unique<GameObject>(*gameObject));
-	this->gameCollections[layer].gameObjects.push_back(make_unique<GameObject>(*gameObject));
+	this->gameCollections[layer].gameObjects.push_back(gameObject);
 	this->gameObjectCount++;
 
 }
@@ -292,7 +292,7 @@ void Game::addGameObject(WorldObject* gameObject, int layer)
 {
 
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	this->gameCollections[layer].gameObjects.push_back(make_unique<WorldObject>(*gameObject));
+	this->gameCollections[layer].gameObjects.push_back(gameObject);
 	this->gameObjectCount++;
 }
 
@@ -307,15 +307,14 @@ void Game::addGameObject(ParticleObject* gameObject, int layer)
 void Game::addGameObject(TextObject* gameObject, int layer)
 {
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	this->gameCollections[layer].gameObjects.push_back(make_unique<TextObject>(*gameObject));
+	this->gameCollections[layer].gameObjects.push_back(gameObject);
 	this->gameObjectCount++;
 }
 
 void Game::addGameObject(CompositeObject* gameObject, int layer)
 {
 
-	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	this->gameCollections[layer].gameObjects.push_back(make_unique<CompositeObject>(*gameObject));
+	this->gameCollections[layer].gameObjects.push_back(gameObject);
 	this->gameObjectCount++;
 }
 
@@ -469,11 +468,13 @@ Game::~Game()
 	SDL_Quit();
 	TTF_Quit();
 
-	for (int x=0 ; x < this->MAX_LAYERS; x++)
+	for (int x=0 ; x < constants::MAX_GAMEOBJECT_LAYERS; x++)
 	{
 		this->gameCollections[x].gameObjects.clear();
 		this->gameCollections[x].particleObjects.clear();
 	}
+
+	delete this->player;
 
 	//Delete box2d world - should delete all bodies and fixtures within
 	delete this->physicsWorld;
@@ -484,6 +485,8 @@ Game::~Game()
 
 Game::Game()
 {
+
+
 
 	
 
