@@ -84,8 +84,8 @@
       "absolutePositioning": false,
       "animations": [
         {
-          "id": "IDLE",
-          "texture": "TX_SWORDLADY1_IDLE",
+          "state": "IDLE",
+          "textureId": "TX_SWORDLADY1_IDLE",
           "speed": 0.06, //time in seconds for each frame. Lower the faster
           "frames": 19
         }
@@ -140,14 +140,14 @@
       "fireOffset": -0.5,
       "animations": [
         {
-          "id": "RUN",
-          "texture": "TX_GINA_64_RUN",
+          "state": "RUN",
+          "textureId": "TX_GINA_64_RUN",
           "speed": 0.10, //time in seconds for each frame. Lower the faster
           "frames": 4
         },
         {
-          "id": "IDLE",
-          "texture": "TX_GINA_64_IDLE",
+          "state": "IDLE",
+          "textureId": "TX_GINA_64_IDLE",
           "speed": 0.10, //time in seconds for each frame. Lower the faster
           "frames": 1
         }

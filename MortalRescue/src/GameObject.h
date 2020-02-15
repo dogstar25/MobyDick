@@ -54,8 +54,10 @@ public:
 
 	virtual SDL_Rect  getPositionRect();
 	virtual SDL_Rect  getRenderDestRect();
-	virtual SDL_Texture* getRenderTexture(SDL_Texture *);
-	virtual SDL_Rect* getRenderTextureRect(SDL_Rect*);
+	//virtual SDL_Texture* getRenderTexture();
+	//virtual SDL_Rect* getRenderTextureRect();
+	virtual SDL_Texture* getRenderTexture();
+	virtual SDL_Rect* getRenderTextureRect();
 	virtual void setPosition(b2Vec2, float);
 	virtual void addWeapon(string, float, float);
 	virtual void onMouseHoverRender();
@@ -77,7 +79,8 @@ public:
 	string 
 		id,
 		definitionId,
-		currentAnimationState;
+		currentAnimationState; //TODD shouldnt this live in animation member?
+
 	bool
 		isAnimated,
 		removeFromWorld;

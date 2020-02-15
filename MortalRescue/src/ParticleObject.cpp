@@ -66,7 +66,7 @@ void ParticleObject::render()
 	SDL_Texture* texture = NULL;
 
 	//Set particles texture to a blend mode
-	texture = this->getRenderTexture(texture);
+	texture = this->getRenderTexture();
 	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD);
 
 	WorldObject::render();

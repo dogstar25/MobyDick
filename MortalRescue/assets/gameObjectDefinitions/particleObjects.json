@@ -45,8 +45,8 @@
       "ySize": 0.12,
       "animations": [
         {
-          "id": "ACTIVE",
-          "texture": "TX_BULLET1",
+          "state": "ACTIVE",
+          "textureId": "TX_BULLET1",
           "speed": 0.02, //time in seconds for each frame. Lower the faster
           "frames": 4
         }
@@ -70,8 +70,8 @@
       "ySize": 0.12,
       "animations": [
         {
-          "id": "ACTIVE",
-          "texture": "TX_BULLET1",
+          "state": "ACTIVE",
+          "textureId": "TX_BULLET1",
           "speed": 0.01, //time in seconds for each frame. Lower the faster
           "frames": 4
         }
@@ -95,8 +95,8 @@
       "ySize": 2.56,
       "animations": [
         {
-          "id": "ACTIVE",
-          "texture": "TX_DEFLECT1_64",
+          "state": "ACTIVE",
+          "textureId": "TX_DEFLECT1_64",
           "speed": 0.01, //time in seconds for each frame. Lower the faster
           "frames": 4
         }

@@ -28,8 +28,6 @@ public:
 	//Map of the definitions of all posible game objects in the game/level
 	map<string, GameObjectDefinition*> gameObjectDefinitions;
 	
-	Animation* buildAnimation(GameObjectDefinition*, string, string, int, float);
-
 	/*
 	Template function that builds any type of GameObject that you pass it
 	Has to be inline because its a templated function

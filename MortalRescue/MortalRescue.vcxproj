@@ -164,7 +164,7 @@
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <OmitFramePointers>false</OmitFramePointers>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
