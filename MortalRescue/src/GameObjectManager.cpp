@@ -157,15 +157,16 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 		if (itr["animations"].isNull() == false)
 		{
 			gameObjectDefinition->isAnimated = true;
-			Animation* animation;
+			
 			for (auto animItr : itr["animations"])
 			{
-				string texture = animItr["texture"].asString();
-				string id = animItr["id"].asString();
-				int frames = animItr["frames"].asInt();
-				float speed = animItr["speed"].asFloat();
-				animation = buildAnimation(gameObjectDefinition, id, texture, frames, speed);
-				gameObjectDefinition->animations[id] = animation;
+				AnimationItem animation;
+				animation.state = animItr["state"].asString();
+				animation.textureId = animItr["textureId"].asString();
+				animation.speed = animItr["speed"].asFloat();
+				animation.frames = animItr["frames"].asInt();
+				//animation = new Animation(gameObjectDefinition, id, texture, frames, speed);
+				gameObjectDefinition->animationDetails.animations.push_back(animation);
 			}
 		}
 
@@ -250,80 +251,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 	}
 }
 
-/*
-Build Animation object
-*/
-Animation* GameObjectManager::buildAnimation(GameObjectDefinition* gameObjectDefinition,
-	string id, string textureId, int frames,
-	float speed)
-{
 
-	Animation* animation = nullptr;
-	animation = new Animation();
-
-	animation->id = id;
-	animation->frameCount = frames;
-	animation->speed = speed;
-
-	//Get pointer to textture
-	animation->texture = game->textureManager.getTexture(textureId)->sdlTexture;
-
-	//Calculate how many columns and rows this animation texture has
-	int width, height;
-	//First get width of textture
-	SDL_QueryTexture(animation->texture, NULL, NULL, &width, &height);
-
-	//Calculate nnumber of rows and columns - remember to convert the gameObject size to pixels first
-	int rows, columns;
-	if (gameObjectDefinition->isPhysicsObject == true)
-	{
-		columns = width / (gameObjectDefinition->xSize * game->config.scaleFactor);
-		rows = height / (gameObjectDefinition->ySize * game->config.scaleFactor);
-	}
-	else
-	{
-		columns = width / (gameObjectDefinition->xSize);
-		rows = height / (gameObjectDefinition->ySize);
-
-	}
-
-	//Calculate top left corner of each animation frame
-	SDL_Point point;
-	int frameCount = 0;
-	for (int rowIdx = 0; rowIdx < rows; rowIdx++) {
-		for (int colIdx = 0; colIdx < columns; colIdx++) {
-
-			if (gameObjectDefinition->isPhysicsObject == true)
-			{
-				point.x = colIdx * (gameObjectDefinition->xSize * game->config.scaleFactor);
-				point.y = rowIdx * (gameObjectDefinition->ySize * game->config.scaleFactor);
-			}
-			else
-			{
-				point.x = colIdx * (gameObjectDefinition->xSize);
-				point.y = rowIdx * (gameObjectDefinition->ySize);
-
-			}
-			//animation->animationFramePositions[frameCount] = point;
-			animation->animationFramePositions.push_back(point);
-
-			//do not exceed the maximum number of frames that this texture holds
-			frameCount++;
-			if (frameCount >= animation->frameCount) {
-				break;
-			}
-		}
-	}
-
-	//TODO: Initialze the current source rect to the first animation frame
-	//SDL_Rect* sourceRect = nullptr;
-	//animation->currentTextureAnimationSrcRect
-
-	return animation;
-
-
-
-}
 
 /*
 	Retrieve the GameObjetc Definition

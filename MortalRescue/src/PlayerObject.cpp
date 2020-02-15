@@ -110,6 +110,7 @@ void PlayerObject::handlePlayerMovementEvent(SDL_Event* event)
 
 void PlayerObject::update()
 {
+
 	//Call base game object update
 	WorldObject::update();
 
@@ -125,6 +126,9 @@ void PlayerObject::update()
 
 void PlayerObject::render()
 {
+
+	game->debugPanel->addItem("ANIMATIONState", this->currentAnimationState);
+	game->debugPanel->addItem("ANIMATIONFrame", to_string(this->animations[this->currentAnimationState]->currentAnimFrame));
 	WorldObject::render();
 }
 
@@ -166,6 +170,7 @@ void PlayerObject::updatePlayerMovement()
 	//Update Animation state
 	if (vec2.Length() > 0)
 	{
+		int test = 9;
 		this->currentAnimationState = "RUN";
 	}
 	else

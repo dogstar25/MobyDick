@@ -109,22 +109,37 @@ SDL_Rect WorldObject::getRenderDestRect()
 
 void WorldObject::render()
 {
-	SDL_Rect *textureSourceRect = NULL, destRect;
+	SDL_Rect* textureSourceRect=NULL, destRect;
 	SDL_Texture* texture = NULL;
 
 	//Get render destination rectangle
 	destRect = this->getRenderDestRect();
 
 	//Get texture
-	texture = this->getRenderTexture(texture);
+	texture = this->getRenderTexture();
 
 	//Get render texture src rectangle
-	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
+	textureSourceRect = this->getRenderTextureRect();
 
 	//Get the angle of the object and convert it from Radians to Degrees for SDL
 	float angle = this->physicsBody->GetAngle();
 	angle = angle * 180 / M_PI;
 
+	
+	if (this->definition->id.compare("GINA_64") == 0)
+	{
+		if (textureSourceRect == NULL) {
+			game->debugPanel->addItem("textureSourceRec", "NULL");
+		}
+		else
+		{
+			game->debugPanel->addItem("textureSourceRecX", to_string(textureSourceRect->x));
+			game->debugPanel->addItem("textureSourceRecY", to_string(textureSourceRect->y));
+		}
+		
+
+	}
+	
 	game->textureManager.render(texture, this->color, textureSourceRect, &destRect, angle);
 
 	//Loop through any possible child objects, in all 9 positions, and render them too

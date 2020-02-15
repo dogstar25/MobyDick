@@ -6,7 +6,7 @@
 #include <cstddef>
 
 #include "Animation.h"
-#include "Weapon.h">
+#include "Weapon.h"
 
 
 using namespace std;
@@ -59,6 +59,19 @@ struct CompositeDetails
 	CompositeBlueprint blueprint;
 };
 
+struct AnimationItem
+{
+	string state;
+	string textureId;
+	float speed;
+	int frames;
+
+};
+
+struct AnimationDetails
+{
+	vector<AnimationItem> animations;
+};
 
 /*
 ToDO:All of the members should be const because they cannot be changed. If they can, then they need
@@ -114,9 +127,10 @@ public:
 	*/
 	TextDetails textDetails;
 	CompositeDetails compositeDetails;
-	SDL_Color color; //The color to apply to the object
-	map<string, Animation*> animations;
-	vector<ChildObjectDetails> childObjectDefinitions;
+	AnimationDetails animationDetails;
+	SDL_Color color;
+
+	vector<ChildObjectDetails> childObjectDefinitions; //TODO:turn this into ChildDetails
 
 	map<int, shared_ptr<Weapon>> weapons;
 

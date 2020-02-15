@@ -12,7 +12,7 @@ void GameObject::update()
 {
 	//If this object is animated, then animate it
 	if(this->definition->isAnimated) {
-		this->animations[this->currentAnimationState]->animate(this);
+		this->animations[this->currentAnimationState]->animate();
 	}
 
 	//Update the mouse state
@@ -68,46 +68,54 @@ SDL_Rect GameObject::getRenderDestRect()
 
 }
 
-SDL_Rect*  GameObject::getRenderTextureRect(SDL_Rect* textureSrcRect)
+SDL_Rect*  GameObject::getRenderTextureRect()
+//SDL_Rect* GameObject::getRenderTextureRect(SDL_Rect* textureSrcRect)
 {
+	SDL_Rect* textureSrcRect=NULL;
 
 	if (this->definition->isAnimated) {
 
-		textureSrcRect = &this->animations[this->currentAnimationState]->currentTextureAnimationSrcRect;
+		//textureSrcRect = &this->animations[this->currentAnimationState]->currentTextureAnimationSrcRect;
+		textureSrcRect = this->animations[this->currentAnimationState]->getRenderTextureRect();
 	}
 
 	return textureSrcRect;
 
 }
 
-SDL_Texture * GameObject::getRenderTexture(SDL_Texture * aTexture)
+SDL_Texture * GameObject::getRenderTexture()
+//SDL_Texture* GameObject::getRenderTexture(SDL_Texture* aTexture)
 {
+	SDL_Texture* texture = nullptr;
+
 	if (this->definition->isAnimated) {
 
-		aTexture = this->animations[this->currentAnimationState]->texture;
+		//aTexture = this->animations[this->currentAnimationState]->getRenderTexture();
+		texture = this->animations[this->currentAnimationState]->getRenderTexture();
 	}
 	else {
 
-		aTexture = this->texture->sdlTexture;
+		texture = this->texture->sdlTexture;
+		//aTexture = this->texture->sdlTexture;
 	}
 
-	return aTexture;
+	return texture;
 
 }
 
 void GameObject::render()
 {
-	SDL_Rect *textureSourceRect = NULL, destRect;
+	SDL_Rect* textureSourceRect=NULL, destRect;
 	SDL_Texture* texture=NULL;
 
 	//Get render destination rectangle
 	destRect = this->getRenderDestRect();
 
 	//Get texture
-	texture = this->getRenderTexture(texture);
+	texture = this->getRenderTexture();
 
 	//Get render texture src rectangle
-	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
+	textureSourceRect = this->getRenderTextureRect();
 
 	//All angles on objects should be in radians to kep consistency with box2d objects
 	//it needs to be converted to degrees for SDL to display
@@ -185,18 +193,32 @@ GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float 
 	//Get pointer to the texture
 	this->texture = game->textureManager.getTexture(definition->textureId);
 
-	//get the animation objects
-	if (definition->animations.size() > 0)
+	//get the animation objects if they exist
+	string firstState;
+	int i = 0;
+	if (definition->animationDetails.animations.size() > 0)
 	{
-		for (auto& animation : definition->animations) {
+		Animation* animation = nullptr;
+		for (auto animationDefinition : definition->animationDetails.animations) {
 
-			//this->animations[animation.second.id] = animation.second;
-			this->animations.emplace(animation.second->id, animation.second);
+			animation = new Animation(definition,
+					animationDefinition.state, 
+					animationDefinition.textureId, 
+					animationDefinition.frames, 
+					animationDefinition.speed);
 
+			this->animations.emplace(animationDefinition.state, animation);
+			//this->animations[animationDefinition.state]= animation;
+
+			//Save the first state id 
+			if (i == 0) {
+				firstState = animationDefinition.state;
+			}
+			++i;
 		}
 
 		//On creation, default the animation state to idle
-		this->currentAnimationState = "IDLE";
+		this->currentAnimationState = firstState;
 	}
 
 	//Build children if they exist

@@ -93,17 +93,17 @@ SDL_Rect TextObject::getRenderDestRect()
 void TextObject::render()
 {
 
-	SDL_Rect *textureSourceRect = NULL, destRect;
+	SDL_Rect* textureSourceRect=NULL, destRect;
 	SDL_Texture* texture = NULL;
 
 	//Get render destination rectangle
 	destRect = this->getRenderDestRect();
 
 	//Get texture
-	texture = GameObject::getRenderTexture(texture);
+	texture = GameObject::getRenderTexture();
 
 	//Get render texture src rectangle
-	textureSourceRect = this->getRenderTextureRect(textureSourceRect);
+	textureSourceRect = this->getRenderTextureRect();
 
 	game->textureManager.render(texture, this->color, textureSourceRect, &destRect, 0);
 
