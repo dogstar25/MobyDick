@@ -158,13 +158,6 @@ public:
 
 	//bool removePredicate(const GameObject&);
 
-	//Current Game State
-	int gameState;
-
-	int fps, awakeCount, gameLoopStep;
-	string currentLevel;
-	DebugDraw debugDraw;
-
 	Clock clock;
 	TextureManager textureManager;
 	GameObjectManager gameObjectManager;
@@ -204,6 +197,15 @@ public:
 	float timeStep;
 	int velocityIterations,
 		positionIterations;
+	//Current Game State
+	int gameState;
+
+	int fps, awakeCount, gameLoopStep;
+	string currentLevel;
+	DebugDraw debugDraw;
+
+
+
 
 
 };

@@ -293,6 +293,9 @@
   <ItemGroup>
     <Text Include="assets\gameObjectDefinitions\compositeObjects.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="assets\sound\weaponFire1.wav" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
