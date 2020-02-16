@@ -22,11 +22,70 @@ using namespace chrono_literals;
 using namespace std;
 
 
+Game::~Game()
+{
+
+	printf("cleaning game\n");
+
+	//Delete SDL stuff
+	SDL_DestroyWindow(this->pWindow);
+	SDL_Quit();
+	TTF_Quit();
+
+	for (int x = 0; x < constants::MAX_GAMEOBJECT_LAYERS; x++)
+	{
+		this->gameCollections[x].gameObjects.clear();
+		this->gameCollections[x].particleObjects.clear();
+	}
+
+	delete this->player;
+
+	//Delete box2d world - should delete all bodies and fixtures within
+	delete this->physicsWorld;
+
+
+}
+
+Game::Game()
+{
+
+	this->config = {};
+	this->camera = {};
+	this->worldBounds = {};
+	this->worldGridSize = {};
+	this->physicsWorld = nullptr;
+
+	this->pWindow = nullptr;
+	this->gameObjectCount = 0;
+	this->mouseSensitivity = 0;
+	this->mouseLocation = {};
+	this->mouseClickLocation = {};
+
+	this->player = nullptr;
+
+	this->gravity = {};
+	this->b2DebugDrawMode = false;
+	this->timeStep = 0;
+	this->velocityIterations = 0;
+	this->positionIterations = 0;
+
+	this->gameState=this->PLAY;
+
+	this->fps = 0;
+	this->awakeCount = 0;
+	this->gameLoopStep = 0;
+
+
+
+}
 /*
 Initialize Game
 */
 bool Game::init()
 {
+
+
+
 
 	//Get all of the configuration values
 	getConfig();
@@ -35,6 +94,7 @@ bool Game::init()
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
+
 		//Init font library
 		TTF_Init();
 
@@ -458,39 +518,6 @@ void Game::initWorldBounds()
 
 }
 
-Game::~Game()
-{
-
-	printf("cleaning game\n");
-
-	//Delete SDL stuff
-	SDL_DestroyWindow(this->pWindow);
-	SDL_Quit();
-	TTF_Quit();
-
-	for (int x=0 ; x < constants::MAX_GAMEOBJECT_LAYERS; x++)
-	{
-		this->gameCollections[x].gameObjects.clear();
-		this->gameCollections[x].particleObjects.clear();
-	}
-
-	delete this->player;
-
-	//Delete box2d world - should delete all bodies and fixtures within
-	delete this->physicsWorld;
-
-
-
-}
-
-Game::Game()
-{
-
-
-
-	
-
-}
 
 
 

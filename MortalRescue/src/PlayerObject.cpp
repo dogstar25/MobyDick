@@ -2,7 +2,7 @@
 #include "PlayerObject.h"
 #include "WorldObject.h"
 #include "Weapon.h"
-#include "GameObjectDefinition.h";
+#include "GameObjectDefinition.h"
 
 #include <math.h>
 

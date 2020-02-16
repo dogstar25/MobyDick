@@ -34,6 +34,9 @@ static const short CHILD_POSITIONS = 9;
 
 class GameObject
 {
+private:
+	void init();
+
 public:
 
 	enum GameObjectMouseState {

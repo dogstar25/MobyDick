@@ -300,4 +300,9 @@
   <ItemGroup>
     <Text Include="assets\gameObjectDefinitions\compositeObjects.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="assets\sound\weaponFire1.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
 </Project>

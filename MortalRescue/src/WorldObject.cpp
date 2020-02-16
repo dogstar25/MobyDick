@@ -123,7 +123,7 @@ void WorldObject::render()
 
 	//Get the angle of the object and convert it from Radians to Degrees for SDL
 	float angle = this->physicsBody->GetAngle();
-	angle = angle * 180 / M_PI;
+	angle = angle * (float)180 / M_PI;
 
 	
 	if (this->definition->id.compare("GINA_64") == 0)

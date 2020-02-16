@@ -154,13 +154,43 @@ void GameObject::render()
 
 }
 
+void GameObject::init()
+{
+
+	//this->definitionId;
+		//this->currentAnimationState;
+
+	this->isAnimated = false;
+	this->removeFromWorld = false;
+
+	this->color = {};
+	this->xPos = 0;
+	this->yPos = 0;
+	this->xSize = 0;
+	this->ySize = 0;
+	this->test = 0;
+	this->angle = 0;
+	this->mouseState = 0;
+
+	this->texture=nullptr;
+	
+	this->definition=nullptr;
+
+}
+
 GameObject::GameObject()
 {
+
+	//Init
+	this->init();
+
 
 }
 
 GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust)
 {
+	//Init
+	this->init();
 
 	//calculate position
 	b2Vec2 position(xMapPos * game->worldGridSize.w, yMapPos * game->worldGridSize.h);
