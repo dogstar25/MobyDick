@@ -4,6 +4,7 @@
 #include "Weapon.h"
 #include "GameObjectDefinition.h"
 #include "Animation.h"
+#include "texture.h"
 
 #include "WorldObject.h"
 
@@ -69,13 +70,11 @@ SDL_Rect GameObject::getRenderDestRect()
 }
 
 SDL_Rect*  GameObject::getRenderTextureRect()
-//SDL_Rect* GameObject::getRenderTextureRect(SDL_Rect* textureSrcRect)
 {
 	SDL_Rect* textureSrcRect=NULL;
 
 	if (this->definition->isAnimated) {
 
-		//textureSrcRect = &this->animations[this->currentAnimationState]->currentTextureAnimationSrcRect;
 		textureSrcRect = this->animations[this->currentAnimationState]->getRenderTextureRect();
 	}
 
@@ -84,19 +83,16 @@ SDL_Rect*  GameObject::getRenderTextureRect()
 }
 
 SDL_Texture * GameObject::getRenderTexture()
-//SDL_Texture* GameObject::getRenderTexture(SDL_Texture* aTexture)
 {
 	SDL_Texture* texture = nullptr;
 
 	if (this->definition->isAnimated) {
 
-		//aTexture = this->animations[this->currentAnimationState]->getRenderTexture();
 		texture = this->animations[this->currentAnimationState]->getRenderTexture();
 	}
 	else {
 
 		texture = this->texture->sdlTexture;
-		//aTexture = this->texture->sdlTexture;
 	}
 
 	return texture;
@@ -205,12 +201,11 @@ GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float 
 	//id value to the one we passed in
 	if (gameObjectId.rfind("DEBUG_", 0) == 0)
 	{
-		//this->definition = game->gameObjectManager.gameObjectDefinitions["DEBUG_ITEM"];
-		definition = game->gameObjectManager.gameObjectDefinitions["DEBUG_ITEM"];;
+		this->definition = game->gameObjectManager.gameObjectDefinitions["DEBUG_ITEM"];;
 	}
 	else
 	{
-		definition = game->gameObjectManager.gameObjectDefinitions[gameObjectId];
+		this->definition = game->gameObjectManager.gameObjectDefinitions[gameObjectId];
 	}
 
 	this->removeFromWorld = false;

@@ -1,5 +1,6 @@
 #include "game.h"
 #include "CompositeObject.h"
+#include "texture.h"
 
 
 CompositeObject::CompositeObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :

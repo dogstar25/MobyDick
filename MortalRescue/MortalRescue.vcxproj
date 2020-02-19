@@ -164,7 +164,7 @@
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <OmitFramePointers>false</OmitFramePointers>
-      <Optimization>Disabled</Optimization>
+      <Optimization>Full</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -202,6 +202,7 @@
     <ClCompile Include="src\Util.cpp" />
     <ClCompile Include="src\Weapon.cpp" />
     <ClCompile Include="src\WorldObject.cpp" />
+    <ClCompile Include="src\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CompositeObject.h" />
@@ -231,6 +232,7 @@
     <ClInclude Include="src\Util.h" />
     <ClInclude Include="src\Weapon.h" />
     <ClInclude Include="src\WorldObject.h" />
+    <ClInclude Include="src\texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\blueprints\drone1_blueprint.aseprite" />

@@ -34,14 +34,12 @@ public:
 	bool init(SDL_Window*);
 	void render(SDL_Texture* texture, SDL_Color color, SDL_Rect* srcRect, SDL_Rect* destRect, float angle );
 	void render(SDL_Rect* destRect, SDL_Color color);
-
 	bool present();
 	bool clear();
 	Texture* getTexture(string id);
 	Texture* getTexture(TextObject*);
 	void addTexture(string, Texture*);
 	string getFont(string id);
-
 	Texture* updateDynamicTextTexture(TextObject*);
 	SDL_Surface* generateTextSurface(SDL_Color, int, string, string);
 	Texture* generateTextTexture(TextObject*);
@@ -60,12 +58,4 @@ private:
 	
 };
 
-class Texture
-{
-public:
-
-	SDL_Texture* sdlTexture;
-	SDL_Surface* surface;
-
-};
 

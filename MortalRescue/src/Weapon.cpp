@@ -11,10 +11,10 @@ extern Game* game;
 Weapon::Weapon(string bulletPoolId, float strength, int levelUpTarget, int level)
 {
 
-	this->bulletPoolId = bulletPoolId;
-	this->strength = strength;
-	this->levelUpTarget = levelUpTarget;
-	this->level = level;
+	m_bulletPoolId = bulletPoolId;
+	m_strength = strength;
+	m_levelUpTarget = levelUpTarget;
+	m_level = level;
 
 }
 
@@ -29,16 +29,10 @@ void Weapon::fire(b2Vec2 origin, float angle, float fireOffset)
 {
 	//bullet;
 	//ParticleObject* bullet = new ParticleObject(this->bulletGameObjectId, 0, 0, 0);
-	ParticleObject* bullet = game->objectPoolManager.get(this->bulletPoolId);
+	ParticleObject* bullet = game->objectPoolManager.get(m_bulletPoolId);
 	if (bullet != NULL) {
 
 		//Calculate the origin of the bullet
-		/*
-		float dx = this->weaponWieldingObject->physicsBody->GetTransform().p.x +
-			cos(this->weaponWieldingObject->physicsBody->GetAngle());
-		float dy = this->weaponWieldingObject->physicsBody->GetTransform().p.y +
-			sin(this->weaponWieldingObject->physicsBody->GetAngle());
-		*/
 		float dx = origin.x + cos(angle);
 		float dy = origin.y + sin(angle);
 
@@ -50,7 +44,7 @@ void Weapon::fire(b2Vec2 origin, float angle, float fireOffset)
 		dy += yAdj;
 
 		//Bullet Strength
-		bullet->strength = this->strength;
+		bullet->strength = m_strength;
 
 		b2Vec2 positionVector = b2Vec2(dx, dy);
 
@@ -77,7 +71,7 @@ void Weapon::fire(b2Vec2 origin, float angle, float fireOffset)
 bool Weapon::checkLevelUp(int pieceCount)
 {
 
-	if (pieceCount >= this->levelUpTarget)
+	if (pieceCount >= m_levelUpTarget)
 	{
 		return true;
 	}
@@ -91,7 +85,7 @@ bool Weapon::checkLevelUp(int pieceCount)
 int Weapon::getNextLevel()
 {
 
-	return this->level += 1;;
+	return m_level += 1;;
 
 }
 

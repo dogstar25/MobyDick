@@ -3,8 +3,6 @@
 
 #include <Box2D/Box2D.h>
 
-using namespace std;
-
 class GameObject;
 class PlayerObject;
 class Game;
@@ -12,20 +10,20 @@ class Game;
 class Weapon
 {
 private:
-	string 
-		bulletPoolId;
+	std::string 
+		m_bulletPoolId;
 	float 
-		strength;
+		m_strength;
 	int 
-		levelUpTarget, 
-		level;
+		m_levelUpTarget, 
+		m_level;
 
 public:
-	Weapon(string bulletPoolId, float strength, int levelUpTarget, int level);
+	Weapon(std::string bulletPoolId, float strength, int levelUpTarget, int level);
 	~Weapon();
 
 	void fire(b2Vec2 origin, float angle, float fireOffset);
-	bool checkLevelUp(int);
+	bool checkLevelUp(int pieceCount);
 	int getNextLevel();
 
 

@@ -21,7 +21,7 @@ public:
 	WorldObject(string, float, float, float);
 	~WorldObject();
 
-	void update();
+	void update() override;
 	void render();
 	void setPosition(b2Vec2, float);
 	void setActive(bool);
