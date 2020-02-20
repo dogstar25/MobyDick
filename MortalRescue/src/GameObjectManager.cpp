@@ -1,4 +1,4 @@
-#include "game.h"
+#include "Game.h"
 #include "GameObjectManager.h"
 #include "TextureManager.h"
 #include "GameObject.h"

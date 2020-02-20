@@ -1,7 +1,7 @@
 #include "GameObjectContactListener.h"
 #include "GameObject.h"
 #include "WorldObject.h"
-#include "game.h"
+#include "Game.h"
 
 
 // this callback will find the closest static body that the ray hits

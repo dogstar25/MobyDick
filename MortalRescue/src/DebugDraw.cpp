@@ -1,5 +1,5 @@
 #include "DebugDraw.h"
-#include "game.h"
+#include "Game.h"
 
 #include <SDL.h>
 

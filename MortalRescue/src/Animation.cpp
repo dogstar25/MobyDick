@@ -1,14 +1,13 @@
-#include <Box2D/Box2D.h>
-
 #include "Animation.h"
 #include "GameObject.h"
 #include "GameObjectDefinition.h"
-#include "texture.h"
-#include "game.h"
+#include "Texture.h"
 
-Animation::Animation(GameObjectDefinition* gameObjectDefinition, string id, string textureId, int totalFrames, float speed)
+
+Animation::Animation(GameObjectDefinition* gameObjectDefinition, string animationId, string textureId, int totalFrames, float speed)
 {
-	this->id = id;
+
+	this->id = animationId;
 	this->speed = speed;
 	this->frameCount = totalFrames;
 
@@ -41,8 +40,10 @@ Animation::Animation(GameObjectDefinition* gameObjectDefinition, string id, stri
 	//Calculate top left corner of each animation frame
 	SDL_Point point;
 	int frameCount = 0;
-	for (int rowIdx = 0; rowIdx < rows; rowIdx++) {
-		for (int colIdx = 0; colIdx < columns; colIdx++) {
+	for (int rowIdx = 0; rowIdx < rows; rowIdx++) 
+	{
+		for (int colIdx = 0; colIdx < columns; colIdx++) 
+		{
 
 			point.x = colIdx * this->frameSize.x;
 			point.y = rowIdx * this->frameSize.y;

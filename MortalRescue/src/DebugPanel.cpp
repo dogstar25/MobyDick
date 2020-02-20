@@ -1,6 +1,6 @@
 #include "DebugPanel.h"
 #include "Util.h"
-#include "game.h"
+#include "Game.h"
 
 
 

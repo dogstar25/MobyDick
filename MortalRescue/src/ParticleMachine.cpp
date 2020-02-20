@@ -2,7 +2,7 @@
 
 #include "ParticleMachine.h"
 #include "ParticleEmission.h"
-#include "game.h"
+#include "Game.h"
 
 
 

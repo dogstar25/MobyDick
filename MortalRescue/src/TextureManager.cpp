@@ -6,8 +6,8 @@
 #include <SDL_ttf.h>
 
 #include "TextureManager.h"
-#include "texture.h"
-#include "game.h"
+#include "Texture.h"
+#include "Game.h"
 #include "PlayerObject.h"
 #include "TextObject.h"
 #include "WorldObject.h"

@@ -1,5 +1,5 @@
 #include "ParticleObject.h"
-#include "game.h"
+#include "Game.h"
 #include <string>
 #include <json/json.h>
 
