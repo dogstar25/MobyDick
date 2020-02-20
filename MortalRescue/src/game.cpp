@@ -1,4 +1,4 @@
-#include "game.h"
+#include "Game.h"
 #include "PlayerObject.h"
 #include "TextObject.h"
 #include "WorldObject.h"

@@ -1,7 +1,7 @@
 // MortalRescue.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-#include "game.h"
+#include "Game.h"
 
 Game* game;
 using namespace std;

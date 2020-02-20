@@ -1,6 +1,6 @@
 #include "TextObject.h"
-#include "texture.h"
-#include "game.h"
+#include "Texture.h"
+#include "Game.h"
 
 
 TextObject::TextObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :

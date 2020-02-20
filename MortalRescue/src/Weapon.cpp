@@ -1,12 +1,10 @@
 #include "Weapon.h"
 #include "GameObject.h"
-#include "WorldObject.h"
 #include "ParticleObject.h"
-#include "PlayerObject.h"
-#include "game.h"
+#include "Game.h"
+
 #include <string>
 
-extern Game* game;
 
 Weapon::Weapon(string bulletPoolId, float strength, int levelUpTarget, int level)
 {
@@ -25,10 +23,9 @@ Weapon::~Weapon()
 
 
 
-void Weapon::fire(b2Vec2 origin, float angle, float fireOffset)
+void Weapon::fire(const b2Vec2 &origin, const float &angle, const float &fireOffset)
 {
-	//bullet;
-	//ParticleObject* bullet = new ParticleObject(this->bulletGameObjectId, 0, 0, 0);
+
 	ParticleObject* bullet = game->objectPoolManager.get(m_bulletPoolId);
 	if (bullet != NULL) {
 
@@ -64,14 +61,12 @@ void Weapon::fire(b2Vec2 origin, float angle, float fireOffset)
 		game->addGameObject(bullet, game->MAIN);
 	}
 
-	
-
 }
 
-bool Weapon::checkLevelUp(int pieceCount)
+bool Weapon::checkLevelUp(const int &rPieceCount)
 {
 
-	if (pieceCount >= m_levelUpTarget)
+	if (rPieceCount >= m_levelUpTarget)
 	{
 		return true;
 	}

@@ -22,8 +22,8 @@ public:
 	Weapon(std::string bulletPoolId, float strength, int levelUpTarget, int level);
 	~Weapon();
 
-	void fire(b2Vec2 origin, float angle, float fireOffset);
-	bool checkLevelUp(int pieceCount);
+	void fire(const b2Vec2 &origin, const float &angle, const float &fireOffset);
+	bool checkLevelUp(const int &pieceCount);
 	int getNextLevel();
 
 

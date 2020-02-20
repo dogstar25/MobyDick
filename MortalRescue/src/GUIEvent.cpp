@@ -1,5 +1,5 @@
 #include "GUIEvent.h"
-#include "game.h"
+#include "Game.h"
 
 GUIEvent::GUIEvent()
 {

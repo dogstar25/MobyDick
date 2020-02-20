@@ -1,7 +1,7 @@
 #include "WorldObject.h"
 #include "GameObjectDefinition.h"
 
-#include "game.h"
+#include "Game.h"
 
 
 

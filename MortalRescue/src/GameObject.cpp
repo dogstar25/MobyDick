@@ -1,10 +1,10 @@
 #include "GameObject.h"
 
-#include "game.h"
+#include "Game.h"
 #include "Weapon.h"
 #include "GameObjectDefinition.h"
 #include "Animation.h"
-#include "texture.h"
+#include "Texture.h"
 
 #include "WorldObject.h"
 

@@ -192,7 +192,7 @@
     <ClCompile Include="src\jsoncpp\jsoncpp.cpp" />
     <ClCompile Include="src\LevelManager.cpp" />
     <ClCompile Include="src\MortalRescue.cpp" />
-    <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\ObjectPoolManager.cpp" />
     <ClCompile Include="src\ParticleMachine.cpp" />
     <ClCompile Include="src\ParticleObject.cpp" />
@@ -202,7 +202,7 @@
     <ClCompile Include="src\Util.cpp" />
     <ClCompile Include="src\Weapon.cpp" />
     <ClCompile Include="src\WorldObject.cpp" />
-    <ClCompile Include="src\texture.cpp" />
+    <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\CompositeObject.h" />
@@ -213,7 +213,7 @@
     <ClInclude Include="src\DebugDraw.h" />
     <ClInclude Include="src\DebugPanel.h" />
     <ClInclude Include="src\DynamicTextManager.h" />
-    <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\Animation.h" />
     <ClInclude Include="src\GameObjectCollection.h" />
@@ -232,7 +232,7 @@
     <ClInclude Include="src\Util.h" />
     <ClInclude Include="src\Weapon.h" />
     <ClInclude Include="src\WorldObject.h" />
-    <ClInclude Include="src\texture.h" />
+    <ClInclude Include="src\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\blueprints\drone1_blueprint.aseprite" />

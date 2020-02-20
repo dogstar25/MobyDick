@@ -1,6 +1,6 @@
 #include "LevelManager.h"
-#include "texture.h"
-#include "game.h"
+#include "Texture.h"
+#include "Game.h"
 
 
 static const SDL_Color WHITE = { 255,255,255 };
