@@ -53,7 +53,7 @@ void CompositeObject::buildComposite()
 	Uint8 red, green, blue, alpha;
 
 	//Get the texture and the surface
-	blueprintTexureId = this->definition->compositeDetails.blueprint.textureId;
+	blueprintTexureId = this->definition()->compositeDetails.blueprint.textureId;
 	blueprintSurface = game->textureManager.getTexture(blueprintTexureId)->surface;
 	int bpp = blueprintSurface->format->BytesPerPixel;
 
@@ -73,7 +73,7 @@ void CompositeObject::buildComposite()
 			SDL_Color currentPixelcolor = { red, green, blue };
 
 			//Loop through the legend to find which gameObject should be built
-			for (CompositeLegendItem legendItem : this->definition->compositeDetails.blueprint.legend)
+			for (CompositeLegendItem legendItem : this->definition()->compositeDetails.blueprint.legend)
 			{
 				if (currentPixelcolor == legendItem.color == true)
 				{
@@ -100,7 +100,7 @@ void CompositeObject::buildPiece(CompositeLegendItem legendItem, int xPos, int y
 	*/
 	WorldObject* worldObject =
 		game->gameObjectManager.buildGameObject<WorldObject>(legendItem.gameObjectId, -5, -5, 0);
-	worldObject->strength = this->definition->compositeDetails.levels[0].strength;
+	worldObject->strength = this->definition()->compositeDetails.levels[0].strength;
 	piece.pieceObject = worldObject;
 		
 
@@ -119,7 +119,7 @@ void CompositeObject::buildPiece(CompositeLegendItem legendItem, int xPos, int y
 	piece.pieceObject->setColor(255,0,0,255);
 
 	//Initialize color and strength to level 1
-	piece.pieceObject->setColor(this->definition->compositeDetails.levels[0].color);
+	piece.pieceObject->setColor(this->definition()->compositeDetails.levels[0].color);
 
 	this->pieces.push_back(piece);
 
@@ -164,7 +164,7 @@ void CompositeObject::updatePieceState(GameObjectPiece& piece)
 	if (piece.isDestroyed == true)
 	{
 		duration<double, milli> timeDiffMilliSeconds = now_time - piece.time_snapshot;
-		if (timeDiffMilliSeconds.count() >= this->definition->compositeDetails.levelUpSpeed)
+		if (timeDiffMilliSeconds.count() >= this->definition()->compositeDetails.levelUpSpeed)
 		{
 
 			//Level up the piece object
@@ -207,7 +207,7 @@ void CompositeObject::levelUp(GameObjectPiece& piece)
 {
 	int nextLevel = piece.currentlevel + 1;
 
-	for (CompositeLevel level : this->definition->compositeDetails.levels)
+	for (CompositeLevel level : this->definition()->compositeDetails.levels)
 	{
 
 		piece.isDestroyed = false;

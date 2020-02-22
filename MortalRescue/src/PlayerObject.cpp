@@ -128,7 +128,7 @@ void PlayerObject::render()
 {
 
 	game->debugPanel->addItem("ANIMATIONState", this->currentAnimationState());
-	game->debugPanel->addItem("ANIMATIONFrame", to_string(this->animations[this->currentAnimationState()]->getCurrentAnimFrame()));
+	game->debugPanel->addItem("ANIMATIONFrame", to_string(this->animations()[this->currentAnimationState()]->getCurrentAnimFrame()));
 	WorldObject::render();
 }
 
@@ -193,7 +193,7 @@ void PlayerObject::fire()
 	
 	//Calculate the origin of the bullet
 	b2Vec2 origin = { this->physicsBody->GetTransform().p.x , this->physicsBody->GetTransform().p.y };
-	this->weapon->fire(origin, this->physicsBody->GetAngle(), this->definition->fireOffset);
+	this->weapon->fire(origin, this->physicsBody->GetAngle(), this->definition()->fireOffset);
 
 
 }
@@ -202,12 +202,12 @@ void PlayerObject::weaponLevelUp()
 {
 	int level = weapon->getNextLevel();
 
-	auto iter = this->definition->weapons.find(level);
+	auto iter = this->definition()->weapons.find(level);
 
-	if (iter != this->definition->weapons.end())
+	if (iter != this->definition()->weapons.end())
 	{
 		//this->weapon = iter->second;
-		this->weapon = this->definition->weapons[level];
+		this->weapon = this->definition()->weapons[level];
 	}
 	
 }

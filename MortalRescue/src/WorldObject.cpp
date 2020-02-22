@@ -15,14 +15,14 @@ WorldObject::WorldObject(string gameObjectId, float xMapPos, float yMapPos, floa
 {
 	//Size
 	//FIXME:Add a override function to setSize to worldPbject to automatically multiply the scalefactor
-	this->setSize(definition->xSize * game->config.scaleFactor, 
-		definition->ySize * game->config.scaleFactor);
+	this->setSize(this->definition()->xSize * game->config.scaleFactor, 
+		this->definition()->ySize * game->config.scaleFactor);
 
 	//speed
-	this->speed = definition->speed;
+	this->speed = this->definition()->speed;
 
 	//Build box2d related stuff
-	this->physicsBody = buildB2Body(definition);
+	this->physicsBody = buildB2Body(this->definition());
 
 	//Gameobject must be passed in it's starting position
 	//Multiply the size times the x,y position in the map grid that represents the world
@@ -51,8 +51,8 @@ void WorldObject::setPosition(b2Vec2 position, float angle)
 	//newlocation.x = (position.x / game->config.scaleFactor);
 	//newlocation.y = (position.y / game->config.scaleFactor);
 
-	newlocation.x = (position.x / game->config.scaleFactor) + (definition->xSize / 2);
-	newlocation.y = (position.y / game->config.scaleFactor) + (definition->ySize / 2);
+	newlocation.x = (position.x / game->config.scaleFactor) + (this->definition()->xSize / 2);
+	newlocation.y = (position.y / game->config.scaleFactor) + (this->definition()->ySize / 2);
 
 	this->physicsBody->SetTransform(newlocation, angle );
 	//this->physicsBody->SetLinearVelocity(b2Vec2(0, 0));
@@ -97,8 +97,8 @@ SDL_Rect WorldObject::getRenderDestRect()
 	
 	destRect = this->getPositionRect();
 	
-	destRect.w += this->definition->xRenderAdjustment;
-	destRect.h += this->definition->yRenderAdjustment;
+	destRect.w += this->definition()->xRenderAdjustment;
+	destRect.h += this->definition()->yRenderAdjustment;
 
 	//Adjust position based on current camera position - offset
 	destRect.x -= game->camera.frame.x;
@@ -127,7 +127,7 @@ void WorldObject::render()
 	angle = angle * (float)180 / M_PI;
 
 	
-	if (this->definition->id.compare("GINA_64") == 0)
+	if (this->definition()->id.compare("GINA_64") == 0)
 	{
 		if (textureSourceRect == NULL) {
 			game->debugPanel->addItem("textureSourceRec", "NULL");
@@ -144,7 +144,7 @@ void WorldObject::render()
 	game->textureManager.render(texture, this->color(), textureSourceRect, &destRect, angle);
 
 	//Loop through any possible child objects, in all 9 positions, and render them too
-	if (this->definition->hasChildObjects == true)
+	if (this->definition()->hasChildObjects == true)
 	{
 		GameObject::renderChildObjects();
 	}

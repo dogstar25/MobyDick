@@ -81,23 +81,23 @@ void GameObjectContactListener::handleContact(WorldObject* contact1, WorldObject
 
 	
 	*/
-	if (contact1->definition->id.compare("BULLET1") == 0 ||
-		contact2->definition->id.compare("BULLET1") == 0 ||
-		contact1->definition->id.compare("BULLET2") == 0 ||
-		contact2->definition->id.compare("BULLET2") == 0)
+	if (contact1->definition()->id.compare("BULLET1") == 0 ||
+		contact2->definition()->id.compare("BULLET1") == 0 ||
+		contact1->definition()->id.compare("BULLET2") == 0 ||
+		contact2->definition()->id.compare("BULLET2") == 0)
 	{
 		//Bullet Wall contact
-		if (contact1->definition->id.compare(0, 4, "WALL") == 0 ||
-			contact2->definition->id.compare(0, 4, "WALL") == 0)
+		if (contact1->definition()->id.compare(0, 4, "WALL") == 0 ||
+			contact2->definition()->id.compare(0, 4, "WALL") == 0)
 		{
-			if (contact1->definition->id.compare("BULLET1") == 0 ||
-				contact1->definition->id.compare("BULLET2") == 0)
+			if (contact1->definition()->id.compare("BULLET1") == 0 ||
+				contact1->definition()->id.compare("BULLET2") == 0)
 			{
 				bullet = contact1;
 				wall = contact2;
 			}
-			else if (contact2->definition->id.compare("BULLET1") == 0 ||
-					 contact2->definition->id.compare("BULLET2") == 0) 
+			else if (contact2->definition()->id.compare("BULLET1") == 0 ||
+					 contact2->definition()->id.compare("BULLET2") == 0) 
 			{
 				bullet = contact2;
 				wall = contact1;
@@ -107,18 +107,18 @@ void GameObjectContactListener::handleContact(WorldObject* contact1, WorldObject
 		}
 
 		//Bullet Piece contact
-		if (contact1->definition->id.compare(5, 5, "PIECE") == 0 ||
-			contact1->definition->id.compare(7, 5, "PIECE") == 0 ||
-			contact2->definition->id.compare(5, 5, "PIECE") == 0 ||
-			contact2->definition->id.compare(7, 5, "PIECE") == 0)
+		if (contact1->definition()->id.compare(5, 5, "PIECE") == 0 ||
+			contact1->definition()->id.compare(7, 5, "PIECE") == 0 ||
+			contact2->definition()->id.compare(5, 5, "PIECE") == 0 ||
+			contact2->definition()->id.compare(7, 5, "PIECE") == 0)
 		{
-			if (contact1->definition->id.compare("BULLET1") == 0 ||
-				contact1->definition->id.compare("BULLET2") == 0) {
+			if (contact1->definition()->id.compare("BULLET1") == 0 ||
+				contact1->definition()->id.compare("BULLET2") == 0) {
 				bullet = contact1;
 				piece = contact2;
 			}
-			else if (contact2->definition->id.compare("BULLET1") == 0 ||
-					 contact2->definition->id.compare("BULLET2") == 0) 
+			else if (contact2->definition()->id.compare("BULLET1") == 0 ||
+					 contact2->definition()->id.compare("BULLET2") == 0) 
 			{
 				bullet = contact2;
 				piece = contact1;
@@ -129,18 +129,18 @@ void GameObjectContactListener::handleContact(WorldObject* contact1, WorldObject
 		}
 
 	}
-	if (contact1->definition->id.compare("GINA_64") == 0 ||
-		contact2->definition->id.compare("GINA_64") == 0)
+	if (contact1->definition()->id.compare("GINA_64") == 0 ||
+		contact2->definition()->id.compare("GINA_64") == 0)
 	{
 		//Bullet Wall contact
-		if (contact1->definition->id.compare("ANGLE_BIT_PIECE") == 0 ||
-			contact2->definition->id.compare("ANGLE_BIT_PIECE") == 0)
+		if (contact1->definition()->id.compare("ANGLE_BIT_PIECE") == 0 ||
+			contact2->definition()->id.compare("ANGLE_BIT_PIECE") == 0)
 		{
-			if (contact1->definition->id.compare("GINA_64") == 0) {
+			if (contact1->definition()->id.compare("GINA_64") == 0) {
 				player = dynamic_cast<PlayerObject*>(contact1);
 				piece = contact2;
 			}
-			else if (contact2->definition->id.compare("GINA_64") == 0) {
+			else if (contact2->definition()->id.compare("GINA_64") == 0) {
 				player = dynamic_cast<PlayerObject*>(contact2);
 				piece = contact1;
 			}

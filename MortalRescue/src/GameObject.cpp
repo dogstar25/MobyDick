@@ -12,11 +12,11 @@
 GameObject::~GameObject()
 {
 
-	this->animations.clear();
+	m_animations.clear();
 
 	for (int x = 0; x < CHILD_POSITIONS; x++)
 	{
-		this->childObjects[x].clear();
+		m_childObjects[x].clear();
 	}
 
 
@@ -35,9 +35,9 @@ void GameObject::init()
 	m_angle = 0;
 	m_mouseState = 0;
 
-	this->texture = nullptr;
+	m_texture = nullptr;
 
-	this->definition = nullptr;
+	m_definition = nullptr;
 
 }
 
@@ -64,36 +64,36 @@ GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float 
 	//id value to the one we passed in
 	if (gameObjectId.rfind("DEBUG_", 0) == 0)
 	{
-		this->definition = game->gameObjectManager.gameObjectDefinitions["DEBUG_ITEM"];;
+		m_definition = game->gameObjectManager.gameObjectDefinitions["DEBUG_ITEM"];;
 	}
 	else
 	{
-		this->definition = game->gameObjectManager.gameObjectDefinitions[gameObjectId];
+		m_definition = game->gameObjectManager.gameObjectDefinitions[gameObjectId];
 	}
 
-	m_size.Set(definition->xSize, definition->ySize);
+	m_size.Set(m_definition->xSize, m_definition->ySize);
 
 	//color
-	m_color = definition->color;
+	m_color = m_definition->color;
 
 	//Get pointer to the texture
-	this->texture = game->textureManager.getTexture(definition->textureId);
+	m_texture = game->textureManager.getTexture(m_definition->textureId);
 
 	//get the animation objects if they exist
 	string firstState;
 	int i = 0;
-	if (definition->animationDetails.animations.size() > 0)
+	if (m_definition->animationDetails.animations.size() > 0)
 	{
 		Animation* animation = nullptr;
-		for (auto animationDefinition : definition->animationDetails.animations) {
+		for (auto animationDefinition : m_definition->animationDetails.animations) {
 
-			animation = new Animation(definition,
+			animation = new Animation(m_definition,
 				animationDefinition.state,
 				animationDefinition.textureId,
 				animationDefinition.frames,
 				animationDefinition.speed);
 
-			this->animations.emplace(animationDefinition.state, animation);
+			m_animations.emplace(animationDefinition.state, animation);
 			//this->animations[animationDefinition.state]= animation;
 
 			//Save the first state id 
@@ -115,8 +115,8 @@ GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float 
 void GameObject::update()
 {
 	//If this object is animated, then animate it
-	if(this->definition->isAnimated) {
-		this->animations[this->m_currentAnimationState]->animate();
+	if(m_definition->isAnimated) {
+		m_animations[this->m_currentAnimationState]->animate();
 	}
 
 	//Update the mouse state
@@ -133,7 +133,7 @@ void GameObject::update()
 
 	//Loop through any possible child objects and update their
 	// position to reflect parent objects position
-	if (this->definition->hasChildObjects == true)
+	if (m_definition->hasChildObjects == true)
 	{
 		updateChildObjects();
 	}
@@ -162,7 +162,7 @@ SDL_Rect GameObject::getRenderDestRect()
 	destRect = this->getPositionRect();
 
 	//adjust render position X and Y for camera if not an absolute positioned object
-	if (this->definition->absolutePositioning == false)
+	if (m_definition->absolutePositioning == false)
 	{
 		destRect.x -= game->camera.frame.x;
 		destRect.y -= game->camera.frame.y;
@@ -176,9 +176,9 @@ SDL_Rect*  GameObject::getRenderTextureRect()
 {
 	SDL_Rect* textureSrcRect=NULL;
 
-	if (this->definition->isAnimated) {
+	if (m_definition->isAnimated) {
 
-		textureSrcRect = this->animations[this->m_currentAnimationState]->getCurrentTextureAnimationSrcRect();
+		textureSrcRect = m_animations[this->m_currentAnimationState]->getCurrentTextureAnimationSrcRect();
 	}
 
 	return textureSrcRect;
@@ -189,13 +189,13 @@ SDL_Texture * GameObject::getRenderTexture()
 {
 	SDL_Texture* texture = nullptr;
 
-	if (this->definition->isAnimated) {
+	if (m_definition->isAnimated) {
 
-		texture = this->animations[this->m_currentAnimationState]->getTexture();
+		texture = m_animations[this->m_currentAnimationState]->getTexture();
 	}
 	else {
 
-		texture = this->texture->sdlTexture;
+		texture = m_texture->sdlTexture;
 	}
 
 	return texture;
@@ -222,7 +222,7 @@ void GameObject::render()
 	game->textureManager.render(texture, m_color, textureSourceRect, &destRect, angle);
 
 	//test outlining object
-	if (this->definition->isMouseSelectable)
+	if (m_definition->isMouseSelectable)
 	{
 		if (m_mouseState == this->MOUSE_HOVER)
 		{
@@ -239,13 +239,13 @@ void GameObject::render()
 	}
 
 	//Outline the object if defined
-	if (this->definition->renderOutline)
+	if (m_definition->renderOutline)
 	{
 		game->textureManager.outLineObject(this, 2);
 	}
 	
 	//Loop through any possible child objects, in all 9 positions, and render them too
-	if (this->definition->hasChildObjects == true)
+	if (m_definition->hasChildObjects == true)
 	{
 		renderChildObjects();
 	}
@@ -301,7 +301,7 @@ void GameObject::updateChildObjects()
 	b2Vec2 newChildPosition, childSize;
 	SDL_Rect parentPositionRect, childPositionRect;
 
-	for (auto& childLocations : this->childObjects)
+	for (auto& childLocations : m_childObjects)
 	{
 		locationSlot++;
 		int childNumber = 0;
@@ -315,7 +315,7 @@ void GameObject::updateChildObjects()
 			newChildPosition = this->calcChildPosition(childObject, locationSlot, childNumber, childCount);
 
 			// Should this child match the angle of the parent
-			if (this->definition->childPositionRelative == true)
+			if (m_definition->childPositionRelative == true)
 			{
 				childObject->setPosition(newChildPosition, this->angle());
 
@@ -338,7 +338,7 @@ void GameObject::updateChildObjects()
 void GameObject::renderChildObjects()
 {
 	//Loop through any possible child objects, in all 9 positions, and render them too
-	for (auto& childPositions : this->childObjects)
+	for (auto& childPositions : m_childObjects)
 	{
 		for (auto& gameObject : childPositions)
 		{
@@ -354,7 +354,7 @@ void GameObject::buildChildren()
 	Loop through all of the child object definitions defined for this GameObject,
 	build them and put them in the GameObjects child collection
 	*/
-	for (ChildObjectDetails childDefinition : this->definition->childObjectDefinitions)
+	for (ChildObjectDetails childDefinition : m_definition->childObjectDefinitions)
 	{
 		string childObjectId = childDefinition.gameObjectId;
 		unsigned int locationSlot = childDefinition.locationSlot;
@@ -368,21 +368,21 @@ void GameObject::buildChildren()
 			{
 				TextObject* textObject =
 					game->gameObjectManager.buildGameObject<TextObject>(childObjectId, 2, 2, 0);
-				this->childObjects[locationSlot - 1].push_back(make_shared<TextObject>(*textObject));
+				m_childObjects[locationSlot - 1].push_back(make_shared<TextObject>(*textObject));
 
 			}
 			else if (definition->type.compare("WORLD_OBJECT") == 0)
 			{
 				WorldObject* worldObject =
 					game->gameObjectManager.buildGameObject<WorldObject>(childObjectId, -5, -5, 0);
-				this->childObjects[locationSlot - 1].push_back(make_shared<WorldObject>(*worldObject));
+				m_childObjects[locationSlot - 1].push_back(make_shared<WorldObject>(*worldObject));
 			}
 			else //default to GAME_OBJECT
 			{
 
 				GameObject* gameObject =
 					game->gameObjectManager.buildGameObject<GameObject>(childObjectId, -5, -5, 0);
-				this->childObjects[locationSlot - 1].push_back(make_shared<GameObject>(*gameObject));
+				m_childObjects[locationSlot - 1].push_back(make_shared<GameObject>(*gameObject));
 			}
 
 		}
@@ -465,11 +465,11 @@ b2Vec2 GameObject::calcChildPosition(
 		if (childCount % 2 == 0)
 		{
 			//isEvenNumber
-			oddEvenadjustValue = (childSize.y + this->definition->childPadding) / 2;
+			oddEvenadjustValue = (childSize.y + m_definition->childPadding) / 2;
 		}
 		else
 		{
-			oddEvenadjustValue = childSize.y + this->definition->childPadding;
+			oddEvenadjustValue = childSize.y + m_definition->childPadding;
 		}
 
 		//calculate number of steps to take to place 1st child object
@@ -482,18 +482,18 @@ b2Vec2 GameObject::calcChildPosition(
 		firstChildPosition.y =
 			childPositionRect.y -
 			oddEvenadjustValue -
-			((childSize.y + this->definition->childPadding) * stepCount);
+			((childSize.y + m_definition->childPadding) * stepCount);
 
 		//Calculate our current child object position using the stepSize and the
 		//position of the first child position
 		childPositionRect.x = firstChildPosition.x;
 		childPositionRect.y =
-			firstChildPosition.y + ((childSize.y + this->definition->childPadding) * childNumber);
+			firstChildPosition.y + ((childSize.y + m_definition->childPadding) * childNumber);
 
 
 	}
 
-	if (this->definition->childPositionRelative == true)
+	if (m_definition->childPositionRelative == true)
 	{
 		b2Vec2 adjustment{};
 
@@ -542,7 +542,7 @@ void GameObject::onMouseClickEvent()
 {
 	string* actionCode;
 
-	actionCode = new string(this->definition->onClickAction);
+	actionCode = new string(m_definition->onClickAction);
 	SDL_Event event;
 	event.user.data1 = static_cast<void*>(actionCode);
 	event.type = SDL_USEREVENT;
@@ -555,7 +555,7 @@ void GameObject::updateMouseState()
 	gameObjectDrawRect = this->getRenderDestRect();
 	bool isHovered = false;
 
-	if (this->definition->isMouseSelectable == true)
+	if (m_definition->isMouseSelectable == true)
 	{
 		//Is mouse over the object
 		if (game->mouseLocation.x >= gameObjectDrawRect.x &&

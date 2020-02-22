@@ -243,7 +243,7 @@ void TextureManager::outLineObject(GameObject* gameObject, float lineSize)
 	SDL_Point point;
 
 	//Adjust for camera
-	if (gameObject->definition->absolutePositioning == false)
+	if (gameObject->definition()->absolutePositioning == false)
 	{
 		gameObjectDrawRect.x -= game->camera.frame.x;
 		gameObjectDrawRect.y -= game->camera.frame.y;

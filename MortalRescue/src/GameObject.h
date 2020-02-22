@@ -6,6 +6,7 @@
 #include <string>
 
 #include <Box2D/Box2D.h>
+
 #include "TextureManager.h"
 
 
@@ -33,6 +34,15 @@ class GameObject
 {
 private:
 
+	enum GameObjectMouseState {
+
+		MOUSE_NONE = 0,
+		MOUSE_HOVER = 1,
+		MOUSE_HOLD = 2,
+		MOUSE_CLICKED = 3
+
+	};
+
 	std::string	
 		m_definitionId,
 		m_currentAnimationState;
@@ -48,6 +58,10 @@ private:
 	bool
 		m_removeFromWorld;
 
+	GameObjectDefinition* m_definition;
+	Texture* m_texture;
+	std::map<std::string, Animation*> m_animations;
+	std::array<std::vector<std::shared_ptr<GameObject>>, CHILD_POSITIONS> m_childObjects;
 
 	void init();
 	virtual void onMouseHoverRender();
@@ -67,24 +81,10 @@ protected:
 	virtual SDL_Rect* getRenderTextureRect();
 	virtual SDL_Texture* getRenderTexture();
 	void setCurrentAnimationState(std::string animationState) {	m_currentAnimationState = animationState; }
+	void setTexture(Texture* texture) { m_texture = texture; }
 
 public:
-
-
-	Texture* texture;
-	GameObjectDefinition* definition;
-	std::map<std::string, Animation*> animations;
-
-
-	enum GameObjectMouseState {
-
-		MOUSE_NONE = 0,
-		MOUSE_HOVER = 1,
-		MOUSE_HOLD = 2,
-		MOUSE_CLICKED = 3
-
-	};
-
+	
 	GameObject();
 	GameObject(std::string,float,float,float);
 	virtual ~GameObject();
@@ -100,25 +100,49 @@ public:
 	virtual void setSize(b2Vec2 size);
 	virtual void setSize(float xSize, float ySize);
 	virtual void setAngle(float angle);
-	void setColor(SDL_Color color) { m_color = color; }
-	void setColorAlpha(int alpha) { m_color.a = alpha; }
+	void setColor(SDL_Color color) { 
+		m_color = color; 
+	}
+	void setColorAlpha(int alpha) { 
+		m_color.a = alpha; 
+	}
 	void setColor(int red, int green, int blue, int alpha);
-	void setRemoveFromWorld(bool removeFromWorld) { m_removeFromWorld = removeFromWorld; }
-
+	void setRemoveFromWorld(bool removeFromWorld) { 
+		m_removeFromWorld = removeFromWorld; 
+	}
 
 	//Accessor Functions
-	b2Vec2 size() { return m_size; }
-	b2Vec2 position() {	return m_position; }
-	float angle() { return m_angle; }
-	SDL_Color color() { return m_color; }
-	std::string definitionId() { return m_definitionId; }
-	std::string currentAnimationState() { return m_currentAnimationState; }
-	bool removeFromWorld() { return m_removeFromWorld; }
+	b2Vec2 size() { 
+		return m_size; 
+	}
+	b2Vec2 position() {	
+		return m_position; 
+	}
+	float angle() { 
+		return m_angle; 
+	}
+	SDL_Color color() { 
+		return m_color; 
+	}
+	std::string definitionId() { 
+		return m_definitionId; 
+	}
+	std::string currentAnimationState() { 
+		return m_currentAnimationState; 
+	}
+	bool removeFromWorld() { 
+		return m_removeFromWorld; 
+	}
+	Texture* texture() { 
+		return m_texture; 
+	}
+	GameObjectDefinition* definition() { 
+		return m_definition; 
+	};
+	std::map<std::string, Animation*>& animations() { 
+		return m_animations; 
+	}
 
-	/*
-	Array that has 9 buckets and each bucket has a vector of GameObjects
-	*/
-	std::array<std::vector<std::shared_ptr<GameObject>>, CHILD_POSITIONS> childObjects;
 	
 };
 
