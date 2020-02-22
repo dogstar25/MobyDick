@@ -26,6 +26,12 @@ extern Game* game;
 class TextureManager
 {
 
+private:
+	SDL_Renderer* m_Renderer;
+	map<string, unique_ptr<Texture>> m_textureMap;
+	map<string, string> m_fontMap;
+	bool loadTextures();
+
 public:
 
 	TextureManager();
@@ -37,25 +43,16 @@ public:
 	bool present();
 	bool clear();
 	Texture* getTexture(string id);
-	Texture* getTexture(TextObject*);
-	void addTexture(string, Texture*);
 	string getFont(string id);
-	Texture* updateDynamicTextTexture(TextObject*);
-	SDL_Surface* generateTextSurface(SDL_Color, int, string, string);
-	Texture* generateTextTexture(TextObject*);
 	void drawPoly(b2Body* body);
 	void drawPoints(SDL_Point *);
 	void drawLine(b2Vec2, b2Vec2);
 	void outLineObject(GameObject* gameObject, float lineSize);
 	void outLineObject(WorldObject* gameObject);
+	SDL_Texture* createTextureFromSurface(SDL_Surface* surface);
 
-private:
-
-	SDL_Renderer* pRenderer;
-	map<string, unique_ptr<Texture>> textureMap;
-	map<string, string> fontMap;
-	bool loadTextures();
 	
+
 };
 
 

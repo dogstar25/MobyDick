@@ -81,23 +81,23 @@ void GameObjectContactListener::handleContact(WorldObject* contact1, WorldObject
 
 	
 	*/
-	if (contact1->definition->id.compare("BULLET1") == 0 ||
-		contact2->definition->id.compare("BULLET1") == 0 ||
-		contact1->definition->id.compare("BULLET2") == 0 ||
-		contact2->definition->id.compare("BULLET2") == 0)
+	if (contact1->definition()->id.compare("BULLET1") == 0 ||
+		contact2->definition()->id.compare("BULLET1") == 0 ||
+		contact1->definition()->id.compare("BULLET2") == 0 ||
+		contact2->definition()->id.compare("BULLET2") == 0)
 	{
 		//Bullet Wall contact
-		if (contact1->definition->id.compare(0, 4, "WALL") == 0 ||
-			contact2->definition->id.compare(0, 4, "WALL") == 0)
+		if (contact1->definition()->id.compare(0, 4, "WALL") == 0 ||
+			contact2->definition()->id.compare(0, 4, "WALL") == 0)
 		{
-			if (contact1->definition->id.compare("BULLET1") == 0 ||
-				contact1->definition->id.compare("BULLET2") == 0)
+			if (contact1->definition()->id.compare("BULLET1") == 0 ||
+				contact1->definition()->id.compare("BULLET2") == 0)
 			{
 				bullet = contact1;
 				wall = contact2;
 			}
-			else if (contact2->definition->id.compare("BULLET1") == 0 ||
-					 contact2->definition->id.compare("BULLET2") == 0) 
+			else if (contact2->definition()->id.compare("BULLET1") == 0 ||
+					 contact2->definition()->id.compare("BULLET2") == 0) 
 			{
 				bullet = contact2;
 				wall = contact1;
@@ -107,18 +107,18 @@ void GameObjectContactListener::handleContact(WorldObject* contact1, WorldObject
 		}
 
 		//Bullet Piece contact
-		if (contact1->definition->id.compare(5, 5, "PIECE") == 0 ||
-			contact1->definition->id.compare(7, 5, "PIECE") == 0 ||
-			contact2->definition->id.compare(5, 5, "PIECE") == 0 ||
-			contact2->definition->id.compare(7, 5, "PIECE") == 0)
+		if (contact1->definition()->id.compare(5, 5, "PIECE") == 0 ||
+			contact1->definition()->id.compare(7, 5, "PIECE") == 0 ||
+			contact2->definition()->id.compare(5, 5, "PIECE") == 0 ||
+			contact2->definition()->id.compare(7, 5, "PIECE") == 0)
 		{
-			if (contact1->definition->id.compare("BULLET1") == 0 ||
-				contact1->definition->id.compare("BULLET2") == 0) {
+			if (contact1->definition()->id.compare("BULLET1") == 0 ||
+				contact1->definition()->id.compare("BULLET2") == 0) {
 				bullet = contact1;
 				piece = contact2;
 			}
-			else if (contact2->definition->id.compare("BULLET1") == 0 ||
-					 contact2->definition->id.compare("BULLET2") == 0) 
+			else if (contact2->definition()->id.compare("BULLET1") == 0 ||
+					 contact2->definition()->id.compare("BULLET2") == 0) 
 			{
 				bullet = contact2;
 				piece = contact1;
@@ -129,18 +129,18 @@ void GameObjectContactListener::handleContact(WorldObject* contact1, WorldObject
 		}
 
 	}
-	if (contact1->definition->id.compare("GINA_64") == 0 ||
-		contact2->definition->id.compare("GINA_64") == 0)
+	if (contact1->definition()->id.compare("GINA_64") == 0 ||
+		contact2->definition()->id.compare("GINA_64") == 0)
 	{
 		//Bullet Wall contact
-		if (contact1->definition->id.compare("ANGLE_BIT_PIECE") == 0 ||
-			contact2->definition->id.compare("ANGLE_BIT_PIECE") == 0)
+		if (contact1->definition()->id.compare("ANGLE_BIT_PIECE") == 0 ||
+			contact2->definition()->id.compare("ANGLE_BIT_PIECE") == 0)
 		{
-			if (contact1->definition->id.compare("GINA_64") == 0) {
+			if (contact1->definition()->id.compare("GINA_64") == 0) {
 				player = dynamic_cast<PlayerObject*>(contact1);
 				piece = contact2;
 			}
-			else if (contact2->definition->id.compare("GINA_64") == 0) {
+			else if (contact2->definition()->id.compare("GINA_64") == 0) {
 				player = dynamic_cast<PlayerObject*>(contact2);
 				piece = contact1;
 			}
@@ -157,7 +157,7 @@ void GameObjectContactListener::handleContact(WorldObject* contact1, WorldObject
 void GameObjectContactListener::playerBitPiece(PlayerObject* player, WorldObject* piece, b2Vec2 contactPoint)
 {
 	//Set flag for bullet to be removed from world
-	piece->removeFromWorld = true;
+	piece->setRemoveFromWorld(true);
 	player->incrementPiecesCollected();
 
 }
@@ -166,7 +166,7 @@ void GameObjectContactListener::playerBitPiece(PlayerObject* player, WorldObject
 void GameObjectContactListener::bulletWall(WorldObject* bullet, WorldObject* wall, b2Vec2 contactPoint)
 {
 	//Set flag for bullet to be removed from world
-	bullet->removeFromWorld = true;
+	bullet->setRemoveFromWorld(true);
 
 	//use the collision point for the particle emission
 	float x = contactPoint.x;
@@ -208,12 +208,12 @@ void GameObjectContactListener::bulletPiece(WorldObject* bullet, WorldObject* pi
 
 
 	//Set flag for bullet to be removed from world
-	bullet->removeFromWorld = true;
+	bullet->setRemoveFromWorld(true);
 
 	//Set flag for piece to be removed from world
 	//only if bullet was strong enough
 	if (piece->testStrength(bullet->strength)) {
-		piece->removeFromWorld = true;
+		piece->setRemoveFromWorld(true);
 		bulletPieceExplode(bullet,piece,contactPoint);
 	}
 	else
@@ -233,8 +233,8 @@ void GameObjectContactListener::bulletPieceExplode(WorldObject* bullet, WorldObj
 	float y = contactPoint.y;
 	b2Vec2 particleOrigin = { x,y };
 
-	SDL_Color colorMin = piece->color;
-	SDL_Color colorMax = piece->color;
+	SDL_Color colorMin = piece->color();
+	SDL_Color colorMax = piece->color();
 
 	particleEmission = new ParticleEmission(
 		"PARTICLE1_POOL",
@@ -281,8 +281,8 @@ void GameObjectContactListener::bulletPieceExplode(WorldObject* bullet, WorldObj
 	game->particleMachine.add(particleEmission);
 
 	//Also emit 2 pieces that will remain on teh ground
-	colorMin = piece->color;
-	colorMax = piece->color;
+	colorMin = piece->color();
+	colorMax = piece->color();
 	particleEmission = new ParticleEmission(
 		"PIECES1_POOL",
 		particleOrigin, //min position

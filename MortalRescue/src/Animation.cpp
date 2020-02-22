@@ -7,35 +7,35 @@
 Animation::Animation(GameObjectDefinition* gameObjectDefinition, string animationId, string textureId, int totalFrames, float speed)
 {
 
-	this->id = animationId;
-	this->speed = speed;
-	this->frameCount = totalFrames;
+	m_id = animationId;
+	m_speed = speed;
+	m_frameCount = totalFrames;
 
 	//Get pointer to textture
-	texture = game->textureManager.getTexture(textureId)->sdlTexture;
+	m_texture = game->textureManager.getTexture(textureId)->sdlTexture;
 
 	//Calculate how many columns and rows this animation texture has
 	int width, height;
 	//First get width of textture
-	SDL_QueryTexture(texture, NULL, NULL, &width, &height);
+	SDL_QueryTexture(m_texture, NULL, NULL, &width, &height);
 
 	//calculate frameSize
 	if (gameObjectDefinition->isPhysicsObject == true)
 	{
-		this->frameSize.x = gameObjectDefinition->xSize * game->config.scaleFactor;
-		this->frameSize.y = gameObjectDefinition->ySize * game->config.scaleFactor;
+		m_frameSize.x = gameObjectDefinition->xSize * game->config.scaleFactor;
+		m_frameSize.y = gameObjectDefinition->ySize * game->config.scaleFactor;
 	}
 	else
 	{
-		this->frameSize.x = gameObjectDefinition->xSize;
-		this->frameSize.y = gameObjectDefinition->ySize;
+		m_frameSize.x = gameObjectDefinition->xSize;
+		m_frameSize.y = gameObjectDefinition->ySize;
 
 	}
 
 	//Calculate nnumber of rows and columns - remember to convert the gameObject size to pixels first
 	int rows, columns;
-	columns = width / this->frameSize.x;
-	rows = height / this->frameSize.y;
+	columns = width / m_frameSize.x;
+	rows = height / m_frameSize.y;
 
 	//Calculate top left corner of each animation frame
 	SDL_Point point;
@@ -45,10 +45,10 @@ Animation::Animation(GameObjectDefinition* gameObjectDefinition, string animatio
 		for (int colIdx = 0; colIdx < columns; colIdx++) 
 		{
 
-			point.x = colIdx * this->frameSize.x;
-			point.y = rowIdx * this->frameSize.y;
+			point.x = colIdx * m_frameSize.x;
+			point.y = rowIdx * m_frameSize.y;
 
-			animationFramePositions.push_back(point);
+			m_animationFramePositions.push_back(point);
 
 			//do not exceed the maximum number of frames that this texture holds
 			frameCount++;
@@ -62,22 +62,29 @@ Animation::Animation(GameObjectDefinition* gameObjectDefinition, string animatio
 Animation::~Animation()
 {
 
-	delete this->currentTextureAnimationSrcRect;
-	delete this->texture;
+	delete m_currentTextureAnimationSrcRect;
+	delete m_texture;
 
 }
 
-SDL_Rect* Animation::getRenderTextureRect()
+SDL_Rect* Animation::getCurrentTextureAnimationSrcRect()
 {
 
-	return this->currentTextureAnimationSrcRect;
+	return m_currentTextureAnimationSrcRect;
 
 }
 
-SDL_Texture* Animation::getRenderTexture()
+SDL_Texture* Animation::getTexture()
 {
 
-	return this->texture;
+	return m_texture;
+
+}
+
+int Animation::getCurrentAnimFrame()
+{
+
+	return m_currentAnimFrame;
 
 }
 
@@ -85,30 +92,30 @@ void Animation::animate()
 {
 	//check the clock and see if enough time as gone by
 	steady_clock::time_point now_time = steady_clock::now();
-	std::chrono::duration<double> time_diff = now_time - this->time_snapshot;
+	std::chrono::duration<double> time_diff = now_time - m_timeSnapshot;
 
-	if (time_diff.count() >= this->speed)
+	if (time_diff.count() >= m_speed)
 	{
-		time_snapshot = now_time;
+		m_timeSnapshot = now_time;
 
 		//Increment animation frame counter and reset if it exceeds last one
-		this->currentAnimFrame += 1;
-		if (this->currentAnimFrame >
-			this->frameCount - 1) {
+		this->m_currentAnimFrame += 1;
+		if (this->m_currentAnimFrame >
+			m_frameCount - 1) {
 
-			this->currentAnimFrame = 0;
+			this->m_currentAnimFrame = 0;
 		}
 
 		//build the rectangle that points to the current animation frame
 		SDL_Rect* rect = new SDL_Rect();
 
-		rect->x = this->animationFramePositions[currentAnimFrame].x;
-		rect->y = this->animationFramePositions[currentAnimFrame].y;
+		rect->x = m_animationFramePositions[m_currentAnimFrame].x;
+		rect->y = m_animationFramePositions[m_currentAnimFrame].y;
 
-		rect->w = this->frameSize.x;
-		rect->h = this->frameSize.y;
+		rect->w = m_frameSize.x;
+		rect->h = m_frameSize.y;
 
-		this->currentTextureAnimationSrcRect = rect;
+		m_currentTextureAnimationSrcRect = rect;
 
 	}
 }

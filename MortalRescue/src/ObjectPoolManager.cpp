@@ -95,7 +95,7 @@ void ObjectPoolManager::reset(ParticleObject* particle)
 	b2Vec2 velocityVector = b2Vec2(0, 0);
 	b2Vec2 positionVector = b2Vec2(-50, -50);
 	
-	particle->removeFromWorld = false;
+	particle->setRemoveFromWorld(false);
 	particle->lifetimeRemaining = particle->lifetime;
 
 	particle->physicsBody->SetTransform(positionVector, 0);

@@ -162,7 +162,7 @@ bool Game::init()
 	//this->player = shared_ptr<PlayerObject>(playerObject);
 	this->player = playerObject;
 	//this->player->physicsBody->SetUserData(this->player);
-	this->player->weapon = this->player->definition->weapons[1];
+	this->player->weapon = this->player->definition()->weapons[1];
 
 	//set camera to center on player object
 	this->camera.setPosition((this->player->physicsBody->GetPosition().x *  this->config.scaleFactor) -
@@ -271,7 +271,7 @@ void Game::update() {
 			
 			particleObject = gameObjectCollection.particleObjects[x];
 
-			if (particleObject->removeFromWorld == true)
+			if (particleObject->removeFromWorld() == true)
 			{
 				particleObjectRemoved = particleObject;
 				game->objectPoolManager.reset(particleObject);

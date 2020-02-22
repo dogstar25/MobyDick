@@ -41,7 +41,7 @@ void ParticleObject::update()
 		{
 
 			//Mark this object for removal so that the removal loop will delete it
-			this->removeFromWorld = true;
+			this->setRemoveFromWorld(true);
 
 		}
 		else
@@ -51,7 +51,7 @@ void ParticleObject::update()
 			//If this particle should fade over time, then adjust its alpha value
 			if (this->isLifetimeAlphaFade)
 			{
-				this->color.a = 255 * (this->lifetimeRemaining / this->lifetime);
+				this->setColorAlpha( int(255 * (this->lifetimeRemaining / this->lifetime)));
 			}
 
 

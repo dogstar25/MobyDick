@@ -16,7 +16,7 @@ PlayerObject::PlayerObject(string gameObjectId, int xMapPos, int yMapPos, int an
 
 	this->direction = 0;
 	this->strafe = 0;
-	this->currentAnimationState = "IDLE";
+	this->setCurrentAnimationState("IDLE");
 	this->pieceCollectedCount = 0;
 
 
@@ -127,8 +127,8 @@ void PlayerObject::update()
 void PlayerObject::render()
 {
 
-	game->debugPanel->addItem("ANIMATIONState", this->currentAnimationState);
-	game->debugPanel->addItem("ANIMATIONFrame", to_string(this->animations[this->currentAnimationState]->currentAnimFrame));
+	game->debugPanel->addItem("ANIMATIONState", this->currentAnimationState());
+	game->debugPanel->addItem("ANIMATIONFrame", to_string(this->animations()[this->currentAnimationState()]->getCurrentAnimFrame()));
 	WorldObject::render();
 }
 
@@ -171,11 +171,11 @@ void PlayerObject::updatePlayerMovement()
 	if (vec2.Length() > 0)
 	{
 		int test = 9;
-		this->currentAnimationState = "RUN";
+		this->setCurrentAnimationState("RUN");
 	}
 	else
 	{
-		this->currentAnimationState = "IDLE";
+		this->setCurrentAnimationState("IDLE");
 	}
 
 	//this->physicsBody->SetTransform(vec3, this->physicsBody->GetAngle());
@@ -193,7 +193,7 @@ void PlayerObject::fire()
 	
 	//Calculate the origin of the bullet
 	b2Vec2 origin = { this->physicsBody->GetTransform().p.x , this->physicsBody->GetTransform().p.y };
-	this->weapon->fire(origin, this->physicsBody->GetAngle(), this->definition->fireOffset);
+	this->weapon->fire(origin, this->physicsBody->GetAngle(), this->definition()->fireOffset);
 
 
 }
@@ -202,12 +202,12 @@ void PlayerObject::weaponLevelUp()
 {
 	int level = weapon->getNextLevel();
 
-	auto iter = this->definition->weapons.find(level);
+	auto iter = this->definition()->weapons.find(level);
 
-	if (iter != this->definition->weapons.end())
+	if (iter != this->definition()->weapons.end())
 	{
 		//this->weapon = iter->second;
-		this->weapon = this->definition->weapons[level];
+		this->weapon = this->definition()->weapons[level];
 	}
 	
 }
