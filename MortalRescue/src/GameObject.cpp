@@ -9,11 +9,114 @@
 #include "WorldObject.h"
 
 
+GameObject::~GameObject()
+{
+
+	this->animations.clear();
+
+	for (int x = 0; x < CHILD_POSITIONS; x++)
+	{
+		this->childObjects[x].clear();
+	}
+
+
+}
+
+void GameObject::init()
+{
+
+	//this->definitionId;
+		//this->m_currentAnimationState;
+
+	m_removeFromWorld = false;
+	m_color = { 255,255,255,255 };
+	m_position = { 0,0 };
+	m_size = { 0,0 };
+	m_angle = 0;
+	m_mouseState = 0;
+
+	this->texture = nullptr;
+
+	this->definition = nullptr;
+
+}
+
+GameObject::GameObject()
+{
+	this->init();
+}
+
+GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust)
+{
+	//Init
+	this->init();
+
+	//calculate position
+	b2Vec2 position(xMapPos * game->worldGridSize.w, yMapPos * game->worldGridSize.h);
+	this->setPosition(position, angleAdjust);
+
+	//set the id and it will be unique for every game object in the game
+	//this->m_id = gameObjectId + to_string(game->gameObjectCount);
+	//this->id = gameObjectId;
+	m_definitionId = gameObjectId;
+
+	//is this a debug object then get the default debug definition but change its 
+	//id value to the one we passed in
+	if (gameObjectId.rfind("DEBUG_", 0) == 0)
+	{
+		this->definition = game->gameObjectManager.gameObjectDefinitions["DEBUG_ITEM"];;
+	}
+	else
+	{
+		this->definition = game->gameObjectManager.gameObjectDefinitions[gameObjectId];
+	}
+
+	m_size.Set(definition->xSize, definition->ySize);
+
+	//color
+	m_color = definition->color;
+
+	//Get pointer to the texture
+	this->texture = game->textureManager.getTexture(definition->textureId);
+
+	//get the animation objects if they exist
+	string firstState;
+	int i = 0;
+	if (definition->animationDetails.animations.size() > 0)
+	{
+		Animation* animation = nullptr;
+		for (auto animationDefinition : definition->animationDetails.animations) {
+
+			animation = new Animation(definition,
+				animationDefinition.state,
+				animationDefinition.textureId,
+				animationDefinition.frames,
+				animationDefinition.speed);
+
+			this->animations.emplace(animationDefinition.state, animation);
+			//this->animations[animationDefinition.state]= animation;
+
+			//Save the first state id 
+			if (i == 0) {
+				firstState = animationDefinition.state;
+			}
+			++i;
+		}
+
+		//On creation, default the animation state to idle
+		this->m_currentAnimationState = firstState;
+	}
+
+	//Build children if they exist
+	this->buildChildren();
+
+}
+
 void GameObject::update()
 {
 	//If this object is animated, then animate it
 	if(this->definition->isAnimated) {
-		this->animations[this->currentAnimationState]->animate();
+		this->animations[this->m_currentAnimationState]->animate();
 	}
 
 	//Update the mouse state
@@ -23,7 +126,7 @@ void GameObject::update()
 	}
 
 	//This object was clicked, so push whatever event is tied to its onClick event property
-	if (this->mouseState == this->MOUSE_CLICKED)
+	if (m_mouseState == this->MOUSE_CLICKED)
 	{
 		this->onMouseClickEvent();
 	}
@@ -41,11 +144,11 @@ SDL_Rect GameObject::getPositionRect()
 {
 	SDL_Rect positionRect;
 
-	positionRect.w = this->xSize;
-	positionRect.h = this->ySize;
+	positionRect.w = m_size.x;
+	positionRect.h = m_size.y;
 
-	positionRect.x = this->xPos;
-	positionRect.y = this->yPos;
+	positionRect.x = m_position.x;
+	positionRect.y = m_position.y;
 
 	return positionRect;
 
@@ -75,7 +178,7 @@ SDL_Rect*  GameObject::getRenderTextureRect()
 
 	if (this->definition->isAnimated) {
 
-		textureSrcRect = this->animations[this->currentAnimationState]->getRenderTextureRect();
+		textureSrcRect = this->animations[this->m_currentAnimationState]->getCurrentTextureAnimationSrcRect();
 	}
 
 	return textureSrcRect;
@@ -88,7 +191,7 @@ SDL_Texture * GameObject::getRenderTexture()
 
 	if (this->definition->isAnimated) {
 
-		texture = this->animations[this->currentAnimationState]->getRenderTexture();
+		texture = this->animations[this->m_currentAnimationState]->getTexture();
 	}
 	else {
 
@@ -115,21 +218,21 @@ void GameObject::render()
 
 	//All angles on objects should be in radians to kep consistency with box2d objects
 	//it needs to be converted to degrees for SDL to display
-	float angle = util::radiansToDegrees(this->angle);
-	game->textureManager.render(texture, this->color, textureSourceRect, &destRect, angle);
+	float angle = util::radiansToDegrees(this->angle());
+	game->textureManager.render(texture, m_color, textureSourceRect, &destRect, angle);
 
 	//test outlining object
 	if (this->definition->isMouseSelectable)
 	{
-		if (this->mouseState == this->MOUSE_HOVER)
+		if (m_mouseState == this->MOUSE_HOVER)
 		{
 			this->onMouseHoverRender();
 		}
-		else if (this->mouseState == this->MOUSE_HOLD)
+		else if (m_mouseState == this->MOUSE_HOLD)
 		{
 			this->onMouseHoldRender();
 		}
-		else if (this->mouseState == this->MOUSE_CLICKED)
+		else if (m_mouseState == this->MOUSE_CLICKED)
 		{
 			this->onMouseClickRender();
 		}
@@ -149,123 +252,6 @@ void GameObject::render()
 
 
 }
-
-void GameObject::init()
-{
-
-	//this->definitionId;
-		//this->currentAnimationState;
-
-	this->isAnimated = false;
-	this->removeFromWorld = false;
-
-	this->color = {};
-	this->xPos = 0;
-	this->yPos = 0;
-	this->xSize = 0;
-	this->ySize = 0;
-	this->test = 0;
-	this->angle = 0;
-	this->mouseState = 0;
-
-	this->texture=nullptr;
-	
-	this->definition=nullptr;
-
-}
-
-GameObject::GameObject()
-{
-
-	//Init
-	this->init();
-
-
-}
-
-GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust)
-{
-	//Init
-	this->init();
-
-	//calculate position
-	b2Vec2 position(xMapPos * game->worldGridSize.w, yMapPos * game->worldGridSize.h);
-	this->setPosition(position, angleAdjust);
-
-	//set the id and it will be unique for every game object in the game
-	this->id = gameObjectId + to_string(game->gameObjectCount);
-	//this->id = gameObjectId;
-	this->definitionId = gameObjectId;
-
-	//is this a debug object then get the default debug definition but change its 
-	//id value to the one we passed in
-	if (gameObjectId.rfind("DEBUG_", 0) == 0)
-	{
-		this->definition = game->gameObjectManager.gameObjectDefinitions["DEBUG_ITEM"];;
-	}
-	else
-	{
-		this->definition = game->gameObjectManager.gameObjectDefinitions[gameObjectId];
-	}
-
-	this->removeFromWorld = false;
-	this->xSize = definition->xSize;
-	this->ySize = definition->ySize;
-
-	//color
-	this->color = definition->color;
-
-	//Get pointer to the texture
-	this->texture = game->textureManager.getTexture(definition->textureId);
-
-	//get the animation objects if they exist
-	string firstState;
-	int i = 0;
-	if (definition->animationDetails.animations.size() > 0)
-	{
-		Animation* animation = nullptr;
-		for (auto animationDefinition : definition->animationDetails.animations) {
-
-			animation = new Animation(definition,
-					animationDefinition.state, 
-					animationDefinition.textureId, 
-					animationDefinition.frames, 
-					animationDefinition.speed);
-
-			this->animations.emplace(animationDefinition.state, animation);
-			//this->animations[animationDefinition.state]= animation;
-
-			//Save the first state id 
-			if (i == 0) {
-				firstState = animationDefinition.state;
-			}
-			++i;
-		}
-
-		//On creation, default the animation state to idle
-		this->currentAnimationState = firstState;
-	}
-
-	//Build children if they exist
-	this->buildChildren();
-
-}
-
-void GameObject::setPosition(b2Vec2 position, float angle)
-{
-	this->xPos = position.x;
-	this->yPos = position.y;
-
-	this->angle = angle;
-}
-
-
-void GameObject::addWeapon(string bulletGameObjectId, float xWeaponOffsetPct, float yWeaponOffsetPct)
-{
-
-
-}
-
 
 
 b2Vec2 GameObject::matchParentRotation(SDL_Rect childPositionRect, SDL_Rect parentPositionRect, float parentAngle)
@@ -331,12 +317,12 @@ void GameObject::updateChildObjects()
 			// Should this child match the angle of the parent
 			if (this->definition->childPositionRelative == true)
 			{
-				childObject->setPosition(newChildPosition, this->angle);
+				childObject->setPosition(newChildPosition, this->angle());
 
 			}
 			else
 			{
-				childObject->setPosition(newChildPosition, 0);
+				childObject->setPosition(newChildPosition);
 			}
 
 			//Since the child is a game object itself, call the update function for it
@@ -410,7 +396,7 @@ b2Vec2 GameObject::calcChildPosition(
 	int childNumber,
 	int childCount)
 {
-	SDL_Rect childSize = {child->xSize, child->ySize};
+	SDL_Rect childSize = { child->size().x, child->size().y };
 	SDL_Rect childPositionRect{};
 	float x, y, xAdj = 0, yAdj = 0;
 
@@ -514,7 +500,7 @@ b2Vec2 GameObject::calcChildPosition(
 		adjustment = this->matchParentRotation(
 			childPositionRect,
 			parentPositionRect,
-			this->angle);
+			this->angle());
 
 		childPositionRect.x += adjustment.x;
 		childPositionRect.y += adjustment.y;
@@ -531,18 +517,6 @@ b2Vec2 GameObject::calcChildPosition(
 }
 
 
-GameObject::~GameObject()
-{
-
-	this->animations.clear();
-
-	for (int x = 0; x < CHILD_POSITIONS; x++)
-	{
-		this->childObjects[x].clear();
-	}
-
-
-}
 
 void GameObject::onMouseHoverRender()
 {
@@ -595,7 +569,7 @@ void GameObject::updateMouseState()
 			{
 
 				//Was this object already in a hold state, meaning user is holding mouse clicked on object
-				if (this->mouseState == this->MOUSE_HOLD)
+				if (m_mouseState == this->MOUSE_HOLD)
 				{
 					//stay in "hold" state while user is holding click on object
 					while (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
@@ -605,29 +579,73 @@ void GameObject::updateMouseState()
 
 					//User has released mouse so now execute the object onClick event
 					//this->onMouseClick();
-					this->mouseState = this->MOUSE_CLICKED;
+					m_mouseState = this->MOUSE_CLICKED;
 
 				}
 				else
 				{
-					this->mouseState = this->MOUSE_HOLD;
+					m_mouseState = this->MOUSE_HOLD;
 				}
 
 			}
 			else
 			{
-				this->mouseState = this->MOUSE_HOVER;
+				m_mouseState = this->MOUSE_HOVER;
 			}
 		}
 		else
 		{
-			this->mouseState = this->MOUSE_NONE;
+			m_mouseState = this->MOUSE_NONE;
 		}
 	}
 
 }
 
-void GameObject::setActive(bool active)
+void GameObject::setPosition(b2Vec2 position)
 {
+	m_position = position;
+}
+
+void GameObject::setPosition(float xPosition, float yPosition)
+{
+	m_position.x = xPosition;
+	m_position.x = yPosition;
+}
+
+void GameObject::setPosition(b2Vec2 position, float angle)
+{
+	m_position = position;
+	m_angle = angle;
+}
+
+void GameObject::setPosition(float xPosition, float yPosition, float angle)
+{
+	m_position.x = xPosition;
+	m_position.x = yPosition;
+	m_angle = angle;
+}
+
+void GameObject::setSize(b2Vec2 size)
+{
+	m_size = size;
+}
+
+void GameObject::setSize(float xSize, float ySize)
+{
+	m_size.x = xSize;
+	m_size.y = ySize;
+}
+
+void GameObject::setAngle(float angle)
+{
+	m_angle = angle;
+}
+
+void GameObject::setColor(int red, int green, int blue, int alpha)
+{
+	m_color.r = red;
+	m_color.g = green;
+	m_color.b = blue;
+	m_color.a = alpha;
 
 }

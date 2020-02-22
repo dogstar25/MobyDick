@@ -16,7 +16,7 @@ PlayerObject::PlayerObject(string gameObjectId, int xMapPos, int yMapPos, int an
 
 	this->direction = 0;
 	this->strafe = 0;
-	this->currentAnimationState = "IDLE";
+	this->setCurrentAnimationState("IDLE");
 	this->pieceCollectedCount = 0;
 
 
@@ -127,8 +127,8 @@ void PlayerObject::update()
 void PlayerObject::render()
 {
 
-	game->debugPanel->addItem("ANIMATIONState", this->currentAnimationState);
-	game->debugPanel->addItem("ANIMATIONFrame", to_string(this->animations[this->currentAnimationState]->currentAnimFrame));
+	game->debugPanel->addItem("ANIMATIONState", this->currentAnimationState());
+	game->debugPanel->addItem("ANIMATIONFrame", to_string(this->animations[this->currentAnimationState()]->getCurrentAnimFrame()));
 	WorldObject::render();
 }
 
@@ -171,11 +171,11 @@ void PlayerObject::updatePlayerMovement()
 	if (vec2.Length() > 0)
 	{
 		int test = 9;
-		this->currentAnimationState = "RUN";
+		this->setCurrentAnimationState("RUN");
 	}
 	else
 	{
-		this->currentAnimationState = "IDLE";
+		this->setCurrentAnimationState("IDLE");
 	}
 
 	//this->physicsBody->SetTransform(vec3, this->physicsBody->GetAngle());

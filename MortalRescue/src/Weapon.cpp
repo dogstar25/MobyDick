@@ -52,10 +52,9 @@ void Weapon::fire(const b2Vec2 &origin, const float &angle, const float &fireOff
 		bullet->physicsBody->SetFixedRotation(true);
 		bullet->physicsBody->SetTransform(positionVector, angle);
 		bullet->physicsBody->SetLinearVelocity(velocityVector);
-		bullet->currentAnimationState = "ACTIVE";
 		bullet->physicsBody->SetBullet(true);
 
-		bullet->color = { 255,255,255,255 };
+		bullet->setColor(255,255,255,255);
 
 		//Add the bullet object to the main gameObject collection
 		game->addGameObject(bullet, game->MAIN);

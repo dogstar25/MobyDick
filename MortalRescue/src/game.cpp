@@ -271,7 +271,7 @@ void Game::update() {
 			
 			particleObject = gameObjectCollection.particleObjects[x];
 
-			if (particleObject->removeFromWorld == true)
+			if (particleObject->removeFromWorld() == true)
 			{
 				particleObjectRemoved = particleObject;
 				game->objectPoolManager.reset(particleObject);

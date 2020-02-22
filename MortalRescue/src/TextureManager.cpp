@@ -18,8 +18,8 @@ bool TextureManager::init(SDL_Window* pWindow)
 {
 
 	//Create the main renderer
-	pRenderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED);
-	SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 0);
+	m_Renderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED);
+	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 0);
 
 	//Load all of the textures for the game
 	loadTextures();
@@ -39,7 +39,7 @@ void TextureManager::render(SDL_Texture* texture, SDL_Color color, SDL_Rect* tex
 	SDL_SetTextureColorMod(texture, color.r, color.g, color.b);
 
 	//Render the texture
-	SDL_RenderCopyEx(this->pRenderer, texture, textureSourceRect, destRect, angle, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(m_Renderer, texture, textureSourceRect, destRect, angle, NULL, SDL_FLIP_NONE);
 
 }
 
@@ -47,8 +47,8 @@ void TextureManager::render(SDL_Rect* destRect, SDL_Color color)
 {
 
 	//Render the rectangle
-	SDL_SetRenderDrawColor(this->pRenderer, color.r, color.g, color.b, color.a);
-	SDL_RenderFillRect(this->pRenderer, destRect);
+	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, color.a);
+	SDL_RenderFillRect(m_Renderer, destRect);
 
 }
 
@@ -84,7 +84,7 @@ bool TextureManager::loadTextures()
 
 		surface = IMG_Load(filename.c_str());
 
-		sdlTexture = SDL_CreateTextureFromSurface(this->pRenderer, surface);
+		sdlTexture = SDL_CreateTextureFromSurface(m_Renderer, surface);
 		textureObject->sdlTexture = sdlTexture;
 		if (retainSurface == true)
 		{
@@ -96,7 +96,7 @@ bool TextureManager::loadTextures()
 			SDL_FreeSurface(surface);
 		}
 
-		this->textureMap.emplace(id, move(textureObject));
+		m_textureMap.emplace(id, move(textureObject));
 		textureObject.reset();
 
 	}
@@ -106,125 +106,33 @@ bool TextureManager::loadTextures()
 		{
 			id = itr["id"].asString();
 			filename = itr["filename"].asString();
-			this->fontMap.emplace(id, filename);
+			m_fontMap.emplace(id, filename);
 
 		}
 
 	return true;
 }
 
-void TextureManager::addTexture(string id, Texture* texture)
+SDL_Texture* TextureManager::createTextureFromSurface(SDL_Surface* surface)
 {
-
-	//this->gameObjects[layer].push_back(make_unique<TextObject>(*gameObject));
-
-	//memory leak here
-	//this->textureMap.erase(id);
-	//this->textureMap.insert_or_assign(id, make_unique<Texture>(*texture));
-	//this->textureMap.emplace(id, make_unique<Texture>(*texture));
-
-
-}
-
-
-
-Texture* TextureManager::generateTextTexture(TextObject* textObject)
-{
-
-	SDL_Surface* surface;
-	Texture* texture = new Texture();
-	SDL_Texture* sdlTexture;
-
-	SDL_Color color = { textObject->color.r, 
-		textObject->color.g,
-		textObject->color.b,
-		textObject->color.a };
-
-	int textSize = textObject->definition->textDetails.size; // default to x size
-	string fontFile = this->getFont(textObject->fontId);
-
-	TTF_Font* fontObject = TTF_OpenFont(fontFile.c_str(), textSize);
-	//surface = TTF_RenderText_Solid(fontObject, textObject->textValue.c_str(), color);
-	surface = TTF_RenderText_Blended(fontObject, textObject->textValue.c_str(), color);
-	TTF_CloseFont(fontObject);
-	string test = TTF_GetError();
-
-	//Set the size of the textObject now that its texture has been generated
-	if (surface != NULL)
-	{
-		textObject->xSize = surface->w;
-		textObject->ySize = surface->h;
-	}
-
-	sdlTexture = SDL_CreateTextureFromSurface(this->pRenderer, surface);
-	SDL_FreeSurface(surface);
-
-	texture->sdlTexture = sdlTexture;
-
-	//Add it to the main texture map
-	//Append "TEXTURE" to gameobejct id to create textture id
-	//possible memory leak - delete texture before adding in case it is already there
-	string textureId = textObject->id + "_TEXT_TEXTURE";
-	this->addTexture(textureId, texture);
-	return 	texture;
-	
-}
-
-
-Texture* TextureManager::updateDynamicTextTexture(TextObject *textObject)
-{
-
-	textItem* newText;
-	Texture* textureObject;
-	SDL_Surface* surface;
-
-	//newText = game->dynamicTextManager.textItems[gameObject->definition->id].get();
-	newText = game->dynamicTextManager.getTextItem(textObject->definitionId);
-
-	//check the clock and see if enough time as gone by
-	steady_clock::time_point now_time = steady_clock::now();
-	std::chrono::duration<double> time_diff = now_time - newText->time_snapshot;
-
-	if (newText->hasChanged == true && time_diff.count() > .2)
-	{
-		//update the timestamp
-		newText->time_snapshot = now_time;
-
-		//Destroy this texture from the map before we generate a new one - memory leak otherwise
-		SDL_DestroyTexture(textObject->texture->sdlTexture);
-
-		//Build new texture
-		textObject->textValue = newText->text;
-		textureObject = generateTextTexture(textObject);
-		newText->hasChanged = false;
-
-	}
-	else
-	{
-		textureObject = textObject->texture;
-
-		//TODO:set a flag at game object level so that the TextureManager::render(TextObject* gameObject) doesnt have to 
-		// do SDL_QueryTexture
-	}
-		
-	return textureObject;
-
+	SDL_Texture* sdlTexture = SDL_CreateTextureFromSurface(m_Renderer, surface);
+	return sdlTexture;
 }
 
 string TextureManager::getFont(string id)
 {
 	string fontFile;
 
-	auto iter = this->fontMap.find(id);
+	auto iter = m_fontMap.find(id);
 
-	if (iter != this->fontMap.end())
+	if (iter != m_fontMap.end())
 	{
-		//fontFile = this->fontMap[id];
+		//fontFile = m_fontMap[id];
 		fontFile = iter->second;
 	}
 	else //default
 	{
-		fontFile = this->fontMap["FONT_ARIAL_REG"];
+		fontFile = m_fontMap["FONT_ARIAL_REG"];
 	}
 
 	return fontFile;
@@ -235,15 +143,15 @@ Texture * TextureManager::getTexture(string id)
 {
 	Texture* textureObject=NULL;
 
-	auto iter = this->textureMap.find(id);
+	auto iter = m_textureMap.find(id);
 
-	if (iter != this->textureMap.end())
+	if (iter != m_textureMap.end())
 	{
 		textureObject = iter->second.get();
 	}
 	else
 	{
-		textureObject = this->textureMap["TX_DEFAULT"].get();
+		textureObject = m_textureMap["TX_DEFAULT"].get();
 	}
 
 	return textureObject;
@@ -253,15 +161,15 @@ Texture * TextureManager::getTexture(string id)
 
 bool TextureManager::present()
 {
-	SDL_RenderPresent(pRenderer);
-	SDL_SetRenderDrawColor(pRenderer, 0, 0, 0, 255);
+	SDL_RenderPresent(m_Renderer);
+	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 255);
 
 	return true;
 }
 
 bool TextureManager::clear()
 {
-	SDL_RenderClear(pRenderer);
+	SDL_RenderClear(m_Renderer);
 
 	return true;
 }
@@ -302,7 +210,7 @@ void TextureManager::drawPoly(b2Body* body)
 		point.y = firstVector.y;
 		points[shape->m_count] = point;
 
-		SDL_RenderDrawLines(this->pRenderer, points, shape->m_count+1);
+		SDL_RenderDrawLines(m_Renderer, points, shape->m_count+1);
 
 		delete[] points;
 
@@ -314,15 +222,15 @@ void TextureManager::drawPoly(b2Body* body)
 void TextureManager::drawPoints(SDL_Point *points)
 {
 
-	SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
-	SDL_RenderDrawLines(this->pRenderer, points, 5);
+	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
+	SDL_RenderDrawLines(m_Renderer, points, 5);
 
 }
 
 void TextureManager::drawLine(b2Vec2 start, b2Vec2 end)
 {
-	SDL_SetRenderDrawColor(pRenderer, 255, 255, 255, 255);
-	SDL_RenderDrawLine(pRenderer, start.x, start.y, end.x, end.y);
+	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
+	SDL_RenderDrawLine(m_Renderer, start.x, start.y, end.x, end.y);
 
 }
 
@@ -367,12 +275,12 @@ void TextureManager::outLineObject(GameObject* gameObject, float lineSize)
 	points.push_back(point);
 
 	//Set render scale to match linesize passed in
-	SDL_RenderGetScale(this->pRenderer, &saveScaleX, &saveScaleY);
-	SDL_RenderSetScale(this->pRenderer, lineSize, lineSize);
+	SDL_RenderGetScale(m_Renderer, &saveScaleX, &saveScaleY);
+	SDL_RenderSetScale(m_Renderer, lineSize, lineSize);
 	this->drawPoints(points.data());
 
 	//Rest Scale to whatever is was before
-	SDL_RenderSetScale(this->pRenderer, saveScaleX, saveScaleY);
+	SDL_RenderSetScale(m_Renderer, saveScaleX, saveScaleY);
 
 	points.clear();
 
@@ -391,7 +299,7 @@ TextureManager::TextureManager()
 TextureManager::~TextureManager()
 {
 
-	for (auto&& textureItem : this->textureMap) {
+	for (auto&& textureItem : m_textureMap) {
 		//pointer->functionOfYourClass();
 		if (textureItem.second != NULL) {
 
@@ -403,7 +311,7 @@ TextureManager::~TextureManager()
 		}
 	}
 
-	this->textureMap.clear();
+	m_textureMap.clear();
 	
 }
 

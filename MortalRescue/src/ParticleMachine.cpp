@@ -135,7 +135,7 @@ void ParticleMachine::emit(
 			{
 				color = colorRangeBegin;
 			}
-			particle->color = color;
+			particle->setColor(color);
 
 			//Set the size of the particle. If zero is passed in then default to the particle size
 			//in th eparticle definition
@@ -151,8 +151,8 @@ void ParticleMachine::emit(
 					particleSize = particleSizeMax;
 				}
 
-				particle->xSize = particleSize * game->config.scaleFactor;
-				particle->ySize = particleSize * game->config.scaleFactor;
+				//FIXME:Add a override function to setSize to particleObject to automatically multiply the scalefactor
+				particle->setSize(particleSize * game->config.scaleFactor, particleSize * game->config.scaleFactor);
 
 			}
 
@@ -204,9 +204,6 @@ void ParticleMachine::emit(
 			particle->physicsBody->SetTransform(positionVector, particleAngle);
 			particle->physicsBody->SetLinearVelocity(velocityVector);
 			//particle->physicsBody->SetBullet(true);
-
-			//set animation state to active
-			particle->currentAnimationState = "ACTIVE";
 
 			//Add the particle to the game world
 			game->addGameObject(particle, game->MAIN);

@@ -14,8 +14,9 @@ WorldObject::WorldObject(string gameObjectId, float xMapPos, float yMapPos, floa
 	GameObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
 {
 	//Size
-	this->xSize = definition->xSize * game->config.scaleFactor;
-	this->ySize = definition->ySize * game->config.scaleFactor;
+	//FIXME:Add a override function to setSize to worldPbject to automatically multiply the scalefactor
+	this->setSize(definition->xSize * game->config.scaleFactor, 
+		definition->ySize * game->config.scaleFactor);
 
 	//speed
 	this->speed = definition->speed;
@@ -63,7 +64,7 @@ void WorldObject::update()
 {
 	//transfer the angle from the physics body to the main game 
 	//object so that certain gamObject logic will work for all
-	this->angle = this->physicsBody->GetAngle();
+	this->setAngle(this->physicsBody->GetAngle());
 	//this->xPos = this->physicsBody->GetTransform().p.x;
 	//this->yPos = this->physicsBody->GetTransform().p.y;
 
@@ -78,14 +79,14 @@ SDL_Rect WorldObject::getPositionRect()
 {
 	SDL_Rect positionRect;
 
-	positionRect.w = this->xSize;
-	positionRect.h = this->ySize;
+	positionRect.w = this->size().x;
+	positionRect.h = this->size().y;
 
 	//World objects position from box2d is the center of the object
 	//So, we need to adjust the rectangle top left corner to be
 	//the render point for SDL
-	positionRect.x = round((this->physicsBody->GetPosition().x * game->config.scaleFactor) - (this->xSize / 2));
-	positionRect.y = round((this->physicsBody->GetPosition().y * game->config.scaleFactor) - (this->ySize / 2));
+	positionRect.x = round((this->physicsBody->GetPosition().x * game->config.scaleFactor) - (this->size().x / 2));
+	positionRect.y = round((this->physicsBody->GetPosition().y * game->config.scaleFactor) - (this->size().y / 2));
 	return positionRect;
 
 }
@@ -140,7 +141,7 @@ void WorldObject::render()
 
 	}
 	
-	game->textureManager.render(texture, this->color, textureSourceRect, &destRect, angle);
+	game->textureManager.render(texture, this->color(), textureSourceRect, &destRect, angle);
 
 	//Loop through any possible child objects, in all 9 positions, and render them too
 	if (this->definition->hasChildObjects == true)

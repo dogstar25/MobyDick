@@ -109,17 +109,17 @@ void CompositeObject::buildPiece(CompositeLegendItem legendItem, int xPos, int y
 	//xOffset = parentPositionRect.x + (xPos * piece.gameObject->xSize);
 	//yOffset = parentPositionRect.y + (yPos * piece.gameObject->ySize);
 
-	xOffset = xPos * piece.pieceObject->xSize;
-	yOffset = yPos * piece.pieceObject->ySize;
+	xOffset = xPos * piece.pieceObject->size().x;
+	yOffset = yPos * piece.pieceObject->size().y;
 
 	piece.parentPositionOffset.x = xOffset;
 	piece.parentPositionOffset.y = yOffset;
 
 	//Temp color setting
-	piece.pieceObject->color = { 255,0,0,255 };
+	piece.pieceObject->setColor(255,0,0,255);
 
 	//Initialize color and strength to level 1
-	piece.pieceObject->color = this->definition->compositeDetails.levels[0].color;
+	piece.pieceObject->setColor(this->definition->compositeDetails.levels[0].color);
 
 	this->pieces.push_back(piece);
 
@@ -151,13 +151,13 @@ void CompositeObject::updatePieceState(GameObjectPiece& piece)
 	steady_clock::time_point now_time = steady_clock::now();
 
 	//Should this object be removed?
-	if (piece.pieceObject->removeFromWorld == true)
+	if (piece.pieceObject->removeFromWorld() == true)
 	{
 
 		piece.pieceObject->setActive(false);
 		piece.isDestroyed = true;
 		piece.time_snapshot = now_time;
-		piece.pieceObject->removeFromWorld = false;
+		piece.pieceObject->setRemoveFromWorld(false);
 	}
 
 	//Has enough time gone by to regenerate the next armor level
@@ -189,18 +189,18 @@ void CompositeObject::updatePiecePosition(GameObjectPiece& piece)
 	SDL_Rect piecePositionRect{};
 	piecePositionRect.x = parentPositionRect.x + piece.parentPositionOffset.x;
 	piecePositionRect.y = parentPositionRect.y + piece.parentPositionOffset.y;
-	piecePositionRect.w = piece.pieceObject->xSize;
-	piecePositionRect.h = piece.pieceObject->ySize;
+	piecePositionRect.w = piece.pieceObject->size().x;
+	piecePositionRect.h = piece.pieceObject->size().y;
 
 	//Adjust the piece position based on the base objects rotation/angle
-	adjustment = this->matchParentRotation(piecePositionRect, parentPositionRect, this->angle);
+	adjustment = this->matchParentRotation(piecePositionRect, parentPositionRect, this->angle());
 	piecePositionRect.x += adjustment.x;
 	piecePositionRect.y += adjustment.y;
 
 	//Create a vec position object to pass to setPosition
 	piecePosition.x = piecePositionRect.x;
 	piecePosition.y = piecePositionRect.y;
-	piece.pieceObject->setPosition(piecePosition, this->angle);
+	piece.pieceObject->setPosition(piecePosition, this->angle());
 }
 
 void CompositeObject::levelUp(GameObjectPiece& piece)
@@ -217,7 +217,7 @@ void CompositeObject::levelUp(GameObjectPiece& piece)
 			piece.currentlevel = level.levelNum;
 //			piece.isDestroyed = false;
 
-			piece.pieceObject->color = level.color;
+			piece.pieceObject->setColor(level.color);
 			piece.pieceObject->strength = level.strength;
 			piece.pieceObject->setActive(true);
 		

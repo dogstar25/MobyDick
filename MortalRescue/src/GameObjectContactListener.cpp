@@ -157,7 +157,7 @@ void GameObjectContactListener::handleContact(WorldObject* contact1, WorldObject
 void GameObjectContactListener::playerBitPiece(PlayerObject* player, WorldObject* piece, b2Vec2 contactPoint)
 {
 	//Set flag for bullet to be removed from world
-	piece->removeFromWorld = true;
+	piece->setRemoveFromWorld(true);
 	player->incrementPiecesCollected();
 
 }
@@ -166,7 +166,7 @@ void GameObjectContactListener::playerBitPiece(PlayerObject* player, WorldObject
 void GameObjectContactListener::bulletWall(WorldObject* bullet, WorldObject* wall, b2Vec2 contactPoint)
 {
 	//Set flag for bullet to be removed from world
-	bullet->removeFromWorld = true;
+	bullet->setRemoveFromWorld(true);
 
 	//use the collision point for the particle emission
 	float x = contactPoint.x;
@@ -208,12 +208,12 @@ void GameObjectContactListener::bulletPiece(WorldObject* bullet, WorldObject* pi
 
 
 	//Set flag for bullet to be removed from world
-	bullet->removeFromWorld = true;
+	bullet->setRemoveFromWorld(true);
 
 	//Set flag for piece to be removed from world
 	//only if bullet was strong enough
 	if (piece->testStrength(bullet->strength)) {
-		piece->removeFromWorld = true;
+		piece->setRemoveFromWorld(true);
 		bulletPieceExplode(bullet,piece,contactPoint);
 	}
 	else
@@ -233,8 +233,8 @@ void GameObjectContactListener::bulletPieceExplode(WorldObject* bullet, WorldObj
 	float y = contactPoint.y;
 	b2Vec2 particleOrigin = { x,y };
 
-	SDL_Color colorMin = piece->color;
-	SDL_Color colorMax = piece->color;
+	SDL_Color colorMin = piece->color();
+	SDL_Color colorMax = piece->color();
 
 	particleEmission = new ParticleEmission(
 		"PARTICLE1_POOL",
@@ -281,8 +281,8 @@ void GameObjectContactListener::bulletPieceExplode(WorldObject* bullet, WorldObj
 	game->particleMachine.add(particleEmission);
 
 	//Also emit 2 pieces that will remain on teh ground
-	colorMin = piece->color;
-	colorMax = piece->color;
+	colorMin = piece->color();
+	colorMax = piece->color();
 	particleEmission = new ParticleEmission(
 		"PIECES1_POOL",
 		particleOrigin, //min position

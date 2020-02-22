@@ -11,6 +11,9 @@ public:
 	void render();
 	SDL_Rect getPositionRect();
 	SDL_Rect getRenderDestRect();
+	Texture* updateDynamicTextTexture();
+	Texture* generateTextTexture();
+
 
 
 	bool isDynamic;
