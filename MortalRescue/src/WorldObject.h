@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
+
 enum worldObjectCategory {
 	GENERIC = 1,
 	PLAYER = 2,
@@ -14,30 +15,45 @@ enum worldObjectCategory {
 	ENEMY_ARMOR_PIECE = 512
 };
 
+
 class WorldObject :	public GameObject
 {
+private:
+
+	b2Body* m_physicsBody;
+	float m_speed;
+	float m_strength;
+
+	b2Body* buildB2Body(GameObjectDefinition*);
+	uint16 setCollisionMask(uint16 category);
+
 public:
 	WorldObject();
 	WorldObject(string, float, float, float);
 	~WorldObject();
 
 	void update() override;
-	void render();
-	void setPosition(b2Vec2, float);
-	void setActive(bool);
-	SDL_Rect  getRenderDestRect(); 
-	SDL_Rect  getPositionRect();
+	void render() override;
+	void setPosition(b2Vec2, float) override;
+	SDL_Rect getRenderDestRect() override; 
+	SDL_Rect getPositionRect() override;
 	bool testStrength(int);
 	virtual void setBox2DUserData(WorldObject*);
+	void setActive(bool);
+	void setStrength(float strength) { m_strength = strength; }
 
-	b2Body* buildB2Body(GameObjectDefinition*);
-	uint16 setCollisionMask(uint16 category);
-
-	b2Body* physicsBody;
-
-	float speed;
-	float strength; // used for bullets and piece objects to determine destruction criteria
 	
+	//Accessor Functions
+	b2Body* physicsBody() {
+		return m_physicsBody;
+	}
+	float speed() {
+		return m_speed;
+	}
+	float strength() {
+		return m_strength;
+	}
+
 
 };
 

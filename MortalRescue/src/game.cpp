@@ -165,9 +165,9 @@ bool Game::init()
 	this->player->weapon = this->player->definition()->weapons[1];
 
 	//set camera to center on player object
-	this->camera.setPosition((this->player->physicsBody->GetPosition().x *  this->config.scaleFactor) -
+	this->camera.setPosition((this->player->physicsBody()->GetPosition().x *  this->config.scaleFactor) -
 		(camera.frame.w / 2),
-		(this->player->physicsBody->GetPosition().y *  this->config.scaleFactor) -
+		(this->player->physicsBody()->GetPosition().y *  this->config.scaleFactor) -
 		(camera.frame.h / 2));
 
 	//CREATE A TEST TEXT ITEM          
@@ -241,9 +241,9 @@ void Game::update() {
 	this->player->update();
 
 	//Update the camera frame to point to the new player position
-	this->camera.setPosition((this->player->physicsBody->GetPosition().x *  this->config.scaleFactor) -
+	this->camera.setPosition((this->player->physicsBody()->GetPosition().x *  this->config.scaleFactor) -
 		(camera.frame.w / 2),
-		(this->player->physicsBody->GetPosition().y *  this->config.scaleFactor) -
+		(this->player->physicsBody()->GetPosition().y *  this->config.scaleFactor) -
 		(camera.frame.h / 2));
 
 	// spin through list of particle tasks to execute, like exposions and emitters

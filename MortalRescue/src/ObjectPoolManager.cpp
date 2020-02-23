@@ -40,7 +40,7 @@ void ObjectPoolManager::init()
 			//convert seconds into miliseconds
 			particle->lifetime = particle->lifetimeRemaining = std::chrono::duration<float>(lifetime);
 			particle->poolId = poolId;
-			particle->physicsBody->SetActive(false);
+			particle->setActive(false);
 			objectPool[poolId].push_back(particle);
 		}
 
@@ -79,7 +79,7 @@ ParticleObject* ObjectPoolManager::get(string poolId)
 		if (particle->isAvailable == true)
 		{
 			particle->isAvailable = false;
-			particle->physicsBody->SetActive(true);
+			particle->setActive(true);
 			availParticle = particle;
 			break;
 		}
@@ -98,9 +98,9 @@ void ObjectPoolManager::reset(ParticleObject* particle)
 	particle->setRemoveFromWorld(false);
 	particle->lifetimeRemaining = particle->lifetime;
 
-	particle->physicsBody->SetTransform(positionVector, 0);
-	particle->physicsBody->SetLinearVelocity(velocityVector);
-	particle->physicsBody->SetActive(false);
+	particle->physicsBody()->SetTransform(positionVector, 0);
+	particle->physicsBody()->SetLinearVelocity(velocityVector);
+	particle->physicsBody()->SetActive(false);
 
 	particle->isAvailable = true;
 

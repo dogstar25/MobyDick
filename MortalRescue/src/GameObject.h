@@ -8,6 +8,8 @@
 #include <Box2D/Box2D.h>
 
 #include "TextureManager.h"
+#include "Constants.h"
+using namespace constants;
 
 
 //Forward declarations
@@ -16,32 +18,9 @@ class Texture;
 class TextObject;
 class Animation;
 
-/*
-Game Object Types
-*/
-enum GameObjectType {
-
-	GAME_OBJECT = 0,
-	WORLD_OBJECT = 1,    //majority of game objects - any physics object
-	PLAYER_OBJECT = 2,
-	TEXT_OBJECT = 3
-
-};
-
-static const short CHILD_POSITIONS = 9;
-
 class GameObject
 {
 private:
-
-	enum GameObjectMouseState {
-
-		MOUSE_NONE = 0,
-		MOUSE_HOVER = 1,
-		MOUSE_HOLD = 2,
-		MOUSE_CLICKED = 3
-
-	};
 
 	std::string	
 		m_definitionId,
