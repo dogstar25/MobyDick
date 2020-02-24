@@ -95,6 +95,10 @@ bool Game::init()
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
 
+
+		//Init Sound
+		this->initSound();
+
 		//Init font library
 		TTF_Init();
 
@@ -433,6 +437,7 @@ void Game::handleEvents() {
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
+			this->testSound();
 			this->player->fire();
 			break;
 		case SDL_USEREVENT:
@@ -518,6 +523,29 @@ void Game::initWorldBounds()
 
 }
 
+/*
+Test SOund stuff
+*/
+
+void Game::initSound()
+{
+
+	Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 512);
+	testSoundChunk = Mix_LoadWAV("assets/sound/weaponFire1.wav");
+
+}
 
 
+void Game::testSound()
+{
+
+	int channelPlayedOn = Mix_PlayChannel(-1, testSoundChunk, 0);
+
+	game->debugPanel->addItem("GunFireSoundChannel", to_string(channelPlayedOn));
+
+	//Mix_PlayMusic(musicName, 0);
+
+
+
+}
 

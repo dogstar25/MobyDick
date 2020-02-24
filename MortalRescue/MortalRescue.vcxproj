@@ -114,7 +114,7 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile />
-      <AdditionalIncludeDirectories>C:\projects\Box2D;C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;%(AdditionalIncludeDirectories);C:\projects\libraries\SDL2_ttf-2.0.15\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\projects\Box2D;C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;C:\projects\libraries\SDL2_mixer-2.0.4\include;%(AdditionalIncludeDirectories);C:\projects\libraries\SDL2_ttf-2.0.15\include</AdditionalIncludeDirectories>
       <CompileAs>Default</CompileAs>
       <OmitFramePointers>false</OmitFramePointers>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -122,8 +122,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\projects\libraries\SDL2_ttf-2.0.15\lib\x64;C:\projects\Box2D\Build\bin\x86_64\Debug;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\projects\libraries\SDL2_mixer-2.0.4\lib\x64;C:\projects\libraries\SDL2_ttf-2.0.15\lib\x64;C:\projects\Box2D\Build\bin\x86_64\Debug;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -159,7 +159,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>C:\projects\Box2D;C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;C:\projects\libraries\Visual Leak Detector\include;%(AdditionalIncludeDirectories);C:\projects\libraries\SDL2_ttf-2.0.15\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\projects\Box2D;C:\projects\MortalRescue\MortalRescue\src\jsoncpp;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;C:\projects\libraries\SDL2_mixer-2.0.4\include;C:\projects\libraries\Visual Leak Detector\include;%(AdditionalIncludeDirectories);C:\projects\libraries\SDL2_ttf-2.0.15\include</AdditionalIncludeDirectories>
       <CompileAs>Default</CompileAs>
       <WholeProgramOptimization>false</WholeProgramOptimization>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
@@ -171,8 +171,8 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\projects\libraries\SDL2_ttf-2.0.15\lib\x64;C:\projects\Box2D\Build\bin\x86_64\Release;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;Box2D.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\projects\libraries\SDL2_mixer-2.0.4\lib\x64;C:\projects\libraries\SDL2_ttf-2.0.15\lib\x64;C:\projects\Box2D\Build\bin\x86_64\Release;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
