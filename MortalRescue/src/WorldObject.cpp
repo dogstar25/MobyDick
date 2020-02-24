@@ -19,10 +19,10 @@ WorldObject::WorldObject(string gameObjectId, float xMapPos, float yMapPos, floa
 		this->definition()->ySize * game->config.scaleFactor);
 
 	//speed
-	this->speed = this->definition()->speed;
+	m_speed = this->definition()->speed;
 
 	//Build box2d related stuff
-	this->physicsBody = buildB2Body(this->definition());
+	m_physicsBody = buildB2Body(this->definition());
 
 	//Gameobject must be passed in it's starting position
 	//Multiply the size times the x,y position in the map grid that represents the world
@@ -35,7 +35,7 @@ WorldObject::WorldObject(string gameObjectId, float xMapPos, float yMapPos, floa
 	this->setPosition(position, angle);
 
 	//Add a reference to the gameObject itself to the physics object for collision helping logic later
-	//this->physicsBody->SetUserData(this);
+	//m_physicsBody->SetUserData(this);
 	this->setBox2DUserData(this);
 
 }
@@ -54,9 +54,9 @@ void WorldObject::setPosition(b2Vec2 position, float angle)
 	newlocation.x = (position.x / game->config.scaleFactor) + (this->definition()->xSize / 2);
 	newlocation.y = (position.y / game->config.scaleFactor) + (this->definition()->ySize / 2);
 
-	this->physicsBody->SetTransform(newlocation, angle );
-	//this->physicsBody->SetLinearVelocity(b2Vec2(0, 0));
-	//this->physicsBody->SetAngularVelocity(0);
+	m_physicsBody->SetTransform(newlocation, angle );
+	//m_physicsBody->SetLinearVelocity(b2Vec2(0, 0));
+	//m_physicsBody->SetAngularVelocity(0);
 
 }
 
@@ -64,9 +64,9 @@ void WorldObject::update()
 {
 	//transfer the angle from the physics body to the main game 
 	//object so that certain gamObject logic will work for all
-	this->setAngle(this->physicsBody->GetAngle());
-	//this->xPos = this->physicsBody->GetTransform().p.x;
-	//this->yPos = this->physicsBody->GetTransform().p.y;
+	this->setAngle(m_physicsBody->GetAngle());
+	//this->xPos = m_physicsBody->GetTransform().p.x;
+	//this->yPos = m_physicsBody->GetTransform().p.y;
 
 
 
@@ -85,8 +85,8 @@ SDL_Rect WorldObject::getPositionRect()
 	//World objects position from box2d is the center of the object
 	//So, we need to adjust the rectangle top left corner to be
 	//the render point for SDL
-	positionRect.x = round((this->physicsBody->GetPosition().x * game->config.scaleFactor) - (this->size().x / 2));
-	positionRect.y = round((this->physicsBody->GetPosition().y * game->config.scaleFactor) - (this->size().y / 2));
+	positionRect.x = round((m_physicsBody->GetPosition().x * game->config.scaleFactor) - (this->size().x / 2));
+	positionRect.y = round((m_physicsBody->GetPosition().y * game->config.scaleFactor) - (this->size().y / 2));
 	return positionRect;
 
 }
@@ -123,7 +123,7 @@ void WorldObject::render()
 	textureSourceRect = this->getRenderTextureRect();
 
 	//Get the angle of the object and convert it from Radians to Degrees for SDL
-	float angle = this->physicsBody->GetAngle();
+	float angle = m_physicsBody->GetAngle();
 	angle = angle * (float)180 / M_PI;
 
 	
@@ -260,14 +260,14 @@ uint16 WorldObject::setCollisionMask(uint16 category)
 void WorldObject::setActive(bool active)
 {
 
-	this->physicsBody->SetActive(active);
+	m_physicsBody->SetActive(active);
 
 }
 
 bool WorldObject::testStrength(int bulletStrength)
 {
 
-	if (bulletStrength >= this->strength) {
+	if (bulletStrength >= this->strength()) {
 		return true;
 	}
 	else
@@ -280,6 +280,6 @@ bool WorldObject::testStrength(int bulletStrength)
 void WorldObject::setBox2DUserData(WorldObject* worldObject)
 {
 
-	this->physicsBody->SetUserData(worldObject);
+	m_physicsBody->SetUserData(worldObject);
 
 }

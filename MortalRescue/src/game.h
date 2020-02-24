@@ -4,6 +4,7 @@
 #include <Box2D/Box2D.h>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 
 #include <iostream>
 #include <fstream>
@@ -156,6 +157,9 @@ public:
 	bool getConfig();
 	void buildWorld(string);
 
+	void testSound();
+	void initSound();
+
 	//bool removePredicate(const GameObject&);
 
 	Clock clock;
@@ -203,6 +207,8 @@ public:
 	int fps, awakeCount, gameLoopStep;
 	string currentLevel;
 	DebugDraw debugDraw;
+
+	Mix_Chunk* testSoundChunk;
 
 
 

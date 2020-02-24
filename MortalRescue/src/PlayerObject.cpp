@@ -103,7 +103,7 @@ void PlayerObject::handlePlayerMovementEvent(SDL_Event* event)
 
 	//method 1
 	float angularVelocity = event->motion.xrel * game->config.mouseSensitivity;
-	this->physicsBody->SetAngularVelocity(angularVelocity);
+	this->physicsBody()->SetAngularVelocity(angularVelocity);
 
 }
 
@@ -118,8 +118,8 @@ void PlayerObject::update()
 	this->updatePlayerMovement();
 
 //test
-	game->debugPanel->addItem("PLAYERX", to_string(this->physicsBody->GetTransform().p.x));
-	game->debugPanel->addItem("PLAYERY", to_string(this->physicsBody->GetTransform().p.y));
+	game->debugPanel->addItem("PLAYERX", to_string(this->physicsBody()->GetTransform().p.x));
+	game->debugPanel->addItem("PLAYERY", to_string(this->physicsBody()->GetTransform().p.y));
 
 
 }
@@ -139,7 +139,7 @@ void PlayerObject::updatePlayerMovement()
 	Lots of tweeks can be down here depending on the game you are building for smoother movement
 	*/
 
-	float acceleration = this->speed;
+	float acceleration = this->speed();
 	float velocity = acceleration;
 
 	//Calc direction XY
@@ -179,7 +179,7 @@ void PlayerObject::updatePlayerMovement()
 	}
 
 	//this->physicsBody->SetTransform(vec3, this->physicsBody->GetAngle());
-	this->physicsBody->SetLinearVelocity(vec2);
+	this->physicsBody()->SetLinearVelocity(vec2);
 
 	//this->physicsBody->ApplyLinearImpulseToCenter(vec2, true);
 
@@ -192,8 +192,8 @@ void PlayerObject::fire()
 {
 	
 	//Calculate the origin of the bullet
-	b2Vec2 origin = { this->physicsBody->GetTransform().p.x , this->physicsBody->GetTransform().p.y };
-	this->weapon->fire(origin, this->physicsBody->GetAngle(), this->definition()->fireOffset);
+	b2Vec2 origin = { this->physicsBody()->GetTransform().p.x , this->physicsBody()->GetTransform().p.y };
+	this->weapon->fire(origin, this->physicsBody()->GetAngle(), this->definition()->fireOffset);
 
 
 }
@@ -231,7 +231,7 @@ void PlayerObject::incrementPiecesCollected()
 void PlayerObject::setBox2DUserData(PlayerObject* playerObject)
 {
 
-	this->physicsBody->SetUserData(playerObject);
+	this->physicsBody()->SetUserData(playerObject);
 }
 
 

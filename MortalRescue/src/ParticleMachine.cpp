@@ -201,8 +201,8 @@ void ParticleMachine::emit(
 			}
 
 			//Set both eh starting position and the velocity of th eparticle
-			particle->physicsBody->SetTransform(positionVector, particleAngle);
-			particle->physicsBody->SetLinearVelocity(velocityVector);
+			particle->physicsBody()->SetTransform(positionVector, particleAngle);
+			particle->physicsBody()->SetLinearVelocity(velocityVector);
 			//particle->physicsBody->SetBullet(true);
 
 			//Add the particle to the game world

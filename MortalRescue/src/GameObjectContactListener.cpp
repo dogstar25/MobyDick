@@ -212,7 +212,7 @@ void GameObjectContactListener::bulletPiece(WorldObject* bullet, WorldObject* pi
 
 	//Set flag for piece to be removed from world
 	//only if bullet was strong enough
-	if (piece->testStrength(bullet->strength)) {
+	if (piece->testStrength(bullet->strength())) {
 		piece->setRemoveFromWorld(true);
 		bulletPieceExplode(bullet,piece,contactPoint);
 	}
@@ -345,7 +345,7 @@ b2Vec2 GameObjectContactListener::findWallImpactPoint(b2Vec2 worldPoint, PlayerO
 	b2Vec2 spawnPoint;
 
 	FirstHitGroundRayCastCallback raycastCallback;
-	game->physicsWorld->RayCast(&raycastCallback, worldPoint, player->physicsBody->GetTransform().p);
+	game->physicsWorld->RayCast(&raycastCallback, worldPoint, player->physicsBody()->GetTransform().p);
 
 
 

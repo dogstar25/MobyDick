@@ -95,6 +95,10 @@ bool Game::init()
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
 
+
+		//Init Sound
+		this->initSound();
+
 		//Init font library
 		TTF_Init();
 
@@ -165,9 +169,9 @@ bool Game::init()
 	this->player->weapon = this->player->definition()->weapons[1];
 
 	//set camera to center on player object
-	this->camera.setPosition((this->player->physicsBody->GetPosition().x *  this->config.scaleFactor) -
+	this->camera.setPosition((this->player->physicsBody()->GetPosition().x *  this->config.scaleFactor) -
 		(camera.frame.w / 2),
-		(this->player->physicsBody->GetPosition().y *  this->config.scaleFactor) -
+		(this->player->physicsBody()->GetPosition().y *  this->config.scaleFactor) -
 		(camera.frame.h / 2));
 
 	//CREATE A TEST TEXT ITEM          
@@ -241,9 +245,9 @@ void Game::update() {
 	this->player->update();
 
 	//Update the camera frame to point to the new player position
-	this->camera.setPosition((this->player->physicsBody->GetPosition().x *  this->config.scaleFactor) -
+	this->camera.setPosition((this->player->physicsBody()->GetPosition().x *  this->config.scaleFactor) -
 		(camera.frame.w / 2),
-		(this->player->physicsBody->GetPosition().y *  this->config.scaleFactor) -
+		(this->player->physicsBody()->GetPosition().y *  this->config.scaleFactor) -
 		(camera.frame.h / 2));
 
 	// spin through list of particle tasks to execute, like exposions and emitters
@@ -433,6 +437,7 @@ void Game::handleEvents() {
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
+			this->testSound();
 			this->player->fire();
 			break;
 		case SDL_USEREVENT:
@@ -518,6 +523,29 @@ void Game::initWorldBounds()
 
 }
 
+/*
+Test SOund stuff
+*/
+
+void Game::initSound()
+{
+
+	Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 512);
+	testSoundChunk = Mix_LoadWAV("assets/sound/weaponFire1.wav");
+
+}
 
 
+void Game::testSound()
+{
+
+	int channelPlayedOn = Mix_PlayChannel(-1, testSoundChunk, 0);
+
+	game->debugPanel->addItem("GunFireSoundChannel", to_string(channelPlayedOn));
+
+	//Mix_PlayMusic(musicName, 0);
+
+
+
+}
 

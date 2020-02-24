@@ -100,7 +100,7 @@ void CompositeObject::buildPiece(CompositeLegendItem legendItem, int xPos, int y
 	*/
 	WorldObject* worldObject =
 		game->gameObjectManager.buildGameObject<WorldObject>(legendItem.gameObjectId, -5, -5, 0);
-	worldObject->strength = this->definition()->compositeDetails.levels[0].strength;
+	worldObject->setStrength(this->definition()->compositeDetails.levels[0].strength);
 	piece.pieceObject = worldObject;
 		
 
@@ -218,7 +218,7 @@ void CompositeObject::levelUp(GameObjectPiece& piece)
 //			piece.isDestroyed = false;
 
 			piece.pieceObject->setColor(level.color);
-			piece.pieceObject->strength = level.strength;
+			piece.pieceObject->setStrength( level.strength);
 			piece.pieceObject->setActive(true);
 		
 		}

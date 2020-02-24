@@ -41,18 +41,18 @@ void Weapon::fire(const b2Vec2 &origin, const float &angle, const float &fireOff
 		dy += yAdj;
 
 		//Bullet Strength
-		bullet->strength = m_strength;
+		bullet->setStrength( m_strength);
 
 		b2Vec2 positionVector = b2Vec2(dx, dy);
 
-		dx = cos(angle) * bullet->speed; // make speed configurable
-		dy = sin(angle) * bullet->speed; // Y-component.
+		dx = cos(angle) * bullet->speed(); // make speed configurable
+		dy = sin(angle) * bullet->speed(); // Y-component.
 		b2Vec2 velocityVector = b2Vec2(dx, dy);
 
-		bullet->physicsBody->SetFixedRotation(true);
-		bullet->physicsBody->SetTransform(positionVector, angle);
-		bullet->physicsBody->SetLinearVelocity(velocityVector);
-		bullet->physicsBody->SetBullet(true);
+		bullet->physicsBody()->SetFixedRotation(true);
+		bullet->physicsBody()->SetTransform(positionVector, angle);
+		bullet->physicsBody()->SetLinearVelocity(velocityVector);
+		bullet->physicsBody()->SetBullet(true);
 
 		bullet->setColor(255,255,255,255);
 
