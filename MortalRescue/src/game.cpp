@@ -531,7 +531,10 @@ void Game::initSound()
 {
 
 	Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 512);
-	testSoundChunk = Mix_LoadWAV("assets/sound/weaponFire1.wav");
+	testSoundChunk = Mix_LoadWAV("assets/sound/weaponFire1.wav"); 
+	testMusic = Mix_LoadMUS("assets/sound/ambience_deep_shining.wav");
+
+	Mix_PlayMusic(testMusic, -1);
 
 }
 
@@ -540,6 +543,7 @@ void Game::testSound()
 {
 
 	int channelPlayedOn = Mix_PlayChannel(-1, testSoundChunk, 0);
+	
 
 	game->debugPanel->addItem("GunFireSoundChannel", to_string(channelPlayedOn));
 

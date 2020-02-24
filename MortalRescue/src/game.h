@@ -209,6 +209,7 @@ public:
 	DebugDraw debugDraw;
 
 	Mix_Chunk* testSoundChunk;
+	Mix_Music* testMusic;
 
 
 
