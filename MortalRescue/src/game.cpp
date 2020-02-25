@@ -21,7 +21,6 @@
 using namespace chrono_literals;
 using namespace std;
 
-
 Game::~Game()
 {
 
@@ -114,7 +113,7 @@ bool Game::init()
 			SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 
 		//Initialize the texture manager
-		this->textureManager.init(pWindow);
+		TextureManager::instance().init(pWindow);
 
 		// Construct a physics world object, which will hold and simulate the physics objects.
 		this->physicsWorld = new b2World(this->gravity);
@@ -305,7 +304,7 @@ void Game::update() {
 void Game::render() {
 
 	//Clear teh graphics display
-	this->textureManager.clear();
+	TextureManager::instance().clear();
 
 	//render the player
 	this->player->render();
@@ -320,7 +319,7 @@ void Game::render() {
 	}
 
 	//Push all drawn things to the graphics display
-	this->textureManager.present();
+	TextureManager::instance().present();
 
 }
 

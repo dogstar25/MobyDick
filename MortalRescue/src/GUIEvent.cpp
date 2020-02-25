@@ -1,4 +1,5 @@
 #include "GUIEvent.h"
+#include "TextureManager.h"
 #include "Game.h"
 
 GUIEvent::GUIEvent()
@@ -99,7 +100,7 @@ void GUIEvent::update()
 void GUIEvent::render()
 {
 
-	game->textureManager.clear();
+	TextureManager::instance().clear();
 
 	//Render all of the game objects in the world
 	Game::renderCollection(&game->gameCollections);
@@ -107,7 +108,7 @@ void GUIEvent::render()
 	//Render all of the GUI Event game objects
 	Game::renderCollection(&uiObjectCollections);
 
-	game->textureManager.present();
+	TextureManager::instance().present();
 
 }
 

@@ -13,6 +13,46 @@
 #include "WorldObject.h"
 #include "ParticleObject.h"
 
+//TextureManager* TextureManager::m_instance = NULL;
+
+TextureManager::TextureManager()
+{
+
+}
+
+TextureManager::~TextureManager()
+{
+
+	for (auto&& textureItem : m_textureMap) {
+		//pointer->functionOfYourClass();
+		if (textureItem.second != NULL) {
+
+			if (textureItem.second->surface != NULL) {
+				SDL_FreeSurface(textureItem.second->surface);
+			}
+			SDL_DestroyTexture(textureItem.second->sdlTexture);
+
+		}
+	}
+
+	m_textureMap.clear();
+
+}
+
+
+TextureManager& TextureManager::instance()
+{
+	static TextureManager singletonInstance;
+	return singletonInstance;
+
+	/*
+	if (m_instance == NULL) {
+		m_instance = new TextureManager();
+	}
+
+	return m_instance;
+	*/
+}
 
 bool TextureManager::init(SDL_Window* pWindow)
 {
@@ -291,29 +331,7 @@ void TextureManager::outLineObject(WorldObject* gameObject)
 
 }
 
-TextureManager::TextureManager()
-{
 
-}
-
-TextureManager::~TextureManager()
-{
-
-	for (auto&& textureItem : m_textureMap) {
-		//pointer->functionOfYourClass();
-		if (textureItem.second != NULL) {
-
-			if (textureItem.second->surface != NULL) {
-				SDL_FreeSurface(textureItem.second->surface);
-			}
-			SDL_DestroyTexture(textureItem.second->sdlTexture);
-
-		}
-	}
-
-	m_textureMap.clear();
-	
-}
 
 
 

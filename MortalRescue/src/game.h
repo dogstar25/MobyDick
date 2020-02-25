@@ -160,10 +160,7 @@ public:
 	void testSound();
 	void initSound();
 
-	//bool removePredicate(const GameObject&);
-
 	Clock clock;
-	TextureManager textureManager;
 	GameObjectManager gameObjectManager;
 	LevelManager levelManager;
 	GameObjectContactListener gameObjectContactListner;

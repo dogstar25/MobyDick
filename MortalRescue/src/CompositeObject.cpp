@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "CompositeObject.h"
 #include "Texture.h"
+#include "TextureManager.h"
 
 
 CompositeObject::CompositeObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
@@ -54,7 +55,7 @@ void CompositeObject::buildComposite()
 
 	//Get the texture and the surface
 	blueprintTexureId = this->definition()->compositeDetails.blueprint.textureId;
-	blueprintSurface = game->textureManager.getTexture(blueprintTexureId)->surface;
+	blueprintSurface = TextureManager::instance().getTexture(blueprintTexureId)->surface;
 	int bpp = blueprintSurface->format->BytesPerPixel;
 
 	SDL_LockSurface(blueprintSurface);

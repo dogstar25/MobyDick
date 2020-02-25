@@ -26,30 +26,37 @@ extern Game* game;
 class TextureManager
 {
 
-private:
-	SDL_Renderer* m_Renderer;
-	map<string, unique_ptr<Texture>> m_textureMap;
-	map<string, string> m_fontMap;
-	bool loadTextures();
-
 public:
 
-	TextureManager();
-	~TextureManager();
+	/*
+	This is a singleton class using a local staic variable returned as a reference
+	*/
+	static TextureManager& instance();
 
 	bool init(SDL_Window*);
-	void render(SDL_Texture* texture, SDL_Color color, SDL_Rect* srcRect, SDL_Rect* destRect, float angle );
+	void render(SDL_Texture* texture, SDL_Color color, SDL_Rect* srcRect, SDL_Rect* destRect, float angle);
 	void render(SDL_Rect* destRect, SDL_Color color);
 	bool present();
 	bool clear();
 	Texture* getTexture(string id);
 	string getFont(string id);
 	void drawPoly(b2Body* body);
-	void drawPoints(SDL_Point *);
+	void drawPoints(SDL_Point*);
 	void drawLine(b2Vec2, b2Vec2);
 	void outLineObject(GameObject* gameObject, float lineSize);
 	void outLineObject(WorldObject* gameObject);
 	SDL_Texture* createTextureFromSurface(SDL_Surface* surface);
+
+private:
+	TextureManager();
+	~TextureManager();
+
+	//static TextureManager* m_instance;
+	SDL_Renderer* m_Renderer;
+	map<string, unique_ptr<Texture>> m_textureMap;
+	map<string, string> m_fontMap;
+	bool loadTextures();
+
 
 	
 

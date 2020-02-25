@@ -1,5 +1,6 @@
 #include "LevelManager.h"
 #include "Texture.h"
+#include "TextureManager.h"
 #include "Game.h"
 
 
@@ -40,8 +41,8 @@ void LevelManager::loadLevelBlueprint(string levelId)
 	game->currentLevel = levelId;
 
 	//I am representing the level grid as a png image file 
-	levelImage = game->textureManager.getTexture(levelId)->sdlTexture;
-	surface = game->textureManager.getTexture(levelId)->surface;
+	levelImage = TextureManager::instance().getTexture(levelId)->sdlTexture;
+	surface = TextureManager::instance().getTexture(levelId)->surface;
 
 	//Create the level object
 	Level* level = new Level();

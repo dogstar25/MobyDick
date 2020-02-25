@@ -1,5 +1,6 @@
 #include "DebugDraw.h"
 #include "Game.h"
+#include "TextureManager.h"
 
 #include <SDL.h>
 
@@ -46,7 +47,7 @@ void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, cons
 	//Add the first point to the end to complete closed shape
 	points[vertexCount] = firstPoint;
 
-	game->textureManager.drawPoints(points);
+	TextureManager::instance().drawPoints(points);
 
 	delete[] points;
 }
@@ -87,7 +88,7 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Ve
 		end = end + newCenter;
 		angle += d_a;
 		
-		game->textureManager.drawLine(start, end);
+		TextureManager::instance().drawLine(start, end);
 	}
 
 

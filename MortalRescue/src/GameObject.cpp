@@ -5,6 +5,7 @@
 #include "GameObjectDefinition.h"
 #include "Animation.h"
 #include "Texture.h"
+#include "TextureManager.h"
 
 #include "WorldObject.h"
 
@@ -77,7 +78,7 @@ GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float 
 	m_color = m_definition->color;
 
 	//Get pointer to the texture
-	m_texture = game->textureManager.getTexture(m_definition->textureId);
+	m_texture = TextureManager::instance().getTexture(m_definition->textureId);
 
 	//get the animation objects if they exist
 	string firstState;
@@ -219,7 +220,7 @@ void GameObject::render()
 	//All angles on objects should be in radians to kep consistency with box2d objects
 	//it needs to be converted to degrees for SDL to display
 	float angle = util::radiansToDegrees(this->angle());
-	game->textureManager.render(texture, m_color, textureSourceRect, &destRect, angle);
+	TextureManager::instance().render(texture, m_color, textureSourceRect, &destRect, angle);
 
 	//test outlining object
 	if (m_definition->isMouseSelectable)
@@ -241,7 +242,7 @@ void GameObject::render()
 	//Outline the object if defined
 	if (m_definition->renderOutline)
 	{
-		game->textureManager.outLineObject(this, 2);
+		TextureManager::instance().outLineObject(this, 2);
 	}
 	
 	//Loop through any possible child objects, in all 9 positions, and render them too
@@ -521,7 +522,7 @@ b2Vec2 GameObject::calcChildPosition(
 void GameObject::onMouseHoverRender()
 {
 
-	game->textureManager.outLineObject(this, 2);
+	TextureManager::instance().outLineObject(this, 2);
 
 
 }
@@ -529,13 +530,13 @@ void GameObject::onMouseHoverRender()
 void GameObject::onMouseClickRender()
 {
 
-	game->textureManager.outLineObject(this, 6);
+	TextureManager::instance().outLineObject(this, 6);
 
 }
 
 void GameObject::onMouseHoldRender()
 {
-	game->textureManager.outLineObject(this, 2);
+	TextureManager::instance().outLineObject(this, 2);
 }
 
 void GameObject::onMouseClickEvent()
