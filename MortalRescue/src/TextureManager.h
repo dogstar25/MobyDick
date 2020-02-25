@@ -32,7 +32,6 @@ public:
 	This is a singleton class using a local staic variable returned as a reference
 	*/
 	static TextureManager& instance();
-
 	bool init(SDL_Window*);
 	void render(SDL_Texture* texture, SDL_Color color, SDL_Rect* srcRect, SDL_Rect* destRect, float angle);
 	void render(SDL_Rect* destRect, SDL_Color color);
@@ -51,7 +50,6 @@ private:
 	TextureManager();
 	~TextureManager();
 
-	//static TextureManager* m_instance;
 	SDL_Renderer* m_Renderer;
 	map<string, unique_ptr<Texture>> m_textureMap;
 	map<string, string> m_fontMap;

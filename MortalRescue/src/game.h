@@ -16,11 +16,12 @@
 #include <forward_list>
 #include <string>
 
+#include "GameObjectManager.h"
 #include "Util.h"
 #include "Constants.h"
 #include "TextureManager.h"
 #include "LevelManager.h"
-#include "GameObjectManager.h"
+
 #include "GameObjectContactListener.h"
 #include "DynamicTextManager.h"
 #include "ObjectPoolManager.h"
@@ -118,6 +119,9 @@ using namespace std::chrono;
 
 class Game {
 
+private:
+	LevelManager m_levelManager;
+	GameObjectContactListener m_gameObjectContactListner;
 
 public:
 
@@ -146,7 +150,7 @@ public:
 	static void renderCollection(array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>*);
 	void update();
 	void handleEvents();
-	void buildLevel(string);
+	
 	void initWorldBounds();
 
 	void addGameObject(GameObject* gameObject, int);
@@ -162,11 +166,6 @@ public:
 
 	Clock clock;
 	GameObjectManager gameObjectManager;
-	LevelManager levelManager;
-	GameObjectContactListener gameObjectContactListner;
-	DynamicTextManager dynamicTextManager;
-	ObjectPoolManager objectPoolManager;
-	ParticleMachine particleMachine;
 
 	Config config;
 	Camera camera;

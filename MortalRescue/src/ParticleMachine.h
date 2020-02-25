@@ -9,8 +9,8 @@ using namespace std;
 class ParticleMachine
 {
 public:
-	ParticleMachine();
-	~ParticleMachine();
+	static ParticleMachine& instance();
+	
 	void update();
 	
 	void runParticleEmissions();
@@ -42,6 +42,11 @@ public:
 		int particleSpawnCountMin,
 		int particleSpawnCountMax
 	);
+
+private:
+	ParticleMachine();
+	~ParticleMachine();
+
 
 };
 

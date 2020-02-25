@@ -38,6 +38,7 @@ public:
 
 	void loadLevelBlueprint(string);
 	LevelObject * determineTile(int,int,SDL_Surface*);
+	void buildLevel(string);
 
 };
 

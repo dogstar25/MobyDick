@@ -1,8 +1,10 @@
-#include "Game.h"
 #include "PlayerObject.h"
+
+#include "Game.h"
 #include "WorldObject.h"
 #include "Weapon.h"
 #include "GameObjectDefinition.h"
+#include "Animation.h"
 
 #include <math.h>
 

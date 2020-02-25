@@ -1,6 +1,7 @@
 #include "TextObject.h"
 #include "Texture.h"
 #include "TextureManager.h"
+#include "DynamicTextManager.h"
 #include "Game.h"
 
 extern Game* game;
@@ -159,7 +160,7 @@ Texture* TextObject::updateDynamicTextTexture()
 	SDL_Surface* surface;
 
 	//newText = game->dynamicTextManager.textItems[gameObject->definition->id].get();
-	newText = game->dynamicTextManager.getTextItem(this->definitionId());
+	newText = DynamicTextManager::instance().getTextItem(this->definitionId());
 
 	//check the clock and see if enough time as gone by
 	steady_clock::time_point now_time = steady_clock::now();

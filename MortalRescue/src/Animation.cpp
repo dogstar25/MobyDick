@@ -1,8 +1,9 @@
 #include "Animation.h"
+
 #include "GameObject.h"
-#include "GameObjectDefinition.h"
 #include "Texture.h"
 #include "TextureManager.h"
+#include "Game.h"
 
 
 Animation::Animation(GameObjectDefinition* gameObjectDefinition, string animationId, string textureId, int totalFrames, float speed)

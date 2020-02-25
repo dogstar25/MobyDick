@@ -1,5 +1,6 @@
 #include "DebugPanel.h"
 #include "Util.h"
+#include "DynamicTextManager.h"
 #include "Game.h"
 
 
@@ -46,7 +47,7 @@ void DebugPanel::addItem(string id, string value)
 		string newText = id + " : " + value;
 
 		//Add or update the dynamic text itself to the dynamic text manager
-		bool alreadyExists = game->dynamicTextManager.updateText(newId, newText);
+		bool alreadyExists = DynamicTextManager::instance().updateText(newId, newText);
 
 		if (alreadyExists == false)
 		{

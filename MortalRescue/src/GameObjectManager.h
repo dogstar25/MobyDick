@@ -3,13 +3,11 @@
 #include <string>
 #include <map>
 
-#include "TextObject.h"
-//#include "CompositeObject.h"
 
 #include "GameObjectDefinition.h"
+#include "TextObject.h"
 
-//Forward declarations
-class Animation;
+
 
 using namespace std;
 

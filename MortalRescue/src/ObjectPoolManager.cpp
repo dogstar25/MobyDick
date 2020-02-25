@@ -7,6 +7,12 @@
 #include "ParticleObject.h"
 
 
+ObjectPoolManager& ObjectPoolManager::instance()
+{
+	static ObjectPoolManager singletonInstance;
+	return singletonInstance;
+}
+
 void ObjectPoolManager::init()
 {
 

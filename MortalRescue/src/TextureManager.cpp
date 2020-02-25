@@ -13,8 +13,6 @@
 #include "WorldObject.h"
 #include "ParticleObject.h"
 
-//TextureManager* TextureManager::m_instance = NULL;
-
 TextureManager::TextureManager()
 {
 
@@ -45,13 +43,6 @@ TextureManager& TextureManager::instance()
 	static TextureManager singletonInstance;
 	return singletonInstance;
 
-	/*
-	if (m_instance == NULL) {
-		m_instance = new TextureManager();
-	}
-
-	return m_instance;
-	*/
 }
 
 bool TextureManager::init(SDL_Window* pWindow)

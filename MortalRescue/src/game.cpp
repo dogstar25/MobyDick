@@ -119,7 +119,7 @@ bool Game::init()
 		this->physicsWorld = new b2World(this->gravity);
 		this->physicsWorld->SetAutoClearForces(true);
 		//Add a collision contact listener
-		this->physicsWorld->SetContactListener(&this->gameObjectContactListner);
+		this->physicsWorld->SetContactListener(&m_gameObjectContactListner);
 
 		//Debug Mode
 		if (this->b2DebugDrawMode == true)
@@ -132,7 +132,7 @@ bool Game::init()
 		this->gameObjectManager.init();
 
 		//Initilaze the Particle Pool Manager
-		this->objectPoolManager.init();
+		ObjectPoolManager::instance().init();
 
 		//Set the mouse mode
 		SDL_ShowCursor(false);
@@ -229,7 +229,7 @@ void Game::play()
 		this->clock.calcFps();
 		this->clock.resetGameLoopTimeAccum();
 
-		this->dynamicTextManager.updateText("FPS_VALUE", to_string(this->clock.fps));
+		DynamicTextManager::instance().updateText("FPS_VALUE", to_string(this->clock.fps));
 
 	}
 
@@ -250,7 +250,7 @@ void Game::update() {
 		(camera.frame.h / 2));
 
 	// spin through list of particle tasks to execute, like exposions and emitters
-	this->particleMachine.update(); 
+	ParticleMachine::instance().update();
 
 	//Update all of the other non player related update chores for each game object
 	// Game objects are stored in layers
@@ -277,7 +277,7 @@ void Game::update() {
 			if (particleObject->removeFromWorld() == true)
 			{
 				particleObjectRemoved = particleObject;
-				game->objectPoolManager.reset(particleObject);
+				ObjectPoolManager::instance().reset(particleObject);
 				std:swap(gameObjectCollection.particleObjects[x], 
 					gameObjectCollection.particleObjects[gameObjectCollection.particleObjects.size()-1]);
 				gameObjectCollection.particleObjects.resize(gameObjectCollection.particleObjects.size() - 1);
@@ -453,7 +453,7 @@ void Game::handleEvents() {
 void Game::buildWorld(string levelId)
 {
 	//load all of the information needed to build the level
-	this->levelManager.loadLevelBlueprint("TX_LEVEL1_BLUEPRINT");
+	m_levelManager.loadLevelBlueprint("TX_LEVEL1_BLUEPRINT");
 
 	//Initialize world bounds and gridsize based on current level loaded info
 	this->initWorldBounds();
@@ -462,37 +462,12 @@ void Game::buildWorld(string levelId)
 	this->camera.init(&this->worldBounds);
 
 	//Build the actual level gameobjects
-	this->buildLevel("TX_LEVEL1_BLUEPRINT");
+	m_levelManager.buildLevel("TX_LEVEL1_BLUEPRINT");
 
 }
 
 
 
-void Game::buildLevel(string levelId)
-{
-	Level* level = this->levelManager.levels[levelId];
-	LevelObject* levelObject;
-	//unique_ptr<WorldObject> worldObject;
-	WorldObject *worldObject;
-
-
-	for (int y = 0; y < level->height; y++)
-	{
-		for (int x = 0; x < level->width; x++)
-		{
-
-			if (level->levelObjects[x][y].gameObjectId.empty() == false)
-			{
-				levelObject = &level->levelObjects[x][y];
-
-				worldObject = gameObjectManager.buildGameObject <WorldObject>(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
-				this->addGameObject(worldObject, this->MAIN);
-
-			}
-
-		}
-	}
-}
 
 void Game::initWorldBounds()
 {
@@ -506,19 +481,19 @@ void Game::initWorldBounds()
 	}
 	else
 	{
-		width = this->levelManager.levels[this->currentLevel]->width *
-			this->levelManager.levels[this->currentLevel]->tileWidth;
+		width = m_levelManager.levels[this->currentLevel]->width *
+			m_levelManager.levels[this->currentLevel]->tileWidth;
 
-		height = this->levelManager.levels[this->currentLevel]->height *
-			this->levelManager.levels[this->currentLevel]->tileHeight;
+		height = m_levelManager.levels[this->currentLevel]->height *
+			m_levelManager.levels[this->currentLevel]->tileHeight;
 	}
 
 	this->worldBounds.x = 0;
 	this->worldBounds.y = 0;
 	this->worldBounds.w = width;
 	this->worldBounds.h = height;
-	this->worldGridSize.w = this->levelManager.levels[this->currentLevel]->tileWidth;
-	this->worldGridSize.h = this->levelManager.levels[this->currentLevel]->tileHeight;
+	this->worldGridSize.w = m_levelManager.levels[this->currentLevel]->tileWidth;
+	this->worldGridSize.h = m_levelManager.levels[this->currentLevel]->tileHeight;
 
 }
 

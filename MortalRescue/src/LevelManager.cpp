@@ -1,6 +1,7 @@
 #include "LevelManager.h"
 #include "Texture.h"
 #include "TextureManager.h"
+#include "WorldObject.h"
 #include "Game.h"
 
 
@@ -231,5 +232,29 @@ LevelObject* LevelManager::determineTile(int x, int y, SDL_Surface* surface)
 
 }
 
+void LevelManager::buildLevel(string levelId)
+{
+	Level* level = this->levels[levelId];
+	LevelObject* levelObject;
+	//unique_ptr<WorldObject> worldObject;
+	WorldObject* worldObject;
+
+	for (int y = 0; y < level->height; y++)
+	{
+		for (int x = 0; x < level->width; x++)
+		{
+
+			if (level->levelObjects[x][y].gameObjectId.empty() == false)
+			{
+				levelObject = &level->levelObjects[x][y];
+
+				worldObject = game->gameObjectManager.buildGameObject <WorldObject>(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
+				game->addGameObject(worldObject, game->MAIN);
+
+			}
+
+		}
+	}
+}
 
 

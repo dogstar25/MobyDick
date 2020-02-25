@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "TextObject.h"
 
 #include "Game.h"
 #include "Weapon.h"

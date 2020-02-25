@@ -2,10 +2,16 @@
 
 #include "ParticleMachine.h"
 #include "ParticleEmission.h"
+#include "ObjectPoolManager.h"
 #include "Game.h"
 
 
+ParticleMachine& ParticleMachine::instance()
+{
+	static ParticleMachine singletonInstance;
+	return singletonInstance;
 
+}
 ParticleMachine::ParticleMachine()
 {
 }
@@ -104,7 +110,7 @@ void ParticleMachine::emit(
 	{
 
 		//Get the particle object from the pre-populated particle pool
-		ParticleObject* particle = game->objectPoolManager.get(poolId);
+		ParticleObject* particle = ObjectPoolManager::instance().get(poolId);
 
 		//If the returned particle is null, then the pool has run out, so do nothing
 		if (particle != NULL)

@@ -1,6 +1,11 @@
 #include "DynamicTextManager.h"
 
+DynamicTextManager& DynamicTextManager::instance()
+{
+	static DynamicTextManager singletonInstance;
+	return singletonInstance;
 
+}
 
 DynamicTextManager::DynamicTextManager()
 {
