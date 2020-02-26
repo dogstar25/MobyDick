@@ -16,6 +16,12 @@
 #include "Util.h"
 
 
+GameObjectManager& GameObjectManager::instance()
+{
+	static GameObjectManager singletonInstance;
+	return singletonInstance;
+}
+
 
 GameObjectManager::GameObjectManager()
 {

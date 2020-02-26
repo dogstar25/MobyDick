@@ -68,7 +68,7 @@ Game::Game()
 	this->velocityIterations = 0;
 	this->positionIterations = 0;
 
-	this->gameState=this->PLAY;
+	this->gameState= GameState::PLAY;
 
 	this->fps = 0;
 	this->awakeCount = 0;
@@ -102,7 +102,7 @@ bool Game::init()
 		TTF_Init();
 
 		//Init Game State
-		this->gameState = this->PLAY;
+		this->gameState = GameState::PLAY;
 
 		//Create the game window
 		pWindow = SDL_CreateWindow(this->gameTitle.c_str(),
@@ -129,7 +129,7 @@ bool Game::init()
 		}
 
 		//Initilaze the Game Object Manager
-		this->gameObjectManager.init();
+		GameObjectManager::instance().init();
 
 		//Initilaze the Particle Pool Manager
 		ObjectPoolManager::instance().init();
@@ -160,12 +160,21 @@ bool Game::init()
 
 
 	//Create the main player object
-	playerObject = gameObjectManager.buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
-	//playerObject->weapon = playerObject->definition->weapons[1];
-	//this->player = shared_ptr<PlayerObject>(playerObject);
+	playerObject = GameObjectManager::instance().buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
 	this->player = playerObject;
-	//this->player->physicsBody->SetUserData(this->player);
 	this->player->weapon = this->player->definition()->weapons[1];
+/*
+	worldObject = GameObjectManager::instance().buildGameObject <WorldObject>("BULLET1", 4, 4, 0);
+	//Test joint
+	b2WeldJointDef weldJointDef;
+	weldJointDef.bodyA = playerObject->physicsBody();
+	weldJointDef.bodyB = worldObject->physicsBody();
+	weldJointDef.collideConnected = false;
+	weldJointDef.localAnchorA.Set(1.0, 0);//the top right corner of the box
+	weldJointDef.localAnchorB.Set(0, 0);//center of the circle
+	(b2RevoluteJoint*)this->physicsWorld->CreateJoint(&weldJointDef);
+	this->addGameObject(worldObject, GameOjectLayer::MAIN);
+*/
 
 	//set camera to center on player object
 	this->camera.setPosition((this->player->physicsBody()->GetPosition().x *  this->config.scaleFactor) -
@@ -174,21 +183,21 @@ bool Game::init()
 		(camera.frame.h / 2));
 
 	//CREATE A TEST TEXT ITEM          
-	textObject = gameObjectManager.buildGameObject <TextObject>("FPS_LABEL", 0, 0, 0);
-	this->addGameObject(textObject, this->TEXT);
+	textObject = GameObjectManager::instance().buildGameObject <TextObject>("FPS_LABEL", 0, 0, 0);
+	this->addGameObject(textObject, GameOjectLayer::TEXT);
 
 	//CREATE A DYNAMIC TEST TEXT ITEM
-	textObject = gameObjectManager.buildGameObject <TextObject>("FPS_VALUE", 0, 1, 0);
-	this->addGameObject(textObject, this->TEXT);
+	textObject = GameObjectManager::instance().buildGameObject <TextObject>("FPS_VALUE", 0, 1, 0);
+	this->addGameObject(textObject, GameOjectLayer::TEXT);
 
-	gameObject = gameObjectManager.buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
-	this->addGameObject(gameObject, this->MAIN);
+	gameObject = GameObjectManager::instance().buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
+	this->addGameObject(gameObject, GameOjectLayer::MAIN);
 
 	//gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK128", 13, 13, 0);
 	//this->addGameObject(gameObject, this->MAIN);
 
-	compositeObject = gameObjectManager.buildGameObject <CompositeObject>("DRONE", 11, 11, 0);
-	this->addGameObject(compositeObject, this->MAIN);
+	compositeObject = GameObjectManager::instance().buildGameObject <CompositeObject>("DRONE", 11, 11, 0);
+	this->addGameObject(compositeObject, GameOjectLayer::MAIN);
 
 	//Create the debug panel if its turned on
 	if (this->config.debugPanel == true)

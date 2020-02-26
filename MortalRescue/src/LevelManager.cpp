@@ -1,8 +1,11 @@
 #include "LevelManager.h"
+#include "Globals.h"
 #include "Texture.h"
 #include "TextureManager.h"
 #include "WorldObject.h"
+#include "GameObjectManager.h"
 #include "Game.h"
+
 
 
 static const SDL_Color WHITE = { 255,255,255 };
@@ -77,9 +80,9 @@ void LevelManager::loadLevelBlueprint(string levelId)
 			if (x == 0 && y == 0)
 			{
 				
-				level->tileWidth = game->gameObjectManager.gameObjectDefinitions[levelObject.gameObjectId]->xSize 
+				level->tileWidth = GameObjectManager::instance().gameObjectDefinitions[levelObject.gameObjectId]->xSize
 					* game->config.scaleFactor;
-				level->tileHeight = game->gameObjectManager.gameObjectDefinitions[levelObject.gameObjectId]->ySize
+				level->tileHeight = GameObjectManager::instance().gameObjectDefinitions[levelObject.gameObjectId]->ySize
 					* game->config.scaleFactor;
 			}
 		}
@@ -248,8 +251,8 @@ void LevelManager::buildLevel(string levelId)
 			{
 				levelObject = &level->levelObjects[x][y];
 
-				worldObject = game->gameObjectManager.buildGameObject <WorldObject>(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
-				game->addGameObject(worldObject, game->MAIN);
+				worldObject = GameObjectManager::instance().buildGameObject <WorldObject>(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
+				game->addGameObject(worldObject, GameOjectLayer::MAIN);
 
 			}
 

@@ -4,6 +4,8 @@
 #include "ParticleEmission.h"
 #include "ObjectPoolManager.h"
 #include "Game.h"
+#include "Globals.h"
+
 
 
 ParticleMachine& ParticleMachine::instance()
@@ -212,7 +214,7 @@ void ParticleMachine::emit(
 			//particle->physicsBody->SetBullet(true);
 
 			//Add the particle to the game world
-			game->addGameObject(particle, game->MAIN);
+			game->addGameObject(particle, GameOjectLayer::MAIN);
 		}
 
 	}

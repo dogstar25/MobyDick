@@ -182,6 +182,9 @@
     <ClInclude Include="src\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Globals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\textureAssets.json" />
@@ -201,6 +204,15 @@
     <None Include="assets\gameObjectDefinitions\objectPools.json" />
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />
     <None Include="assets\gameObjectDefinitions\level1Objects.json" />
+    <None Include="libFLAC-8.dll" />
+    <None Include="libmodplug-1.dll" />
+    <None Include="libmpg123-0.dll" />
+    <None Include="libogg-0.dll" />
+    <None Include="libopus-0.dll" />
+    <None Include="libopusfile-0.dll" />
+    <None Include="libvorbis-0.dll" />
+    <None Include="libvorbisfile-3.dll" />
+    <None Include="SDL2_mixer.dll" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png">
@@ -308,6 +320,9 @@
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\weaponFire1.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="assets\sound\ambience_deep_shining.wav">
       <Filter>Resource Files</Filter>
     </Media>
   </ItemGroup>

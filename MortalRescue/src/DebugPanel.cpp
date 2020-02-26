@@ -1,6 +1,7 @@
 #include "DebugPanel.h"
 #include "Util.h"
 #include "DynamicTextManager.h"
+#include "GameObjectManager.h"
 #include "Game.h"
 
 
@@ -38,7 +39,7 @@ void DebugPanel::addItem(string id, string value)
 		float yPos, xPos;
 
 		//Get the base definition for debug text items
-		GameObjectDefinition* definition = game->gameObjectManager.gameObjectDefinitions["DEBUG_ITEM"];;
+		GameObjectDefinition* definition = GameObjectManager::instance().gameObjectDefinitions["DEBUG_ITEM"];;
 
 		//Prefix DEBUG to the id
 		string newId = "DEBUG_" + id;
@@ -57,8 +58,8 @@ void DebugPanel::addItem(string id, string value)
 			//yPos = this->location.y + this->itemCount * (.5);
 			yPos = this->location.y + this->itemCount * ((float)definition->textDetails.size / (float)game->worldGridSize.h);
 
-			TextObject* textObject = game->gameObjectManager.buildGameObject <TextObject>(newId, xPos, yPos, 0);
-			game->addGameObject(textObject, game->DEBUG);
+			TextObject* textObject = GameObjectManager::instance().buildGameObject <TextObject>(newId, xPos, yPos, 0);
+			game->addGameObject(textObject, GameOjectLayer::DEBUG);
 
 			this->itemCount++;
 		}

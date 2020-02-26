@@ -66,11 +66,11 @@ GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float 
 	//id value to the one we passed in
 	if (gameObjectId.rfind("DEBUG_", 0) == 0)
 	{
-		m_definition = game->gameObjectManager.gameObjectDefinitions["DEBUG_ITEM"];;
+		m_definition = GameObjectManager::instance().gameObjectDefinitions["DEBUG_ITEM"];;
 	}
 	else
 	{
-		m_definition = game->gameObjectManager.gameObjectDefinitions[gameObjectId];
+		m_definition = GameObjectManager::instance().gameObjectDefinitions[gameObjectId];
 	}
 
 	m_size.Set(m_definition->xSize, m_definition->ySize);
@@ -361,7 +361,7 @@ void GameObject::buildChildren()
 		string childObjectId = childDefinition.gameObjectId;
 		unsigned int locationSlot = childDefinition.locationSlot;
 
-		GameObjectDefinition* definition = game->gameObjectManager.getDefinition(childObjectId);
+		GameObjectDefinition* definition = GameObjectManager::instance().getDefinition(childObjectId);
 
 		if (definition != NULL)
 		{
@@ -369,21 +369,21 @@ void GameObject::buildChildren()
 			if (definition->type.compare("TEXT_OBJECT") == 0)
 			{
 				TextObject* textObject =
-					game->gameObjectManager.buildGameObject<TextObject>(childObjectId, 2, 2, 0);
+					GameObjectManager::instance().buildGameObject<TextObject>(childObjectId, 2, 2, 0);
 				m_childObjects[locationSlot - 1].push_back(make_shared<TextObject>(*textObject));
 
 			}
 			else if (definition->type.compare("WORLD_OBJECT") == 0)
 			{
 				WorldObject* worldObject =
-					game->gameObjectManager.buildGameObject<WorldObject>(childObjectId, -5, -5, 0);
+					GameObjectManager::instance().buildGameObject<WorldObject>(childObjectId, -5, -5, 0);
 				m_childObjects[locationSlot - 1].push_back(make_shared<WorldObject>(*worldObject));
 			}
 			else //default to GAME_OBJECT
 			{
 
 				GameObject* gameObject =
-					game->gameObjectManager.buildGameObject<GameObject>(childObjectId, -5, -5, 0);
+					GameObjectManager::instance().buildGameObject<GameObject>(childObjectId, -5, -5, 0);
 				m_childObjects[locationSlot - 1].push_back(make_shared<GameObject>(*gameObject));
 			}
 

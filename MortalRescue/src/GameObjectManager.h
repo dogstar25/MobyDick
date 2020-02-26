@@ -14,9 +14,8 @@ using namespace std;
 class GameObjectManager
 {
 public:
-	GameObjectManager();
-	~GameObjectManager();
 		
+	static GameObjectManager& instance();
 
 	bool init();
 	void load(string);
@@ -41,6 +40,9 @@ public:
 	}
 
 private:
+	GameObjectManager();
+	~GameObjectManager();
+
 	
 };
 
