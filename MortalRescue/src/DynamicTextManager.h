@@ -26,15 +26,18 @@ public:
 class DynamicTextManager
 {
 public:
-	DynamicTextManager();
-	~DynamicTextManager();
 
+	static DynamicTextManager& instance();
 	map<string, unique_ptr<textItem>> textItems;
 
 	//vector <unique_ptr<GameObject>> gameObjects;
 
 	bool updateText(string, string);
 	textItem* getTextItem(string);
+
+private:
+	DynamicTextManager();
+	~DynamicTextManager();
 
 
 };

@@ -1,10 +1,12 @@
 #include "GameObject.h"
+#include "TextObject.h"
 
 #include "Game.h"
 #include "Weapon.h"
 #include "GameObjectDefinition.h"
 #include "Animation.h"
 #include "Texture.h"
+#include "TextureManager.h"
 
 #include "WorldObject.h"
 
@@ -64,11 +66,11 @@ GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float 
 	//id value to the one we passed in
 	if (gameObjectId.rfind("DEBUG_", 0) == 0)
 	{
-		m_definition = game->gameObjectManager.gameObjectDefinitions["DEBUG_ITEM"];;
+		m_definition = GameObjectManager::instance().gameObjectDefinitions["DEBUG_ITEM"];;
 	}
 	else
 	{
-		m_definition = game->gameObjectManager.gameObjectDefinitions[gameObjectId];
+		m_definition = GameObjectManager::instance().gameObjectDefinitions[gameObjectId];
 	}
 
 	m_size.Set(m_definition->xSize, m_definition->ySize);
@@ -77,7 +79,7 @@ GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float 
 	m_color = m_definition->color;
 
 	//Get pointer to the texture
-	m_texture = game->textureManager.getTexture(m_definition->textureId);
+	m_texture = TextureManager::instance().getTexture(m_definition->textureId);
 
 	//get the animation objects if they exist
 	string firstState;
@@ -219,7 +221,7 @@ void GameObject::render()
 	//All angles on objects should be in radians to kep consistency with box2d objects
 	//it needs to be converted to degrees for SDL to display
 	float angle = util::radiansToDegrees(this->angle());
-	game->textureManager.render(texture, m_color, textureSourceRect, &destRect, angle);
+	TextureManager::instance().render(texture, m_color, textureSourceRect, &destRect, angle);
 
 	//test outlining object
 	if (m_definition->isMouseSelectable)
@@ -241,7 +243,7 @@ void GameObject::render()
 	//Outline the object if defined
 	if (m_definition->renderOutline)
 	{
-		game->textureManager.outLineObject(this, 2);
+		TextureManager::instance().outLineObject(this, 2);
 	}
 	
 	//Loop through any possible child objects, in all 9 positions, and render them too
@@ -359,7 +361,7 @@ void GameObject::buildChildren()
 		string childObjectId = childDefinition.gameObjectId;
 		unsigned int locationSlot = childDefinition.locationSlot;
 
-		GameObjectDefinition* definition = game->gameObjectManager.getDefinition(childObjectId);
+		GameObjectDefinition* definition = GameObjectManager::instance().getDefinition(childObjectId);
 
 		if (definition != NULL)
 		{
@@ -367,21 +369,21 @@ void GameObject::buildChildren()
 			if (definition->type.compare("TEXT_OBJECT") == 0)
 			{
 				TextObject* textObject =
-					game->gameObjectManager.buildGameObject<TextObject>(childObjectId, 2, 2, 0);
+					GameObjectManager::instance().buildGameObject<TextObject>(childObjectId, 2, 2, 0);
 				m_childObjects[locationSlot - 1].push_back(make_shared<TextObject>(*textObject));
 
 			}
 			else if (definition->type.compare("WORLD_OBJECT") == 0)
 			{
 				WorldObject* worldObject =
-					game->gameObjectManager.buildGameObject<WorldObject>(childObjectId, -5, -5, 0);
+					GameObjectManager::instance().buildGameObject<WorldObject>(childObjectId, -5, -5, 0);
 				m_childObjects[locationSlot - 1].push_back(make_shared<WorldObject>(*worldObject));
 			}
 			else //default to GAME_OBJECT
 			{
 
 				GameObject* gameObject =
-					game->gameObjectManager.buildGameObject<GameObject>(childObjectId, -5, -5, 0);
+					GameObjectManager::instance().buildGameObject<GameObject>(childObjectId, -5, -5, 0);
 				m_childObjects[locationSlot - 1].push_back(make_shared<GameObject>(*gameObject));
 			}
 
@@ -521,7 +523,7 @@ b2Vec2 GameObject::calcChildPosition(
 void GameObject::onMouseHoverRender()
 {
 
-	game->textureManager.outLineObject(this, 2);
+	TextureManager::instance().outLineObject(this, 2);
 
 
 }
@@ -529,13 +531,13 @@ void GameObject::onMouseHoverRender()
 void GameObject::onMouseClickRender()
 {
 
-	game->textureManager.outLineObject(this, 6);
+	TextureManager::instance().outLineObject(this, 6);
 
 }
 
 void GameObject::onMouseHoldRender()
 {
-	game->textureManager.outLineObject(this, 2);
+	TextureManager::instance().outLineObject(this, 2);
 }
 
 void GameObject::onMouseClickEvent()

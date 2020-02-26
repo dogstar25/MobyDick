@@ -1,6 +1,5 @@
 // MortalRescue.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
-
 #include "Game.h"
 
 Game* game;
@@ -15,18 +14,18 @@ int main(int argc, char *args[])
 	game = new Game();
 	game->init();
 
-	while (game->gameState != game->QUIT)
+	while (game->gameState != GameState::QUIT)
 	{
 
 		game->handleEvents();
 
 		switch (game->gameState)
 		{
-		case Game::PAUSE:
+		case GameState::PAUSE:
 			//this may be not needed
 				break;
 
-		case Game::PLAY:
+		case GameState::PLAY:
 				game->play();
 				break;
 		}

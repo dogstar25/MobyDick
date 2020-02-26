@@ -21,7 +21,6 @@
 using namespace chrono_literals;
 using namespace std;
 
-
 Game::~Game()
 {
 
@@ -69,7 +68,7 @@ Game::Game()
 	this->velocityIterations = 0;
 	this->positionIterations = 0;
 
-	this->gameState=this->PLAY;
+	this->gameState= GameState::PLAY;
 
 	this->fps = 0;
 	this->awakeCount = 0;
@@ -103,7 +102,7 @@ bool Game::init()
 		TTF_Init();
 
 		//Init Game State
-		this->gameState = this->PLAY;
+		this->gameState = GameState::PLAY;
 
 		//Create the game window
 		pWindow = SDL_CreateWindow(this->gameTitle.c_str(),
@@ -114,13 +113,13 @@ bool Game::init()
 			SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 
 		//Initialize the texture manager
-		this->textureManager.init(pWindow);
+		TextureManager::instance().init(pWindow);
 
 		// Construct a physics world object, which will hold and simulate the physics objects.
 		this->physicsWorld = new b2World(this->gravity);
 		this->physicsWorld->SetAutoClearForces(true);
 		//Add a collision contact listener
-		this->physicsWorld->SetContactListener(&this->gameObjectContactListner);
+		this->physicsWorld->SetContactListener(&m_gameObjectContactListner);
 
 		//Debug Mode
 		if (this->b2DebugDrawMode == true)
@@ -130,10 +129,10 @@ bool Game::init()
 		}
 
 		//Initilaze the Game Object Manager
-		this->gameObjectManager.init();
+		GameObjectManager::instance().init();
 
 		//Initilaze the Particle Pool Manager
-		this->objectPoolManager.init();
+		ObjectPoolManager::instance().init();
 
 		//Set the mouse mode
 		SDL_ShowCursor(false);
@@ -161,12 +160,21 @@ bool Game::init()
 
 
 	//Create the main player object
-	playerObject = gameObjectManager.buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
-	//playerObject->weapon = playerObject->definition->weapons[1];
-	//this->player = shared_ptr<PlayerObject>(playerObject);
+	playerObject = GameObjectManager::instance().buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
 	this->player = playerObject;
-	//this->player->physicsBody->SetUserData(this->player);
 	this->player->weapon = this->player->definition()->weapons[1];
+/*
+	worldObject = GameObjectManager::instance().buildGameObject <WorldObject>("BULLET1", 4, 4, 0);
+	//Test joint
+	b2WeldJointDef weldJointDef;
+	weldJointDef.bodyA = playerObject->physicsBody();
+	weldJointDef.bodyB = worldObject->physicsBody();
+	weldJointDef.collideConnected = false;
+	weldJointDef.localAnchorA.Set(1.0, 0);//the top right corner of the box
+	weldJointDef.localAnchorB.Set(0, 0);//center of the circle
+	(b2RevoluteJoint*)this->physicsWorld->CreateJoint(&weldJointDef);
+	this->addGameObject(worldObject, GameOjectLayer::MAIN);
+*/
 
 	//set camera to center on player object
 	this->camera.setPosition((this->player->physicsBody()->GetPosition().x *  this->config.scaleFactor) -
@@ -175,21 +183,21 @@ bool Game::init()
 		(camera.frame.h / 2));
 
 	//CREATE A TEST TEXT ITEM          
-	textObject = gameObjectManager.buildGameObject <TextObject>("FPS_LABEL", 0, 0, 0);
-	this->addGameObject(textObject, this->TEXT);
+	textObject = GameObjectManager::instance().buildGameObject <TextObject>("FPS_LABEL", 0, 0, 0);
+	this->addGameObject(textObject, GameOjectLayer::TEXT);
 
 	//CREATE A DYNAMIC TEST TEXT ITEM
-	textObject = gameObjectManager.buildGameObject <TextObject>("FPS_VALUE", 0, 1, 0);
-	this->addGameObject(textObject, this->TEXT);
+	textObject = GameObjectManager::instance().buildGameObject <TextObject>("FPS_VALUE", 0, 1, 0);
+	this->addGameObject(textObject, GameOjectLayer::TEXT);
 
-	gameObject = gameObjectManager.buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
-	this->addGameObject(gameObject, this->MAIN);
+	gameObject = GameObjectManager::instance().buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
+	this->addGameObject(gameObject, GameOjectLayer::MAIN);
 
 	//gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK128", 13, 13, 0);
 	//this->addGameObject(gameObject, this->MAIN);
 
-	compositeObject = gameObjectManager.buildGameObject <CompositeObject>("DRONE", 11, 11, 0);
-	this->addGameObject(compositeObject, this->MAIN);
+	compositeObject = GameObjectManager::instance().buildGameObject <CompositeObject>("DRONE", 11, 11, 0);
+	this->addGameObject(compositeObject, GameOjectLayer::MAIN);
 
 	//Create the debug panel if its turned on
 	if (this->config.debugPanel == true)
@@ -230,7 +238,7 @@ void Game::play()
 		this->clock.calcFps();
 		this->clock.resetGameLoopTimeAccum();
 
-		this->dynamicTextManager.updateText("FPS_VALUE", to_string(this->clock.fps));
+		DynamicTextManager::instance().updateText("FPS_VALUE", to_string(this->clock.fps));
 
 	}
 
@@ -251,7 +259,7 @@ void Game::update() {
 		(camera.frame.h / 2));
 
 	// spin through list of particle tasks to execute, like exposions and emitters
-	this->particleMachine.update(); 
+	ParticleMachine::instance().update();
 
 	//Update all of the other non player related update chores for each game object
 	// Game objects are stored in layers
@@ -278,7 +286,7 @@ void Game::update() {
 			if (particleObject->removeFromWorld() == true)
 			{
 				particleObjectRemoved = particleObject;
-				game->objectPoolManager.reset(particleObject);
+				ObjectPoolManager::instance().reset(particleObject);
 				std:swap(gameObjectCollection.particleObjects[x], 
 					gameObjectCollection.particleObjects[gameObjectCollection.particleObjects.size()-1]);
 				gameObjectCollection.particleObjects.resize(gameObjectCollection.particleObjects.size() - 1);
@@ -305,7 +313,7 @@ void Game::update() {
 void Game::render() {
 
 	//Clear teh graphics display
-	this->textureManager.clear();
+	TextureManager::instance().clear();
 
 	//render the player
 	this->player->render();
@@ -320,7 +328,7 @@ void Game::render() {
 	}
 
 	//Push all drawn things to the graphics display
-	this->textureManager.present();
+	TextureManager::instance().present();
 
 }
 
@@ -454,7 +462,7 @@ void Game::handleEvents() {
 void Game::buildWorld(string levelId)
 {
 	//load all of the information needed to build the level
-	this->levelManager.loadLevelBlueprint("TX_LEVEL1_BLUEPRINT");
+	m_levelManager.loadLevelBlueprint("TX_LEVEL1_BLUEPRINT");
 
 	//Initialize world bounds and gridsize based on current level loaded info
 	this->initWorldBounds();
@@ -463,37 +471,12 @@ void Game::buildWorld(string levelId)
 	this->camera.init(&this->worldBounds);
 
 	//Build the actual level gameobjects
-	this->buildLevel("TX_LEVEL1_BLUEPRINT");
+	m_levelManager.buildLevel("TX_LEVEL1_BLUEPRINT");
 
 }
 
 
 
-void Game::buildLevel(string levelId)
-{
-	Level* level = this->levelManager.levels[levelId];
-	LevelObject* levelObject;
-	//unique_ptr<WorldObject> worldObject;
-	WorldObject *worldObject;
-
-
-	for (int y = 0; y < level->height; y++)
-	{
-		for (int x = 0; x < level->width; x++)
-		{
-
-			if (level->levelObjects[x][y].gameObjectId.empty() == false)
-			{
-				levelObject = &level->levelObjects[x][y];
-
-				worldObject = gameObjectManager.buildGameObject <WorldObject>(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
-				this->addGameObject(worldObject, this->MAIN);
-
-			}
-
-		}
-	}
-}
 
 void Game::initWorldBounds()
 {
@@ -507,19 +490,19 @@ void Game::initWorldBounds()
 	}
 	else
 	{
-		width = this->levelManager.levels[this->currentLevel]->width *
-			this->levelManager.levels[this->currentLevel]->tileWidth;
+		width = m_levelManager.levels[this->currentLevel]->width *
+			m_levelManager.levels[this->currentLevel]->tileWidth;
 
-		height = this->levelManager.levels[this->currentLevel]->height *
-			this->levelManager.levels[this->currentLevel]->tileHeight;
+		height = m_levelManager.levels[this->currentLevel]->height *
+			m_levelManager.levels[this->currentLevel]->tileHeight;
 	}
 
 	this->worldBounds.x = 0;
 	this->worldBounds.y = 0;
 	this->worldBounds.w = width;
 	this->worldBounds.h = height;
-	this->worldGridSize.w = this->levelManager.levels[this->currentLevel]->tileWidth;
-	this->worldGridSize.h = this->levelManager.levels[this->currentLevel]->tileHeight;
+	this->worldGridSize.w = m_levelManager.levels[this->currentLevel]->tileWidth;
+	this->worldGridSize.h = m_levelManager.levels[this->currentLevel]->tileHeight;
 
 }
 
@@ -531,7 +514,10 @@ void Game::initSound()
 {
 
 	Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 512);
-	testSoundChunk = Mix_LoadWAV("assets/sound/weaponFire1.wav");
+	testSoundChunk = Mix_LoadWAV("assets/sound/weaponFire1.wav"); 
+	testMusic = Mix_LoadMUS("assets/sound/ambience_deep_shining.wav");
+
+	Mix_PlayMusic(testMusic, -1);
 
 }
 
@@ -540,6 +526,7 @@ void Game::testSound()
 {
 
 	int channelPlayedOn = Mix_PlayChannel(-1, testSoundChunk, 0);
+	
 
 	game->debugPanel->addItem("GunFireSoundChannel", to_string(channelPlayedOn));
 

@@ -10,13 +10,17 @@ using namespace::std;
 class ObjectPoolManager
 {
 public:
-	ObjectPoolManager();
-	~ObjectPoolManager();
+	static ObjectPoolManager& instance();
 	void init();
 	void reset(ParticleObject* particle);
 
 	ParticleObject* get(string);
 	map <string, vector<ParticleObject*>> objectPool;
+
+private:
+	ObjectPoolManager();
+	~ObjectPoolManager();
+
 
 };
 

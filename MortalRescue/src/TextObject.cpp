@@ -1,5 +1,7 @@
 #include "TextObject.h"
 #include "Texture.h"
+#include "TextureManager.h"
+#include "DynamicTextManager.h"
 #include "Game.h"
 
 extern Game* game;
@@ -108,7 +110,7 @@ void TextObject::render()
 	//Get render texture src rectangle
 	textureSourceRect = this->getRenderTextureRect();
 
-	game->textureManager.render(texture, this->color(), textureSourceRect, &destRect, 0);
+	TextureManager::instance().render(texture, this->color(), textureSourceRect, &destRect, 0);
 
 
 }
@@ -121,7 +123,7 @@ Texture* TextObject::generateTextTexture()
 	SDL_Texture* sdlTexture;
 
 	int textSize = this->definition()->textDetails.size; // default to x size
-	string fontFile = game->textureManager.getFont(this->fontId);
+	string fontFile = TextureManager::instance().getFont(this->fontId);
 
 	TTF_Font* fontObject = TTF_OpenFont(fontFile.c_str(), textSize);
 	//surface = TTF_RenderText_Solid(fontObject, textObject->textValue.c_str(), color);
@@ -135,7 +137,7 @@ Texture* TextObject::generateTextTexture()
 		this->setSize(surface->w, surface->h);
 	}
 
-	sdlTexture = game->textureManager.createTextureFromSurface(surface);
+	sdlTexture = TextureManager::instance().createTextureFromSurface(surface);
 	SDL_FreeSurface(surface);
 
 	texture->sdlTexture = sdlTexture;
@@ -158,7 +160,7 @@ Texture* TextObject::updateDynamicTextTexture()
 	SDL_Surface* surface;
 
 	//newText = game->dynamicTextManager.textItems[gameObject->definition->id].get();
-	newText = game->dynamicTextManager.getTextItem(this->definitionId());
+	newText = DynamicTextManager::instance().getTextItem(this->definitionId());
 
 	//check the clock and see if enough time as gone by
 	steady_clock::time_point now_time = steady_clock::now();

@@ -127,12 +127,16 @@
       "physicsObject": {
         "type": "B2_DYNAMIC",
         "collisionShape": "B2_CIRCLE",
-        "collisionRadius": 1.28,
+        "collisionRadius": 0.64,
         "friction": 0.5,
         "density": 5.5,
         "linearDamping": 0.2,
         "angularDamping": 100.0,
-        "collisionCategory": 2
+        "collisionCategory": 2,
+        "weaponAnchorPoint": {
+          "x": 1.0,
+          "y": 0.0
+        }
       },
       "xSize": 2.56,
       "ySize": 2.56,

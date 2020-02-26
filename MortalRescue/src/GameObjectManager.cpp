@@ -1,12 +1,4 @@
-#include "Game.h"
 #include "GameObjectManager.h"
-#include "TextureManager.h"
-#include "GameObject.h"
-#include "PlayerObject.h"
-#include "WorldObject.h"
-#include "TextObject.h"
-#include "CompositeObject.h"
-#include "GameObjectDefinition.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -14,6 +6,21 @@
 
 #include <iostream>
 #include <fstream>
+
+#include "TextureManager.h"
+#include "GameObject.h"
+#include "PlayerObject.h"
+#include "WorldObject.h"
+#include "TextObject.h"
+#include "CompositeObject.h"
+#include "Util.h"
+
+
+GameObjectManager& GameObjectManager::instance()
+{
+	static GameObjectManager singletonInstance;
+	return singletonInstance;
+}
 
 
 GameObjectManager::GameObjectManager()

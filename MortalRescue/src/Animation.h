@@ -6,7 +6,8 @@
 #include <vector> 
 #include <SDL.h>
 #include <Box2D/Box2D.h>
-#include "Game.h"
+
+#include "GameObjectDefinition.h"
 
 class Animation
 {

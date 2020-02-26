@@ -1,6 +1,11 @@
 #include "Game.h"
+#include "Globals.h"
 #include "CompositeObject.h"
+
 #include "Texture.h"
+#include "TextureManager.h"
+#include "GameObjectManager.h"
+
 
 
 CompositeObject::CompositeObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
@@ -54,7 +59,7 @@ void CompositeObject::buildComposite()
 
 	//Get the texture and the surface
 	blueprintTexureId = this->definition()->compositeDetails.blueprint.textureId;
-	blueprintSurface = game->textureManager.getTexture(blueprintTexureId)->surface;
+	blueprintSurface = TextureManager::instance().getTexture(blueprintTexureId)->surface;
 	int bpp = blueprintSurface->format->BytesPerPixel;
 
 	SDL_LockSurface(blueprintSurface);
@@ -99,7 +104,7 @@ void CompositeObject::buildPiece(CompositeLegendItem legendItem, int xPos, int y
 	Build the game objects off screen. They will be placed in exect location duriing update loop
 	*/
 	WorldObject* worldObject =
-		game->gameObjectManager.buildGameObject<WorldObject>(legendItem.gameObjectId, -5, -5, 0);
+		GameObjectManager::instance().buildGameObject<WorldObject>(legendItem.gameObjectId, -5, -5, 0);
 	worldObject->setStrength(this->definition()->compositeDetails.levels[0].strength);
 	piece.pieceObject = worldObject;
 		

@@ -1,7 +1,8 @@
 #include "GameObjectContactListener.h"
 #include "GameObject.h"
 #include "WorldObject.h"
-#include "Game.h"
+#include "ParticleMachine.h"
+#include "GameObjectDefinition.h"
 
 
 // this callback will find the closest static body that the ray hits
@@ -199,7 +200,7 @@ void GameObjectContactListener::bulletWall(WorldObject* bullet, WorldObject* wal
 		40,	//Particle count min
 		50	//Particle count max
 	);
-	game->particleMachine.add(particleEmission);
+	ParticleMachine::instance().add(particleEmission);
 
 }
 
@@ -254,7 +255,7 @@ void GameObjectContactListener::bulletPieceExplode(WorldObject* bullet, WorldObj
 		10,	//Particle count min
 		25	//Particle count max
 	);
-	game->particleMachine.add(particleEmission);
+	ParticleMachine::instance().add(particleEmission);
 
 	//Create some white smoke particles
 	colorMin = { 255,255,255,100 };
@@ -278,7 +279,7 @@ void GameObjectContactListener::bulletPieceExplode(WorldObject* bullet, WorldObj
 		5,	//Particle count min
 		10	//Particle count max
 	);
-	game->particleMachine.add(particleEmission);
+	ParticleMachine::instance().add(particleEmission);
 
 	//Also emit 2 pieces that will remain on teh ground
 	colorMin = piece->color();
@@ -301,7 +302,7 @@ void GameObjectContactListener::bulletPieceExplode(WorldObject* bullet, WorldObj
 		2,	//Particle count min
 		2	//Particle count max
 	);
-	game->particleMachine.add(particleEmission);
+	ParticleMachine::instance().add(particleEmission);
 
 }
 
@@ -334,7 +335,7 @@ void GameObjectContactListener::bulletPieceDeflect(WorldObject* bullet, WorldObj
 		2,	//Particle count min
 		3	//Particle count max
 	);
-	game->particleMachine.add(particleEmission);
+	ParticleMachine::instance().add(particleEmission);
 
 
 }
@@ -344,8 +345,8 @@ b2Vec2 GameObjectContactListener::findWallImpactPoint(b2Vec2 worldPoint, PlayerO
 
 	b2Vec2 spawnPoint;
 
-	FirstHitGroundRayCastCallback raycastCallback;
-	game->physicsWorld->RayCast(&raycastCallback, worldPoint, player->physicsBody()->GetTransform().p);
+	//FirstHitGroundRayCastCallback raycastCallback;
+	//game->physicsWorld->RayCast(&raycastCallback, worldPoint, player->physicsBody()->GetTransform().p);
 
 
 

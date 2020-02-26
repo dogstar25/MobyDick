@@ -3,11 +3,12 @@
 #include <map>
 #include <SDL.h>
 #include <Box2D/Box2D.h>
-#include <cstddef>
 
-#include "Animation.h"
+#include <cstddef>
+#include <vector>
 #include "Weapon.h"
 
+class Animation;
 
 using namespace std;
 

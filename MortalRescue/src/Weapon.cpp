@@ -1,6 +1,8 @@
 #include "Weapon.h"
+
 #include "GameObject.h"
 #include "ParticleObject.h"
+#include "ObjectPoolManager.h"
 #include "Game.h"
 
 #include <string>
@@ -26,7 +28,7 @@ Weapon::~Weapon()
 void Weapon::fire(const b2Vec2 &origin, const float &angle, const float &fireOffset)
 {
 
-	ParticleObject* bullet = game->objectPoolManager.get(m_bulletPoolId);
+	ParticleObject* bullet = ObjectPoolManager::instance().get(m_bulletPoolId);
 	if (bullet != NULL) {
 
 		//Calculate the origin of the bullet
@@ -57,7 +59,7 @@ void Weapon::fire(const b2Vec2 &origin, const float &angle, const float &fireOff
 		bullet->setColor(255,255,255,255);
 
 		//Add the bullet object to the main gameObject collection
-		game->addGameObject(bullet, game->MAIN);
+		game->addGameObject(bullet, GameOjectLayer::MAIN);
 	}
 
 }

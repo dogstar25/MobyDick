@@ -1,7 +1,9 @@
 #include "Animation.h"
+
 #include "GameObject.h"
-#include "GameObjectDefinition.h"
 #include "Texture.h"
+#include "TextureManager.h"
+#include "Game.h"
 
 
 Animation::Animation(GameObjectDefinition* gameObjectDefinition, string animationId, string textureId, int totalFrames, float speed)
@@ -12,7 +14,7 @@ Animation::Animation(GameObjectDefinition* gameObjectDefinition, string animatio
 	m_frameCount = totalFrames;
 
 	//Get pointer to textture
-	m_texture = game->textureManager.getTexture(textureId)->sdlTexture;
+	m_texture = TextureManager::instance().getTexture(textureId)->sdlTexture;
 
 	//Calculate how many columns and rows this animation texture has
 	int width, height;

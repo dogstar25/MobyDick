@@ -1,4 +1,6 @@
 #include "GUIEvent.h"
+#include "TextureManager.h"
+#include "GameObjectManager.h"
 #include "Game.h"
 
 GUIEvent::GUIEvent()
@@ -11,7 +13,7 @@ GUIEvent::GUIEvent(string guiObjectId)
 	//cout << guiObjectId +"\n";
 
 	GameObjectDefinition* definition;
-	definition = game->gameObjectManager.gameObjectDefinitions[guiObjectId];
+	definition = GameObjectManager::instance().gameObjectDefinitions[guiObjectId];
 
 	//Set the mouse mode
 	SDL_ShowCursor(true);
@@ -40,9 +42,9 @@ GUIEvent::GUIEvent(string guiObjectId)
 
 
 	//Panel game object
-	GameObject* guiPanel = game->gameObjectManager.buildGameObject <GameObject>("GUIPausePanel", posX, posY, 0);
+	GameObject* guiPanel = GameObjectManager::instance().buildGameObject <GameObject>("GUIPausePanel", posX, posY, 0);
 
-	this->uiObjectCollections[game->MAIN].gameObjects.push_back(guiPanel);
+	this->uiObjectCollections[GameOjectLayer::MAIN].gameObjects.push_back(guiPanel);
 
 }
 
@@ -99,7 +101,7 @@ void GUIEvent::update()
 void GUIEvent::render()
 {
 
-	game->textureManager.clear();
+	TextureManager::instance().clear();
 
 	//Render all of the game objects in the world
 	Game::renderCollection(&game->gameCollections);
@@ -107,7 +109,7 @@ void GUIEvent::render()
 	//Render all of the GUI Event game objects
 	Game::renderCollection(&uiObjectCollections);
 
-	game->textureManager.present();
+	TextureManager::instance().present();
 
 }
 

@@ -1,6 +1,11 @@
 #include "LevelManager.h"
+#include "Globals.h"
 #include "Texture.h"
+#include "TextureManager.h"
+#include "WorldObject.h"
+#include "GameObjectManager.h"
 #include "Game.h"
+
 
 
 static const SDL_Color WHITE = { 255,255,255 };
@@ -40,8 +45,8 @@ void LevelManager::loadLevelBlueprint(string levelId)
 	game->currentLevel = levelId;
 
 	//I am representing the level grid as a png image file 
-	levelImage = game->textureManager.getTexture(levelId)->sdlTexture;
-	surface = game->textureManager.getTexture(levelId)->surface;
+	levelImage = TextureManager::instance().getTexture(levelId)->sdlTexture;
+	surface = TextureManager::instance().getTexture(levelId)->surface;
 
 	//Create the level object
 	Level* level = new Level();
@@ -75,9 +80,9 @@ void LevelManager::loadLevelBlueprint(string levelId)
 			if (x == 0 && y == 0)
 			{
 				
-				level->tileWidth = game->gameObjectManager.gameObjectDefinitions[levelObject.gameObjectId]->xSize 
+				level->tileWidth = GameObjectManager::instance().gameObjectDefinitions[levelObject.gameObjectId]->xSize
 					* game->config.scaleFactor;
-				level->tileHeight = game->gameObjectManager.gameObjectDefinitions[levelObject.gameObjectId]->ySize
+				level->tileHeight = GameObjectManager::instance().gameObjectDefinitions[levelObject.gameObjectId]->ySize
 					* game->config.scaleFactor;
 			}
 		}
@@ -230,5 +235,29 @@ LevelObject* LevelManager::determineTile(int x, int y, SDL_Surface* surface)
 
 }
 
+void LevelManager::buildLevel(string levelId)
+{
+	Level* level = this->levels[levelId];
+	LevelObject* levelObject;
+	//unique_ptr<WorldObject> worldObject;
+	WorldObject* worldObject;
+
+	for (int y = 0; y < level->height; y++)
+	{
+		for (int x = 0; x < level->width; x++)
+		{
+
+			if (level->levelObjects[x][y].gameObjectId.empty() == false)
+			{
+				levelObject = &level->levelObjects[x][y];
+
+				worldObject = GameObjectManager::instance().buildGameObject <WorldObject>(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
+				game->addGameObject(worldObject, GameOjectLayer::MAIN);
+
+			}
+
+		}
+	}
+}
 
 
