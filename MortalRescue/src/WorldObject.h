@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
+class WeaponObject;
 
 enum worldObjectCategory {
 	GENERIC = 1,
@@ -23,9 +24,11 @@ private:
 	b2Body* m_physicsBody;
 	float m_speed;
 	float m_strength;
+	WeaponObject* m_weapon;
 
 	b2Body* buildB2Body(GameObjectDefinition*);
 	uint16 setCollisionMask(uint16 category);
+
 
 public:
 	WorldObject();
@@ -41,6 +44,7 @@ public:
 	virtual void setBox2DUserData(WorldObject*);
 	void setActive(bool);
 	void setStrength(float strength) { m_strength = strength; }
+	void addWeapon(string weaponObjectId);
 
 	
 	//Accessor Functions
@@ -52,6 +56,9 @@ public:
 	}
 	float strength() {
 		return m_strength;
+	}
+	WeaponObject* weapon() {
+		return m_weapon;
 	}
 
 

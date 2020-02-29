@@ -36,9 +36,6 @@
     <ClCompile Include="src\LevelManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Weapon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameObjectContactListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -96,6 +93,9 @@
     <ClCompile Include="src\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\WeaponObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\TextureManager.h">
@@ -117,9 +117,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\LevelManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Weapon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObjectContactListener.h">
@@ -183,6 +180,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Globals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\WeaponObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -309,6 +309,15 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\deflect1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\weapon1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\weapon1_FIRE.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\weapon1_IDLE.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

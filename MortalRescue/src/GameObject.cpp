@@ -2,7 +2,6 @@
 #include "TextObject.h"
 
 #include "Game.h"
-#include "Weapon.h"
 #include "GameObjectDefinition.h"
 #include "Animation.h"
 #include "Texture.h"

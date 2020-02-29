@@ -6,7 +6,6 @@
 
 #include <cstddef>
 #include <vector>
-#include "Weapon.h"
 
 class Animation;
 
@@ -74,6 +73,21 @@ struct AnimationDetails
 	vector<AnimationItem> animations;
 };
 
+struct WeaponLevelDetails
+{
+	int level;
+	int levelUpTarget;
+	int strength;
+	SDL_Color color;
+	string bulletPoolId;
+};
+
+struct WeaponDetails
+{
+	b2Vec2 anchorPoint;
+	map<int, WeaponLevelDetails> weaponLevelDetails;
+};
+
 /*
 ToDO:All of the members should be const because they cannot be changed. If they can, then they need
 to move to the gameObject level
@@ -122,6 +136,9 @@ public:
 		childPositionRelative;
 	uint16
 		collisionCategory;
+	SDL_Color 
+		color;
+	b2Vec2 weaponAnchorPoint;
 
 	/*
 	Complex definition details
@@ -129,11 +146,12 @@ public:
 	TextDetails textDetails;
 	CompositeDetails compositeDetails;
 	AnimationDetails animationDetails;
-	SDL_Color color;
+	WeaponDetails weaponDetails;
+	
 
 	vector<ChildObjectDetails> childObjectDefinitions; //TODO:turn this into ChildDetails
 
-	map<int, shared_ptr<Weapon>> weapons;
+	
 
 
 

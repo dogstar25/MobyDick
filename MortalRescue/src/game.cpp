@@ -13,7 +13,7 @@
 #include "GameObject.h"
 #include "Util.h"
 #include "Camera.h"
-#include "Weapon.h"
+#include "WeaponObject.h"
 #include "ParticleEmission.h"
 #include "GUIEvent.h"
 
@@ -161,20 +161,9 @@ bool Game::init()
 
 	//Create the main player object
 	playerObject = GameObjectManager::instance().buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
+	playerObject->addWeapon("WEAPON1");
 	this->player = playerObject;
-	this->player->weapon = this->player->definition()->weapons[1];
-/*
-	worldObject = GameObjectManager::instance().buildGameObject <WorldObject>("BULLET1", 4, 4, 0);
-	//Test joint
-	b2WeldJointDef weldJointDef;
-	weldJointDef.bodyA = playerObject->physicsBody();
-	weldJointDef.bodyB = worldObject->physicsBody();
-	weldJointDef.collideConnected = false;
-	weldJointDef.localAnchorA.Set(1.0, 0);//the top right corner of the box
-	weldJointDef.localAnchorB.Set(0, 0);//center of the circle
-	(b2RevoluteJoint*)this->physicsWorld->CreateJoint(&weldJointDef);
-	this->addGameObject(worldObject, GameOjectLayer::MAIN);
-*/
+
 
 	//set camera to center on player object
 	this->camera.setPosition((this->player->physicsBody()->GetPosition().x *  this->config.scaleFactor) -
@@ -384,6 +373,13 @@ void Game::addGameObject(TextObject* gameObject, int layer)
 }
 
 void Game::addGameObject(CompositeObject* gameObject, int layer)
+{
+
+	this->gameCollections[layer].gameObjects.push_back(gameObject);
+	this->gameObjectCount++;
+}
+
+void Game::addGameObject(WeaponObject* gameObject, int layer)
 {
 
 	this->gameCollections[layer].gameObjects.push_back(gameObject);

@@ -200,7 +200,7 @@
     <ClCompile Include="src\TextObject.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\Util.cpp" />
-    <ClCompile Include="src\Weapon.cpp" />
+    <ClCompile Include="src\WeaponObject.cpp" />
     <ClCompile Include="src\WorldObject.cpp" />
     <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
@@ -231,7 +231,7 @@
     <ClInclude Include="src\TextObject.h" />
     <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\Util.h" />
-    <ClInclude Include="src\Weapon.h" />
+    <ClInclude Include="src\WeaponObject.h" />
     <ClInclude Include="src\WorldObject.h" />
     <ClInclude Include="src\Texture.h" />
   </ItemGroup>
@@ -298,6 +298,9 @@
     <Image Include="assets\wall1_hall.png" />
     <Image Include="assets\wall1_open.png" />
     <Image Include="assets\wall1_wall.png" />
+    <Image Include="assets\weapon1.png" />
+    <Image Include="assets\weapon1_FIRE.png" />
+    <Image Include="assets\weapon1_IDLE.png" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\arial.ttf" />

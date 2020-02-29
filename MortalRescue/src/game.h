@@ -52,6 +52,7 @@ class GameObject;
 class ParticleObject;
 class CompositeObject;
 class ParticleMachine;
+class WeaponObject;
 
 /*
 	Main Game Class
@@ -81,6 +82,7 @@ public:
 	void addGameObject(WorldObject* gameObject, int);
 	void addGameObject(ParticleObject* gameObject, int);
 	void addGameObject(CompositeObject* gameObject, int);
+	void addGameObject(WeaponObject* gameObject, int);
 	bool getConfig();
 	void buildWorld(string);
 

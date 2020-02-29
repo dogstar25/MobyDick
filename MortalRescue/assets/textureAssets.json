@@ -153,7 +153,18 @@
       "id": "TX_DEFLECT1_64",
       "description": "Deflect",
       "filename": "assets/deflect1.png"
+    },
+    {
+      "id": "TX_WEAPON1_IDLE",
+      "description": "Weapon 1 Idle",
+      "filename": "assets/weapon1_IDLE.png"
+    },
+    {
+      "id": "TX_WEAPON1_FIRE",
+      "description": "Weapon 1 Fire",
+      "filename": "assets/weapon1_FIRE.png"
     }
+
 
   ],
   "fonts": [
