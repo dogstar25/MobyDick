@@ -2,6 +2,7 @@
 
 #include "GameObjectDefinition.h"
 #include "TextureManager.h"
+#include "WeaponObject.h"
 
 #include "Game.h"
 
@@ -225,7 +226,7 @@ uint16 WorldObject::setCollisionMask(uint16 category)
 
 	switch(category) {
 		case PLAYER:
-			mask = WALL | PARTICLE1 | PARTICLE2 | PARTICLE3 | ENEMY_FRAME | ENEMY_ARMOR_PIECE;
+			mask = WALL | PARTICLE2 | PARTICLE3 | ENEMY_FRAME | ENEMY_ARMOR_PIECE;
 			break;
 		case WALL:
 			mask = PLAYER | PARTICLE1 | PARTICLE2 | PARTICLE3 | ENEMY_FRAME | PLAYER_BULLET | ENEMY_ARMOR_PIECE;
@@ -283,5 +284,37 @@ void WorldObject::setBox2DUserData(WorldObject* worldObject)
 {
 
 	m_physicsBody->SetUserData(worldObject);
+
+}
+
+void WorldObject::addWeapon(string weaponObjectId)
+{
+
+	WeaponObject *weaponObject = 
+		GameObjectManager::instance().buildGameObject <WeaponObject>
+		(weaponObjectId, 4, 4, 0);
+
+	b2WeldJointDef weldJointDef;
+	weldJointDef.referenceAngle;
+	weldJointDef.bodyA = this->physicsBody();
+	weldJointDef.bodyB = weaponObject->physicsBody();
+	weldJointDef.collideConnected = false;
+	
+	b2Vec2 worldObjectAnchorPoint = { 
+		this->definition()->weaponAnchorPoint.x, 
+		this->definition()->weaponAnchorPoint.y 
+	};
+	weldJointDef.localAnchorA = worldObjectAnchorPoint;
+
+	b2Vec2 weaponsAnchorPoint =	{ 
+		weaponObject->definition()->weaponDetails.anchorPoint.x, 
+		weaponObject->definition()->weaponDetails.anchorPoint.y 
+	};
+	weldJointDef.localAnchorB = weaponsAnchorPoint;
+	(b2WeldJointDef*)game->physicsWorld->CreateJoint(&weldJointDef);
+
+	this->m_weapon = weaponObject;
+
+	game->addGameObject(weaponObject, GameOjectLayer::MAIN);
 
 }

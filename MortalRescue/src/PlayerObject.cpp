@@ -2,7 +2,7 @@
 
 #include "Game.h"
 #include "WorldObject.h"
-#include "Weapon.h"
+#include "WeaponObject.h"
 #include "GameObjectDefinition.h"
 #include "Animation.h"
 
@@ -195,22 +195,14 @@ void PlayerObject::fire()
 	
 	//Calculate the origin of the bullet
 	b2Vec2 origin = { this->physicsBody()->GetTransform().p.x , this->physicsBody()->GetTransform().p.y };
-	this->weapon->fire(origin, this->physicsBody()->GetAngle(), this->definition()->fireOffset);
+	this->weapon()->fire(origin, this->physicsBody()->GetAngle(), this->definition()->fireOffset);
 
 
 }
 
 void PlayerObject::weaponLevelUp()
 {
-	int level = weapon->getNextLevel();
-
-	auto iter = this->definition()->weapons.find(level);
-
-	if (iter != this->definition()->weapons.end())
-	{
-		//this->weapon = iter->second;
-		this->weapon = this->definition()->weapons[level];
-	}
+	weapon()->levelUp();
 	
 }
 
@@ -220,7 +212,7 @@ void PlayerObject::incrementPiecesCollected()
 	pieceCollectedCount += 1;
 	
 	//attemp to level up weapon
-	if (weapon->checkLevelUp(pieceCollectedCount) == true)
+	if (weapon()->checkLevelUp(pieceCollectedCount) == true)
 	{
 		this->weaponLevelUp();
 		pieceCollectedCount = 0;

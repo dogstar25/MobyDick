@@ -128,13 +128,13 @@
         "type": "B2_DYNAMIC",
         "collisionShape": "B2_CIRCLE",
         "collisionRadius": 0.64,
-        "friction": 0.5,
-        "density": 5.5,
+        "friction": 0.01,
+        "density": 15.5,
         "linearDamping": 0.2,
         "angularDamping": 100.0,
         "collisionCategory": 2,
         "weaponAnchorPoint": {
-          "x": 1.0,
+          "x": 0.8,
           "y": 0.0
         }
       },
@@ -164,29 +164,8 @@
           "gameObjectId": "PLAYER_LABEL",
           "locationSlot": 3
         }
-
-      ],
-      "weapons": [
-        {
-          "level": 1,
-          "strength": 1,
-          "levelUpTarget": 25,
-          "bulletPoolId": "BULLET1_POOL"
-        },
-        {
-          "level": 2,
-          "strength": 2,
-          "levelUpTarget": 25,
-          "bulletPoolId": "BULLET2_POOL"
-        },
-        {
-          "level": 3,
-          "strength": 5,
-          "levelUpTarget": 25,
-          "bulletPoolId": "BULLET2_POOL"
-        }
       ]
-     },
+    },
     {
       "id": "FPS_LABEL",
       "description": "FPS Label",
@@ -236,6 +215,80 @@
         "font": "FONT_ARIAL_REG",
         "size": 16
       }
+    },
+    {
+      "id": "WEAPON1",
+      "description": "Weapon 1",
+      "type": "WEAPON_OBJECT",
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "restitution": 0.0,
+        "density": 15.05,
+        "linearDamping": 0.0,
+        "angularDamping": 0.0,
+        "collisionCategory": 8,
+        "anchorPoint": {
+          "x": -0.3,
+          "y": 0.0
+        }
+
+      },
+      "xSize": 0.64,
+      "ySize": 0.64,
+      "animations": [
+        {
+          "state": "ACTIVE",
+          "textureId": "TX_WEAPON1_IDLE",
+          "speed": 0.5, //time in seconds for each frame. Lower the faster
+          "frames": 3
+        },
+        {
+          "state": "FIRE",
+          "textureId": "TX_WEAPON1_FIRE",
+          "speed": 0.1, //time in seconds for each frame. Lower the faster
+          "frames": 3
+        }
+
+      ],
+      "weaponLevels": [
+        {
+          "level": 1,
+          "strength": 1,
+          "levelUpTarget": 25,
+          "color": {
+            "red": 255,
+            "green": 0,
+            "blue": 0,
+            "alpha": 255
+          },
+          "bulletPoolId": "BULLET1_POOL"
+        },
+        {
+          "level": 2,
+          "strength": 2,
+          "levelUpTarget": 25,
+          "color": {
+            "red": 0,
+            "green": 255,
+            "blue": 0,
+            "alpha": 255
+          },
+          "bulletPoolId": "BULLET2_POOL"
+        },
+        {
+          "level": 3,
+          "strength": 5,
+          "levelUpTarget": 25,
+          "color": {
+            "red": 255,
+            "green": 255,
+            "blue": 255,
+            "alpha": 255
+          },
+          "bulletPoolId": "BULLET2_POOL"
+        }
+      ]
     }
   ]
 }

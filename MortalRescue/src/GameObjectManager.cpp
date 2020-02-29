@@ -123,7 +123,8 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 			gameObjectDefinition->collisionShape = itr["physicsObject"]["collisionShape"].asString();
 			gameObjectDefinition->collisionRadius = itr["physicsObject"]["collisionRadius"].asFloat();
 			gameObjectDefinition->collisionCategory = itr["physicsObject"]["collisionCategory"].asInt();
-
+			gameObjectDefinition->weaponAnchorPoint.x = itr["physicsObject"]["weaponAnchorPoint"]["x"].asFloat();
+			gameObjectDefinition->weaponAnchorPoint.y = itr["physicsObject"]["weaponAnchorPoint"]["y"].asFloat();
 
 		}
 
@@ -237,21 +238,26 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 			}
 		}
 
-		shared_ptr<Weapon> weapon;
-		for (auto weaponItr : itr["weapons"])
+		/*
+		Weapons details
+		*/
+		float x = itr["physicsObject"]["anchorPoint"]["x"].asFloat();
+		float y = itr["physicsObject"]["anchorPoint"]["y"].asFloat();
+		gameObjectDefinition->weaponDetails.anchorPoint.Set(x,y);
+		WeaponLevelDetails weaponLevelDetails;
+		for (auto weaponItr : itr["weaponLevels"])
 		{
-			int level = weaponItr["level"].asInt();
-
-			weapon = make_shared<Weapon>(
-				weaponItr["bulletPoolId"].asString(),
-				weaponItr["strength"].asFloat(),
-				weaponItr["levelUpTarget"].asInt(),
-				level
-				);
-			gameObjectDefinition->weapons.emplace(level, weapon);
+			weaponLevelDetails.level = weaponItr["level"].asInt();
+			weaponLevelDetails.levelUpTarget = weaponItr["levelUpTarget"].asInt();
+			weaponLevelDetails.strength = weaponItr["strength"].asInt();
+			weaponLevelDetails.bulletPoolId = weaponItr["bulletPoolId"].asString();
+			weaponLevelDetails.color.r = weaponItr["color"]["red"].asInt();
+			weaponLevelDetails.color.g = weaponItr["color"]["green"].asInt();
+			weaponLevelDetails.color.b = weaponItr["color"]["blue"].asInt();
+			weaponLevelDetails.color.a = weaponItr["color"]["alpha"].asInt();
+			gameObjectDefinition->weaponDetails.weaponLevelDetails.emplace(weaponLevelDetails.level, weaponLevelDetails);
 
 		}
-
 
 		this->gameObjectDefinitions[gameObjectDefinition->id] = gameObjectDefinition;
 

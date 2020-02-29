@@ -1,7 +1,6 @@
 #pragma once
 #include <SDL.h>
 
-#include "Weapon.h"
 #include "WorldObject.h"
 
 class GameObject;
@@ -15,8 +14,6 @@ public:
 		direction, 
 		strafe,
 		pieceCollectedCount;
-
-	shared_ptr<Weapon> weapon;
 
 	PlayerObject();
 	PlayerObject(string, int, int, int);
