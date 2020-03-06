@@ -3,6 +3,7 @@
 #include "WorldObject.h"
 #include "ParticleMachine.h"
 #include "GameObjectDefinition.h"
+#include "SoundManager.h"
 
 
 // this callback will find the closest static body that the ray hits
@@ -161,6 +162,10 @@ void GameObjectContactListener::playerBitPiece(PlayerObject* player, WorldObject
 	piece->setRemoveFromWorld(true);
 	player->incrementPiecesCollected();
 
+	//Sound
+	SoundManager::instance().playSound("SFX_PICKUP_2");
+
+
 }
 
 
@@ -304,6 +309,9 @@ void GameObjectContactListener::bulletPieceExplode(WorldObject* bullet, WorldObj
 	);
 	ParticleMachine::instance().add(particleEmission);
 
+	//Sound
+	SoundManager::instance().playSound("SFX_IMPACT_1");
+
 }
 
 void GameObjectContactListener::bulletPieceDeflect(WorldObject* bullet, WorldObject* piece, b2Vec2 contactPoint)
@@ -336,6 +344,9 @@ void GameObjectContactListener::bulletPieceDeflect(WorldObject* bullet, WorldObj
 		3	//Particle count max
 	);
 	ParticleMachine::instance().add(particleEmission);
+
+	//Sound
+	SoundManager::instance().playSound("SFX_IMPACT_3");
 
 
 }

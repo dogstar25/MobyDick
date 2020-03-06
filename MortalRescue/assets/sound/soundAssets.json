@@ -4,6 +4,48 @@
       "id": "SFX_WEAPON1_FIRE1",
       "description": "Weapon1 Fire Sound 1",
       "filename": "weapon1_fire1.wav"
+    },
+    {
+      "id": "SFX_LASER_002",
+      "description": "Laser 002",
+      "filename": "weapon_laser_002.wav"
+
+    },
+    {
+      "id": "SFX_LASER_004",
+      "description": "Laser 004",
+      "filename": "weapon_laser_004.wav"
+
+    },
+    {
+      "id": "SFX_IMPACT_1",
+      "description": "Imapct Fire Sound 1",
+      "filename": "impact_metal_shell_001.wav"
+
+    },
+    {
+      "id": "SFX_IMPACT_2",
+      "description": "Imapct Fire Sound 2",
+      "filename": "impact_metal_shell_002.wav"
+
+    },
+    {
+      "id": "SFX_IMPACT_3",
+      "description": "Imapct Fire Sound 3",
+      "filename": "impact_metal_shell_003.wav"
+
+    },
+    {
+      "id": "SFX_PICKUP_1",
+      "description": "Pickup Item 1",
+      "filename": "pick_up_001.wav"
+
+    },
+    {
+      "id": "SFX_PICKUP_2",
+      "description": "Pickup Item 2",
+      "filename": "pick_up_002.wav"
+
     }
   ],
   "music": [

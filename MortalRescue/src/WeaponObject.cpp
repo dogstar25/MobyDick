@@ -32,7 +32,7 @@ void WeaponObject::fire(const b2Vec2 &origin, const float &angle, const float &f
 	if (bullet != NULL) {
 
 		//Sound
-		SoundManager::instance().playSound("SFX_WEAPON1_FIRE1");
+		SoundManager::instance().playSound("SFX_LASER_002");
 
 		SDL_Color color = this->definition()->weaponDetails.weaponLevelDetails[m_currentLevel].color;
 		int strength = this->definition()->weaponDetails.weaponLevelDetails[m_currentLevel].strength;

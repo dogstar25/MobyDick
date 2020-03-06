@@ -313,7 +313,14 @@
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav" />
+    <Media Include="assets\sound\impact_metal_shell_001.wav" />
+    <Media Include="assets\sound\impact_metal_shell_002.wav" />
+    <Media Include="assets\sound\impact_metal_shell_003.wav" />
+    <Media Include="assets\sound\pick_up_001.wav" />
+    <Media Include="assets\sound\pick_up_002.wav" />
     <Media Include="assets\sound\weapon1_fire1.wav" />
+    <Media Include="assets\sound\weapon_laser_002.wav" />
+    <Media Include="assets\sound\weapon_laser_004.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
