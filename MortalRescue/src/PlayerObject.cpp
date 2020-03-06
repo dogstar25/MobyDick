@@ -5,6 +5,7 @@
 #include "WeaponObject.h"
 #include "GameObjectDefinition.h"
 #include "Animation.h"
+#include "SoundManager.h"
 
 #include <math.h>
 

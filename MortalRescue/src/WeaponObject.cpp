@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "ParticleObject.h"
 #include "ObjectPoolManager.h"
+#include "SoundManager.h"
 #include "Game.h"
 
 #include <string>
@@ -29,6 +30,9 @@ void WeaponObject::fire(const b2Vec2 &origin, const float &angle, const float &f
 	
 	ParticleObject* bullet = ObjectPoolManager::instance().get(bulletPoolId);
 	if (bullet != NULL) {
+
+		//Sound
+		SoundManager::instance().playSound("SFX_WEAPON1_FIRE1");
 
 		SDL_Color color = this->definition()->weaponDetails.weaponLevelDetails[m_currentLevel].color;
 		int strength = this->definition()->weaponDetails.weaponLevelDetails[m_currentLevel].strength;

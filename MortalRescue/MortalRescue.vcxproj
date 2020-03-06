@@ -197,6 +197,7 @@
     <ClCompile Include="src\ParticleMachine.cpp" />
     <ClCompile Include="src\ParticleObject.cpp" />
     <ClCompile Include="src\PlayerObject.cpp" />
+    <ClCompile Include="src\SoundManager.cpp" />
     <ClCompile Include="src\TextObject.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\Util.cpp" />
@@ -228,6 +229,7 @@
     <ClInclude Include="src\ParticleMachine.h" />
     <ClInclude Include="src\ParticleObject.h" />
     <ClInclude Include="src\PlayerObject.h" />
+    <ClInclude Include="src\SoundManager.h" />
     <ClInclude Include="src\TextObject.h" />
     <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\Util.h" />
@@ -247,6 +249,7 @@
     <None Include="assets\particleObjects.json">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </None>
+    <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\textureAssets.json" />
     <None Include="assets\gameConfig.json" />
     <None Include="libFLAC-8.dll" />
@@ -310,7 +313,7 @@
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav" />
-    <Media Include="assets\sound\weaponFire1.wav" />
+    <Media Include="assets\sound\weapon1_fire1.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

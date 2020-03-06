@@ -96,6 +96,9 @@
     <ClCompile Include="src\WeaponObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\SoundManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\TextureManager.h">
@@ -185,6 +188,9 @@
     <ClInclude Include="src\WeaponObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\SoundManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\textureAssets.json" />
@@ -213,6 +219,7 @@
     <None Include="libvorbis-0.dll" />
     <None Include="libvorbisfile-3.dll" />
     <None Include="SDL2_mixer.dll" />
+    <None Include="assets\sound\soundAssets.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png">
@@ -328,10 +335,10 @@
     <Text Include="assets\gameObjectDefinitions\compositeObjects.json" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="assets\sound\weaponFire1.wav">
+    <Media Include="assets\sound\ambience_deep_shining.wav">
       <Filter>Resource Files</Filter>
     </Media>
-    <Media Include="assets\sound\ambience_deep_shining.wav">
+    <Media Include="assets\sound\weapon1_fire1.wav">
       <Filter>Resource Files</Filter>
     </Media>
   </ItemGroup>

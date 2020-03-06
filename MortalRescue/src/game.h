@@ -6,6 +6,7 @@
 #include <SDL_image.h>
 #include <SDL_mixer.h>
 
+
 #include <iostream>
 #include <fstream>
 //#include <cstdio>
@@ -42,7 +43,7 @@ public:
 	bool debugPanel;
 	SDL_Point debugPanelLocation;
 	int debugPanelFontSize;
-
+	int soundChannels;
 
 };
 
@@ -129,7 +130,7 @@ public:
 	string currentLevel;
 	DebugDraw debugDraw;
 
-	Mix_Chunk* testSoundChunk;
+	//Mix_Chunk* testSoundChunk;
 	Mix_Music* testMusic;
 
 

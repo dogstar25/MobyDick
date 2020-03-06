@@ -4,6 +4,9 @@
     "width": 1280,
     "height": 720
   },
+  "sound": {
+    "numberOfChannels":  32
+  },
   "mouseSensitivity": 5.2, //higher the mmore sensitive
   "gameLoopStep": 16, //in miliseconds
   "physics": {

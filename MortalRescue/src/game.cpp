@@ -7,6 +7,7 @@
 #include "LevelManager.h"
 #include "TextureManager.h"
 #include "GameObjectManager.h"
+#include "SoundManager.h"
 #include "DynamicTextManager.h"
 #include "GameObjectCollection.h"
 #include "ParticleMachine.h"
@@ -94,10 +95,6 @@ bool Game::init()
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
 
-
-		//Init Sound
-		this->initSound();
-
 		//Init font library
 		TTF_Init();
 
@@ -114,6 +111,10 @@ bool Game::init()
 
 		//Initialize the texture manager
 		TextureManager::instance().init(pWindow);
+
+		//Initialize the sound manager
+		SoundManager::instance().initSound();
+		SoundManager::instance().playMusic("MUSIC_AMBIENCE_1", -1);
 
 		// Construct a physics world object, which will hold and simulate the physics objects.
 		this->physicsWorld = new b2World(this->gravity);
@@ -410,9 +411,12 @@ bool Game::getConfig()
 	this->config.debugPanelLocation.x = root["debugPanel"]["xPos"].asInt();
 	this->config.debugPanelLocation.y = root["debugPanel"]["yPos"].asInt();
 	this->config.debugPanelFontSize = root["debugPanel"]["fontSize"].asInt();
+	this->config.soundChannels = root["sound"]["numberOfChannels"].asInt();
 
 	this->camera.frame.w = root["camera"]["width"].asInt();
 	this->camera.frame.h = root["camera"]["height"].asInt();
+
+	
 
 	return true;
 }
@@ -441,7 +445,7 @@ void Game::handleEvents() {
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			this->testSound();
+			//this->testSound();
 			this->player->fire();
 			break;
 		case SDL_USEREVENT:
@@ -502,33 +506,5 @@ void Game::initWorldBounds()
 
 }
 
-/*
-Test SOund stuff
-*/
 
-void Game::initSound()
-{
-
-	Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 512);
-	testSoundChunk = Mix_LoadWAV("assets/sound/weaponFire1.wav"); 
-	testMusic = Mix_LoadMUS("assets/sound/ambience_deep_shining.wav");
-
-	Mix_PlayMusic(testMusic, -1);
-
-}
-
-
-void Game::testSound()
-{
-
-	int channelPlayedOn = Mix_PlayChannel(-1, testSoundChunk, 0);
-	
-
-	game->debugPanel->addItem("GunFireSoundChannel", to_string(channelPlayedOn));
-
-	//Mix_PlayMusic(musicName, 0);
-
-
-
-}
 

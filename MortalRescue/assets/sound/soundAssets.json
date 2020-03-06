@@ -1,0 +1,17 @@
+{
+  "soundEffects": [
+    {
+      "id": "SFX_WEAPON1_FIRE1",
+      "description": "Weapon1 Fire Sound 1",
+      "filename": "weapon1_fire1.wav"
+    }
+  ],
+  "music": [
+    {
+      "id": "MUSIC_AMBIENCE_1",
+      "description": "Ambience Music 1",
+      "filename": "ambience_deep_shining.wav"
+    }
+  ]
+
+}
