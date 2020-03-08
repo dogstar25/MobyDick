@@ -1,20 +1,45 @@
 #include "Camera.h"
+#include "GameConfig.h"
 
 
+Camera::Camera()
+{
 
-void Camera::setPosition(int x, int y)
+}
+
+Camera::~Camera()
+{
+}
+
+Camera& Camera::instance()
+{
+	static Camera singletonInstance;
+	return singletonInstance;
+
+}
+
+void Camera::setFrameSize(int width, int height)
+{
+
+	m_frame.w = width;
+	m_frame.h = height;
+
+}
+
+
+void Camera::setFramePosition(int x, int y)
 {
 	int xPos, yPos;
 
 	//Check far left limit
-	if (x < this->worldBounds->x)
+	if (x < m_cameraBounds.x)
 	{
-		xPos = this->worldBounds->x;
+		xPos = m_cameraBounds.x;
 	}
 	//Check far right limit
-	else if (x > this->worldBounds->w - this->frame.w)
+	else if (x > m_cameraBounds.w - m_frame.w)
 	{
-		xPos = this->worldBounds->w - this->frame.w;
+		xPos = m_cameraBounds.w - m_frame.w;
 	}
 	else
 	{
@@ -22,14 +47,14 @@ void Camera::setPosition(int x, int y)
 	}
 
 	//Check far top limit
-	if (y < this->worldBounds->y)
+	if (y < m_cameraBounds.y)
 	{
-		yPos = this->worldBounds->y;
+		yPos = m_cameraBounds.y;
 	}
 	//Check far bottom limit
-	else if (y > this->worldBounds->h - this->frame.h)
+	else if (y > m_cameraBounds.h - m_frame.h)
 	{
-		yPos = this->worldBounds->h - this->frame.h;
+		yPos = m_cameraBounds.h - m_frame.h;
 	}
 	else
 	{
@@ -37,14 +62,25 @@ void Camera::setPosition(int x, int y)
 	}
 
 	//set position
-	this->frame.x = xPos;
-	this->frame.y = yPos;
+	m_frame.x = xPos;
+	m_frame.y = yPos;
 
 }
 
-void Camera::init(SDL_Rect *worldBounds)
+void Camera::init()
 {
 
-	this->worldBounds = worldBounds;
+	m_frame.x = GameConfig::instance().defaultCameraFrame().x;
+	m_frame.y = GameConfig::instance().defaultCameraFrame().y;
+	m_frame.w = GameConfig::instance().defaultCameraFrame().w;
+	m_frame.h = GameConfig::instance().defaultCameraFrame().h;
+
+
+}
+
+void Camera::setCameraBounds(SDL_Rect bounds)
+{
+
+	m_cameraBounds = bounds;
 
 }

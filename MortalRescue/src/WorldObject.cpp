@@ -4,6 +4,7 @@
 #include "TextureManager.h"
 #include "WeaponObject.h"
 
+#include "GameConfig.h"
 #include "Game.h"
 
 
@@ -18,8 +19,8 @@ WorldObject::WorldObject(string gameObjectId, float xMapPos, float yMapPos, floa
 {
 	//Size
 	//FIXME:Add a override function to setSize to worldPbject to automatically multiply the scalefactor
-	this->setSize(this->definition()->xSize * game->config.scaleFactor, 
-		this->definition()->ySize * game->config.scaleFactor);
+	this->setSize(this->definition()->xSize * GameConfig::instance().scaleFactor(), 
+		this->definition()->ySize * GameConfig::instance().scaleFactor());
 
 	//speed
 	m_speed = this->definition()->speed;
@@ -51,11 +52,11 @@ WorldObject::~WorldObject()
 void WorldObject::setPosition(b2Vec2 position, float angle)
 {
 	b2Vec2 newlocation;
-	//newlocation.x = (position.x / game->config.scaleFactor);
-	//newlocation.y = (position.y / game->config.scaleFactor);
+	//newlocation.x = (position.x / GameConfig::instance().scaleFactor);
+	//newlocation.y = (position.y / GameConfig::instance().scaleFactor);
 
-	newlocation.x = (position.x / game->config.scaleFactor) + (this->definition()->xSize / 2);
-	newlocation.y = (position.y / game->config.scaleFactor) + (this->definition()->ySize / 2);
+	newlocation.x = (position.x / GameConfig::instance().scaleFactor()) + (this->definition()->xSize / 2);
+	newlocation.y = (position.y / GameConfig::instance().scaleFactor()) + (this->definition()->ySize / 2);
 
 	m_physicsBody->SetTransform(newlocation, angle );
 	//m_physicsBody->SetLinearVelocity(b2Vec2(0, 0));
@@ -88,8 +89,8 @@ SDL_Rect WorldObject::getPositionRect()
 	//World objects position from box2d is the center of the object
 	//So, we need to adjust the rectangle top left corner to be
 	//the render point for SDL
-	positionRect.x = round((m_physicsBody->GetPosition().x * game->config.scaleFactor) - (this->size().x / 2));
-	positionRect.y = round((m_physicsBody->GetPosition().y * game->config.scaleFactor) - (this->size().y / 2));
+	positionRect.x = round((m_physicsBody->GetPosition().x * GameConfig::instance().scaleFactor()) - (this->size().x / 2));
+	positionRect.y = round((m_physicsBody->GetPosition().y * GameConfig::instance().scaleFactor()) - (this->size().y / 2));
 	return positionRect;
 
 }
@@ -104,8 +105,8 @@ SDL_Rect WorldObject::getRenderDestRect()
 	destRect.h += this->definition()->yRenderAdjustment;
 
 	//Adjust position based on current camera position - offset
-	destRect.x -= game->camera.frame.x;
-	destRect.y -= game->camera.frame.y;
+	destRect.x -= Camera::instance().frame().x;
+	destRect.y -= Camera::instance().frame().y;
 
 	return destRect;
 }

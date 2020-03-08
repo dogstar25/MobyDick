@@ -5,6 +5,7 @@
 
 #include <json/json.h>
 
+#include "GameConfig.h"
 #include "Game.h"
 
 
@@ -90,7 +91,7 @@ void SoundManager::playMusic(string id, int loopTimes)
 
 void SoundManager::allocateChannels()
 {
-	int soundChannels = game->config.soundChannels;
+	int soundChannels = GameConfig::instance().soundChannels();
 
 	Mix_AllocateChannels(soundChannels);
 

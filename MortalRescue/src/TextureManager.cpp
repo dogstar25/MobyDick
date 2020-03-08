@@ -12,6 +12,8 @@
 #include "TextObject.h"
 #include "WorldObject.h"
 #include "ParticleObject.h"
+#include "GameConfig.h"
+
 
 TextureManager::TextureManager()
 {
@@ -231,8 +233,8 @@ void TextureManager::drawPoly(b2Body* body)
 				firstFound = true;
 			}
 
-			point.x = vector.x * game->config.scaleFactor;
-			point.y = vector.y * game->config.scaleFactor;
+			point.x = vector.x * GameConfig::instance().scaleFactor();
+			point.y = vector.y * GameConfig::instance().scaleFactor();
 			points[i] = point;
 		}
 
@@ -276,8 +278,8 @@ void TextureManager::outLineObject(GameObject* gameObject, float lineSize)
 	//Adjust for camera
 	if (gameObject->definition()->absolutePositioning == false)
 	{
-		gameObjectDrawRect.x -= game->camera.frame.x;
-		gameObjectDrawRect.y -= game->camera.frame.y;
+		gameObjectDrawRect.x -= Camera::instance().frame().x;
+		gameObjectDrawRect.y -= Camera::instance().frame().y;
 	}
 
 	//topleft

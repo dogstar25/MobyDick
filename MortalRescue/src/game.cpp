@@ -12,6 +12,7 @@
 #include "GameObjectCollection.h"
 #include "ParticleMachine.h"
 #include "GameObject.h"
+#include "GameConfig.h"
 #include "Util.h"
 #include "Camera.h"
 #include "WeaponObject.h"
@@ -49,8 +50,6 @@ Game::~Game()
 Game::Game()
 {
 
-	this->config = {};
-	this->camera = {};
 	this->worldBounds = {};
 	this->worldGridSize = {};
 	this->physicsWorld = nullptr;
@@ -63,17 +62,10 @@ Game::Game()
 
 	this->player = nullptr;
 
-	this->gravity = {};
-	this->b2DebugDrawMode = false;
-	this->timeStep = 0;
-	this->velocityIterations = 0;
-	this->positionIterations = 0;
-
 	this->gameState= GameState::PLAY;
 
 	this->fps = 0;
 	this->awakeCount = 0;
-	this->gameLoopStep = 0;
 
 
 
@@ -84,16 +76,16 @@ Initialize Game
 bool Game::init()
 {
 
-
-
-
 	//Get all of the configuration values
-	getConfig();
-	gameObjectCount = 0;
+	GameConfig::instance().init("gameConfig");
+	
 
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
+
+		//Initialize the camera
+		Camera::instance().init();
 
 		//Init font library
 		TTF_Init();
@@ -102,11 +94,11 @@ bool Game::init()
 		this->gameState = GameState::PLAY;
 
 		//Create the game window
-		pWindow = SDL_CreateWindow(this->gameTitle.c_str(),
+		pWindow = SDL_CreateWindow(GameConfig::instance().gameTitle().c_str(),
 			this->windowXpos,
 			this->windowYPos,
-			this->camera.frame.w,
-			this->camera.frame.h,
+			Camera::instance().frame().w,
+			Camera::instance().frame().h,
 			SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 
 		//Initialize the texture manager
@@ -117,13 +109,13 @@ bool Game::init()
 		SoundManager::instance().playMusic("MUSIC_AMBIENCE_1", -1);
 
 		// Construct a physics world object, which will hold and simulate the physics objects.
-		this->physicsWorld = new b2World(this->gravity);
+		this->physicsWorld = new b2World(GameConfig::instance().gravity());
 		this->physicsWorld->SetAutoClearForces(true);
 		//Add a collision contact listener
 		this->physicsWorld->SetContactListener(&m_gameObjectContactListner);
 
 		//Debug Mode
-		if (this->b2DebugDrawMode == true)
+		if (GameConfig::instance().b2DebugDrawMode() == true)
 		{
 			this->debugDraw.SetFlags(DebugDraw::e_shapeBit);
 			this->physicsWorld->SetDebugDraw(&this->debugDraw);
@@ -157,9 +149,6 @@ bool Game::init()
 	TextObject* textObject = NULL;
 	CompositeObject* compositeObject = NULL;
 
-	
-
-
 	//Create the main player object
 	playerObject = GameObjectManager::instance().buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
 	playerObject->addWeapon("WEAPON1");
@@ -167,10 +156,14 @@ bool Game::init()
 
 
 	//set camera to center on player object
-	this->camera.setPosition((this->player->physicsBody()->GetPosition().x *  this->config.scaleFactor) -
-		(camera.frame.w / 2),
-		(this->player->physicsBody()->GetPosition().y *  this->config.scaleFactor) -
-		(camera.frame.h / 2));
+	//
+	//TODO:Can we remove this?
+	//
+	Camera::instance().setFramePosition(
+		(this->player->physicsBody()->GetPosition().x * GameConfig::instance().scaleFactor()) -
+		(Camera::instance().frame().w / 2),
+		(this->player->physicsBody()->GetPosition().y * GameConfig::instance().scaleFactor()) -
+		(Camera::instance().frame().h / 2));
 
 	//CREATE A TEST TEXT ITEM          
 	textObject = GameObjectManager::instance().buildGameObject <TextObject>("FPS_LABEL", 0, 0, 0);
@@ -190,7 +183,7 @@ bool Game::init()
 	this->addGameObject(compositeObject, GameOjectLayer::MAIN);
 
 	//Create the debug panel if its turned on
-	if (this->config.debugPanel == true)
+	if (GameConfig::instance().debugPanel() == true)
 	{
 
 		this->debugPanel = make_unique<DebugPanel>();
@@ -208,7 +201,8 @@ void Game::play()
 {
 
 	//Get the value for how often to update and render the game
-	std::chrono::duration<double> milisecsPerUpdate = std::chrono::milliseconds(this->gameLoopStep);
+	std::chrono::duration<double> milisecsPerUpdate = 
+		std::chrono::milliseconds(GameConfig::instance().gameLoopStep());
 
 	//Capture the amount of time that has passed since last loop and accumulate time for both
 	//the FPS calculation and the game loop timer
@@ -243,10 +237,15 @@ void Game::update() {
 	this->player->update();
 
 	//Update the camera frame to point to the new player position
-	this->camera.setPosition((this->player->physicsBody()->GetPosition().x *  this->config.scaleFactor) -
-		(camera.frame.w / 2),
-		(this->player->physicsBody()->GetPosition().y *  this->config.scaleFactor) -
-		(camera.frame.h / 2));
+	//
+	//TODO:Instead of this, give the camera an object/position to follow
+	//and the camera will follow on its own
+	//
+	Camera::instance().setFramePosition(
+		(this->player->physicsBody()->GetPosition().x * GameConfig::instance().scaleFactor()) -
+		(Camera::instance().frame().w / 2),
+		(this->player->physicsBody()->GetPosition().y * GameConfig::instance().scaleFactor()) -
+		(Camera::instance().frame().h / 2));
 
 	// spin through list of particle tasks to execute, like exposions and emitters
 	ParticleMachine::instance().update();
@@ -294,7 +293,9 @@ void Game::update() {
 	}
 
 	//Step the box2d physics world
-	this->physicsWorld->Step(this->timeStep, this->velocityIterations, this->positionIterations);
+	this->physicsWorld->Step(GameConfig::instance().timeStep(), 
+		GameConfig::instance().velocityIterations(),
+		GameConfig::instance().positionIterations());
 
 }
 
@@ -312,7 +313,7 @@ void Game::render() {
 	renderCollection(&this->gameCollections);
 
 	//DebugDraw
-	if (this->b2DebugDrawMode == true)
+	if (GameConfig::instance().b2DebugDrawMode() == true)
 	{
 		this->physicsWorld->DrawDebugData();
 	}
@@ -387,39 +388,6 @@ void Game::addGameObject(WeaponObject* gameObject, int layer)
 	this->gameObjectCount++;
 }
 
-bool Game::getConfig()
-{
-	//Read file and stream it to a JSON object
-	Json::Value root;
-	ifstream ifs("assets/gameConfig.json");
-	ifs >> root;
-	//ifs.close();
-
-	//Get and store config values
-	this->gameTitle = root["gameTitle"].asString();
-	this->gameLoopStep = root["gameLoopStep"].asInt();
-	this->gravity.Set(root["physics"]["gravity"]["x"].asInt(), root["physics"]["gravity"]["y"].asFloat());
-
-	this->timeStep = root["physics"]["timeStep"].asFloat();
-	this->velocityIterations = root["physics"]["velocityIterations"].asInt();
-	this->positionIterations = root["physics"]["positionIterations"].asInt();
-	this->b2DebugDrawMode = root["physics"]["b2DebugDrawMode"].asBool();
-
-	this->config.scaleFactor = root["physics"]["box2dScale"].asFloat();
-	this->config.mouseSensitivity = root["mouseSensitivity"].asFloat();
-	this->config.debugPanel = root["debugPanel"]["show"].asBool();
-	this->config.debugPanelLocation.x = root["debugPanel"]["xPos"].asInt();
-	this->config.debugPanelLocation.y = root["debugPanel"]["yPos"].asInt();
-	this->config.debugPanelFontSize = root["debugPanel"]["fontSize"].asInt();
-	this->config.soundChannels = root["sound"]["numberOfChannels"].asInt();
-
-	this->camera.frame.w = root["camera"]["width"].asInt();
-	this->camera.frame.h = root["camera"]["height"].asInt();
-
-	
-
-	return true;
-}
 
 void Game::handleEvents() {
 	SDL_Event event;
@@ -467,8 +435,8 @@ void Game::buildWorld(string levelId)
 	//Initialize world bounds and gridsize based on current level loaded info
 	this->initWorldBounds();
 
-	//Init Camera
-	this->camera.init(&this->worldBounds);
+	//Set Camera Bounds
+	Camera::instance().setCameraBounds(this->worldBounds);
 
 	//Build the actual level gameobjects
 	m_levelManager.buildLevel("TX_LEVEL1_BLUEPRINT");
@@ -485,8 +453,8 @@ void Game::initWorldBounds()
 	//If there is no level loaded then default the world size to be the same as the camera size
 	if (this->currentLevel.empty())
 	{
-		width = this->camera.frame.w;
-		height = this->camera.frame.h;
+		width = Camera::instance().frame().w;
+		height = Camera::instance().frame().h;
 	}
 	else
 	{
@@ -505,6 +473,5 @@ void Game::initWorldBounds()
 	this->worldGridSize.h = m_levelManager.levels[this->currentLevel]->tileHeight;
 
 }
-
 
 

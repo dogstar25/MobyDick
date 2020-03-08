@@ -1,6 +1,7 @@
 #include "GUIEvent.h"
 #include "TextureManager.h"
 #include "GameObjectManager.h"
+#include "Camera.h"
 #include "Game.h"
 
 GUIEvent::GUIEvent()
@@ -24,8 +25,8 @@ GUIEvent::GUIEvent(string guiObjectId)
 	int posX, posY;
 	
 	//Adjust to camera position center
-	float centerInPixelsX = game->camera.frame.w / 2;
-	float centerInPixelsY = game->camera.frame.h / 2;
+	float centerInPixelsX = Camera::instance().frame().w / 2;
+	float centerInPixelsY = Camera::instance().frame().h / 2;
 
 	//Adjust to gridsize
 	int centerInTilesX = centerInPixelsX / game->worldGridSize.w;

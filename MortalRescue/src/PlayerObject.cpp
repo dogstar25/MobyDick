@@ -6,6 +6,7 @@
 #include "GameObjectDefinition.h"
 #include "Animation.h"
 #include "SoundManager.h"
+#include "GameConfig.h"
 
 #include <math.h>
 
@@ -105,7 +106,7 @@ void PlayerObject::handlePlayerMovementEvent(SDL_Event* event)
 	*/
 
 	//method 1
-	float angularVelocity = event->motion.xrel * game->config.mouseSensitivity;
+	float angularVelocity = event->motion.xrel * GameConfig::instance().mouseSensitivity();
 	this->physicsBody()->SetAngularVelocity(angularVelocity);
 
 }

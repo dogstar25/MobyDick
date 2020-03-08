@@ -165,8 +165,8 @@ SDL_Rect GameObject::getRenderDestRect()
 	//adjust render position X and Y for camera if not an absolute positioned object
 	if (m_definition->absolutePositioning == false)
 	{
-		destRect.x -= game->camera.frame.x;
-		destRect.y -= game->camera.frame.y;
+		destRect.x -= Camera::instance().frame().x;
+		destRect.y -= Camera::instance().frame().y;
 	}
 
 	return destRect;

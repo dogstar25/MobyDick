@@ -2,6 +2,7 @@
 #include "Util.h"
 #include "DynamicTextManager.h"
 #include "GameObjectManager.h"
+#include "GameConfig.h"
 #include "Game.h"
 
 
@@ -12,8 +13,8 @@
 DebugPanel::DebugPanel()
 {
 
-	this->location.x = game->config.debugPanelLocation.x;
-	this->location.y = game->config.debugPanelLocation.y;
+	this->location.x = GameConfig::instance().debugPanelLocation().x;
+	this->location.y = GameConfig::instance().debugPanelLocation().y;
 
 	this->itemCount = 0;
 
@@ -34,7 +35,7 @@ void DebugPanel::addItem(string id, float value, int decDigits)
 void DebugPanel::addItem(string id, string value)
 {
 
-	if (game->config.debugPanel == true) {
+	if (GameConfig::instance().debugPanel() == true) {
 
 		float yPos, xPos;
 

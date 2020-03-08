@@ -1,6 +1,7 @@
 #include "DebugDraw.h"
 #include "Game.h"
 #include "TextureManager.h"
+#include "GameConfig.h"
 
 #include <SDL.h>
 
@@ -27,12 +28,12 @@ void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, cons
 		b2Vec2 vector = vertices[i];
 
 		//Adjust points based on Gamescale
-		point.x = vector.x * game->config.scaleFactor;
-		point.y = vector.y * game->config.scaleFactor;
+		point.x = vector.x * GameConfig::instance().scaleFactor();
+		point.y = vector.y * GameConfig::instance().scaleFactor();
 
 		//Adjust position based on current camera position - offset
-		point.x -= game->camera.frame.x;
-		point.y -= game->camera.frame.y;
+		point.x -= Camera::instance().frame().x;
+		point.y -= Camera::instance().frame().y;
 
 		//If this is the first point, then save it
 		if (firstFound == false) {
@@ -63,13 +64,13 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Ve
 
 	//convert to propert game scale
 	b2Vec2 newCenter = center;
-	newCenter.x *= game->config.scaleFactor;
-	newCenter.y *= game->config.scaleFactor;
-	radius *= game->config.scaleFactor;
+	newCenter.x *= GameConfig::instance().scaleFactor();
+	newCenter.y *= GameConfig::instance().scaleFactor();
+	radius *= GameConfig::instance().scaleFactor();
 
 	//Adjust position based on current camera position - offset
-	newCenter.x -= game->camera.frame.x;
-	newCenter.y -= game->camera.frame.y;
+	newCenter.x -= Camera::instance().frame().x;
+	newCenter.y -= Camera::instance().frame().y;
 
 	int  sides = (2 * M_PI) * radius / 2;
 

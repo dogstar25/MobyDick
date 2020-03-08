@@ -4,6 +4,7 @@
 #include "TextureManager.h"
 #include "WorldObject.h"
 #include "GameObjectManager.h"
+#include "GameConfig.h"
 #include "Game.h"
 
 
@@ -81,9 +82,9 @@ void LevelManager::loadLevelBlueprint(string levelId)
 			{
 				
 				level->tileWidth = GameObjectManager::instance().gameObjectDefinitions[levelObject.gameObjectId]->xSize
-					* game->config.scaleFactor;
+					* GameConfig::instance().scaleFactor();
 				level->tileHeight = GameObjectManager::instance().gameObjectDefinitions[levelObject.gameObjectId]->ySize
-					* game->config.scaleFactor;
+					* GameConfig::instance().scaleFactor();
 			}
 		}
 	}

@@ -4,6 +4,7 @@
 #include "Texture.h"
 #include "TextureManager.h"
 #include "Game.h"
+#include "GameConfig.h"
 
 
 Animation::Animation(GameObjectDefinition* gameObjectDefinition, string animationId, string textureId, int totalFrames, float speed)
@@ -24,8 +25,8 @@ Animation::Animation(GameObjectDefinition* gameObjectDefinition, string animatio
 	//calculate frameSize
 	if (gameObjectDefinition->isPhysicsObject == true)
 	{
-		m_frameSize.x = gameObjectDefinition->xSize * game->config.scaleFactor;
-		m_frameSize.y = gameObjectDefinition->ySize * game->config.scaleFactor;
+		m_frameSize.x = gameObjectDefinition->xSize * GameConfig::instance().scaleFactor();
+		m_frameSize.y = gameObjectDefinition->ySize * GameConfig::instance().scaleFactor();
 	}
 	else
 	{

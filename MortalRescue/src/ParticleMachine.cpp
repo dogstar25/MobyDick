@@ -4,6 +4,7 @@
 #include "ParticleEmission.h"
 #include "ObjectPoolManager.h"
 #include "Game.h"
+#include "GameConfig.h"
 #include "Globals.h"
 
 
@@ -160,7 +161,9 @@ void ParticleMachine::emit(
 				}
 
 				//FIXME:Add a override function to setSize to particleObject to automatically multiply the scalefactor
-				particle->setSize(particleSize * game->config.scaleFactor, particleSize * game->config.scaleFactor);
+				particle->setSize(
+					particleSize * GameConfig::instance().scaleFactor(), 
+					particleSize * GameConfig::instance().scaleFactor()	);
 
 			}
 

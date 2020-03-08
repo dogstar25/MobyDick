@@ -35,17 +35,6 @@
 
 
 
-struct Config
-{
-public:
-	float32 scaleFactor;
-	float32 mouseSensitivity;
-	bool debugPanel;
-	SDL_Point debugPanelLocation;
-	int debugPanelFontSize;
-	int soundChannels;
-
-};
 
 //forward declations
 class PlayerObject;
@@ -84,24 +73,18 @@ public:
 	void addGameObject(ParticleObject* gameObject, int);
 	void addGameObject(CompositeObject* gameObject, int);
 	void addGameObject(WeaponObject* gameObject, int);
-	bool getConfig();
 	void buildWorld(string);
 
-	void testSound();
-	void initSound();
 
 	Clock clock;
 	
 
-	Config config;
-	Camera camera;
 	SDL_Rect worldBounds;
 	SDL_Rect worldGridSize;
 	b2World* physicsWorld;
 	
 	//Main screen and window stuff
 	SDL_Window* pWindow;
-	string gameTitle;
 	Uint32 windowXpos= SDL_WINDOWPOS_CENTERED, windowYPos= SDL_WINDOWPOS_CENTERED;
 	Uint32 windowFlags= SDL_WINDOW_RESIZABLE;
 	int gameObjectCount;
@@ -117,16 +100,10 @@ public:
 
 	unique_ptr<DebugPanel> debugPanel;
 
-	//Box2d Physics
-	b2Vec2 gravity;
-	bool b2DebugDrawMode;
-	float timeStep;
-	int velocityIterations,
-		positionIterations;
 	//Current Game State
 	int gameState;
 
-	int fps, awakeCount, gameLoopStep;
+	int fps, awakeCount;
 	string currentLevel;
 	DebugDraw debugDraw;
 

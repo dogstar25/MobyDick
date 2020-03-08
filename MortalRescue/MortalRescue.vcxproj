@@ -177,6 +177,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\CompositeObject.cpp" />
+    <ClCompile Include="src\GameConfig.cpp" />
     <ClCompile Include="src\GUIEvent.cpp" />
     <ClCompile Include="src\ParticleEmission.cpp" />
     <ClCompile Include="src\Camera.cpp" />
@@ -206,6 +207,7 @@
     <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GameConfig.h" />
     <ClInclude Include="src\Globals.h" />
     <ClInclude Include="src\CompositeObject.h" />
     <ClInclude Include="src\Constants.h" />
