@@ -176,6 +176,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Clock.cpp" />
     <ClCompile Include="src\CompositeObject.cpp" />
     <ClCompile Include="src\GameConfig.cpp" />
     <ClCompile Include="src\GUIEvent.cpp" />
@@ -207,6 +208,7 @@
     <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Clock.h" />
     <ClInclude Include="src\GameConfig.h" />
     <ClInclude Include="src\Globals.h" />
     <ClInclude Include="src\CompositeObject.h" />

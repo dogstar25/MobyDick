@@ -75,10 +75,6 @@ public:
 	void addGameObject(WeaponObject* gameObject, int);
 	void buildWorld(string);
 
-
-	Clock clock;
-	
-
 	SDL_Rect worldBounds;
 	SDL_Rect worldGridSize;
 	b2World* physicsWorld;
@@ -106,11 +102,6 @@ public:
 	int fps, awakeCount;
 	string currentLevel;
 	DebugDraw debugDraw;
-
-	//Mix_Chunk* testSoundChunk;
-	Mix_Music* testMusic;
-
-
 
 
 

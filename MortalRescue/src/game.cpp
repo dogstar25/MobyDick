@@ -18,6 +18,7 @@
 #include "WeaponObject.h"
 #include "ParticleEmission.h"
 #include "GUIEvent.h"
+#include "Clock.h"
 
 
 using namespace chrono_literals;
@@ -135,7 +136,7 @@ bool Game::init()
 		this->buildWorld("TX_LEVEL1_BLUEPRINT");
 
 		//Initialize the clock object
-		this->clock.init();
+		Clock::instance().init();
 		
 	}
 
@@ -200,16 +201,13 @@ Main Play Loop
 void Game::play()
 {
 
-	//Get the value for how often to update and render the game
-	std::chrono::duration<double> milisecsPerUpdate = 
-		std::chrono::milliseconds(GameConfig::instance().gameLoopStep());
 
 	//Capture the amount of time that has passed since last loop and accumulate time for both
 	//the FPS calculation and the game loop timer
-	this->clock.tick();
+	Clock::instance().update();
 
 	//Only update and render if we have passed the 60 fps time passage
-	if (this->clock.gameloop_time_accum >= milisecsPerUpdate)
+	if (Clock::instance().hasMetGameLoopSpeed())
 	{
 		//Handle updating objects positions and physics
 		update();
@@ -218,11 +216,9 @@ void Game::play()
 		render();
 
 		//Increment frame counter and calculate FPS and reset the gameloop timer
-		this->clock.current_frame_cnt++;
-		this->clock.calcFps();
-		this->clock.resetGameLoopTimeAccum();
+		Clock::instance().calcFps();
 
-		DynamicTextManager::instance().updateText("FPS_VALUE", to_string(this->clock.fps));
+		DynamicTextManager::instance().updateText("FPS_VALUE", to_string(Clock::instance().fps()));
 
 	}
 
