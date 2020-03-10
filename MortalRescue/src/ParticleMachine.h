@@ -22,8 +22,6 @@ public:
 		int force
 	);
 
-	vector <ParticleEmission*> particleEmissions;
-
 	void emit(
 		string poolId,
 		b2Vec2 originMin,
@@ -46,6 +44,10 @@ public:
 private:
 	ParticleMachine();
 	~ParticleMachine();
+
+	vector <ParticleEmission*> m_particleEmissions;
+
+
 
 
 };

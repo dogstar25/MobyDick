@@ -99,7 +99,7 @@ public:
 	//Current Game State
 	int gameState;
 
-	int fps, awakeCount;
+	int fps;
 	string currentLevel;
 	DebugDraw debugDraw;
 

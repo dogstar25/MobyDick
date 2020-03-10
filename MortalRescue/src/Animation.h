@@ -12,6 +12,17 @@
 class Animation
 {
 
+public:
+
+	Animation(GameObjectDefinition* gameObjectDefinition, std::string animationId, std::string textureId,
+		int totalFrames, float speed);
+	~Animation();
+
+	void animate();
+	SDL_Rect* getCurrentTextureAnimationSrcRect();
+	SDL_Texture* getTexture();
+	int getCurrentAnimFrame();
+
 private:
 	std::string m_id;
 	float m_speed;
@@ -28,17 +39,6 @@ private:
 	//Array of all x,y coordinates of the top left corner of each animation frame in the texture
 	std::vector<SDL_Point> m_animationFramePositions;
 	SDL_Texture* m_texture;
-
-public:
-
-	Animation(GameObjectDefinition* gameObjectDefinition, std::string animationId, std::string textureId,
-		int totalFrames, float speed);
-	~Animation();
-
-	void animate();
-	SDL_Rect* getCurrentTextureAnimationSrcRect();
-	SDL_Texture* getTexture();
-	int getCurrentAnimFrame();
 
 };
 

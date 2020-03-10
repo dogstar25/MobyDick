@@ -6,6 +6,7 @@
 
 class GameConfig
 {
+
 public:
 	static GameConfig& instance();
 	bool init(std::string configFile);

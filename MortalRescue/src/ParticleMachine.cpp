@@ -34,9 +34,9 @@ void ParticleMachine::runParticleEmissions()
 {
 	ParticleEmission* particleEmission = NULL;
 
-	while (this->particleEmissions.empty() == false)
+	while (m_particleEmissions.empty() == false)
 	{
-		particleEmission = this->particleEmissions.back();
+		particleEmission = m_particleEmissions.back();
 
 		this->emit(
 			particleEmission->poolId,
@@ -57,18 +57,14 @@ void ParticleMachine::runParticleEmissions()
 			particleEmission->particleCountMax	//Particle count max
 		);
 
-		this->particleEmissions.pop_back();
+		m_particleEmissions.pop_back();
 	}
 
 }
 
 void ParticleMachine::add(ParticleEmission* particleEmission)
 {
-
-	this->particleEmissions.push_back(particleEmission);
-
-
-
+	m_particleEmissions.push_back(particleEmission);
 }
 
 

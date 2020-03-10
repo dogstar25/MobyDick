@@ -5,20 +5,18 @@
 
 #include <SDL_rect.h>
 
-using namespace std;
-
 class DebugPanel
 {
 public:
 	DebugPanel();
 	~DebugPanel();
 
-	void addItem(string, string);
-	void addItem(string, float, int);
-	SDL_Point location;
-	int itemCount;
-	//map <string,string>debugItems;
+	void addItem(std::string, std::string);
+	void addItem(std::string, float, int);
 
+private:
+	SDL_Point m_location;
+	int m_itemCount;
 
 };
 

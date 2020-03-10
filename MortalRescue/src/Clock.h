@@ -5,6 +5,7 @@
 
 class Clock
 {
+
 public:
 
 	static Clock& instance();

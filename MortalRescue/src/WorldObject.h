@@ -19,17 +19,6 @@ enum worldObjectCategory {
 
 class WorldObject :	public GameObject
 {
-private:
-
-	b2Body* m_physicsBody;
-	float m_speed;
-	float m_strength;
-	WeaponObject* m_weapon;
-
-	b2Body* buildB2Body(GameObjectDefinition*);
-	uint16 setCollisionMask(uint16 category);
-
-
 public:
 	WorldObject();
 	WorldObject(string, float, float, float);
@@ -60,6 +49,17 @@ public:
 	WeaponObject* weapon() {
 		return m_weapon;
 	}
+
+private:
+
+	b2Body* m_physicsBody;
+	float m_speed;
+	float m_strength;
+	WeaponObject* m_weapon;
+
+	b2Body* buildB2Body(GameObjectDefinition*);
+	uint16 setCollisionMask(uint16 category);
+
 
 
 };

@@ -13,10 +13,10 @@
 DebugPanel::DebugPanel()
 {
 
-	this->location.x = GameConfig::instance().debugPanelLocation().x;
-	this->location.y = GameConfig::instance().debugPanelLocation().y;
+	m_location.x = GameConfig::instance().debugPanelLocation().x;
+	m_location.y = GameConfig::instance().debugPanelLocation().y;
 
-	this->itemCount = 0;
+	m_itemCount = 0;
 
 }
 
@@ -55,14 +55,14 @@ void DebugPanel::addItem(string id, string value)
 		{
 
 			//Calculate the position of the debug text item
-			xPos = this->location.x;
+			xPos = m_location.x;
 			//yPos = this->location.y + this->itemCount * (.5);
-			yPos = this->location.y + this->itemCount * ((float)definition->textDetails.size / (float)game->worldGridSize.h);
+			yPos = m_location.y + m_itemCount * ((float)definition->textDetails.size / (float)game->worldGridSize.h);
 
 			TextObject* textObject = GameObjectManager::instance().buildGameObject <TextObject>(newId, xPos, yPos, 0);
 			game->addGameObject(textObject, GameOjectLayer::DEBUG);
 
-			this->itemCount++;
+			m_itemCount++;
 		}
 
 	}

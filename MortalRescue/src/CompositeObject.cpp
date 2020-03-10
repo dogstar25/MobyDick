@@ -35,7 +35,7 @@ void CompositeObject::render()
 {
 	WorldObject::render();
 
-	for (auto pieceObject : this->pieces)
+	for (auto pieceObject : m_pieces)
 	{
 		if(pieceObject.isDestroyed == false)
 		{
@@ -126,13 +126,13 @@ void CompositeObject::buildPiece(CompositeLegendItem legendItem, int xPos, int y
 	//Initialize color and strength to level 1
 	piece.pieceObject->setColor(this->definition()->compositeDetails.levels[0].color);
 
-	this->pieces.push_back(piece);
+	m_pieces.push_back(piece);
 
 }
 
 void CompositeObject::updatePieces()
 {
-	for (auto& pieceObject : this->pieces)
+	for (auto& pieceObject : m_pieces)
 	{
 
 		//Update the state of the piece

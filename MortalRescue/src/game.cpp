@@ -66,8 +66,6 @@ Game::Game()
 	this->gameState= GameState::PLAY;
 
 	this->fps = 0;
-	this->awakeCount = 0;
-
 
 
 }
