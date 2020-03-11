@@ -1,4 +1,5 @@
 #include "LevelManager.h"
+#include "Level.h"
 #include "Globals.h"
 #include "Texture.h"
 #include "TextureManager.h"

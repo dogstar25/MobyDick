@@ -180,6 +180,7 @@
     <ClCompile Include="src\CompositeObject.cpp" />
     <ClCompile Include="src\GameConfig.cpp" />
     <ClCompile Include="src\GUIEvent.cpp" />
+    <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\ParticleEmission.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\DebugDraw.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="src\CompositeObject.h" />
     <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\GUIEvent.h" />
+    <ClInclude Include="src\Level.h" />
     <ClInclude Include="src\ParticleEmission.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\DebugDraw.h" />
