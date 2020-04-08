@@ -53,7 +53,7 @@ bool TextureManager::init(SDL_Window* pWindow)
 	//Create the main renderer
 	m_Renderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 0);
-
+	//SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 	//Load all of the textures for the game
 	loadTextures();
 
@@ -267,6 +267,67 @@ void TextureManager::drawLine(b2Vec2 start, b2Vec2 end)
 
 }
 
+void TextureManager::drawGlowLine(b2Vec2 start, b2Vec2 end, SDL_Color color)
+{
+	SDL_SetRenderDrawBlendMode(m_Renderer, SDL_BLENDMODE_BLEND);
+	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, color.a);
+	SDL_RenderDrawLine(m_Renderer, start.x, start.y, end.x, end.y);
+
+	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, 127);
+	SDL_RenderDrawLine(m_Renderer, start.x+1, start.y, end.x+1, end.y);
+	SDL_RenderDrawLine(m_Renderer, start.x -1, start.y, end.x -1, end.y);
+
+	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, 127);
+	SDL_RenderDrawLine(m_Renderer, start.x + 2, start.y, end.x + 2, end.y);
+	SDL_RenderDrawLine(m_Renderer, start.x - 2, start.y, end.x - 2, end.y);
+
+	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, 64);
+	SDL_RenderDrawLine(m_Renderer, start.x + 3, start.y, end.x + 3, end.y);
+	SDL_RenderDrawLine(m_Renderer, start.x - 3, start.y, end.x - 3, end.y);
+
+	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, 64);
+	SDL_RenderDrawLine(m_Renderer, start.x + 4, start.y, end.x + 4, end.y);
+	SDL_RenderDrawLine(m_Renderer, start.x - 4, start.y, end.x - 4, end.y);
+
+	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, 10);
+	SDL_RenderDrawLine(m_Renderer, start.x + 5, start.y, end.x + 5, end.y);
+	SDL_RenderDrawLine(m_Renderer, start.x - 5, start.y, end.x - 5, end.y);
+
+	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, 10);
+	SDL_RenderDrawLine(m_Renderer, start.x + 6, start.y, end.x + 6, end.y);
+	SDL_RenderDrawLine(m_Renderer, start.x - 6, start.y, end.x - 6, end.y);
+
+}
+
+void TextureManager::drawGlowLine2(b2Vec2 start, b2Vec2 end, SDL_Color color)
+{
+	SDL_SetRenderDrawBlendMode(m_Renderer, SDL_BLENDMODE_ADD);
+	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, color.a);
+	SDL_RenderDrawLine(m_Renderer, start.x, start.y, end.x, end.y);
+
+	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, 32);
+	SDL_RenderSetLogicalSize(m_Renderer, 5, 5);
+	SDL_RenderSetScale(m_Renderer, 5, 5);
+	SDL_RenderDrawLine(m_Renderer, start.x, start.y, end.x, end.y);
+	SDL_RenderDrawLine(m_Renderer, start.x, start.y, end.x, end.y);
+
+	SDL_RenderSetScale(m_Renderer, 4, 4);
+	SDL_RenderDrawLine(m_Renderer, start.x, start.y, end.x, end.y);
+	SDL_RenderDrawLine(m_Renderer, start.x, start.y, end.x, end.y);
+
+	SDL_RenderSetScale(m_Renderer, 3, 3);
+	SDL_RenderDrawLine(m_Renderer, start.x, start.y, end.x, end.y);
+	SDL_RenderDrawLine(m_Renderer, start.x, start.y, end.x, end.y);
+
+	SDL_RenderSetScale(m_Renderer, 2, 2);
+	SDL_RenderDrawLine(m_Renderer, start.x, start.y, end.x, end.y);
+	SDL_RenderDrawLine(m_Renderer, start.x, start.y, end.x, end.y);
+
+	SDL_RenderSetScale(m_Renderer, 1, 1);
+
+
+
+}
 void TextureManager::outLineObject(GameObject* gameObject, float lineSize)
 {
 

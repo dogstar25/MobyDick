@@ -42,6 +42,8 @@ public:
 	void drawPoly(b2Body* body);
 	void drawPoints(SDL_Point*);
 	void drawLine(b2Vec2, b2Vec2);
+	void drawGlowLine(b2Vec2, b2Vec2, SDL_Color);
+	void drawGlowLine2(b2Vec2, b2Vec2, SDL_Color);
 	void outLineObject(GameObject* gameObject, float lineSize);
 	void outLineObject(WorldObject* gameObject);
 	SDL_Texture* createTextureFromSurface(SDL_Surface* surface);

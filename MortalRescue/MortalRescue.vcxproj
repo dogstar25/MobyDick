@@ -207,6 +207,7 @@
     <ClCompile Include="src\WeaponObject.cpp" />
     <ClCompile Include="src\WorldObject.cpp" />
     <ClCompile Include="src\Texture.cpp" />
+    <ClCompile Include="src\Waypoint.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Clock.h" />
@@ -242,6 +243,7 @@
     <ClInclude Include="src\WeaponObject.h" />
     <ClInclude Include="src\WorldObject.h" />
     <ClInclude Include="src\Texture.h" />
+    <ClInclude Include="src\Waypoint.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\blueprints\drone1_blueprint.aseprite" />

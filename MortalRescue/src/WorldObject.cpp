@@ -180,12 +180,22 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 	b2Shape* shape;
 	b2PolygonShape box;
 	b2CircleShape circle;
+	b2ChainShape chain;
 
 	//Collision shape - will default to a rectangle
 	if(definition->collisionShape.compare("B2_CIRCLE") == 0)
 	{
 		circle.m_radius = definition->collisionRadius;
 		shape = &circle;
+	}
+	else if (definition->collisionShape.compare("B2_CHAIN") == 0)
+	{
+		b2Vec2 vs[4];
+		vs[0].Set(40, 40);
+		vs[1].Set(400,400);
+		vs[2].Set(50,500);
+		chain.CreateChain(vs, 3);
+		shape = &chain;
 	}
 	else
 	{

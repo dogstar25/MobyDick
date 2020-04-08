@@ -1,4 +1,5 @@
 #include "LevelManager.h"
+#include "Box2D/Box2D.h"
 #include "Level.h"
 #include "Globals.h"
 #include "Texture.h"
@@ -35,6 +36,30 @@ static const unsigned char bottomWall = 0b0111;
 static const unsigned char leftWall = 0b1110;
 static const unsigned char column = 0b0000;
 
+
+b2Vec2 LevelManager::levelSize(std::string level)
+{
+	b2Vec2 levelSize;
+
+	levelSize.Set(m_levels[level]->width, m_levels[level]->height);
+
+	return (levelSize);
+
+
+}
+
+b2Vec2 LevelManager::tileSize(std::string level)
+{
+	b2Vec2 tileSize;
+
+	tileSize.Set(m_levels[level]->tileWidth, m_levels[level]->tileHeight);
+
+	return (tileSize);
+
+
+}
+
+
 void LevelManager::loadLevelBlueprint(string levelId)
 {
 
@@ -60,10 +85,11 @@ void LevelManager::loadLevelBlueprint(string levelId)
 	SDL_LockSurface(surface);
 
 	//Add level to the vector
-	this->levels[levelId] = level;
+	m_levels[levelId] = level;
 
 	//Initialze the array based on the pixels in the image by resizing it to proper size
-	this->levels[levelId]->levelObjects.resize(surface->w, vector<LevelObject>(surface->h));
+	m_levels[levelId]->setLevelObjectArraySize(surface->w, surface->h);
+
 
 	//Loop through entire image, top to bottom, left to right and build the
 	//2 dimensional array of tile objects
@@ -76,7 +102,7 @@ void LevelManager::loadLevelBlueprint(string levelId)
 			LevelObject levelObject = *determineTile(x, y, surface);
 
 			//Add levelItem to array
-			this->levels[levelId]->levelObjects[x][y] = levelObject;
+			m_levels[levelId]->addLevelObject(x,y,levelObject);
 
 			//use the first levelItem to determine the tile size of the level and world
 			if (x == 0 && y == 0)
@@ -239,7 +265,7 @@ LevelObject* LevelManager::determineTile(int x, int y, SDL_Surface* surface)
 
 void LevelManager::buildLevel(string levelId)
 {
-	Level* level = this->levels[levelId];
+	Level* level = m_levels[levelId];
 	LevelObject* levelObject;
 	//unique_ptr<WorldObject> worldObject;
 	WorldObject* worldObject;

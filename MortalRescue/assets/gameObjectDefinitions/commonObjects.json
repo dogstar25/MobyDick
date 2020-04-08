@@ -289,6 +289,22 @@
           "bulletPoolId": "BULLET2_POOL"
         }
       ]
+    },
+    {
+      "id": "CHAINTEST",
+      "description": "Chain test 1",
+      "type": "WORLD_OBJECT",
+      "absolutePositioning": false,
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "collisionShape": "B2_CHAIN",
+        "friction": 0.0,
+        "restitution": 0.0,
+        "density": 0.1,
+        "linearDamping": 0.0,
+        "angularDamping": 0.0,
+        "collisionCategory": 4
+      }
     }
   ]
 }

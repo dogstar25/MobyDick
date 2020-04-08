@@ -97,7 +97,8 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Ve
 
 void DebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 {
-	bool a;
+	TextureManager::instance().drawLine(p1, p2);
+
 }
 
 void DebugDraw::DrawTransform(const b2Transform& xf)

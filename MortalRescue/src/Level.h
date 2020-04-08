@@ -1,4 +1,5 @@
 #pragma once
+#include "Waypoint.h"
 #include <string>
 #include <vector>
 
@@ -16,8 +17,19 @@ public:
 	int width, height; // in tile count
 	float tileWidth, tileHeight;
 
-	//2 dimentional array for the 2D map
 	std::vector< std::vector <LevelObject> > levelObjects;
+
+	void addWaypoint(Waypoint waypoint);
+	void addLevelObject(int xIndex, int yIndex, LevelObject levelObject);
+	void setLevelObjectArraySize(int width, int height);
+
+	//Accessor Functions
+	std::vector<Waypoint> patrolWaypoints() {
+		return m_patrolWaypoints;
+	}
+
+private:
+	std::vector<Waypoint> m_patrolWaypoints;
 
 };
 
