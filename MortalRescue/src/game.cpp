@@ -181,10 +181,11 @@ bool Game::init()
 	compositeObject = GameObjectManager::instance().buildGameObject <CompositeObject>("DRONE", 11, 11, 0);
 	this->addGameObject(compositeObject, GameOjectLayer::MAIN);
 
-	worldObject = GameObjectManager::instance().buildGameObject <WorldObject>("CHAINTEST", 3, 3, 0);
-	this->addGameObject(worldObject, GameOjectLayer::MAIN);
+//	worldObject = GameObjectManager::instance().buildGameObject <WorldObject>("CHAINTEST", 3, 3, 0);
+//	this->addGameObject(worldObject, GameOjectLayer::MAIN);
 
-	
+	//gameObject = GameObjectManager::instance().buildGameObject <GameObject>("PARTICLE_SMOKE_GLOW", 4, 4, 45);
+	//this->addGameObject(gameObject, GameOjectLayer::MAIN);
 
 	//Create the debug panel if its turned on
 	if (GameConfig::instance().debugPanel() == true)
@@ -320,14 +321,12 @@ void Game::render() {
 		this->physicsWorld->DrawDebugData();
 	}
 
-	//Test a glow line
-	b2Vec2 glowStart = { 80,145 };
-	b2Vec2 glowEnd = { 100,416 };
-	SDL_Color color;
-	color.r = 113; color.g = 243; color.b = 65; color.a = 255;
-	TextureManager::instance().drawGlowLine2(glowStart, glowEnd, color);
-
-
+	/*
+	SDL_Color color = { 0,0,255,255 };
+	b2Vec2 start = { 64,64 };
+	b2Vec2 end = { 67,1000 };
+	TextureManager::instance().drawGlowLine(start, end, color);
+	*/
 
 	//Push all drawn things to the graphics display
 	TextureManager::instance().present();

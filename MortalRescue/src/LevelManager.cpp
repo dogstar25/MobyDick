@@ -90,7 +90,6 @@ void LevelManager::loadLevelBlueprint(string levelId)
 	//Initialze the array based on the pixels in the image by resizing it to proper size
 	m_levels[levelId]->setLevelObjectArraySize(surface->w, surface->h);
 
-
 	//Loop through entire image, top to bottom, left to right and build the
 	//2 dimensional array of tile objects
 	for(int y = 0; y< surface->h;y++)

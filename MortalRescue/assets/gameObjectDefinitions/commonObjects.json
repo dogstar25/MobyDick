@@ -68,11 +68,11 @@
         "red": 12,
         "green": 122,
         "blue": 200,
-        "alpha": 5,
+        "alpha": 255,
         "random": false
       },
-      "xSize": 128,
-      "ySize": 128
+      "xSize": 16,
+      "ySize": 1256
     },
     {
       "id": "SWORDLADY",
