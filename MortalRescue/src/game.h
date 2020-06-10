@@ -22,7 +22,7 @@
 #include "Util.h"
 #include "Constants.h"
 #include "TextureManager.h"
-#include "LevelManager.h"
+#include "Level.h"
 
 #include "GameObjectContactListener.h"
 #include "DynamicTextManager.h"
@@ -50,7 +50,7 @@ class WeaponObject;
 class Game {
 
 private:
-	LevelManager m_levelManager;
+	Level m_level;
 	GameObjectContactListener m_gameObjectContactListner;
 
 public:
@@ -100,7 +100,6 @@ public:
 	int gameState;
 
 	int fps;
-	string currentLevel;
 	DebugDraw debugDraw;
 
 

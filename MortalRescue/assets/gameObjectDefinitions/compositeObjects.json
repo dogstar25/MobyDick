@@ -20,7 +20,7 @@
       "ySize": 5.12,
       "speed": 11.5,
       "childPadding": 8,
-      "childPositionRelative": true,
+      "childPositionRelative": false,
       "childObjects": [
         {
           "gameObjectId": "SWORDLADY",

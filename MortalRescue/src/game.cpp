@@ -4,7 +4,7 @@
 #include "WorldObject.h"
 #include "ParticleObject.h"
 #include "CompositeObject.h"
-#include "LevelManager.h"
+#include "Level.h"
 #include "TextureManager.h"
 #include "GameObjectManager.h"
 #include "SoundManager.h"
@@ -440,7 +440,7 @@ void Game::handleEvents() {
 void Game::buildWorld(string levelId)
 {
 	//load all of the information needed to build the level
-	m_levelManager.loadLevelBlueprint("TX_LEVEL1_BLUEPRINT");
+	m_level.load("TX_LEVEL1_BLUEPRINT");
 
 	//Initialize world bounds and gridsize based on current level loaded info
 	this->initWorldBounds();
@@ -449,7 +449,7 @@ void Game::buildWorld(string levelId)
 	Camera::instance().setCameraBounds(this->worldBounds);
 
 	//Build the actual level gameobjects
-	m_levelManager.buildLevel("TX_LEVEL1_BLUEPRINT");
+	m_level.build("TX_LEVEL1_BLUEPRINT");
 
 }
 
@@ -461,26 +461,24 @@ void Game::initWorldBounds()
 	int width, height;
 
 	//If there is no level loaded then default the world size to be the same as the camera size
-	if (this->currentLevel.empty())
+	if (this->m_level.m_id.empty() == true)
 	{
 		width = Camera::instance().frame().w;
 		height = Camera::instance().frame().h;
 	}
 	else
 	{
-		width = m_levelManager.levelSize(this->currentLevel).x *
-			m_levelManager.tileSize(this->currentLevel).x;
+		width = m_level.m_width * m_level.m_tileWidth;
 
-		height = m_levelManager.levelSize(this->currentLevel).y *
-			m_levelManager.tileSize(this->currentLevel).y;
+		height = m_level.m_height * m_level.m_tileHeight;
 	}
 
 	this->worldBounds.x = 0;
 	this->worldBounds.y = 0;
 	this->worldBounds.w = width;
 	this->worldBounds.h = height;
-	this->worldGridSize.w = m_levelManager.tileSize(this->currentLevel).x;
-	this->worldGridSize.h = m_levelManager.tileSize(this->currentLevel).y;
+	this->worldGridSize.w = m_level.m_tileWidth;
+	this->worldGridSize.h = m_level.m_tileHeight;
 
 }
 

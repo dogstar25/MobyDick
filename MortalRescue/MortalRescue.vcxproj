@@ -193,7 +193,6 @@
     <ClCompile Include="src\GameObjectDefinition.cpp" />
     <ClCompile Include="src\GameObjectManager.cpp" />
     <ClCompile Include="src\jsoncpp\jsoncpp.cpp" />
-    <ClCompile Include="src\LevelManager.cpp" />
     <ClCompile Include="src\MortalRescue.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\ObjectPoolManager.cpp" />
@@ -231,7 +230,6 @@
     <ClInclude Include="src\GameObjectManager.h" />
     <ClInclude Include="src\jsoncpp\json\json-forwards.h" />
     <ClInclude Include="src\jsoncpp\json\json.h" />
-    <ClInclude Include="src\LevelManager.h" />
     <ClInclude Include="src\ObjectPoolManager.h" />
     <ClInclude Include="src\ParticleMachine.h" />
     <ClInclude Include="src\ParticleObject.h" />
@@ -254,6 +252,8 @@
     <None Include="assets\blueprints\level1.ase" />
     <None Include="assets\blueprints\level_test.ase" />
     <None Include="assets\gameObjectDefinitions\particleObjects.json" />
+    <None Include="assets\levels\level1_Objects.json" />
+    <None Include="assets\levels\level1_definition.json" />
     <None Include="assets\particleObjects.json">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </None>
@@ -277,9 +277,9 @@
     <None Include="zlib1.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\blueprints\drone1_test.png" />
     <Image Include="assets\deflect1.png" />
     <Image Include="assets\enemyFrame1_128.png" />
+    <Image Include="assets\levels\level1_blueprint.png" />
     <Image Include="assets\particle2.png" />
     <Image Include="assets\pieceAngle1_8.png" />
     <Image Include="assets\pieceAngle2_8.png" />
@@ -292,7 +292,6 @@
     <Image Include="assets\gina_Idle_64.png" />
     <Image Include="assets\gina_Run_64.png" />
     <Image Include="assets\blueprints\level1.png" />
-    <Image Include="assets\blueprints\level_test.png" />
     <Image Include="assets\particle1.png" />
     <Image Include="assets\pistolLady128_Run.png" />
     <Image Include="assets\pistolLady64_Run.png" />

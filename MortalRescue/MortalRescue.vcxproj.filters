@@ -33,9 +33,6 @@
     <ClCompile Include="src\Util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\LevelManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameObjectContactListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -129,9 +126,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Util.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\LevelManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObjectContactListener.h">
@@ -244,6 +238,8 @@
     <None Include="libvorbisfile-3.dll" />
     <None Include="SDL2_mixer.dll" />
     <None Include="assets\sound\soundAssets.json" />
+    <None Include="assets\levels\level1_definition.json" />
+    <None Include="assets\levels\level1_Objects.json" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\bowman1.png">
@@ -294,9 +290,6 @@
     <Image Include="assets\particle1.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="assets\blueprints\level_test.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="assets\blueprints\level1.png">
       <Filter>Resource Files</Filter>
     </Image>
@@ -333,9 +326,6 @@
     <Image Include="assets\particle2.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="assets\blueprints\drone1_test.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="assets\enemyFrame1_128.png">
       <Filter>Resource Files</Filter>
     </Image>
@@ -349,6 +339,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\weapon1_IDLE.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\levels\level1_blueprint.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
