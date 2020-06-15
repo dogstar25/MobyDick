@@ -67,7 +67,6 @@ Game::Game()
 
 	this->fps = 0;
 
-
 }
 /*
 Initialize Game

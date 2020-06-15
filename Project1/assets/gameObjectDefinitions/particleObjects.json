@@ -1,0 +1,108 @@
+{
+  "gameObjects": [
+    {
+
+      "id": "PARTICLE_SMOKE_1",
+      "type": "PARTICLE_OBJECT",
+      "description": "Smoke Particle 1",
+      "speed": 50,
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        //        "collisionShape": "B2_CIRCLE",
+        //        "collisionRadius": 0.16,
+        "friction": 0.0,
+        "density": 0.1,
+        "restitution": 0.3,
+        "linearDamping": 0.0,
+        "angularDamping": 0.0,
+        "collisionCategory": 16
+      },
+      "texture": "TX_SMOKE_PARTICLE_2",
+      "color": {
+        "red": 214,
+        "green": 36,
+        "blue": 17,
+        "alpha": 175
+      },
+      "xSize": 1.28,
+      "ySize": 1.28
+    },
+    {
+      "id": "BULLET1",
+      "description": "Bullet 1",
+      "type": "WORLD_OBJECT",
+      "speed": 50,
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "restitution": 0.0,
+        "density": 0.05,
+        "linearDamping": 0.0,
+        "angularDamping": 12.0,
+        "collisionCategory": 8
+      },
+      "xSize": 0.24,
+      "ySize": 0.12,
+      "animations": [
+        {
+          "state": "ACTIVE",
+          "textureId": "TX_BULLET1",
+          "speed": 0.02, //time in seconds for each frame. Lower the faster
+          "frames": 4
+        }
+      ]
+    },
+    {
+      "id": "BULLET2",
+      "description": "Bullet 2",
+      "type": "WORLD_OBJECT",
+      "speed": 75,
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "restitution": 0.0,
+        "density": 0.05,
+        "linearDamping": 0.0,
+        "angularDamping": 12.0,
+        "collisionCategory": 8
+      },
+      "xSize": 0.24,
+      "ySize": 0.12,
+      "animations": [
+        {
+          "state": "ACTIVE",
+          "textureId": "TX_BULLET1",
+          "speed": 0.01, //time in seconds for each frame. Lower the faster
+          "frames": 4
+        }
+      ]
+    },
+    {
+      "id": "DEFLECT1",
+      "description": "Deflect",
+      "type": "WORLD_OBJECT",
+      "speed": 75,
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "restitution": 0.0,
+        "density": 0.05,
+        "linearDamping": 0.0,
+        "angularDamping": 12.0,
+        "collisionCategory": 16
+      },
+      "xSize": 2.56,
+      "ySize": 2.56,
+      "animations": [
+        {
+          "state": "ACTIVE",
+          "textureId": "TX_DEFLECT1_64",
+          "speed": 0.01, //time in seconds for each frame. Lower the faster
+          "frames": 4
+        }
+      ]
+    }
+
+  ]
+
+}

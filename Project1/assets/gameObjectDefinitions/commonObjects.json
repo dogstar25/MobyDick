@@ -1,0 +1,310 @@
+{
+  "gameObjects": [
+    {
+      "id": "BOWMAN",
+      "description": "Player Bowman",
+      "type": "WORLD_OBJECT",
+      "texture": "TX_BOWMAN1",
+      "xSize": 2.56,
+      "ySize": 2.56,
+      "speed": 20.4, //change to walkforce
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.3,
+        "density": 0.5,
+        "linearDamping": 0.1,
+        "angularDamping": 0.5
+      }
+    },
+    {
+      "id": "ROCK128",
+      "description": "A Red Rock",
+      "type": "GAME_OBJECT",
+      "texture": "TX_SQUARE_128",
+      "color": {
+        "red": 12,
+        "green": 122,
+        "blue": 200,
+        "alpha": 200,
+        "random": false
+      },
+      "xSize": 128,
+      "ySize": 128
+    },
+    {
+      "id": "ROCK8",
+      "description": "A Red Rock",
+      "type": "GAME_OBJECT",
+      "color": {
+        "red": 255,
+        "green": 0,
+        "blue": 0,
+        "alpha": 255,
+        "random": false
+      },
+      "xSize": 8,
+      "ySize": 8
+    },
+    {
+      "id": "ROCK4",
+      "description": "A Red Rock",
+      "type": "GAME_OBJECT",
+      "color": {
+        "red": 12,
+        "green": 122,
+        "blue": 200,
+        "alpha": 5,
+        "random": false
+      },
+      "xSize": 4,
+      "ySize": 4
+    },
+    {
+      "id": "PARTICLE_SMOKE_GLOW",
+      "description": "duh",
+      "type": "GAME_OBJECT",
+      "texture": "TX_SMOKE_PARTICLE_2",
+      "color": {
+        "red": 12,
+        "green": 122,
+        "blue": 200,
+        "alpha": 255,
+        "random": false
+      },
+      "xSize": 16,
+      "ySize": 1256
+    },
+    {
+      "id": "SWORDLADY",
+      "description": "SwordLady",
+      "type": "GAME_OBJECT",
+      "speed": 0.5,
+      "xSize": 64, //meters which translates to 64px
+      "ySize": 43.75,
+      "absolutePositioning": false,
+      "animations": [
+        {
+          "state": "IDLE",
+          "textureId": "TX_SWORDLADY1_IDLE",
+          "speed": 0.06, //time in seconds for each frame. Lower the faster
+          "frames": 19
+        }
+      ]
+    },
+    {
+      "id": "ARMORTEST1",
+      "description": "Armor test 1",
+      "type": "WORLD_OBJECT",
+      "texture": "TX_DEFAULT",
+      "absolutePositioning": false,
+      "xSize": 2.56,
+      "ySize": 2.56,
+      "renderOutline": true,
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "restitution": 0.0,
+        "density": 0.1,
+        "linearDamping": 0.0,
+        "angularDamping": 0.0,
+        "collisionCategory": 128
+      }
+    },
+    {
+      "id": "ARMORTEST2",
+      "description": "Armor test 2",
+      "type": "GAME_OBJECT",
+      "texture": "TX_DEFAULT",
+      "absolutePositioning": false,
+      "xSize": 64,
+      "ySize": 64,
+      "renderOutline": false
+    },
+    {
+      "id": "GINA_64",
+      "description": "Gina 64",
+      "type": "PLAYER_OBJECT",
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "collisionShape": "B2_CIRCLE",
+        "collisionRadius": 0.64,
+        "friction": 0.01,
+        "density": 15.5,
+        "linearDamping": 0.2,
+        "angularDamping": 100.0,
+        "collisionCategory": 2,
+        "weaponAnchorPoint": {
+          "x": 0.8,
+          "y": 0.0
+        }
+      },
+      "xSize": 2.56,
+      "ySize": 2.56,
+      "speed": 9.5,
+      "fireOffset": -0.5,
+      "animations": [
+        {
+          "state": "RUN",
+          "textureId": "TX_GINA_64_RUN",
+          "speed": 0.10, //time in seconds for each frame. Lower the faster
+          "frames": 4
+        },
+        {
+          "state": "IDLE",
+          "textureId": "TX_GINA_64_IDLE",
+          "speed": 0.10, //time in seconds for each frame. Lower the faster
+          "frames": 1
+        }
+
+      ],
+      "childPadding": 8,
+      "childPositionRelative": false,
+      "childObjects": [
+        {
+          "gameObjectId": "PLAYER_LABEL",
+          "locationSlot": 3
+        }
+      ]
+    },
+    {
+      "id": "FPS_LABEL",
+      "description": "FPS Label",
+      "type": "TEXT_OBJECT",
+      "absolutePositioning": true,
+      "text": {
+        "value": "FPS",
+        "dynamic": false,
+        "font": "FONT_ARIAL_REG",
+        "size": 32
+      }
+    },
+    {
+      "id": "PLAYER_LABEL",
+      "description": "Player Label",
+      "type": "TEXT_OBJECT",
+      "text": {
+        "value": "Player 100",
+        "dynamic": false,
+        "font": "FONT_ARIAL_REG",
+        "size": 12
+      }
+    },
+    {
+      "id": "FPS_VALUE",
+      "description": "FPS Value Text",
+      "type": "TEXT_OBJECT",
+      "absolutePositioning": true,
+      "text": {
+        "dynamic": true,
+        "font": "FONT_ARIAL_REG",
+        "size": 32,
+        "color": {
+          "red": 255,
+          "green": 0,
+          "blue": 0,
+          "alpha": 255
+        }
+      }
+    },
+    {
+      "id": "DEBUG_ITEM",
+      "description": "Debug Item",
+      "type": "TEXT_OBJECT",
+      "text": {
+        "dynamic": true,
+        "font": "FONT_ARIAL_REG",
+        "size": 16
+      }
+    },
+    {
+      "id": "WEAPON1",
+      "description": "Weapon 1",
+      "type": "WEAPON_OBJECT",
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "restitution": 0.0,
+        "density": 15.05,
+        "linearDamping": 0.0,
+        "angularDamping": 0.0,
+        "collisionCategory": 8,
+        "anchorPoint": {
+          "x": -0.3,
+          "y": 0.0
+        }
+
+      },
+      "xSize": 0.64,
+      "ySize": 0.64,
+      "animations": [
+        {
+          "state": "ACTIVE",
+          "textureId": "TX_WEAPON1_IDLE",
+          "speed": 0.5, //time in seconds for each frame. Lower the faster
+          "frames": 3
+        },
+        {
+          "state": "FIRE",
+          "textureId": "TX_WEAPON1_FIRE",
+          "speed": 0.1, //time in seconds for each frame. Lower the faster
+          "frames": 3
+        }
+
+      ],
+      "weaponLevels": [
+        {
+          "level": 1,
+          "strength": 1,
+          "levelUpTarget": 25,
+          "color": {
+            "red": 255,
+            "green": 0,
+            "blue": 0,
+            "alpha": 255
+          },
+          "bulletPoolId": "BULLET1_POOL"
+        },
+        {
+          "level": 2,
+          "strength": 2,
+          "levelUpTarget": 25,
+          "color": {
+            "red": 0,
+            "green": 255,
+            "blue": 0,
+            "alpha": 255
+          },
+          "bulletPoolId": "BULLET2_POOL"
+        },
+        {
+          "level": 3,
+          "strength": 5,
+          "levelUpTarget": 25,
+          "color": {
+            "red": 255,
+            "green": 255,
+            "blue": 255,
+            "alpha": 255
+          },
+          "bulletPoolId": "BULLET2_POOL"
+        }
+      ]
+    },
+    {
+      "id": "CHAINTEST",
+      "description": "Chain test 1",
+      "type": "WORLD_OBJECT",
+      "absolutePositioning": false,
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "collisionShape": "B2_CHAIN",
+        "friction": 0.0,
+        "restitution": 0.0,
+        "density": 0.1,
+        "linearDamping": 0.0,
+        "angularDamping": 0.0,
+        "collisionCategory": 4
+      }
+    }
+  ]
+}

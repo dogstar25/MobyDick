@@ -1,0 +1,30 @@
+{
+  "gameTitle": "MortalRescue",
+  "camera": {
+    "width": 1280,
+    "height": 720
+  },
+  "sound": {
+    "numberOfChannels":  32
+  },
+  "mouseSensitivity": 5.2, //higher the mmore sensitive
+  "gameLoopStep": 16, //in miliseconds
+  "physics": {
+    "gravity": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "b2DebugDrawMode": false,
+    "timeStep": 0.016, // 1/60 or 1/30
+    "velocityIterations": 6,
+    "positionIterations": 2,
+    "box2dScale": 25 //Box2D. This game will be 25 pixels per meter which is a factor of .04 derived from 1/25
+  },
+  "debugPanel": {
+    "show": false,
+    "xPos": 1,
+    "yPos": 3,
+    "fontSize": 16
+  }
+}
+  

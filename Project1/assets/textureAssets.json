@@ -1,0 +1,178 @@
+{
+  "textures": [
+    {
+      "id": "TX_DEFAULT",
+      "description": "Default Texure",
+      "filename": "assets/tile1.png"
+    },
+    {
+      "id": "TX_BOWMAN1",
+      "description": "single bowman image",
+      "filename": "assets/bowman1.png"
+    },
+    {
+      "id": "TX_TILE1",
+      "description": "TILE 1",
+      "filename": "assets/tile1.png"
+    },
+    {
+      "id": "TX_SWORDLADY1_IDLE",
+      "description": "Sword lady idle",
+      "filename": "assets/swordLady64_Idle.png"
+    },
+    {
+      "id": "TX_PISTOLLADY_64_RUN",
+      "description": "Pistol Lady Run 64px",
+      "filename": "assets/pistolLady64_Run.png"
+    },
+    {
+      "id": "TX_PISTOLLADY_128_RUN",
+      "description": "Pistol Lady Run 128px",
+      "filename": "assets/pistolLady128_Run.png"
+    },
+    {
+      "id": "TX_SPACESHIP1",
+      "description": "Test spaceship 64px",
+      "filename": "assets/spaceship1.png"
+    },
+    {
+      "id": "TX_LEVEL1_BLUEPRINT",
+      "description": "Level 1 Bluprint",
+      "filename": "assets/blueprints/level1.png",
+      "retainSurface": true
+    },
+    {
+      "id": "TX_LEVEL_TEST",
+      "description": "Test Level Map",
+      "filename": "assets/blueprints/level_test.png",
+      "retainSurface": true
+    },
+    {
+      "id": "TX_WALL1_COLUMN",
+      "description": "Wall 1 Column",
+      "filename": "assets/wall1_column.png"
+    },
+    {
+      "id": "TX_WALL1_CORNER",
+      "description": "Wall 1 Corner",
+      "filename": "assets/wall1_corner.png"
+    },
+    {
+      "id": "TX_WALL1_HALL",
+      "description": "Wall 1 Hall",
+      "filename": "assets/wall1_hall.png"
+    },
+    {
+      "id": "TX_WALL1_OPEN",
+      "description": "Wall 1 Open",
+      "filename": "assets/wall1_open.png"
+    },
+    {
+      "id": "TX_WALL1_WALL",
+      "description": "Wall 1 Wall",
+      "filename": "assets/wall1_wall.png"
+    },
+    {
+      "id": "TX_WALL1_END",
+      "description": "Wall 1 End",
+      "filename": "assets/wall1_end.png"
+    },
+    {
+      "id": "TX_BULLET1",
+      "description": "Bullet 1",
+      "filename": "assets/bullet1.png"
+    },
+    {
+      "id": "TX_GINA_64_RUN",
+      "description": "Gina Run 64",
+      "filename": "assets/gina_Run_64.png"
+    },
+    {
+      "id": "TX_GINA_64_IDLE",
+      "description": "Gina Idle 64",
+      "filename": "assets/gina_Idle_64.png"
+    },
+    {
+      "id": "TX_SMOKE_PARTICLE_1",
+      "description": "Smoke particle",
+      "filename": "assets/particle1.png"
+    },
+    {
+      "id": "TX_SMOKE_PARTICLE_2",
+      "description": "Glow particle",
+      "filename": "assets/particle2.png"
+    },
+    {
+      "id": "TX_DRONE1_BLUEPRINT",
+      "description": "Drone 1 Blueprint",
+      "filename": "assets/blueprints/drone1_blueprint.png",
+      "retainSurface": true
+    },
+    {
+      "id": "TX_DRONE1_TEST",
+      "description": "Drone 1 Test Blueprint",
+      "filename": "assets/blueprints/drone1_test.png",
+      "retainSurface": true
+    },
+    {
+      "id": "TX_SQUARE_128",
+      "description": "128 x 128 square",
+      "filename": "assets/square_128.png"
+    },
+    {
+      "id": "TX_PIECE_FULL_8",
+      "description": "8 X 8 square",
+      "filename": "assets/pieceFull_8.png"
+    },
+    {
+      "id": "TX_PIECE_ANGLE1_8",
+      "description": "Angle",
+      "filename": "assets/pieceAngle1_8.png"
+    },
+    {
+      "id": "TX_PIECE_ANGLE2_8",
+      "description": "Angle",
+      "filename": "assets/pieceAngle2_8.png"
+    },
+    {
+      "id": "TX_PIECE_ANGLE3_8",
+      "description": "Angle",
+      "filename": "assets/pieceAngle3_8.png"
+    },
+    {
+      "id": "TX_PIECE_ANGLE4_8",
+      "description": "Angle",
+      "filename": "assets/pieceAngle4_8.png"
+    },
+    {
+      "id": "TX_ENEMYFRAME1_128",
+      "description": "Angle",
+      "filename": "assets/enemyFrame1_128.png"
+    },
+    {
+      "id": "TX_DEFLECT1_64",
+      "description": "Deflect",
+      "filename": "assets/deflect1.png"
+    },
+    {
+      "id": "TX_WEAPON1_IDLE",
+      "description": "Weapon 1 Idle",
+      "filename": "assets/weapon1_IDLE.png"
+    },
+    {
+      "id": "TX_WEAPON1_FIRE",
+      "description": "Weapon 1 Fire",
+      "filename": "assets/weapon1_FIRE.png"
+    }
+
+
+  ],
+  "fonts": [
+    {
+      "id": "FONT_ARIAL_REG",
+      "description": "Arial Regular",
+      "filename": "assets/arial.ttf"
+    }
+  ]
+
+}

@@ -1,0 +1,245 @@
+{
+  "gameObjects": [
+    {
+      "id": "DRONE",
+      "description": "Enemy Guard Drone",
+      "type": "COMPOSITE_OBJECT",
+      "texture": "TX_ENEMYFRAME1_128",
+      "physicsObject": {
+        "collisionShape": "B2_CIRCLE",
+        "collisionRadius": 2.56,
+        "type": "B2_DYNAMIC",
+        "restitution": 0.1,
+        "friction": 1.0,
+        "density": 2.5,
+        "linearDamping": 0.2,
+        "angularDamping": 0.1,
+        "collisionCategory": 128
+      },
+      "xSize": 5.12,
+      "ySize": 5.12,
+      "speed": 11.5,
+      "childPadding": 8,
+      "childPositionRelative": false,
+      "childObjects": [
+        {
+          "gameObjectId": "SWORDLADY",
+          "locationSlot": 1
+        }
+
+      ],
+      "composite": {
+        "levelUpSpeed": 1800,
+        "blueprint": {
+          "texture": "TX_DRONE1_BLUEPRINT",
+          "legend": [
+            {
+              "gameObjectId": "FULL_PIECE",
+              "color": {
+                "red": 127,
+                "green": 6,
+                "blue": 34,
+                "alpha": 255
+              }
+            },
+            {
+              "gameObjectId": "ANGLE1_PIECE",
+              "color": {
+                "red": 214,
+                "green": 36,
+                "blue": 17,
+                "alpha": 255
+              }
+            },
+            {
+              "gameObjectId": "ANGLE2_PIECE",
+              "color": {
+                "red": 255,
+                "green": 132,
+                "blue": 38,
+                "alpha": 255
+              }
+            },
+            {
+              "gameObjectId": "ANGLE3_PIECE",
+              "color": {
+                "red": 255,
+                "green": 38,
+                "blue": 116,
+                "alpha": 255
+              }
+            },
+            {
+              "gameObjectId": "ANGLE4_PIECE",
+              "color": {
+                "red": 255,
+                "green": 209,
+                "blue": 0,
+                "alpha": 255
+              }
+            }
+          ]
+        },
+        "levels": [
+          {
+            "level": 1,
+            "strength": 1,
+            "color": {
+              "red": 255,
+              "green": 0,
+              "blue": 0,
+              "alpha": 255
+            }
+          },
+          {
+            "level": 2,
+            "strength": 2,
+            "color": {
+              "red": 129,
+              "green": 98,
+              "blue": 0,
+              "alpha": 255
+            }
+          },
+          {
+            "level": 3,
+            "strength": 3,
+            "color": {
+              "red": 0,
+              "green": 25,
+              "blue": 88,
+              "alpha": 255
+            }
+          },
+          {
+            "level": 4,
+            "strength": 25,
+            "color": {
+              "red": 255,
+              "green": 0,
+              "blue": 255,
+              "alpha": 255
+            }
+          }
+        ]
+
+      }
+
+    },
+    {
+      "id": "FULL_PIECE",
+      "description": "Full Piece",
+      "type": "WORLD_OBJECT",
+      "texture": "TX_PIECE_FULL_8",
+      "xSize": 0.32,
+      "ySize": 0.32,
+      "xRenderAdjustment": 1,
+      "yRenderAdjustment": 1,
+      "physicsObject": {
+        "type": "B2_KINEMATIC",
+        "friction": 0.0,
+        "restitution": 0.0,
+        "density": 0.1,
+        "linearDamping": 0.0,
+        "angularDamping": 0.0,
+        "collisionCategory": 256
+      }
+    },
+    {
+      "id": "ANGLE1_PIECE",
+      "description": "Angle Piece",
+      "type": "WORLD_OBJECT",
+      "texture": "TX_PIECE_ANGLE1_8",
+      "xSize": 0.32,
+      "ySize": 0.32,
+      "xRenderAdjustment": 1,
+      "yRenderAdjustment": 1,
+      "physicsObject": {
+        "type": "B2_KINEMATIC",
+        "friction": 0.0,
+        "restitution": 0.0,
+        "density": 0.1,
+        "linearDamping": 0.0,
+        "angularDamping": 0.0,
+        "collisionCategory": 256
+      }
+    },
+    {
+      "id": "ANGLE2_PIECE",
+      "description": "Angle Piece",
+      "type": "WORLD_OBJECT",
+      "texture": "TX_PIECE_ANGLE2_8",
+      "xSize": 0.32,
+      "ySize": 0.32,
+      "xRenderAdjustment": 1,
+      "yRenderAdjustment": 1,
+      "physicsObject": {
+        "type": "B2_KINEMATIC",
+        "friction": 0.0,
+        "restitution": 0.0,
+        "density": 0.1,
+        "linearDamping": 0.0,
+        "angularDamping": 0.0,
+        "collisionCategory": 256
+      }
+    },
+    {
+      "id": "ANGLE3_PIECE",
+      "description": "Angle Piece",
+      "type": "WORLD_OBJECT",
+      "texture": "TX_PIECE_ANGLE3_8",
+      "xSize": 0.32,
+      "ySize": 0.32,
+      "xRenderAdjustment": 1,
+      "yRenderAdjustment": 1,
+      "physicsObject": {
+        "type": "B2_KINEMATIC",
+        "friction": 0.0,
+        "restitution": 0.0,
+        "density": 0.1,
+        "linearDamping": 0.0,
+        "angularDamping": 0.0,
+        "collisionCategory": 256
+      }
+    },
+    {
+      "id": "ANGLE4_PIECE",
+      "description": "Angle Piece",
+      "type": "WORLD_OBJECT",
+      "texture": "TX_PIECE_ANGLE4_8",
+      "xSize": 0.32,
+      "ySize": 0.32,
+      "xRenderAdjustment": 1,
+      "yRenderAdjustment": 1,
+      "physicsObject": {
+        "type": "B2_KINEMATIC",
+        "friction": 0.0,
+        "restitution": 0.0,
+        "density": 0.1,
+        "linearDamping": 0.0,
+        "angularDamping": 0.0,
+        "collisionCategory": 256
+      }
+    },
+    {
+      "id": "ANGLE_BIT_PIECE",
+      "description": "Angle Bit Piece",
+      "type": "WORLD_OBJECT",
+      "texture": "TX_PIECE_ANGLE1_8",
+      "xSize": 0.16,
+      "ySize": 0.16,
+      "physicsObject": {
+        "type": "B2_DYNAMIC",
+        "friction": 0.0,
+        "restitution": 0.5,
+        "density": 0.1,
+        "linearDamping": 5.0,
+        "angularDamping": 5.0,
+        "collisionCategory": 512
+      }
+    }
+
+
+  ]
+
+}
