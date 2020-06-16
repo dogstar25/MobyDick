@@ -166,7 +166,7 @@ void ParticleMachine::emit(
 			//Set the particles lifetime in miliseconds. If a zero is passed in, then it will remain the value 
 			//when it was built freom the pool definition
 			float particleLifetime = 0;
-			if (lifetimeMin != 0 and lifetimeMax != 0)
+			if (lifetimeMin != 0 && lifetimeMax != 0)
 			{
 				if (lifetimeMin != lifetimeMax)
 				{
