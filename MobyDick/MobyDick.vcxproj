@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{8F281F59-81AA-42BC-BC07-C605E22DB9EF}</ProjectGuid>
+    <ProjectGuid>{5BC96C69-A864-419D-96C6-BC3507DE7D1B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -36,12 +36,12 @@
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
@@ -70,14 +70,10 @@
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>C:\projects\MobyDick\x64\Debug;C:\projects\libraries\jsoncpp\out\build\x64-Debug\lib;C:\projects\libraries\SDL2_mixer-2.0.4\lib\x64;C:\projects\libraries\SDL2_ttf-2.0.15\lib\x64;C:\projects\libraries\Box2D\Build\bin\x86_64\Debug;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;C:\projects\MortalRescue\x64\Debug;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
-    <IncludePath>C:\projects\libraries\jsoncpp\include;C:\projects\libraries\Box2D;C:\projects\libraries\SDL2_ttf-2.0.15\include;C:\projects\libraries\SDL2_mixer-2.0.4\include;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\</OutDir>
+    <IncludePath>C:\projects\libraries\SDL2_ttf-2.0.15\include;C:\projects\libraries\SDL2_mixer-2.0.4\include;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;C:\projects\libraries\jsoncpp\include;C:\projects\libraries\Box2D;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LibraryPath>C:\projects\MobyDick\x64\Release;C:\projects\libraries\jsoncpp\out\build\x64-Release\lib;C:\projects\libraries\SDL2_mixer-2.0.4\lib\x64;C:\projects\libraries\SDL2_ttf-2.0.15\lib\x64;C:\projects\libraries\Box2D\Build\bin\x86_64\Release;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
-    <IncludePath>C:\projects\libraries\jsoncpp\include;C:\projects\libraries\Box2D;C:\projects\libraries\SDL2_ttf-2.0.15\include;C:\projects\libraries\SDL2_mixer-2.0.4\include;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
-    <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\</OutDir>
+    <IncludePath>C:\projects\libraries\SDL2_ttf-2.0.15\include;C:\projects\libraries\SDL2_mixer-2.0.4\include;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;C:\projects\libraries\jsoncpp\include;C:\projects\libraries\Box2D;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -110,29 +106,79 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)MobyDick/src</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <SDLCheck>true</SDLCheck>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>jsoncpp.lib;Box2D.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;MobyDick.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Console</SubSystem>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>$(SolutionDir)MobyDick/src</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <SDLCheck>true</SDLCheck>
     </ClCompile>
-    <Link>
-      <AdditionalDependencies>jsoncpp.lib;Box2D.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;MobyDick.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Console</SubSystem>
-    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="src\Animation.cpp" />
+    <ClCompile Include="src\Camera.cpp" />
+    <ClCompile Include="src\Clock.cpp" />
+    <ClCompile Include="src\CompositeObject.cpp" />
+    <ClCompile Include="src\DebugDraw.cpp" />
+    <ClCompile Include="src\DebugPanel.cpp" />
+    <ClCompile Include="src\DynamicTextManager.cpp" />
+    <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\GameConfig.cpp" />
+    <ClCompile Include="src\GameObject.cpp" />
+    <ClCompile Include="src\GameObjectCollection.cpp" />
+    <ClCompile Include="src\GameObjectContactListener.cpp" />
+    <ClCompile Include="src\GameObjectDefinition.cpp" />
+    <ClCompile Include="src\GameObjectManager.cpp" />
+    <ClCompile Include="src\GUIEvent.cpp" />
+    <ClCompile Include="src\Level.cpp" />
+    <ClCompile Include="src\ObjectPoolManager.cpp" />
+    <ClCompile Include="src\ParticleEmission.cpp" />
+    <ClCompile Include="src\ParticleMachine.cpp" />
+    <ClCompile Include="src\ParticleObject.cpp" />
+    <ClCompile Include="src\PlayerObject.cpp" />
+    <ClCompile Include="src\SoundManager.cpp" />
+    <ClCompile Include="src\TextObject.cpp" />
+    <ClCompile Include="src\texture.cpp" />
+    <ClCompile Include="src\TextureManager.cpp" />
+    <ClCompile Include="src\Util.cpp" />
+    <ClCompile Include="src\Waypoint.cpp" />
+    <ClCompile Include="src\WeaponObject.cpp" />
+    <ClCompile Include="src\WorldObject.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MobyDick\MobyDick.vcxproj">
-      <Project>{5bc96c69-a864-419d-96c6-bc3507de7d1b}</Project>
-    </ProjectReference>
+    <ClInclude Include="src\Animation.h" />
+    <ClInclude Include="src\Camera.h" />
+    <ClInclude Include="src\Clock.h" />
+    <ClInclude Include="src\CompositeObject.h" />
+    <ClInclude Include="src\Constants.h" />
+    <ClInclude Include="src\DebugDraw.h" />
+    <ClInclude Include="src\DebugPanel.h" />
+    <ClInclude Include="src\DynamicTextManager.h" />
+    <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\GameConfig.h" />
+    <ClInclude Include="src\GameObject.h" />
+    <ClInclude Include="src\GameObjectCollection.h" />
+    <ClInclude Include="src\GameObjectContactListener.h" />
+    <ClInclude Include="src\GameObjectDefinition.h" />
+    <ClInclude Include="src\GameObjectManager.h" />
+    <ClInclude Include="src\Globals.h" />
+    <ClInclude Include="src\GUIEvent.h" />
+    <ClInclude Include="src\Level.h" />
+    <ClInclude Include="src\ObjectPoolManager.h" />
+    <ClInclude Include="src\ParticleEmission.h" />
+    <ClInclude Include="src\ParticleMachine.h" />
+    <ClInclude Include="src\ParticleObject.h" />
+    <ClInclude Include="src\PlayerObject.h" />
+    <ClInclude Include="src\SoundManager.h" />
+    <ClInclude Include="src\TextObject.h" />
+    <ClInclude Include="src\texture.h" />
+    <ClInclude Include="src\TextureManager.h" />
+    <ClInclude Include="src\Util.h" />
+    <ClInclude Include="src\Waypoint.h" />
+    <ClInclude Include="src\WeaponObject.h" />
+    <ClInclude Include="src\WorldObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
