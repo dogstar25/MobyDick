@@ -75,7 +75,7 @@
     <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LibraryPath>C:\projects\MobyDick\x64\Release;C:\projects\libraries\jsoncpp\out\build\x64-Release\lib;C:\projects\libraries\SDL2_mixer-2.0.4\lib\x64;C:\projects\libraries\SDL2_ttf-2.0.15\lib\x64;C:\projects\libraries\Box2D\Build\bin\x86_64\Release;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <LibraryPath>C:\projects\MobyDick\x64\Release;$(LibraryPath)</LibraryPath>
     <IncludePath>C:\projects\libraries\jsoncpp\include;C:\projects\libraries\Box2D;C:\projects\libraries\SDL2_ttf-2.0.15\include;C:\projects\libraries\SDL2_mixer-2.0.4\include;C:\projects\libraries\SDL2_image\include;C:\projects\libraries\SDL2\include;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
     <OutDir>$(SolutionDir)$(ProjectName)\$(Configuration)\</OutDir>
   </PropertyGroup>
@@ -122,7 +122,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)MobyDick/src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>jsoncpp.lib;Box2D.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;MobyDick.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>MobyDick.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>

@@ -109,12 +109,26 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
+    <Lib>
+      <AdditionalDependencies>jsoncpp.lib;Box2D.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\projects\libraries\Box2D\Build\bin\x86_64\Debug;C:\projects\libraries\jsoncpp\out\build\x64-Debug\lib;C:\projects\libraries\SDL2_mixer-2.0.4\lib\x64;C:\projects\libraries\SDL2_ttf-2.0.15\lib\x64;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64</AdditionalLibraryDirectories>
+    </Lib>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
+    <Lib>
+      <AdditionalDependencies>jsoncpp.lib;Box2D.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\projects\libraries\Box2D\Build\bin\x86_64\Release;C:\projects\libraries\jsoncpp\out\build\x64-Release\lib;C:\projects\libraries\SDL2_mixer-2.0.4\lib\x64;C:\projects\libraries\SDL2_ttf-2.0.15\lib\x64;C:\projects\libraries\SDL2_image\lib\x64;C:\projects\libraries\SDL2\lib\x64</AdditionalLibraryDirectories>
+    </Lib>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Animation.cpp" />
