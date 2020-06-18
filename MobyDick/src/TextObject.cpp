@@ -173,7 +173,9 @@ Texture* TextObject::updateDynamicTextTexture()
 		newText->time_snapshot = now_time;
 
 		//Destroy this texture from the map before we generate a new one - memory leak otherwise
-		SDL_DestroyTexture(this->texture()->sdlTexture);
+		if (this->texture()->sdlTexture != NULL) {
+			SDL_DestroyTexture(this->texture()->sdlTexture);
+		}
 
 		//Build new texture
 		this->textValue = newText->text;

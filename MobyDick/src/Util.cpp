@@ -4,6 +4,8 @@
 #include <sstream>
 #include <string>
 
+#include <box2d/b2_math.h>
+
 using namespace std;
 
 const int util::generateRandomNumber(int min, int max)
@@ -45,7 +47,7 @@ const SDL_Color util::generateRandomColor()
 
 const float util::radiansToDegrees(float angleInRadians)
 {
-	float angle = angleInRadians / M_PI * 180;
+	float angle = angleInRadians / b2_pi * 180;
 	return angle;
 
 }

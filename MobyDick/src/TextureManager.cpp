@@ -3,7 +3,7 @@
 #include <math.h>
 #include <list>
 
-#include <SDL_ttf.h>
+#include <SDL2/SDL_ttf.h>
 
 #include "TextureManager.h"
 #include "Texture.h"

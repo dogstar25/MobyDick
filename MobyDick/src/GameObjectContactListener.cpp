@@ -6,29 +6,6 @@
 #include "SoundManager.h"
 
 
-// this callback will find the closest static body that the ray hits
-class FirstHitGroundRayCastCallback : public b2RayCastCallback
-{
-public:
-	b2Vec2 m_point;
-	b2Fixture* m_fixture;
-
-	FirstHitGroundRayCastCallback()
-	{
-		m_fixture = NULL;
-	}
-
-	float32 ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction)
-	{
-		//ignore non-static bodies
-		if (fixture->GetBody()->GetType() != b2_staticBody)
-			return -1;
-
-		m_point = point;
-		m_fixture = fixture;
-		return fraction;
-	}
-};
 
 void GameObjectContactListener::BeginContact(b2Contact* contact) {
 
@@ -37,8 +14,8 @@ void GameObjectContactListener::BeginContact(b2Contact* contact) {
 	WorldObject* gameObjectA = static_cast<WorldObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
 	WorldObject* gameObjectB = static_cast<WorldObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
 
-	float32 x = 0;
-	float32 y = 0;
+	float x = 0;
+	float y = 0;
 	b2WorldManifold worldManifold;
 
 	contact->GetWorldManifold(&worldManifold);
@@ -351,21 +328,6 @@ void GameObjectContactListener::bulletPieceDeflect(WorldObject* bullet, WorldObj
 
 }
 
-b2Vec2 GameObjectContactListener::findWallImpactPoint(b2Vec2 worldPoint, PlayerObject* player)
-{
-
-	b2Vec2 spawnPoint;
-
-	//FirstHitGroundRayCastCallback raycastCallback;
-	//game->physicsWorld->RayCast(&raycastCallback, worldPoint, player->physicsBody()->GetTransform().p);
-
-
-
-	return spawnPoint;
-
-
-
-}
 
 
 

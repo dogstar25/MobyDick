@@ -1,7 +1,7 @@
 #pragma once
 #include "WorldObject.h"
 #include <vector> 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <map>
 #include <chrono>
 #include <string>
