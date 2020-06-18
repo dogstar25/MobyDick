@@ -2,8 +2,10 @@
 #include "Game.h"
 #include "TextureManager.h"
 #include "GameConfig.h"
+#include <math.h>
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
+#include <box2d/b2_math.h>
 
 extern Game* game;
 
@@ -53,13 +55,13 @@ void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, cons
 	delete[] points;
 }
 
-void DebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
+void DebugDraw::DrawCircle(const b2Vec2& center, float radius, const b2Color& color)
 {
 	b2Vec2 axis;
 	DrawSolidCircle(center, radius, axis, color);
 }
 
-void DebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
+void DebugDraw::DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2& axis, const b2Color& color)
 {
 
 	//convert to propert game scale
@@ -72,9 +74,9 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Ve
 	newCenter.x -= Camera::instance().frame().x;
 	newCenter.y -= Camera::instance().frame().y;
 
-	int  sides = (2 * M_PI) * radius / 2;
+	int  sides = (2 * b2_pi) * radius / 2;
 
-	float d_a = (2 * M_PI) / sides,
+	float d_a = (2 * b2_pi) / sides,
 		angle = d_a;
 
 	b2Vec2 start, end;
@@ -106,7 +108,7 @@ void DebugDraw::DrawTransform(const b2Transform& xf)
 	bool a;
 }
 
-void DebugDraw::DrawPoint(const b2Vec2& p, float32 size, const b2Color& color)
+void DebugDraw::DrawPoint(const b2Vec2& p, float size, const b2Color& color)
 {
 	bool a;
 }

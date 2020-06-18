@@ -2,7 +2,7 @@
 #include <array>
 #include <map>
 #include <memory>
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <string>
 
 #include <Box2D/Box2D.h>

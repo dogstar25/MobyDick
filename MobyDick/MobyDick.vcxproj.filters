@@ -197,5 +197,11 @@
     <ClInclude Include="src\WorldObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="ExtraLibs\SDL2main.lib" />
   </ItemGroup>
 </Project>

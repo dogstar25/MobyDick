@@ -6,6 +6,7 @@
 
 #include "GameConfig.h"
 #include "Game.h"
+#include <SDL2/SDL_stdinc.h>
 
 
 
@@ -128,7 +129,7 @@ void WorldObject::render()
 
 	//Get the angle of the object and convert it from Radians to Degrees for SDL
 	float angle = m_physicsBody->GetAngle();
-	angle = angle * (float)180 / M_PI;
+	angle = angle * (float)180 / b2_pi;
 
 	
 	if (this->definition()->id.compare("GINA_64") == 0)
@@ -200,8 +201,8 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 	else
 	{
 		//Box Shape
-		float32 xSize = definition->xSize / 2; //SetAsBox takes half-widths
-		float32 YSize = definition->ySize / 2;
+		float xSize = definition->xSize / 2; //SetAsBox takes half-widths
+		float YSize = definition->ySize / 2;
 		box.SetAsBox(xSize, YSize);
 		shape = &box;
 	}
