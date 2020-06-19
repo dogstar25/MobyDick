@@ -29,17 +29,25 @@ public:
 	void setLevelObjectArraySize(int width, int height);
 
 	void load(std::string levelId);
-	void build(std::string levelId);
 
 	//Accessor Functions
+	std::string description() {
+		return m_description;
+	}
 	std::vector<Waypoint> waypoints() {
 		return m_waypoints;
 	}
 
 private:
-	std::vector<Waypoint> m_waypoints;
+	std::string m_description;
+	std::string m_blueprint;
 
-	LevelObject* determineTile(int, int, SDL_Surface*);
+	std::vector<Waypoint> m_waypoints;
+	std::map<std::string, LevelObject*> m_locationObjects;
+
+	LevelObject* _determineTile(int, int, SDL_Surface*);
+	void _loadDefinition(std::string levelId);
+	void _buildLevelObjects();
 
 };
 

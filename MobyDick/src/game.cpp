@@ -449,7 +449,7 @@ void Game::handleEvents() {
 void Game::buildWorld(string levelId)
 {
 	//load all of the information needed to build the level
-	m_level.load("TX_LEVEL1_BLUEPRINT");
+	m_level.load("level1");
 
 	//Initialize world bounds and gridsize based on current level loaded info
 	this->initWorldBounds();
@@ -458,7 +458,7 @@ void Game::buildWorld(string levelId)
 	Camera::instance().setCameraBounds(this->worldBounds);
 
 	//Build the actual level gameobjects
-	m_level.build("TX_LEVEL1_BLUEPRINT");
+	//m_level.build("TX_LEVEL1_BLUEPRINT");
 
 }
 

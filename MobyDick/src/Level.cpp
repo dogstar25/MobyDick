@@ -61,6 +61,43 @@ void Level::setLevelObjectArraySize(int width, int height)
 
 }
 
+void Level::_loadDefinition(std::string levelId)
+{
+	//Read file and stream it to a JSON object
+	bool success = false;
+	Json::CharReaderBuilder jsonBuilder;
+	Json::Value root;
+	string filename = "assets/levels/" + levelId + "_definition.json";
+	string errors;
+	ifstream ifs(filename);
+
+	success = Json::parseFromStream(jsonBuilder, ifs, &root, &errors);
+
+	if (success == true)
+	{
+		//Level definition values
+		m_id = levelId;
+		m_description = root["description"].asString();
+		m_blueprint = root["blueprint"].asString();
+
+		LevelObject* locationDefinition = NULL;
+		std:string locationId;
+		for (auto itr : root["locationObjects"])
+		{
+			locationDefinition = new LevelObject();
+			locationDefinition->gameObjectId = itr["gameObjectId"].asString();
+			locationId = itr["id"].asString();
+			m_locationObjects.emplace(locationId, locationDefinition);
+
+		}
+			
+	}
+	else
+	{
+		//TODO: error logger
+	}
+}
+
 void Level::load(std::string levelId)
 {
 
@@ -69,15 +106,12 @@ void Level::load(std::string levelId)
 	SDL_Color* color;
 	SDL_Surface* surface;
 
-
-	/*
-	ADD THE JSON READING HERE TO GET LEVEL DETAILS
-	LOAD UP THE LOCATION OBJECT ARRAY
-	*/
+	//Load the Level definition
+	_loadDefinition(levelId);
 
 	//I am representing the level grid as a png image file 
-	levelImage = TextureManager::instance().getTexture(levelId)->sdlTexture;
-	surface = TextureManager::instance().getTexture(levelId)->surface;
+	levelImage = TextureManager::instance().getTexture(m_blueprint)->sdlTexture;
+	surface = TextureManager::instance().getTexture(m_blueprint)->surface;
 
 	m_id = levelId;
 	m_width = surface->w;
@@ -95,7 +129,7 @@ void Level::load(std::string levelId)
 		for (int x = 0; x < surface->w; x++)
 		{
 			//determine what tile to build for current x,y location
-			LevelObject levelObject = *determineTile(x, y, surface);
+			LevelObject levelObject = *_determineTile(x, y, surface);
 
 			//Add levelItem to array
 			levelObjects[x][y] = levelObject;
@@ -115,9 +149,13 @@ void Level::load(std::string levelId)
 	}
 
 	SDL_UnlockSurface(surface);
+
+	//Build all of the objects that make up this level and store them
+	//In the main gameObject collection
+	_buildLevelObjects();
 }
 
-LevelObject* Level::determineTile(int x, int y, SDL_Surface* surface)
+LevelObject* Level::_determineTile(int x, int y, SDL_Surface* surface)
 {
 	int bpp = surface->format->BytesPerPixel;
 	Uint8 red, green, blue, alpha;
@@ -261,7 +299,7 @@ LevelObject* Level::determineTile(int x, int y, SDL_Surface* surface)
 
 }
 
-void Level::build(string levelId)
+void Level::_buildLevelObjects()
 {
 	LevelObject* levelObject;
 	WorldObject* worldObject;
