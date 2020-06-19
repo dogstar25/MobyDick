@@ -81,8 +81,6 @@ public:
 	
 	//Main screen and window stuff
 	SDL_Window* pWindow;
-	Uint32 windowXpos= SDL_WINDOWPOS_CENTERED, windowYPos= SDL_WINDOWPOS_CENTERED;
-	Uint32 windowFlags= SDL_WINDOW_RESIZABLE;
 	int gameObjectCount;
 
 	//mouse

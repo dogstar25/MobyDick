@@ -15,11 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="assets\blueprints\drone1_blueprint.png">
       <Filter>Resource Files</Filter>
     </Image>
@@ -134,5 +129,10 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\arial.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
