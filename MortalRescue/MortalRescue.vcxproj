@@ -158,6 +158,56 @@
       <Project>{5bc96c69-a864-419d-96c6-bc3507de7d1b}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\blueprints\drone1_blueprint.png" />
+    <Image Include="assets\blueprints\drone1_test.png" />
+    <Image Include="assets\blueprints\level1.png" />
+    <Image Include="assets\blueprints\level_test.png" />
+    <Image Include="assets\bowman1.png" />
+    <Image Include="assets\bullet1.png" />
+    <Image Include="assets\deflect1.png" />
+    <Image Include="assets\enemyFrame1_128.png" />
+    <Image Include="assets\gina_Idle_64.png" />
+    <Image Include="assets\gina_Run_64.png" />
+    <Image Include="assets\levels\level1_blueprint.png" />
+    <Image Include="assets\particle1.png" />
+    <Image Include="assets\particle2.png" />
+    <Image Include="assets\pieceAngle1_8.png" />
+    <Image Include="assets\pieceAngle2_8.png" />
+    <Image Include="assets\pieceAngle3_8.png" />
+    <Image Include="assets\pieceAngle4_8.png" />
+    <Image Include="assets\pieceFull_8.png" />
+    <Image Include="assets\pistolLady128_Run.png" />
+    <Image Include="assets\pistolLady64_Run.png" />
+    <Image Include="assets\spaceship1.png" />
+    <Image Include="assets\square_128.png" />
+    <Image Include="assets\swordLady64_Idle.png" />
+    <Image Include="assets\tile1.png" />
+    <Image Include="assets\wall1_column.png" />
+    <Image Include="assets\wall1_corner.png" />
+    <Image Include="assets\wall1_end.png" />
+    <Image Include="assets\wall1_hall.png" />
+    <Image Include="assets\wall1_open.png" />
+    <Image Include="assets\wall1_wall.png" />
+    <Image Include="assets\weapon1.png" />
+    <Image Include="assets\weapon1_FIRE.png" />
+    <Image Include="assets\weapon1_IDLE.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\gameConfig.json" />
+    <None Include="assets\gameObjectDefinitions\commonObjects.json" />
+    <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
+    <None Include="assets\gameObjectDefinitions\GUIObjects.json" />
+    <None Include="assets\gameObjectDefinitions\level1Objects.json" />
+    <None Include="assets\gameObjectDefinitions\objectPools.json" />
+    <None Include="assets\gameObjectDefinitions\particleObjects.json" />
+    <None Include="assets\levels\level1_definition.json" />
+    <None Include="assets\levels\level1_Objects.json" />
+    <None Include="assets\textureAssets.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\arial.ttf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
