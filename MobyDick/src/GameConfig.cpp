@@ -42,10 +42,9 @@ bool GameConfig::init(std::string configFile)
 	m_debugPanelFontSize = root["debugPanel"]["fontSize"].asInt();
 	m_soundChannels = root["sound"]["numberOfChannels"].asInt();
 
-	m_DefaultCameraFrame.x = 0;
-	m_DefaultCameraFrame.y = 0;
-	m_DefaultCameraFrame.w = root["camera"]["width"].asInt();
-	m_DefaultCameraFrame.h = root["camera"]["height"].asInt();
+	m_windowWidth = root["window"]["width"].asInt();
+	m_windowHeight = root["window"]["height"].asInt();
+	m_windowFullscreen = root["window"]["fullscreen"].asBool();
 
 	return true;
 }

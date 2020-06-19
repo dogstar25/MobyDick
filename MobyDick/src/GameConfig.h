@@ -50,8 +50,14 @@ public:
 	bool b2DebugDrawMode() {
 		return m_b2DebugDrawMode;
 	}
-	SDL_Rect defaultCameraFrame() {
-		return m_DefaultCameraFrame;
+	int windowWidth() {
+		return m_windowWidth;
+	}
+	int windowHeight() {
+		return m_windowHeight;
+	}
+	bool windowFullscreen() {
+		return m_windowFullscreen;
 	}
 
 private:
@@ -63,13 +69,14 @@ private:
 		m_mouseSensitivity,
 		m_timeStep;
 	bool
+		m_windowFullscreen,
 		m_debugPanel,
 		m_b2DebugDrawMode;
 	SDL_Point 
 		m_debugPanelLocation;
-	SDL_Rect
-		m_DefaultCameraFrame;
 	int
+		m_windowWidth,
+		m_windowHeight,
 		m_debugPanelFontSize,
 		m_soundChannels,
 		m_gameLoopStep,

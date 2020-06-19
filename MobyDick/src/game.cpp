@@ -92,12 +92,22 @@ bool Game::init()
 		this->gameState = GameState::PLAY;
 
 		//Create the game window
+		uint16 windowFlags = 0 | SDL_WINDOW_OPENGL;
+		if (GameConfig::instance().windowFullscreen() == true) 
+		{
+			windowFlags = windowFlags | SDL_WINDOW_FULLSCREEN;
+
+		}
+		else
+		{
+			windowFlags = windowFlags | SDL_WINDOW_RESIZABLE;
+		}
 		pWindow = SDL_CreateWindow(GameConfig::instance().gameTitle().c_str(),
-			this->windowXpos,
-			this->windowYPos,
-			Camera::instance().frame().w,
-			Camera::instance().frame().h,
-			SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+			SDL_WINDOWPOS_CENTERED,
+			SDL_WINDOWPOS_CENTERED,
+			GameConfig::instance().windowWidth(),
+			GameConfig::instance().windowHeight(),
+			windowFlags);
 
 		//Initialize the texture manager
 		TextureManager::instance().init(pWindow);

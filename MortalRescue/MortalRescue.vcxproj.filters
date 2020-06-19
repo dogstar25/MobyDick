@@ -15,11 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="assets\blueprints\drone1_blueprint.png">
       <Filter>Resource Files</Filter>
     </Image>
@@ -131,38 +126,13 @@
     <None Include="assets\levels\level1_Objects.json" />
     <None Include="assets\gameConfig.json" />
     <None Include="assets\textureAssets.json" />
-    <None Include="assets\sound\soundAssets.json" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\arial.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="assets\sound\ambience_deep_shining.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sound\impact_metal_shell_001.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sound\impact_metal_shell_002.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sound\impact_metal_shell_003.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sound\pick_up_001.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sound\pick_up_002.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sound\weapon_laser_002.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sound\weapon_laser_004.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sound\weapon1_fire1.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
+    <ClCompile Include="src\Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -70,10 +70,10 @@ void Camera::setFramePosition(int x, int y)
 void Camera::init()
 {
 
-	m_frame.x = GameConfig::instance().defaultCameraFrame().x;
-	m_frame.y = GameConfig::instance().defaultCameraFrame().y;
-	m_frame.w = GameConfig::instance().defaultCameraFrame().w;
-	m_frame.h = GameConfig::instance().defaultCameraFrame().h;
+	m_frame.x = 0;
+	m_frame.y = 0;
+	m_frame.w = GameConfig::instance().windowWidth();
+	m_frame.h = GameConfig::instance().windowHeight();
 
 
 }
