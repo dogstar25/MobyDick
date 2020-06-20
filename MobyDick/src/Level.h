@@ -21,25 +21,35 @@ public:
 	std::string m_id; //probably same as the textureId since the map is represented by a texture
 	int m_width, m_height; // in tile count
 	float m_tileWidth, m_tileHeight;
+	SDL_FRect m_levelBounds;
 
 	std::vector< std::vector <LevelObject> > levelObjects;
 
+	static Level& instance();
 	void addWaypoint(Waypoint waypoint);
 	void addLevelObject(int xIndex, int yIndex, LevelObject levelObject);
 	void setLevelObjectArraySize(int width, int height);
 
 	void load(std::string levelId);
-	void build(std::string levelId);
 
 	//Accessor Functions
+	std::string description() {
+		return m_description;
+	}
 	std::vector<Waypoint> waypoints() {
 		return m_waypoints;
 	}
 
 private:
-	std::vector<Waypoint> m_waypoints;
+	std::string m_description;
+	std::string m_blueprint;
 
-	LevelObject* determineTile(int, int, SDL_Surface*);
+	std::vector<Waypoint> m_waypoints;
+	std::map<std::string, LevelObject*> m_locationObjects;
+
+	LevelObject* _determineTile(int, int, SDL_Surface*);
+	void _loadDefinition(std::string levelId);
+	void _buildLevelObjects();
 
 };
 

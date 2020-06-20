@@ -1,8 +1,9 @@
 {
   "gameTitle": "MortalRescue",
-  "camera": {
+  "window": {
     "width": 1280,
-    "height": 720
+    "height": 720,
+    "fullscreen":  false
   },
   "sound": {
     "numberOfChannels":  32

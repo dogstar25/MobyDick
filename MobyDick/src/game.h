@@ -50,7 +50,6 @@ class WeaponObject;
 class Game {
 
 private:
-	Level m_level;
 	GameObjectContactListener m_gameObjectContactListner;
 
 public:
@@ -65,8 +64,6 @@ public:
 	void update();
 	void handleEvents();
 	
-	void initWorldBounds();
-
 	void addGameObject(GameObject* gameObject, int);
 	void addGameObject(TextObject* gameObject, int);
 	void addGameObject(WorldObject* gameObject, int);
@@ -75,14 +72,10 @@ public:
 	void addGameObject(WeaponObject* gameObject, int);
 	void buildWorld(string);
 
-	SDL_Rect worldBounds;
-	SDL_Rect worldGridSize;
 	b2World* physicsWorld;
 	
 	//Main screen and window stuff
 	SDL_Window* pWindow;
-	Uint32 windowXpos= SDL_WINDOWPOS_CENTERED, windowYPos= SDL_WINDOWPOS_CENTERED;
-	Uint32 windowFlags= SDL_WINDOW_RESIZABLE;
 	int gameObjectCount;
 
 	//mouse
@@ -101,6 +94,9 @@ public:
 
 	int fps;
 	DebugDraw debugDraw;
+
+
+	//Accessor Functions
 
 
 

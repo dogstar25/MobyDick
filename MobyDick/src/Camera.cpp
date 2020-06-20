@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "GameConfig.h"
+#include "Level.h"
 
 
 Camera::Camera()
@@ -18,69 +19,60 @@ Camera& Camera::instance()
 
 }
 
-void Camera::setFrameSize(int width, int height)
-{
-
-	m_frame.w = width;
-	m_frame.h = height;
-
-}
-
-
 void Camera::setFramePosition(int x, int y)
 {
 	int xPos, yPos;
 
-	//Check far left limit
-	if (x < m_cameraBounds.x)
+	//If no level is loaded, then frame does not move
+	if (Level::instance().m_id.empty() == false)
 	{
-		xPos = m_cameraBounds.x;
-	}
-	//Check far right limit
-	else if (x > m_cameraBounds.w - m_frame.w)
-	{
-		xPos = m_cameraBounds.w - m_frame.w;
-	}
-	else
-	{
-		xPos = x;
-	}
+		//Check far left limit
+		if (x < Level::instance().m_levelBounds.x)
+		{
+			xPos = Level::instance().m_levelBounds.x;
+		}
+		//Check far right limit
+		else if (x > Level::instance().m_levelBounds.w - m_frame.w)
+		{
+			xPos = Level::instance().m_levelBounds.w - m_frame.w;
+		}
+		else
+		{
+			xPos = x;
+		}
 
-	//Check far top limit
-	if (y < m_cameraBounds.y)
-	{
-		yPos = m_cameraBounds.y;
-	}
-	//Check far bottom limit
-	else if (y > m_cameraBounds.h - m_frame.h)
-	{
-		yPos = m_cameraBounds.h - m_frame.h;
-	}
-	else
-	{
-		yPos = y;
-	}
+		//Check far top limit
+		if (y < Level::instance().m_levelBounds.y)
+		{
+			yPos = Level::instance().m_levelBounds.y;
+		}
+		//Check far bottom limit
+		else if (y > Level::instance().m_levelBounds.h - m_frame.h)
+		{
+			yPos = Level::instance().m_levelBounds.h - m_frame.h;
+		}
+		else
+		{
+			yPos = y;
+		}
 
-	//set position
-	m_frame.x = xPos;
-	m_frame.y = yPos;
+		//set position
+		m_frame.x = xPos;
+		m_frame.y = yPos;
+	}
 
 }
 
 void Camera::init()
 {
 
-	m_frame.x = GameConfig::instance().defaultCameraFrame().x;
-	m_frame.y = GameConfig::instance().defaultCameraFrame().y;
-	m_frame.w = GameConfig::instance().defaultCameraFrame().w;
-	m_frame.h = GameConfig::instance().defaultCameraFrame().h;
+	m_frame.x = 0;
+	m_frame.y = 0;
+	m_frame.w = GameConfig::instance().windowWidth();
+	m_frame.h = GameConfig::instance().windowHeight();
+
+	setFramePosition(0, 0);
 
 
 }
 
-void Camera::setCameraBounds(SDL_Rect bounds)
-{
-
-	m_cameraBounds = bounds;
-
-}

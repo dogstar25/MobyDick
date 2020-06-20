@@ -171,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="resource1.h" />
     <ClInclude Include="src\Animation.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Clock.h" />
@@ -205,6 +206,9 @@
   </ItemGroup>
   <ItemGroup>
     <Library Include="ExtraLibs\SDL2main.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MobyDick.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

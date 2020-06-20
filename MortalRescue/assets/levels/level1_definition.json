@@ -1,10 +1,12 @@
 {
   "id": "LEVEL1",
-  "blueprint": "",
+  "blueprint": "TX_LEVEL1_BLUEPRINT",
   "description": "Level 1",
-  "size": {
-    "width": 128,
-    "height": 64
+  "dimensions": {
+    "levelWidth":  128,
+    "levelHeight":  64,
+    "tileWidth": 32,
+    "tileHeight": 32
   },
   "tileSize": 32,
   "locationObjects": [

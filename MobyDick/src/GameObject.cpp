@@ -53,7 +53,7 @@ GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float 
 	this->init();
 
 	//calculate position
-	b2Vec2 position(xMapPos * game->worldGridSize.w, yMapPos * game->worldGridSize.h);
+	b2Vec2 position(xMapPos * Level::instance().m_tileWidth, yMapPos * Level::instance().m_tileHeight);
 	this->setPosition(position, angleAdjust);
 
 	//set the id and it will be unique for every game object in the game

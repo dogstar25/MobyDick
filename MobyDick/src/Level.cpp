@@ -39,6 +39,12 @@ static const unsigned char leftWall = 0b1110;
 static const unsigned char column = 0b0000;
 
 
+Level& Level::instance()
+{
+	static Level singletonInstance;
+	return singletonInstance;
+}
+
 void Level::addWaypoint(Waypoint wayPoint)
 {
 
@@ -61,6 +67,53 @@ void Level::setLevelObjectArraySize(int width, int height)
 
 }
 
+void Level::_loadDefinition(std::string levelId)
+{
+	//Read file and stream it to a JSON object
+	bool success = false;
+	Json::CharReaderBuilder jsonBuilder;
+	Json::Value root;
+	string filename = "assets/levels/" + levelId + "_definition.json";
+	string errors;
+	ifstream ifs(filename);
+
+	success = Json::parseFromStream(jsonBuilder, ifs, &root, &errors);
+
+	if (success == true)
+	{
+		//Level definition values
+		m_id = levelId;
+		m_description = root["description"].asString();
+		m_blueprint = root["blueprint"].asString();
+
+		//Dimensions
+		m_width = root["dimensions"]["levelWidth"].asInt();
+		m_height = root["dimensions"]["levelHeight"].asInt();
+		m_tileWidth = root["dimensions"]["tileWidth"].asInt();
+		m_tileHeight = root["dimensions"]["tileHeight"].asInt();
+		m_levelBounds.x = 0;
+		m_levelBounds.y = 0;
+		m_levelBounds.w = m_width * m_tileWidth;
+		m_levelBounds.h = m_height * m_tileHeight;
+
+		LevelObject* locationDefinition = NULL;
+		std:string locationId;
+		for (auto itr : root["locationObjects"])
+		{
+			locationDefinition = new LevelObject();
+			locationDefinition->gameObjectId = itr["gameObjectId"].asString();
+			locationId = itr["id"].asString();
+			m_locationObjects.emplace(locationId, locationDefinition);
+
+		}
+			
+	}
+	else
+	{
+		//TODO: error logger
+	}
+}
+
 void Level::load(std::string levelId)
 {
 
@@ -69,19 +122,21 @@ void Level::load(std::string levelId)
 	SDL_Color* color;
 	SDL_Surface* surface;
 
-
-	/*
-	ADD THE JSON READING HERE TO GET LEVEL DETAILS
-	LOAD UP THE LOCATION OBJECT ARRAY
-	*/
+	//Load the Level definition
+	_loadDefinition(levelId);
 
 	//I am representing the level grid as a png image file 
-	levelImage = TextureManager::instance().getTexture(levelId)->sdlTexture;
-	surface = TextureManager::instance().getTexture(levelId)->surface;
+	surface = TextureManager::instance().getTexture(m_blueprint)->surface;
 
-	m_id = levelId;
-	m_width = surface->w;
-	m_height = surface->h;
+	//Log warning if the bluprint image size doesnt match what we ahve in config
+	int surfaceWidth = surface->w;
+	int surfaceHeight = surface->h;
+	if (surfaceWidth != m_width ||
+		surfaceHeight != m_height)
+	{
+		cout << "WARNING: Blueprint " << m_id << " width/height: " << surfaceWidth << "/" << surfaceHeight << " does not match defined width/height of: " 
+			<<	m_width << "/" << m_height << "\n";
+	}
 
 	SDL_LockSurface(surface);
 
@@ -95,29 +150,22 @@ void Level::load(std::string levelId)
 		for (int x = 0; x < surface->w; x++)
 		{
 			//determine what tile to build for current x,y location
-			LevelObject levelObject = *determineTile(x, y, surface);
+			LevelObject levelObject = *_determineTile(x, y, surface);
 
 			//Add levelItem to array
 			levelObjects[x][y] = levelObject;
 
-			//use the first levelItem to determine the tile size of the level and world
-			if (x == 0 && y == 0)
-			{
-				/*
-				TODO:SHOULD COME FROM NEW JSON FILE
-				*/
-				m_tileWidth = GameObjectManager::instance().gameObjectDefinitions[levelObject.gameObjectId]->xSize
-					* GameConfig::instance().scaleFactor();
-				m_tileHeight = GameObjectManager::instance().gameObjectDefinitions[levelObject.gameObjectId]->ySize
-					* GameConfig::instance().scaleFactor();
-			}
 		}
 	}
 
 	SDL_UnlockSurface(surface);
+
+	//Build all of the objects that make up this level and store them
+	//In the main gameObject collection
+	_buildLevelObjects();
 }
 
-LevelObject* Level::determineTile(int x, int y, SDL_Surface* surface)
+LevelObject* Level::_determineTile(int x, int y, SDL_Surface* surface)
 {
 	int bpp = surface->format->BytesPerPixel;
 	Uint8 red, green, blue, alpha;
@@ -261,7 +309,7 @@ LevelObject* Level::determineTile(int x, int y, SDL_Surface* surface)
 
 }
 
-void Level::build(string levelId)
+void Level::_buildLevelObjects()
 {
 	LevelObject* levelObject;
 	WorldObject* worldObject;

@@ -15,7 +15,123 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp">
+    <Image Include="assets\blueprints\drone1_blueprint.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprints\drone1_test.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprints\level_test.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprints\level1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\levels\level1_blueprint.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\bowman1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\bullet1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\deflect1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\enemyFrame1_128.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\gina_Idle_64.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\gina_Run_64.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\particle1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\particle2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\pieceAngle1_8.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\pieceAngle2_8.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\pieceAngle3_8.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\pieceAngle4_8.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\pieceFull_8.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\pistolLady64_Run.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\pistolLady128_Run.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\spaceship1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\square_128.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\swordLady64_Idle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\tile1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_column.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_corner.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_end.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_hall.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_open.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\wall1_wall.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\weapon1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\weapon1_FIRE.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\weapon1_IDLE.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\gameObjectDefinitions\commonObjects.json" />
+    <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
+    <None Include="assets\gameObjectDefinitions\GUIObjects.json" />
+    <None Include="assets\gameObjectDefinitions\level1Objects.json" />
+    <None Include="assets\gameObjectDefinitions\objectPools.json" />
+    <None Include="assets\gameObjectDefinitions\particleObjects.json" />
+    <None Include="assets\levels\level1_definition.json" />
+    <None Include="assets\levels\level1_Objects.json" />
+    <None Include="assets\gameConfig.json" />
+    <None Include="assets\textureAssets.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\arial.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
