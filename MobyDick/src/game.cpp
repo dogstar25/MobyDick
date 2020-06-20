@@ -51,8 +51,6 @@ Game::~Game()
 Game::Game()
 {
 
-	this->worldBounds = {};
-	this->worldGridSize = {};
 	this->physicsWorld = nullptr;
 
 	this->pWindow = nullptr;
@@ -83,7 +81,7 @@ bool Game::init()
 	{
 
 		//Initialize the camera
-		Camera::instance().init();
+		//Camera::instance().init();
 
 		//Init font library
 		TTF_Init();
@@ -139,11 +137,15 @@ bool Game::init()
 		SDL_ShowCursor(false);
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 
-		//Build the world for a particular level
-		this->buildWorld("TX_LEVEL1_BLUEPRINT");
-
 		//Initialize the clock object
 		Clock::instance().init();
+
+		//Load the First level
+		Level::instance().load("level1");
+
+		//Initilaize Camera size and
+		Camera::instance().init();
+
 		
 	}
 
@@ -446,49 +448,7 @@ void Game::handleEvents() {
 	}
 }
 
-void Game::buildWorld(string levelId)
-{
-	//load all of the information needed to build the level
-	m_level.load("level1");
-
-	//Initialize world bounds and gridsize based on current level loaded info
-	this->initWorldBounds();
-
-	//Set Camera Bounds
-	Camera::instance().setCameraBounds(this->worldBounds);
-
-	//Build the actual level gameobjects
-	//m_level.build("TX_LEVEL1_BLUEPRINT");
-
-}
 
 
-
-
-void Game::initWorldBounds()
-{
-	int width, height;
-
-	//If there is no level loaded then default the world size to be the same as the camera size
-	if (this->m_level.m_id.empty() == true)
-	{
-		width = Camera::instance().frame().w;
-		height = Camera::instance().frame().h;
-	}
-	else
-	{
-		width = m_level.m_width * m_level.m_tileWidth;
-
-		height = m_level.m_height * m_level.m_tileHeight;
-	}
-
-	this->worldBounds.x = 0;
-	this->worldBounds.y = 0;
-	this->worldBounds.w = width;
-	this->worldBounds.h = height;
-	this->worldGridSize.w = m_level.m_tileWidth;
-	this->worldGridSize.h = m_level.m_tileHeight;
-
-}
 
 

@@ -35,7 +35,7 @@ WorldObject::WorldObject(string gameObjectId, float xMapPos, float yMapPos, floa
 	// We need it centered on the grid location
 	//so add half of the object size so that the object will be placed with its top left corner in the grid location
 	//we specify
-	b2Vec2 position(xMapPos * game->worldGridSize.w, yMapPos * game->worldGridSize.h);
+	b2Vec2 position(xMapPos * Level::instance().m_tileWidth, yMapPos * Level::instance().m_tileHeight);
 	float angle = util::degreesToRadians(angleAdjust);
 	this->setPosition(position, angle);
 

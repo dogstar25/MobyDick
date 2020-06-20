@@ -7,9 +7,7 @@ public:
 
 	static Camera& instance();
 	void setFramePosition(int x, int y);
-	void setFrameSize(int width, int height);
 	void init();
-	void setCameraBounds(SDL_Rect worldBounds);
 
 	SDL_Rect frame() {
 		return m_frame;

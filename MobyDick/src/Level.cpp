@@ -39,6 +39,12 @@ static const unsigned char leftWall = 0b1110;
 static const unsigned char column = 0b0000;
 
 
+Level& Level::instance()
+{
+	static Level singletonInstance;
+	return singletonInstance;
+}
+
 void Level::addWaypoint(Waypoint wayPoint)
 {
 
@@ -80,6 +86,16 @@ void Level::_loadDefinition(std::string levelId)
 		m_description = root["description"].asString();
 		m_blueprint = root["blueprint"].asString();
 
+		//Dimensions
+		m_width = root["dimensions"]["levelWidth"].asInt();
+		m_height = root["dimensions"]["levelHeight"].asInt();
+		m_tileWidth = root["dimensions"]["tileWidth"].asInt();
+		m_tileHeight = root["dimensions"]["tileHeight"].asInt();
+		m_levelBounds.x = 0;
+		m_levelBounds.y = 0;
+		m_levelBounds.w = m_width * m_tileWidth;
+		m_levelBounds.h = m_height * m_tileHeight;
+
 		LevelObject* locationDefinition = NULL;
 		std:string locationId;
 		for (auto itr : root["locationObjects"])
@@ -110,12 +126,17 @@ void Level::load(std::string levelId)
 	_loadDefinition(levelId);
 
 	//I am representing the level grid as a png image file 
-	levelImage = TextureManager::instance().getTexture(m_blueprint)->sdlTexture;
 	surface = TextureManager::instance().getTexture(m_blueprint)->surface;
 
-	m_id = levelId;
-	m_width = surface->w;
-	m_height = surface->h;
+	//Log warning if the bluprint image size doesnt match what we ahve in config
+	int surfaceWidth = surface->w;
+	int surfaceHeight = surface->h;
+	if (surfaceWidth != m_width ||
+		surfaceHeight != m_height)
+	{
+		cout << "WARNING: Blueprint " << m_id << " width/height: " << surfaceWidth << "/" << surfaceHeight << " does not match defined width/height of: " 
+			<<	m_width << "/" << m_height << "\n";
+	}
 
 	SDL_LockSurface(surface);
 
@@ -134,17 +155,6 @@ void Level::load(std::string levelId)
 			//Add levelItem to array
 			levelObjects[x][y] = levelObject;
 
-			//use the first levelItem to determine the tile size of the level and world
-			if (x == 0 && y == 0)
-			{
-				/*
-				TODO:SHOULD COME FROM NEW JSON FILE
-				*/
-				m_tileWidth = GameObjectManager::instance().gameObjectDefinitions[levelObject.gameObjectId]->xSize
-					* GameConfig::instance().scaleFactor();
-				m_tileHeight = GameObjectManager::instance().gameObjectDefinitions[levelObject.gameObjectId]->ySize
-					* GameConfig::instance().scaleFactor();
-			}
 		}
 	}
 

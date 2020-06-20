@@ -57,7 +57,7 @@ void DebugPanel::addItem(string id, string value)
 			//Calculate the position of the debug text item
 			xPos = m_location.x;
 			//yPos = this->location.y + this->itemCount * (.5);
-			yPos = m_location.y + m_itemCount * ((float)definition->textDetails.size / (float)game->worldGridSize.h);
+			yPos = m_location.y + m_itemCount * ((float)definition->textDetails.size / (float)Level::instance().m_tileHeight);
 
 			TextObject* textObject = GameObjectManager::instance().buildGameObject <TextObject>(newId, xPos, yPos, 0);
 			game->addGameObject(textObject, GameOjectLayer::DEBUG);

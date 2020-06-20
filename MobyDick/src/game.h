@@ -50,7 +50,6 @@ class WeaponObject;
 class Game {
 
 private:
-	Level m_level;
 	GameObjectContactListener m_gameObjectContactListner;
 
 public:
@@ -65,8 +64,6 @@ public:
 	void update();
 	void handleEvents();
 	
-	void initWorldBounds();
-
 	void addGameObject(GameObject* gameObject, int);
 	void addGameObject(TextObject* gameObject, int);
 	void addGameObject(WorldObject* gameObject, int);
@@ -75,8 +72,6 @@ public:
 	void addGameObject(WeaponObject* gameObject, int);
 	void buildWorld(string);
 
-	SDL_Rect worldBounds;
-	SDL_Rect worldGridSize;
 	b2World* physicsWorld;
 	
 	//Main screen and window stuff
@@ -99,6 +94,9 @@ public:
 
 	int fps;
 	DebugDraw debugDraw;
+
+
+	//Accessor Functions
 
 
 

@@ -21,17 +21,7 @@ TextObject::TextObject(string gameObjectId, float xMapPos, float yMapPos, float 
 	//If the text item is actually smaller than the gridsize, adjust the position to reflect that
 	float adjPosX=0;
 	float adjPosY=0;
-	/*
-	if (this->xSize < game->worldGridSize.w)
-	{
-		this->xPos -= (game->worldGridSize.w) - this->xSize);
-	}
-	
-	if (this->ySize < game->worldGridSize.h)
-	{
-		this->yPos -= (game->worldGridSize.h - (this->ySize+ game->worldGridSize.h));
-	}
-	*/
+
 	this->setColor(this->definition()->textDetails.color.r,
 		this->definition()->textDetails.color.g,
 		this->definition()->textDetails.color.b,

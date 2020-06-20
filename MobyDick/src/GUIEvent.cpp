@@ -29,13 +29,13 @@ GUIEvent::GUIEvent(string guiObjectId)
 	float centerInPixelsY = Camera::instance().frame().h / 2;
 
 	//Adjust to gridsize
-	int centerInTilesX = centerInPixelsX / game->worldGridSize.w;
-	int centerInTilesY = centerInPixelsY / game->worldGridSize.h;
+	int centerInTilesX = centerInPixelsX / Level::instance().m_tileWidth;
+	int centerInTilesY = centerInPixelsY / Level::instance().m_tileHeight;
 
 	//Adjust to center of oject to be center of the point we calculated, otherwise it woudl 
 	//position the objects top left corver at the point
-	centerInTilesX = centerInTilesX - (definition->xSize / 2 / game->worldGridSize.w);
-	centerInTilesY = centerInTilesY - (definition->ySize / 2 / game->worldGridSize.h);
+	centerInTilesX = centerInTilesX - (definition->xSize / 2 / Level::instance().m_tileWidth);
+	centerInTilesY = centerInTilesY - (definition->ySize / 2 / Level::instance().m_tileHeight);
 
 
 	posX = centerInTilesX;
