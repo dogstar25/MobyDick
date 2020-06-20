@@ -5,6 +5,7 @@
 
 #include "ObjectPoolManager.h"
 #include "ParticleObject.h"
+#include "GameObjectManager.h"
 
 
 ObjectPoolManager& ObjectPoolManager::instance()
@@ -40,7 +41,7 @@ void ObjectPoolManager::init()
 		lifetime = itr["lifetime"].asFloat();
 
 		for (int index = 0; index < maxItems; index++) {
-			particle = new ParticleObject(gameObjectId, -50, -50, 0);
+			particle = GameObjectManager::instance().buildGameObject <ParticleObject>(gameObjectId, -50, -50, 0);
 
 			particle->isAvailable = true;
 			//convert seconds into miliseconds
