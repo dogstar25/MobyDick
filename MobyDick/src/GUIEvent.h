@@ -14,7 +14,6 @@ class GUIEvent
 {
 
 public:
-	GUIEvent();
 	GUIEvent(string guiObjectId);
 	~GUIEvent();
 

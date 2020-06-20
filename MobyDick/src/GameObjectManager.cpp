@@ -31,14 +31,9 @@ GameObjectManager::GameObjectManager()
 GameObjectManager::~GameObjectManager()
 {
 
-	//clean and delete all of the game objects
-	/*
-	for (auto gameObjectDefinition : this->gameObjectDefinitions) {
-
-		delete gameObjectDefinition.second;
-	}
-	*/
+	//Use clear and swap to ensure free memory
 	this->gameObjectDefinitions.clear();
+	map<string, GameObjectDefinition*>().swap(this->gameObjectDefinitions);
 }
 
 

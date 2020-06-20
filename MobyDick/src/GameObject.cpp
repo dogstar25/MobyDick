@@ -6,20 +6,22 @@
 #include "Animation.h"
 #include "Texture.h"
 #include "TextureManager.h"
-
+#include <vector>
 #include "WorldObject.h"
 
 
 GameObject::~GameObject()
 {
-
+	//Use clear then swap with empty array to free memory
 	m_animations.clear();
-
+	std::map<std::string, Animation*>().swap(m_animations);
+	
+	//Free the children - YAY!
 	for (int x = 0; x < constants::CHILD_POSITIONS; x++)
 	{
 		m_childObjects[x].clear();
+		vector <std::shared_ptr<GameObject>>().swap(m_childObjects[x]);
 	}
-
 
 }
 

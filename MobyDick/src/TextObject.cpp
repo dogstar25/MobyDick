@@ -18,10 +18,6 @@ TextObject::TextObject(string gameObjectId, float xMapPos, float yMapPos, float 
 	this->setSize(this->definition()->textDetails.size, 
 		this->definition()->textDetails.size);
 
-	//If the text item is actually smaller than the gridsize, adjust the position to reflect that
-	float adjPosX=0;
-	float adjPosY=0;
-
 	this->setColor(this->definition()->textDetails.color.r,
 		this->definition()->textDetails.color.g,
 		this->definition()->textDetails.color.b,
@@ -36,6 +32,7 @@ TextObject::TextObject(string gameObjectId, float xMapPos, float yMapPos, float 
 
 TextObject::~TextObject()
 {
+
 }
 
 void TextObject::update()
@@ -108,29 +105,27 @@ void TextObject::render()
 Texture* TextObject::generateTextTexture()
 {
 
-	SDL_Surface* surface;
 	Texture* texture = new Texture();
-	SDL_Texture* sdlTexture;
+	SDL_Surface* tempSurface;
 
 	int textSize = this->definition()->textDetails.size; // default to x size
 	string fontFile = TextureManager::instance().getFont(this->fontId);
 
 	TTF_Font* fontObject = TTF_OpenFont(fontFile.c_str(), textSize);
 	//surface = TTF_RenderText_Solid(fontObject, textObject->textValue.c_str(), color);
-	surface = TTF_RenderText_Blended(fontObject, this->textValue.c_str(), this->color());
+	tempSurface = TTF_RenderText_Blended(fontObject, this->textValue.c_str(), this->color());
 	TTF_CloseFont(fontObject);
 	string test = TTF_GetError();
 
 	//Set the size of the textObject now that its texture has been generated
-	if (surface != NULL)
+	if (tempSurface != NULL)
 	{
-		this->setSize(surface->w, surface->h);
+		this->setSize(tempSurface->w, tempSurface->h);
 	}
 
-	sdlTexture = TextureManager::instance().createTextureFromSurface(surface);
-	SDL_FreeSurface(surface);
+	texture->sdlTexture = TextureManager::instance().createTextureFromSurface(tempSurface);
+	SDL_FreeSurface(tempSurface);
 
-	texture->sdlTexture = sdlTexture;
 
 	//Add it to the main texture map
 	//Append "TEXTURE" to gameobejct id to create textture id

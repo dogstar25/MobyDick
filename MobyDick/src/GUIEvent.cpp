@@ -4,9 +4,6 @@
 #include "Camera.h"
 #include "Game.h"
 
-GUIEvent::GUIEvent()
-{
-}
 
 GUIEvent::GUIEvent(string guiObjectId)
 {
@@ -59,8 +56,22 @@ GUIEvent::~GUIEvent()
 	//Free the resources
 	for (int x = 0; x < constants::MAX_GAMEOBJECT_LAYERS; x++)
 	{
+		for (GameObject* gameObject : this->uiObjectCollections[x].gameObjects)
+		{
+			delete gameObject;
+		}
+		for (ParticleObject* particleObject : this->uiObjectCollections[x].particleObjects)
+		{
+			delete particleObject;
+		}
+
 		this->uiObjectCollections[x].gameObjects.clear();
 		this->uiObjectCollections[x].particleObjects.clear();
+
+		vector <GameObject*>().swap(this->uiObjectCollections[x].gameObjects);
+		vector <ParticleObject*>().swap(this->uiObjectCollections[x].particleObjects);
+
+
 	}
 
 
