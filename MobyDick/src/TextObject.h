@@ -14,9 +14,14 @@ public:
 	std::shared_ptr<Texture> updateDynamicTextTexture();
 	std::shared_ptr<Texture> generateTextTexture();
 
-	bool isDynamic;
-	std::string fontId;
-	std::string textValue;
+	bool 
+		isDynamic,
+		isDebugText;
+	std::string 
+		fontId,
+		textValue,
+		debugId;
+	
 		
 
 };

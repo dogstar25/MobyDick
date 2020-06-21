@@ -2,6 +2,8 @@
 #include "Texture.h"
 #include "TextureManager.h"
 #include "DynamicTextManager.h"
+#include "GameConfig.h"
+
 #include "Game.h"
 
 extern Game* game;
@@ -13,7 +15,15 @@ TextObject::TextObject(string gameObjectId, float xMapPos, float yMapPos, float 
 
 	this->isDynamic = this->definition()->textDetails.isDynamic;
 
-	//Test could be blank here if it's a dynamic text object
+	//is this a debug object then set a flag and build the special debugId to be used in place 
+	// of the gameObjectId for building textures
+	if (gameObjectId.rfind("DEBUG_", 0) == 0)
+	{
+		this->isDebugText = true;
+		this->debugId = gameObjectId;
+	}
+
+	//Text could be blank here if it's a dynamic text object
 	if (this->definition()->textDetails.value.empty() == true)
 	{
 		this->textValue = "default";
@@ -29,7 +39,16 @@ TextObject::TextObject(string gameObjectId, float xMapPos, float yMapPos, float 
 		this->definition()->textDetails.color.a);
 
 	//Get or Generate the text texture
-	std:string textureId = "TX_" + this->definition()->id;
+	std::string textureId;
+	if (this->isDebugText == true)
+	{
+		textureId = "TX_" + this->debugId;
+	}
+	else
+	{
+		textureId = "TX_" + this->definition()->id;
+	}
+
 	if (TextureManager::instance().hasTexture(textureId))
 	{
 		this->setTexture( TextureManager::instance().getTexture(textureId));
@@ -123,13 +142,22 @@ shared_ptr<Texture> TextObject::generateTextTexture()
 
 	shared_ptr<Texture> texture = make_shared<Texture>();;
 
+	std::string textureId;
+	if (this->isDebugText == true)
+	{
+		textureId = "TX_" + this->debugId;
+	}
+	else
+	{
+		textureId = "TX_" + this->definition()->id;
+	}
+
 	/*
 	TextObjects have their textures generated here, not in the TextureManager.init().
 	Generate the texture and add it to the TextureManager so that it can be shared with
 	other objects if needed.
 	*/
 	SDL_Surface* tempSurface;
-	std:string textureId = "TX_" + this->definition()->id;
 
 	int textSize = this->definition()->textDetails.size; // default to x size
 	string fontFile = TextureManager::instance().getFont(this->fontId);
@@ -161,14 +189,22 @@ shared_ptr<Texture> TextObject::updateDynamicTextTexture()
 	shared_ptr<Texture> texture;
 	SDL_Surface* surface;
 
-	newText = DynamicTextManager::instance().getTextItem(this->definition()->id);
+	if (this->isDebugText == true)
+	{
+		newText = DynamicTextManager::instance().getTextItem(this->debugId);
+	}
+	else
+	{
+		newText = DynamicTextManager::instance().getTextItem(this->definition()->id);
+	}
 
 	//check the clock and see if enough time as gone by
 	steady_clock::time_point now_time = steady_clock::now();
 	std::chrono::duration<double> time_diff = now_time - newText->time_snapshot;
 
 	//FIXME: .2 needs to be a setting somewhere
-	if (newText->hasChanged == true && time_diff.count() > 0)
+	//if (newText->hasChanged == true && time_diff.count() > 0)
+	if (newText->hasChanged == true && time_diff.count() > GameConfig::instance().dynamicTextRefreshDelay())
 	{
 		//update the timestamp
 		newText->time_snapshot = now_time;
@@ -181,7 +217,16 @@ shared_ptr<Texture> TextObject::updateDynamicTextTexture()
 	}
 	else
 	{
-		std:string textureId = "TX_" + this->definition()->id;
+		std::string textureId;
+		if (this->isDebugText == true)
+		{
+			textureId = "TX_" + this->debugId;
+		}
+		else
+		{
+			textureId = "TX_" + this->definition()->id;
+		}
+
 		texture = TextureManager::instance().getTexture(textureId);
 
 		//TODO:set a flag at game object level so that the TextureManager::render(TextObject* gameObject) doesnt have to 

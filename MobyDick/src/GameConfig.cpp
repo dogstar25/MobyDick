@@ -36,6 +36,7 @@ bool GameConfig::init(std::string configFile)
 
 	m_scaleFactor = root["physics"]["box2dScale"].asFloat();
 	m_mouseSensitivity = root["mouseSensitivity"].asFloat();
+	m_dynamicTextRefreshDelay = root["dynamicTextRefreshDelay"].asFloat();
 	m_debugPanel = root["debugPanel"]["show"].asBool();
 	m_debugPanelLocation.x = root["debugPanel"]["xPos"].asInt();
 	m_debugPanelLocation.y = root["debugPanel"]["yPos"].asInt();

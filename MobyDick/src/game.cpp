@@ -55,7 +55,6 @@ Game::Game()
 
 	this->pWindow = nullptr;
 	this->gameObjectCount = 0;
-	this->mouseSensitivity = 0;
 	this->mouseLocation = {};
 	this->mouseClickLocation = {};
 
@@ -236,9 +235,7 @@ void Game::play()
 		//Increment frame counter and calculate FPS and reset the gameloop timer
 		Clock::instance().calcFps();
 
-
 		DynamicTextManager::instance().updateText("FPS_VALUE", to_string(Clock::instance().fps()));
-		//DynamicTextManager::instance().updateText("FPS_VALUE", to_string(util::generateRandomNumber(1, 222)));
 
 	}
 
