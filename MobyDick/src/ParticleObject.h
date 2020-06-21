@@ -24,7 +24,7 @@ public:
 	bool isLifetimeAlphaFade;
 	bool hasInfiniteLifetime;
 	bool isAvailable;
-	string poolId;
+	std::string poolId;
 
 	steady_clock::time_point time_snapshot;
 

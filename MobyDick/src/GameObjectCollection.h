@@ -16,8 +16,8 @@ public:
 
 	//We keep our particle objects in a seperate collection because they have a limited lifetime and 
 	//that collection goes through a heavy amount of additions and deletions
-	vector <GameObject*> gameObjects;
-	vector <ParticleObject*> particleObjects;
+	std::vector <GameObject*> gameObjects;
+	std::vector <ParticleObject*> particleObjects;
 	
 
 };
