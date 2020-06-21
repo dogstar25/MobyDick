@@ -65,7 +65,7 @@ void WeaponObject::fire(const b2Vec2 &origin, const float &angle, const float &f
 		bullet->setColor(color);
 
 		//Add the bullet object to the main gameObject collection
-		game->addGameObject(bullet, GameOjectLayer::MAIN);
+		Game::instance().addGameObject(bullet, GameOjectLayer::MAIN);
 	}
 
 }

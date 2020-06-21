@@ -135,12 +135,12 @@ void WorldObject::render()
 	if (this->definition()->id.compare("GINA_64") == 0)
 	{
 		if (textureSourceRect == NULL) {
-			game->debugPanel->addItem("textureSourceRec", "NULL");
+			Game::instance().debugPanel->addItem("textureSourceRec", "NULL");
 		}
 		else
 		{
-			game->debugPanel->addItem("textureSourceRecX", to_string(textureSourceRect->x));
-			game->debugPanel->addItem("textureSourceRecY", to_string(textureSourceRect->y));
+			Game::instance().debugPanel->addItem("textureSourceRecX", to_string(textureSourceRect->x));
+			Game::instance().debugPanel->addItem("textureSourceRecY", to_string(textureSourceRect->y));
 		}
 		
 
@@ -176,7 +176,7 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 
 	//Default the position to zero.
 	bodyDef.position.SetZero();
-	b2Body* body = game->physicsWorld->CreateBody(&bodyDef);
+	b2Body* body = Game::instance().physicsWorld->CreateBody(&bodyDef);
 
 	b2Shape* shape;
 	b2PolygonShape box;
@@ -323,10 +323,10 @@ void WorldObject::addWeapon(string weaponObjectId)
 		weaponObject->definition()->weaponDetails.anchorPoint.y 
 	};
 	weldJointDef.localAnchorB = weaponsAnchorPoint;
-	(b2WeldJointDef*)game->physicsWorld->CreateJoint(&weldJointDef);
+	(b2WeldJointDef*)Game::instance().physicsWorld->CreateJoint(&weldJointDef);
 
 	this->m_weapon = weaponObject;
 
-	game->addGameObject(weaponObject, GameOjectLayer::MAIN);
+	Game::instance().addGameObject(weaponObject, GameOjectLayer::MAIN);
 
 }

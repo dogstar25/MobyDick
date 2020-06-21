@@ -21,7 +21,6 @@ class ParticleObject;
 class Game;
 
 using namespace std;
-extern Game* game;
 
 class TextureManager
 {

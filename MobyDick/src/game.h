@@ -70,7 +70,7 @@ public:
 	void addGameObject(ParticleObject* gameObject, int);
 	void addGameObject(CompositeObject* gameObject, int);
 	void addGameObject(WeaponObject* gameObject, int);
-	void buildWorld(string);
+	static Game& instance();
 
 	b2World* physicsWorld;
 	

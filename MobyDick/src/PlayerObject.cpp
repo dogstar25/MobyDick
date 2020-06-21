@@ -122,8 +122,8 @@ void PlayerObject::update()
 	this->updatePlayerMovement();
 
 //test
-	game->debugPanel->addItem("PLAYERX", to_string(this->physicsBody()->GetTransform().p.x));
-	game->debugPanel->addItem("PLAYERY", to_string(this->physicsBody()->GetTransform().p.y));
+	Game::instance().debugPanel->addItem("PLAYERX", to_string(this->physicsBody()->GetTransform().p.x));
+	Game::instance().debugPanel->addItem("PLAYERY", to_string(this->physicsBody()->GetTransform().p.y));
 
 
 }
@@ -131,8 +131,8 @@ void PlayerObject::update()
 void PlayerObject::render()
 {
 
-	game->debugPanel->addItem("ANIMATIONState", this->currentAnimationState());
-	game->debugPanel->addItem("ANIMATIONFrame", to_string(this->animations()[this->currentAnimationState()]->getCurrentAnimFrame()));
+	Game::instance().debugPanel->addItem("ANIMATIONState", this->currentAnimationState());
+	Game::instance().debugPanel->addItem("ANIMATIONFrame", to_string(this->animations()[this->currentAnimationState()]->getCurrentAnimFrame()));
 	WorldObject::render();
 }
 

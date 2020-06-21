@@ -1,6 +1,5 @@
 #include "Game.h"
 
-Game* game;
 using namespace std;
 
 int main(int argc, char* args[])
@@ -8,27 +7,25 @@ int main(int argc, char* args[])
 
 	cout << "Mortal Rescue Begins\n";
 
-	game = new Game();
-	game->init();
+	Game::instance().init();
 
-	while (game->gameState != GameState::QUIT)
+	while (Game::instance().gameState != GameState::QUIT)
 	{
 
-		game->handleEvents();
+		Game::instance().handleEvents();
 
-		switch (game->gameState)
+		switch (Game::instance().gameState)
 		{
 		case GameState::PAUSE:
 			//this may be not needed
 			break;
 
 		case GameState::PLAY:
-			game->play();
+			Game::instance().play();
 			break;
 		}
 	}
 
-	delete game;
 
 	return 0;
 }

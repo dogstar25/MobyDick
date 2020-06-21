@@ -24,6 +24,13 @@
 using namespace chrono_literals;
 using namespace std;
 
+Game& Game::instance()
+{
+	static Game singletonInstance;
+	return singletonInstance;
+}
+
+
 Game::~Game()
 {
 

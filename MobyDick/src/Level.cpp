@@ -331,7 +331,7 @@ void Level::_buildLevelObjects()
 				levelObject = &levelObjects[x][y];
 
 				worldObject = GameObjectManager::instance().buildGameObject <WorldObject>(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
-				game->addGameObject(worldObject, GameOjectLayer::MAIN);
+				Game::instance().addGameObject(worldObject, GameOjectLayer::MAIN);
 
 			}
 

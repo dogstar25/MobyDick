@@ -60,7 +60,7 @@ void DebugPanel::addItem(string id, string value)
 			yPos = m_location.y + m_itemCount * ((float)definition->textDetails.size / (float)Level::instance().m_tileHeight);
 
 			TextObject* textObject = GameObjectManager::instance().buildGameObject <TextObject>(newId, xPos, yPos, 0);
-			game->addGameObject(textObject, GameOjectLayer::DEBUG);
+			Game::instance().addGameObject(textObject, GameOjectLayer::DEBUG);
 
 			m_itemCount++;
 		}

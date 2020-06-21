@@ -563,10 +563,10 @@ void GameObject::updateMouseState()
 	if (m_definition->isMouseSelectable == true)
 	{
 		//Is mouse over the object
-		if (game->mouseLocation.x >= gameObjectDrawRect.x &&
-			game->mouseLocation.x <= gameObjectDrawRect.x + gameObjectDrawRect.w &&
-			game->mouseLocation.y >= gameObjectDrawRect.y &&
-			game->mouseLocation.y <= gameObjectDrawRect.y + gameObjectDrawRect.h)
+		if (Game::instance().mouseLocation.x >= gameObjectDrawRect.x &&
+			Game::instance().mouseLocation.x <= gameObjectDrawRect.x + gameObjectDrawRect.w &&
+			Game::instance().mouseLocation.y >= gameObjectDrawRect.y &&
+			Game::instance().mouseLocation.y <= gameObjectDrawRect.y + gameObjectDrawRect.h)
 		{
 
 			//was this object clicked?

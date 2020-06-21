@@ -213,7 +213,7 @@ void ParticleMachine::emit(
 			//particle->physicsBody->SetBullet(true);
 
 			//Add the particle to the game world
-			game->addGameObject(particle, GameOjectLayer::MAIN);
+			Game::instance().addGameObject(particle, GameOjectLayer::MAIN);
 		}
 
 	}

@@ -116,7 +116,7 @@ void GUIEvent::render()
 	TextureManager::instance().clear();
 
 	//Render all of the game objects in the world
-	Game::renderCollection(&game->gameCollections);
+	Game::renderCollection(&Game::instance().gameCollections);
 
 	//Render all of the GUI Event game objects
 	Game::renderCollection(&uiObjectCollections);
@@ -144,7 +144,7 @@ void GUIEvent::handleInput()
 		case SDL_MOUSEBUTTONDOWN:
 			break;
 		case SDL_MOUSEMOTION:
-			game->mouseLocation.Set(event.motion.x, event.motion.y);
+			Game::instance().mouseLocation.Set(event.motion.x, event.motion.y);
 			break;
 		case SDL_QUIT:
 			state = EXITGUI;
