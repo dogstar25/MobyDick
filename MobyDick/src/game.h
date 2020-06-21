@@ -79,7 +79,6 @@ public:
 	int gameObjectCount;
 
 	//mouse
-	float mouseSensitivity;
 	b2Vec2 mouseLocation, mouseClickLocation;
 
 	//Fixed array of Layers

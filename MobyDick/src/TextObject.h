@@ -4,21 +4,24 @@
 class TextObject :	public GameObject
 {
 public:
-	TextObject(string, float, float, float);
+	TextObject(std::string, float, float, float);
 	virtual ~TextObject();
 
 	void update();
 	void render();
 	SDL_Rect getPositionRect();
 	SDL_Rect getRenderDestRect();
-	Texture* updateDynamicTextTexture();
-	Texture* generateTextTexture();
+	std::shared_ptr<Texture> updateDynamicTextTexture();
+	std::shared_ptr<Texture> generateTextTexture();
 
-
-
-	bool isDynamic;
-	string fontId;
-	string textValue;
+	bool 
+		isDynamic,
+		isDebugText;
+	std::string 
+		fontId,
+		textValue,
+		debugId;
+	
 		
 
 };

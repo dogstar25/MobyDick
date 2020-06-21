@@ -6,7 +6,6 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "TextureManager.h"
-#include "Texture.h"
 #include "Game.h"
 #include "PlayerObject.h"
 #include "TextObject.h"
@@ -24,7 +23,7 @@ TextureManager::~TextureManager()
 {
 
 	for (auto&& textureItem : m_textureMap) {
-		//pointer->functionOfYourClass();
+
 		if (textureItem.second != NULL) {
 
 			if (textureItem.second->surface != NULL) {
@@ -36,6 +35,7 @@ TextureManager::~TextureManager()
 	}
 
 	m_textureMap.clear();
+	map<string, shared_ptr<Texture>>().swap(m_textureMap);
 
 }
 
@@ -60,6 +60,43 @@ bool TextureManager::init(SDL_Window* pWindow)
 	return true;
 }
 
+bool TextureManager::hasTexture(string textureId)
+{
+
+	if (m_textureMap.find(textureId) == m_textureMap.end())
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+
+
+}
+
+void TextureManager::addOrReplaceTexture(string textureId, shared_ptr<Texture> texture)
+{
+	shared_ptr<Texture> tempTexture;
+
+	if (hasTexture(textureId) == false)
+	{
+		m_textureMap.emplace(textureId, texture);
+	}
+	else
+	{
+		tempTexture = getTexture(textureId);
+
+		SDL_FreeSurface(tempTexture->surface);
+		if (tempTexture->sdlTexture != NULL) {
+			SDL_DestroyTexture(tempTexture->sdlTexture);
+		}
+
+		//Use [] for the replacing of an item already there
+		m_textureMap[textureId] = texture;
+	}
+
+}
 
 void TextureManager::render(SDL_Texture* texture, SDL_Color color, SDL_Rect* textureSourceRect, SDL_Rect* destRect, float angle)
 {
@@ -101,7 +138,7 @@ bool TextureManager::loadTextures()
 
 	SDL_Surface* surface;
 	SDL_Texture* sdlTexture;
-	unique_ptr<Texture> textureObject;
+	Texture* textureObject;
 	TTF_Font* fontObject;
 
 	//Loop through every texture defined in the config file, create a texture object
@@ -109,7 +146,7 @@ bool TextureManager::loadTextures()
 	for(auto itr : root["textures"])
 	{
 		//textureObject = new Texture();
-		textureObject = make_unique<Texture>();
+		textureObject = new Texture();
 
 		id = itr["id"].asString();
 		filename = itr["filename"].asString();
@@ -129,8 +166,7 @@ bool TextureManager::loadTextures()
 			SDL_FreeSurface(surface);
 		}
 
-		m_textureMap.emplace(id, move(textureObject));
-		textureObject.reset();
+		m_textureMap.emplace(id, make_shared<Texture>(*textureObject));
 
 	}
 
@@ -172,19 +208,19 @@ string TextureManager::getFont(string id)
 }
 
 
-Texture * TextureManager::getTexture(string id)
+shared_ptr<Texture> TextureManager::getTexture(string id)
 {
-	Texture* textureObject=NULL;
+	shared_ptr<Texture> textureObject;
 
 	auto iter = m_textureMap.find(id);
 
 	if (iter != m_textureMap.end())
 	{
-		textureObject = iter->second.get();
+		textureObject = iter->second;
 	}
 	else
 	{
-		textureObject = m_textureMap["TX_DEFAULT"].get();
+		textureObject = m_textureMap["TX_DEFAULT"];
 	}
 
 	return textureObject;

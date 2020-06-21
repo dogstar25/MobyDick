@@ -2,6 +2,8 @@
 #include "Texture.h"
 #include "TextureManager.h"
 #include "DynamicTextManager.h"
+#include "GameConfig.h"
+
 #include "Game.h"
 
 extern Game* game;
@@ -12,11 +14,24 @@ TextObject::TextObject(string gameObjectId, float xMapPos, float yMapPos, float 
 {
 
 	this->isDynamic = this->definition()->textDetails.isDynamic;
-	this->textValue = this->definition()->textDetails.value;
 
-	//Use the text size value for both x and y size of the gameobject
-	this->setSize(this->definition()->textDetails.size, 
-		this->definition()->textDetails.size);
+	//is this a debug object then set a flag and build the special debugId to be used in place 
+	// of the gameObjectId for building textures
+	if (gameObjectId.rfind("DEBUG_", 0) == 0)
+	{
+		this->isDebugText = true;
+		this->debugId = gameObjectId;
+	}
+
+	//Text could be blank here if it's a dynamic text object
+	if (this->definition()->textDetails.value.empty() == true)
+	{
+		this->textValue = "default";
+	}
+	else
+	{
+		this->textValue = this->definition()->textDetails.value;
+	}
 
 	this->setColor(this->definition()->textDetails.color.r,
 		this->definition()->textDetails.color.g,
@@ -24,8 +39,28 @@ TextObject::TextObject(string gameObjectId, float xMapPos, float yMapPos, float 
 		this->definition()->textDetails.color.a);
 
 	//Get or Generate the text texture
-	this->setTexture( generateTextTexture() );
+	std::string textureId;
+	if (this->isDebugText == true)
+	{
+		textureId = "TX_" + this->debugId;
+	}
+	else
+	{
+		textureId = "TX_" + this->definition()->id;
+	}
 
+	if (TextureManager::instance().hasTexture(textureId))
+	{
+		this->setTexture( TextureManager::instance().getTexture(textureId));
+		this->setSize(this->getRenderSurface()->w, this->getRenderSurface()->h);
+
+	}
+	else
+	{
+		this->setTexture(generateTextTexture());
+	}
+
+	
 
 }
 
@@ -102,81 +137,103 @@ void TextObject::render()
 
 }
 
-Texture* TextObject::generateTextTexture()
+shared_ptr<Texture> TextObject::generateTextTexture()
 {
 
-	Texture* texture = new Texture();
+	shared_ptr<Texture> texture = make_shared<Texture>();;
+
+	std::string textureId;
+	if (this->isDebugText == true)
+	{
+		textureId = "TX_" + this->debugId;
+	}
+	else
+	{
+		textureId = "TX_" + this->definition()->id;
+	}
+
+	/*
+	TextObjects have their textures generated here, not in the TextureManager.init().
+	Generate the texture and add it to the TextureManager so that it can be shared with
+	other objects if needed.
+	*/
 	SDL_Surface* tempSurface;
 
 	int textSize = this->definition()->textDetails.size; // default to x size
 	string fontFile = TextureManager::instance().getFont(this->fontId);
 
 	TTF_Font* fontObject = TTF_OpenFont(fontFile.c_str(), textSize);
-	//surface = TTF_RenderText_Solid(fontObject, textObject->textValue.c_str(), color);
 	tempSurface = TTF_RenderText_Blended(fontObject, this->textValue.c_str(), this->color());
 	TTF_CloseFont(fontObject);
-	string test = TTF_GetError();
 
 	//Set the size of the textObject now that its texture has been generated
-	if (tempSurface != NULL)
-	{
-		this->setSize(tempSurface->w, tempSurface->h);
-	}
+	this->setSize(tempSurface->w, tempSurface->h);
 
 	texture->sdlTexture = TextureManager::instance().createTextureFromSurface(tempSurface);
-	SDL_FreeSurface(tempSurface);
+	texture->surface = tempSurface;
+	//SDL_FreeSurface(tempSurface);
 
+	//Add it to the textureManager but first free any texture that may already be there in case this is
+	//being generated for a dynamic text object
+	TextureManager::instance().addOrReplaceTexture(textureId, texture);
 
-	//Add it to the main texture map
-	//Append "TEXTURE" to gameobejct id to create textture id
-	//possible memory leak - delete texture before adding in case it is already there
-	//string textureId = textObject->id + "_TEXT_TEXTURE";
-	//this->addTexture(textureId, texture);
 	return 	texture;
 
 }
 
 
-Texture* TextObject::updateDynamicTextTexture()
+shared_ptr<Texture> TextObject::updateDynamicTextTexture()
 {
 
 	textItem* newText;
-	Texture* textureObject;
+	shared_ptr<Texture> texture;
 	SDL_Surface* surface;
 
-	//newText = game->dynamicTextManager.textItems[gameObject->definition->id].get();
-	newText = DynamicTextManager::instance().getTextItem(this->definitionId());
+	if (this->isDebugText == true)
+	{
+		newText = DynamicTextManager::instance().getTextItem(this->debugId);
+	}
+	else
+	{
+		newText = DynamicTextManager::instance().getTextItem(this->definition()->id);
+	}
 
 	//check the clock and see if enough time as gone by
 	steady_clock::time_point now_time = steady_clock::now();
 	std::chrono::duration<double> time_diff = now_time - newText->time_snapshot;
 
 	//FIXME: .2 needs to be a setting somewhere
-	if (newText->hasChanged == true && time_diff.count() > .2)
+	//if (newText->hasChanged == true && time_diff.count() > 0)
+	if (newText->hasChanged == true && time_diff.count() > GameConfig::instance().dynamicTextRefreshDelay())
 	{
 		//update the timestamp
 		newText->time_snapshot = now_time;
 
-		//Destroy this texture from the map before we generate a new one - memory leak otherwise
-		if (this->texture()->sdlTexture != NULL) {
-			SDL_DestroyTexture(this->texture()->sdlTexture);
-		}
-
 		//Build new texture
 		this->textValue = newText->text;
-		textureObject = generateTextTexture();
+		texture = generateTextTexture();
 		newText->hasChanged = false;
 
 	}
 	else
 	{
-		textureObject = this->texture();
+		std::string textureId;
+		if (this->isDebugText == true)
+		{
+			textureId = "TX_" + this->debugId;
+		}
+		else
+		{
+			textureId = "TX_" + this->definition()->id;
+		}
+
+		texture = TextureManager::instance().getTexture(textureId);
 
 		//TODO:set a flag at game object level so that the TextureManager::render(TextObject* gameObject) doesnt have to 
 		// do SDL_QueryTexture
 	}
 
-	return textureObject;
+	return texture;
 
 }
 

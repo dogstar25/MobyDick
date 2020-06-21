@@ -58,11 +58,6 @@ GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float 
 	b2Vec2 position(xMapPos * Level::instance().m_tileWidth, yMapPos * Level::instance().m_tileHeight);
 	this->setPosition(position, angleAdjust);
 
-	//set the id and it will be unique for every game object in the game
-	//this->m_id = gameObjectId + to_string(game->gameObjectCount);
-	//this->id = gameObjectId;
-	m_definitionId = gameObjectId;
-
 	//is this a debug object then get the default debug definition but change its 
 	//id value to the one we passed in
 	if (gameObjectId.rfind("DEBUG_", 0) == 0)
@@ -202,6 +197,13 @@ SDL_Texture * GameObject::getRenderTexture()
 	}
 
 	return texture;
+
+}
+
+SDL_Surface* GameObject::getRenderSurface()
+{
+
+	return m_texture->surface;
 
 }
 

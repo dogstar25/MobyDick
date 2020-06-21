@@ -23,7 +23,6 @@ class GameObject
 private:
 
 	std::string	
-		m_definitionId,
 		m_currentAnimationState;
 	int
 		m_mouseState;
@@ -38,7 +37,7 @@ private:
 		m_removeFromWorld;
 
 	GameObjectDefinition* m_definition;
-	Texture* m_texture;
+	std::shared_ptr<Texture> m_texture;
 	std::map<std::string, Animation*> m_animations;
 	std::array<std::vector<std::shared_ptr<GameObject>>, CHILD_POSITIONS> m_childObjects;
 
@@ -59,8 +58,9 @@ protected:
 	void renderChildObjects();
 	virtual SDL_Rect* getRenderTextureRect();
 	virtual SDL_Texture* getRenderTexture();
+	virtual SDL_Surface* getRenderSurface();
 	void setCurrentAnimationState(std::string animationState) {	m_currentAnimationState = animationState; }
-	void setTexture(Texture* texture) { m_texture = texture; }
+	void setTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
 
 public:
 	
@@ -103,9 +103,6 @@ public:
 	SDL_Color color() { 
 		return m_color; 
 	}
-	std::string definitionId() { 
-		return m_definitionId; 
-	}
 	std::string currentAnimationState() { 
 		return m_currentAnimationState; 
 	}
@@ -113,8 +110,9 @@ public:
 		return m_removeFromWorld; 
 	}
 	Texture* texture() { 
-		return m_texture; 
+		return m_texture.get(); 
 	}
+
 	GameObjectDefinition* definition() { 
 		return m_definition; 
 	};

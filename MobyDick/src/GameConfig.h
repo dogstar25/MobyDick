@@ -59,6 +59,9 @@ public:
 	bool windowFullscreen() {
 		return m_windowFullscreen;
 	}
+	float dynamicTextRefreshDelay() {
+		return m_dynamicTextRefreshDelay;
+	}
 
 private:
 	GameConfig();
@@ -67,7 +70,8 @@ private:
 	float
 		m_scaleFactor,
 		m_mouseSensitivity,
-		m_timeStep;
+		m_timeStep,
+		m_dynamicTextRefreshDelay;
 	bool
 		m_windowFullscreen,
 		m_debugPanel,

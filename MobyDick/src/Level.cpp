@@ -1,6 +1,7 @@
 #include "Level.h"
 
 #include <vector>
+#include <memory>
 
 #include "Box2D/Box2D.h"
 
@@ -127,6 +128,12 @@ void Level::load(std::string levelId)
 
 	//I am representing the level grid as a png image file 
 	surface = TextureManager::instance().getTexture(m_blueprint)->surface;
+	//shared_ptr test = TextureManager::instance().getTexture("test");
+	//shared_ptr test = make_shared<Texture>();
+	//TextureManager::instance().addOrReplaceTexture("test", test);
+	//TextureManager::instance().getFont(m_blueprint);
+	//surface = NULL;
+
 
 	//Log warning if the bluprint image size doesnt match what we ahve in config
 	int surfaceWidth = surface->w;

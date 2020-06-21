@@ -55,7 +55,6 @@ Game::Game()
 
 	this->pWindow = nullptr;
 	this->gameObjectCount = 0;
-	this->mouseSensitivity = 0;
 	this->mouseLocation = {};
 	this->mouseClickLocation = {};
 
@@ -182,7 +181,7 @@ bool Game::init()
 	//CREATE A DYNAMIC TEST TEXT ITEM
 	textObject = GameObjectManager::instance().buildGameObject <TextObject>("FPS_VALUE", 0, 1, 0);
 	this->addGameObject(textObject, GameOjectLayer::TEXT);
-
+	
 	gameObject = GameObjectManager::instance().buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
 	this->addGameObject(gameObject, GameOjectLayer::MAIN);
 
