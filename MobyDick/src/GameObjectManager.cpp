@@ -4,7 +4,7 @@
 
 #include <json/json.h>
 
-#include "Util.h"
+#include "Globals.h"
 
 
 GameObjectManager& GameObjectManager::instance()

@@ -12,7 +12,7 @@
 
 #include "TextureManager.h" //Need this here so that inherited classes can get the textureManager without linker issues
 #include "GameObjectDefinition.h"
-#include "Constants.h"
+#include "Globals.h"
 
 //Forward declarations
 class Animation;

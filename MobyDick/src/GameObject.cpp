@@ -7,7 +7,6 @@
 #include "Level.h"
 #include "WorldObject.h"
 #include "Camera.h"
-#include "Util.h"
 #include "game.h"
 
 
@@ -122,7 +121,7 @@ void GameObject::update()
 	}
 
 	//This object was clicked, so push whatever event is tied to its onClick event property
-	if (m_mouseState == constants::MOUSE_CLICKED)
+	if (m_mouseState == MouseState::CLICKED)
 	{
 		this->onMouseClickEvent();
 	}
@@ -227,15 +226,15 @@ void GameObject::render()
 	//test outlining object
 	if (m_definition->isMouseSelectable)
 	{
-		if (m_mouseState == constants::MOUSE_HOVER)
+		if (m_mouseState == MouseState::HOVER)
 		{
 			this->onMouseHoverRender();
 		}
-		else if (m_mouseState == constants::MOUSE_HOLD)
+		else if (m_mouseState == MouseState::HOLD)
 		{
 			this->onMouseHoldRender();
 		}
-		else if (m_mouseState == constants::MOUSE_CLICKED)
+		else if (m_mouseState == MouseState::CLICKED)
 		{
 			this->onMouseClickRender();
 		}
@@ -570,7 +569,7 @@ void GameObject::updateMouseState()
 			{
 
 				//Was this object already in a hold state, meaning user is holding mouse clicked on object
-				if (m_mouseState == constants::MOUSE_HOLD)
+				if (m_mouseState == MouseState::HOLD)
 				{
 					//stay in "hold" state while user is holding click on object
 					while (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
@@ -580,23 +579,23 @@ void GameObject::updateMouseState()
 
 					//User has released mouse so now execute the object onClick event
 					//this->onMouseClick();
-					m_mouseState = constants::MOUSE_CLICKED;
+					m_mouseState = MouseState::CLICKED;
 
 				}
 				else
 				{
-					m_mouseState = constants::MOUSE_HOLD;
+					m_mouseState = MouseState::HOLD;
 				}
 
 			}
 			else
 			{
-				m_mouseState = constants::MOUSE_HOVER;
+				m_mouseState = MouseState::HOVER;
 			}
 		}
 		else
 		{
-			m_mouseState = constants::MOUSE_NONE;
+			m_mouseState = MouseState::NONE;
 		}
 	}
 

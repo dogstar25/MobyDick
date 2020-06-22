@@ -1,7 +1,5 @@
 #include "GUIEvent.h"
 
-
-#include "Globals.h"
 #include "GameObject.h"
 
 #include "TextureManager.h"

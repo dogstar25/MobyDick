@@ -1,8 +1,9 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <string>
+
+#include <SDL2/SDL_pixels.h>
 
 /*
 Overloaded operators used throught the game
@@ -17,6 +18,41 @@ static bool operator !=(SDL_Color a, SDL_Color b)
 	return (a.r != b.r) || (a.g != b.g) || (a.b != b.b);
 }
 
+namespace constants
+{
+
+	static constexpr int MAX_GAMEOBJECT_LAYERS = 4;
+	static constexpr short CHILD_POSITIONS = 9;
+
+}
+
+namespace util
+{
+
+	const int generateRandomNumber(int min, int max);
+	const float generateRandomNumber(float min, float max);
+	const SDL_Color generateRandomColor();
+	const float radiansToDegrees(float angleInRadians);
+	const float degreesToRadians(float angleInDegrees);
+	const std::string floatToString(float x, int decDigits);
+
+};
+
+
+/*
+Mouse State
+*/
+enum MouseState {
+
+	NONE = 0,
+	HOVER = 1,
+	HOLD = 2,
+	CLICKED = 3
+};
+
+/*
+Game State
+*/
 enum GameState {
 
 	QUIT = 0,
@@ -25,6 +61,9 @@ enum GameState {
 
 };
 
+/*
+Game Object Layers
+*/
 enum GameOjectLayer {
 
 	BACKGROUND = 0,
@@ -32,6 +71,9 @@ enum GameOjectLayer {
 	TEXT = 2,
 	DEBUG = 3,
 };
+
+
+
 
 
 #endif

@@ -153,6 +153,7 @@
     <ClCompile Include="src\GameObjectContactListener.cpp" />
     <ClCompile Include="src\GameObjectDefinition.cpp" />
     <ClCompile Include="src\GameObjectManager.cpp" />
+    <ClCompile Include="src\Globals.cpp" />
     <ClCompile Include="src\GUIEvent.cpp" />
     <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\ObjectPoolManager.cpp" />
@@ -164,7 +165,6 @@
     <ClCompile Include="src\TextObject.cpp" />
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
-    <ClCompile Include="src\Util.cpp" />
     <ClCompile Include="src\Waypoint.cpp" />
     <ClCompile Include="src\WeaponObject.cpp" />
     <ClCompile Include="src\WorldObject.cpp" />
@@ -176,7 +176,6 @@
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Clock.h" />
     <ClInclude Include="src\CompositeObject.h" />
-    <ClInclude Include="src\Constants.h" />
     <ClInclude Include="src\DebugDraw.h" />
     <ClInclude Include="src\DebugPanel.h" />
     <ClInclude Include="src\DynamicTextManager.h" />
@@ -199,7 +198,6 @@
     <ClInclude Include="src\TextObject.h" />
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\TextureManager.h" />
-    <ClInclude Include="src\Util.h" />
     <ClInclude Include="src\Waypoint.h" />
     <ClInclude Include="src\WeaponObject.h" />
     <ClInclude Include="src\WorldObject.h" />
