@@ -1,6 +1,5 @@
 #include "Game.h"
 
-#include "Globals.h"
 #include "GameObject.h"
 #include "PlayerObject.h"
 #include "TextObject.h"
@@ -65,7 +64,7 @@ Game::Game()
 
 	this->player = nullptr;
 
-	this->gameState= GameState::PLAY;
+	this->gameState = GameState::PLAY;
 
 	this->fps = 0;
 
@@ -89,9 +88,6 @@ bool Game::init()
 
 		//Init font library
 		TTF_Init();
-
-		//Init Game State
-		this->gameState = GameState::PLAY;
 
 		//Create the game window
 		uint16 windowFlags = 0 | SDL_WINDOW_OPENGL;

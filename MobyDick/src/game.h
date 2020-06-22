@@ -10,7 +10,7 @@
 #include <string>
 #include <memory>
 
-#include "Constants.h"
+#include "Globals.h"
 
 #include "GameObjectContactListener.h"
 #include "DebugDraw.h"

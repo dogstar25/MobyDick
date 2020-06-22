@@ -4,9 +4,8 @@
 #include <array>
 #include <string>
 
-#include "Constants.h"
+#include "Globals.h"
 #include "GameObjectCollection.h"
-
 
 class GUIEvent
 {
