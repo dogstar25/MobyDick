@@ -1,6 +1,6 @@
-#pragma once
+#ifndef CLOCK_H
+#define CLOCK_H
 
-#include <ctime>
 #include <chrono>
 
 class Clock
@@ -33,3 +33,4 @@ private:
 
 };
 
+#endif

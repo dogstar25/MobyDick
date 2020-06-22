@@ -1,24 +1,18 @@
-#pragma once
-#include <stdio.h>
+#ifndef DYNAMIC_TEXT_MANAGER_H
+#define DYNAMIC_TEXT_MANAGER_H
+
 #include <string>
 #include <map>
 #include <memory>
 #include <chrono>
 
-using namespace std::chrono;
-using namespace std;
-
 struct textItem {
 
 public:
 	bool hasChanged;
-	string text;
+	std::string text;
 
-	steady_clock::time_point time_snapshot;
-	//TODO: Add a timestamp variable to be checked during "if text changed" logic
-	//		so that a new dynamic text texture is not generated more than once 
-	//		per "second?". the refresh interval should be a config value of the 
-	//		dynamic text manager
+	std::chrono::steady_clock::time_point time_snapshot;
 
 };
 
@@ -28,12 +22,11 @@ class DynamicTextManager
 public:
 
 	static DynamicTextManager& instance();
-	map<string, unique_ptr<textItem>> textItems;
+	std::map<std::string, std::unique_ptr<textItem>> textItems;
 
-	//vector <unique_ptr<GameObject>> gameObjects;
 
-	bool updateText(string, string);
-	textItem* getTextItem(string);
+	bool updateText(std::string, std::string);
+	textItem* getTextItem(std::string);
 
 private:
 	DynamicTextManager();
@@ -42,3 +35,4 @@ private:
 
 };
 
+#endif

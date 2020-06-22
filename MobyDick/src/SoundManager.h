@@ -1,14 +1,13 @@
-#pragma once
+#ifndef SOUND_MANAGER_H
+#define SOUND_MANAGER_H
+
 
 #include <string>
 #include <stdio.h>
 #include <map>
 #include <memory>
 
-
 #include <SDL2/SDL_mixer.h>
-
-using namespace std;
 
 class SoundManager
 {
@@ -16,16 +15,16 @@ class SoundManager
 public:
 	static SoundManager& instance();
 	void initSound();
-	void playSound(string id);
-	void playMusic(string id, int loopTimes);
+	void playSound(std::string id);
+	void playMusic(std::string id, int loopTimes);
 
 
 private:
 	SoundManager();
 	~SoundManager();
 
-	map<string, Mix_Chunk*> m_sfxChunks;
-	map<string, Mix_Music*> m_sfxMusic;
+	std::map<std::string, Mix_Chunk*> m_sfxChunks;
+	std::map<std::string, Mix_Music*> m_sfxMusic;
 
 	void loadSounds();
 	void allocateChannels();
@@ -33,3 +32,4 @@ private:
 
 };
 
+#endif

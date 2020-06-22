@@ -1,7 +1,10 @@
-#pragma once
+#ifndef WORLD_OBJECT_H
+#define WORLD_OBJECT_H
+
 #include "GameObject.h"
 
 class WeaponObject;
+class GameObjectDefinition;
 
 enum worldObjectCategory {
 	GENERIC = 1,
@@ -21,11 +24,10 @@ class WorldObject :	public GameObject
 {
 public:
 	WorldObject();
-	WorldObject(string, float, float, float);
+	WorldObject(std::string, float, float, float);
 	~WorldObject();
 
 	void update() override;
-	void render() override;
 	void setPosition(b2Vec2, float) override;
 	SDL_Rect getRenderDestRect() override; 
 	SDL_Rect getPositionRect() override;
@@ -33,7 +35,7 @@ public:
 	virtual void setBox2DUserData(WorldObject*);
 	void setActive(bool);
 	void setStrength(float strength) { m_strength = strength; }
-	void addWeapon(string weaponObjectId);
+	void addWeapon(std::string weaponObjectId);
 
 	
 	//Accessor Functions
@@ -64,3 +66,4 @@ private:
 
 };
 
+#endif

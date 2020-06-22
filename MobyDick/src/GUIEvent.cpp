@@ -1,11 +1,17 @@
 #include "GUIEvent.h"
+
+
+#include "Globals.h"
+#include "GameObject.h"
+
 #include "TextureManager.h"
 #include "GameObjectManager.h"
 #include "Camera.h"
+#include "Level.h"
 #include "Game.h"
 
 
-GUIEvent::GUIEvent(string guiObjectId)
+GUIEvent::GUIEvent(std::string guiObjectId)
 {
 	this->state = ACTIVE;
 	//cout << guiObjectId +"\n";
@@ -68,8 +74,8 @@ GUIEvent::~GUIEvent()
 		this->uiObjectCollections[x].gameObjects.clear();
 		this->uiObjectCollections[x].particleObjects.clear();
 
-		vector <GameObject*>().swap(this->uiObjectCollections[x].gameObjects);
-		vector <ParticleObject*>().swap(this->uiObjectCollections[x].particleObjects);
+		std::vector <GameObject*>().swap(this->uiObjectCollections[x].gameObjects);
+		std::vector <ParticleObject*>().swap(this->uiObjectCollections[x].particleObjects);
 
 
 	}
@@ -116,10 +122,10 @@ void GUIEvent::render()
 	TextureManager::instance().clear();
 
 	//Render all of the game objects in the world
-	Game::renderCollection(&Game::instance().gameCollections);
+	Game::instance().renderCollection(&Game::instance().gameCollections);
 
 	//Render all of the GUI Event game objects
-	Game::renderCollection(&uiObjectCollections);
+	Game::instance().renderCollection(&uiObjectCollections);
 
 	TextureManager::instance().present();
 
@@ -152,7 +158,7 @@ void GUIEvent::handleInput()
 			SDL_PushEvent(&event);
 			break;
 		case SDL_USEREVENT:
-			string* actionCode = static_cast<string*>(event.user.data1);
+			std::string* actionCode = static_cast<std::string*>(event.user.data1);
 			if (actionCode != NULL && actionCode->empty() == false)
 			{
 				if (actionCode->compare("CONTINUE") == 0)

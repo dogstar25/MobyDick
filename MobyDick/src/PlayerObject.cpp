@@ -1,20 +1,18 @@
 #include "PlayerObject.h"
 
-#include "Game.h"
-#include "WorldObject.h"
-#include "WeaponObject.h"
-#include "GameObjectDefinition.h"
-#include "Animation.h"
-#include "SoundManager.h"
-#include "GameConfig.h"
 
-#include <math.h>
+#include "WeaponObject.h"
+#include "Animation.h"
+#include "GameConfig.h"
+#include "Game.h"
+
+
 
 PlayerObject::PlayerObject()
 {
 }
 
-PlayerObject::PlayerObject(string gameObjectId, int xMapPos, int yMapPos, int angleAdjust) :
+PlayerObject::PlayerObject(std::string gameObjectId, int xMapPos, int yMapPos, int angleAdjust) :
 	WorldObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
 {
 
@@ -122,8 +120,8 @@ void PlayerObject::update()
 	this->updatePlayerMovement();
 
 //test
-	Game::instance().debugPanel->addItem("PLAYERX", to_string(this->physicsBody()->GetTransform().p.x));
-	Game::instance().debugPanel->addItem("PLAYERY", to_string(this->physicsBody()->GetTransform().p.y));
+	Game::instance().debugPanel->addItem("PLAYERX", std::to_string(this->physicsBody()->GetTransform().p.x));
+	Game::instance().debugPanel->addItem("PLAYERY", std::to_string(this->physicsBody()->GetTransform().p.y));
 
 
 }
@@ -132,7 +130,7 @@ void PlayerObject::render()
 {
 
 	Game::instance().debugPanel->addItem("ANIMATIONState", this->currentAnimationState());
-	Game::instance().debugPanel->addItem("ANIMATIONFrame", to_string(this->animations()[this->currentAnimationState()]->getCurrentAnimFrame()));
+	Game::instance().debugPanel->addItem("ANIMATIONFrame", std::to_string(this->animations()[this->currentAnimationState()]->getCurrentAnimFrame()));
 	WorldObject::render();
 }
 

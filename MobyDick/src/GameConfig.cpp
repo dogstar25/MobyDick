@@ -1,10 +1,8 @@
 #include "GameConfig.h"
-#include <json/json.h>
-#include <stdio.h>
 
-#include <iostream>
+#include <json/json.h>
+
 #include <fstream>
-#include <string>
 
 GameConfig::GameConfig()
 {
@@ -23,7 +21,6 @@ bool GameConfig::init(std::string configFile)
 	Json::Value root;
 	std::ifstream ifs("assets/" + configFile + ".json");
 	ifs >> root;
-	//ifs.close();
 
 	m_gameTitle = root["gameTitle"].asString();
 	m_gameLoopStep = root["gameLoopStep"].asInt();

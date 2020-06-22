@@ -1,11 +1,13 @@
 #include "Game.h"
 
-using namespace std;
+#include <iostream>
+
+#include "Globals.h"
 
 int main(int argc, char* args[])
 {
 
-	cout << "Mortal Rescue Begins\n";
+	std::cout << "Mortal Rescue Begins\n";
 
 	Game::instance().init();
 

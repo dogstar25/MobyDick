@@ -1,13 +1,13 @@
-#pragma once
+#ifndef ANIMATION_H
+#define ANIMATION_H
 
-#include <map>
 #include <chrono>
 #include <string>
 #include <vector> 
 #include <SDL2/SDL.h>
 #include <Box2D/Box2D.h>
 
-#include "GameObjectDefinition.h"
+class GameObjectDefinition;
 
 class Animation
 {
@@ -42,3 +42,4 @@ private:
 
 };
 
+#endif

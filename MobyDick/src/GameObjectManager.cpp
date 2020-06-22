@@ -1,18 +1,9 @@
 #include "GameObjectManager.h"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <json/json.h>
-
-#include <iostream>
 #include <fstream>
 
-#include "TextureManager.h"
-#include "GameObject.h"
-#include "PlayerObject.h"
-#include "WorldObject.h"
-#include "TextObject.h"
-#include "CompositeObject.h"
+#include <json/json.h>
+
 #include "Util.h"
 
 
@@ -33,7 +24,7 @@ GameObjectManager::~GameObjectManager()
 
 	//Use clear and swap to ensure free memory
 	this->gameObjectDefinitions.clear();
-	map<string, GameObjectDefinition*>().swap(this->gameObjectDefinitions);
+	std::map<std::string, GameObjectDefinition*>().swap(this->gameObjectDefinitions);
 }
 
 
@@ -49,15 +40,15 @@ bool GameObjectManager::init()
 }
 
 
-void GameObjectManager::load(string gameObjectAssetsFilename)
+void GameObjectManager::load(std::string gameObjectAssetsFilename)
 {
 	//Read file and stream it to a JSON object
 	Json::Value root;
-	string filename = "assets/" + gameObjectAssetsFilename + ".json";
-	ifstream ifs(filename);
+	std::string filename = "assets/" + gameObjectAssetsFilename + ".json";
+	std::ifstream ifs(filename);
 	ifs >> root;
 
-	string id, textureId;
+	std::string id, textureId;
 	GameObjectDefinition* gameObjectDefinition;
 
 	for (auto itr : root["gameObjects"])
@@ -264,7 +255,7 @@ void GameObjectManager::load(string gameObjectAssetsFilename)
 /*
 	Retrieve the GameObjetc Definition
 */
-GameObjectDefinition* GameObjectManager::getDefinition(string definitionId)
+GameObjectDefinition* GameObjectManager::getDefinition(std::string definitionId)
 {
 
 	if (this->gameObjectDefinitions.find(definitionId) == this->gameObjectDefinitions.end())

@@ -1,4 +1,6 @@
-#pragma once
+#ifndef TEXTURE_H
+#define TEXTURE_H
+
 #include <SDL2/SDL.h>
 
 struct Texture
@@ -8,4 +10,6 @@ struct Texture
 	SDL_Surface* surface;
 
 };
+
+#endif
 

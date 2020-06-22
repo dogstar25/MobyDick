@@ -1,13 +1,10 @@
 #include "DebugDraw.h"
-#include "Game.h"
+
+
 #include "TextureManager.h"
 #include "GameConfig.h"
-#include <math.h>
+#include "Camera.h"
 
-#include <SDL2/SDL.h>
-#include <box2d/b2_math.h>
-
-extern Game* game;
 
 void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {

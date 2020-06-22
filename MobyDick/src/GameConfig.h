@@ -1,6 +1,8 @@
-#pragma once
+#ifndef GAME_CONFIG_H
+#define GAME_CONFIG_H
+
 #include <SDL2/SDL.h>
-#include <Box2D/Box2D.h>
+#include <box2d/box2d.h>
 
 #include <string>
 
@@ -11,6 +13,7 @@ public:
 	static GameConfig& instance();
 	bool init(std::string configFile);
 
+	//Accessor functions
 	float scaleFactor() {
 		return m_scaleFactor;
 	}
@@ -94,3 +97,4 @@ private:
 
 };
 
+#endif

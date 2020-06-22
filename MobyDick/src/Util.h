@@ -1,8 +1,8 @@
-#pragma once
+#ifndef UTIL_H
+#define UTIL_H
+
 #include <SDL2/SDL.h>
 #include <string>
-
-using namespace std;
 
 namespace util
 {
@@ -12,9 +12,8 @@ namespace util
 	const SDL_Color generateRandomColor();
 	const float radiansToDegrees(float angleInRadians);
 	const float degreesToRadians(float angleInDegrees);
-	const string floatToString(float x, int decDigits);
+	const std::string floatToString(float x, int decDigits);
 
 };
 
-
-
+#endif

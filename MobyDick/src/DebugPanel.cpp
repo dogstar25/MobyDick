@@ -1,13 +1,13 @@
 #include "DebugPanel.h"
+
+#include "Globals.h"
 #include "Util.h"
 #include "DynamicTextManager.h"
 #include "GameObjectManager.h"
 #include "GameConfig.h"
+#include "TextObject.h"
+#include "Level.h"
 #include "Game.h"
-
-
-
-
 
 
 DebugPanel::DebugPanel()
@@ -25,14 +25,14 @@ DebugPanel::~DebugPanel()
 {
 }
 
-void DebugPanel::addItem(string id, float value, int decDigits)
+void DebugPanel::addItem(std::string id, float value, int decDigits)
 {
-	string debugValue = util::floatToString(value, decDigits);
+	std::string debugValue = util::floatToString(value, decDigits);
 	DebugPanel::addItem(id, debugValue);
 
 }
 
-void DebugPanel::addItem(string id, string value)
+void DebugPanel::addItem(std::string id, std::string value)
 {
 
 	if (GameConfig::instance().debugPanel() == true) {
@@ -43,10 +43,10 @@ void DebugPanel::addItem(string id, string value)
 		GameObjectDefinition* definition = GameObjectManager::instance().gameObjectDefinitions["DEBUG_ITEM"];;
 
 		//Prefix DEBUG to the id
-		string newId = "DEBUG_" + id;
+		std::string newId = "DEBUG_" + id;
 
 		//Build the new text using the id as a label
-		string newText = id + " : " + value;
+		std::string newText = id + " : " + value;
 
 		//Add or update the dynamic text itself to the dynamic text manager
 		bool alreadyExists = DynamicTextManager::instance().updateText(newId, newText);

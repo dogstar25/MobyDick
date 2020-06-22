@@ -1,15 +1,13 @@
 #include "TextObject.h"
-#include "Texture.h"
+
 #include "TextureManager.h"
 #include "DynamicTextManager.h"
 #include "GameConfig.h"
-
-#include "Game.h"
-
-extern Game* game;
+#include "Camera.h"
 
 
-TextObject::TextObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
+
+TextObject::TextObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
 	GameObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
 {
 
@@ -117,30 +115,11 @@ SDL_Rect TextObject::getRenderDestRect()
 
 }
 
-void TextObject::render()
+
+std::shared_ptr<Texture> TextObject::generateTextTexture()
 {
 
-	SDL_Rect* textureSourceRect=NULL, destRect;
-	SDL_Texture* texture = NULL;
-
-	//Get render destination rectangle
-	destRect = this->getRenderDestRect();
-
-	//Get texture
-	texture = GameObject::getRenderTexture();
-
-	//Get render texture src rectangle
-	textureSourceRect = this->getRenderTextureRect();
-
-	TextureManager::instance().render(texture, this->color(), textureSourceRect, &destRect, 0);
-
-
-}
-
-shared_ptr<Texture> TextObject::generateTextTexture()
-{
-
-	shared_ptr<Texture> texture = make_shared<Texture>();;
+	std::shared_ptr<Texture> texture = std::make_shared<Texture>();;
 
 	std::string textureId;
 	if (this->isDebugText == true)
@@ -160,7 +139,7 @@ shared_ptr<Texture> TextObject::generateTextTexture()
 	SDL_Surface* tempSurface;
 
 	int textSize = this->definition()->textDetails.size; // default to x size
-	string fontFile = TextureManager::instance().getFont(this->fontId);
+	std::string fontFile = TextureManager::instance().getFont(this->fontId);
 
 	TTF_Font* fontObject = TTF_OpenFont(fontFile.c_str(), textSize);
 	tempSurface = TTF_RenderText_Blended(fontObject, this->textValue.c_str(), this->color());
@@ -182,11 +161,11 @@ shared_ptr<Texture> TextObject::generateTextTexture()
 }
 
 
-shared_ptr<Texture> TextObject::updateDynamicTextTexture()
+std::shared_ptr<Texture> TextObject::updateDynamicTextTexture()
 {
 
 	textItem* newText;
-	shared_ptr<Texture> texture;
+	std::shared_ptr<Texture> texture;
 	SDL_Surface* surface;
 
 	if (this->isDebugText == true)
@@ -199,7 +178,7 @@ shared_ptr<Texture> TextObject::updateDynamicTextTexture()
 	}
 
 	//check the clock and see if enough time as gone by
-	steady_clock::time_point now_time = steady_clock::now();
+	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
 	std::chrono::duration<double> time_diff = now_time - newText->time_snapshot;
 
 	//FIXME: .2 needs to be a setting somewhere

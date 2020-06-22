@@ -1,13 +1,11 @@
 #include "Animation.h"
 
-#include "GameObject.h"
-#include "Texture.h"
 #include "TextureManager.h"
-#include "Game.h"
 #include "GameConfig.h"
+#include "GameObjectDefinition.h"
 
 
-Animation::Animation(GameObjectDefinition* gameObjectDefinition, string animationId, string textureId, int totalFrames, float speed)
+Animation::Animation(GameObjectDefinition* gameObjectDefinition, std::string animationId, std::string textureId, int totalFrames, float speed)
 {
 
 	m_id = animationId;
@@ -94,7 +92,7 @@ int Animation::getCurrentAnimFrame()
 void Animation::animate()
 {
 	//check the clock and see if enough time as gone by
-	steady_clock::time_point now_time = steady_clock::now();
+	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
 	std::chrono::duration<double> time_diff = now_time - m_timeSnapshot;
 
 	if (time_diff.count() >= m_speed)

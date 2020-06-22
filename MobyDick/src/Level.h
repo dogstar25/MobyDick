@@ -1,11 +1,12 @@
-#pragma once
-#include "Waypoint.h"
+#ifndef LEVEL_H
+#define LEVEL_H
+
 #include <string>
 #include <vector>
 #include <SDL2/SDL.h>
-#include <Box2D/Box2D.h>
 #include <map>
 
+#include "Waypoint.h"
 
 struct LevelObject
 {
@@ -53,4 +54,4 @@ private:
 };
 
 
-
+#endif

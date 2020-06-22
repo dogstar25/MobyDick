@@ -1,10 +1,10 @@
-#pragma once
+#ifndef PLAYER_OBJECT_H
+#define PLAYER_OBJECT_H
+
 #include <SDL2/SDL.h>
 
 #include "WorldObject.h"
 
-class GameObject;
-//class Weapon;
 
 class PlayerObject : public WorldObject
 {
@@ -16,7 +16,7 @@ public:
 		pieceCollectedCount;
 
 	PlayerObject();
-	PlayerObject(string, int, int, int);
+	PlayerObject(std::string, int, int, int);
 	~PlayerObject();
 
 	void update();
@@ -30,3 +30,4 @@ public:
 
 };
 
+#endif

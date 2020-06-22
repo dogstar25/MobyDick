@@ -1,8 +1,7 @@
 #include "GameObjectContactListener.h"
-#include "GameObject.h"
-#include "WorldObject.h"
+
+#include "PlayerObject.h"
 #include "ParticleMachine.h"
-#include "GameObjectDefinition.h"
 #include "SoundManager.h"
 
 

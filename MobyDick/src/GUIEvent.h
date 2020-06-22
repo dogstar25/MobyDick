@@ -1,20 +1,18 @@
-#pragma once
-#include <SDL2/SDL.h>
-#include "Game.h"
-#include "GameObject.h"
-#include "GameObjectCollection.h"
+#ifndef GUIEVENT_H
+#define GUIEVENT_H
 
-#include <iostream>
 #include <array>
+#include <string>
 
-using namespace std;
+#include "Constants.h"
+#include "GameObjectCollection.h"
 
 
 class GUIEvent
 {
 
 public:
-	GUIEvent(string guiObjectId);
+	GUIEvent(std::string guiObjectId);
 	~GUIEvent();
 
 	void run();
@@ -34,7 +32,8 @@ public:
 	};
 
 	int state;
-	array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS> uiObjectCollections;
+	std::array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS> uiObjectCollections;
 
 };
 
+#endif

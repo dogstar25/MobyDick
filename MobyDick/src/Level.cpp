@@ -1,16 +1,14 @@
 #include "Level.h"
 
-#include <vector>
-#include <memory>
+#include <iostream>
+#include <fstream>
 
-#include "Box2D/Box2D.h"
+#include <json/json.h>
 
 #include "Globals.h"
-#include "Texture.h"
 #include "TextureManager.h"
 #include "WorldObject.h"
 #include "GameObjectManager.h"
-#include "GameConfig.h"
 #include "Game.h"
 
 
@@ -74,9 +72,9 @@ void Level::_loadDefinition(std::string levelId)
 	bool success = false;
 	Json::CharReaderBuilder jsonBuilder;
 	Json::Value root;
-	string filename = "assets/levels/" + levelId + "_definition.json";
-	string errors;
-	ifstream ifs(filename);
+	std::string filename = "assets/levels/" + levelId + "_definition.json";
+	std::string errors;
+	std::ifstream ifs(filename);
 
 	success = Json::parseFromStream(jsonBuilder, ifs, &root, &errors);
 
@@ -98,7 +96,7 @@ void Level::_loadDefinition(std::string levelId)
 		m_levelBounds.h = m_height * m_tileHeight;
 
 		LevelObject* locationDefinition = NULL;
-		std:string locationId;
+		std::string locationId;
 		for (auto itr : root["locationObjects"])
 		{
 			locationDefinition = new LevelObject();
@@ -128,12 +126,6 @@ void Level::load(std::string levelId)
 
 	//I am representing the level grid as a png image file 
 	surface = TextureManager::instance().getTexture(m_blueprint)->surface;
-	//shared_ptr test = TextureManager::instance().getTexture("test");
-	//shared_ptr test = make_shared<Texture>();
-	//TextureManager::instance().addOrReplaceTexture("test", test);
-	//TextureManager::instance().getFont(m_blueprint);
-	//surface = NULL;
-
 
 	//Log warning if the bluprint image size doesnt match what we ahve in config
 	int surfaceWidth = surface->w;
@@ -141,7 +133,7 @@ void Level::load(std::string levelId)
 	if (surfaceWidth != m_width ||
 		surfaceHeight != m_height)
 	{
-		cout << "WARNING: Blueprint " << m_id << " width/height: " << surfaceWidth << "/" << surfaceHeight << " does not match defined width/height of: " 
+		std::cout << "WARNING: Blueprint " << m_id << " width/height: " << surfaceWidth << "/" << surfaceHeight << " does not match defined width/height of: " 
 			<<	m_width << "/" << m_height << "\n";
 	}
 

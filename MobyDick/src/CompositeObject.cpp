@@ -1,14 +1,13 @@
-#include "Game.h"
-#include "Globals.h"
 #include "CompositeObject.h"
 
-#include "Texture.h"
 #include "TextureManager.h"
+
+#include "Globals.h"
+
+
 #include "GameObjectManager.h"
 
-
-
-CompositeObject::CompositeObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
+CompositeObject::CompositeObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
 	WorldObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
 {
 
@@ -35,7 +34,7 @@ void CompositeObject::render()
 {
 	WorldObject::render();
 
-	for (auto pieceObject : m_pieces)
+	for (GameObjectPiece pieceObject : m_pieces)
 	{
 		if(pieceObject.isDestroyed == false)
 		{
@@ -54,7 +53,7 @@ void CompositeObject::buildComposite()
 	SDL_Surface* blueprintSurface;
 	SDL_PixelFormat* fmt;
 	SDL_Color* color;
-	string blueprintTexureId;
+	std::string blueprintTexureId;
 	Uint8 red, green, blue, alpha;
 
 	//Get the texture and the surface
@@ -98,7 +97,7 @@ void CompositeObject::buildPiece(CompositeLegendItem legendItem, int xPos, int y
 	GameObjectPiece piece = {};
 	piece.currentlevel = 1;
 	piece.isDestroyed = false;
-	piece.time_snapshot = steady_clock::now();
+	piece.time_snapshot = std::chrono::steady_clock::now();
 
 	/*
 	Build the game objects off screen. They will be placed in exect location duriing update loop
@@ -153,7 +152,7 @@ void CompositeObject::updatePieces()
 void CompositeObject::updatePieceState(GameObjectPiece& piece)
 {
 	//Get now time
-	steady_clock::time_point now_time = steady_clock::now();
+	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
 
 	//Should this object be removed?
 	if (piece.pieceObject->removeFromWorld() == true)
@@ -168,7 +167,7 @@ void CompositeObject::updatePieceState(GameObjectPiece& piece)
 	//Has enough time gone by to regenerate the next armor level
 	if (piece.isDestroyed == true)
 	{
-		duration<double, milli> timeDiffMilliSeconds = now_time - piece.time_snapshot;
+		std::chrono::duration<double, std::milli> timeDiffMilliSeconds = now_time - piece.time_snapshot;
 		if (timeDiffMilliSeconds.count() >= this->definition()->compositeDetails.levelUpSpeed)
 		{
 

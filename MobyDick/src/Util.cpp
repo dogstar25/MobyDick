@@ -2,11 +2,8 @@
 
 #include <random>
 #include <sstream>
-#include <string>
 
 #include <box2d/b2_math.h>
-
-using namespace std;
 
 const int util::generateRandomNumber(int min, int max)
 {
@@ -59,10 +56,10 @@ const float util::degreesToRadians(float angleInDegrees)
 
 }
 
-const string util::floatToString(float x, int decDigits)
+const std::string util::floatToString(float x, int decDigits)
 {
-	stringstream ss;
-	ss << fixed;
+	std::stringstream ss;
+	ss << std::fixed;
 	ss.precision(decDigits); // set # places after decimal
 	ss << x;
 	return ss.str();

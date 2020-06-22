@@ -1,7 +1,9 @@
-#include <Box2D/Box2D.h>
-
 #include "ParticleMachine.h"
-#include "ParticleEmission.h"
+
+
+
+#include "ParticleObject.h"
+#include "Util.h"
 #include "ObjectPoolManager.h"
 #include "Game.h"
 #include "GameConfig.h"
@@ -69,7 +71,7 @@ void ParticleMachine::add(ParticleEmission* particleEmission)
 
 
 void ParticleMachine::emit(
-	string poolId,
+	std::string poolId,
 	b2Vec2 originMin,
 	b2Vec2 originMax,
 	int forceMin,
@@ -220,7 +222,7 @@ void ParticleMachine::emit(
 }
 
 void ParticleMachine::fireBullet(
-	string poolId,
+	std::string poolId,
 	b2Vec2 origin,
 	float angle,
 	int force)

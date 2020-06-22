@@ -1,10 +1,10 @@
-#pragma once
+#ifndef PARTICLE_MACHINE_H
+#define PARTICLE_MACHINE_H
+
 #include <vector>
 #include <SDL2/SDL_image.h>
 
 #include "ParticleEmission.h"
-
-using namespace std;
 
 class ParticleMachine
 {
@@ -16,14 +16,14 @@ public:
 	void runParticleEmissions();
 	void add(ParticleEmission*);
 	void fireBullet(
-		string poolId,
+		std::string poolId,
 		b2Vec2 origin,
 		float angle,
 		int force
 	);
 
 	void emit(
-		string poolId,
+		std::string poolId,
 		b2Vec2 originMin,
 		b2Vec2 originMax,
 		int forceMin,
@@ -45,10 +45,11 @@ private:
 	ParticleMachine();
 	~ParticleMachine();
 
-	vector <ParticleEmission*> m_particleEmissions;
+	std::vector <ParticleEmission*> m_particleEmissions;
 
 
 
 
 };
 
+#endif
