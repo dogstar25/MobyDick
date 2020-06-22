@@ -1,15 +1,10 @@
-#pragma once
-#include <stdio.h>
+#ifndef GAME_OBJECT_MANAGER_H
+#define GAME_OBJECT_MANAGER_H
+
 #include <string>
 #include <map>
 
-
 #include "GameObjectDefinition.h"
-#include "TextObject.h"
-
-
-
-using namespace std;
 
 class GameObjectManager
 {
@@ -18,19 +13,19 @@ public:
 	static GameObjectManager& instance();
 
 	bool init();
-	void load(string);
+	void load(std::string);
 
-	GameObjectDefinition* getDefinition(string);
+	GameObjectDefinition* getDefinition(std::string);
 
 	//Map of the definitions of all posible game objects in the game/level
-	map<string, GameObjectDefinition*> gameObjectDefinitions;
+	std::map<std::string, GameObjectDefinition*> gameObjectDefinitions;
 	
 	/*
 	Template function that builds any type of GameObject that you pass it
 	Has to be inline because its a templated function
 	*/
 	template <typename gameObjectType>
-	inline gameObjectType* buildGameObject(string gameObjectId, float xMapPos, float yMapPos, float angle)
+	inline gameObjectType* buildGameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angle)
 	{
 
 		gameObjectType* gameObject = new gameObjectType(gameObjectId, xMapPos, yMapPos, angle);
@@ -46,3 +41,4 @@ private:
 	
 };
 
+#endif

@@ -1,7 +1,9 @@
 #include "Game.h"
+
+#include "Globals.h"
+#include "GameObject.h"
 #include "PlayerObject.h"
 #include "TextObject.h"
-#include "WorldObject.h"
 #include "ParticleObject.h"
 #include "CompositeObject.h"
 #include "Level.h"
@@ -9,20 +11,23 @@
 #include "GameObjectManager.h"
 #include "SoundManager.h"
 #include "DynamicTextManager.h"
-#include "GameObjectCollection.h"
 #include "ParticleMachine.h"
-#include "GameObject.h"
 #include "GameConfig.h"
-#include "Util.h"
 #include "Camera.h"
 #include "WeaponObject.h"
-#include "ParticleEmission.h"
 #include "GUIEvent.h"
 #include "Clock.h"
+#include "ObjectPoolManager.h"
 
 
-using namespace chrono_literals;
-using namespace std;
+using namespace std::chrono_literals;
+
+Game& Game::instance()
+{
+	static Game singletonInstance;
+	return singletonInstance;
+}
+
 
 Game::~Game()
 {
@@ -201,7 +206,7 @@ bool Game::init()
 	if (GameConfig::instance().debugPanel() == true)
 	{
 
-		this->debugPanel = make_unique<DebugPanel>();
+		this->debugPanel = std::make_unique<DebugPanel>();
 
 	}
 
@@ -235,7 +240,7 @@ void Game::play()
 		//Increment frame counter and calculate FPS and reset the gameloop timer
 		Clock::instance().calcFps();
 
-		DynamicTextManager::instance().updateText("FPS_VALUE", to_string(Clock::instance().fps()));
+		DynamicTextManager::instance().updateText("FPS_VALUE", std::to_string(Clock::instance().fps()));
 
 	}
 
@@ -289,7 +294,7 @@ void Game::update() {
 			{
 				particleObjectRemoved = particleObject;
 				ObjectPoolManager::instance().reset(particleObject);
-				std:swap(gameObjectCollection.particleObjects[x], 
+				std::swap(gameObjectCollection.particleObjects[x], 
 					gameObjectCollection.particleObjects[gameObjectCollection.particleObjects.size()-1]);
 				gameObjectCollection.particleObjects.resize(gameObjectCollection.particleObjects.size() - 1);
 			}
@@ -316,7 +321,7 @@ void Game::update() {
 
 void Game::render() {
 
-	//Clear teh graphics display
+	//Clear the graphics display
 	TextureManager::instance().clear();
 
 	//render the player
@@ -343,7 +348,7 @@ void Game::render() {
 
 }
 
-void Game::renderCollection(array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>* gameObjectCollection)
+void Game::renderCollection(std::array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>* gameObjectCollection)
 {
 
 	//Render all of the game objects
@@ -382,7 +387,7 @@ void Game::addGameObject(WorldObject* gameObject, int layer)
 void Game::addGameObject(ParticleObject* gameObject, int layer)
 {
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	gameObject->time_snapshot = steady_clock::now();
+	gameObject->time_snapshot = std::chrono::steady_clock::now();
 	this->gameCollections[layer].particleObjects.push_back(gameObject);
 	this->gameObjectCount++;
 }
@@ -423,7 +428,7 @@ void Game::handleEvents() {
 		case SDL_MOUSEMOTION:
 			if ((char)event.key.keysym.sym == SDLK_ESCAPE && event.type == SDL_KEYDOWN)
 			{
-				unique_ptr<GUIEvent> guiEvent = make_unique<GUIEvent>("GUIPausePanel");
+				std::unique_ptr<GUIEvent> guiEvent = std::make_unique<GUIEvent>("GUIPausePanel");
 				guiEvent->run();
 			}
 			else

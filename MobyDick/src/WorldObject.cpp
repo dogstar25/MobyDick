@@ -1,12 +1,14 @@
 #include "WorldObject.h"
 
-#include "GameObjectDefinition.h"
-#include "TextureManager.h"
+#include "Globals.h"
 #include "WeaponObject.h"
-
 #include "GameConfig.h"
+#include "Level.h"
+#include "Util.h"
+#include "Camera.h"
+#include "GameObjectManager.h"
 #include "Game.h"
-#include <SDL2/SDL_stdinc.h>
+
 
 
 
@@ -15,7 +17,7 @@ WorldObject::WorldObject()
 
 }
 
-WorldObject::WorldObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
+WorldObject::WorldObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
 	GameObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
 {
 	//Size
@@ -113,50 +115,6 @@ SDL_Rect WorldObject::getRenderDestRect()
 }
 
 
-void WorldObject::render()
-{
-	SDL_Rect* textureSourceRect=NULL, destRect;
-	SDL_Texture* texture = NULL;
-
-	//Get render destination rectangle
-	destRect = this->getRenderDestRect();
-
-	//Get texture
-	texture = this->getRenderTexture();
-
-	//Get render texture src rectangle
-	textureSourceRect = this->getRenderTextureRect();
-
-	//Get the angle of the object and convert it from Radians to Degrees for SDL
-	float angle = m_physicsBody->GetAngle();
-	angle = angle * (float)180 / b2_pi;
-
-	
-	if (this->definition()->id.compare("GINA_64") == 0)
-	{
-		if (textureSourceRect == NULL) {
-			game->debugPanel->addItem("textureSourceRec", "NULL");
-		}
-		else
-		{
-			game->debugPanel->addItem("textureSourceRecX", to_string(textureSourceRect->x));
-			game->debugPanel->addItem("textureSourceRecY", to_string(textureSourceRect->y));
-		}
-		
-
-	}
-	
-	TextureManager::instance().render(texture, this->color(), textureSourceRect, &destRect, angle);
-
-	//Loop through any possible child objects, in all 9 positions, and render them too
-	if (this->definition()->hasChildObjects == true)
-	{
-		GameObject::renderChildObjects();
-	}
-
-
-}
-
 b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 {
 	b2BodyDef bodyDef;
@@ -176,7 +134,7 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 
 	//Default the position to zero.
 	bodyDef.position.SetZero();
-	b2Body* body = game->physicsWorld->CreateBody(&bodyDef);
+	b2Body* body = Game::instance().physicsWorld->CreateBody(&bodyDef);
 
 	b2Shape* shape;
 	b2PolygonShape box;
@@ -299,7 +257,7 @@ void WorldObject::setBox2DUserData(WorldObject* worldObject)
 
 }
 
-void WorldObject::addWeapon(string weaponObjectId)
+void WorldObject::addWeapon(std::string weaponObjectId)
 {
 
 	WeaponObject *weaponObject = 
@@ -323,10 +281,10 @@ void WorldObject::addWeapon(string weaponObjectId)
 		weaponObject->definition()->weaponDetails.anchorPoint.y 
 	};
 	weldJointDef.localAnchorB = weaponsAnchorPoint;
-	(b2WeldJointDef*)game->physicsWorld->CreateJoint(&weldJointDef);
+	(b2WeldJointDef*)Game::instance().physicsWorld->CreateJoint(&weldJointDef);
 
 	this->m_weapon = weaponObject;
 
-	game->addGameObject(weaponObject, GameOjectLayer::MAIN);
+	Game::instance().addGameObject(weaponObject, GameOjectLayer::MAIN);
 
 }

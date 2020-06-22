@@ -1,4 +1,9 @@
-#pragma once
+#ifndef TEXT_OBJECT_H
+#define TEXT_OBJECT_H
+
+#include <memory>
+
+#include "texture.h"
 #include "GameObject.h"
 
 class TextObject :	public GameObject
@@ -8,7 +13,6 @@ public:
 	virtual ~TextObject();
 
 	void update();
-	void render();
 	SDL_Rect getPositionRect();
 	SDL_Rect getRenderDestRect();
 	std::shared_ptr<Texture> updateDynamicTextTexture();
@@ -26,3 +30,4 @@ public:
 
 };
 
+#endif

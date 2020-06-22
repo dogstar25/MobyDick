@@ -1,13 +1,14 @@
 #include "GameObject.h"
-#include "TextObject.h"
 
-#include "Game.h"
-#include "GameObjectDefinition.h"
+#include "TextObject.h"
+#include "CompositeObject.h"
+#include "GameObjectManager.h"
 #include "Animation.h"
-#include "Texture.h"
-#include "TextureManager.h"
-#include <vector>
+#include "Level.h"
 #include "WorldObject.h"
+#include "Camera.h"
+#include "Util.h"
+#include "game.h"
 
 
 GameObject::~GameObject()
@@ -20,16 +21,13 @@ GameObject::~GameObject()
 	for (int x = 0; x < constants::CHILD_POSITIONS; x++)
 	{
 		m_childObjects[x].clear();
-		vector <std::shared_ptr<GameObject>>().swap(m_childObjects[x]);
+		std::vector <std::shared_ptr<GameObject>>().swap(m_childObjects[x]);
 	}
 
 }
 
 void GameObject::init()
 {
-
-	//this->definitionId;
-		//this->m_currentAnimationState;
 
 	m_removeFromWorld = false;
 	m_color = { 255,255,255,255 };
@@ -49,7 +47,7 @@ GameObject::GameObject()
 	this->init();
 }
 
-GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust)
+GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust)
 {
 	//Init
 	this->init();
@@ -78,7 +76,7 @@ GameObject::GameObject(string gameObjectId, float xMapPos, float yMapPos, float 
 	m_texture = TextureManager::instance().getTexture(m_definition->textureId);
 
 	//get the animation objects if they exist
-	string firstState;
+	std::string firstState;
 	int i = 0;
 	if (m_definition->animationDetails.animations.size() > 0)
 	{
@@ -246,7 +244,7 @@ void GameObject::render()
 	//Outline the object if defined
 	if (m_definition->renderOutline)
 	{
-		TextureManager::instance().outLineObject(this, 2);
+		outlineObject(2);
 	}
 	
 	//Loop through any possible child objects, in all 9 positions, and render them too
@@ -361,7 +359,7 @@ void GameObject::buildChildren()
 	*/
 	for (ChildObjectDetails childDefinition : m_definition->childObjectDefinitions)
 	{
-		string childObjectId = childDefinition.gameObjectId;
+		std::string childObjectId = childDefinition.gameObjectId;
 		unsigned int locationSlot = childDefinition.locationSlot;
 
 		GameObjectDefinition* definition = GameObjectManager::instance().getDefinition(childObjectId);
@@ -373,21 +371,21 @@ void GameObject::buildChildren()
 			{
 				TextObject* textObject =
 					GameObjectManager::instance().buildGameObject<TextObject>(childObjectId, 2, 2, 0);
-				m_childObjects[locationSlot - 1].push_back(make_shared<TextObject>(*textObject));
+				m_childObjects[locationSlot - 1].push_back(std::make_shared<TextObject>(*textObject));
 
 			}
 			else if (definition->type.compare("WORLD_OBJECT") == 0)
 			{
 				WorldObject* worldObject =
 					GameObjectManager::instance().buildGameObject<WorldObject>(childObjectId, -5, -5, 0);
-				m_childObjects[locationSlot - 1].push_back(make_shared<WorldObject>(*worldObject));
+				m_childObjects[locationSlot - 1].push_back(std::make_shared<WorldObject>(*worldObject));
 			}
 			else //default to GAME_OBJECT
 			{
 
 				GameObject* gameObject =
 					GameObjectManager::instance().buildGameObject<GameObject>(childObjectId, -5, -5, 0);
-				m_childObjects[locationSlot - 1].push_back(make_shared<GameObject>(*gameObject));
+				m_childObjects[locationSlot - 1].push_back(std::make_shared<GameObject>(*gameObject));
 			}
 
 		}
@@ -396,7 +394,7 @@ void GameObject::buildChildren()
 }
 
 b2Vec2 GameObject::calcChildPosition(
-	shared_ptr<GameObject> child,
+	std::shared_ptr<GameObject> child,
 	int locationSlot,
 	int childNumber,
 	int childCount)
@@ -526,28 +524,26 @@ b2Vec2 GameObject::calcChildPosition(
 void GameObject::onMouseHoverRender()
 {
 
-	TextureManager::instance().outLineObject(this, 2);
-
-
+	outlineObject(2);
 }
 
 void GameObject::onMouseClickRender()
 {
 
-	TextureManager::instance().outLineObject(this, 6);
+	outlineObject(6);
 
 }
 
 void GameObject::onMouseHoldRender()
 {
-	TextureManager::instance().outLineObject(this, 2);
+	outlineObject(2);
 }
 
 void GameObject::onMouseClickEvent()
 {
-	string* actionCode;
+	std::string* actionCode;
 
-	actionCode = new string(m_definition->onClickAction);
+	actionCode = new std::string(m_definition->onClickAction);
 	SDL_Event event;
 	event.user.data1 = static_cast<void*>(actionCode);
 	event.type = SDL_USEREVENT;
@@ -563,10 +559,10 @@ void GameObject::updateMouseState()
 	if (m_definition->isMouseSelectable == true)
 	{
 		//Is mouse over the object
-		if (game->mouseLocation.x >= gameObjectDrawRect.x &&
-			game->mouseLocation.x <= gameObjectDrawRect.x + gameObjectDrawRect.w &&
-			game->mouseLocation.y >= gameObjectDrawRect.y &&
-			game->mouseLocation.y <= gameObjectDrawRect.y + gameObjectDrawRect.h)
+		if (Game::instance().mouseLocation.x >= gameObjectDrawRect.x &&
+			Game::instance().mouseLocation.x <= gameObjectDrawRect.x + gameObjectDrawRect.w &&
+			Game::instance().mouseLocation.y >= gameObjectDrawRect.y &&
+			Game::instance().mouseLocation.y <= gameObjectDrawRect.y + gameObjectDrawRect.h)
 		{
 
 			//was this object clicked?
@@ -606,6 +602,52 @@ void GameObject::updateMouseState()
 
 }
 
+
+void GameObject::outlineObject(float lineSize)
+{
+
+	std::vector<SDL_Point> points;
+	SDL_Rect gameObjectDrawRect = getRenderDestRect();
+	float saveScaleX, saveScaleY;
+	SDL_Point point;
+
+	//Adjust for camera
+	if (this->definition()->absolutePositioning == false)
+	{
+		gameObjectDrawRect.x -= Camera::instance().frame().x;
+		gameObjectDrawRect.y -= Camera::instance().frame().y;
+	}
+
+	//topleft
+	point.x = gameObjectDrawRect.x / lineSize;
+	point.y = gameObjectDrawRect.y / lineSize;
+	points.push_back(point);
+
+	//topright
+	point.x = (gameObjectDrawRect.x + gameObjectDrawRect.w) / lineSize;
+	point.y = gameObjectDrawRect.y / lineSize;
+	points.push_back(point);
+
+	//bottomright
+	point.x = (gameObjectDrawRect.x + gameObjectDrawRect.w) / lineSize;
+	point.y = (gameObjectDrawRect.y + gameObjectDrawRect.h) / lineSize;
+	points.push_back(point);
+
+	//bottomleft
+	point.x = gameObjectDrawRect.x / lineSize;
+	point.y = (gameObjectDrawRect.y + gameObjectDrawRect.h) / lineSize;
+	points.push_back(point);
+
+	//add the topleft as last point to complete the shape
+	point.x = gameObjectDrawRect.x / lineSize;
+	point.y = gameObjectDrawRect.y / lineSize;
+	points.push_back(point);
+
+	TextureManager::instance().outlineObject(points, lineSize);
+
+	points.clear();
+
+}
 void GameObject::setPosition(b2Vec2 position)
 {
 	m_position = position;

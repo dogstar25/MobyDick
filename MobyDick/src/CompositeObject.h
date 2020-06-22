@@ -1,12 +1,13 @@
-#pragma once
-#include "WorldObject.h"
-#include <vector> 
-#include <SDL2/SDL.h>
-#include <map>
-#include <chrono>
-#include <string>
+#ifndef COMPOSITE_OBJECT_H
+#define COMPOSITE_OBJECT_H
 
-class GameObject;
+#include <vector> 
+#include <chrono>
+#include <string> 
+
+#include "WorldObject.h"
+#include "GameObjectDefinition.h"
+
 
 struct GameObjectPiece
 {
@@ -43,7 +44,8 @@ private:
 	void levelUp(GameObjectPiece& piece);
 
 	//Collection of all of the gameObjects that make up this composite object
-	vector<GameObjectPiece>m_pieces;
+	std::vector<GameObjectPiece>m_pieces;
 
 };
 
+#endif

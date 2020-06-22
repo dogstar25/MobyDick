@@ -1,12 +1,10 @@
 #include "SoundManager.h"
 
-#include <iostream>
 #include <fstream>
 
 #include <json/json.h>
 
 #include "GameConfig.h"
-#include "Game.h"
 
 
 
@@ -41,13 +39,13 @@ void SoundManager::initSound()
 void SoundManager::loadSounds()
 {
 
-	string id, desc, filename;
+	std::string id, desc, filename;
 	Mix_Chunk* soundChunk=nullptr;
 	Mix_Music* music = nullptr;
 
 	//Read file and stream it to a JSON object
 	Json::Value root;
-	ifstream ifs("assets/sound/soundAssets.json");
+	std::ifstream ifs("assets/sound/soundAssets.json");
 	ifs >> root;
 
 	//Store the sound affects sound items
@@ -75,14 +73,14 @@ void SoundManager::loadSounds()
 
 }
 
-void SoundManager::playSound(string id )
+void SoundManager::playSound(std::string id )
 {
 	
 	int channelPlayedOn = Mix_PlayChannel(-1, m_sfxChunks[id], 0);
 
 }
 
-void SoundManager::playMusic(string id, int loopTimes)
+void SoundManager::playMusic(std::string id, int loopTimes)
 {
 
 	Mix_PlayMusic(m_sfxMusic[id], loopTimes);

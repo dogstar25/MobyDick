@@ -1,4 +1,6 @@
-#pragma once
+#ifndef DEBUGDRAW_H
+#define DEBUGDRAW_H
+
 #include <Box2D/Box2D.h>
 
 class DebugDraw : public b2Draw
@@ -24,3 +26,4 @@ public:
 };
 
 
+#endif

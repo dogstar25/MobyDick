@@ -1,5 +1,4 @@
 #include "ParticleEmission.h"
-#include "Game.h"
 
 
 
@@ -8,7 +7,7 @@ ParticleEmission::ParticleEmission()
 }
 
 ParticleEmission::ParticleEmission(
-	string poolId,
+	std::string poolId,
 	b2Vec2 originMin,
 	b2Vec2 originMax,
 	int forceMin,

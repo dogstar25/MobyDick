@@ -1,5 +1,6 @@
 #include "DynamicTextManager.h"
 
+
 DynamicTextManager& DynamicTextManager::instance()
 {
 	static DynamicTextManager singletonInstance;
@@ -13,7 +14,7 @@ DynamicTextManager::DynamicTextManager()
 	textItem* item = new textItem();
 	item->text = "defaultText";
 	item->hasChanged = true;
-	this->textItems["DEFAULT"] = make_unique<textItem>(*item);
+	this->textItems["DEFAULT"] = std::make_unique<textItem>(*item);
 
 }
 
@@ -24,7 +25,7 @@ DynamicTextManager::~DynamicTextManager()
 	this->textItems.clear();
 }
 
-textItem* DynamicTextManager::getTextItem(string id)
+textItem* DynamicTextManager::getTextItem(std::string id)
 {
 	textItem* textItem;
 
@@ -46,7 +47,7 @@ textItem* DynamicTextManager::getTextItem(string id)
 }
 
 
-bool DynamicTextManager::updateText(string id, string newText)
+bool DynamicTextManager::updateText(std::string id, std::string newText)
 {
 
 	bool wasFound = false;
@@ -70,7 +71,7 @@ bool DynamicTextManager::updateText(string id, string newText)
 		textItem* item = new textItem();
 		item->text = newText;
 		item->hasChanged = true;
-		this->textItems[id] = make_unique<textItem>(*item);
+		this->textItems[id] = std::make_unique<textItem>(*item);
 	}
 
 	return wasFound;

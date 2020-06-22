@@ -1,48 +1,29 @@
-#pragma once
+#ifndef GAME_H
+#define GAME_H
 
-#include <json/json.h>
 #include <Box2D/Box2D.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>
 
-
-#include <iostream>
-#include <fstream>
-//#include <cstdio>
-#include <ctime>
-#include <ratio>
-#include <chrono>
 #include <array>
-#include <forward_list>
 #include <string>
+#include <memory>
 
-#include "Globals.h"
-#include "GameObjectManager.h"
-#include "Util.h"
 #include "Constants.h"
-#include "TextureManager.h"
-#include "Level.h"
 
 #include "GameObjectContactListener.h"
-#include "DynamicTextManager.h"
-#include "ObjectPoolManager.h"
-#include "Camera.h"
 #include "DebugDraw.h"
 #include "DebugPanel.h"
 #include "GameObjectCollection.h"
-#include "ParticleMachine.h"
-
-
-
 
 //forward declations
 class PlayerObject;
 class GameObject;
 class ParticleObject;
 class CompositeObject;
-class ParticleMachine;
 class WeaponObject;
+class TextObject;
 
 /*
 	Main Game Class
@@ -60,7 +41,7 @@ public:
 	void play();
 	bool init();
 	void render();
-	static void renderCollection(array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>*);
+	static void renderCollection(std::array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>*);
 	void update();
 	void handleEvents();
 	
@@ -70,7 +51,7 @@ public:
 	void addGameObject(ParticleObject* gameObject, int);
 	void addGameObject(CompositeObject* gameObject, int);
 	void addGameObject(WeaponObject* gameObject, int);
-	void buildWorld(string);
+	static Game& instance();
 
 	b2World* physicsWorld;
 	
@@ -83,10 +64,10 @@ public:
 
 	//Fixed array of Layers
 	//Each layer contains a GameObjectCollection
-	array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS> gameCollections;
+	std::array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS> gameCollections;
 	PlayerObject* player;
 
-	unique_ptr<DebugPanel> debugPanel;
+	std::unique_ptr<DebugPanel> debugPanel;
 
 	//Current Game State
 	int gameState;
@@ -102,6 +83,6 @@ public:
 };
 
 
-
+#endif
 
 

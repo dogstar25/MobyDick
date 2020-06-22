@@ -1,27 +1,21 @@
-#pragma once
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <json/json.h>
-#include <stdio.h>
+#ifndef TEXTURE_MANAGER_H
+#define TEXTURE_MANAGER_H
+
 #include <string>
 #include <map>
+#include <memory>
+#include <vector>
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <Box2D/Box2D.h>
 #include "texture.h"
 
-#include "GameObject.h"
-#include <SDL2/SDL_ttf.h>
+//#include "GameObject.h" //added
+//#include "CompositeObject.h" //added
 
-//Forward declarations
-class GameObject;
-//class Texture;
-class PlayerObject;
-class WorldObject;
-class TextObject;
-class ParticleObject;
-class Game;
 
-using namespace std;
-extern Game* game;
 
 class TextureManager
 {
@@ -37,26 +31,25 @@ public:
 	void render(SDL_Rect* destRect, SDL_Color color);
 	bool present();
 	bool clear();
-	shared_ptr<Texture> getTexture(string id);
-	string getFont(string id);
+	std::shared_ptr<Texture> getTexture(std::string id);
+	std::string getFont(std::string id);
 	void drawPoly(b2Body* body);
 	void drawPoints(SDL_Point*);
 	void drawLine(b2Vec2, b2Vec2);
 	void drawGlowLine(b2Vec2, b2Vec2, SDL_Color);
 	void drawGlowLine2(b2Vec2, b2Vec2, SDL_Color);
-	void outLineObject(GameObject* gameObject, float lineSize);
-	void outLineObject(WorldObject* gameObject);
+	void outlineObject(std::vector<SDL_Point> points, float lineSize);
 	SDL_Texture* createTextureFromSurface(SDL_Surface* surface);
-	bool hasTexture(string textureId);
-	void addOrReplaceTexture(string textureId, shared_ptr<Texture> texture);
+	bool hasTexture(std::string textureId);
+	void addOrReplaceTexture(std::string textureId, std::shared_ptr<Texture> texture);
 
 private:
 	TextureManager();
 	~TextureManager();
 
 	SDL_Renderer* m_Renderer;
-	map<string, shared_ptr<Texture>> m_textureMap;
-	map<string, string> m_fontMap;
+	std::map<std::string, std::shared_ptr<Texture>> m_textureMap;
+	std::map<std::string, std::string> m_fontMap;
 	bool loadTextures();
 
 
@@ -64,4 +57,4 @@ private:
 
 };
 
-
+#endif

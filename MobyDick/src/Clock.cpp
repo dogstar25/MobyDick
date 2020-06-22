@@ -1,4 +1,5 @@
 #include "Clock.h"
+
 #include "GameConfig.h"
 
 using namespace std::chrono_literals;

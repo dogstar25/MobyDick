@@ -1,4 +1,6 @@
-#pragma once
+#ifndef WAYPOINT_H
+#define WAYPOINT_H
+
 #include <string>
 #include "Box2D/Box2D.h"
 
@@ -12,3 +14,4 @@ public:
 
 };
 
+#endif

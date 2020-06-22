@@ -1,31 +1,29 @@
-#pragma once
+#ifndef GAME_OBJECT_DEFINITION_H
+#define GAME_OBJECT_DEFINITION_H
+
 #include <string>
 #include <map>
 #include <SDL2/SDL.h>
 #include <Box2D/Box2D.h>
 
-#include <cstddef>
 #include <vector>
 
-class Animation;
-
-using namespace std;
 
 struct TextDetails {
 
 	SDL_Color color;
 	int size;
 	bool isDynamic;
-	string fontId;
-	string value;
+	std::string fontId;
+	std::string value;
 
 };
 
 struct ChildObjectDetails
 {
-	string gameObjectId;
+	std::string gameObjectId;
 	short locationSlot;
-	string gameObjectType;	
+	std::string gameObjectType;
 };
 
 struct CompositeLevel
@@ -38,7 +36,7 @@ struct CompositeLevel
 struct CompositeLegendItem
 {
 	SDL_Color color;
-	string gameObjectId;
+	std::string gameObjectId;
 };
 
 /*
@@ -47,22 +45,22 @@ Of how to decipher the pixels in the blueprint texture
 */
 struct CompositeBlueprint
 {
-	string textureId;
-	vector<CompositeLegendItem> legend;
+	std::string textureId;
+	std::vector<CompositeLegendItem> legend;
 };
 
 struct CompositeDetails
 {
 	short maxlevel;
 	float levelUpSpeed;
-	vector<CompositeLevel> levels;
+	std::vector<CompositeLevel> levels;
 	CompositeBlueprint blueprint;
 };
 
 struct AnimationItem
 {
-	string state;
-	string textureId;
+	std::string state;
+	std::string textureId;
 	float speed;
 	int frames;
 
@@ -70,7 +68,7 @@ struct AnimationItem
 
 struct AnimationDetails
 {
-	vector<AnimationItem> animations;
+	std::vector<AnimationItem> animations;
 };
 
 struct WeaponLevelDetails
@@ -79,13 +77,13 @@ struct WeaponLevelDetails
 	int levelUpTarget;
 	int strength;
 	SDL_Color color;
-	string bulletPoolId;
+	std::string bulletPoolId;
 };
 
 struct WeaponDetails
 {
 	b2Vec2 anchorPoint;
-	map<int, WeaponLevelDetails> weaponLevelDetails;
+	std::map<int, WeaponLevelDetails> weaponLevelDetails;
 };
 
 /*
@@ -99,7 +97,7 @@ public:
 	GameObjectDefinition();
 	~GameObjectDefinition();
 
-	string
+	std::string
 		id,
 		type,
 		description,
@@ -149,10 +147,8 @@ public:
 	WeaponDetails weaponDetails;
 	
 
-	vector<ChildObjectDetails> childObjectDefinitions; //TODO:turn this into ChildDetails
-
-	
-
-
+	std::vector<ChildObjectDetails> childObjectDefinitions; //TODO:turn this into ChildDetails
 
 };
+
+#endif

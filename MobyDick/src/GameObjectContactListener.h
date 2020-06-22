@@ -1,6 +1,10 @@
-#pragma once
+#ifndef GAME_OBJECT_CONTACT_LISTENER_H
+#define GAME_OBJECT_CONTACT_LISTENER_H
+
 #include <Box2D/Box2D.h>
-#include "PlayerObject.h"
+
+class PlayerObject;
+class WorldObject;
 
 class GameObjectContactListener : public b2ContactListener
 {
@@ -17,4 +21,6 @@ public:
 
 	
 };
+
+#endif
 

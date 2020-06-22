@@ -1,17 +1,11 @@
-#include <iostream>
-#include <fstream>
-#include <math.h>
-#include <list>
-
-#include <SDL2/SDL_ttf.h>
-
 #include "TextureManager.h"
-#include "Game.h"
-#include "PlayerObject.h"
-#include "TextObject.h"
-#include "WorldObject.h"
-#include "ParticleObject.h"
+
+#include <fstream>
+
+#include <json/json.h>
+
 #include "GameConfig.h"
+#include "Camera.h"
 
 
 TextureManager::TextureManager()
@@ -35,7 +29,7 @@ TextureManager::~TextureManager()
 	}
 
 	m_textureMap.clear();
-	map<string, shared_ptr<Texture>>().swap(m_textureMap);
+	std::map<std::string, std::shared_ptr<Texture>>().swap(m_textureMap);
 
 }
 
@@ -60,7 +54,7 @@ bool TextureManager::init(SDL_Window* pWindow)
 	return true;
 }
 
-bool TextureManager::hasTexture(string textureId)
+bool TextureManager::hasTexture(std::string textureId)
 {
 
 	if (m_textureMap.find(textureId) == m_textureMap.end())
@@ -75,9 +69,9 @@ bool TextureManager::hasTexture(string textureId)
 
 }
 
-void TextureManager::addOrReplaceTexture(string textureId, shared_ptr<Texture> texture)
+void TextureManager::addOrReplaceTexture(std::string textureId, std::shared_ptr<Texture> texture)
 {
-	shared_ptr<Texture> tempTexture;
+	std::shared_ptr<Texture> tempTexture;
 
 	if (hasTexture(textureId) == false)
 	{
@@ -127,12 +121,12 @@ bool TextureManager::loadTextures()
 
 	//Read file and stream it to a JSON object
 	Json::Value root;
-	ifstream ifs("assets/textureAssets.json");
+	std::ifstream ifs("assets/textureAssets.json");
 	//ifstream ifs("assets/textureAssets_Test.json");
 	ifs >> root;
 
 	//Get and store config values
-	string filename, id;
+	std::string filename, id;
 	int size;
 	bool retainSurface = false;
 
@@ -166,7 +160,7 @@ bool TextureManager::loadTextures()
 			SDL_FreeSurface(surface);
 		}
 
-		m_textureMap.emplace(id, make_shared<Texture>(*textureObject));
+		m_textureMap.emplace(id, std::make_shared<Texture>(*textureObject));
 
 	}
 
@@ -188,9 +182,9 @@ SDL_Texture* TextureManager::createTextureFromSurface(SDL_Surface* surface)
 	return sdlTexture;
 }
 
-string TextureManager::getFont(string id)
+std::string TextureManager::getFont(std::string id)
 {
-	string fontFile;
+	std::string fontFile;
 
 	auto iter = m_fontMap.find(id);
 
@@ -208,9 +202,9 @@ string TextureManager::getFont(string id)
 }
 
 
-shared_ptr<Texture> TextureManager::getTexture(string id)
+std::shared_ptr<Texture> TextureManager::getTexture(std::string id)
 {
-	shared_ptr<Texture> textureObject;
+	std::shared_ptr<Texture> textureObject;
 
 	auto iter = m_textureMap.find(id);
 
@@ -336,45 +330,11 @@ void TextureManager::drawGlowLine2(b2Vec2 start, b2Vec2 end, SDL_Color color)
 	SDL_RenderSetScale(m_Renderer, 1, 1);
 
 }
-void TextureManager::outLineObject(GameObject* gameObject, float lineSize)
+
+void TextureManager::outlineObject(std::vector<SDL_Point> points, float lineSize)
 {
 
-	vector<SDL_Point> points;
-	SDL_Rect gameObjectDrawRect = gameObject->getRenderDestRect();
 	float saveScaleX, saveScaleY;
-	SDL_Point point;
-
-	//Adjust for camera
-	if (gameObject->definition()->absolutePositioning == false)
-	{
-		gameObjectDrawRect.x -= Camera::instance().frame().x;
-		gameObjectDrawRect.y -= Camera::instance().frame().y;
-	}
-
-	//topleft
-	point.x = gameObjectDrawRect.x / lineSize;
-	point.y = gameObjectDrawRect.y / lineSize;
-	points.push_back(point);
-
-	//topright
-	point.x = (gameObjectDrawRect.x + gameObjectDrawRect.w) / lineSize;
-	point.y = gameObjectDrawRect.y / lineSize;
-	points.push_back(point);
-
-	//bottomright
-	point.x = (gameObjectDrawRect.x + gameObjectDrawRect.w) / lineSize;
-	point.y = (gameObjectDrawRect.y + gameObjectDrawRect.h) / lineSize;
-	points.push_back(point);
-
-	//bottomleft
-	point.x = gameObjectDrawRect.x / lineSize;
-	point.y = (gameObjectDrawRect.y + gameObjectDrawRect.h) / lineSize;
-	points.push_back(point);
-
-	//add the topleft as last point to complete the shape
-	point.x = gameObjectDrawRect.x / lineSize;
-	point.y = gameObjectDrawRect.y / lineSize;
-	points.push_back(point);
 
 	//Set render scale to match linesize passed in
 	SDL_RenderGetScale(m_Renderer, &saveScaleX, &saveScaleY);
@@ -384,14 +344,9 @@ void TextureManager::outLineObject(GameObject* gameObject, float lineSize)
 	//Rest Scale to whatever is was before
 	SDL_RenderSetScale(m_Renderer, saveScaleX, saveScaleY);
 
-	points.clear();
 
 }
 
-void TextureManager::outLineObject(WorldObject* gameObject)
-{
-
-}
 
 
 

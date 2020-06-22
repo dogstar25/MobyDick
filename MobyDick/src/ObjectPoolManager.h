@@ -1,11 +1,11 @@
-#pragma once
+#ifndef OBJECT_POOL_MANAGER_H
+#define OBJECT_POOL_MANAGER_H
+
 #include <string>
 #include <map>
 #include <vector>
 
 class ParticleObject;
-
-using namespace::std;
 
 class ObjectPoolManager
 {
@@ -14,8 +14,8 @@ public:
 	void init();
 	void reset(ParticleObject* particle);
 
-	ParticleObject* get(string);
-	map <string, vector<ParticleObject*>> objectPool;
+	ParticleObject* get(std::string);
+	std::map <std::string, std::vector<ParticleObject*>> objectPool;
 
 private:
 	ObjectPoolManager();
@@ -24,3 +24,4 @@ private:
 
 };
 
+#endif

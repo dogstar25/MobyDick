@@ -1,9 +1,10 @@
-#pragma once
-#include <stdio.h>
-#include<map>
+#ifndef DEBUGPANEL_H
+#define DEBUGPANEL_H
+
+#include <SDL2/SDL.h>
+
 #include <string>
 
-#include <SDL2/SDL_rect.h>
 
 class DebugPanel
 {
@@ -20,3 +21,4 @@ private:
 
 };
 
+#endif

@@ -1,9 +1,9 @@
-#include <iostream>
-#include <fstream>
-#include <math.h>
-#include <list>
-
 #include "ObjectPoolManager.h"
+
+#include <fstream>
+
+#include <json/json.h>
+
 #include "ParticleObject.h"
 #include "GameObjectManager.h"
 
@@ -19,15 +19,15 @@ void ObjectPoolManager::init()
 
 	//Read file and stream it to a JSON object
 	Json::Value root;
-	ifstream ifs("assets/gameObjectDefinitions/objectPools.json");
+	std::ifstream ifs("assets/gameObjectDefinitions/objectPools.json");
 	ifs >> root;
 
 	//Get and store config values
-	string gameObjectId, poolId;
+	std::string gameObjectId, poolId;
 	ParticleObject* particle;
 	int maxItems;
 	float lifetime;
-	duration<float, milli> lifetimeDur;
+	std::chrono::duration<float, std::milli> lifetimeDur;
 
 
 	//Loop through every texture defined in the config file, create a texture object
@@ -77,7 +77,7 @@ ObjectPoolManager::~ObjectPoolManager()
 	
 }
 
-ParticleObject* ObjectPoolManager::get(string poolId)
+ParticleObject* ObjectPoolManager::get(std::string poolId)
 {
 	ParticleObject* availParticle=NULL;
 	

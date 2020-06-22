@@ -1,16 +1,13 @@
 #include "ParticleObject.h"
-#include "Game.h"
-#include <string>
-#include <json/json.h>
 
-using namespace std::chrono_literals;
-using namespace std;
+
+
 
 ParticleObject::ParticleObject()
 {
 }
 
-ParticleObject::ParticleObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
+ParticleObject::ParticleObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
 	WorldObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
 {
 	//initialize stuff
@@ -29,9 +26,9 @@ ParticleObject::~ParticleObject()
 void ParticleObject::update()
 {
 	GameObject::update();
-	steady_clock::time_point now_time = steady_clock::now();
+	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
 
-	duration<double, milli> timeDiffMilliSeconds = now_time - this->time_snapshot;
+	std::chrono::duration<double, std::milli> timeDiffMilliSeconds = now_time - this->time_snapshot;
 
 	if (this->hasInfiniteLifetime == false)
 	{

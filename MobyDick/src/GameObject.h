@@ -1,22 +1,22 @@
-#pragma once
+#ifndef GAME_OBJECT_H
+#define GAME_OBJECT_H
+
 #include <array>
 #include <map>
 #include <memory>
 #include <SDL2/SDL.h>
 #include <string>
+#include <vector>
 
 #include <Box2D/Box2D.h>
 
-#include "TextureManager.h"
+#include "TextureManager.h" //Need this here so that inherited classes can get the textureManager without linker issues
+#include "GameObjectDefinition.h"
 #include "Constants.h"
-using namespace constants;
-
 
 //Forward declarations
-class GameObjectDefinition;
-class Texture;
-class TextObject;
 class Animation;
+class Texture;
 
 class GameObject
 {
@@ -39,7 +39,7 @@ private:
 	GameObjectDefinition* m_definition;
 	std::shared_ptr<Texture> m_texture;
 	std::map<std::string, Animation*> m_animations;
-	std::array<std::vector<std::shared_ptr<GameObject>>, CHILD_POSITIONS> m_childObjects;
+	std::array<std::vector<std::shared_ptr<GameObject>>, constants::CHILD_POSITIONS> m_childObjects;
 
 	void init();
 	virtual void onMouseHoverRender();
@@ -50,6 +50,7 @@ private:
 	b2Vec2 calcChildPosition(std::shared_ptr<GameObject>, int, int, int);
 	void updateChildObjects();
 	void buildChildren();
+	void outlineObject(float lineSize);
 
 
 protected:
@@ -123,5 +124,4 @@ public:
 	
 };
 
-
-
+#endif

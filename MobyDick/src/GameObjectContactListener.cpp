@@ -1,8 +1,7 @@
 #include "GameObjectContactListener.h"
-#include "GameObject.h"
-#include "WorldObject.h"
+
+#include "PlayerObject.h"
 #include "ParticleMachine.h"
-#include "GameObjectDefinition.h"
 #include "SoundManager.h"
 
 
@@ -155,9 +154,6 @@ void GameObjectContactListener::bulletWall(WorldObject* bullet, WorldObject* wal
 	float x = contactPoint.x;
 	float y = contactPoint.y;
 	b2Vec2 particleOrigin = { x,y };
-	//This position might be "inside" of the wall object
-	//We will do a ray trace from this position towards the play object untl it is no long inside the wall
-	//findWallImpactPoint(worldPoint, game->player.get());
 
 	//temp color code
 	SDL_Color colorMin = { 0,0,0,255 };

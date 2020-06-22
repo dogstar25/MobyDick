@@ -1,16 +1,17 @@
-#pragma once
+#ifndef PARTICLE_EMISSION_H
+#define PARTICLE_EMISSION_H
+
 #include <string>
 
 #include <SDL2/SDL.h>
 #include <Box2D/Box2D.h>
 
-using namespace std;
 class ParticleEmission
 {
 public:
 	ParticleEmission();
 	ParticleEmission(
-		string poolId,
+		std::string poolId,
 		b2Vec2 originMin,
 		b2Vec2 originMax,
 		int forceMin,
@@ -35,7 +36,7 @@ public:
 		originMin,
 		originMax;
 
-	string 
+	std::string
 		poolId;
 
 	short
@@ -64,3 +65,4 @@ public:
 
 };
 
+#endif

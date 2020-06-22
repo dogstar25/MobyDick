@@ -1,15 +1,14 @@
 #include "WeaponObject.h"
 
-#include "GameObject.h"
+#include "Globals.h"
 #include "ParticleObject.h"
 #include "ObjectPoolManager.h"
 #include "SoundManager.h"
 #include "Game.h"
 
-#include <string>
 
 
-WeaponObject::WeaponObject(string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
+WeaponObject::WeaponObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
 	WorldObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
 {
 
@@ -25,7 +24,7 @@ WeaponObject::~WeaponObject()
 void WeaponObject::fire(const b2Vec2 &origin, const float &angle, const float &fireOffset)
 {
 
-	string bulletPoolId = 
+	std::string bulletPoolId = 
 		this->definition()->weaponDetails.weaponLevelDetails[m_currentLevel].bulletPoolId;
 	
 	ParticleObject* bullet = ObjectPoolManager::instance().get(bulletPoolId);
@@ -65,7 +64,7 @@ void WeaponObject::fire(const b2Vec2 &origin, const float &angle, const float &f
 		bullet->setColor(color);
 
 		//Add the bullet object to the main gameObject collection
-		game->addGameObject(bullet, GameOjectLayer::MAIN);
+		Game::instance().addGameObject(bullet, GameOjectLayer::MAIN);
 	}
 
 }

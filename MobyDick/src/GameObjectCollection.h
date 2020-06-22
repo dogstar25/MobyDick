@@ -1,12 +1,10 @@
-#pragma once
-#include <forward_list>
-#include <list>
-#include <memory>
+#ifndef GAME_OBJECT_COLLECTION_H
+#define GAME_OBJECT_COLLECTION_H
+
 #include <vector>
 
-#include "GameObject.h"
-#include "ParticleObject.h"
-
+class GameObject;
+class ParticleObject;
 
 class GameObjectCollection
 {
@@ -22,3 +20,4 @@ public:
 
 };
 
+#endif
