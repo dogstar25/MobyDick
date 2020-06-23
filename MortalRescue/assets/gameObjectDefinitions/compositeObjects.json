@@ -11,7 +11,7 @@
         "type": "B2_DYNAMIC",
         "restitution": 0.1,
         "friction": 1.0,
-        "density": 2.5,
+        "density": 1000.5,
         "linearDamping": 0.2,
         "angularDamping": 0.1,
         "collisionCategory": 128

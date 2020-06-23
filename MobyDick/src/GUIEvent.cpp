@@ -120,10 +120,10 @@ void GUIEvent::render()
 	TextureManager::instance().clear();
 
 	//Render all of the game objects in the world
-	Game::instance().renderCollection(&Game::instance().gameCollections);
+	Game::instance().renderCollection(Game::instance().gameCollections());
 
 	//Render all of the GUI Event game objects
-	Game::instance().renderCollection(&uiObjectCollections);
+	Game::instance().renderCollection(uiObjectCollections);
 
 	TextureManager::instance().present();
 

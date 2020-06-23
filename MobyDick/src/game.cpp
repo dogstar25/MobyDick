@@ -40,8 +40,8 @@ Game::~Game()
 
 	for (int x = 0; x < constants::MAX_GAMEOBJECT_LAYERS; x++)
 	{
-		this->gameCollections[x].gameObjects.clear();
-		this->gameCollections[x].particleObjects.clear();
+		m_gameCollections[x].gameObjects.clear();
+		m_gameCollections[x].particleObjects.clear();
 	}
 
 	delete this->player;
@@ -243,11 +243,11 @@ void Game::play()
 
 
 
-void Game::renderCollection(std::array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>* gameObjectCollection)
+void Game::renderCollection(std::array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>& gameObjectCollection)
 {
 
 	//Render all of the game objects
-	for (const auto& collection : *gameObjectCollection)
+	for (const auto& collection : gameObjectCollection)
 	{
 		for (const auto& gameObject : collection.gameObjects)
 		{
@@ -266,7 +266,7 @@ void Game::addGameObject(GameObject* gameObject, int layer)
 {
 
 	//this->gameObjects[layer].push_back(make_unique<GameObject>(*gameObject));
-	this->gameCollections[layer].gameObjects.push_back(gameObject);
+	m_gameCollections[layer].gameObjects.push_back(gameObject);
 
 }
 
@@ -274,7 +274,7 @@ void Game::addGameObject(WorldObject* gameObject, int layer)
 {
 
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	this->gameCollections[layer].gameObjects.push_back(gameObject);
+	m_gameCollections[layer].gameObjects.push_back(gameObject);
 
 }
 
@@ -282,25 +282,25 @@ void Game::addGameObject(ParticleObject* gameObject, int layer)
 {
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
 	gameObject->time_snapshot = std::chrono::steady_clock::now();
-	this->gameCollections[layer].particleObjects.push_back(gameObject);
+	m_gameCollections[layer].particleObjects.push_back(gameObject);
 }
 
 void Game::addGameObject(TextObject* gameObject, int layer)
 {
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	this->gameCollections[layer].gameObjects.push_back(gameObject);
+	m_gameCollections[layer].gameObjects.push_back(gameObject);
 }
 
 void Game::addGameObject(CompositeObject* gameObject, int layer)
 {
 
-	this->gameCollections[layer].gameObjects.push_back(gameObject);
+	m_gameCollections[layer].gameObjects.push_back(gameObject);
 }
 
 void Game::addGameObject(WeaponObject* gameObject, int layer)
 {
 
-	this->gameCollections[layer].gameObjects.push_back(gameObject);
+	m_gameCollections[layer].gameObjects.push_back(gameObject);
 }
 
 
@@ -326,7 +326,7 @@ void Game::_update() {
 
 	//Update all of the other non player related update chores for each game object
 	// Game objects are stored in layers
-	for (auto& gameObjectCollection : this->gameCollections)
+	for (auto& gameObjectCollection : m_gameCollections)
 	{
 		//Update normal game objects
 		for (auto& gameObject : gameObjectCollection.gameObjects)
@@ -384,7 +384,7 @@ void Game::_render() {
 	this->player->render();
 
 	//Render all of the game objects in thew world
-	renderCollection(&this->gameCollections);
+	renderCollection(m_gameCollections);
 
 	//DebugDraw
 	if (GameConfig::instance().b2DebugDrawMode() == true)
@@ -415,7 +415,6 @@ void Game::handleEvents() {
 			this->gameState = QUIT;
 		case SDL_KEYDOWN:
 		case SDL_KEYUP:
-		case SDL_MOUSEMOTION:
 			if ((char)event.key.keysym.sym == SDLK_ESCAPE && event.type == SDL_KEYDOWN)
 			{
 				std::unique_ptr<GUIEvent> guiEvent = std::make_unique<GUIEvent>("GUIPausePanel");
@@ -425,6 +424,10 @@ void Game::handleEvents() {
 			{
 				this->player->handlePlayerMovementEvent(&event);
 			}
+			break;
+
+		case SDL_MOUSEMOTION:
+			this->player->handlePlayerMovementEvent(&event);
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			//this->testSound();

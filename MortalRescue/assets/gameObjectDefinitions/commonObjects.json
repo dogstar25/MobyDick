@@ -129,9 +129,9 @@
         "collisionShape": "B2_CIRCLE",
         "collisionRadius": 0.64,
         "friction": 0.01,
-        "density": 15.5,
-        "linearDamping": 0.2,
-        "angularDamping": 100.0,
+        "density": 750.5,
+        "linearDamping": 10.0,
+        "angularDamping": 200.0,
         "collisionCategory": 2,
         "weaponAnchorPoint": {
           "x": 0.8,
@@ -140,7 +140,7 @@
       },
       "xSize": 2.56,
       "ySize": 2.56,
-      "speed": 9.5,
+      "speed": 19.5,
       "fireOffset": -0.5,
       "animations": [
         {

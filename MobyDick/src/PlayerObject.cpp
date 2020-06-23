@@ -39,73 +39,82 @@ void PlayerObject::handlePlayerMovementEvent(SDL_Event* event)
 	//const Uint8 *state;
 
 
-	//SDL_PumpEvents();
-	const Uint8 *state = SDL_GetKeyboardState(&count);
-	this->direction = 0;
-	this->strafe = 0;
+	if (event->type & SDL_KEYDOWN || 
+		event->type & SDL_KEYUP)
+	{
+		const Uint8* state = SDL_GetKeyboardState(&count);
+		this->direction = 0;
+		this->strafe = 0;
 
-	if (state[SDL_SCANCODE_W])
-	{
-		this->direction = -1;
-	}
-	if (state[SDL_SCANCODE_S])
-	{
-		this->direction = 1;
-	}
-	if (state[SDL_SCANCODE_A])
-	{
-		this->strafe = 1;
-	}
-	if (state[SDL_SCANCODE_D])
-	{
-		this->strafe = -1;
-	}
-
-	/*
-		if (event->type == SDL_KEYUP) {
-
-			switch (event->key.keysym.sym) {
-			case SDLK_w:
-				//this->yDirection = 0;
-				this->direction = 0;
-				break;
-			case SDLK_s:
-				this->direction = 0;
-				break;
-			case SDLK_a:
-				this->strafe = 0;
-				break;
-			case SDLK_d:
-				this->strafe = 0;
-				break;
-			}
+		if (state[SDL_SCANCODE_W])
+		{
+			this->direction = -1;
+		}
+		if (state[SDL_SCANCODE_S])
+		{
+			this->direction = 1;
+		}
+		if (state[SDL_SCANCODE_A])
+		{
+			this->strafe = 1;
+		}
+		if (state[SDL_SCANCODE_D])
+		{
+			this->strafe = -1;
 		}
 
-		if (event->type == SDL_KEYDOWN) {
-			switch (event->key.keysym.sym) {
-			case SDLK_w:
-				//this->yDirection = -1;
-				this->direction = -1;
-				break;
-			case SDLK_s:
-				//this->yDirection = 1;
-				this->direction = 1;
-				break;
-			case SDLK_a:
-				//this->xDirection = -1;
-				this->strafe = 1;
-				break;
-			case SDLK_d:
-				//this->xDirection = 1;
-				this->strafe = -1;
-				break;
-			}
-		}
-	*/
+		/*
+			if (event->type == SDL_KEYUP) {
 
-	//method 1
-	float angularVelocity = event->motion.xrel * GameConfig::instance().mouseSensitivity();
-	this->physicsBody()->SetAngularVelocity(angularVelocity);
+				switch (event->key.keysym.sym) {
+				case SDLK_w:
+					//this->yDirection = 0;
+					this->direction = 0;
+					break;
+				case SDLK_s:
+					this->direction = 0;
+					break;
+				case SDLK_a:
+					this->strafe = 0;
+					break;
+				case SDLK_d:
+					this->strafe = 0;
+					break;
+				}
+			}
+
+			if (event->type == SDL_KEYDOWN) {
+				switch (event->key.keysym.sym) {
+				case SDLK_w:
+					//this->yDirection = -1;
+					this->direction = -1;
+					break;
+				case SDLK_s:
+					//this->yDirection = 1;
+					this->direction = 1;
+					break;
+				case SDLK_a:
+					//this->xDirection = -1;
+					this->strafe = 1;
+					break;
+				case SDLK_d:
+					//this->xDirection = 1;
+					this->strafe = -1;
+					break;
+				}
+			}
+		*/
+	}
+
+	if (event->type & SDL_MOUSEMOTION)
+	{
+
+		float angularVelocity = event->motion.xrel * GameConfig::instance().mouseSensitivity();
+		this->physicsBody()->SetAngularVelocity(angularVelocity);
+
+		Game::instance().debugPanel->addItem("ANGULAR_VELOCITY", std::to_string(angularVelocity));
+	}
+
 
 }
 
@@ -164,7 +173,7 @@ void PlayerObject::updatePlayerMovement()
 	//Create the vector for strafe direction
 	b2Vec2 strafeVector = b2Vec2(sx, sy);
 
-	//Initialize new final movemtn vector
+	//Initialize new final movement vector
 	b2Vec2 vec2;
 	vec2.SetZero();
 
@@ -173,7 +182,6 @@ void PlayerObject::updatePlayerMovement()
 	//Update Animation state
 	if (vec2.Length() > 0)
 	{
-		int test = 9;
 		this->setCurrentAnimationState("RUN");
 	}
 	else

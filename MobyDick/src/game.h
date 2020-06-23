@@ -43,7 +43,7 @@ public:
 	void play();
 	void handleEvents();
 
-	static void renderCollection(std::array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>*);
+	static void renderCollection(std::array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>&);
 	
 	void addGameObject(GameObject* gameObject, int);
 	void addGameObject(TextObject* gameObject, int);
@@ -53,9 +53,6 @@ public:
 	void addGameObject(WeaponObject* gameObject, int);
 	
 
-	//Fixed array of Layers
-	//Each layer contains a GameObjectCollection
-	std::array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS> gameCollections;
 	PlayerObject* player;
 
 	std::unique_ptr<DebugPanel> debugPanel;
@@ -75,6 +72,10 @@ public:
 		return m_window;
 	}
 
+	std::array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>& gameCollections() {
+
+		return m_gameCollections;
+	}
 
 
 private:
@@ -84,6 +85,11 @@ private:
 
 	b2World* m_physicsWorld;
 	SDL_Window* m_window;
+
+
+	//Fixed array of Layers
+	//Each layer contains a GameObjectCollection
+	std::array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS> m_gameCollections;
 
 
 
