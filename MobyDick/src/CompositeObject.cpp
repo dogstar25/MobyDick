@@ -11,9 +11,7 @@ CompositeObject::CompositeObject(std::string gameObjectId, float xMapPos, float 
 	WorldObject(gameObjectId, xMapPos, yMapPos, angleAdjust)
 {
 
-	//this->blueprint = game->textureManager.getTexture(definition->blueprint);
-
-	this->buildComposite();
+	_buildComposite();
 
 }
 
@@ -27,7 +25,7 @@ void CompositeObject::update()
 	//Call base game object update
 	WorldObject::update();
 
-	this->updatePieces();
+	_updatePieces();
 }
 
 void CompositeObject::render()
@@ -46,7 +44,7 @@ void CompositeObject::render()
 
 }
 
-void CompositeObject::buildComposite()
+void CompositeObject::_buildComposite()
 {
 
 	SDL_Texture* blueprintTexure;
@@ -81,7 +79,7 @@ void CompositeObject::buildComposite()
 			{
 				if (currentPixelcolor == legendItem.color == true)
 				{
-					this->buildPiece(legendItem, x, y);
+					_buildPiece(legendItem, x, y);
 				}
 			}
 
@@ -91,7 +89,7 @@ void CompositeObject::buildComposite()
 	SDL_UnlockSurface(blueprintSurface);
 }
 
-void CompositeObject::buildPiece(CompositeLegendItem legendItem, int xPos, int yPos)
+void CompositeObject::_buildPiece(CompositeLegendItem legendItem, int xPos, int yPos)
 {
 	float xOffset, yOffset;
 	GameObjectPiece piece = {};
@@ -109,10 +107,6 @@ void CompositeObject::buildPiece(CompositeLegendItem legendItem, int xPos, int y
 		
 
 	//calculate the X,Y offset position in relating to the base object
-	//SDL_Rect parentPositionRect = this->getPositionRect();
-	//xOffset = parentPositionRect.x + (xPos * piece.gameObject->xSize);
-	//yOffset = parentPositionRect.y + (yPos * piece.gameObject->ySize);
-
 	xOffset = xPos * piece.pieceObject->size().x;
 	yOffset = yPos * piece.pieceObject->size().y;
 
@@ -129,16 +123,16 @@ void CompositeObject::buildPiece(CompositeLegendItem legendItem, int xPos, int y
 
 }
 
-void CompositeObject::updatePieces()
+void CompositeObject::_updatePieces()
 {
 	for (auto& pieceObject : m_pieces)
 	{
 
 		//Update the state of the piece
-		this->updatePieceState(pieceObject);
+		_updatePieceState(pieceObject);
 
 		//Update the position of the piece
-		this->updatePiecePosition(pieceObject);
+		_updatePiecePosition(pieceObject);
 
 		//The piece object itself is a gameObject that should have its update called
 		pieceObject.pieceObject->update();
@@ -149,7 +143,7 @@ void CompositeObject::updatePieces()
 
 }
 
-void CompositeObject::updatePieceState(GameObjectPiece& piece)
+void CompositeObject::_updatePieceState(GameObjectPiece& piece)
 {
 	//Get now time
 	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
@@ -172,7 +166,7 @@ void CompositeObject::updatePieceState(GameObjectPiece& piece)
 		{
 
 			//Level up the piece object
-			this->levelUp(piece);
+			_levelUp(piece);
 		}
 
 	}
@@ -180,7 +174,7 @@ void CompositeObject::updatePieceState(GameObjectPiece& piece)
 
 }
 
-void CompositeObject::updatePiecePosition(GameObjectPiece& piece)
+void CompositeObject::_updatePiecePosition(GameObjectPiece& piece)
 {
 
 	b2Vec2 piecePosition{ 0,0 };
@@ -207,7 +201,7 @@ void CompositeObject::updatePiecePosition(GameObjectPiece& piece)
 	piece.pieceObject->setPosition(piecePosition, this->angle());
 }
 
-void CompositeObject::levelUp(GameObjectPiece& piece)
+void CompositeObject::_levelUp(GameObjectPiece& piece)
 {
 	int nextLevel = piece.currentlevel + 1;
 

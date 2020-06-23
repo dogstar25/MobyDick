@@ -130,7 +130,8 @@ void PlayerObject::render()
 {
 
 	Game::instance().debugPanel->addItem("ANIMATIONState", this->currentAnimationState());
-	Game::instance().debugPanel->addItem("ANIMATIONFrame", std::to_string(this->animations()[this->currentAnimationState()]->getCurrentAnimFrame()));
+	Game::instance().debugPanel->addItem("ANIMATIONFrame", 
+		std::to_string(this->animations()[this->currentAnimationState()]->getCurrentAnimFrame()));
 	WorldObject::render();
 }
 

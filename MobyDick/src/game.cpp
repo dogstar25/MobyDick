@@ -34,7 +34,7 @@ Game::~Game()
 	printf("cleaning game\n");
 
 	//Delete SDL stuff
-	SDL_DestroyWindow(this->pWindow);
+	SDL_DestroyWindow(m_window);
 	SDL_Quit();
 	TTF_Quit();
 
@@ -47,7 +47,7 @@ Game::~Game()
 	delete this->player;
 
 	//Delete box2d world - should delete all bodies and fixtures within
-	delete this->physicsWorld;
+	delete m_physicsWorld;
 
 
 }
@@ -55,12 +55,9 @@ Game::~Game()
 Game::Game()
 {
 
-	this->physicsWorld = nullptr;
+	m_physicsWorld = nullptr;
 
-	this->pWindow = nullptr;
-	this->gameObjectCount = 0;
-	this->mouseLocation = {};
-	this->mouseClickLocation = {};
+	m_window = nullptr;
 
 	this->player = nullptr;
 
@@ -100,7 +97,7 @@ bool Game::init()
 		{
 			windowFlags = windowFlags | SDL_WINDOW_RESIZABLE;
 		}
-		pWindow = SDL_CreateWindow(GameConfig::instance().gameTitle().c_str(),
+		m_window = SDL_CreateWindow(GameConfig::instance().gameTitle().c_str(),
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
 			GameConfig::instance().windowWidth(),
@@ -108,23 +105,23 @@ bool Game::init()
 			windowFlags);
 
 		//Initialize the texture manager
-		TextureManager::instance().init(pWindow);
+		TextureManager::instance().init(m_window);
 
 		//Initialize the sound manager
 		SoundManager::instance().initSound();
 		SoundManager::instance().playMusic("MUSIC_AMBIENCE_1", -1);
 
 		// Construct a physics world object, which will hold and simulate the physics objects.
-		this->physicsWorld = new b2World(GameConfig::instance().gravity());
-		this->physicsWorld->SetAutoClearForces(true);
+		m_physicsWorld = new b2World(GameConfig::instance().gravity());
+		m_physicsWorld->SetAutoClearForces(true);
 		//Add a collision contact listener
-		this->physicsWorld->SetContactListener(&m_gameObjectContactListner);
+		m_physicsWorld->SetContactListener(&m_gameObjectContactListner);
 
 		//Debug Mode
 		if (GameConfig::instance().b2DebugDrawMode() == true)
 		{
 			this->debugDraw.SetFlags(DebugDraw::e_shapeBit);
-			this->physicsWorld->SetDebugDraw(&this->debugDraw);
+			m_physicsWorld->SetDebugDraw(&this->debugDraw);
 		}
 
 		//Initilaze the Game Object Manager
@@ -228,10 +225,10 @@ void Game::play()
 	if (Clock::instance().hasMetGameLoopSpeed())
 	{
 		//Handle updating objects positions and physics
-		update();
+		_update();
 
 		//render everything
-		render();
+		_render();
 
 		//Increment frame counter and calculate FPS and reset the gameloop timer
 		Clock::instance().calcFps();
@@ -244,105 +241,7 @@ void Game::play()
 
 
 
-void Game::update() {
 
-
-	//Specifiaclly handle input and stuff for the one player gameObject
-	this->player->update();
-
-	//Update the camera frame to point to the new player position
-	//
-	//TODO:Instead of this, give the camera an object/position to follow
-	//and the camera will follow on its own
-	//
-	Camera::instance().setFramePosition(
-		(this->player->physicsBody()->GetPosition().x * GameConfig::instance().scaleFactor()) -
-		(Camera::instance().frame().w / 2),
-		(this->player->physicsBody()->GetPosition().y * GameConfig::instance().scaleFactor()) -
-		(Camera::instance().frame().h / 2));
-
-	// spin through list of particle tasks to execute, like exposions and emitters
-	ParticleMachine::instance().update();
-
-	//Update all of the other non player related update chores for each game object
-	// Game objects are stored in layers
-	for (auto & gameObjectCollection : this->gameCollections)
-	{
-		//Update normal game objects
-		for (auto & gameObject : gameObjectCollection.gameObjects)
-		{
-			gameObject->update();
-		}
-
-		//Update particle game objects
-		ParticleObject* particleObject = NULL;
-		ParticleObject* particleObjectRemoved = NULL;
-
-		for (int x=0;x<gameObjectCollection.particleObjects.size();x++)
-		{
-
-			//If particle is expired, reset it and remove from teh game world list
-			//The pointer and objectitself will remain in the pool
-			
-			particleObject = gameObjectCollection.particleObjects[x];
-
-			if (particleObject->removeFromWorld() == true)
-			{
-				particleObjectRemoved = particleObject;
-				ObjectPoolManager::instance().reset(particleObject);
-				std::swap(gameObjectCollection.particleObjects[x], 
-					gameObjectCollection.particleObjects[gameObjectCollection.particleObjects.size()-1]);
-				gameObjectCollection.particleObjects.resize(gameObjectCollection.particleObjects.size() - 1);
-			}
-			else
-			{
-				particleObject->update();
-			}
-
-		}
-		
-		//resize the particle vector in case items were removed
-		gameObjectCollection.particleObjects.shrink_to_fit();
-
-	}
-
-	//Step the box2d physics world
-	this->physicsWorld->Step(GameConfig::instance().timeStep(), 
-		GameConfig::instance().velocityIterations(),
-		GameConfig::instance().positionIterations());
-
-}
-
-
-
-void Game::render() {
-
-	//Clear the graphics display
-	TextureManager::instance().clear();
-
-	//render the player
-	this->player->render();
-
-	//Render all of the game objects in thew world
-	renderCollection(&this->gameCollections);
-
-	//DebugDraw
-	if (GameConfig::instance().b2DebugDrawMode() == true)
-	{
-		this->physicsWorld->DrawDebugData();
-	}
-
-	/*
-	SDL_Color color = { 0,0,255,255 };
-	b2Vec2 start = { 64,64 };
-	b2Vec2 end = { 67,1000 };
-	TextureManager::instance().drawGlowLine(start, end, color);
-	*/
-
-	//Push all drawn things to the graphics display
-	TextureManager::instance().present();
-
-}
 
 void Game::renderCollection(std::array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>* gameObjectCollection)
 {
@@ -368,7 +267,6 @@ void Game::addGameObject(GameObject* gameObject, int layer)
 
 	//this->gameObjects[layer].push_back(make_unique<GameObject>(*gameObject));
 	this->gameCollections[layer].gameObjects.push_back(gameObject);
-	this->gameObjectCount++;
 
 }
 
@@ -377,7 +275,7 @@ void Game::addGameObject(WorldObject* gameObject, int layer)
 
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
 	this->gameCollections[layer].gameObjects.push_back(gameObject);
-	this->gameObjectCount++;
+
 }
 
 void Game::addGameObject(ParticleObject* gameObject, int layer)
@@ -385,30 +283,126 @@ void Game::addGameObject(ParticleObject* gameObject, int layer)
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
 	gameObject->time_snapshot = std::chrono::steady_clock::now();
 	this->gameCollections[layer].particleObjects.push_back(gameObject);
-	this->gameObjectCount++;
 }
 
 void Game::addGameObject(TextObject* gameObject, int layer)
 {
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
 	this->gameCollections[layer].gameObjects.push_back(gameObject);
-	this->gameObjectCount++;
 }
 
 void Game::addGameObject(CompositeObject* gameObject, int layer)
 {
 
 	this->gameCollections[layer].gameObjects.push_back(gameObject);
-	this->gameObjectCount++;
 }
 
 void Game::addGameObject(WeaponObject* gameObject, int layer)
 {
 
 	this->gameCollections[layer].gameObjects.push_back(gameObject);
-	this->gameObjectCount++;
 }
 
+
+void Game::_update() {
+
+
+	//Specifiaclly handle input and stuff for the one player gameObject
+	this->player->update();
+
+	//Update the camera frame to point to the new player position
+	//
+	//TODO:Instead of this, give the camera an object/position to follow
+	//and the camera will follow on its own
+	//
+	Camera::instance().setFramePosition(
+		(this->player->physicsBody()->GetPosition().x * GameConfig::instance().scaleFactor()) -
+		(Camera::instance().frame().w / 2),
+		(this->player->physicsBody()->GetPosition().y * GameConfig::instance().scaleFactor()) -
+		(Camera::instance().frame().h / 2));
+
+	// spin through list of particle tasks to execute, like exposions and emitters
+	ParticleMachine::instance().update();
+
+	//Update all of the other non player related update chores for each game object
+	// Game objects are stored in layers
+	for (auto& gameObjectCollection : this->gameCollections)
+	{
+		//Update normal game objects
+		for (auto& gameObject : gameObjectCollection.gameObjects)
+		{
+			gameObject->update();
+		}
+
+		//Update particle game objects
+		ParticleObject* particleObject = NULL;
+		ParticleObject* particleObjectRemoved = NULL;
+
+		for (int x = 0; x < gameObjectCollection.particleObjects.size(); x++)
+		{
+
+			//If particle is expired, reset it and remove from teh game world list
+			//The pointer and objectitself will remain in the pool
+
+			particleObject = gameObjectCollection.particleObjects[x];
+
+			if (particleObject->removeFromWorld() == true)
+			{
+				particleObjectRemoved = particleObject;
+				ObjectPoolManager::instance().reset(particleObject);
+				std::swap(gameObjectCollection.particleObjects[x],
+					gameObjectCollection.particleObjects[gameObjectCollection.particleObjects.size() - 1]);
+				gameObjectCollection.particleObjects.resize(gameObjectCollection.particleObjects.size() - 1);
+			}
+			else
+			{
+				particleObject->update();
+			}
+
+		}
+
+		//resize the particle vector in case items were removed
+		gameObjectCollection.particleObjects.shrink_to_fit();
+
+	}
+
+	//Step the box2d physics world
+	m_physicsWorld->Step(GameConfig::instance().timeStep(),
+		GameConfig::instance().velocityIterations(),
+		GameConfig::instance().positionIterations());
+
+}
+
+
+
+void Game::_render() {
+
+	//Clear the graphics display
+	TextureManager::instance().clear();
+
+	//render the player
+	this->player->render();
+
+	//Render all of the game objects in thew world
+	renderCollection(&this->gameCollections);
+
+	//DebugDraw
+	if (GameConfig::instance().b2DebugDrawMode() == true)
+	{
+		m_physicsWorld->DrawDebugData();
+	}
+
+	/*
+	SDL_Color color = { 0,0,255,255 };
+	b2Vec2 start = { 64,64 };
+	b2Vec2 end = { 67,1000 };
+	TextureManager::instance().drawGlowLine(start, end, color);
+	*/
+
+	//Push all drawn things to the graphics display
+	TextureManager::instance().present();
+
+}
 
 void Game::handleEvents() {
 	SDL_Event event;
@@ -429,7 +423,6 @@ void Game::handleEvents() {
 			}
 			else
 			{
-				this->mouseLocation.Set(event.motion.x, event.motion.y);
 				this->player->handlePlayerMovementEvent(&event);
 			}
 			break;

@@ -133,7 +133,7 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 
 	//Default the position to zero.
 	bodyDef.position.SetZero();
-	b2Body* body = Game::instance().physicsWorld->CreateBody(&bodyDef);
+	b2Body* body = Game::instance().physicsWorld()->CreateBody(&bodyDef);
 
 	b2Shape* shape;
 	b2PolygonShape box;
@@ -280,7 +280,7 @@ void WorldObject::addWeapon(std::string weaponObjectId)
 		weaponObject->definition()->weaponDetails.anchorPoint.y 
 	};
 	weldJointDef.localAnchorB = weaponsAnchorPoint;
-	(b2WeldJointDef*)Game::instance().physicsWorld->CreateJoint(&weldJointDef);
+	(b2WeldJointDef*)Game::instance().physicsWorld()->CreateJoint(&weldJointDef);
 
 	this->m_weapon = weaponObject;
 

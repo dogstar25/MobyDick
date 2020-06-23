@@ -26,10 +26,8 @@ public:
 private:
 	std::string m_id;
 	float m_speed;
-	
 	int m_frameCount;
 	int m_currentAnimFrame;
-
 	b2Vec2 m_frameSize;
 	std::chrono::steady_clock::time_point m_timeSnapshot;
 
@@ -38,6 +36,7 @@ private:
 
 	//Array of all x,y coordinates of the top left corner of each animation frame in the texture
 	std::vector<SDL_Point> m_animationFramePositions;
+
 	SDL_Texture* m_texture;
 
 };

@@ -41,11 +41,11 @@ TextureManager& TextureManager::instance()
 
 }
 
-bool TextureManager::init(SDL_Window* pWindow)
+bool TextureManager::init(SDL_Window* window)
 {
 
 	//Create the main renderer
-	m_Renderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED);
+	m_Renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 0);
 	//SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 	//Load all of the textures for the game

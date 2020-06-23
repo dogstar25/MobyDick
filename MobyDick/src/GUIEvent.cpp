@@ -145,11 +145,6 @@ void GUIEvent::handleInput()
 				state = EXITGUI;
 			}
 			break;
-		case SDL_MOUSEBUTTONDOWN:
-			break;
-		case SDL_MOUSEMOTION:
-			Game::instance().mouseLocation.Set(event.motion.x, event.motion.y);
-			break;
 		case SDL_QUIT:
 			state = EXITGUI;
 			event.type = SDL_QUIT;

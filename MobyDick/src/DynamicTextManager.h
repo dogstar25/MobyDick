@@ -11,7 +11,6 @@ struct textItem {
 public:
 	bool hasChanged;
 	std::string text;
-
 	std::chrono::steady_clock::time_point time_snapshot;
 
 };
@@ -23,7 +22,6 @@ public:
 
 	static DynamicTextManager& instance();
 	std::map<std::string, std::unique_ptr<textItem>> textItems;
-
 
 	bool updateText(std::string, std::string);
 	textItem* getTextItem(std::string);

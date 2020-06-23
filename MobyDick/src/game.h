@@ -38,12 +38,12 @@ public:
 	Game();
 	~Game();
 
-	void play();
+	static Game& instance();
 	bool init();
-	void render();
-	static void renderCollection(std::array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>*);
-	void update();
+	void play();
 	void handleEvents();
+
+	static void renderCollection(std::array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>*);
 	
 	void addGameObject(GameObject* gameObject, int);
 	void addGameObject(TextObject* gameObject, int);
@@ -51,16 +51,7 @@ public:
 	void addGameObject(ParticleObject* gameObject, int);
 	void addGameObject(CompositeObject* gameObject, int);
 	void addGameObject(WeaponObject* gameObject, int);
-	static Game& instance();
-
-	b2World* physicsWorld;
 	
-	//Main screen and window stuff
-	SDL_Window* pWindow;
-	int gameObjectCount;
-
-	//mouse
-	b2Vec2 mouseLocation, mouseClickLocation;
 
 	//Fixed array of Layers
 	//Each layer contains a GameObjectCollection
@@ -77,6 +68,24 @@ public:
 
 
 	//Accessor Functions
+	b2World* physicsWorld() {
+		return m_physicsWorld;
+	}
+	SDL_Window* window() {
+		return m_window;
+	}
+
+
+
+private:
+
+	void _render();
+	void _update();
+
+	b2World* m_physicsWorld;
+	SDL_Window* m_window;
+
+
 
 
 
