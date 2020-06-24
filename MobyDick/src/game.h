@@ -52,18 +52,6 @@ public:
 	void addGameObject(CompositeObject* gameObject, int);
 	void addGameObject(WeaponObject* gameObject, int);
 	
-
-	PlayerObject* player;
-
-	std::unique_ptr<DebugPanel> debugPanel;
-
-	//Current Game State
-	int gameState;
-
-	int fps;
-	DebugDraw debugDraw;
-
-
 	//Accessor Functions
 	b2World* physicsWorld() {
 		return m_physicsWorld;
@@ -71,12 +59,15 @@ public:
 	SDL_Window* window() {
 		return m_window;
 	}
-
+	PlayerObject* player() {
+		return m_player;
+	}
+	int gameState(){
+		return m_gameState;
+	}
 	std::array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>& gameCollections() {
-
 		return m_gameCollections;
 	}
-
 
 private:
 
@@ -85,14 +76,12 @@ private:
 
 	b2World* m_physicsWorld;
 	SDL_Window* m_window;
-
+	PlayerObject* m_player;
+	int m_gameState;
 
 	//Fixed array of Layers
 	//Each layer contains a GameObjectCollection
 	std::array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS> m_gameCollections;
-
-
-
 
 
 };

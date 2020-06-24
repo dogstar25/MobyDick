@@ -267,7 +267,7 @@ void GameObjectContactListener::bulletPieceExplode(WorldObject* bullet, WorldObj
 		particleOrigin, //min position
 		particleOrigin,	//max position
 		20,	//Force Min
-		50,	//force Max
+		75,	//force Max
 		0,	//Lifetime Min
 		0,	//Lifetime Max
 		false,	// Alpha fade
@@ -278,7 +278,7 @@ void GameObjectContactListener::bulletPieceExplode(WorldObject* bullet, WorldObj
 		colorMin,	//Color Min
 		colorMax,	//Color Max
 		2,	//Particle count min
-		2	//Particle count max
+		3	//Particle count max
 	);
 	ParticleMachine::instance().add(particleEmission);
 

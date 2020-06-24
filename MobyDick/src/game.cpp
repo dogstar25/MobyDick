@@ -44,7 +44,7 @@ Game::~Game()
 		m_gameCollections[x].particleObjects.clear();
 	}
 
-	delete this->player;
+	delete m_player;
 
 	//Delete box2d world - should delete all bodies and fixtures within
 	delete m_physicsWorld;
@@ -59,13 +59,12 @@ Game::Game()
 
 	m_window = nullptr;
 
-	this->player = nullptr;
+	m_player = nullptr;
 
-	this->gameState = GameState::PLAY;
-
-	this->fps = 0;
+	m_gameState = GameState::PLAY;
 
 }
+
 /*
 Initialize Game
 */
@@ -120,8 +119,8 @@ bool Game::init()
 		//Debug Mode
 		if (GameConfig::instance().b2DebugDrawMode() == true)
 		{
-			this->debugDraw.SetFlags(DebugDraw::e_shapeBit);
-			m_physicsWorld->SetDebugDraw(&this->debugDraw);
+			DebugDraw::instance().SetFlags(DebugDraw::e_shapeBit);
+			m_physicsWorld->SetDebugDraw(&DebugDraw::instance());
 		}
 
 		//Initilaze the Game Object Manager
@@ -157,19 +156,17 @@ bool Game::init()
 	CompositeObject* compositeObject = NULL;
 
 	//Create the main player object
-	playerObject = GameObjectManager::instance().buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
-	playerObject->addWeapon("WEAPON1");
-	this->player = playerObject;
-
+	m_player = GameObjectManager::instance().buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
+	m_player->addWeapon("WEAPON1");
 
 	//set camera to center on player object
 	//
 	//TODO:Can we remove this?
 	//
 	Camera::instance().setFramePosition(
-		(this->player->physicsBody()->GetPosition().x * GameConfig::instance().scaleFactor()) -
+		(m_player->physicsBody()->GetPosition().x * GameConfig::instance().scaleFactor()) -
 		(Camera::instance().frame().w / 2),
-		(this->player->physicsBody()->GetPosition().y * GameConfig::instance().scaleFactor()) -
+		(m_player->physicsBody()->GetPosition().y * GameConfig::instance().scaleFactor()) -
 		(Camera::instance().frame().h / 2));
 
 	//CREATE A TEST TEXT ITEM          
@@ -195,16 +192,7 @@ bool Game::init()
 	//gameObject = GameObjectManager::instance().buildGameObject <GameObject>("PARTICLE_SMOKE_GLOW", 4, 4, 45);
 	//this->addGameObject(gameObject, GameOjectLayer::MAIN);
 
-	//Create the debug panel if its turned on
-	if (GameConfig::instance().debugPanel() == true)
-	{
-
-		this->debugPanel = std::make_unique<DebugPanel>();
-
-	}
-
-
-
+	
 
 	return true;
 }
@@ -308,7 +296,7 @@ void Game::_update() {
 
 
 	//Specifiaclly handle input and stuff for the one player gameObject
-	this->player->update();
+	m_player->update();
 
 	//Update the camera frame to point to the new player position
 	//
@@ -316,9 +304,9 @@ void Game::_update() {
 	//and the camera will follow on its own
 	//
 	Camera::instance().setFramePosition(
-		(this->player->physicsBody()->GetPosition().x * GameConfig::instance().scaleFactor()) -
+		(m_player->physicsBody()->GetPosition().x * GameConfig::instance().scaleFactor()) -
 		(Camera::instance().frame().w / 2),
-		(this->player->physicsBody()->GetPosition().y * GameConfig::instance().scaleFactor()) -
+		(m_player->physicsBody()->GetPosition().y * GameConfig::instance().scaleFactor()) -
 		(Camera::instance().frame().h / 2));
 
 	// spin through list of particle tasks to execute, like exposions and emitters
@@ -381,7 +369,7 @@ void Game::_render() {
 	TextureManager::instance().clear();
 
 	//render the player
-	this->player->render();
+	m_player->render();
 
 	//Render all of the game objects in thew world
 	renderCollection(m_gameCollections);
@@ -391,13 +379,6 @@ void Game::_render() {
 	{
 		m_physicsWorld->DrawDebugData();
 	}
-
-	/*
-	SDL_Color color = { 0,0,255,255 };
-	b2Vec2 start = { 64,64 };
-	b2Vec2 end = { 67,1000 };
-	TextureManager::instance().drawGlowLine(start, end, color);
-	*/
 
 	//Push all drawn things to the graphics display
 	TextureManager::instance().present();
@@ -412,7 +393,7 @@ void Game::handleEvents() {
 		switch (event.type) 
 		{
 		case SDL_QUIT:
-			this->gameState = QUIT;
+			m_gameState = QUIT;
 		case SDL_KEYDOWN:
 		case SDL_KEYUP:
 			if ((char)event.key.keysym.sym == SDLK_ESCAPE && event.type == SDL_KEYDOWN)
@@ -422,16 +403,16 @@ void Game::handleEvents() {
 			}
 			else
 			{
-				this->player->handlePlayerMovementEvent(&event);
+				m_player->handlePlayerMovementEvent(&event);
 			}
 			break;
 
 		case SDL_MOUSEMOTION:
-			this->player->handlePlayerMovementEvent(&event);
+			m_player->handlePlayerMovementEvent(&event);
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			//this->testSound();
-			this->player->fire();
+			m_player->fire();
 			break;
 		case SDL_USEREVENT:
 			delete event.user.data1;

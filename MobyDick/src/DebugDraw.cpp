@@ -5,6 +5,11 @@
 #include "GameConfig.h"
 #include "Camera.h"
 
+DebugDraw& DebugDraw::instance()
+{
+	static DebugDraw singletonInstance;
+	return singletonInstance;
+}
 
 void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {

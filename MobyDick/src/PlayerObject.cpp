@@ -112,7 +112,7 @@ void PlayerObject::handlePlayerMovementEvent(SDL_Event* event)
 		float angularVelocity = event->motion.xrel * GameConfig::instance().mouseSensitivity();
 		this->physicsBody()->SetAngularVelocity(angularVelocity);
 
-		Game::instance().debugPanel->addItem("ANGULAR_VELOCITY", std::to_string(angularVelocity));
+		DebugPanel::instance().addItem("ANGULAR_VELOCITY", std::to_string(angularVelocity));
 	}
 
 
@@ -129,8 +129,8 @@ void PlayerObject::update()
 	this->updatePlayerMovement();
 
 //test
-	Game::instance().debugPanel->addItem("PLAYERX", std::to_string(this->physicsBody()->GetTransform().p.x));
-	Game::instance().debugPanel->addItem("PLAYERY", std::to_string(this->physicsBody()->GetTransform().p.y));
+	DebugPanel::instance().addItem("PLAYERX", std::to_string(this->physicsBody()->GetTransform().p.x));
+	DebugPanel::instance().addItem("PLAYERY", std::to_string(this->physicsBody()->GetTransform().p.y));
 
 
 }
@@ -138,8 +138,8 @@ void PlayerObject::update()
 void PlayerObject::render()
 {
 
-	Game::instance().debugPanel->addItem("ANIMATIONState", this->currentAnimationState());
-	Game::instance().debugPanel->addItem("ANIMATIONFrame", 
+	DebugPanel::instance().addItem("ANIMATIONState", this->currentAnimationState());
+	DebugPanel::instance().addItem("ANIMATIONFrame",
 		std::to_string(this->animations()[this->currentAnimationState()]->getCurrentAnimFrame()));
 	WorldObject::render();
 }

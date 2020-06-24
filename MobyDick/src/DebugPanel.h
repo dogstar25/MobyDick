@@ -12,6 +12,7 @@ public:
 	DebugPanel();
 	~DebugPanel();
 
+	static DebugPanel& instance();
 	void addItem(std::string, std::string);
 	void addItem(std::string, float, int);
 
