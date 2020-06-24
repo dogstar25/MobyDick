@@ -68,27 +68,6 @@ Animation::~Animation()
 
 }
 
-SDL_Rect* Animation::getCurrentTextureAnimationSrcRect()
-{
-
-	return m_currentTextureAnimationSrcRect;
-
-}
-
-SDL_Texture* Animation::getTexture()
-{
-
-	return m_texture;
-
-}
-
-int Animation::getCurrentAnimFrame()
-{
-
-	return m_currentAnimFrame;
-
-}
-
 void Animation::animate()
 {
 	//check the clock and see if enough time as gone by

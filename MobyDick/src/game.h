@@ -25,6 +25,7 @@ class CompositeObject;
 class WeaponObject;
 class TextObject;
 
+
 /*
 	Main Game Class
 */
@@ -43,7 +44,7 @@ public:
 	void play();
 	void handleEvents();
 
-	static void renderCollection(std::array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>&);
+	static void renderCollection(const std::array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>&);
 	
 	void addGameObject(GameObject* gameObject, int);
 	void addGameObject(TextObject* gameObject, int);
@@ -65,7 +66,7 @@ public:
 	int gameState(){
 		return m_gameState;
 	}
-	std::array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>& gameCollections() {
+	const std::array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>& gameCollections() {
 		return m_gameCollections;
 	}
 

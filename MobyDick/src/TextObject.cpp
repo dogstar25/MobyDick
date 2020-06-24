@@ -76,6 +76,7 @@ void TextObject::update()
 
 		this->setTexture( updateDynamicTextTexture());
 	}
+	
 
 }
 
@@ -164,7 +165,7 @@ std::shared_ptr<Texture> TextObject::generateTextTexture()
 std::shared_ptr<Texture> TextObject::updateDynamicTextTexture()
 {
 
-	textItem* newText;
+	TextItem* newText;
 	std::shared_ptr<Texture> texture;
 	SDL_Surface* surface;
 
@@ -189,7 +190,7 @@ std::shared_ptr<Texture> TextObject::updateDynamicTextTexture()
 		newText->time_snapshot = now_time;
 
 		//Build new texture
-		this->textValue = newText->text;
+		this->textValue = newText->textValue;
 		texture = generateTextTexture();
 		newText->hasChanged = false;
 

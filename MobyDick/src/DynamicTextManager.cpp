@@ -11,10 +11,10 @@ DynamicTextManager& DynamicTextManager::instance()
 DynamicTextManager::DynamicTextManager()
 {
 
-	textItem* item = new textItem();
-	item->text = "defaultText";
+	TextItem* item = new TextItem();
+	item->textValue = "defaultText";
 	item->hasChanged = true;
-	this->textItems["DEFAULT"] = std::make_unique<textItem>(*item);
+	m_textItems["DEFAULT"] = std::make_unique<TextItem>(*item);
 
 }
 
@@ -22,24 +22,24 @@ DynamicTextManager::DynamicTextManager()
 DynamicTextManager::~DynamicTextManager()
 {
 
-	this->textItems.clear();
+	m_textItems.clear();
 }
 
-textItem* DynamicTextManager::getTextItem(std::string id)
+TextItem* DynamicTextManager::getTextItem(std::string id)
 {
-	textItem* textItem;
+	TextItem* textItem;
 
-	auto iter = this->textItems.find(id);
+	auto iter = m_textItems.find(id);
 
-	if (iter != this->textItems.end())
+	if (iter != m_textItems.end())
 	{
 
-		textItem = this->textItems[id].get();
+		textItem = m_textItems[id].get();
 
 	}
 	else
 	{
-		textItem = this->textItems["DEFAULT"].get();
+		textItem = m_textItems["DEFAULT"].get();
 	}
 
 	return textItem;
@@ -53,13 +53,13 @@ bool DynamicTextManager::updateText(std::string id, std::string newText)
 	bool wasFound = false;
 
 	//If the text item is already in the map, then update it, otherwise create it
-	auto iter = this->textItems.find(id);
+	auto iter = m_textItems.find(id);
 	
-	if (iter != this->textItems.end())
+	if (iter != m_textItems.end())
 	{
-		if(iter->second->text.compare(newText) != 0)
+		if(iter->second->textValue.compare(newText) != 0)
 		{
-			iter->second->text = newText;
+			iter->second->textValue = newText;
 			iter->second->hasChanged = true;
 		}
 
@@ -68,10 +68,10 @@ bool DynamicTextManager::updateText(std::string id, std::string newText)
 	}
 	else
 	{
-		textItem* item = new textItem();
-		item->text = newText;
+		TextItem* item = new TextItem();
+		item->textValue = newText;
 		item->hasChanged = true;
-		this->textItems[id] = std::make_unique<textItem>(*item);
+		m_textItems[id] = std::make_unique<TextItem>(*item);
 	}
 
 	return wasFound;

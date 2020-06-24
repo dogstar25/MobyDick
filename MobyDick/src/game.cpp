@@ -40,8 +40,8 @@ Game::~Game()
 
 	for (int x = 0; x < constants::MAX_GAMEOBJECT_LAYERS; x++)
 	{
-		m_gameCollections[x].gameObjects.clear();
-		m_gameCollections[x].particleObjects.clear();
+		m_gameCollections[x].gameObjects().clear();
+		m_gameCollections[x].particleObjects().clear();
 	}
 
 	delete m_player;
@@ -229,20 +229,18 @@ void Game::play()
 
 
 
-
-
-void Game::renderCollection(std::array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>& gameObjectCollection)
+void Game::renderCollection(const std::array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>& gameObjectCollection)
 {
 
 	//Render all of the game objects
-	for (const auto& collection : gameObjectCollection)
+	for (auto collection : gameObjectCollection)
 	{
-		for (const auto& gameObject : collection.gameObjects)
+		for (auto& gameObject : collection.gameObjects())
 		{
 			gameObject->render();
 		}
 
-		for (const auto& particleObject : collection.particleObjects)
+		for (auto& particleObject : collection.particleObjects())
 		{
 			particleObject->render();
 		}
@@ -254,7 +252,7 @@ void Game::addGameObject(GameObject* gameObject, int layer)
 {
 
 	//this->gameObjects[layer].push_back(make_unique<GameObject>(*gameObject));
-	m_gameCollections[layer].gameObjects.push_back(gameObject);
+	m_gameCollections[layer].gameObjects().push_back(gameObject);
 
 }
 
@@ -262,7 +260,7 @@ void Game::addGameObject(WorldObject* gameObject, int layer)
 {
 
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	m_gameCollections[layer].gameObjects.push_back(gameObject);
+	m_gameCollections[layer].gameObjects().push_back(gameObject);
 
 }
 
@@ -270,25 +268,25 @@ void Game::addGameObject(ParticleObject* gameObject, int layer)
 {
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
 	gameObject->time_snapshot = std::chrono::steady_clock::now();
-	m_gameCollections[layer].particleObjects.push_back(gameObject);
+	m_gameCollections[layer].particleObjects().push_back(gameObject);
 }
 
 void Game::addGameObject(TextObject* gameObject, int layer)
 {
 	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	m_gameCollections[layer].gameObjects.push_back(gameObject);
+	m_gameCollections[layer].gameObjects().push_back(gameObject);
 }
 
 void Game::addGameObject(CompositeObject* gameObject, int layer)
 {
 
-	m_gameCollections[layer].gameObjects.push_back(gameObject);
+	m_gameCollections[layer].gameObjects().push_back(gameObject);
 }
 
 void Game::addGameObject(WeaponObject* gameObject, int layer)
 {
 
-	m_gameCollections[layer].gameObjects.push_back(gameObject);
+	m_gameCollections[layer].gameObjects().push_back(gameObject);
 }
 
 
@@ -317,7 +315,7 @@ void Game::_update() {
 	for (auto& gameObjectCollection : m_gameCollections)
 	{
 		//Update normal game objects
-		for (auto& gameObject : gameObjectCollection.gameObjects)
+		for (auto& gameObject : gameObjectCollection.gameObjects())
 		{
 			gameObject->update();
 		}
@@ -326,21 +324,21 @@ void Game::_update() {
 		ParticleObject* particleObject = NULL;
 		ParticleObject* particleObjectRemoved = NULL;
 
-		for (int x = 0; x < gameObjectCollection.particleObjects.size(); x++)
+		for (int x = 0; x < gameObjectCollection.particleObjects().size(); x++)
 		{
 
 			//If particle is expired, reset it and remove from teh game world list
 			//The pointer and objectitself will remain in the pool
 
-			particleObject = gameObjectCollection.particleObjects[x];
+			particleObject = gameObjectCollection.particleObjects()[x];
 
 			if (particleObject->removeFromWorld() == true)
 			{
 				particleObjectRemoved = particleObject;
 				ObjectPoolManager::instance().reset(particleObject);
-				std::swap(gameObjectCollection.particleObjects[x],
-					gameObjectCollection.particleObjects[gameObjectCollection.particleObjects.size() - 1]);
-				gameObjectCollection.particleObjects.resize(gameObjectCollection.particleObjects.size() - 1);
+				std::swap(gameObjectCollection.particleObjects()[x],
+					gameObjectCollection.particleObjects()[gameObjectCollection.particleObjects().size() - 1]);
+				gameObjectCollection.particleObjects().resize(gameObjectCollection.particleObjects().size() - 1);
 			}
 			else
 			{
@@ -350,7 +348,7 @@ void Game::_update() {
 		}
 
 		//resize the particle vector in case items were removed
-		gameObjectCollection.particleObjects.shrink_to_fit();
+		gameObjectCollection.particleObjects().shrink_to_fit();
 
 	}
 

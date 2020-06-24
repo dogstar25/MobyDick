@@ -19,9 +19,18 @@ public:
 	~Animation();
 
 	void animate();
-	SDL_Rect* getCurrentTextureAnimationSrcRect();
-	SDL_Texture* getTexture();
-	int getCurrentAnimFrame();
+
+	//Accessor Functions
+	SDL_Rect* getCurrentTextureAnimationSrcRect() {
+		return m_currentTextureAnimationSrcRect;
+	}
+	SDL_Texture* getTexture() {
+		return m_texture;
+	}
+	int getCurrentAnimFrame() {
+		return m_currentAnimFrame;
+	}
+
 
 private:
 	std::string m_id;
