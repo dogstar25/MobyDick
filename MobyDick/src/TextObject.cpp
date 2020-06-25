@@ -80,9 +80,9 @@ void TextObject::update()
 
 }
 
-SDL_Rect TextObject::getPositionRect()
+SDL_FRect TextObject::getPositionRect()
 {
-	SDL_Rect positionRect;
+	SDL_FRect positionRect;
 
 	//calculate the destination rectangle
 	//Use query texture to get size of the generated text object
@@ -98,9 +98,9 @@ SDL_Rect TextObject::getPositionRect()
 	return positionRect;
 }
 
-SDL_Rect TextObject::getRenderDestRect()
+SDL_FRect TextObject::getRenderDestRect()
 {
-	SDL_Rect destRect;
+	SDL_FRect destRect;
 
 	//Get the position/size rectangle of the object
 	destRect = this->getPositionRect();

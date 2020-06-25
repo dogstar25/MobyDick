@@ -181,10 +181,10 @@ void CompositeObject::_updatePiecePosition(GameObjectPiece& piece)
 	b2Vec2 adjustment{ 0,0 };
 
 	//calculate the X,Y offset position in relating to the base object
-	SDL_Rect parentPositionRect = this->getPositionRect();
+	SDL_FRect parentPositionRect = this->getPositionRect();
 
 	//piecePositions
-	SDL_Rect piecePositionRect{};
+	SDL_FRect piecePositionRect{};
 	piecePositionRect.x = parentPositionRect.x + piece.parentPositionOffset.x;
 	piecePositionRect.y = parentPositionRect.y + piece.parentPositionOffset.y;
 	piecePositionRect.w = piece.pieceObject->size().x;

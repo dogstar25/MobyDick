@@ -192,7 +192,7 @@ void PlayerObject::updatePlayerMovement()
 	//this->physicsBody->SetTransform(vec3, this->physicsBody->GetAngle());
 	this->physicsBody()->SetLinearVelocity(vec2);
 
-	//this->physicsBody->ApplyLinearImpulseToCenter(vec2, true);
+	//physicsBody()->ApplyLinearImpulseToCenter(vec2, true);
 
 	//std:cout << "angle is " << this->physicsBody->GetAngle() << "\n";
 

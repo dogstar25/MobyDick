@@ -48,7 +48,7 @@ void ObjectPoolManager::init()
 			particle->lifetime = particle->lifetimeRemaining = std::chrono::duration<float>(lifetime);
 			particle->poolId = poolId;
 			particle->setActive(false);
-			objectPool[poolId].push_back(particle);
+			m_objectPool[poolId].push_back(particle);
 		}
 
 	}
@@ -64,7 +64,7 @@ ObjectPoolManager::ObjectPoolManager()
 
 ObjectPoolManager::~ObjectPoolManager()
 {
-	for (auto particleMap : this->objectPool)
+	for (auto particleMap : m_objectPool)
 	{
 		for (auto particle : particleMap.second)
 		{
@@ -72,16 +72,16 @@ ObjectPoolManager::~ObjectPoolManager()
 		}
 	}
 
-	this-> objectPool.clear();
+	this->m_objectPool.clear();
 	
 	
 }
 
-ParticleObject* ObjectPoolManager::get(std::string poolId)
+ParticleObject* ObjectPoolManager::getParticle(std::string poolId)
 {
 	ParticleObject* availParticle=NULL;
 	
-	for (auto particle : this->objectPool[poolId])
+	for (auto particle : this->m_objectPool[poolId])
 	{
 		if (particle->isAvailable == true)
 		{

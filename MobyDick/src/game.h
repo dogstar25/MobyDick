@@ -42,8 +42,6 @@ public:
 	static Game& instance();
 	bool init();
 	void play();
-	void handleEvents();
-
 	static void renderCollection(const std::array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>&);
 	
 	void addGameObject(GameObject* gameObject, int);
@@ -74,6 +72,8 @@ private:
 
 	void _render();
 	void _update();
+	void _handleEvents();
+
 
 	b2World* m_physicsWorld;
 	SDL_Window* m_window;

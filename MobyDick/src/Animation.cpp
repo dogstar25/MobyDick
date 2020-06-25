@@ -39,7 +39,7 @@ Animation::Animation(GameObjectDefinition* gameObjectDefinition, std::string ani
 	rows = height / m_frameSize.y;
 
 	//Calculate top left corner of each animation frame
-	SDL_Point point;
+	SDL_FPoint point;
 	int frameCount = 0;
 	for (int rowIdx = 0; rowIdx < rows; rowIdx++) 
 	{

@@ -29,7 +29,7 @@ public:
 	virtual void update();
 	virtual void render();
 
-	virtual SDL_Rect  getRenderDestRect();
+	virtual SDL_FRect  getRenderDestRect();
 	virtual void setPosition(b2Vec2 position);
 	virtual void setPosition(float xPosition, float yPosition);
 	virtual void setPosition(b2Vec2 position, float angle);
@@ -113,8 +113,8 @@ private:
 
 
 protected:
-	virtual SDL_Rect  getPositionRect();
-	b2Vec2 matchParentRotation(SDL_Rect, SDL_Rect, float);
+	virtual SDL_FRect  getPositionRect();
+	b2Vec2 matchParentRotation(SDL_FRect, SDL_FRect, float);
 	void renderChildObjects();
 	virtual SDL_Rect* getRenderTextureRect();
 	virtual SDL_Texture* getRenderTexture();

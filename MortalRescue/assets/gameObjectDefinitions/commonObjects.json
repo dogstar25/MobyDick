@@ -128,9 +128,9 @@
         "type": "B2_DYNAMIC",
         "collisionShape": "B2_CIRCLE",
         "collisionRadius": 0.64,
-        "friction": 0.01,
+        "friction": 0.00,
         "density": 50.5,
-        "linearDamping": 10.0,
+        "linearDamping": 0.0,
         "angularDamping": 200.0,
         "collisionCategory": 2,
         "weaponAnchorPoint": {

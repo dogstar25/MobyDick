@@ -29,8 +29,8 @@ public:
 
 	void update() override;
 	void setPosition(b2Vec2, float) override;
-	SDL_Rect getRenderDestRect() override; 
-	SDL_Rect getPositionRect() override;
+	SDL_FRect getRenderDestRect() override; 
+	SDL_FRect getPositionRect() override;
 	bool testStrength(int);
 	virtual void setBox2DUserData(WorldObject*);
 	void setActive(bool);

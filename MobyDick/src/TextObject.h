@@ -13,8 +13,8 @@ public:
 	virtual ~TextObject();
 
 	void update();
-	SDL_Rect getPositionRect();
-	SDL_Rect getRenderDestRect();
+	SDL_FRect getPositionRect();
+	SDL_FRect getRenderDestRect();
 	std::shared_ptr<Texture> updateDynamicTextTexture();
 	std::shared_ptr<Texture> generateTextTexture();
 

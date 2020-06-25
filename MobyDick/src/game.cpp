@@ -209,6 +209,8 @@ void Game::play()
 	//the FPS calculation and the game loop timer
 	Clock::instance().update();
 
+	_handleEvents();
+
 	//Only update and render if we have passed the 60 fps time passage
 	if (Clock::instance().hasMetGameLoopSpeed())
 	{
@@ -383,10 +385,10 @@ void Game::_render() {
 
 }
 
-void Game::handleEvents() {
+void Game::_handleEvents() {
 	SDL_Event event;
 
-	while (SDL_PollEvent(&event)) {
+	if (SDL_PollEvent(&event)) {
 
 		switch (event.type) 
 		{

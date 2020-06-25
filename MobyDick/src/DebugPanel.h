@@ -17,7 +17,7 @@ public:
 	void addItem(std::string, float, int);
 
 private:
-	SDL_Point m_location;
+	SDL_FPoint m_location;
 	int m_itemCount;
 
 };

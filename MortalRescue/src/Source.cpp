@@ -13,8 +13,6 @@ int main(int argc, char* args[])
 	while (Game::instance().gameState() != GameState::QUIT)
 	{
 
-		Game::instance().handleEvents();
-
 		switch (Game::instance().gameState())
 		{
 		case GameState::PAUSE:

@@ -81,9 +81,9 @@ void WorldObject::update()
 
 }
 
-SDL_Rect WorldObject::getPositionRect()
+SDL_FRect WorldObject::getPositionRect()
 {
-	SDL_Rect positionRect;
+	SDL_FRect positionRect;
 
 	positionRect.w = this->size().x;
 	positionRect.h = this->size().y;
@@ -97,9 +97,9 @@ SDL_Rect WorldObject::getPositionRect()
 
 }
 
-SDL_Rect WorldObject::getRenderDestRect()
+SDL_FRect WorldObject::getRenderDestRect()
 {
-	SDL_Rect destRect;
+	SDL_FRect destRect;
 	
 	destRect = this->getPositionRect();
 	
