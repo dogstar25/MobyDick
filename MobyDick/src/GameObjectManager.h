@@ -14,7 +14,7 @@ public:
 
 	bool init();
 	void load(std::string);
-
+	
 	GameObjectDefinition* getDefinition(std::string);
 
 	//Map of the definitions of all posible game objects in the game/level
@@ -30,7 +30,7 @@ public:
 
 		gameObjectType* gameObject = new gameObjectType(gameObjectId, xMapPos, yMapPos, angle);
 
-		//string test = typeid(gameObject).name();
+		string test = typeid(gameObject).name();
 		return gameObject;
 	}
 

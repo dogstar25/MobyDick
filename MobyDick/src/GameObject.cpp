@@ -524,7 +524,7 @@ b2Vec2 GameObject::calcChildPosition(
 void GameObject::onMouseHoverRender()
 {
 
-	outlineObject(2);
+	outlineObject(6);
 }
 
 void GameObject::onMouseClickRender()
