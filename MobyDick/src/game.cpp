@@ -61,8 +61,6 @@ Game::Game()
 
 	m_player = nullptr;
 
-	m_gameState = GameState::PLAY;
-
 }
 
 /*
@@ -71,6 +69,8 @@ Initialize Game
 bool Game::init()
 {
 
+
+	
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
 	

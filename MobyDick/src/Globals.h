@@ -2,8 +2,10 @@
 #define GLOBALS_H
 
 #include <string>
+#include <map>
 
 #include <SDL2/SDL_pixels.h>
+
 
 /*
 Overloaded operators used throught the game
@@ -42,24 +44,38 @@ namespace util
 /*
 Mouse State
 */
-enum MouseState {
+namespace MouseState {
 
-	NONE = 0,
-	HOVER = 1,
-	HOLD = 2,
-	CLICKED = 3
+	enum {
+
+		NONE = 0,
+		HOVER = 1,
+		HOLD = 2,
+		CLICKED = 3
+	};
+
+	std::map<std::string, size_t> m;
+
+	inline void init() {
+		m["NONE"] = NONE;
+	}
+	inline size_t get(std::string) {
+		return 1;
+	}
+
 };
+
 
 /*
 Game State
 */
-enum GameState {
-
+enum GameState{ 
 	QUIT = 0,
 	PLAY = 1,
 	PAUSE = 2
 
 };
+
 
 /*
 Game Object Layers

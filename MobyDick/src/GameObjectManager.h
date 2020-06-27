@@ -30,7 +30,7 @@ public:
 
 		gameObjectType* gameObject = new gameObjectType(gameObjectId, xMapPos, yMapPos, angle);
 
-		string test = typeid(gameObject).name();
+		//string test = typeid(gameObject).name();
 		return gameObject;
 	}
 

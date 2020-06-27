@@ -179,6 +179,7 @@
     <ClInclude Include="src\DebugDraw.h" />
     <ClInclude Include="src\DebugPanel.h" />
     <ClInclude Include="src\DynamicTextManager.h" />
+    <ClInclude Include="src\EnumMaps.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\GameConfig.h" />
     <ClInclude Include="src\GameObject.h" />
