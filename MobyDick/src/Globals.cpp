@@ -5,6 +5,40 @@
 
 #include <box2d/b2_math.h>
 
+
+
+MouseState::MouseState() {
+
+		m["NONE"] = NONE;
+		m["HOVER"] = HOVER;
+
+}
+
+size_t MouseState::toEnum(std::string name) {
+
+	return m[name];
+}
+
+WorldObjectCategory::WorldObjectCategory() {
+
+	m["GENERIC"] = GENERIC;
+	m["PLAYER"] = PLAYER;
+	m["WALL"] = WALL;
+	m["PLAYER_BULLET"] = PLAYER_BULLET;
+	m["PARTICLE1"] = PARTICLE1;
+	m["PARTICLE2"] = PARTICLE2;
+	m["PARTICLE3"] = PARTICLE3;
+	m["ENEMY_FRAME"] = ENEMY_FRAME;
+	m["ENEMY_ARMOR"] = ENEMY_ARMOR;
+	m["ENEMY_ARMOR_PIECE"] = ENEMY_ARMOR_PIECE;
+
+}
+
+size_t WorldObjectCategory::toEnum(std::string name) {
+
+	return m[name];
+}
+
 namespace util
 {
 

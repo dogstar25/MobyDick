@@ -10,7 +10,6 @@
 
 
 
-
 WorldObject::WorldObject()
 {
 
@@ -192,34 +191,37 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 uint16 WorldObject::setCollisionMask(uint16 category)
 {
 	uint16 mask=0;
+	
 
 	switch(category) {
-		case PLAYER:
-			mask = WALL | PARTICLE2 | PARTICLE3 | ENEMY_FRAME | ENEMY_ARMOR_PIECE;
+		case WorldObjectCategory::PLAYER:
+			mask = WorldObjectCategory::WALL | WorldObjectCategory::PARTICLE2 | WorldObjectCategory::PARTICLE3 | WorldObjectCategory::ENEMY_FRAME 
+				| WorldObjectCategory::ENEMY_ARMOR_PIECE;
 			break;
-		case WALL:
-			mask = PLAYER | PARTICLE1 | PARTICLE2 | PARTICLE3 | ENEMY_FRAME | PLAYER_BULLET | ENEMY_ARMOR_PIECE;
+		case WorldObjectCategory::WALL:
+			mask = WorldObjectCategory::PLAYER | WorldObjectCategory::PARTICLE1 | WorldObjectCategory::PARTICLE2 | WorldObjectCategory::PARTICLE3 
+				| WorldObjectCategory::ENEMY_FRAME 	| WorldObjectCategory::PLAYER_BULLET | WorldObjectCategory::ENEMY_ARMOR_PIECE;
 			break;
-		case PLAYER_BULLET:
-			mask = WALL | ENEMY_ARMOR;
+		case WorldObjectCategory::PLAYER_BULLET:
+			mask = WorldObjectCategory::WALL | WorldObjectCategory::ENEMY_ARMOR;
 			break;
-		case PARTICLE1:
-			mask = WALL | PLAYER;
+		case WorldObjectCategory::PARTICLE1:
+			mask = WorldObjectCategory::WALL | WorldObjectCategory::PLAYER;
 			break;
-		case PARTICLE2:
-			mask = WALL | PLAYER;
+		case WorldObjectCategory::PARTICLE2:
+			mask = WorldObjectCategory::WALL | WorldObjectCategory::PLAYER;
 			break;
-		case PARTICLE3:
-			mask = WALL | PLAYER;
+		case WorldObjectCategory::PARTICLE3:
+			mask = WorldObjectCategory::WALL | WorldObjectCategory::PLAYER;
 			break;
-		case ENEMY_FRAME:
-			mask = WALL | PLAYER | ENEMY_ARMOR_PIECE;
+		case WorldObjectCategory::ENEMY_FRAME:
+			mask = WorldObjectCategory::WALL | WorldObjectCategory::PLAYER | WorldObjectCategory::ENEMY_ARMOR_PIECE;
 			break;
-		case ENEMY_ARMOR:
-			mask = PLAYER_BULLET;
+		case WorldObjectCategory::ENEMY_ARMOR:
+			mask = WorldObjectCategory::PLAYER_BULLET;
 			break;
-		case ENEMY_ARMOR_PIECE:
-			mask = PLAYER | WALL | ENEMY_FRAME | ENEMY_ARMOR_PIECE;
+		case WorldObjectCategory::ENEMY_ARMOR_PIECE:
+			mask = WorldObjectCategory::PLAYER | WorldObjectCategory::WALL | WorldObjectCategory::ENEMY_FRAME | WorldObjectCategory::ENEMY_ARMOR_PIECE;
 			break;
 
 

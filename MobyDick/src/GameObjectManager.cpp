@@ -4,8 +4,9 @@
 
 #include <json/json.h>
 
+#include "WorldObject.h"
 #include "Globals.h"
-
+//#include "EnumMaps.h"
 
 GameObjectManager& GameObjectManager::instance()
 {
@@ -47,6 +48,8 @@ void GameObjectManager::load(std::string gameObjectAssetsFilename)
 	std::string filename = "assets/" + gameObjectAssetsFilename + ".json";
 	std::ifstream ifs(filename);
 	ifs >> root;
+
+	MouseState mouseState;
 
 	std::string id, textureId;
 	GameObjectDefinition* gameObjectDefinition;
@@ -108,7 +111,8 @@ void GameObjectManager::load(std::string gameObjectAssetsFilename)
 			gameObjectDefinition->physicsType = itr["physicsObject"]["type"].asString();
 			gameObjectDefinition->collisionShape = itr["physicsObject"]["collisionShape"].asString();
 			gameObjectDefinition->collisionRadius = itr["physicsObject"]["collisionRadius"].asFloat();
-			gameObjectDefinition->collisionCategory = itr["physicsObject"]["collisionCategory"].asInt();
+
+			gameObjectDefinition->collisionCategory = WorldObjCat.toEnum(itr["physicsObject"]["collisionCategory"].asString());
 			gameObjectDefinition->weaponAnchorPoint.x = itr["physicsObject"]["weaponAnchorPoint"]["x"].asFloat();
 			gameObjectDefinition->weaponAnchorPoint.y = itr["physicsObject"]["weaponAnchorPoint"]["y"].asFloat();
 

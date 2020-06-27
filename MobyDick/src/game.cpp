@@ -69,8 +69,11 @@ Initialize Game
 bool Game::init()
 {
 
+	m_gameState = GameState::PLAY;
 
-	
+
+	//size_t test = MouseState::toEnum("HOVER");
+
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
 	
