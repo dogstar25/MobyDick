@@ -1,6 +1,7 @@
 #include "WorldObject.h"
 
 #include "Globals.h"
+#include "EnumMaps.h"
 #include "WeaponObject.h"
 #include "GameConfig.h"
 #include "Level.h"
@@ -194,7 +195,7 @@ uint16 WorldObject::setCollisionMask(uint16 category)
 	
 
 	switch(category) {
-		case WorldObjectCategory::PLAYER:
+	case WorldObjectCategory::PLAYER:
 			mask = WorldObjectCategory::WALL | WorldObjectCategory::PARTICLE2 | WorldObjectCategory::PARTICLE3 | WorldObjectCategory::ENEMY_FRAME 
 				| WorldObjectCategory::ENEMY_ARMOR_PIECE;
 			break;

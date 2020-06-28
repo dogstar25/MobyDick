@@ -1,9 +1,12 @@
 #include "Globals.h"
+#include "EnumMaps.h"
 
 #include <random>
 #include <sstream>
 
 #include <box2d/b2_math.h>
+
+static Enums enums;
 
 
 

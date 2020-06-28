@@ -42,7 +42,7 @@ namespace util
 
 /*
 World Object Categories
-*/
+
 static struct WorldObjectCategory {
 	enum {
 		GENERIC = 1,
@@ -64,12 +64,12 @@ static struct WorldObjectCategory {
 	std::map<std::string, std::size_t> m;
 
 }WorldObjCat;
-
+*/
 
 
 /*
 Mouse State
-*/
+
 struct MouseState{
 
 	enum {
@@ -86,7 +86,7 @@ struct MouseState{
 	std::map<std::string, std::size_t> m;
 	
 };
-
+*/
 
 /*
 Game State

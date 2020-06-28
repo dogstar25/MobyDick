@@ -1,4 +1,40 @@
 #include "EnumMaps.h"
 
+Enums::Enums()
+{
+
+	enumMap["NONE"] = MOUSE_NONE;
+	enumMap["HOVER"] = MOUSE_HOVER;
+	enumMap["NONE"] = MOUSE_HOLD;
+	enumMap["HOVER"] = MOUSE_CLICKED;
+
+	enumMap["COLLISION_GENERIC"] = COLLISION_GENERIC;
+	enumMap["COLLISION_PLAYER"] = COLLISION_PLAYER;
+	enumMap["COLLISION_WALL"] = COLLISION_WALL;
+	enumMap["COLLISION_PLAYER_BULLET"] = COLLISION_PLAYER_BULLET;
+	enumMap["COLLISION_PARTICLE1"] = COLLISION_PARTICLE1;
+	enumMap["COLLISION_PARTICLE2"] = COLLISION_PARTICLE2;
+	enumMap["COLLISION_PARTICLE3"] = COLLISION_PARTICLE3;
+	enumMap["COLLISION_ENEMY_FRAME"] = COLLISION_ENEMY_FRAME;
+	enumMap["COLLISION_ENEMY_ARMOR"] = COLLISION_ENEMY_ARMOR;
+	enumMap["COLLISION_ENEMY_ARMOR_PIECE"] = COLLISION_ENEMY_ARMOR_PIECE;
+
+
+
+}
+
+Enums::~Enums()
+{
+
+
+
+
+}
+
+size_t Enums::toEnum(std::string name, std::map<std::string, size_t>enumMap)
+{
+	return enumMap[name];
+
+}
 
 

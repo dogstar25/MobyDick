@@ -19,6 +19,8 @@
 #include "ObjectPoolManager.h"
 
 
+#include "EnumMaps.h"
+
 using namespace std::chrono_literals;
 
 Game& Game::instance()
@@ -69,6 +71,10 @@ Initialize Game
 bool Game::init()
 {
 
+	static Enums enums;
+
+	int test = enums::CLICKED;
+	
 	m_gameState = GameState::PLAY;
 
 
