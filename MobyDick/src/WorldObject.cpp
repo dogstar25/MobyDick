@@ -1,7 +1,6 @@
 #include "WorldObject.h"
 
 #include "Globals.h"
-#include "EnumMaps.h"
 #include "WeaponObject.h"
 #include "GameConfig.h"
 #include "Level.h"
@@ -9,10 +8,9 @@
 #include "GameObjectManager.h"
 #include "Game.h"
 
-
-
 WorldObject::WorldObject()
 {
+
 
 }
 
@@ -118,18 +116,7 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 {
 	b2BodyDef bodyDef;
 
-	if (definition->physicsType.compare("B2_STATIC") == 0)
-	{
-		bodyDef.type = b2_staticBody;
-	}
-	else if (definition->physicsType.compare("B2_KINEMATIC") == 0)
-	{
-		bodyDef.type = b2_kinematicBody;
-	}
-	else if (definition->physicsType.compare("B2_DYNAMIC") == 0)
-	{
-		bodyDef.type = b2_dynamicBody;
-	}
+	bodyDef.type = static_cast<b2BodyType>(definition->physicsType);
 
 	//Default the position to zero.
 	bodyDef.position.SetZero();
@@ -141,18 +128,21 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 	b2ChainShape chain;
 
 	//Collision shape - will default to a rectangle
-	if(definition->collisionShape.compare("B2_CIRCLE") == 0)
+	if(definition->collisionShape == b2Shape::e_circle)
 	{
 		circle.m_radius = definition->collisionRadius;
 		shape = &circle;
 	}
-	else if (definition->collisionShape.compare("B2_CHAIN") == 0)
+	else if (definition->collisionShape == b2Shape::e_chain)
 	{
+		//temp test code
+		/*
 		b2Vec2 vs[4];
 		vs[0].Set(40, 40);
 		vs[1].Set(400,400);
 		vs[2].Set(50,500);
 		chain.CreateChain(vs, 3);
+		*/
 		shape = &chain;
 	}
 	else
@@ -195,34 +185,34 @@ uint16 WorldObject::setCollisionMask(uint16 category)
 	
 
 	switch(category) {
-	case WorldObjectCategory::PLAYER:
-			mask = WorldObjectCategory::WALL | WorldObjectCategory::PARTICLE2 | WorldObjectCategory::PARTICLE3 | WorldObjectCategory::ENEMY_FRAME 
-				| WorldObjectCategory::ENEMY_ARMOR_PIECE;
+	case COLLISION_PLAYER:
+			mask = COLLISION_WALL | COLLISION_PARTICLE2 | COLLISION_PARTICLE3 | COLLISION_ENEMY_FRAME
+				| COLLISION_ENEMY_ARMOR_PIECE;
 			break;
-		case WorldObjectCategory::WALL:
-			mask = WorldObjectCategory::PLAYER | WorldObjectCategory::PARTICLE1 | WorldObjectCategory::PARTICLE2 | WorldObjectCategory::PARTICLE3 
-				| WorldObjectCategory::ENEMY_FRAME 	| WorldObjectCategory::PLAYER_BULLET | WorldObjectCategory::ENEMY_ARMOR_PIECE;
+		case COLLISION_WALL:
+			mask = COLLISION_PLAYER | COLLISION_PARTICLE1 | COLLISION_PARTICLE2 | COLLISION_PARTICLE3 
+				| COLLISION_ENEMY_FRAME 	| COLLISION_PLAYER_BULLET | COLLISION_ENEMY_ARMOR_PIECE;
 			break;
-		case WorldObjectCategory::PLAYER_BULLET:
-			mask = WorldObjectCategory::WALL | WorldObjectCategory::ENEMY_ARMOR;
+		case COLLISION_PLAYER_BULLET:
+			mask = COLLISION_WALL | COLLISION_ENEMY_ARMOR;
 			break;
-		case WorldObjectCategory::PARTICLE1:
-			mask = WorldObjectCategory::WALL | WorldObjectCategory::PLAYER;
+		case COLLISION_PARTICLE1:
+			mask = COLLISION_WALL | COLLISION_PLAYER;
 			break;
-		case WorldObjectCategory::PARTICLE2:
-			mask = WorldObjectCategory::WALL | WorldObjectCategory::PLAYER;
+		case COLLISION_PARTICLE2:
+			mask = COLLISION_WALL | COLLISION_PLAYER;
 			break;
-		case WorldObjectCategory::PARTICLE3:
-			mask = WorldObjectCategory::WALL | WorldObjectCategory::PLAYER;
+		case COLLISION_PARTICLE3:
+			mask = COLLISION_WALL | COLLISION_PLAYER;
 			break;
-		case WorldObjectCategory::ENEMY_FRAME:
-			mask = WorldObjectCategory::WALL | WorldObjectCategory::PLAYER | WorldObjectCategory::ENEMY_ARMOR_PIECE;
+		case COLLISION_ENEMY_FRAME:
+			mask = COLLISION_WALL | COLLISION_PLAYER | COLLISION_ENEMY_ARMOR_PIECE;
 			break;
-		case WorldObjectCategory::ENEMY_ARMOR:
-			mask = WorldObjectCategory::PLAYER_BULLET;
+		case COLLISION_ENEMY_ARMOR:
+			mask = COLLISION_PLAYER_BULLET;
 			break;
-		case WorldObjectCategory::ENEMY_ARMOR_PIECE:
-			mask = WorldObjectCategory::PLAYER | WorldObjectCategory::WALL | WorldObjectCategory::ENEMY_FRAME | WorldObjectCategory::ENEMY_ARMOR_PIECE;
+		case COLLISION_ENEMY_ARMOR_PIECE:
+			mask = COLLISION_PLAYER | COLLISION_WALL | COLLISION_ENEMY_FRAME | COLLISION_ENEMY_ARMOR_PIECE;
 			break;
 
 

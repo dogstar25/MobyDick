@@ -14,7 +14,7 @@
         "density": 1000.5,
         "linearDamping": 0.2,
         "angularDamping": 0.1,
-        "collisionCategory": "ENEMY_FRAME"
+        "collisionCategory": "COLLISION_ENEMY_FRAME"
       },
       "xSize": 5.12,
       "ySize": 5.12,
@@ -142,7 +142,7 @@
         "density": 0.1,
         "linearDamping": 0.0,
         "angularDamping": 0.0,
-        "collisionCategory": "ENEMY_ARMOR"
+        "collisionCategory": "COLLISION_ENEMY_ARMOR"
       }
     },
     {
@@ -161,7 +161,7 @@
         "density": 0.1,
         "linearDamping": 0.0,
         "angularDamping": 0.0,
-        "collisionCategory": "ENEMY_ARMOR"
+        "collisionCategory": "COLLISION_ENEMY_ARMOR"
       }
     },
     {
@@ -180,7 +180,7 @@
         "density": 0.1,
         "linearDamping": 0.0,
         "angularDamping": 0.0,
-        "collisionCategory": "ENEMY_ARMOR"
+        "collisionCategory": "COLLISION_ENEMY_ARMOR"
       }
     },
     {
@@ -199,7 +199,7 @@
         "density": 0.1,
         "linearDamping": 0.0,
         "angularDamping": 0.0,
-        "collisionCategory": "ENEMY_ARMOR"
+        "collisionCategory": "COLLISION_ENEMY_ARMOR"
       }
     },
     {
@@ -218,7 +218,7 @@
         "density": 0.1,
         "linearDamping": 0.0,
         "angularDamping": 0.0,
-        "collisionCategory": "ENEMY_ARMOR"
+        "collisionCategory": "COLLISION_ENEMY_ARMOR"
       }
     },
     {
@@ -235,7 +235,7 @@
         "density": 0.1,
         "linearDamping": 5.0,
         "angularDamping": 5.0,
-        "collisionCategory": "ENEMY_ARMOR_PIECE"
+        "collisionCategory": "COLLISION_ENEMY_ARMOR_PIECE"
       }
     }
 

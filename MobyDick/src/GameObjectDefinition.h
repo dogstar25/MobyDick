@@ -101,8 +101,6 @@ public:
 		id,
 		type,
 		description,
-		physicsType,
-		collisionShape,
 		textureId,
 		onClickAction;
 	float
@@ -133,7 +131,9 @@ public:
 		renderOutline,
 		childPositionRelative;
 	uint16
-		collisionCategory;
+		collisionCategory,
+		collisionShape,
+		physicsType ;
 	SDL_Color 
 		color;
 	b2Vec2 weaponAnchorPoint;

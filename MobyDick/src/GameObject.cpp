@@ -121,7 +121,7 @@ void GameObject::update()
 	}
 
 	//This object was clicked, so push whatever event is tied to its onClick event property
-	if (m_mouseState == MouseState::CLICKED)
+	if (m_mouseState == MOUSE_CLICKED)
 	{
 		this->onMouseClickEvent();
 	}
@@ -227,15 +227,15 @@ void GameObject::render()
 	//test outlining object
 	if (m_definition->isMouseSelectable)
 	{
-		if (m_mouseState == MouseState::HOVER)
+		if (m_mouseState == MOUSE_HOVER)
 		{
 			this->onMouseHoverRender();
 		}
-		else if (m_mouseState == MouseState::HOLD)
+		else if (m_mouseState == MOUSE_HOLD)
 		{
 			this->onMouseHoldRender();
 		}
-		else if (m_mouseState == MouseState::CLICKED)
+		else if (m_mouseState == MOUSE_CLICKED)
 		{
 			this->onMouseClickRender();
 		}
@@ -574,7 +574,7 @@ void GameObject::updateMouseState()
 			{
 
 				//Was this object already in a hold state, meaning user is holding mouse clicked on object
-				if (m_mouseState == MouseState::HOLD)
+				if (m_mouseState == MOUSE_HOLD)
 				{
 					//stay in "hold" state while user is holding click on object
 					while (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
@@ -584,23 +584,23 @@ void GameObject::updateMouseState()
 
 					//User has released mouse so now execute the object onClick event
 					//this->onMouseClick();
-					m_mouseState = MouseState::CLICKED;
+					m_mouseState = MOUSE_CLICKED;
 
 				}
 				else
 				{
-					m_mouseState = MouseState::HOLD;
+					m_mouseState = MOUSE_HOLD;
 				}
 
 			}
 			else
 			{
-				m_mouseState = MouseState::HOVER;
+				m_mouseState = MOUSE_HOVER;
 			}
 		}
 		else
 		{
-			m_mouseState = MouseState::NONE;
+			m_mouseState = MOUSE_NONE;
 		}
 	}
 

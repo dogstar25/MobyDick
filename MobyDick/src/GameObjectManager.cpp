@@ -6,7 +6,7 @@
 
 #include "WorldObject.h"
 #include "Globals.h"
-//#include "EnumMaps.h"
+#include "EnumMaps.h"
 
 GameObjectManager& GameObjectManager::instance()
 {
@@ -48,8 +48,6 @@ void GameObjectManager::load(std::string gameObjectAssetsFilename)
 	std::string filename = "assets/" + gameObjectAssetsFilename + ".json";
 	std::ifstream ifs(filename);
 	ifs >> root;
-
-	MouseState mouseState;
 
 	std::string id, textureId;
 	GameObjectDefinition* gameObjectDefinition;
@@ -108,11 +106,11 @@ void GameObjectManager::load(std::string gameObjectAssetsFilename)
 			gameObjectDefinition->density = itr["physicsObject"]["density"].asFloat();
 			gameObjectDefinition->linearDamping = itr["physicsObject"]["linearDamping"].asFloat();
 			gameObjectDefinition->angularDamping = itr["physicsObject"]["angularDamping"].asFloat();
-			gameObjectDefinition->physicsType = itr["physicsObject"]["type"].asString();
-			gameObjectDefinition->collisionShape = itr["physicsObject"]["collisionShape"].asString();
+			gameObjectDefinition->physicsType = EnumMap::instance().toEnum(itr["physicsObject"]["type"].asString());
+			gameObjectDefinition->collisionShape = EnumMap::instance().toEnum(itr["physicsObject"]["collisionShape"].asString());
 			gameObjectDefinition->collisionRadius = itr["physicsObject"]["collisionRadius"].asFloat();
 
-			gameObjectDefinition->collisionCategory = WorldObjCat.toEnum(itr["physicsObject"]["collisionCategory"].asString());
+			gameObjectDefinition->collisionCategory = EnumMap::instance().toEnum(itr["physicsObject"]["collisionCategory"].asString());
 			gameObjectDefinition->weaponAnchorPoint.x = itr["physicsObject"]["weaponAnchorPoint"]["x"].asFloat();
 			gameObjectDefinition->weaponAnchorPoint.y = itr["physicsObject"]["weaponAnchorPoint"]["y"].asFloat();
 

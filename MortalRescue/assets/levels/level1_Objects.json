@@ -8,7 +8,7 @@
       "physicsObject": {
         "type": "B2_STATIC",
         "friction": 0.3,
-        "collisionCategory": "WALL"
+        "collisionCategory": "COLLISION_WALL"
       },
       "texture": "TX_WALL1_OPEN",
       "color": {
@@ -28,7 +28,7 @@
       "physicsObject": {
         "type": "B2_STATIC",
         "friction": 0.3,
-        "collisionCategory": "WALL"
+        "collisionCategory": "COLLISION_WALL"
       },
       "texture": "TX_WALL1_COLUMN",
       "color": {
@@ -48,7 +48,7 @@
       "physicsObject": {
         "type": "B2_STATIC",
         "friction": 0.3,
-        "collisionCategory": "WALL"
+        "collisionCategory": "COLLISION_WALL"
       },
       "texture": "TX_WALL1_CORNER",
       "color": {
@@ -68,7 +68,7 @@
       "physicsObject": {
         "type": "B2_STATIC",
         "friction": 0.3,
-        "collisionCategory": "WALL"
+        "collisionCategory": "COLLISION_WALL"
       },
       "texture": "TX_WALL1_END",
       "color": {
@@ -88,7 +88,7 @@
       "physicsObject": {
         "type": "B2_STATIC",
         "friction": 0.3,
-        "collisionCategory": "WALL"
+        "collisionCategory": "COLLISION_WALL"
       },
       "texture": "TX_WALL1_HALL",
       "color": {
@@ -108,7 +108,7 @@
       "physicsObject": {
         "type": "B2_STATIC",
         "friction": 0.3,
-        "collisionCategory": "WALL"
+        "collisionCategory": "COLLISION_WALL"
       },
       "texture": "TX_WALL1_WALL",
       "color": {

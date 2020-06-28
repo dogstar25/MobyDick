@@ -40,53 +40,23 @@ namespace util
 
 };
 
-/*
-World Object Categories
+enum {
+	MOUSE_NONE = 0,
+	MOUSE_HOVER = 1,
+	MOUSE_HOLD = 2,
+	MOUSE_CLICKED = 3,
 
-static struct WorldObjectCategory {
-	enum {
-		GENERIC = 1,
-		PLAYER = 2,
-		WALL = 4,
-		PLAYER_BULLET = 8,
-		PARTICLE1 = 16,
-		PARTICLE2 = 32,
-		PARTICLE3 = 64,
-		ENEMY_FRAME = 128,
-		ENEMY_ARMOR = 256,
-		ENEMY_ARMOR_PIECE = 512
-	};
-
-	WorldObjectCategory();
-
-	size_t toEnum(std::string name);
-
-	std::map<std::string, std::size_t> m;
-
-}WorldObjCat;
-*/
-
-
-/*
-Mouse State
-
-struct MouseState{
-
-	enum {
-		NONE = 0,
-		HOVER = 1,
-		HOLD = 2,
-		CLICKED = 3
-	};
-
-	MouseState();
-
-	size_t toEnum(std::string name);
-
-	std::map<std::string, std::size_t> m;
-	
+	COLLISION_GENERIC = 1,
+	COLLISION_PLAYER = 2,
+	COLLISION_WALL = 4,
+	COLLISION_PLAYER_BULLET = 8,
+	COLLISION_PARTICLE1 = 16,
+	COLLISION_PARTICLE2 = 32,
+	COLLISION_PARTICLE3 = 64,
+	COLLISION_ENEMY_FRAME = 128,
+	COLLISION_ENEMY_ARMOR = 256,
+	COLLISION_ENEMY_ARMOR_PIECE = 512
 };
-*/
 
 /*
 Game State
