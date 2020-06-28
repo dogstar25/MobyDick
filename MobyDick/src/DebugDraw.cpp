@@ -5,6 +5,11 @@
 #include "GameConfig.h"
 #include "Camera.h"
 
+DebugDraw& DebugDraw::instance()
+{
+	static DebugDraw singletonInstance;
+	return singletonInstance;
+}
 
 void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
@@ -16,11 +21,11 @@ void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2C
 void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
 
-	SDL_Point *points = new SDL_Point[vertexCount + 1];
+	SDL_FPoint *points = new SDL_FPoint[vertexCount + 1];
 
-	SDL_Point firstPoint;
+	SDL_FPoint firstPoint;
 	bool firstFound = false;
-	SDL_Point point;
+	SDL_FPoint point;
 
 	for (int i = 0; i < vertexCount; ++i) {
 
@@ -117,7 +122,7 @@ void DebugDraw::DrawString(int x, int y, const char *string, ...)
 
 void DebugDraw::DrawAABB(b2AABB* aabb, const b2Color& c)
 {
-	SDL_Rect poly;
+	SDL_FRect poly;
 	poly.x = aabb->upperBound.x;
 	poly.y = aabb->upperBound.y;
 	poly.w = aabb->GetExtents().x * 2;

@@ -14,7 +14,7 @@ public:
 
 	bool init();
 	void load(std::string);
-
+	
 	GameObjectDefinition* getDefinition(std::string);
 
 	//Map of the definitions of all posible game objects in the game/level

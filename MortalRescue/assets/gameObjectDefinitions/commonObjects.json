@@ -107,7 +107,7 @@
         "density": 0.1,
         "linearDamping": 0.0,
         "angularDamping": 0.0,
-        "collisionCategory": 128
+        "collisionCategory": "COLLISION_ENEMY_FRAME"
       }
     },
     {
@@ -128,11 +128,11 @@
         "type": "B2_DYNAMIC",
         "collisionShape": "B2_CIRCLE",
         "collisionRadius": 0.64,
-        "friction": 0.01,
-        "density": 15.5,
-        "linearDamping": 0.2,
-        "angularDamping": 100.0,
-        "collisionCategory": 2,
+        "friction": 0.00,
+        "density": 50.5,
+        "linearDamping": 0.0,
+        "angularDamping": 200.0,
+        "collisionCategory": "COLLISION_PLAYER",
         "weaponAnchorPoint": {
           "x": 0.8,
           "y": 0.0
@@ -140,7 +140,7 @@
       },
       "xSize": 2.56,
       "ySize": 2.56,
-      "speed": 9.5,
+      "speed": 19.5,
       "fireOffset": -0.5,
       "animations": [
         {
@@ -214,7 +214,7 @@
       "text": {
         "dynamic": true,
         "font": "FONT_ARIAL_REG",
-        "size": 16
+        "size": 12
       }
     },
     {
@@ -224,11 +224,11 @@
       "physicsObject": {
         "type": "B2_DYNAMIC",
         "friction": 0.0,
-        "restitution": 0.0,
-        "density": 15.05,
+        "restitution": 1.0,
+        "density": 5.05,
         "linearDamping": 0.0,
         "angularDamping": 0.0,
-        "collisionCategory": 8,
+        "collisionCategory": "COLLISION_PLAYER_BULLET",
         "anchorPoint": {
           "x": -0.3,
           "y": 0.0
@@ -304,7 +304,7 @@
         "density": 0.1,
         "linearDamping": 0.0,
         "angularDamping": 0.0,
-        "collisionCategory": 4
+        "collisionCategory": "COLLISION_WALL"
       }
     }
   ]

@@ -121,7 +121,7 @@ void GameObject::update()
 	}
 
 	//This object was clicked, so push whatever event is tied to its onClick event property
-	if (m_mouseState == MouseState::CLICKED)
+	if (m_mouseState == MOUSE_CLICKED)
 	{
 		this->onMouseClickEvent();
 	}
@@ -135,9 +135,9 @@ void GameObject::update()
 
 }
 
-SDL_Rect GameObject::getPositionRect()
+SDL_FRect GameObject::getPositionRect()
 {
-	SDL_Rect positionRect;
+	SDL_FRect positionRect;
 
 	positionRect.w = m_size.x;
 	positionRect.h = m_size.y;
@@ -149,9 +149,9 @@ SDL_Rect GameObject::getPositionRect()
 
 }
 
-SDL_Rect GameObject::getRenderDestRect()
+SDL_FRect GameObject::getRenderDestRect()
 {
-	SDL_Rect destRect{};
+	SDL_FRect destRect{};
 
 	//Get the position/size rectangle of the object
 	destRect = this->getPositionRect();
@@ -206,7 +206,8 @@ SDL_Surface* GameObject::getRenderSurface()
 
 void GameObject::render()
 {
-	SDL_Rect* textureSourceRect=NULL, destRect;
+	SDL_Rect* textureSourceRect=NULL;
+	SDL_FRect destRect;
 	SDL_Texture* texture=NULL;
 
 	//Get render destination rectangle
@@ -226,15 +227,15 @@ void GameObject::render()
 	//test outlining object
 	if (m_definition->isMouseSelectable)
 	{
-		if (m_mouseState == MouseState::HOVER)
+		if (m_mouseState == MOUSE_HOVER)
 		{
 			this->onMouseHoverRender();
 		}
-		else if (m_mouseState == MouseState::HOLD)
+		else if (m_mouseState == MOUSE_HOLD)
 		{
 			this->onMouseHoldRender();
 		}
-		else if (m_mouseState == MouseState::CLICKED)
+		else if (m_mouseState == MOUSE_CLICKED)
 		{
 			this->onMouseClickRender();
 		}
@@ -256,7 +257,7 @@ void GameObject::render()
 }
 
 
-b2Vec2 GameObject::matchParentRotation(SDL_Rect childPositionRect, SDL_Rect parentPositionRect, float parentAngle)
+b2Vec2 GameObject::matchParentRotation(SDL_FRect childPositionRect, SDL_FRect parentPositionRect, float parentAngle)
 {
 	b2Vec2 adjustment;
 
@@ -301,7 +302,7 @@ void GameObject::updateChildObjects()
 {
 	short locationSlot = 0;
 	b2Vec2 newChildPosition, childSize;
-	SDL_Rect parentPositionRect, childPositionRect;
+	SDL_FRect parentPositionRect, childPositionRect;
 
 	for (auto& childLocations : m_childObjects)
 	{
@@ -398,11 +399,11 @@ b2Vec2 GameObject::calcChildPosition(
 	int childNumber,
 	int childCount)
 {
-	SDL_Rect childSize = { child->size().x, child->size().y };
-	SDL_Rect childPositionRect{};
+	SDL_FRect childSize = { child->size().x, child->size().y };
+	SDL_FRect childPositionRect{};
 	float x, y, xAdj = 0, yAdj = 0;
 
-	SDL_Rect parentPositionRect = this->getPositionRect();
+	SDL_FRect parentPositionRect = this->getPositionRect();
 
 	//Calculate center of parent
 	b2Vec2 parentCenter;
@@ -523,7 +524,7 @@ b2Vec2 GameObject::calcChildPosition(
 void GameObject::onMouseHoverRender()
 {
 
-	outlineObject(2);
+	outlineObject(6);
 }
 
 void GameObject::onMouseClickRender()
@@ -551,17 +552,21 @@ void GameObject::onMouseClickEvent()
 
 void GameObject::updateMouseState()
 {
-	SDL_Rect gameObjectDrawRect;
+	SDL_FRect gameObjectDrawRect;
 	gameObjectDrawRect = this->getRenderDestRect();
 	bool isHovered = false;
 
 	if (m_definition->isMouseSelectable == true)
 	{
+		//Get Mouse Position
+		int mouseX, mouseY;
+		SDL_GetMouseState(&mouseX, &mouseY);
+
 		//Is mouse over the object
-		if (Game::instance().mouseLocation.x >= gameObjectDrawRect.x &&
-			Game::instance().mouseLocation.x <= gameObjectDrawRect.x + gameObjectDrawRect.w &&
-			Game::instance().mouseLocation.y >= gameObjectDrawRect.y &&
-			Game::instance().mouseLocation.y <= gameObjectDrawRect.y + gameObjectDrawRect.h)
+		if (mouseX >= gameObjectDrawRect.x &&
+			mouseX <= gameObjectDrawRect.x + gameObjectDrawRect.w &&
+			mouseY >= gameObjectDrawRect.y &&
+			mouseY <= gameObjectDrawRect.y + gameObjectDrawRect.h)
 		{
 
 			//was this object clicked?
@@ -569,7 +574,7 @@ void GameObject::updateMouseState()
 			{
 
 				//Was this object already in a hold state, meaning user is holding mouse clicked on object
-				if (m_mouseState == MouseState::HOLD)
+				if (m_mouseState == MOUSE_HOLD)
 				{
 					//stay in "hold" state while user is holding click on object
 					while (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
@@ -579,23 +584,23 @@ void GameObject::updateMouseState()
 
 					//User has released mouse so now execute the object onClick event
 					//this->onMouseClick();
-					m_mouseState = MouseState::CLICKED;
+					m_mouseState = MOUSE_CLICKED;
 
 				}
 				else
 				{
-					m_mouseState = MouseState::HOLD;
+					m_mouseState = MOUSE_HOLD;
 				}
 
 			}
 			else
 			{
-				m_mouseState = MouseState::HOVER;
+				m_mouseState = MOUSE_HOVER;
 			}
 		}
 		else
 		{
-			m_mouseState = MouseState::NONE;
+			m_mouseState = MOUSE_NONE;
 		}
 	}
 
@@ -605,10 +610,10 @@ void GameObject::updateMouseState()
 void GameObject::outlineObject(float lineSize)
 {
 
-	std::vector<SDL_Point> points;
-	SDL_Rect gameObjectDrawRect = getRenderDestRect();
+	std::vector<SDL_FPoint> points;
+	SDL_FRect gameObjectDrawRect = getRenderDestRect();
 	float saveScaleX, saveScaleY;
-	SDL_Point point;
+	SDL_FPoint point;
 
 	//Adjust for camera
 	if (this->definition()->absolutePositioning == false)

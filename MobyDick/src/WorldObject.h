@@ -2,22 +2,11 @@
 #define WORLD_OBJECT_H
 
 #include "GameObject.h"
+#include <unordered_map>
+#include <map>
 
 class WeaponObject;
 class GameObjectDefinition;
-
-enum worldObjectCategory {
-	GENERIC = 1,
-	PLAYER = 2,
-	WALL = 4,
-	PLAYER_BULLET = 8,
-	PARTICLE1 = 16,
-	PARTICLE2 = 32,
-	PARTICLE3 = 64,
-	ENEMY_FRAME = 128,
-	ENEMY_ARMOR = 256,
-	ENEMY_ARMOR_PIECE = 512
-};
 
 
 class WorldObject :	public GameObject
@@ -29,8 +18,8 @@ public:
 
 	void update() override;
 	void setPosition(b2Vec2, float) override;
-	SDL_Rect getRenderDestRect() override; 
-	SDL_Rect getPositionRect() override;
+	SDL_FRect getRenderDestRect() override; 
+	SDL_FRect getPositionRect() override;
 	bool testStrength(int);
 	virtual void setBox2DUserData(WorldObject*);
 	void setActive(bool);

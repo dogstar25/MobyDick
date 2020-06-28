@@ -2,7 +2,6 @@
 
 #include <iostream>
 
-#include "Globals.h"
 
 int main(int argc, char* args[])
 {
@@ -11,12 +10,10 @@ int main(int argc, char* args[])
 
 	Game::instance().init();
 
-	while (Game::instance().gameState != GameState::QUIT)
+	while (Game::instance().gameState() != GameState::QUIT)
 	{
 
-		Game::instance().handleEvents();
-
-		switch (Game::instance().gameState)
+		switch (Game::instance().gameState())
 		{
 		case GameState::PAUSE:
 			//this may be not needed

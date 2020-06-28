@@ -46,7 +46,7 @@ GUIEvent::GUIEvent(std::string guiObjectId)
 	//Panel game object
 	GameObject* guiPanel = GameObjectManager::instance().buildGameObject <GameObject>("GUIPausePanel", posX, posY, 0);
 
-	this->uiObjectCollections[GameOjectLayer::MAIN].gameObjects.push_back(guiPanel);
+	this->uiObjectCollections[GameOjectLayer::MAIN].gameObjects().push_back(guiPanel);
 
 }
 
@@ -60,20 +60,20 @@ GUIEvent::~GUIEvent()
 	//Free the resources
 	for (int x = 0; x < constants::MAX_GAMEOBJECT_LAYERS; x++)
 	{
-		for (GameObject* gameObject : this->uiObjectCollections[x].gameObjects)
+		for (GameObject* gameObject : this->uiObjectCollections[x].gameObjects())
 		{
 			delete gameObject;
 		}
-		for (ParticleObject* particleObject : this->uiObjectCollections[x].particleObjects)
+		for (ParticleObject* particleObject : this->uiObjectCollections[x].particleObjects())
 		{
 			delete particleObject;
 		}
 
-		this->uiObjectCollections[x].gameObjects.clear();
-		this->uiObjectCollections[x].particleObjects.clear();
+		this->uiObjectCollections[x].gameObjects().clear();
+		this->uiObjectCollections[x].particleObjects().clear();
 
-		std::vector <GameObject*>().swap(this->uiObjectCollections[x].gameObjects);
-		std::vector <ParticleObject*>().swap(this->uiObjectCollections[x].particleObjects);
+		std::vector <GameObject*>().swap(this->uiObjectCollections[x].gameObjects());
+		std::vector <ParticleObject*>().swap(this->uiObjectCollections[x].particleObjects());
 
 
 	}
@@ -106,7 +106,7 @@ void GUIEvent::update()
 	for (auto& gameObjectCollection : this->uiObjectCollections)
 	{
 		//Update normal game objects
-		for (auto& gameObject : gameObjectCollection.gameObjects)
+		for (auto& gameObject : gameObjectCollection.gameObjects())
 		{
 			gameObject->update();
 		}
@@ -120,10 +120,10 @@ void GUIEvent::render()
 	TextureManager::instance().clear();
 
 	//Render all of the game objects in the world
-	Game::instance().renderCollection(&Game::instance().gameCollections);
+	Game::instance().renderCollection(Game::instance().gameCollections());
 
 	//Render all of the GUI Event game objects
-	Game::instance().renderCollection(&uiObjectCollections);
+	Game::instance().renderCollection(uiObjectCollections);
 
 	TextureManager::instance().present();
 
@@ -144,11 +144,6 @@ void GUIEvent::handleInput()
 			{
 				state = EXITGUI;
 			}
-			break;
-		case SDL_MOUSEBUTTONDOWN:
-			break;
-		case SDL_MOUSEMOTION:
-			Game::instance().mouseLocation.Set(event.motion.x, event.motion.y);
 			break;
 		case SDL_QUIT:
 			state = EXITGUI;

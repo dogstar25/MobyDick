@@ -6,12 +6,10 @@
 #include <memory>
 #include <chrono>
 
-struct textItem {
+struct TextItem {
 
-public:
 	bool hasChanged;
-	std::string text;
-
+	std::string textValue;
 	std::chrono::steady_clock::time_point time_snapshot;
 
 };
@@ -22,15 +20,15 @@ class DynamicTextManager
 public:
 
 	static DynamicTextManager& instance();
-	std::map<std::string, std::unique_ptr<textItem>> textItems;
-
 
 	bool updateText(std::string, std::string);
-	textItem* getTextItem(std::string);
+	TextItem* getTextItem(std::string);
 
 private:
 	DynamicTextManager();
 	~DynamicTextManager();
+
+	std::map<std::string, std::unique_ptr<TextItem>> m_textItems;
 
 
 };

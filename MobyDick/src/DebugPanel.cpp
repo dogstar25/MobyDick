@@ -9,6 +9,12 @@
 #include "Game.h"
 
 
+DebugPanel& DebugPanel::instance()
+{
+	static DebugPanel singletonInstance;
+	return singletonInstance;
+}
+
 DebugPanel::DebugPanel()
 {
 

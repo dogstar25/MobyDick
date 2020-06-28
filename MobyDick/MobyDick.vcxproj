@@ -146,6 +146,7 @@
     <ClCompile Include="src\DebugDraw.cpp" />
     <ClCompile Include="src\DebugPanel.cpp" />
     <ClCompile Include="src\DynamicTextManager.cpp" />
+    <ClCompile Include="src\EnumMaps.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\GameConfig.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="src\DebugDraw.h" />
     <ClInclude Include="src\DebugPanel.h" />
     <ClInclude Include="src\DynamicTextManager.h" />
+    <ClInclude Include="src\EnumMaps.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\GameConfig.h" />
     <ClInclude Include="src\GameObject.h" />

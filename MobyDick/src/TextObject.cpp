@@ -76,12 +76,13 @@ void TextObject::update()
 
 		this->setTexture( updateDynamicTextTexture());
 	}
+	
 
 }
 
-SDL_Rect TextObject::getPositionRect()
+SDL_FRect TextObject::getPositionRect()
 {
-	SDL_Rect positionRect;
+	SDL_FRect positionRect;
 
 	//calculate the destination rectangle
 	//Use query texture to get size of the generated text object
@@ -97,9 +98,9 @@ SDL_Rect TextObject::getPositionRect()
 	return positionRect;
 }
 
-SDL_Rect TextObject::getRenderDestRect()
+SDL_FRect TextObject::getRenderDestRect()
 {
-	SDL_Rect destRect;
+	SDL_FRect destRect;
 
 	//Get the position/size rectangle of the object
 	destRect = this->getPositionRect();
@@ -164,7 +165,7 @@ std::shared_ptr<Texture> TextObject::generateTextTexture()
 std::shared_ptr<Texture> TextObject::updateDynamicTextTexture()
 {
 
-	textItem* newText;
+	TextItem* newText;
 	std::shared_ptr<Texture> texture;
 	SDL_Surface* surface;
 
@@ -189,7 +190,7 @@ std::shared_ptr<Texture> TextObject::updateDynamicTextTexture()
 		newText->time_snapshot = now_time;
 
 		//Build new texture
-		this->textValue = newText->text;
+		this->textValue = newText->textValue;
 		texture = generateTextTexture();
 		newText->hasChanged = false;
 

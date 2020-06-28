@@ -27,7 +27,7 @@ void WeaponObject::fire(const b2Vec2 &origin, const float &angle, const float &f
 	std::string bulletPoolId = 
 		this->definition()->weaponDetails.weaponLevelDetails[m_currentLevel].bulletPoolId;
 	
-	ParticleObject* bullet = ObjectPoolManager::instance().get(bulletPoolId);
+	ParticleObject* bullet = ObjectPoolManager::instance().getParticle(bulletPoolId);
 	if (bullet != NULL) {
 
 		//Sound

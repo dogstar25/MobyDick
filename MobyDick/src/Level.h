@@ -36,7 +36,7 @@ public:
 	std::string description() {
 		return m_description;
 	}
-	std::vector<Waypoint> waypoints() {
+	const std::vector<Waypoint>& waypoints() {
 		return m_waypoints;
 	}
 

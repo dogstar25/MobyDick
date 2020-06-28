@@ -8,11 +8,9 @@
 #include "GameObjectManager.h"
 #include "Game.h"
 
-
-
-
 WorldObject::WorldObject()
 {
+
 
 }
 
@@ -81,9 +79,9 @@ void WorldObject::update()
 
 }
 
-SDL_Rect WorldObject::getPositionRect()
+SDL_FRect WorldObject::getPositionRect()
 {
-	SDL_Rect positionRect;
+	SDL_FRect positionRect;
 
 	positionRect.w = this->size().x;
 	positionRect.h = this->size().y;
@@ -97,9 +95,9 @@ SDL_Rect WorldObject::getPositionRect()
 
 }
 
-SDL_Rect WorldObject::getRenderDestRect()
+SDL_FRect WorldObject::getRenderDestRect()
 {
-	SDL_Rect destRect;
+	SDL_FRect destRect;
 	
 	destRect = this->getPositionRect();
 	
@@ -118,22 +116,11 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 {
 	b2BodyDef bodyDef;
 
-	if (definition->physicsType.compare("B2_STATIC") == 0)
-	{
-		bodyDef.type = b2_staticBody;
-	}
-	else if (definition->physicsType.compare("B2_KINEMATIC") == 0)
-	{
-		bodyDef.type = b2_kinematicBody;
-	}
-	else if (definition->physicsType.compare("B2_DYNAMIC") == 0)
-	{
-		bodyDef.type = b2_dynamicBody;
-	}
+	bodyDef.type = static_cast<b2BodyType>(definition->physicsType);
 
 	//Default the position to zero.
 	bodyDef.position.SetZero();
-	b2Body* body = Game::instance().physicsWorld->CreateBody(&bodyDef);
+	b2Body* body = Game::instance().physicsWorld()->CreateBody(&bodyDef);
 
 	b2Shape* shape;
 	b2PolygonShape box;
@@ -141,18 +128,21 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 	b2ChainShape chain;
 
 	//Collision shape - will default to a rectangle
-	if(definition->collisionShape.compare("B2_CIRCLE") == 0)
+	if(definition->collisionShape == b2Shape::e_circle)
 	{
 		circle.m_radius = definition->collisionRadius;
 		shape = &circle;
 	}
-	else if (definition->collisionShape.compare("B2_CHAIN") == 0)
+	else if (definition->collisionShape == b2Shape::e_chain)
 	{
+		//temp test code
+		/*
 		b2Vec2 vs[4];
 		vs[0].Set(40, 40);
 		vs[1].Set(400,400);
 		vs[2].Set(50,500);
 		chain.CreateChain(vs, 3);
+		*/
 		shape = &chain;
 	}
 	else
@@ -192,34 +182,37 @@ b2Body * WorldObject::buildB2Body(GameObjectDefinition* definition)
 uint16 WorldObject::setCollisionMask(uint16 category)
 {
 	uint16 mask=0;
+	
 
 	switch(category) {
-		case PLAYER:
-			mask = WALL | PARTICLE2 | PARTICLE3 | ENEMY_FRAME | ENEMY_ARMOR_PIECE;
+	case COLLISION_PLAYER:
+			mask = COLLISION_WALL | COLLISION_PARTICLE2 | COLLISION_PARTICLE3 | COLLISION_ENEMY_FRAME
+				| COLLISION_ENEMY_ARMOR_PIECE;
 			break;
-		case WALL:
-			mask = PLAYER | PARTICLE1 | PARTICLE2 | PARTICLE3 | ENEMY_FRAME | PLAYER_BULLET | ENEMY_ARMOR_PIECE;
+		case COLLISION_WALL:
+			mask = COLLISION_PLAYER | COLLISION_PARTICLE1 | COLLISION_PARTICLE2 | COLLISION_PARTICLE3 
+				| COLLISION_ENEMY_FRAME 	| COLLISION_PLAYER_BULLET | COLLISION_ENEMY_ARMOR_PIECE;
 			break;
-		case PLAYER_BULLET:
-			mask = WALL | ENEMY_ARMOR;
+		case COLLISION_PLAYER_BULLET:
+			mask = COLLISION_WALL | COLLISION_ENEMY_ARMOR;
 			break;
-		case PARTICLE1:
-			mask = WALL | PLAYER;
+		case COLLISION_PARTICLE1:
+			mask = COLLISION_WALL | COLLISION_PLAYER;
 			break;
-		case PARTICLE2:
-			mask = WALL | PLAYER;
+		case COLLISION_PARTICLE2:
+			mask = COLLISION_WALL | COLLISION_PLAYER;
 			break;
-		case PARTICLE3:
-			mask = WALL | PLAYER;
+		case COLLISION_PARTICLE3:
+			mask = COLLISION_WALL | COLLISION_PLAYER;
 			break;
-		case ENEMY_FRAME:
-			mask = WALL | PLAYER | ENEMY_ARMOR_PIECE;
+		case COLLISION_ENEMY_FRAME:
+			mask = COLLISION_WALL | COLLISION_PLAYER | COLLISION_ENEMY_ARMOR_PIECE;
 			break;
-		case ENEMY_ARMOR:
-			mask = PLAYER_BULLET;
+		case COLLISION_ENEMY_ARMOR:
+			mask = COLLISION_PLAYER_BULLET;
 			break;
-		case ENEMY_ARMOR_PIECE:
-			mask = PLAYER | WALL | ENEMY_FRAME | ENEMY_ARMOR_PIECE;
+		case COLLISION_ENEMY_ARMOR_PIECE:
+			mask = COLLISION_PLAYER | COLLISION_WALL | COLLISION_ENEMY_FRAME | COLLISION_ENEMY_ARMOR_PIECE;
 			break;
 
 
@@ -280,7 +273,7 @@ void WorldObject::addWeapon(std::string weaponObjectId)
 		weaponObject->definition()->weaponDetails.anchorPoint.y 
 	};
 	weldJointDef.localAnchorB = weaponsAnchorPoint;
-	(b2WeldJointDef*)Game::instance().physicsWorld->CreateJoint(&weldJointDef);
+	(b2WeldJointDef*)Game::instance().physicsWorld()->CreateJoint(&weldJointDef);
 
 	this->m_weapon = weaponObject;
 

@@ -39,7 +39,7 @@ Animation::Animation(GameObjectDefinition* gameObjectDefinition, std::string ani
 	rows = height / m_frameSize.y;
 
 	//Calculate top left corner of each animation frame
-	SDL_Point point;
+	SDL_FPoint point;
 	int frameCount = 0;
 	for (int rowIdx = 0; rowIdx < rows; rowIdx++) 
 	{
@@ -65,27 +65,6 @@ Animation::~Animation()
 
 	delete m_currentTextureAnimationSrcRect;
 	delete m_texture;
-
-}
-
-SDL_Rect* Animation::getCurrentTextureAnimationSrcRect()
-{
-
-	return m_currentTextureAnimationSrcRect;
-
-}
-
-SDL_Texture* Animation::getTexture()
-{
-
-	return m_texture;
-
-}
-
-int Animation::getCurrentAnimFrame()
-{
-
-	return m_currentAnimFrame;
 
 }
 

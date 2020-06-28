@@ -36,12 +36,12 @@ public:
 	
 
 private:
-	void buildPiece(CompositeLegendItem, int, int);
-	void updatePieces();
-	void buildComposite();
-	void updatePieceState(GameObjectPiece& piece);
-	void updatePiecePosition(GameObjectPiece& piece);
-	void levelUp(GameObjectPiece& piece);
+	void _buildPiece(CompositeLegendItem, int, int);
+	void _updatePieces();
+	void _buildComposite();
+	void _updatePieceState(GameObjectPiece& piece);
+	void _updatePiecePosition(GameObjectPiece& piece);
+	void _levelUp(GameObjectPiece& piece);
 
 	//Collection of all of the gameObjects that make up this composite object
 	std::vector<GameObjectPiece>m_pieces;

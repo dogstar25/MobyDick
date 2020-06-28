@@ -6,6 +6,9 @@
 class DebugDraw : public b2Draw
 {
 public:
+
+	static DebugDraw& instance();
+
 	void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);
 
 	void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color);

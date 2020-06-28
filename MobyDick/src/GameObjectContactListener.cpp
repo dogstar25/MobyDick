@@ -219,15 +219,15 @@ void GameObjectContactListener::bulletPieceExplode(WorldObject* bullet, WorldObj
 		"PARTICLE1_POOL",
 		particleOrigin, //min position
 		particleOrigin,	//max position
-		10,	//Force Min
-		20,	//force Max
-		0.55,	//Lifetime Min
-		0.75,	//Lifetime Max
+		1,	//Force Min
+		10,	//force Max
+		0.35,	//Lifetime Min
+		0.65,	//Lifetime Max
 		true,	// Alpha fade
 		0,	//Angle min
 		360,	//Angle Max
-		0.28,	//Size Min
-		0.48,	//Size Max
+		1.28,	//Size Min
+		3.48,	//Size Max
 		colorMin,	//Color Min
 		colorMax,	//Color Max
 		10,	//Particle count min
@@ -236,26 +236,26 @@ void GameObjectContactListener::bulletPieceExplode(WorldObject* bullet, WorldObj
 	ParticleMachine::instance().add(particleEmission);
 
 	//Create some white smoke particles
-	colorMin = { 255,255,255,100 };
-	colorMax = { 255,255,255,200 };
+	colorMin = { 255,255,255,50 };
+	colorMax = { 255,255,255,100 };
 
 	particleEmission = new ParticleEmission(
 		"PARTICLE1_POOL",
 		particleOrigin, //min position
 		particleOrigin,	//max position
-		2,	//Force Min
-		4,	//force Max
+		1,	//Force Min
+		8,	//force Max
 		0.55,	//Lifetime Min
 		0.75,	//Lifetime Max
 		false,	// Alpha fade
 		0,	//Angle min
 		360,	//Angle Max
-		1.00,	//Size Min
-		1.25,	//Size Max
+		2.00,	//Size Min
+		5.25,	//Size Max
 		colorMin,	//Color Min
 		colorMax,	//Color Max
-		5,	//Particle count min
-		10	//Particle count max
+		1,	//Particle count min
+		8	//Particle count max
 	);
 	ParticleMachine::instance().add(particleEmission);
 
@@ -267,7 +267,7 @@ void GameObjectContactListener::bulletPieceExplode(WorldObject* bullet, WorldObj
 		particleOrigin, //min position
 		particleOrigin,	//max position
 		20,	//Force Min
-		50,	//force Max
+		75,	//force Max
 		0,	//Lifetime Min
 		0,	//Lifetime Max
 		false,	// Alpha fade
@@ -278,7 +278,7 @@ void GameObjectContactListener::bulletPieceExplode(WorldObject* bullet, WorldObj
 		colorMin,	//Color Min
 		colorMax,	//Color Max
 		2,	//Particle count min
-		2	//Particle count max
+		3	//Particle count max
 	);
 	ParticleMachine::instance().add(particleEmission);
 

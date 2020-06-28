@@ -2,8 +2,10 @@
 #define GLOBALS_H
 
 #include <string>
+#include <map>
 
 #include <SDL2/SDL_pixels.h>
+
 
 /*
 Overloaded operators used throught the game
@@ -38,28 +40,34 @@ namespace util
 
 };
 
+enum {
+	MOUSE_NONE = 0,
+	MOUSE_HOVER = 1,
+	MOUSE_HOLD = 2,
+	MOUSE_CLICKED = 3,
 
-/*
-Mouse State
-*/
-enum MouseState {
-
-	NONE = 0,
-	HOVER = 1,
-	HOLD = 2,
-	CLICKED = 3
+	COLLISION_GENERIC = 1,
+	COLLISION_PLAYER = 2,
+	COLLISION_WALL = 4,
+	COLLISION_PLAYER_BULLET = 8,
+	COLLISION_PARTICLE1 = 16,
+	COLLISION_PARTICLE2 = 32,
+	COLLISION_PARTICLE3 = 64,
+	COLLISION_ENEMY_FRAME = 128,
+	COLLISION_ENEMY_ARMOR = 256,
+	COLLISION_ENEMY_ARMOR_PIECE = 512
 };
 
 /*
 Game State
 */
-enum GameState {
-
+enum GameState{ 
 	QUIT = 0,
 	PLAY = 1,
 	PAUSE = 2
 
 };
+
 
 /*
 Game Object Layers

@@ -41,11 +41,11 @@ TextureManager& TextureManager::instance()
 
 }
 
-bool TextureManager::init(SDL_Window* pWindow)
+bool TextureManager::init(SDL_Window* window)
 {
 
 	//Create the main renderer
-	m_Renderer = SDL_CreateRenderer(pWindow, -1, SDL_RENDERER_ACCELERATED);
+	m_Renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawColor(m_Renderer, 0, 0, 0, 0);
 	//SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 	//Load all of the textures for the game
@@ -92,7 +92,7 @@ void TextureManager::addOrReplaceTexture(std::string textureId, std::shared_ptr<
 
 }
 
-void TextureManager::render(SDL_Texture* texture, SDL_Color color, SDL_Rect* textureSourceRect, SDL_Rect* destRect, float angle)
+void TextureManager::render(SDL_Texture* texture, SDL_Color color, SDL_Rect* textureSourceRect, SDL_FRect* destRect, float angle)
 {
 	//Set the color
 	SDL_SetTextureAlphaMod(texture, color.a);
@@ -103,16 +103,16 @@ void TextureManager::render(SDL_Texture* texture, SDL_Color color, SDL_Rect* tex
 	SDL_SetTextureColorMod(texture, color.r, color.g, color.b);
 
 	//Render the texture
-	SDL_RenderCopyEx(m_Renderer, texture, textureSourceRect, destRect, angle, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyExF(m_Renderer, texture, textureSourceRect, destRect, angle, NULL, SDL_FLIP_NONE);
 
 }
 
-void TextureManager::render(SDL_Rect* destRect, SDL_Color color)
+void TextureManager::render(SDL_FRect* destRect, SDL_Color color)
 {
 
 	//Render the rectangle
 	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, color.a);
-	SDL_RenderFillRect(m_Renderer, destRect);
+	SDL_RenderFillRectF(m_Renderer, destRect);
 
 }
 
@@ -248,11 +248,11 @@ void TextureManager::drawPoly(b2Body* body)
 		b2Shape* s = fixture->GetShape();
 		b2PolygonShape* shape = (b2PolygonShape*)s;
 
-		SDL_Point *points = new SDL_Point[shape->m_count+1];
+		SDL_FPoint *points = new SDL_FPoint[shape->m_count+1];
 
 		b2Vec2 firstVector;
 		bool firstFound = false;
-		SDL_Point point;
+		SDL_FPoint point;
 		// Build list of transformed vertices
 		for (int i = 0; i < shape->m_count; ++i) {
 
@@ -273,7 +273,7 @@ void TextureManager::drawPoly(b2Body* body)
 		point.y = firstVector.y;
 		points[shape->m_count] = point;
 
-		SDL_RenderDrawLines(m_Renderer, points, shape->m_count+1);
+		SDL_RenderDrawLinesF(m_Renderer, points, shape->m_count+1);
 
 		delete[] points;
 
@@ -282,18 +282,18 @@ void TextureManager::drawPoly(b2Body* body)
 
 }
 
-void TextureManager::drawPoints(SDL_Point *points)
+void TextureManager::drawPoints(SDL_FPoint *points)
 {
 
 	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
-	SDL_RenderDrawLines(m_Renderer, points, 5);
+	SDL_RenderDrawLinesF(m_Renderer, points, 5);
 
 }
 
 void TextureManager::drawLine(b2Vec2 start, b2Vec2 end)
 {
 	SDL_SetRenderDrawColor(m_Renderer, 255, 255, 255, 255);
-	SDL_RenderDrawLine(m_Renderer, start.x, start.y, end.x, end.y);
+	SDL_RenderDrawLineF(m_Renderer, start.x, start.y, end.x, end.y);
 
 }
 
@@ -301,12 +301,12 @@ void TextureManager::drawGlowLine(b2Vec2 start, b2Vec2 end, SDL_Color color)
 {
 	SDL_SetRenderDrawBlendMode(m_Renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, color.a);
-	SDL_RenderDrawLine(m_Renderer, start.x, start.y, end.x, end.y);
-	SDL_RenderDrawLine(m_Renderer, start.x, start.y, end.x, end.y);
-	SDL_RenderDrawLine(m_Renderer, start.x+1, start.y-1, end.x+1, end.y-1);
-	SDL_RenderDrawLine(m_Renderer, start.x -1, start.y+1, end.x -1, end.y+1);
-	SDL_RenderDrawLine(m_Renderer, start.x + 2, start.y - 2, end.x + 2, end.y - 2);
-	SDL_RenderDrawLine(m_Renderer, start.x - 2, start.y + 2, end.x - 2, end.y + 2);
+	SDL_RenderDrawLineF(m_Renderer, start.x, start.y, end.x, end.y);
+	SDL_RenderDrawLineF(m_Renderer, start.x, start.y, end.x, end.y);
+	SDL_RenderDrawLineF(m_Renderer, start.x+1, start.y-1, end.x+1, end.y-1);
+	SDL_RenderDrawLineF(m_Renderer, start.x -1, start.y+1, end.x -1, end.y+1);
+	SDL_RenderDrawLineF(m_Renderer, start.x + 2, start.y - 2, end.x + 2, end.y - 2);
+	SDL_RenderDrawLineF(m_Renderer, start.x - 2, start.y + 2, end.x - 2, end.y + 2);
 
 
 
@@ -323,7 +323,7 @@ void TextureManager::drawGlowLine2(b2Vec2 start, b2Vec2 end, SDL_Color color)
 	SDL_RenderSetScale(m_Renderer, 7, 7);
 	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, color.a);
 	
-	SDL_RenderDrawLine(m_Renderer, start.x, start.y, end.x, end.y);
+	SDL_RenderDrawLineF(m_Renderer, start.x, start.y, end.x, end.y);
 	SDL_RenderCopy(m_Renderer, texture, NULL, NULL);
 
 	SDL_SetRenderTarget(m_Renderer, NULL);
@@ -331,7 +331,7 @@ void TextureManager::drawGlowLine2(b2Vec2 start, b2Vec2 end, SDL_Color color)
 
 }
 
-void TextureManager::outlineObject(std::vector<SDL_Point> points, float lineSize)
+void TextureManager::outlineObject(std::vector<SDL_FPoint> points, float lineSize)
 {
 
 	float saveScaleX, saveScaleY;

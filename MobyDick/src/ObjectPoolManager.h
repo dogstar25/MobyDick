@@ -14,12 +14,19 @@ public:
 	void init();
 	void reset(ParticleObject* particle);
 
-	ParticleObject* get(std::string);
-	std::map <std::string, std::vector<ParticleObject*>> objectPool;
+	ParticleObject* getParticle(std::string);
+
+	//Accessor Functions
+	const std::map <std::string, std::vector<ParticleObject*>>& objectPool(){
+		return m_objectPool;
+	}
 
 private:
 	ObjectPoolManager();
 	~ObjectPoolManager();
+
+	std::map <std::string, std::vector<ParticleObject*>> m_objectPool;
+
 
 
 };
