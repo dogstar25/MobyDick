@@ -40,6 +40,7 @@ void ParticleObject::update()
 			//Mark this object for removal so that the removal loop will delete it
 			this->setRemoveFromWorld(true);
 
+
 		}
 		else
 		{
