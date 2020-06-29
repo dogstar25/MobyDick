@@ -190,6 +190,7 @@
     <ClInclude Include="src\GameObjectManager.h" />
     <ClInclude Include="src\Globals.h" />
     <ClInclude Include="src\GUIEvent.h" />
+    <ClInclude Include="src\ComponentDefinitions.h" />
     <ClInclude Include="src\Level.h" />
     <ClInclude Include="src\ObjectPoolManager.h" />
     <ClInclude Include="src\ParticleEmission.h" />

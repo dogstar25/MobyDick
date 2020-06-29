@@ -1,0 +1,17 @@
+{
+  "componentsDefinitions": [
+    {
+      "id": "COMPONENT_TRANSFORM",
+      ""
+
+    },
+    {
+      "id": "COMPONENT_ANIMATION",
+      "properties": [
+        "currentAnimationsState"
+      ]
+
+    }
+
+  ]
+}
