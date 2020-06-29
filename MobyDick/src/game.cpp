@@ -19,6 +19,9 @@
 #include "ObjectPoolManager.h"
 
 
+//temp
+#include "ComponentDefinitions.h"
+
 using namespace std::chrono_literals;
 
 Game& Game::instance()

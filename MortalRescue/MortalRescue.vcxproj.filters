@@ -127,6 +127,8 @@
     <None Include="assets\gameConfig.json" />
     <None Include="assets\textureAssets.json" />
     <None Include="assets\sound\soundAssets.json" />
+    <None Include="assets\gameObjectDefinitions\components.json" />
+    <None Include="assets\gameObjectDefinitions\commonObjects2.json" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\arial.ttf" />
