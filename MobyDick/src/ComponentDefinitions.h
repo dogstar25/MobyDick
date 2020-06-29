@@ -163,11 +163,10 @@ struct PhysicsComponent : Component {
 
 struct VitalityComponent : Component {
 
-	float 
+	float
 		m_speed,
 		m_strength,
-		m_health,
-		m_lifetime;
+		m_health;
 
 	std::chrono::duration<float, std::milli> m_lifetime;
 	std::chrono::duration<float, std::milli> m_lifetimeRemaining;
