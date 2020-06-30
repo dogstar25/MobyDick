@@ -70,11 +70,11 @@
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\projects\MobyDick\MobyDick\src\components;C:\projects\MobyDick\MobyDick\src;$(IncludePath)</IncludePath>
     <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\lib\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\projects\MobyDick\MobyDick\src\components;C:\projects\MobyDick\MobyDick\src;$(IncludePath)</IncludePath>
     <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\lib\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -139,9 +139,18 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\components\AnimationComponent.cpp" />
+    <ClCompile Include="src\components\AttachmentsComponent.cpp" />
+    <ClCompile Include="src\components\ChildrenComponent.cpp" />
+    <ClCompile Include="src\components\CompositeComponent.cpp" />
+    <ClCompile Include="src\components\ParticleComponent.cpp" />
+    <ClCompile Include="src\components\PhysicsComponent.cpp" />
+    <ClCompile Include="src\components\RenderComponent.cpp" />
+    <ClCompile Include="src\components\Component.cpp" />
     <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Clock.cpp" />
+    <ClCompile Include="src\components\TransformComponent.cpp" />
     <ClCompile Include="src\CompositeObject.cpp" />
     <ClCompile Include="src\DebugDraw.cpp" />
     <ClCompile Include="src\DebugPanel.cpp" />
@@ -169,13 +178,24 @@
     <ClCompile Include="src\Waypoint.cpp" />
     <ClCompile Include="src\WeaponObject.cpp" />
     <ClCompile Include="src\WorldObject.cpp" />
+    <ClCompile Include="src\components\TextComponent.cpp" />
+    <ClCompile Include="src\components\VitalityComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\components\AnimationComponent.h" />
+    <ClInclude Include="src\components\AttachmentsComponent.h" />
+    <ClInclude Include="src\components\ChildrenComponent.h" />
+    <ClInclude Include="src\components\CompositeComponent.h" />
+    <ClInclude Include="src\components\ParticleComponent.h" />
+    <ClInclude Include="src\components\PhysicsComponent.h" />
+    <ClInclude Include="src\components\RenderComponent.h" />
+    <ClInclude Include="src\components\Component.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="src\Animation.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Clock.h" />
+    <ClInclude Include="src\components\TransformComponent.h" />
     <ClInclude Include="src\CompositeObject.h" />
     <ClInclude Include="src\DebugDraw.h" />
     <ClInclude Include="src\DebugPanel.h" />
@@ -204,6 +224,8 @@
     <ClInclude Include="src\Waypoint.h" />
     <ClInclude Include="src\WeaponObject.h" />
     <ClInclude Include="src\WorldObject.h" />
+    <ClInclude Include="src\components\TextComponent.h" />
+    <ClInclude Include="src\components\VitalityComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="ExtraLibs\SDL2main.lib" />
