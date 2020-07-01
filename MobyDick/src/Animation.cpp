@@ -13,6 +13,7 @@ Animation::Animation(GameObjectDefinition* gameObjectDefinition, std::string ani
 	m_frameCount = totalFrames;
 
 	//Get pointer to textture
+	//FIXME:Change this to simple use the 
 	m_texture = TextureManager::instance().getTexture(textureId)->sdlTexture;
 
 	//Calculate how many columns and rows this animation texture has
