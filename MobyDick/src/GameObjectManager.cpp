@@ -31,14 +31,16 @@ GameObjectManager::~GameObjectManager()
 
 bool GameObjectManager::init()
 {
-	load("gameObjectDefinitions/commonObjects");
-	load("gameObjectDefinitions/particleObjects");
-	load("gameObjectDefinitions/level1Objects");
-	load("gameObjectDefinitions/GUIObjects");
-	load("gameObjectDefinitions/compositeObjects");
+	load("gameObjectDefinitions/commonObjects2");
 
 	return true;
 }
+
+GameObject GameObjectManager::buildGameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angle)
+{
+
+}
+
 
 
 void GameObjectManager::load(std::string gameObjectAssetsFilename)
