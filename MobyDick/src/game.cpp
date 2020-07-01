@@ -142,7 +142,6 @@ bool Game::init()
 
 		//Initilaize Camera size and
 		Camera::instance().init();
-
 		
 	}
 
@@ -386,46 +385,46 @@ void Game::_render() {
 
 }
 
-void Game::_handleEvents() {
+void Game::_handleEvents() 
+{
 	SDL_Event event;
+	SDL_Event events[100];
 
-	if (SDL_PollEvent(&event)) {
+	/*
+	We only want to handle "State Related" events.
+	Ignore all user input events
+	*/
 
-		switch (event.type) 
+	/*
+	Set main quite game state which gets captured by highest level game loop
+	*/
+	if (SDL_HasEvent(SDL_QUIT)) {
+		m_gameState = QUIT;
+	}
+
+	if (int eventCount = SDL_PeepEvents(events, 100, SDL_GETEVENT, SDL_USEREVENT, SDL_USEREVENT)) {
+
+		for (auto i = 0; i < eventCount; i++)
 		{
-		case SDL_QUIT:
-			m_gameState = QUIT;
-		case SDL_KEYDOWN:
-		case SDL_KEYUP:
-			if ((char)event.key.keysym.sym == SDLK_ESCAPE && event.type == SDL_KEYDOWN)
-			{
-				std::unique_ptr<GUIEvent> guiEvent = std::make_unique<GUIEvent>("GUIPausePanel");
-				guiEvent->run();
-			}
-			else
-			{
-				m_player->handlePlayerMovementEvent(&event);
-			}
-			break;
 
-		case SDL_MOUSEMOTION:
-			m_player->handlePlayerMovementEvent(&event);
-			break;
-		case SDL_MOUSEBUTTONDOWN:
-			//this->testSound();
-			m_player->fire();
-			break;
-		case SDL_USEREVENT:
-			delete event.user.data1;
-			break;
-		default:
-			break;
+			event = events[i];
+
+			std::string* actionCode = static_cast<std::string*>(event.user.data1);
+			if (actionCode != NULL && actionCode->empty() == false)
+			{
+				if (actionCode->compare("GUI_PAUSE_PANEL") == 0)
+				{
+					std::unique_ptr<GUIEvent> guiEvent = std::make_unique<GUIEvent>("GUIPausePanel");
+					guiEvent->run();
+					delete event.user.data1;
+
+				}
+			}
+
 		}
 
-		
 	}
 }
-
 
 
 
