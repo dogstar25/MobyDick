@@ -31,90 +31,73 @@ PlayerObject::~PlayerObject()
 
 }
 
-void PlayerObject::handlePlayerMovementEvent(SDL_Event* event)
+void PlayerObject::handlePlayerMovementEvent()
 {
 
-	int count;
-	int* mouseXChg = NULL, *mouseYChg = NULL;
-	//const Uint8 *state;
+	int keyCode=0, scanCode, keyCount, keyStateCount;
+	float angularVelocity = 0;
+	SDL_Event event;
 
+/*
+Handle all user input 
+Escape key is special and creates a user defined event that will be captured in PLAY game loop
+*/
+	while (keyCode != SDLK_ESCAPE && SDL_PollEvent(&event)) {
 
-	if (event->type & SDL_KEYDOWN || 
-		event->type & SDL_KEYUP)
-	{
-		const Uint8* state = SDL_GetKeyboardState(&count);
-		this->direction = 0;
-		this->strafe = 0;
-
-		if (state[SDL_SCANCODE_W])
+		switch (event.type)
 		{
-			this->direction = -1;
-		}
-		if (state[SDL_SCANCODE_S])
-		{
-			this->direction = 1;
-		}
-		if (state[SDL_SCANCODE_A])
-		{
-			this->strafe = 1;
-		}
-		if (state[SDL_SCANCODE_D])
-		{
-			this->strafe = -1;
-		}
-
-		/*
-			if (event->type == SDL_KEYUP) {
-
-				switch (event->key.keysym.sym) {
-				case SDLK_w:
-					//this->yDirection = 0;
-					this->direction = 0;
-					break;
-				case SDLK_s:
-					this->direction = 0;
-					break;
-				case SDLK_a:
-					this->strafe = 0;
-					break;
-				case SDLK_d:
-					this->strafe = 0;
-					break;
-				}
+		case SDL_KEYUP:
+		case SDL_KEYDOWN:
+			keyCode = event.key.keysym.sym;
+			//Special Escape key check to allow for quitting
+			if (keyCode == SDLK_ESCAPE)
+			{
+				std::string* actionCode = new std::string("GUI_PAUSE_PANEL");
+				SDL_Event event;
+				event.user.data1 = static_cast<void*>(actionCode);
+				event.type = SDL_USEREVENT;
+				SDL_PushEvent(&event);
+				break;
 			}
+			else
+			{
+				this->direction = 0;
+				this->strafe = 0;
+				const Uint8* keyStates = SDL_GetKeyboardState(&keyStateCount);
 
-			if (event->type == SDL_KEYDOWN) {
-				switch (event->key.keysym.sym) {
-				case SDLK_w:
-					//this->yDirection = -1;
+				if (keyStates[SDL_SCANCODE_W])
+				{
 					this->direction = -1;
-					break;
-				case SDLK_s:
-					//this->yDirection = 1;
+				}
+				if (keyStates[SDL_SCANCODE_S])
+				{
 					this->direction = 1;
-					break;
-				case SDLK_a:
-					//this->xDirection = -1;
+				}
+				if (keyStates[SDL_SCANCODE_A])
+				{
 					this->strafe = 1;
-					break;
-				case SDLK_d:
-					//this->xDirection = 1;
+				}
+				if (keyStates[SDL_SCANCODE_D])
+				{
 					this->strafe = -1;
-					break;
 				}
 			}
-		*/
+			break;
+
+		case SDL_MOUSEMOTION:
+			angularVelocity = event.motion.xrel * GameConfig::instance().mouseSensitivity();
+			this->physicsBody()->SetAngularVelocity(angularVelocity);
+			DebugPanel::instance().addItem("ANGULAR_VELOCITY", std::to_string(angularVelocity));
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			fire();
+			break;
+		default:
+			break;
+		}
+
+
 	}
-
-	if (event->type & SDL_MOUSEMOTION)
-	{
-
-		float angularVelocity = event->motion.xrel * GameConfig::instance().mouseSensitivity();
-		this->physicsBody()->SetAngularVelocity(angularVelocity);
-
-		DebugPanel::instance().addItem("ANGULAR_VELOCITY", std::to_string(angularVelocity));
-	}
-
 
 }
 
@@ -124,6 +107,8 @@ void PlayerObject::update()
 
 	//Call base game object update
 	WorldObject::update();
+
+	this->handlePlayerMovementEvent();
 
 	//Call all player movement updates
 	this->updatePlayerMovement();

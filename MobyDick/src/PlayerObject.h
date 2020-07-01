@@ -21,7 +21,7 @@ public:
 
 	void update();
 	void render();
-	void handlePlayerMovementEvent(SDL_Event* event);
+	void handlePlayerMovementEvent();
 	void updatePlayerMovement();
 	void fire();
 	void weaponLevelUp();
