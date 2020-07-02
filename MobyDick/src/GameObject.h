@@ -36,6 +36,11 @@ public:
 		return m_removeFromWorld; 
 	}
 
+	std::shared_ptr<GameObjectDefinition> gameObjectDefinition(){
+		return m_gameObjectDefinition;
+	}
+
+
 	
 private:
 

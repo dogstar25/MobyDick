@@ -15,6 +15,8 @@ public:
 	~AnimationComponent();
 
 	void update() override;
+	SDL_Rect* getCurrentAnimationTextureRect();
+	SDL_Texture* getCurrentAnimationTexture();
 
 	//Accessors
 	int currentAnimationState() {
@@ -23,7 +25,7 @@ public:
 	std::map<int, Animation>& animations() {
 		return m_animations;
 	}
-	void setCurrentAnimationState(std::string animationState) { m_currentAnimationState = animationState; }
+	void setCurrentAnimationState(int animationState) { m_currentAnimationState = animationState; }
 
 
 private:

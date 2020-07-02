@@ -5,6 +5,8 @@
 #include <SDL2/SDL.h>
 
 #include "Component.h"
+#include "TransformComponent.h"
+#include "AnimationComponent.h"
 #include "Texture.h"
 #include "../GameObject.h"
 
@@ -12,12 +14,14 @@ class RenderComponent : public Component
 {
 
 public:
-	RenderComponent();
+	RenderComponent(Json::Value& componentDetailsJSO);
+	RenderComponent(RenderComponent* componentDefinition);
 	~RenderComponent();
 
 	void update() override;
+	void render() override;
 
-	virtual SDL_FRect  getRenderDestRect();
+	SDL_FRect  getRenderDestRect();
 	void setColor(SDL_Color color) {
 		m_color = color;
 	}
@@ -26,6 +30,15 @@ public:
 	}
 	void setColor(int red, int green, int blue, int alpha);
 	void setTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
+
+	void outlineObject(float lineSize);
+
+	SDL_Rect* getRenderTextureRect();
+	SDL_Texture* getRenderTexture();
+	SDL_Surface* getRenderSurface();
+	
+
+	//void render(SDL_FRect* destRect, SDL_Color color);
 
 	//Accessors
 	SDL_Color color() {
@@ -38,6 +51,10 @@ public:
 
 
 private:
+	// References to ther componets of the same gameObject
+	std::shared_ptr<TransformComponent> m_transformComponent;
+	std::shared_ptr<AnimationComponent> m_animationComponent;
+
 	std::shared_ptr<Texture> m_texture;
 	SDL_Color
 		m_color;
@@ -46,13 +63,9 @@ private:
 		m_yRenderAdjustment;
 	bool
 		m_renderOutline;
-	std::shared_ptr<GameObject> parentGameObject;
+	std::string
+		m_textureId;
 
-	void outlineObject(float lineSize);
-
-	SDL_Rect* getRenderTextureRect();
-	SDL_Texture* getRenderTexture();
-	SDL_Surface* getRenderSurface();
 
 };
 

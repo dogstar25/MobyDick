@@ -18,6 +18,10 @@ public:
 	GameObjectDefinition(Json::Value gameObjectDefinitionJSON);
 	~GameObjectDefinition();
 
+	bool hasComponent(unsigned int componentId) {
+		return (componentFlags & componentId);
+	}
+
 private:
 
 	std::string

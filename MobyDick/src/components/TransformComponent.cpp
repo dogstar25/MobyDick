@@ -34,3 +34,43 @@ SDL_FRect TransformComponent::getPositionRect()
 	return positionRect;
 
 }
+
+void TransformComponent::setPosition(b2Vec2 position)
+{
+	m_position = position;
+}
+
+void TransformComponent::setPosition(float xPosition, float yPosition)
+{
+	m_position.x = xPosition;
+	m_position.x = yPosition;
+}
+
+void TransformComponent::setPosition(b2Vec2 position, float angle)
+{
+	m_position = position;
+	m_angle = angle;
+}
+
+void TransformComponent::setPosition(float xPosition, float yPosition, float angle)
+{
+	m_position.x = xPosition;
+	m_position.x = yPosition;
+	m_angle = angle;
+}
+
+void TransformComponent::setSize(b2Vec2 size)
+{
+	m_size = size;
+}
+
+void TransformComponent::setSize(float xSize, float ySize)
+{
+	m_size.x = xSize;
+	m_size.y = ySize;
+}
+
+void TransformComponent::setAngle(float angle)
+{
+	m_angle = angle;
+}

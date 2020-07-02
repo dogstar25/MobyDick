@@ -33,6 +33,10 @@ public:
 	float angle() {
 		return m_angle;
 	}
+	bool absolutePositioning() {
+		return m_absolutePositioning;
+	}
+
 	virtual SDL_FRect  getPositionRect();
 
 private:

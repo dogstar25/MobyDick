@@ -32,6 +32,28 @@ AnimationComponent::~AnimationComponent()
 
 }
 
+SDL_Rect* AnimationComponent::getCurrentAnimationTextureRect()
+{
+	SDL_Rect* textureSrcRect = nullptr;
+
+	textureSrcRect =
+		m_animations[m_currentAnimationState].getCurrentTextureAnimationSrcRect();
+
+	return textureSrcRect;
+	
+}
+
+SDL_Texture* AnimationComponent::getCurrentAnimationTexture()
+{
+	SDL_Texture* texture = nullptr;
+
+	texture =
+		m_animations[m_currentAnimationState].getTexture();
+
+	return texture;
+
+}
+
 
 
 
