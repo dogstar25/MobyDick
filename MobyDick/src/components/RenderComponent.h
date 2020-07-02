@@ -6,6 +6,7 @@
 
 #include "Component.h"
 #include "Texture.h"
+#include "../GameObject.h"
 
 class RenderComponent : public Component
 {
@@ -45,6 +46,7 @@ private:
 		m_yRenderAdjustment;
 	bool
 		m_renderOutline;
+	std::shared_ptr<GameObject> parentGameObject;
 
 	void outlineObject(float lineSize);
 

@@ -20,3 +20,17 @@ TransformComponent::~TransformComponent()
 {
 
 }
+
+SDL_FRect TransformComponent::getPositionRect()
+{
+	SDL_FRect positionRect;
+
+	positionRect.w = m_size.x;
+	positionRect.h = m_size.y;
+
+	positionRect.x = m_position.x;
+	positionRect.y = m_position.y;
+
+	return positionRect;
+
+}

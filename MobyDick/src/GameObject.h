@@ -21,6 +21,7 @@ class GameObject
 public:
 	
 	GameObject();
+	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust);
 	~GameObject();
 
 	virtual void update();
@@ -42,16 +43,16 @@ private:
 		m_mouseState;
 	bool
 		m_removeFromWorld;
-	std::shared_ptr<GameObjectDefinition> gameObjectDefinition;
+	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 
 	void init();
-	virtual void onMouseHoverRender();
+	/*virtual void onMouseHoverRender();
 	virtual void onMouseClickRender();
 	virtual void onMouseHoldRender();
 	virtual void onMouseClickEvent();
-	void updateMouseState();
+	void updateMouseState();*/
 
-	std::vector<std::shared_ptr<Component>> m_components;
+	std::vector<Component> m_components;
 
 
 };

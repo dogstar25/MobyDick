@@ -12,16 +12,6 @@
 
 GameObject::~GameObject()
 {
-	//Use clear then swap with empty array to free memory
-	m_animations.clear();
-	std::map<std::string, Animation*>().swap(m_animations);
-	
-	//Free the children - YAY!
-	for (int x = 0; x < constants::CHILD_POSITIONS; x++)
-	{
-		m_childObjects[x].clear();
-		std::vector <std::shared_ptr<GameObject>>().swap(m_childObjects[x]);
-	}
 
 }
 
@@ -29,15 +19,7 @@ void GameObject::init()
 {
 
 	m_removeFromWorld = false;
-	m_color = { 255,255,255,255 };
-	m_position = { 0,0 };
-	m_size = { 0,0 };
-	m_angle = 0;
-	m_mouseState = 0;
-
-	m_texture = nullptr;
-
-	m_definition = nullptr;
+	m_gameObjectDefinition = nullptr;
 
 }
 
@@ -52,102 +34,94 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	this->init();
 
 	//calculate position
-	b2Vec2 position(xMapPos * Level::instance().m_tileWidth, yMapPos * Level::instance().m_tileHeight);
-	this->setPosition(position, angleAdjust);
+	//b2Vec2 position(xMapPos * Level::instance().m_tileWidth, yMapPos * Level::instance().m_tileHeight);
+	//this->setPosition(position, angleAdjust);
 
 	//is this a debug object then get the default debug definition but change its 
 	//id value to the one we passed in
-	if (gameObjectId.rfind("DEBUG_", 0) == 0)
-	{
-		m_definition = GameObjectManager::instance().gameObjectDefinitions["DEBUG_ITEM"];;
-	}
-	else
-	{
-		m_definition = GameObjectManager::instance().gameObjectDefinitions[gameObjectId];
-	}
+	//if (gameObjectId.rfind("DEBUG_", 0) == 0)
+	//{
+	//	m_definition = GameObjectManager::instance().gameObjectDefinitions["DEBUG_ITEM"];;
+	//}
+	//else
+	//{
+	//	m_definition = GameObjectManager::instance().gameObjectDefinitions[gameObjectId];
+	//}
 
-	m_size.Set(m_definition->xSize, m_definition->ySize);
+	//m_size.Set(m_definition->xSize, m_definition->ySize);
 
-	//color
-	m_color = m_definition->color;
+	////color
+	//m_color = m_definition->color;
 
-	//Get pointer to the texture
-	m_texture = TextureManager::instance().getTexture(m_definition->textureId);
+	////Get pointer to the texture
+	//m_texture = TextureManager::instance().getTexture(m_definition->textureId);
 
-	//get the animation objects if they exist
-	std::string firstState;
-	int i = 0;
-	if (m_definition->animationDetails.animations.size() > 0)
-	{
-		Animation* animation = nullptr;
-		for (auto animationDefinition : m_definition->animationDetails.animations) {
+	////get the animation objects if they exist
+	//std::string firstState;
+	//int i = 0;
+	//if (m_definition->animationDetails.animations.size() > 0)
+	//{
+	//	Animation* animation = nullptr;
+	//	for (auto animationDefinition : m_definition->animationDetails.animations) {
 
-			animation = new Animation(m_definition,
-				animationDefinition.state,
-				animationDefinition.textureId,
-				animationDefinition.frames,
-				animationDefinition.speed);
+	//		animation = new Animation(m_definition,
+	//			animationDefinition.state,
+	//			animationDefinition.textureId,
+	//			animationDefinition.frames,
+	//			animationDefinition.speed);
 
-			m_animations.emplace(animationDefinition.state, animation);
-			//this->animations[animationDefinition.state]= animation;
+	//		m_animations.emplace(animationDefinition.state, animation);
+	//		//this->animations[animationDefinition.state]= animation;
 
-			//Save the first state id 
-			if (i == 0) {
-				firstState = animationDefinition.state;
-			}
-			++i;
-		}
+	//		//Save the first state id 
+	//		if (i == 0) {
+	//			firstState = animationDefinition.state;
+	//		}
+	//		++i;
+	//	}
 
-		//On creation, default the animation state to idle
-		this->m_currentAnimationState = firstState;
-	}
+	//	//On creation, default the animation state to idle
+	//	this->m_currentAnimationState = firstState;
+	//}
 
-	//Build children if they exist
-	this->buildChildren();
+	////Build children if they exist
+	//this->buildChildren();
 
 }
 
 void GameObject::update()
 {
+
+	for (auto& component : m_components)
+	{
+		component.update();
+	}
 	//If this object is animated, then animate it
-	if(m_definition->isAnimated) {
-		m_animations[this->m_currentAnimationState]->animate();
-	}
+	//if(m_definition->isAnimated) {
+	//	m_animations[this->m_currentAnimationState]->animate();
+	//}
 
-	//Update the mouse state
-	if (SDL_GetRelativeMouseMode() == SDL_FALSE)
-	{
-		this->updateMouseState();
-	}
+	////Update the mouse state
+	//if (SDL_GetRelativeMouseMode() == SDL_FALSE)
+	//{
+	//	this->updateMouseState();
+	//}
 
-	//This object was clicked, so push whatever event is tied to its onClick event property
-	if (m_mouseState == MOUSE_CLICKED)
-	{
-		this->onMouseClickEvent();
-	}
+	////This object was clicked, so push whatever event is tied to its onClick event property
+	//if (m_mouseState == MOUSE_CLICKED)
+	//{
+	//	this->onMouseClickEvent();
+	//}
 
-	//Loop through any possible child objects and update their
-	// position to reflect parent objects position
-	if (m_definition->hasChildObjects == true)
-	{
-		updateChildObjects();
-	}
-
-}
-
-SDL_FRect GameObject::getPositionRect()
-{
-	SDL_FRect positionRect;
-
-	positionRect.w = m_size.x;
-	positionRect.h = m_size.y;
-
-	positionRect.x = m_position.x;
-	positionRect.y = m_position.y;
-
-	return positionRect;
+	////Loop through any possible child objects and update their
+	//// position to reflect parent objects position
+	//if (m_definition->hasChildObjects == true)
+	//{
+	//	updateChildObjects();
+	//}
 
 }
+
 
 SDL_FRect GameObject::getRenderDestRect()
 {
