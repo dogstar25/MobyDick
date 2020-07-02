@@ -17,21 +17,21 @@ GameObjectDefinition::GameObjectDefinition(Json::Value gameObjectDefinitionJSON)
 	if (itr.isMember("TransformComponent"))
 	{
 		Json::Value& transformComponentJSON = itr["TransformComponent"];
-		this->components.emplace(TRANSFORM_COMPONENT, new TransformComponent(transformComponentJSON));
+		this->m_components.emplace(TRANSFORM_COMPONENT, new TransformComponent(transformComponentJSON));
 	}
 
 	//Render Component
 	if (itr.isMember("RenderComponent"))
 	{
 		Json::Value& renderComponentJSON = itr["RenderComponent"];
-		this->components.emplace(RENDER_COMPONENT, new RenderComponent(renderComponentJSON));
+		this->m_components.emplace(RENDER_COMPONENT, new RenderComponent(renderComponentJSON));
 	}
 
 	//Animation Component
 	if (itr.isMember("AnimationComponent"))
 	{
 		Json::Value& animationComponentJSON = itr["AnimationComponent"];
-		this->components.emplace(ANIMATION_COMPONENT, new AnimationComponent(animationComponentJSON));
+		this->m_components.emplace(ANIMATION_COMPONENT, new AnimationComponent(animationComponentJSON));
 	}
 
 

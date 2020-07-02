@@ -22,6 +22,11 @@ public:
 		return (componentFlags & componentId);
 	}
 
+	//Accessor functions
+	std::map<int, Component> components() {
+		return m_components;
+	}
+
 private:
 
 	std::string
@@ -29,7 +34,7 @@ private:
 		description;
 	unsigned int componentFlags;
 
-	std::map<int, Component> components;
+	std::map<int, Component> m_components;
 
 };
 

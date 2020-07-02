@@ -49,6 +49,7 @@ private:
 	bool
 		m_removeFromWorld;
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
+	std::string m_id;
 
 	void init();
 	/*virtual void onMouseHoverRender();

@@ -35,6 +35,27 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Init
 	this->init();
 
+	//Get a pointer to the game object definition
+	m_id = gameObjectId;
+	m_gameObjectDefinition = 
+		std::make_shared<GameObjectDefinition>(GameObjectManager::instance().getDefinition(gameObjectId));
+
+	//copy over the components
+	std::map<int, Component>::iterator it = m_gameObjectDefinition->components().begin();
+	for (std::pair<int, Component> component : m_gameObjectDefinition->components())
+	{
+		m_components.emplace_back( component.second);
+
+	}
+
+	//Need to call the constructor of each compoentn type to build the stuff that wasnt part of
+	//getting the component definition
+
+
+
+
+
+
 	//calculate position
 	//b2Vec2 position(xMapPos * Level::instance().m_tileWidth, yMapPos * Level::instance().m_tileHeight);
 	//this->setPosition(position, angleAdjust);
