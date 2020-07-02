@@ -25,7 +25,7 @@ private:
 		description;
 	unsigned int componentFlags;
 
-	std::map<std::string, Component> components;
+	std::map<int, Component> components;
 
 };
 

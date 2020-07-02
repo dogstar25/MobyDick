@@ -6,8 +6,11 @@
             "description": "SwordLady",
             "TransformComponent":
             {
-                "xSize": 64,
-                "ySize": 43.75,
+                "size":
+                {
+                    "width": 64,
+                    "height": 43.75
+                },
                 "absolutePositioning": false
 
             },
@@ -16,38 +19,13 @@
                 "animations":
                 [
                     {
-                        "state": "IDLE",
+                        "state": "ANIMATION_IDLE",
                         "textureId": "TX_SWORDLADY1_IDLE",
                         "speed": 0.06,
                         "frames": 19
                     }
                 ]
             }
-        },
-        {
-            "id": "SWORDLADY2",
-            "description": "SwordLady2",
-            "Components":
-            [
-                {
-                    "id": "TransformComponent",
-                    "xSize": 64,
-                    "ySize": 43.75,
-                    "absolutePositioning": false
-                },
-                {
-                    "id": "AnimationComponent",
-                    "animations":
-                    [
-                        {
-                            "state": "IDLE",
-                            "textureId": "TX_SWORDLADY1_IDLE",
-                            "speed": 0.06,
-                            "frames": 19
-                        }
-                    ]
-                }
-            ]
         },
         {
             "id": "GINA_64",
@@ -68,7 +46,7 @@
                     "animations":
                     [
                         {
-                            "state": "RUN",
+                            "state": "ANIMATION_RUN",
                             "textureId": "TX_GINA_64_RUN",
                             "speed": 0.10, //time in seconds for each frame. Lower the faster
                             "frames": 4
@@ -258,13 +236,13 @@
                     [
 
                         {
-                            "state": "ACTIVE",
+                            "state": "ANIMATION_IDLE",
                             "textureId": "TX_WEAPON1_IDLE",
                             "speed": 0.5, //time in seconds for each frame. Lower the faster
                             "frames": 3
                         },
                         {
-                            "state": "FIRE",
+                            "state": "ANIMATION_ACTION",
                             "textureId": "TX_WEAPON1_FIRE",
                             "speed": 0.1, //time in seconds for each frame. Lower the faster
                             "frames": 3

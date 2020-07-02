@@ -1,22 +1,32 @@
 #include "GameObjectDefinition.h"
 
+#include "components/TransformComponent.h"
+#include "components/AnimationComponent.h"
+#include "Globals.h"
 
 
 GameObjectDefinition::GameObjectDefinition(Json::Value gameObjectDefinitionJSON)
 {
-	//Create a shortcut name for convenience
+	//Convenience reference
 	Json::Value& itr = gameObjectDefinitionJSON;
-
 
 	this->description = itr["description"].asString();
 
 	//Transform Component
 	if (itr.isMember("TransformComponent"))
 	{
-		this->components.emplace
-
-
+		Json::Value& transformComponentJSON = itr["TransformComponent"];
+		this->components.emplace(TRANSFORM_COMPONENT, new TransformComponent(transformComponentJSON));
 	}
+
+	//Animation Component
+	if (itr.isMember("AnimationComponent"))
+	{
+		Json::Value& animationComponentJSON = itr["AnimationComponent"];
+		this->components.emplace(ANIMATION_COMPONENT, new AnimationComponent(animationComponentJSON));
+	}
+
+
 
 
 	gameObjectDefinition->speed = itr["speed"].asDouble();

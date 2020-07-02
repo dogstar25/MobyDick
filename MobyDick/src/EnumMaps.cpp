@@ -39,6 +39,12 @@ EnumMap::EnumMap()
 	m_enumMap["B2_BOX"] = b2Shape::e_polygon;
 	m_enumMap["B2_CHAIN"] = b2Shape::e_chain;
 
+	//Animation States
+	m_enumMap["ANIMATION_IDLE"] = ANIMATION_IDLE;
+	m_enumMap["ANIMATION_RUN"] = ANIMATION_RUN;
+	m_enumMap["ANIMATION_ACTIVE"] = ANIMATION_ACTIVE;
+	m_enumMap["ANIMATION_ACTION"] = ANIMATION_ACTION;
+
 
 }
 

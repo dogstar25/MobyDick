@@ -5,10 +5,23 @@
 #include "GameObjectDefinition.h"
 
 
+
+Animation::Animation(Json::Value animationDetailsJSON)
+{
+	//Convenience reference
+	Json::Value& itr = animationDetailsJSON;
+
+	m_state = itr["state"].asInt();
+	m_speed = itr["speed"].asFloat();
+	m_frameCount = itr["frames"].asInt();
+
+
+}
+
 Animation::Animation(GameObjectDefinition* gameObjectDefinition, std::string animationId, std::string textureId, int totalFrames, float speed)
 {
 
-	m_id = animationId;
+	//m_state = animationId;
 	m_speed = speed;
 	m_frameCount = totalFrames;
 

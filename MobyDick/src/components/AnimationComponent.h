@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <json/json.h>
 
 #include "Component.h"
 #include "Animation.h"
@@ -10,26 +11,26 @@
 class AnimationComponent :  public Component
 {
 public:
-	AnimationComponent();
+	AnimationComponent(Json::Value& componentDetailsJSON);
 	~AnimationComponent();
 
 	void update() override;
 
 	//Accessors
-	std::string currentAnimationState() {
+	int currentAnimationState() {
 		return m_currentAnimationState;
 	}
-	std::map<std::string, Animation*>& animations() {
+	std::map<int, Animation>& animations() {
 		return m_animations;
 	}
 	void setCurrentAnimationState(std::string animationState) { m_currentAnimationState = animationState; }
 
 
 private:
-	std::string
+	int 
 		m_currentAnimationState;
 
-	std::map<std::string, Animation*> m_animations;
+	std::map<int, Animation> m_animations;
 
 };
 

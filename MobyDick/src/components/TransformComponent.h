@@ -3,6 +3,7 @@
 
 #include "box2d/box2d.h"
 #include <SDL2/SDL.h>
+#include <json/json.h>
 
 #include "Component.h"
 
@@ -10,7 +11,7 @@ class TransformComponent : public Component
 {
 
 public:
-	TransformComponent();
+	TransformComponent(Json::Value& componentDetailsJSON);
 	~TransformComponent();
 
 	void update() override;
