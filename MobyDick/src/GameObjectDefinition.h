@@ -5,6 +5,7 @@
 #include <map>
 #include <SDL2/SDL.h>
 #include <Box2D/Box2D.h>
+#include <json/json.h>
 #include <vector>
 
 #include "components/Component.h"
@@ -14,13 +15,14 @@ class GameObjectDefinition
 {
 public:
 
-	GameObjectDefinition();
+	GameObjectDefinition(Json::Value gameObjectDefinitionJSON);
 	~GameObjectDefinition();
 
 private:
 
 	std::string
-		id;
+		id,
+		description;
 	unsigned int componentFlags;
 
 	std::map<std::string, Component> components;

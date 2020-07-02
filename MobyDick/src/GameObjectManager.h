@@ -26,6 +26,10 @@ private:
 	GameObjectManager();
 	~GameObjectManager();
 
+	//Map of the definitions of all posible game objects in the game/level
+	std::map<std::string, GameObjectDefinition> m_gameObjectDefinitions;
+
+
 	
 };
 

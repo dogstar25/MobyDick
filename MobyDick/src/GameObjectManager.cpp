@@ -25,7 +25,7 @@ GameObjectManager::~GameObjectManager()
 
 	//Use clear and swap to ensure free memory
 	this->gameObjectDefinitions.clear();
-	std::map<std::string, GameObjectDefinition*>().swap(this->gameObjectDefinitions);
+	std::map<std::string, GameObjectDefinition>().swap(this->gameObjectDefinitions);
 }
 
 
@@ -38,6 +38,11 @@ bool GameObjectManager::init()
 
 GameObject GameObjectManager::buildGameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angle)
 {
+
+
+
+
+
 
 }
 
@@ -54,8 +59,12 @@ void GameObjectManager::load(std::string gameObjectAssetsFilename)
 	std::string id, textureId;
 	GameObjectDefinition* gameObjectDefinition;
 
-	for (auto itr : root["gameObjects"])
+	for (Json::Value itr : root["gameObjects"])
 	{
+		std::string gameObjectId = itr["id"].asString();
+
+		m_gameObjectDefinitions.emplace(gameObjectId, new GameObjectDefinition(itr));
+
 		gameObjectDefinition = new GameObjectDefinition();
 		gameObjectDefinition->id = itr["id"].asString();
 		gameObjectDefinition->description = itr["description"].asString();

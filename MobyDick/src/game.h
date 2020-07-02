@@ -64,8 +64,8 @@ public:
 	int gameState(){
 		return m_gameState;
 	}
-	const std::array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>& gameCollections() {
-		return m_gameCollections;
+	std::array <std::vector<GameObject>, constants::MAX_GAMEOBJECT_LAYERS> {
+		return m_gameObjects;
 	}
 
 private:
@@ -80,9 +80,12 @@ private:
 	PlayerObject* m_player;
 	int m_gameState;
 
-	//Fixed array of Layers
-	//Each layer contains a GameObjectCollection
-	std::array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS> m_gameCollections;
+	/*Fixed array of Layers
+	Each layer contains a vector of GameObjects
+	For deletions, things with heavy number of deletes like bullets and particles should all be at 
+	the end of the vector which shoudl make for acceptable erase performance
+	*/
+	std::array <std::vector<GameObject>, constants::MAX_GAMEOBJECT_LAYERS> m_gameObjects;
 
 
 };
