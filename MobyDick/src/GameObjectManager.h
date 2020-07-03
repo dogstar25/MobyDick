@@ -15,12 +15,8 @@ public:
 	bool init();
 	void load(std::string);
 	
-	GameObjectDefinition* getDefinition(std::string);
+	std::shared_ptr<GameObjectDefinition> getDefinition(std::string);
 
-	//Map of the definitions of all posible game objects in the game/level
-	std::map<std::string, GameObjectDefinition> gameObjectDefinitions;
-	
-	GameObject buildGameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angle);
 
 private:
 	GameObjectManager();

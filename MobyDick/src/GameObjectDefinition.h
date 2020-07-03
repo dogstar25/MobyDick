@@ -8,33 +8,35 @@
 #include <json/json.h>
 #include <vector>
 
-#include "components/Component.h"
-
 
 class GameObjectDefinition
 {
 public:
 
+	GameObjectDefinition();
 	GameObjectDefinition(Json::Value gameObjectDefinitionJSON);
 	~GameObjectDefinition();
 
 	bool hasComponent(unsigned int componentId) {
-		return (componentFlags & componentId);
+		return (m_componentFlags & componentId);
+	}
+
+	void setDefinitionJSON(Json::Value definitionJSON) {
+		m_definitionJSON = definitionJSON;
 	}
 
 	//Accessor functions
-	std::map<int, Component> components() {
-		return m_components;
+	Json::Value definitionJSON() {
+		return m_definitionJSON;
 	}
 
 private:
 
 	std::string
-		id,
-		description;
-	unsigned int componentFlags;
+		m_id;
+	unsigned int m_componentFlags;
+	Json::Value m_definitionJSON;
 
-	std::map<int, Component> m_components;
 
 };
 

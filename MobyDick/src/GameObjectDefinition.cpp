@@ -1,38 +1,19 @@
 #include "GameObjectDefinition.h"
 
-#include "components/TransformComponent.h"
-#include "components/AnimationComponent.h"
-#include "components/RenderComponent.h"
-#include "Globals.h"
 
+
+GameObjectDefinition::GameObjectDefinition()
+{
+
+}
 
 GameObjectDefinition::GameObjectDefinition(Json::Value gameObjectDefinitionJSON)
 {
-	//Convenience reference
-	Json::Value& itr = gameObjectDefinitionJSON;
 
-	this->description = itr["description"].asString();
+	m_id = gameObjectDefinitionJSON["id"].asString();
 
-	//Transform Component
-	if (itr.isMember("TransformComponent"))
-	{
-		Json::Value& transformComponentJSON = itr["TransformComponent"];
-		this->m_components.emplace(TRANSFORM_COMPONENT, new TransformComponent(transformComponentJSON));
-	}
+	m_definitionJSON = gameObjectDefinitionJSON;
 
-	//Render Component
-	if (itr.isMember("RenderComponent"))
-	{
-		Json::Value& renderComponentJSON = itr["RenderComponent"];
-		this->m_components.emplace(RENDER_COMPONENT, new RenderComponent(renderComponentJSON));
-	}
-
-	//Animation Component
-	if (itr.isMember("AnimationComponent"))
-	{
-		Json::Value& animationComponentJSON = itr["AnimationComponent"];
-		this->m_components.emplace(ANIMATION_COMPONENT, new AnimationComponent(animationComponentJSON));
-	}
 
 
 	//gameObjectDefinition->fireOffset = itr["fireOffset"].asFloat();

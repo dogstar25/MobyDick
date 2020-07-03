@@ -1,22 +1,40 @@
 #include "TransformComponent.h"
+#include "../GameObjectDefinition.h"
+#include "../GameObjectManager.h"
+#include "../GameObject.h"
 
-#include "json/json.h"
-
-TransformComponent::TransformComponent(Json::Value& componentDetailsJSON)
+TransformComponent::TransformComponent()
 {
-	//Convenience reference
-	Json::Value itr = componentDetailsJSON;
+}
 
-	m_position.SetZero();
-	m_angle = 0;
+TransformComponent::TransformComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject)
+{
+	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 
-	m_size.Set(itr["size"]["width"].asFloat(), itr["size"]["height"].asFloat());
-	m_absolutePositioning = itr["absolutePositioning"].asBool();
-	
+	if (itrJSON.isMember("transformComponent"))
+	{
+		Json::Value itrTransform = itrJSON["transformComponent"];
+
+		m_parentGameObject = parentGameObject;
+		m_parentGameObject->componentFlags().set(TRANSFORM_COMPONENT);
+
+		m_position.SetZero();
+		m_angle = 0;
+
+		m_size.Set(itrTransform["size"]["width"].asFloat(), itrTransform["size"]["height"].asFloat());
+		m_absolutePositioning = itrTransform["absolutePositioning"].asBool();
+
+	}
 
 }
 
+
 TransformComponent::~TransformComponent()
+{
+
+}
+
+void TransformComponent::update()
 {
 
 }

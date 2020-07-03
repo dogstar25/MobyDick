@@ -2,16 +2,9 @@
 
 
 
-
 Component::Component()
 {
 	
-
-}
-
-Component::Component(GameObject* parentGameObject)
-{
-	m_parentGameObject = std::make_shared<GameObject>(parentGameObject);
 
 }
 
@@ -28,8 +21,3 @@ void Component::update()
 
 }
 
-void Component::render()
-{
-
-
-}

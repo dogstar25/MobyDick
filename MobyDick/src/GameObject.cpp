@@ -1,15 +1,7 @@
 #include "GameObject.h"
 
-#include "TextObject.h"
-#include "CompositeObject.h"
 #include "GameObjectManager.h"
-#include "Animation.h"
-#include "Level.h"
-#include "WorldObject.h"
-#include "Camera.h"
-#include "Renderer.h"
-#include "components/RenderComponent.h"
-#include "game.h"
+//#include "Level.h"
 
 
 GameObject::~GameObject()
@@ -22,31 +14,49 @@ void GameObject::init()
 
 	m_removeFromWorld = false;
 	m_gameObjectDefinition = nullptr;
-
+	m_componentFlags = 0;
 }
 
 GameObject::GameObject()
+	: mTransformComponent()
 {
 	this->init();
 }
 
-GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust)
+GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
+	mAnimationComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
+	mAttachmentsComponent(gameObjectId),
+	mChildrenComponent(gameObjectId),
+	mCompositeComponent(gameObjectId),
+	mParticleComponent(gameObjectId),
+	mPhysicsComponent(gameObjectId),
+	mRenderComponent(gameObjectId),
+	mTextComponent(gameObjectId),
+	mTransformComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
+	mVitalityComponent(gameObjectId),
+	mWeaponComponent(gameObjectId)
 {
 	//Init
 	this->init();
 
 	//Get a pointer to the game object definition
 	m_id = gameObjectId;
-	m_gameObjectDefinition = 
-		std::make_shared<GameObjectDefinition>(GameObjectManager::instance().getDefinition(gameObjectId));
 
-	//copy over the components
-	std::map<int, Component>::iterator it = m_gameObjectDefinition->components().begin();
-	for (std::pair<int, Component> component : m_gameObjectDefinition->components())
-	{
-		m_components.emplace_back( component.second);
+	////Render Component
+	//if (itr.isMember("RenderComponent"))
+	//{
+	//	m_componentFlags |= RENDER_COMPONENT;
+	//	Json::Value& renderComponentJSON = itr["RenderComponent"];
+	//	this->m_components.emplace(RENDER_COMPONENT, new RenderComponent(renderComponentJSON));
+	//}
 
-	}
+	////Animation Component
+	//if (itr.isMember("AnimationComponent"))
+	//{
+	//	m_componentFlags |= ANIMATION_COMPONENT;
+	//	Json::Value& animationComponentJSON = itr["AnimationComponent"];
+	//	this->m_components.emplace(ANIMATION_COMPONENT, new AnimationComponent(animationComponentJSON));
+	//}
 
 	//Need to call the constructor of each compoentn type to build the stuff that wasnt part of
 	//getting the component definition
@@ -115,14 +125,18 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 void GameObject::update()
 {
 
-	for (auto& component : m_components)
-	{
-		component.update();
-	}
-	//If this object is animated, then animate it
-	//if(m_definition->isAnimated) {
-	//	m_animations[this->m_currentAnimationState]->animate();
-	//}
+
+	mTransformComponent.update();
+	mPhysicsComponent.update();
+	mRenderComponent.update();
+	mAnimationComponent.update();
+	mTextComponent.update();
+	mChildrenComponent.update();
+	mAttachmentsComponent.update();
+	mVitalityComponent.update();
+	mWeaponComponent.update();
+	mCompositeComponent.update();
+	mParticleComponent.update();
 
 	////Update the mouse state
 	//if (SDL_GetRelativeMouseMode() == SDL_FALSE)
@@ -154,10 +168,10 @@ void GameObject::render()
 	SDL_Texture* texture=NULL;
 
 
-	if (m_gameObjectDefinition->hasComponent(RENDER_COMPONENT))
+	if (m_componentFlags.test(RENDER_COMPONENT))
 	{
 
-		m_components[RENDER_COMPONENT].render();
+		mRenderComponent.render();
 		
 
 		////test outlining object

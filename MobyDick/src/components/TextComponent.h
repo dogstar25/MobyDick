@@ -7,6 +7,7 @@ class TextComponent : public Component
 {
 public:
 	TextComponent();
+	TextComponent(std::string gameObjectId);
 	~TextComponent();
 
 	void update() override;

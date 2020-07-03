@@ -7,7 +7,6 @@
 
 #include "Globals.h"
 #include "TextureManager.h"
-#include "WorldObject.h"
 #include "GameObjectManager.h"
 #include "Game.h"
 

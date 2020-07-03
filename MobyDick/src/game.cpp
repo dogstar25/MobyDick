@@ -1,10 +1,10 @@
 #include "Game.h"
 
-#include "GameObject.h"
 //#include "Level.h"
 #include "TextureManager.h"
 #include "GameObjectManager.h"
 #include "SoundManager.h"
+#include "Renderer.h"
 //#include "DynamicTextManager.h"
 //#include "ParticleMachine.h"
 #include "GameConfig.h"
@@ -99,6 +99,9 @@ bool Game::init()
 			windowFlags);
 
 		//Initialize the texture manager
+		Renderer::instance().init(m_window);
+
+		//Initialize the texture manager
 		TextureManager::instance().init(m_window);
 
 		//Initialize the sound manager
@@ -160,9 +163,13 @@ bool Game::init()
 	//	(m_player->physicsBody()->GetPosition().y * GameConfig::instance().scaleFactor()) -
 	//	(Camera::instance().frame().h / 2));
 
-	gameObject = GameObjectManager::instance().buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
-	this->addGameObject(gameObject, GameOjectLayer::MAIN);
 
+
+
+	//gameObject = GameObjectManager::instance().buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
+	//this->addGameObject(gameObject, GameOjectLayer::MAIN);
+
+	gameObject = new GameObject("SWORDLADY", 2, 2, 0);
 
 	return true;
 }
@@ -231,7 +238,7 @@ void Game::_update() {
 
 
 	//Specifiaclly handle input and stuff for the one player gameObject
-	m_player->update();
+	//m_player->update();
 
 	//Update the camera frame to point to the new player position
 	//
@@ -283,10 +290,10 @@ void Game::_update() {
 void Game::_render() {
 
 	//Clear the graphics display
-	TextureManager::instance().clear();
+	Renderer::instance().clear();
 
 	//render the player
-	m_player->render();
+	//m_player->render();
 
 	//Render all of the game objects in thew world
 	renderGameObjects(m_gameObjects);
@@ -298,7 +305,7 @@ void Game::_render() {
 	//}
 
 	//Push all drawn things to the graphics display
-	TextureManager::instance().present();
+	Renderer::instance().present();
 
 }
 

@@ -11,6 +11,8 @@ class TransformComponent : public Component
 {
 
 public:
+	TransformComponent();
+	TransformComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject);
 	TransformComponent(Json::Value& componentDetailsJSON);
 	~TransformComponent();
 

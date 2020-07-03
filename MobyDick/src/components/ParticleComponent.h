@@ -9,6 +9,7 @@ class ParticleComponent : public Component
 {
 public:
 	ParticleComponent();
+	ParticleComponent(std::string gameObjectId);
 	~ParticleComponent();
 
 	void update() override;

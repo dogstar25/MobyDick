@@ -1,9 +1,14 @@
 #include "RenderComponent.h"
 
 #include "../Renderer.h"
-#include "../GameObject.h"
 #include "../Camera.h"
-#include "../TextureManager.h"
+#include "../GameObjectManager.h"
+
+
+RenderComponent::RenderComponent()
+{
+
+}
 
 /*
 Used for GameObject/Component creation
@@ -13,9 +18,19 @@ RenderComponent::RenderComponent(RenderComponent* componentDefinition)
 
 }
 
-/*
-Used for GameObject/Component definition data
-*/
+RenderComponent::RenderComponent(std::string gameObjectId)
+{
+	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
+
+	//Transform Component
+	if (itrJSON.isMember("RenderComponent"))
+	{
+
+		//m_componentFlags |= TRANSFORM_COMPONENT;
+
+	}
+
+}
 
 RenderComponent::RenderComponent(Json::Value& componentDetailsJSON)
 {
@@ -44,6 +59,11 @@ RenderComponent::RenderComponent(Json::Value& componentDetailsJSON)
 }
 
 RenderComponent::~RenderComponent()
+{
+
+}
+
+void RenderComponent::update()
 {
 
 }
@@ -154,7 +174,7 @@ void RenderComponent::outlineObject(float lineSize)
 	point.y = gameObjectDrawRect.y / lineSize;
 	points.push_back(point);
 
-	TextureManager::instance().outlineObject(points, lineSize);
+	Renderer::instance().outlineObject(points, lineSize);
 
 	points.clear();
 

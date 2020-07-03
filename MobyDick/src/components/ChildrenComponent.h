@@ -3,15 +3,21 @@
 
 #include <array>
 #include <vector>
+#include <SDL2/SDL.h>
+#include <box2d/box2d.h>
 
 #include "Component.h"
-#include "GameObject.h"
-#include "Globals.h"
+#include "../Globals.h"
+//#include "../GameObject.h"
+
+class GameObject;
+
 
 class ChildrenComponent :  public Component
 {
 public:
 	ChildrenComponent();
+	ChildrenComponent(std::string gameObjectId);
 	~ChildrenComponent();
 
 	void update() override;
@@ -25,9 +31,9 @@ private:
 	bool
 		m_childPositionRelative;
 
-	std::array<std::vector<GameObject>, constants::CHILD_POSITIONS> m_childObjects;
+	std::array<std::vector<std::shared_ptr<GameObject>>, constants::CHILD_POSITIONS> m_childObjects;
 
-	b2Vec2 calcChildPosition(std::shared_ptr<GameObject>, int, int, int);
+	//b2Vec2 calcChildPosition(std::shared_ptr<GameObject>, int, int, int);
 	void updateChildObjects();
 	void buildChildren();
 

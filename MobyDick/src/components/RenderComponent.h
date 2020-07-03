@@ -5,21 +5,22 @@
 #include <SDL2/SDL.h>
 
 #include "Component.h"
+#include "../Texture.h"
 #include "TransformComponent.h"
 #include "AnimationComponent.h"
-#include "Texture.h"
-#include "../GameObject.h"
 
 class RenderComponent : public Component
 {
 
 public:
-	RenderComponent(Json::Value& componentDetailsJSO);
+	RenderComponent();
+	RenderComponent(std::string gameObjectId);
+	RenderComponent(Json::Value& componentDetailsJSON);
 	RenderComponent(RenderComponent* componentDefinition);
 	~RenderComponent();
 
 	void update() override;
-	void render() override;
+	void render();
 
 	SDL_FRect  getRenderDestRect();
 	void setColor(SDL_Color color) {

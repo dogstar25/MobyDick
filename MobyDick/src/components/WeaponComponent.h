@@ -10,9 +10,12 @@ class WeaponComponent : public Component
 {
 
 public:
+	WeaponComponent();
+	WeaponComponent(std::string gameObjectId);
 	WeaponComponent(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust);
 	~WeaponComponent();
 
+	void update();
 	void fire(const b2Vec2& origin, const float& angle, const float& fireOffset);
 	bool checkLevelUp(const int& pieceCount);
 	void levelUp();

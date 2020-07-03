@@ -6,12 +6,15 @@
 #include <json/json.h>
 
 #include "Component.h"
-#include "Animation.h"
+#include "../Animation.h"
+
+class GameObject;
 
 class AnimationComponent :  public Component
 {
 public:
-	AnimationComponent(Json::Value& componentDetailsJSON);
+	AnimationComponent();
+	AnimationComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject);
 	~AnimationComponent();
 
 	void update() override;

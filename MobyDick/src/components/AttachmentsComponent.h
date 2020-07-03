@@ -4,10 +4,13 @@
 #include <vector>
 #include "Component.h"
 
+class GameObject;
+
 class AttachmentsComponent :   public Component
 {
 public:
 	AttachmentsComponent();
+	AttachmentsComponent(std::string gameObjectId);
 	~AttachmentsComponent();
 
 	void update() override;

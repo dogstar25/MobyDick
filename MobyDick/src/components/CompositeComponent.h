@@ -31,6 +31,7 @@ class CompositeComponent : public Component
 {
 public:
 	CompositeComponent();
+	CompositeComponent(std::string gameObjectId);
 	~CompositeComponent();
 
 	void update() override;

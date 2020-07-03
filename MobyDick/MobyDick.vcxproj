@@ -70,11 +70,11 @@
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\projects\MobyDick\MobyDick\src\components;C:\projects\MobyDick\MobyDick\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
     <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\lib\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\projects\MobyDick\MobyDick\src\components;C:\projects\MobyDick\MobyDick\src;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
     <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\lib\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -161,7 +161,6 @@
     <ClCompile Include="src\GameObjectDefinition.cpp" />
     <ClCompile Include="src\GameObjectManager.cpp" />
     <ClCompile Include="src\Globals.cpp" />
-    <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\SoundManager.cpp" />
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
@@ -194,8 +193,6 @@
     <ClInclude Include="src\GameObjectDefinition.h" />
     <ClInclude Include="src\GameObjectManager.h" />
     <ClInclude Include="src\Globals.h" />
-    <ClInclude Include="src\ComponentDefinitions.h" />
-    <ClInclude Include="src\Level.h" />
     <ClInclude Include="src\SoundManager.h" />
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\TextureManager.h" />

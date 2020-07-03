@@ -1,6 +1,35 @@
 #include "ChildrenComponent.h"
 
+#include "../GameObjectManager.h"
 
+ChildrenComponent::ChildrenComponent()
+{
+
+}
+
+ChildrenComponent::ChildrenComponent(std::string gameObjectId)
+{
+	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
+
+	//Transform Component
+	if (itrJSON.isMember("ChildrenComponent"))
+	{
+
+		//m_componentFlags |= TRANSFORM_COMPONENT;
+
+	}
+
+}
+
+ChildrenComponent::~ChildrenComponent()
+{
+
+}
+
+void ChildrenComponent::update()
+{
+
+}
 
 //
 //
