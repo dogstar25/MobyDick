@@ -9,13 +9,17 @@ class PhysicsComponent : public Component
 
 public:
 	PhysicsComponent();
-	PhysicsComponent(std::string gameObjectId);
+	PhysicsComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject);
 	~PhysicsComponent();
 
 	void update() override;
 
 
 private:
+
+	b2Body* buildB2Body();
+	uint16 setCollisionMask(uint16 category);
+
 	b2Body* m_physicsBody;
 
 	float

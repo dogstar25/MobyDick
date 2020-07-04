@@ -57,7 +57,7 @@
                     }
                 ]
             },
-            "physicsCompoent":
+            "physicsComponent":
             {
                 "type": "B2_DYNAMIC",
                 "collisionShape": "B2_CIRCLE",
@@ -65,7 +65,7 @@
                 "friction": 0.00,
                 "density": 50.5,
                 "linearDamping": 0.0,
-                "angularDamping": 200.0,
+                "angularDamping": 0.0,
                 "collisionCategory": "COLLISION_PLAYER"
             },
             "attachmentsComponent":

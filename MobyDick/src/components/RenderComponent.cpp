@@ -4,6 +4,8 @@
 #include "../Camera.h"
 #include "../GameObjectManager.h"
 #include "../GameObject.h"
+#include "../Globals.h"
+#include "../GameConfig.h"
 
 
 RenderComponent::RenderComponent()
@@ -81,8 +83,27 @@ SDL_FRect RenderComponent::getRenderDestRect()
 
 	destRect = m_parentGameObject->transformComponent().getPositionRect();
 
-	destRect.w += m_xRenderAdjustment;
-	destRect.h += m_yRenderAdjustment;
+	if (m_parentGameObject->hasComponentFlag(PHYSICS_COMPONENT))
+	{
+		destRect.w *= GameConfig::instance().scaleFactor();
+		destRect.h *= GameConfig::instance().scaleFactor();
+		destRect.x *= GameConfig::instance().scaleFactor();
+		destRect.y *= GameConfig::instance().scaleFactor();
+
+	}
+
+	//Render Adjustment
+	if (m_parentGameObject->hasComponentFlag(PHYSICS_COMPONENT))
+	{
+		destRect.w += (m_xRenderAdjustment / GameConfig::instance().scaleFactor());
+		destRect.h += (m_yRenderAdjustment / GameConfig::instance().scaleFactor());
+	}
+	else
+	{
+		destRect.w += m_xRenderAdjustment;
+		destRect.h += m_yRenderAdjustment;
+	}
+
 
 	//Adjust position based on current camera position - offset
 	destRect.x -= Camera::instance().frame().x;

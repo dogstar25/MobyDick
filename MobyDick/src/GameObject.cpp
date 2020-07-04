@@ -26,7 +26,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	mChildrenComponent(gameObjectId),
 	mCompositeComponent(gameObjectId),
 	mParticleComponent(gameObjectId),
-	mPhysicsComponent(gameObjectId),
+	mPhysicsComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
 	mRenderComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
 	mTextComponent(gameObjectId),
 	mTransformComponent(gameObjectId, std::shared_ptr<GameObject>(this)),

@@ -110,7 +110,7 @@ bool Game::init()
 
 		// Construct a physics world object, which will hold and simulate the physics objects.
 		m_physicsWorld = new b2World(GameConfig::instance().gravity());
-		m_physicsWorld->SetAutoClearForces(true);
+		//m_physicsWorld->SetAutoClearForces(true);
 		//Add a collision contact listener
 		//m_physicsWorld->SetContactListener(&m_gameObjectContactListner);
 
@@ -169,8 +169,8 @@ bool Game::init()
 	//gameObject = GameObjectManager::instance().buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
 	//this->addGameObject(gameObject, GameOjectLayer::MAIN);
 
-	gameObject = new GameObject("SWORDLADY", 2, 2, 0);
-	addGameObject(gameObject, GameOjectLayer::MAIN);
+	//gameObject = new GameObject("SWORDLADY", 2, 2, 0);
+	//addGameObject(gameObject, GameOjectLayer::MAIN);
 
 
 	gameObject = new GameObject("GINA_64", 6, 6, 0);

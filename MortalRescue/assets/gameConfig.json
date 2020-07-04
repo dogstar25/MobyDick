@@ -13,8 +13,8 @@
   "dynamicTextRefreshDelay":  0.1, //need a tiny delay to prevent millions of text texture regenerations
   "physics": {
     "gravity": {
-      "x": 0.0,
-      "y": 0.0
+      "x": 7.0,
+      "y": 7.0
     },
     "b2DebugDrawMode": false,
     "timeStep": 0.016, // 1/60 or 1/30

@@ -2,6 +2,7 @@
 #include "../GameObjectDefinition.h"
 #include "../GameObjectManager.h"
 #include "../GameObject.h"
+#include "../GameConfig.h"
 
 TransformComponent::TransformComponent()
 {
@@ -23,7 +24,19 @@ TransformComponent::TransformComponent(std::string gameObjectId, std::shared_ptr
 		m_position.SetZero();
 		m_angle = 0;
 
-		m_size.Set(itrTransform["size"]["width"].asFloat(), itrTransform["size"]["height"].asFloat());
+		//If this is a physics object then apply the box2d scale factor to the size
+		//to convert it from pixels to meters
+		if (itrJSON.isMember("physicsComponent"))
+		{
+			m_size.Set(
+				itrTransform["size"]["width"].asFloat() / GameConfig::instance().scaleFactor(), 
+				itrTransform["size"]["height"].asFloat() / GameConfig::instance().scaleFactor());
+		}
+		else
+		{
+			m_size.Set(itrTransform["size"]["width"].asFloat(), itrTransform["size"]["height"].asFloat());
+		}
+
 		m_absolutePositioning = itrTransform["absolutePositioning"].asBool();
 
 	}
