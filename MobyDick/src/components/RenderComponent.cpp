@@ -26,6 +26,9 @@ RenderComponent::RenderComponent(std::string gameObjectId, std::shared_ptr<GameO
 	//Save the pointer to parent GameObject
 	m_parentGameObject = parentGameObject;
 
+	//Default values if no component configured
+	setColor(255, 255, 255, 255);
+
 	//Transform Component
 	if (itrJSON.isMember("renderComponent"))
 	{

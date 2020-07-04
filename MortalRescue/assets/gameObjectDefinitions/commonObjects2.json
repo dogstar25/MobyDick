@@ -14,20 +14,6 @@
                 "absolutePositioning": false
 
             },
-            "renderComponent":
-            {
-                "textureId": "",
-                "color":
-                {
-                    "red": 255,
-                    "green": 0,
-                    "blue": 0,
-                    "alpha": 255
-                },
-                "xRenderAdjustment": 0,
-                "yRenderAdjustment": 0,
-                "renderOutline":  false
-            },
             "animationComponent":
             {
                 "animations":
@@ -48,8 +34,8 @@
             {
                 "size":
                 {
-                    "width": 2.56,
-                    "height": 2.56
+                    "width": 64,
+                    "height": 64
                 },
                 "absolutePositioning": false
             },

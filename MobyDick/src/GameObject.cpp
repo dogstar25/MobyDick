@@ -163,8 +163,8 @@ void GameObject::render()
 	SDL_Texture* texture=NULL;
 
 
-	if (hasComponentFlag(RENDER_COMPONENT))
-	{
+	//if (hasComponentFlag(RENDER_COMPONENT))
+	//{
 
 		mRenderComponent.render();
 		
@@ -197,7 +197,7 @@ void GameObject::render()
 		//{
 		//	renderChildObjects();
 		//}
-	}
+	//}
 
 }
 

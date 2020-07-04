@@ -172,6 +172,10 @@ bool Game::init()
 	gameObject = new GameObject("SWORDLADY", 2, 2, 0);
 	addGameObject(gameObject, GameOjectLayer::MAIN);
 
+
+	gameObject = new GameObject("GINA_64", 6, 6, 0);
+	addGameObject(gameObject, GameOjectLayer::MAIN);
+
 	return true;
 }
 
