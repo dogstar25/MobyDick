@@ -30,7 +30,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	mCompositeComponent(gameObjectId),
 	mParticleComponent(gameObjectId),
 	mPhysicsComponent(gameObjectId),
-	mRenderComponent(gameObjectId),
+	mRenderComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
 	mTextComponent(gameObjectId),
 	mTransformComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
 	mVitalityComponent(gameObjectId),
@@ -168,8 +168,8 @@ void GameObject::render()
 	SDL_Texture* texture=NULL;
 
 
-	if (m_componentFlags.test(RENDER_COMPONENT))
-	{
+	//if (m_componentFlags.test(RENDER_COMPONENT))
+	//{
 
 		mRenderComponent.render();
 		
@@ -202,7 +202,7 @@ void GameObject::render()
 		//{
 		//	renderChildObjects();
 		//}
-	}
+	//}
 
 }
 

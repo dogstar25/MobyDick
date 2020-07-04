@@ -9,12 +9,14 @@
 #include "TransformComponent.h"
 #include "AnimationComponent.h"
 
+class GameObject;
+
 class RenderComponent : public Component
 {
 
 public:
 	RenderComponent();
-	RenderComponent(std::string gameObjectId);
+	RenderComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject);
 	RenderComponent(Json::Value& componentDetailsJSON);
 	RenderComponent(RenderComponent* componentDefinition);
 	~RenderComponent();
@@ -52,9 +54,6 @@ public:
 
 
 private:
-	// References to ther componets of the same gameObject
-	std::shared_ptr<TransformComponent> m_transformComponent;
-	std::shared_ptr<AnimationComponent> m_animationComponent;
 
 	std::shared_ptr<Texture> m_texture;
 	SDL_Color

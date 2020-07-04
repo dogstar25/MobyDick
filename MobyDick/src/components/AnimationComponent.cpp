@@ -43,6 +43,9 @@ AnimationComponent::AnimationComponent(std::string gameObjectId, std::shared_ptr
 AnimationComponent::~AnimationComponent()
 {
 
+	m_animations.clear();
+	std::map<int, Animation>().swap(m_animations);
+
 }
 
 void AnimationComponent::update()

@@ -3,6 +3,7 @@
 #include "../Renderer.h"
 #include "../Camera.h"
 #include "../GameObjectManager.h"
+#include "../GameObject.h"
 
 
 RenderComponent::RenderComponent()
@@ -18,45 +19,42 @@ RenderComponent::RenderComponent(RenderComponent* componentDefinition)
 
 }
 
-RenderComponent::RenderComponent(std::string gameObjectId)
+RenderComponent::RenderComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject)
 {
 	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 
 	//Transform Component
-	if (itrJSON.isMember("RenderComponent"))
+	if (itrJSON.isMember("renderComponent"))
 	{
+		m_parentGameObject = parentGameObject;
+		m_parentGameObject->componentFlags().set(RENDER_COMPONENT);
 
-		//m_componentFlags |= TRANSFORM_COMPONENT;
+		Json::Value itrRender = itrJSON["renderComponent"];
+
+		if (itrRender.isMember("color"))
+		{
+			setColor(
+				itrRender["color"]["red"].asInt(),
+				itrRender["color"]["green"].asInt(),
+				itrRender["color"]["blue"].asInt(),
+				itrRender["color"]["alpha"].asInt()
+			);
+		}
+		else
+		{
+			setColor(255, 255, 255, 255);
+		}
+
+		m_textureId = itrRender["textureId"].asString();
+		m_xRenderAdjustment = itrRender["xRenderAdjustment"].asFloat();
+		m_yRenderAdjustment = itrRender["yRenderAdjustment"].asFloat();
+		m_renderOutline = itrRender["renderOutline"].asFloat();
+
 
 	}
 
 }
 
-RenderComponent::RenderComponent(Json::Value& componentDetailsJSON)
-{
-	//Convenience reference
-	Json::Value itr = componentDetailsJSON;
-
-	if (itr.isMember("color") )
-	{
-		setColor( 
-			itr["color"]["red"].asInt(),
-			itr["color"]["green"].asInt(),
-			itr["color"]["blue"].asInt(),
-			itr["color"]["alpha"].asInt()
-		);
-	}
-	else
-	{
-		setColor(255,255,255,255);
-	}
-
-	m_textureId = itr["textureId"].asString();
-	m_xRenderAdjustment = itr["xRenderAdjustment"].asFloat();
-	m_yRenderAdjustment = itr["yRenderAdjustment"].asFloat();
-	m_renderOutline = itr["renderOutline"].asFloat();
-
-}
 
 RenderComponent::~RenderComponent()
 {
@@ -75,7 +73,7 @@ SDL_FRect RenderComponent::getRenderDestRect()
 {
 	SDL_FRect destRect;
 
-	destRect = m_transformComponent->getPositionRect();
+	destRect = m_parentGameObject->transformComponent().getPositionRect();
 
 	destRect.w += m_xRenderAdjustment;
 	destRect.h += m_yRenderAdjustment;
@@ -97,9 +95,9 @@ SDL_Rect* RenderComponent::getRenderTextureRect()
 	SDL_Rect* textureSrcRect=nullptr;
 
 	//if (m_parentGameObject->gameObjectDefinition()->hasComponent(ANIMATION_COMPONENT)) 
-	if(m_animationComponent)
+	if(m_parentGameObject->componentFlags().test(ANIMATION_COMPONENT))
 	{
-		textureSrcRect = m_animationComponent->getCurrentAnimationTextureRect();
+		textureSrcRect = m_parentGameObject->animationComponent().getCurrentAnimationTextureRect();
 	}
 
 	return textureSrcRect;
@@ -114,9 +112,9 @@ SDL_Texture* RenderComponent::getRenderTexture()
 {
 	SDL_Texture* texture = nullptr;
 
-	if (m_animationComponent) {
+	if (m_parentGameObject->componentFlags().test(ANIMATION_COMPONENT)) {
 
-		texture = m_animationComponent->getCurrentAnimationTexture();
+		texture = m_parentGameObject->animationComponent().getCurrentAnimationTexture();
 	}
 	else {
 
@@ -143,7 +141,7 @@ void RenderComponent::outlineObject(float lineSize)
 	SDL_FPoint point;
 
 	//Adjust for camera
-	if (m_transformComponent->absolutePositioning() == false)
+	if (m_parentGameObject->transformComponent().absolutePositioning() == false)
 	{
 		gameObjectDrawRect.x -= Camera::instance().frame().x;
 		gameObjectDrawRect.y -= Camera::instance().frame().y;
@@ -196,7 +194,7 @@ void RenderComponent::render()
 	SDL_Rect* textureSourceRect = getRenderTextureRect();
 	const SDL_FRect destRect = getRenderDestRect();
 	SDL_Texture* texture = getRenderTexture();
-	float angle = m_transformComponent->angle();
+	float angle = m_parentGameObject->transformComponent().angle();
 
 	//Set the color
 	SDL_SetTextureAlphaMod(texture, m_color.a);

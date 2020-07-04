@@ -81,8 +81,8 @@ Animation::Animation(Json::Value animationDetailsJSON)
 Animation::~Animation()
 {
 
-	delete m_currentTextureAnimationSrcRect;
-	delete m_texture;
+	//delete m_currentTextureAnimationSrcRect;
+	//delete m_texture;
 
 }
 
