@@ -20,8 +20,8 @@
                 "color":
                 {
                     "red": 255,
-                    "green": 255,
-                    "blue": 255,
+                    "green": 0,
+                    "blue": 0,
                     "alpha": 255
                 },
                 "xRenderAdjustment": 0,
@@ -82,7 +82,7 @@
                 "angularDamping": 200.0,
                 "collisionCategory": "COLLISION_PLAYER"
             },
-            "attachmentsComponet":
+            "attachmentsComponent":
             {
                 "attachments":
                 [

@@ -23,11 +23,14 @@ RenderComponent::RenderComponent(std::string gameObjectId, std::shared_ptr<GameO
 {
 	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 
+	//Save the pointer to parent GameObject
+	m_parentGameObject = parentGameObject;
+
 	//Transform Component
 	if (itrJSON.isMember("renderComponent"))
 	{
 		m_parentGameObject = parentGameObject;
-		m_parentGameObject->componentFlags().set(RENDER_COMPONENT);
+		m_parentGameObject->setComponentFlag(RENDER_COMPONENT);
 
 		Json::Value itrRender = itrJSON["renderComponent"];
 
@@ -94,8 +97,7 @@ SDL_Rect* RenderComponent::getRenderTextureRect()
 {
 	SDL_Rect* textureSrcRect=nullptr;
 
-	//if (m_parentGameObject->gameObjectDefinition()->hasComponent(ANIMATION_COMPONENT)) 
-	if(m_parentGameObject->componentFlags().test(ANIMATION_COMPONENT))
+	if (m_parentGameObject->hasComponentFlag(ANIMATION_COMPONENT))
 	{
 		textureSrcRect = m_parentGameObject->animationComponent().getCurrentAnimationTextureRect();
 	}
@@ -112,7 +114,7 @@ SDL_Texture* RenderComponent::getRenderTexture()
 {
 	SDL_Texture* texture = nullptr;
 
-	if (m_parentGameObject->componentFlags().test(ANIMATION_COMPONENT)) {
+	if (m_parentGameObject->hasComponentFlag(ANIMATION_COMPONENT)) {
 
 		texture = m_parentGameObject->animationComponent().getCurrentAnimationTexture();
 	}

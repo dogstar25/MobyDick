@@ -170,6 +170,7 @@ bool Game::init()
 	//this->addGameObject(gameObject, GameOjectLayer::MAIN);
 
 	gameObject = new GameObject("SWORDLADY", 2, 2, 0);
+	addGameObject(gameObject, GameOjectLayer::MAIN);
 
 	return true;
 }
@@ -212,7 +213,7 @@ void Game::renderGameObjects(const std::array <std::vector<GameObject>, constant
 {
 
 	//Render all of the game objects
-	for (auto& gameLayer : gameObjects)
+	for (auto gameLayer : gameObjects)
 	{
 		//Update normal game objects
 		for (auto gameObject : gameLayer)
@@ -226,8 +227,7 @@ void Game::renderGameObjects(const std::array <std::vector<GameObject>, constant
 void Game::addGameObject(GameObject* gameObject, int layer)
 {
 
-	//this->gameObjects[layer].push_back(make_unique<GameObject>(*gameObject));
-	//m_gameCollections[layer].gameObjects().push_back(gameObject);
+	this->m_gameObjects[layer].push_back((*gameObject));
 
 }
 

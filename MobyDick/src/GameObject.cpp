@@ -12,9 +12,6 @@ GameObject::~GameObject()
 void GameObject::init()
 {
 
-	m_removeFromWorld = false;
-	m_gameObjectDefinition = nullptr;
-	m_componentFlags = 0;
 }
 
 GameObject::GameObject()
@@ -36,8 +33,6 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	mVitalityComponent(gameObjectId),
 	mWeaponComponent(gameObjectId)
 {
-	//Init
-	this->init();
 
 	//Get a pointer to the game object definition
 	m_id = gameObjectId;
@@ -168,8 +163,8 @@ void GameObject::render()
 	SDL_Texture* texture=NULL;
 
 
-	//if (m_componentFlags.test(RENDER_COMPONENT))
-	//{
+	if (hasComponentFlag(RENDER_COMPONENT))
+	{
 
 		mRenderComponent.render();
 		
@@ -202,7 +197,7 @@ void GameObject::render()
 		//{
 		//	renderChildObjects();
 		//}
-	//}
+	}
 
 }
 

@@ -25,7 +25,7 @@ public:
 	int currentAnimationState() {
 		return m_currentAnimationState;
 	}
-	std::map<int, Animation>& animations() {
+	std::map<int, std::shared_ptr<Animation>>& animations() {
 		return m_animations;
 	}
 	void setCurrentAnimationState(int animationState) { m_currentAnimationState = animationState; }
@@ -35,7 +35,7 @@ private:
 	int 
 		m_currentAnimationState;
 
-	std::map<int, Animation> m_animations;
+	std::map<int, std::shared_ptr<Animation>> m_animations;
 
 };
 

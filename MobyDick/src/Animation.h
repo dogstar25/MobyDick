@@ -16,7 +16,7 @@ class Animation
 public:
 
 	Animation();
-	Animation(Json::Value animationDetailsJSON);
+	Animation(Json::Value animationDetailsJSON, Json::Value transformComponentJSON);
 	Animation(GameObjectDefinition* gameObjectDefinition, std::string animationId, std::string textureId,
 		int totalFrames, float speed);
 	~Animation();

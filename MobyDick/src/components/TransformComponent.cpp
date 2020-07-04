@@ -11,12 +11,14 @@ TransformComponent::TransformComponent(std::string gameObjectId, std::shared_ptr
 {
 	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 
+	//Save the pointer to parent GameObject
+	m_parentGameObject = parentGameObject;
+
 	if (itrJSON.isMember("transformComponent"))
 	{
 		Json::Value itrTransform = itrJSON["transformComponent"];
 
-		m_parentGameObject = parentGameObject;
-		m_parentGameObject->componentFlags().set(TRANSFORM_COMPONENT);
+		m_parentGameObject->setComponentFlag(TRANSFORM_COMPONENT);
 
 		m_position.SetZero();
 		m_angle = 0;

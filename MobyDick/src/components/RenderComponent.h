@@ -17,7 +17,6 @@ class RenderComponent : public Component
 public:
 	RenderComponent();
 	RenderComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject);
-	RenderComponent(Json::Value& componentDetailsJSON);
 	RenderComponent(RenderComponent* componentDefinition);
 	~RenderComponent();
 

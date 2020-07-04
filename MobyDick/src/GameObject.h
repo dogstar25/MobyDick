@@ -41,6 +41,14 @@ public:
 		m_removeFromWorld = removeFromWorld; 
 	}
 
+	auto setComponentFlag(size_t flag) {
+		m_componentFlags.set(flag, true);
+	}
+
+	bool hasComponentFlag(size_t flag) {
+		return m_componentFlags.test(flag);
+	}
+
 	//Accessor Functions
 	auto removeFromWorld() { 
 		return m_removeFromWorld; 
@@ -48,9 +56,6 @@ public:
 
 	auto gameObjectDefinition(){
 		return m_gameObjectDefinition;
-	}
-	auto componentFlags() {
-		return m_componentFlags;
 	}
 	auto& animationComponent() {
 		return mAnimationComponent;

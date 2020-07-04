@@ -13,16 +13,23 @@ AnimationComponent::AnimationComponent(std::string gameObjectId, std::shared_ptr
 {
 	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 
-	//Transform Component
-	if (itrJSON.isMember("animationComponent"))
-	{
-		m_parentGameObject = parentGameObject;
-		m_parentGameObject->componentFlags().set(ANIMATION_COMPONENT);
+	//Save the pointer to parent GameObject
+	m_parentGameObject = parentGameObject;
 
+	//Animation Component - requires transform component as well 
+	if (itrJSON.isMember("animationComponent") && itrJSON.isMember("transformComponent"))
+	{
+		m_parentGameObject->setComponentFlag(ANIMATION_COMPONENT);
+
+		//Get reference to the animationComponent JSON config and transformComponent JSON config
+		Json::Value animationComponentJSON = itrJSON["animationComponent"];
+		Json::Value transformComponentJSON = itrJSON["transformComponent"];
+
+		//Build animationComponent details
 		m_currentAnimationState = 1;
 
 		int i = 0;
-		for (Json::Value animItr : itrJSON["animationComponent"]["animations"])
+		for (Json::Value animItr : animationComponentJSON["animations"])
 		{
 			i++;
 			int state = EnumMap::instance().toEnum(animItr["state"].asString());
@@ -32,7 +39,7 @@ AnimationComponent::AnimationComponent(std::string gameObjectId, std::shared_ptr
 				m_currentAnimationState = state;
 			}
 			//Animation* animation = new Animation(animItr);
-			m_animations.emplace(state, *(new Animation(animItr)));
+			m_animations.emplace(state, new Animation(animItr, transformComponentJSON));
 
 		}
 
@@ -44,12 +51,14 @@ AnimationComponent::~AnimationComponent()
 {
 
 	m_animations.clear();
-	std::map<int, Animation>().swap(m_animations);
+	//std::map<int, Animation*>().swap(m_animations);
 
 }
 
 void AnimationComponent::update()
 {
+
+	m_animations[m_currentAnimationState]->animate();
 
 }
 
@@ -59,7 +68,7 @@ SDL_Rect* AnimationComponent::getCurrentAnimationTextureRect()
 	SDL_Rect* textureSrcRect = nullptr;
 
 	textureSrcRect =
-		m_animations[m_currentAnimationState].getCurrentTextureAnimationSrcRect();
+		m_animations[m_currentAnimationState]->getCurrentTextureAnimationSrcRect();
 
 	return textureSrcRect;
 	
@@ -70,7 +79,7 @@ SDL_Texture* AnimationComponent::getCurrentAnimationTexture()
 	SDL_Texture* texture = nullptr;
 
 	texture =
-		m_animations[m_currentAnimationState].getTexture();
+		m_animations[m_currentAnimationState]->getTexture();
 
 	return texture;
 
