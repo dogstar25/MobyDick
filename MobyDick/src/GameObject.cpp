@@ -17,24 +17,24 @@ void GameObject::init()
 }
 
 GameObject::GameObject()
-	: mTransformComponent()
+	: m_TransformComponent()
 {
 	this->init();
 }
 
 GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
-	mAnimationComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
-	mAttachmentsComponent(gameObjectId),
-	mChildrenComponent(gameObjectId),
-	mCompositeComponent(gameObjectId),
-	mParticleComponent(gameObjectId),
-	mPhysicsComponent(gameObjectId, std::shared_ptr<GameObject>(this), xMapPos, yMapPos, angleAdjust),
-	mPlayerControlComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
-	mRenderComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
-	mTextComponent(gameObjectId),
-	mTransformComponent(gameObjectId, std::shared_ptr<GameObject>(this), xMapPos, yMapPos, angleAdjust),
-	mVitalityComponent(gameObjectId),
-	mWeaponComponent(gameObjectId)
+	m_AnimationComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
+	m_AttachmentsComponent(gameObjectId),
+	m_ChildrenComponent(gameObjectId),
+	m_CompositeComponent(gameObjectId),
+	m_ParticleComponent(gameObjectId),
+	m_PhysicsComponent(gameObjectId, std::shared_ptr<GameObject>(this), xMapPos, yMapPos, angleAdjust),
+	m_PlayerControlComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
+	m_RenderComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
+	m_TextComponent(gameObjectId),
+	m_TransformComponent(gameObjectId, std::shared_ptr<GameObject>(this), xMapPos, yMapPos, angleAdjust),
+	m_VitalityComponent(gameObjectId),
+	m_WeaponComponent(gameObjectId)
 {
 
 	//Get a pointer to the game object definition
@@ -124,40 +124,40 @@ void GameObject::update()
 {
 
 	if (hasComponentFlag(TRANSFORM_COMPONENT)) {
-		mTransformComponent.update();
+		m_TransformComponent.update();
 	}
 	if (hasComponentFlag(PHYSICS_COMPONENT)) {
-		mPhysicsComponent.update();
+		m_PhysicsComponent.update();
 	}
 	if (hasComponentFlag(ANIMATION_COMPONENT)) {
-		mAnimationComponent.update();
+		m_AnimationComponent.update();
 	}
 	if (hasComponentFlag(RENDER_COMPONENT)) {
-		mRenderComponent.update();
+		m_RenderComponent.update();
 	}
 	if (hasComponentFlag(TEXT_COMPONENT)) {
-		mTextComponent.update();
+		m_TextComponent.update();
 	}
 	if (hasComponentFlag(CHILDREN_COMPONENT)) {
-		mChildrenComponent.update();
+		m_ChildrenComponent.update();
 	}
 	if (hasComponentFlag(ATTACHMENTS_COMPONENT)) {
-		mAttachmentsComponent.update();
+		m_AttachmentsComponent.update();
 	}
 	if (hasComponentFlag(VITALITY_COMPONENT)) {
-		mVitalityComponent.update();
+		m_VitalityComponent.update();
 	}
 	if (hasComponentFlag(WEAPON_COMPONENT)) {
-		mWeaponComponent.update();
+		m_WeaponComponent.update();
 	}
 	if (hasComponentFlag(COMPOSITE_COMPONENT)) {
-		mCompositeComponent.update();
+		m_CompositeComponent.update();
 	}
 	if (hasComponentFlag(PARTICLE_COMPONENT)) {
-		mParticleComponent.update();
+		m_ParticleComponent.update();
 	}
 	if (hasComponentFlag(PLAYERCONTROL_COMPONENT)) {
-		mPlayerControlComponent.update();
+		m_PlayerControlComponent.update();
 	}
 
 
@@ -194,7 +194,7 @@ void GameObject::render()
 	//if (hasComponentFlag(RENDER_COMPONENT))
 	//{
 
-		mRenderComponent.render();
+		m_RenderComponent.render();
 		
 
 		////test outlining object
@@ -318,5 +318,49 @@ void GameObject::render()
 //}
 //
 
+void GameObject::performMovementSequence(float velocity, int direction, int strafe)
+{
+	//Physics
+	m_PhysicsComponent.applyMovement(velocity, direction, strafe);
+
+	//Sound
+	playSound(0);
+
+	//Animation
+	if (direction == 0 && strafe == 0)
+	{
+		setAnimationState(ANIMATION_IDLE);
+	}
+	else
+	{
+		setAnimationState(ANIMATION_RUN);
+	}
+}
+
+
+void GameObject::performRotationSequence(float angularVelocity)
+{
+	m_PhysicsComponent.applyRotation(angularVelocity);
+
+	//Sound
+	playSound(0);
+
+	//Animation
+	setAnimationState(ANIMATION_IDLE);
+
+}
+
+void GameObject::playSound(int soundId)
+{
+
+
+}
+
+void GameObject::setAnimationState(int animationState)
+{
+
+	m_AnimationComponent.setCurrentAnimationState(animationState);
+
+}
 
 

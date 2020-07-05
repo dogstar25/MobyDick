@@ -49,6 +49,10 @@ public:
 	bool hasComponentFlag(size_t flag) {
 		return m_componentFlags.test(flag);
 	}
+	void performMovementSequence(float velocity, int direction, int strafe);
+	void performRotationSequence(float angularVelocity);
+	void setAnimationState(int animationState);
+	void playSound(int soundId);
 
 	//Accessor Functions
 	auto removeFromWorld() { 
@@ -59,40 +63,40 @@ public:
 		return m_gameObjectDefinition;
 	}
 	auto& animationComponent() {
-		return mAnimationComponent;
+		return m_AnimationComponent;
 	}
 	auto& attachmentsComponent() {
-		return mAttachmentsComponent;
+		return m_AttachmentsComponent;
 	}
 	auto& childrenComponent() {
-		return mChildrenComponent;
+		return m_ChildrenComponent;
 	}
 	auto& compositeComponent() {
-		return mCompositeComponent;
+		return m_CompositeComponent;
 	}
 	auto& particleComponent() {
-		return mParticleComponent;
+		return m_ParticleComponent;
 	}
 	auto& physicsComponent() {
-		return mPhysicsComponent;
+		return m_PhysicsComponent;
 	}
 	auto& playerControlComponent() {
-		return mPlayerControlComponent;
+		return m_PlayerControlComponent;
 	}
 	auto& renderComponent() {
-		return mRenderComponent;
+		return m_RenderComponent;
 	}
 	auto& textComponent() {
-		return mTextComponent;
+		return m_TextComponent;
 	}
 	auto& transformComponent() {
-		return mTransformComponent;
+		return m_TransformComponent;
 	}
 	auto& vitalityComponent() {
-		return mVitalityComponent;
+		return m_VitalityComponent;
 	}
 	auto& weaponComponent() {
-		return mWeaponComponent;
+		return m_WeaponComponent;
 	}
 
 private:
@@ -110,18 +114,18 @@ private:
 	void init();
 
 	//Components
-	AnimationComponent mAnimationComponent;
-	AttachmentsComponent mAttachmentsComponent;
-	ChildrenComponent mChildrenComponent;
-	CompositeComponent mCompositeComponent;
-	ParticleComponent mParticleComponent;
-	PhysicsComponent mPhysicsComponent;
-	RenderComponent mRenderComponent;
-	TextComponent mTextComponent;
-	TransformComponent mTransformComponent;
-	VitalityComponent mVitalityComponent;
-	WeaponComponent mWeaponComponent;
-	PlayerControlComponent mPlayerControlComponent;
+	AnimationComponent m_AnimationComponent;
+	AttachmentsComponent m_AttachmentsComponent;
+	ChildrenComponent m_ChildrenComponent;
+	CompositeComponent m_CompositeComponent;
+	ParticleComponent m_ParticleComponent;
+	PhysicsComponent m_PhysicsComponent;
+	RenderComponent m_RenderComponent;
+	TextComponent m_TextComponent;
+	TransformComponent m_TransformComponent;
+	VitalityComponent m_VitalityComponent;
+	WeaponComponent m_WeaponComponent;
+	PlayerControlComponent m_PlayerControlComponent;
 	
 	
 

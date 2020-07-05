@@ -95,14 +95,13 @@ void PlayerControlComponent::update()
 				strafe = -1;
 			}
 
-			//physicsComponent->applyMovement(vitalityComponent->speed(), direction, strafe);
-			physicsComponent->applyMovement(10, direction, strafe);
+			m_parentGameObject->performMovementSequence(10, direction, strafe);
 
 			break;
 
 		case SDL_MOUSEMOTION:
 			angularVelocity = inputEvent->event.motion.xrel * GameConfig::instance().mouseSensitivity();
-			physicsComponent->applyRotation(angularVelocity);
+			m_parentGameObject->performRotationSequence(angularVelocity);
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			//fire();

@@ -26,7 +26,6 @@ AnimationComponent::AnimationComponent(std::string gameObjectId, std::shared_ptr
 		Json::Value transformComponentJSON = itrJSON["transformComponent"];
 
 		//Build animationComponent details
-		m_currentAnimationState = 1;
 
 		int i = 0;
 		for (Json::Value animItr : animationComponentJSON["animations"])
@@ -34,7 +33,7 @@ AnimationComponent::AnimationComponent(std::string gameObjectId, std::shared_ptr
 			i++;
 			int state = EnumMap::instance().toEnum(animItr["state"].asString());
 
-			//Initialze curretn animation state to the first animation in the list
+			//Initialze current animation state to the first animation in the list
 			if (i == 1) {
 				m_currentAnimationState = state;
 			}

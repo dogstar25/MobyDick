@@ -175,17 +175,17 @@ bool Game::init()
 	//gameObject = GameObjectManager::instance().buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
 	//this->addGameObject(gameObject, GameOjectLayer::MAIN);
 
-	gameObject = new GameObject("SWORDLADY", 2, 2, 180);
-	addGameObject(gameObject, GameOjectLayer::DEBUG);
+	//gameObject = new GameObject("SWORDLADY", 2, 2, 180);
+	//addGameObject(gameObject, GameOjectLayer::DEBUG);
 
 	gameObject = new GameObject("GINA_64", 2, 2, 180);
 	addGameObject(gameObject, GameOjectLayer::DEBUG);
 
-	for (int i = 0; i < 20; i++)
-	{
-		gameObject = new GameObject("BOWMAN", 13, 13, 0);
-		addGameObject(gameObject, GameOjectLayer::MAIN);
-	}
+	//for (int i = 0; i < 20; i++)
+	//{
+	//	gameObject = new GameObject("BOWMAN", 13, 13, 0);
+	//	addGameObject(gameObject, GameOjectLayer::MAIN);
+	//}
 
 
 	return true;
