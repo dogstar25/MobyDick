@@ -26,10 +26,10 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	mChildrenComponent(gameObjectId),
 	mCompositeComponent(gameObjectId),
 	mParticleComponent(gameObjectId),
-	mPhysicsComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
+	mPhysicsComponent(gameObjectId, std::shared_ptr<GameObject>(this), xMapPos, yMapPos, angleAdjust),
 	mRenderComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
 	mTextComponent(gameObjectId),
-	mTransformComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
+	mTransformComponent(gameObjectId, std::shared_ptr<GameObject>(this), xMapPos, yMapPos, angleAdjust),
 	mVitalityComponent(gameObjectId),
 	mWeaponComponent(gameObjectId)
 {
@@ -120,18 +120,39 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 void GameObject::update()
 {
 
-
-	mTransformComponent.update();
-	mPhysicsComponent.update();
-	mRenderComponent.update();
-	mAnimationComponent.update();
-	mTextComponent.update();
-	mChildrenComponent.update();
-	mAttachmentsComponent.update();
-	mVitalityComponent.update();
-	mWeaponComponent.update();
-	mCompositeComponent.update();
-	mParticleComponent.update();
+	if (hasComponentFlag(TRANSFORM_COMPONENT)) {
+		mTransformComponent.update();
+	}
+	if (hasComponentFlag(PHYSICS_COMPONENT)) {
+		mPhysicsComponent.update();
+	}
+	if (hasComponentFlag(ANIMATION_COMPONENT)) {
+		mAnimationComponent.update();
+	}
+	if (hasComponentFlag(RENDER_COMPONENT)) {
+		mRenderComponent.update();
+	}
+	if (hasComponentFlag(TEXT_COMPONENT)) {
+		mTextComponent.update();
+	}
+	if (hasComponentFlag(CHILDREN_COMPONENT)) {
+		mChildrenComponent.update();
+	}
+	if (hasComponentFlag(ATTACHMENTS_COMPONENT)) {
+		mAttachmentsComponent.update();
+	}
+	if (hasComponentFlag(VITALITY_COMPONENT)) {
+		mVitalityComponent.update();
+	}
+	if (hasComponentFlag(WEAPON_COMPONENT)) {
+		mWeaponComponent.update();
+	}
+	if (hasComponentFlag(COMPOSITE_COMPONENT)) {
+		mCompositeComponent.update();
+	}
+	if (hasComponentFlag(PARTICLE_COMPONENT)) {
+		mParticleComponent.update();
+	}
 
 	////Update the mouse state
 	//if (SDL_GetRelativeMouseMode() == SDL_FALSE)

@@ -6,6 +6,7 @@
 #include "../Globals.h"
 #include "../GameObject.h"
 #include "../EnumMaps.h"
+#include "../GameConfig.h"
 #include "../Game.h"
 
 PhysicsComponent::PhysicsComponent()
@@ -13,7 +14,7 @@ PhysicsComponent::PhysicsComponent()
 
 }
 
-PhysicsComponent::PhysicsComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject)
+PhysicsComponent::PhysicsComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject, float xMapPos, float yMapPos, float angleAdjust)
 {
 	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 
@@ -21,33 +22,39 @@ PhysicsComponent::PhysicsComponent(std::string gameObjectId, std::shared_ptr<Gam
 	m_parentGameObject = parentGameObject;
 
 	//Pyhisics Component
-	if (itrJSON.isMember("physicsComponent"))
+	if (itrJSON.isMember("physicsComponent") && itrJSON.isMember("transformComponent"))
 	{
 		m_parentGameObject = parentGameObject;
 		m_parentGameObject->setComponentFlag(PHYSICS_COMPONENT);
 
-		//Convenvience reference
-		Json::Value itr = itrJSON["physicsComponent"];
+		//Get reference to the animationComponent JSON config and transformComponent JSON config
+		Json::Value physicsComponentJSON = itrJSON["physicsComponent"];
+		Json::Value transformComponentJSON = itrJSON["transformComponent"];
 
-		m_physicsType = EnumMap::instance().toEnum(itr["type"].asString());
-		m_collisionShape = EnumMap::instance().toEnum(itr["collisionShape"].asString());
-		m_collisionRadius = itr["collisionRadius"].asFloat();
-		m_friction = itr["friction"].asFloat();
-		m_density = itr["density"].asFloat();
-		m_linearDamping = itr["linearDamping"].asFloat();
-		m_angularDamping = itr["angularDamping"].asFloat();
-		m_collisionCategory = EnumMap::instance().toEnum(itr["collisionCategory"].asString());
+		m_physicsType = EnumMap::instance().toEnum(physicsComponentJSON["type"].asString());
+		m_collisionShape = EnumMap::instance().toEnum(physicsComponentJSON["collisionShape"].asString());
+		m_collisionRadius = physicsComponentJSON["collisionRadius"].asFloat();
+		m_friction = physicsComponentJSON["friction"].asFloat();
+		m_density = physicsComponentJSON["density"].asFloat();
+		m_linearDamping = physicsComponentJSON["linearDamping"].asFloat();
+		m_angularDamping = physicsComponentJSON["angularDamping"].asFloat();
+		m_collisionCategory = EnumMap::instance().toEnum(physicsComponentJSON["collisionCategory"].asString());
 
 		//Build the physics body
-		m_physicsBody = buildB2Body();
+		m_physicsBody = buildB2Body(transformComponentJSON);
+
+		//Calculate the spawn position
+		//Translate the pixel oriented position into box2d meter-oriented
+		b2Vec2* position = new b2Vec2
+		(  (xMapPos * 32 + (transformComponentJSON["size"]["width"].asFloat() / 2)) / GameConfig::instance().scaleFactor(),
+		   (yMapPos * 32 + (transformComponentJSON["size"]["width"].asFloat() / 2)) / GameConfig::instance().scaleFactor());
+
+		//Calculate the spawn Angle
+		float newAngle = util::degreesToRadians(angleAdjust);
 
 		//Initial spawn position
 		//FIXME:Need to pass in position info
-		m_physicsBody->SetTransform(b2Vec2(2, 2), 0);
-
-
-
-
+		m_physicsBody->SetTransform(*position, newAngle);
 
 	}
 
@@ -69,7 +76,7 @@ void PhysicsComponent::update()
 
 }
 
-b2Body* PhysicsComponent::buildB2Body()
+b2Body* PhysicsComponent::buildB2Body(Json::Value transformComponentJSON)
 {
 	b2BodyDef bodyDef;
 
@@ -105,9 +112,11 @@ b2Body* PhysicsComponent::buildB2Body()
 	else
 	{
 		//Box Shape
+		//Divide by 2 because box2d needs center position
 		box.SetAsBox(
-			m_parentGameObject->transformComponent().size().x / 2, 
-			m_parentGameObject->transformComponent().size().y / 2);
+			transformComponentJSON["size"]["width"].asFloat() / GameConfig::instance().scaleFactor() / 2,
+			transformComponentJSON["size"]["height"].asFloat() / GameConfig::instance().scaleFactor() / 2
+		);
 		shape = &box;
 	}
 

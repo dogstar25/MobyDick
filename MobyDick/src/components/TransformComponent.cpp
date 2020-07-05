@@ -8,12 +8,15 @@ TransformComponent::TransformComponent()
 {
 }
 
-TransformComponent::TransformComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject)
+TransformComponent::TransformComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject, float xMapPos, float yMapPos, float angleAdjust)
 {
 	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 
 	//Save the pointer to parent GameObject
 	m_parentGameObject = parentGameObject;
+
+	//Convenience flag
+	bool hasPhysicsComponent = itrJSON.isMember("physicsComponent");
 
 	if (itrJSON.isMember("transformComponent"))
 	{
@@ -21,12 +24,21 @@ TransformComponent::TransformComponent(std::string gameObjectId, std::shared_ptr
 
 		m_parentGameObject->setComponentFlag(TRANSFORM_COMPONENT);
 
-		m_position.SetZero();
-		m_angle = 0;
+		/*
+		If this is a physics object, then this all will get overridden current he first 
+		Game loop on pyhsicsComponent.Update()
+		*/
+		m_angle = angleAdjust;
 
-		//If this is a physics object then apply the box2d scale factor to the size
-		//to convert it from pixels to meters
-		if (itrJSON.isMember("physicsComponent"))
+		//FixMe: 32 is tilewidth
+		setPosition( 
+			(xMapPos * 32) + itrTransform["size"]["width"].asFloat() / 2, 
+			(yMapPos * 32) + itrTransform["size"]["height"].asFloat() / 2
+		);
+
+		//Size of both physics and non-physics objetcs needs to be set here
+		//We cant easily get the size of the physics object later
+		if (itrJSON.isMember("physicsComponent") == true)
 		{
 			m_size.Set(
 				itrTransform["size"]["width"].asFloat() / GameConfig::instance().scaleFactor(), 
@@ -46,6 +58,37 @@ TransformComponent::TransformComponent(std::string gameObjectId, std::shared_ptr
 
 TransformComponent::~TransformComponent()
 {
+
+}
+
+b2Vec2 TransformComponent::calculatePosition(float xMapPos, float yMapPos, bool hasPhysicsComponent, Json::Value itrTransform)
+{
+	b2Vec2* position=nullptr;
+	//Physics object requires center of the object
+	if (hasPhysicsComponent)
+	{
+		position = new b2Vec2(
+			xMapPos * 32 + (itrTransform["size"]["width"].asFloat() / 2) , 
+			yMapPos * 32 + (itrTransform["size"]["width"].asFloat() / 2 ));
+	}
+	else
+	{
+		position = new b2Vec2(xMapPos * 32, yMapPos * 32);
+	}
+
+	return *position;
+}
+
+float TransformComponent::calculateAngle(float angle, bool isPhysicsObject)
+{
+	float newAngle = angle;
+
+	if (isPhysicsObject)
+	{
+		newAngle = util::degreesToRadians(angle);
+	}
+
+	return newAngle;
 
 }
 
@@ -76,7 +119,7 @@ void TransformComponent::setPosition(b2Vec2 position)
 void TransformComponent::setPosition(float xPosition, float yPosition)
 {
 	m_position.x = xPosition;
-	m_position.x = yPosition;
+	m_position.y = yPosition;
 }
 
 void TransformComponent::setPosition(b2Vec2 position, float angle)
@@ -88,7 +131,7 @@ void TransformComponent::setPosition(b2Vec2 position, float angle)
 void TransformComponent::setPosition(float xPosition, float yPosition, float angle)
 {
 	m_position.x = xPosition;
-	m_position.x = yPosition;
+	m_position.y = yPosition;
 	m_angle = angle;
 }
 

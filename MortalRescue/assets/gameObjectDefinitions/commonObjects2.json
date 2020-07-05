@@ -60,8 +60,8 @@
             "physicsComponent":
             {
                 "type": "B2_DYNAMIC",
-                "collisionShape": "B2_CIRCLE",
-                "collisionRadius": 0.64,
+                "collisionShape": "B2_BOX",
+                //"collisionRadius": 0.64,
                 "friction": 0.00,
                 "density": 50.5,
                 "linearDamping": 0.0,
@@ -99,6 +99,33 @@
                         "locationSlot": 3
                     }
                 ]
+            }
+        },
+        {
+            "id": "BOWMAN",
+            "transformComponent":
+            {
+                "size":
+                {
+                    "width": 64,
+                    "height": 64
+                },
+                "absolutePositioning": false
+            },
+            "renderComponent":
+            {
+                "textureId": "TX_BOWMAN1"
+            },
+            "physicsComponent":
+            {
+                "type": "B2_DYNAMIC",
+                "collisionShape": "B2_BOX",
+                //"collisionRadius": 0.64,
+                "friction": 0.00,
+                "density": 50.5,
+                "linearDamping": 0.0,
+                "angularDamping": 0.0,
+                "collisionCategory": "COLLISION_PLAYER"
             }
         }
 

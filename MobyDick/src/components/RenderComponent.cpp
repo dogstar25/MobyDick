@@ -6,6 +6,7 @@
 #include "../GameObject.h"
 #include "../Globals.h"
 #include "../GameConfig.h"
+#include "../TextureManager.h"
 
 
 RenderComponent::RenderComponent()
@@ -58,7 +59,8 @@ RenderComponent::RenderComponent(std::string gameObjectId, std::shared_ptr<GameO
 		m_yRenderAdjustment = itrRender["yRenderAdjustment"].asFloat();
 		m_renderOutline = itrRender["renderOutline"].asFloat();
 
-
+		//Get Texture
+		m_texture = TextureManager::instance().getTexture(itrRender["textureId"].asString());
 	}
 
 }
@@ -76,23 +78,33 @@ void RenderComponent::update()
 
 /*
 Get the destination for rendering the gameObject
+The end result should be a rectangle with a width and height in pixels and
+an x, y position that is the top left corner of the object (for SDL render function)
 */
 SDL_FRect RenderComponent::getRenderDestRect()
 {
-	SDL_FRect destRect;
+	SDL_FRect destRect, currentPositionRect;
 
-	destRect = m_parentGameObject->transformComponent().getPositionRect();
+	//Get its current position. Should be center of object
+	currentPositionRect = m_parentGameObject->transformComponent().getPositionRect();
 
+	//All objects positions are the center of the object so we have to subtract the halfsize from the x,y position
+	//because SDL wants the position to be top left corner
 	if (m_parentGameObject->hasComponentFlag(PHYSICS_COMPONENT))
 	{
-		destRect.w *= GameConfig::instance().scaleFactor();
-		destRect.h *= GameConfig::instance().scaleFactor();
-		destRect.x *= GameConfig::instance().scaleFactor();
-		destRect.y *= GameConfig::instance().scaleFactor();
-
+		destRect.w = currentPositionRect.w * GameConfig::instance().scaleFactor();
+		destRect.h = currentPositionRect.h * GameConfig::instance().scaleFactor();
+		destRect.x = currentPositionRect.x * GameConfig::instance().scaleFactor() - (currentPositionRect.w * GameConfig::instance().scaleFactor() / 2);
+		destRect.y = currentPositionRect.y * GameConfig::instance().scaleFactor() - (currentPositionRect.h * GameConfig::instance().scaleFactor() / 2);
+	}
+	else
+	{
+		destRect = currentPositionRect;
+		destRect.x -= (currentPositionRect.w / 2);
+		destRect.y -= (currentPositionRect.h / 2);
 	}
 
-	//Render Adjustment
+	//Render Adjustment if it exists - mostly for composite pieces
 	if (m_parentGameObject->hasComponentFlag(PHYSICS_COMPONENT))
 	{
 		destRect.w += (m_xRenderAdjustment / GameConfig::instance().scaleFactor());
@@ -103,7 +115,6 @@ SDL_FRect RenderComponent::getRenderDestRect()
 		destRect.w += m_xRenderAdjustment;
 		destRect.h += m_yRenderAdjustment;
 	}
-
 
 	//Adjust position based on current camera position - offset
 	destRect.x -= Camera::instance().frame().x;
@@ -138,17 +149,16 @@ SDL_Texture* RenderComponent::getRenderTexture()
 {
 	SDL_Texture* texture = nullptr;
 
-	if (m_parentGameObject->hasComponentFlag(ANIMATION_COMPONENT)) {
-
+	if (m_parentGameObject->hasComponentFlag(ANIMATION_COMPONENT)) 
+	{
 		texture = m_parentGameObject->animationComponent().getCurrentAnimationTexture();
 	}
-	else {
-
+	else 
+	{
 		texture = m_texture->sdlTexture;
 	}
 
 	return texture;
-
 }
 
 SDL_Surface* RenderComponent::getRenderSurface()

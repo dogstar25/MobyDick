@@ -12,19 +12,19 @@ class TransformComponent : public Component
 
 public:
 	TransformComponent();
-	TransformComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject);
+	TransformComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject, float xMapPos, float yMapPos, float angleAdjust);
 	TransformComponent(Json::Value& componentDetailsJSON);
 	~TransformComponent();
 
 	void update() override;
 
-	virtual void setPosition(b2Vec2 position);
-	virtual void setPosition(float xPosition, float yPosition);
-	virtual void setPosition(b2Vec2 position, float angle);
-	virtual void setPosition(float xPosition, float yPosition, float angle);
-	virtual void setSize(b2Vec2 size);
-	virtual void setSize(float xSize, float ySize);
-	virtual void setAngle(float angle);
+	void setPosition(b2Vec2 position);
+	void setPosition(float xPosition, float yPosition);
+	void setPosition(b2Vec2 position, float angle);
+	void setPosition(float xPosition, float yPosition, float angle);
+	void setSize(b2Vec2 size);
+	void setSize(float xSize, float ySize);
+	void setAngle(float angle);
 
 	b2Vec2 size() {
 		return m_size;
@@ -43,6 +43,8 @@ public:
 
 private:
 
+	b2Vec2 calculatePosition(float xMapPos, float yMapPos, bool hasPhysicsComponent, Json::Value itrJSON);
+	float calculateAngle(float angle, bool isPhysicsObject);
 	float
 		m_angle;
 	b2Vec2
