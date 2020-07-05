@@ -21,7 +21,7 @@
                     {
                         "state": "ANIMATION_IDLE",
                         "textureId": "TX_SWORDLADY1_IDLE",
-                        "speed": 0.06,
+                        "speed": 0.01,
                         "frames": 19
                     }
                 ]

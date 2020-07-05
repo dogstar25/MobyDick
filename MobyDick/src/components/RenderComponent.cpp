@@ -141,6 +141,23 @@ SDL_Rect* RenderComponent::getRenderTextureRect()
 
 }
 
+float RenderComponent::getRenderAngle()
+{
+	float angle=0;
+
+	if (m_parentGameObject->hasComponentFlag(PHYSICS_COMPONENT))
+	{
+		angle = util::radiansToDegrees(m_parentGameObject->transformComponent().angle());
+	}
+	else
+	{
+		angle = m_parentGameObject->transformComponent().angle();
+	}
+
+	return angle;
+}
+
+
 /*
 Get the actual texture to display. If this is an animated object then it will have
 different textures for different animation states
@@ -160,6 +177,7 @@ SDL_Texture* RenderComponent::getRenderTexture()
 
 	return texture;
 }
+
 
 SDL_Surface* RenderComponent::getRenderSurface()
 {
@@ -230,7 +248,7 @@ void RenderComponent::render()
 	SDL_Rect* textureSourceRect = getRenderTextureRect();
 	const SDL_FRect destRect = getRenderDestRect();
 	SDL_Texture* texture = getRenderTexture();
-	float angle = m_parentGameObject->transformComponent().angle();
+	float angle = getRenderAngle();
 
 	//Set the color
 	SDL_SetTextureAlphaMod(texture, m_color.a);

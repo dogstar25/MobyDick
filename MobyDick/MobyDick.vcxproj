@@ -139,6 +139,7 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\EventManager.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\components\AnimationComponent.cpp" />
     <ClCompile Include="src\components\AttachmentsComponent.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="src\components\VitalityComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\EventManager.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\components\AnimationComponent.h" />
     <ClInclude Include="src\components\AttachmentsComponent.h" />

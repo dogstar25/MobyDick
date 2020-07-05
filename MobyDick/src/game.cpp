@@ -12,6 +12,7 @@
 //#include "GUIEvent.h"
 #include "Clock.h"
 //#include "ObjectPoolManager.h"
+#include "EventManager.h"
 
 
 using namespace std::chrono_literals;
@@ -69,6 +70,11 @@ bool Game::init()
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
 	
+	//Reserve each layors vector for efficient object memory management
+	for (auto& gameLayer : m_gameObjects)
+	{
+		gameLayer.reserve(2000);
+	}
 
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
@@ -169,11 +175,11 @@ bool Game::init()
 	//gameObject = GameObjectManager::instance().buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
 	//this->addGameObject(gameObject, GameOjectLayer::MAIN);
 
-	gameObject = new GameObject("SWORDLADY", 2, 2, 25);
+	gameObject = new GameObject("SWORDLADY", 2, 2, 180);
 	addGameObject(gameObject, GameOjectLayer::DEBUG);
 
 
-	gameObject = new GameObject("BOWMAN", 3, 3, 500);
+	gameObject = new GameObject("BOWMAN", 13, 13, 0);
 	addGameObject(gameObject, GameOjectLayer::MAIN);
 
 
@@ -193,7 +199,8 @@ void Game::play()
 	//the FPS calculation and the game loop timer
 	Clock::instance().update();
 
-	_handleEvents();
+	//_handleEvents();
+	EventManager::instance().pollEvents();
 
 	//Only update and render if we have passed the 60 fps time passage
 	if (Clock::instance().hasMetGameLoopSpeed())

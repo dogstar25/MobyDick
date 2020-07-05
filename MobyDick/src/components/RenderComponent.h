@@ -37,6 +37,7 @@ public:
 
 	SDL_Rect* getRenderTextureRect();
 	SDL_Texture* getRenderTexture();
+	float getRenderAngle();
 	SDL_Surface* getRenderSurface();
 	
 

@@ -38,6 +38,9 @@ public:
 	static void renderGameObjects(const std::array <std::vector<GameObject>, constants::MAX_GAMEOBJECT_LAYERS>&);
 	
 	void addGameObject(GameObject* gameObject, int);
+	void setGameState(int state) {
+		m_gameState = state;
+	}
 	
 	//Accessor Functions
 	b2World* physicsWorld() {
