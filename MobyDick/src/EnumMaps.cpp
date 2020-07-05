@@ -1,6 +1,5 @@
 #include "EnumMaps.h"
 
-#include "Globals.h"
 #include "box2d/box2d.h"
 
 EnumMap& EnumMap::instance()
@@ -39,6 +38,32 @@ EnumMap::EnumMap()
 	m_enumMap["B2_BOX"] = b2Shape::e_polygon;
 	m_enumMap["B2_CHAIN"] = b2Shape::e_chain;
 
+	//Animation States
+	m_enumMap["ANIMATION_IDLE"] = ANIMATION_IDLE;
+	m_enumMap["ANIMATION_RUN"] = ANIMATION_RUN;
+	m_enumMap["ANIMATION_ACTIVE"] = ANIMATION_ACTIVE;
+	m_enumMap["ANIMATION_ACTION"] = ANIMATION_ACTION;
+
+	//Component Types
+	m_enumMap["TRANSFORM_COMPONENT"] = TRANSFORM_COMPONENT;
+	m_enumMap["ANIMATION_COMPONENT"] = ANIMATION_COMPONENT;
+	m_enumMap["CHILDREN_COMPONENT"] = CHILDREN_COMPONENT;
+	m_enumMap["RENDER_COMPONENT"] = RENDER_COMPONENT;
+	m_enumMap["PHYSICS_COMPONENT"] = PHYSICS_COMPONENT;
+	m_enumMap["VITALITY_COMPONENT"] = VITALITY_COMPONENT;
+	m_enumMap["WEAPON_COMPONENT"] = WEAPON_COMPONENT;
+	m_enumMap["TEXT_COMPONENT"] = TEXT_COMPONENT;
+	m_enumMap["COMPOSITE_COMPONENT"] = COMPOSITE_COMPONENT;
+	m_enumMap["PARTICLE_COMPONENT"] = PARTICLE_COMPONENT;
+	m_enumMap["ATTACHMENTS_COMPONENT"] = ATTACHMENTS_COMPONENT;
+	m_enumMap["PLAYERCONTROL_COMPONENT"] = PLAYERCONTROL_COMPONENT;
+
+	//Player Control
+	m_enumMap["CONTROL_MOVEMENT"] = CONTROL_MOVEMENT;
+	m_enumMap["CONTROL_ROTATION"] = CONTROL_ROTATION;
+	
+
+	
 
 }
 

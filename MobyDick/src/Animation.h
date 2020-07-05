@@ -6,6 +6,7 @@
 #include <vector> 
 #include <SDL2/SDL.h>
 #include <Box2D/Box2D.h>
+#include <json/json.h>
 
 class GameObjectDefinition;
 
@@ -14,6 +15,8 @@ class Animation
 
 public:
 
+	Animation();
+	Animation(Json::Value animationDetailsJSON, Json::Value transformComponentJSON);
 	Animation(GameObjectDefinition* gameObjectDefinition, std::string animationId, std::string textureId,
 		int totalFrames, float speed);
 	~Animation();
@@ -33,11 +36,17 @@ public:
 
 
 private:
-	std::string m_id;
-	float m_speed;
-	int m_frameCount;
-	int m_currentAnimFrame;
-	b2Vec2 m_frameSize;
+	;
+	float 
+		m_speed;
+	int 
+		m_state,
+		m_frameCount,
+		m_currentAnimFrame;
+
+	b2Vec2 
+		m_frameSize;
+
 	std::chrono::steady_clock::time_point m_timeSnapshot;
 
 	//a rectangle pointing to the animation textture of the animation frame to be displayed

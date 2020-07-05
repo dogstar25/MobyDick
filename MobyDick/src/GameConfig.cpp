@@ -24,7 +24,7 @@ bool GameConfig::init(std::string configFile)
 
 	m_gameTitle = root["gameTitle"].asString();
 	m_gameLoopStep = root["gameLoopStep"].asInt();
-	m_gravity.Set(root["physics"]["gravity"]["x"].asInt(), 
+	m_gravity.Set(root["physics"]["gravity"]["x"].asFloat(),
 		root["physics"]["gravity"]["y"].asFloat());
 	m_timeStep = root["physics"]["timeStep"].asFloat();
 	m_velocityIterations = root["physics"]["velocityIterations"].asInt();

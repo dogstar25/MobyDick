@@ -1,127 +1,129 @@
 #ifndef GAME_OBJECT_H
 #define GAME_OBJECT_H
 
-#include <array>
-#include <map>
 #include <memory>
 #include <SDL2/SDL.h>
 #include <string>
 #include <vector>
+#include <json/json.h>
+#include <bitset>
 
 #include <Box2D/Box2D.h>
 
-#include "TextureManager.h" //Need this here so that inherited classes can get the textureManager without linker issues
 #include "GameObjectDefinition.h"
-#include "Globals.h"
-
-//Forward declarations
-class Animation;
-class Texture;
+#include "components/TransformComponent.h"
+#include "components/AnimationComponent.h"
+#include "components/AttachmentsComponent.h"
+#include "components/ChildrenComponent.h"
+#include "components/CompositeComponent.h"
+#include "components/ParticleComponent.h"
+#include "components/PhysicsComponent.h"
+#include "components/PlayerControlComponent.h"
+#include "components/RenderComponent.h"
+#include "components/TextComponent.h"
+#include "components/VitalityComponent.h"
+#include "components/WeaponComponent.h"
 
 class GameObject
 {
 public:
 	
 	GameObject();
-	GameObject(std::string,float,float,float);
-	virtual ~GameObject();
+	//GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
+	//	mTransformComponent(gameObjectId) {}
+	~GameObject();
+
+	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust);
 
 	virtual void update();
 	virtual void render();
 
-	virtual SDL_FRect  getRenderDestRect();
-	virtual void setPosition(b2Vec2 position);
-	virtual void setPosition(float xPosition, float yPosition);
-	virtual void setPosition(b2Vec2 position, float angle);
-	virtual void setPosition(float xPosition, float yPosition, float angle);
-	virtual void setSize(b2Vec2 size);
-	virtual void setSize(float xSize, float ySize);
-	virtual void setAngle(float angle);
-	void setColor(SDL_Color color) { 
-		m_color = color; 
-	}
-	void setColorAlpha(int alpha) { 
-		m_color.a = alpha; 
-	}
-	void setColor(int red, int green, int blue, int alpha);
 	void setRemoveFromWorld(bool removeFromWorld) { 
 		m_removeFromWorld = removeFromWorld; 
 	}
 
+	auto setComponentFlag(size_t flag) {
+		m_componentFlags.set(flag, true);
+	}
+
+	bool hasComponentFlag(size_t flag) {
+		return m_componentFlags.test(flag);
+	}
+
 	//Accessor Functions
-	b2Vec2 size() { 
-		return m_size; 
-	}
-	b2Vec2 position() {	
-		return m_position; 
-	}
-	float angle() { 
-		return m_angle; 
-	}
-	SDL_Color color() { 
-		return m_color; 
-	}
-	std::string currentAnimationState() { 
-		return m_currentAnimationState; 
-	}
-	bool removeFromWorld() { 
+	auto removeFromWorld() { 
 		return m_removeFromWorld; 
 	}
-	Texture* texture() { 
-		return m_texture.get(); 
+
+	auto gameObjectDefinition(){
+		return m_gameObjectDefinition;
+	}
+	auto& animationComponent() {
+		return mAnimationComponent;
+	}
+	auto& attachmentsComponent() {
+		return mAttachmentsComponent;
+	}
+	auto& childrenComponent() {
+		return mChildrenComponent;
+	}
+	auto& compositeComponent() {
+		return mCompositeComponent;
+	}
+	auto& particleComponent() {
+		return mParticleComponent;
+	}
+	auto& physicsComponent() {
+		return mPhysicsComponent;
+	}
+	auto& playerControlComponent() {
+		return mPlayerControlComponent;
+	}
+	auto& renderComponent() {
+		return mRenderComponent;
+	}
+	auto& textComponent() {
+		return mTextComponent;
+	}
+	auto& transformComponent() {
+		return mTransformComponent;
+	}
+	auto& vitalityComponent() {
+		return mVitalityComponent;
+	}
+	auto& weaponComponent() {
+		return mWeaponComponent;
 	}
 
-	GameObjectDefinition* definition() { 
-		return m_definition; 
-	};
-	std::map<std::string, Animation*>& animations() { 
-		return m_animations; 
-	}
-
-	
 private:
 
-	std::string
-		m_currentAnimationState;
 	int
 		m_mouseState;
-	float
-		m_angle;
-	b2Vec2
-		m_position,
-		m_size;
-	SDL_Color
-		m_color;
 	bool
 		m_removeFromWorld;
+	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
+	std::string m_id;
+	std::bitset<32>
+		m_componentFlags;
 
-	GameObjectDefinition* m_definition;
-	std::shared_ptr<Texture> m_texture;
-	std::map<std::string, Animation*> m_animations;
-	std::array<std::vector<std::shared_ptr<GameObject>>, constants::CHILD_POSITIONS> m_childObjects;
 
 	void init();
-	virtual void onMouseHoverRender();
-	virtual void onMouseClickRender();
-	virtual void onMouseHoldRender();
-	virtual void onMouseClickEvent();
-	void updateMouseState();
-	b2Vec2 calcChildPosition(std::shared_ptr<GameObject>, int, int, int);
-	void updateChildObjects();
-	void buildChildren();
-	void outlineObject(float lineSize);
 
-
-protected:
-	virtual SDL_FRect  getPositionRect();
-	b2Vec2 matchParentRotation(SDL_FRect, SDL_FRect, float);
-	void renderChildObjects();
-	virtual SDL_Rect* getRenderTextureRect();
-	virtual SDL_Texture* getRenderTexture();
-	virtual SDL_Surface* getRenderSurface();
-	void setCurrentAnimationState(std::string animationState) { m_currentAnimationState = animationState; }
-	void setTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
-
+	//Components
+	AnimationComponent mAnimationComponent;
+	AttachmentsComponent mAttachmentsComponent;
+	ChildrenComponent mChildrenComponent;
+	CompositeComponent mCompositeComponent;
+	ParticleComponent mParticleComponent;
+	PhysicsComponent mPhysicsComponent;
+	RenderComponent mRenderComponent;
+	TextComponent mTextComponent;
+	TransformComponent mTransformComponent;
+	VitalityComponent mVitalityComponent;
+	WeaponComponent mWeaponComponent;
+	PlayerControlComponent mPlayerControlComponent;
+	
+	
 
 };
 

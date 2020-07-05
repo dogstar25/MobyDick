@@ -11,19 +11,12 @@
 #include <memory>
 
 #include "Globals.h"
-
-#include "GameObjectContactListener.h"
-#include "DebugDraw.h"
-#include "DebugPanel.h"
+#include "GameObject.h"
+//#include "GameObjectContactListener.h"
+//#include "DebugDraw.h"
+//#include "DebugPanel.h"
 #include "GameObjectCollection.h"
 
-//forward declations
-class PlayerObject;
-class GameObject;
-class ParticleObject;
-class CompositeObject;
-class WeaponObject;
-class TextObject;
 
 
 /*
@@ -32,7 +25,7 @@ class TextObject;
 class Game {
 
 private:
-	GameObjectContactListener m_gameObjectContactListner;
+	//GameObjectContactListener m_gameObjectContactListner;
 
 public:
 
@@ -42,14 +35,12 @@ public:
 	static Game& instance();
 	bool init();
 	void play();
-	static void renderCollection(const std::array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>&);
+	static void renderGameObjects(const std::array <std::vector<GameObject>, constants::MAX_GAMEOBJECT_LAYERS>&);
 	
 	void addGameObject(GameObject* gameObject, int);
-	void addGameObject(TextObject* gameObject, int);
-	void addGameObject(WorldObject* gameObject, int);
-	void addGameObject(ParticleObject* gameObject, int);
-	void addGameObject(CompositeObject* gameObject, int);
-	void addGameObject(WeaponObject* gameObject, int);
+	void setGameState(int state) {
+		m_gameState = state;
+	}
 	
 	//Accessor Functions
 	b2World* physicsWorld() {
@@ -58,15 +49,15 @@ public:
 	SDL_Window* window() {
 		return m_window;
 	}
-	PlayerObject* player() {
+	GameObject* player() {
 		return m_player;
 	}
 	int gameState(){
 		return m_gameState;
 	}
-	const std::array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>& gameCollections() {
-		return m_gameCollections;
-	}
+	//std::array <std::vector<GameObject>, constants::MAX_GAMEOBJECT_LAYERS> {
+	//	return m_gameObjects;
+	//}
 
 private:
 
@@ -77,12 +68,15 @@ private:
 
 	b2World* m_physicsWorld;
 	SDL_Window* m_window;
-	PlayerObject* m_player;
+	GameObject* m_player;
 	int m_gameState;
 
-	//Fixed array of Layers
-	//Each layer contains a GameObjectCollection
-	std::array <GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS> m_gameCollections;
+	/*Fixed array of Layers
+	Each layer contains a vector of GameObjects
+	For deletions, things with heavy number of deletes like bullets and particles should all be at 
+	the end of the vector which shoudl make for acceptable erase performance
+	*/
+	std::array <std::vector<GameObject>, constants::MAX_GAMEOBJECT_LAYERS> m_gameObjects;
 
 
 };
