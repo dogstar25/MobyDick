@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\EventManager.cpp" />
+    <ClCompile Include="src\components\PlayerControlComponent.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\components\AnimationComponent.cpp" />
     <ClCompile Include="src\components\AttachmentsComponent.cpp" />
@@ -171,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\EventManager.h" />
+    <ClInclude Include="src\components\PlayerControlComponent.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\components\AnimationComponent.h" />
     <ClInclude Include="src\components\AttachmentsComponent.h" />

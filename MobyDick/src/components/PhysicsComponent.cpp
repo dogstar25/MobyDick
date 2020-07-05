@@ -152,6 +152,11 @@ uint16 PhysicsComponent::setCollisionMask(uint16 category)
 
 
 	switch (category) {
+	case COLLISION_GENERIC:
+		mask = COLLISION_GENERIC| COLLISION_WALL | COLLISION_PARTICLE2 | COLLISION_PARTICLE3 | COLLISION_ENEMY_FRAME
+			| COLLISION_ENEMY_ARMOR_PIECE;
+		break;
+
 	case COLLISION_PLAYER:
 		mask = COLLISION_WALL | COLLISION_PARTICLE2 | COLLISION_PARTICLE3 | COLLISION_ENEMY_FRAME
 			| COLLISION_ENEMY_ARMOR_PIECE;
@@ -189,4 +194,56 @@ uint16 PhysicsComponent::setCollisionMask(uint16 category)
 
 }
 
+
+void PhysicsComponent::applyMovement(float velocity, int direction, int strafeDirection)
+{
+
+
+	//Calc direction XY
+	//float dx = cos(this->physicsBody->GetAngle()) * velocity * this->direction; // X-component.
+	//float dy = sin(this->physicsBody->GetAngle()) * velocity * this->direction; // Y-component.
+	float dx = cos(1.5708) * velocity * direction; // X-component.
+	float dy = sin(1.5708) * velocity * direction; // Y-component.
+
+	//calc strafe xy and add direction and strafe vectors
+	//1.5708 is 90 degrees
+	//float sx = cos(this->physicsBody->GetAngle() + 1.5708) * velocity * this->strafe; // X-component.
+	//float sy = sin(this->physicsBody->GetAngle() + 1.5708) * velocity * this->strafe; // Y-component.
+	float sx = cos((1.5708) + 1.5708) * velocity * strafeDirection; // X-component.
+	float sy = sin((1.5708) + 1.5708) * velocity * strafeDirection; // Y-component.
+
+	//Create the vector for forward/backward  direction
+	b2Vec2 directionVector = b2Vec2(dx, dy);
+
+	//Create the vector for strafe direction
+	b2Vec2 strafeVector = b2Vec2(sx, sy);
+
+	//Initialize new final movement vector
+	b2Vec2 vec2;
+	vec2.SetZero();
+
+	vec2 = (directionVector + strafeVector);
+
+	//Update Animation state
+	/*if (vec2.Length() > 0)
+	{
+		this->setCurrentAnimationState("RUN");
+	}
+	else
+	{
+		this->setCurrentAnimationState("IDLE");
+	}*/
+
+	//this->physicsBody->SetTransform(vec3, this->physicsBody->GetAngle());
+	m_physicsBody->SetLinearVelocity(vec2);
+
+	//physicsBody()->ApplyLinearImpulseToCenter(vec2, true);
+
+
+}
+
+void PhysicsComponent::applyRotation(float angularVelocity)
+{
+	m_physicsBody->SetAngularVelocity(angularVelocity);
+}
 

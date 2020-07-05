@@ -14,6 +14,11 @@ public:
 
 	void update() override;
 
+	//Accessor functions
+	float speed() {
+		return m_speed;
+	}
+
 private:
 	float
 		m_speed,

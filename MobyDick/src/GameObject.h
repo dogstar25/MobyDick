@@ -18,6 +18,7 @@
 #include "components/CompositeComponent.h"
 #include "components/ParticleComponent.h"
 #include "components/PhysicsComponent.h"
+#include "components/PlayerControlComponent.h"
 #include "components/RenderComponent.h"
 #include "components/TextComponent.h"
 #include "components/VitalityComponent.h"
@@ -75,6 +76,9 @@ public:
 	auto& physicsComponent() {
 		return mPhysicsComponent;
 	}
+	auto& playerControlComponent() {
+		return mPlayerControlComponent;
+	}
 	auto& renderComponent() {
 		return mRenderComponent;
 	}
@@ -117,6 +121,7 @@ private:
 	TransformComponent mTransformComponent;
 	VitalityComponent mVitalityComponent;
 	WeaponComponent mWeaponComponent;
+	PlayerControlComponent mPlayerControlComponent;
 	
 	
 

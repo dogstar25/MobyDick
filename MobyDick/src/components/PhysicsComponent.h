@@ -13,7 +13,8 @@ public:
 	~PhysicsComponent();
 
 	void update() override;
-
+	void applyMovement(float velocity, int direction, int strafeDirection);
+	void applyRotation( float angularVelocity);
 
 private:
 

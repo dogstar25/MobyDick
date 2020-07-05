@@ -35,7 +35,6 @@ RenderComponent::RenderComponent(std::string gameObjectId, std::shared_ptr<GameO
 	//Transform Component
 	if (itrJSON.isMember("renderComponent"))
 	{
-		m_parentGameObject = parentGameObject;
 		m_parentGameObject->setComponentFlag(RENDER_COMPONENT);
 
 		Json::Value itrRender = itrJSON["renderComponent"];

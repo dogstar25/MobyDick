@@ -178,10 +178,11 @@ bool Game::init()
 	gameObject = new GameObject("SWORDLADY", 2, 2, 180);
 	addGameObject(gameObject, GameOjectLayer::DEBUG);
 
-
-	gameObject = new GameObject("BOWMAN", 13, 13, 0);
-	addGameObject(gameObject, GameOjectLayer::MAIN);
-
+	for (int i = 0; i < 20; i++)
+	{
+		gameObject = new GameObject("BOWMAN", 13, 13, 0);
+		addGameObject(gameObject, GameOjectLayer::MAIN);
+	}
 
 
 	return true;
@@ -290,6 +291,9 @@ void Game::_update() {
 		//gameObjectCollection.particleObjects().shrink_to_fit();
 
 	}
+
+	//Clear all events
+	EventManager::instance().clearEvents();
 
 	//Step the box2d physics world
 	m_physicsWorld->Step(GameConfig::instance().timeStep(),

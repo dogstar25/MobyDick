@@ -99,7 +99,17 @@
                         "locationSlot": 3
                     }
                 ]
+            },
+            "playerControlComponent":
+            {
+                "controls":
+                [
+                    "CONTROL_MOVEMENT",
+                    "CONTROL_ROTATION"
+                ]
+
             }
+
         },
         {
             "id": "BOWMAN",
@@ -116,17 +126,31 @@
             {
                 "textureId": "TX_BOWMAN1"
             },
+            "vitalityComponent":
+            {
+                "speed": 30.0
+            },
             "physicsComponent":
             {
                 "type": "B2_DYNAMIC",
                 "collisionShape": "B2_BOX",
                 //"collisionRadius": 0.64,
                 "friction": 0.00,
-                "density": 50.5,
+                "density": 100.5,
                 "linearDamping": 0.0,
-                "angularDamping": 0.0,
-                "collisionCategory": "COLLISION_PLAYER"
+                "angularDamping": 6.0,
+                "collisionCategory": "COLLISION_GENERIC"
+            },
+            "playerControlComponent":
+            {
+                "controls":
+                [
+                    "CONTROL_MOVEMENT",
+                    "CONTROL_ROTATION"
+                ]
+
             }
+
         }
 
         //{

@@ -1,6 +1,8 @@
 #include "GameObject.h"
 
 #include "GameObjectManager.h"
+#include "EventManager.h"
+
 //#include "Level.h"
 
 
@@ -27,6 +29,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	mCompositeComponent(gameObjectId),
 	mParticleComponent(gameObjectId),
 	mPhysicsComponent(gameObjectId, std::shared_ptr<GameObject>(this), xMapPos, yMapPos, angleAdjust),
+	mPlayerControlComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
 	mRenderComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
 	mTextComponent(gameObjectId),
 	mTransformComponent(gameObjectId, std::shared_ptr<GameObject>(this), xMapPos, yMapPos, angleAdjust),
@@ -153,6 +156,10 @@ void GameObject::update()
 	if (hasComponentFlag(PARTICLE_COMPONENT)) {
 		mParticleComponent.update();
 	}
+	if (hasComponentFlag(PLAYERCONTROL_COMPONENT)) {
+		mPlayerControlComponent.update();
+	}
+
 
 	////Update the mouse state
 	//if (SDL_GetRelativeMouseMode() == SDL_FALSE)

@@ -3,6 +3,14 @@
 
 #include <SDL2/SDL.h>
 #include <vector>
+#include <memory>
+
+struct PlayerInputEvent
+{
+
+	unsigned char keyStates[SDL_NUM_SCANCODES];
+	SDL_Event event;
+};
 
 class EventManager
 {
@@ -14,15 +22,16 @@ public:
 	static EventManager& instance();
 
 	void pollEvents();
+	void clearEvents();
 
 	//Accessor functions
-	std::vector<SDL_Event> playerInputEvents() {
+	std::vector<std::shared_ptr<PlayerInputEvent>> playerInputEvents() {
 		return m_PlayerInputEvents;
 	}
 
 private:
 
-	std::vector<SDL_Event> m_PlayerInputEvents;
+	std::vector<std::shared_ptr<PlayerInputEvent>> m_PlayerInputEvents;
 
 
 
