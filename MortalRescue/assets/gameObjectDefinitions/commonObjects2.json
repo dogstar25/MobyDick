@@ -44,28 +44,28 @@
                 "animations":
                 [
                     {
+                        "state": "ANIMATION_IDLE",
+                        "textureId": "TX_GINA_64_IDLE",
+                        "speed": 0.10, //time in seconds for each frame. Lower the faster
+                        "frames": 1
+                    },
+                    {
                         "state": "ANIMATION_RUN",
                         "textureId": "TX_GINA_64_RUN",
                         "speed": 0.10, //time in seconds for each frame. Lower the faster
                         "frames": 4
-                    },
-                    {
-                        "state": "IDLE",
-                        "textureId": "TX_GINA_64_IDLE",
-                        "speed": 0.10, //time in seconds for each frame. Lower the faster
-                        "frames": 1
                     }
                 ]
             },
             "physicsComponent":
             {
                 "type": "B2_DYNAMIC",
-                "collisionShape": "B2_BOX",
-                //"collisionRadius": 0.64,
+                "collisionShape": "B2_CIRCLE",
+                "collisionRadius": 0.64,
                 "friction": 0.00,
                 "density": 50.5,
                 "linearDamping": 0.0,
-                "angularDamping": 0.0,
+                "angularDamping": 10.0,
                 "collisionCategory": "COLLISION_PLAYER"
             },
             "attachmentsComponent":

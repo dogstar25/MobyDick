@@ -178,6 +178,9 @@ bool Game::init()
 	gameObject = new GameObject("SWORDLADY", 2, 2, 180);
 	addGameObject(gameObject, GameOjectLayer::DEBUG);
 
+	gameObject = new GameObject("GINA_64", 2, 2, 180);
+	addGameObject(gameObject, GameOjectLayer::DEBUG);
+
 	for (int i = 0; i < 20; i++)
 	{
 		gameObject = new GameObject("BOWMAN", 13, 13, 0);
