@@ -8,14 +8,16 @@
 #include "Component.h"
 #include "../Animation.h"
 
-class GameObject;
+class TransformComponent;
 
 class AnimationComponent :  public Component
 {
 public:
 	AnimationComponent();
-	AnimationComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject);
+	AnimationComponent(std::string gameObjectId);
+	AnimationComponent(Json::Value itrJSON);
 	~AnimationComponent();
+	void construct(Json::Value itrJSON);
 
 	void update() override;
 	SDL_Rect* getCurrentAnimationTextureRect();
@@ -29,12 +31,13 @@ public:
 		return m_animations;
 	}
 	void setCurrentAnimationState(int animationState) { m_currentAnimationState = animationState; }
-
+	void setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent);
 
 private:
 	int 
 		m_currentAnimationState;
 
+	std::shared_ptr<TransformComponent> m_refTransFormComponent;
 	std::map<int, std::shared_ptr<Animation>> m_animations;
 
 };

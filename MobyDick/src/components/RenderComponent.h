@@ -9,14 +9,17 @@
 #include "TransformComponent.h"
 #include "AnimationComponent.h"
 
-class GameObject;
+class AnimationComponent;
+class PhysicsComponent;
+class TransformComponent;
+
 
 class RenderComponent : public Component
 {
 
 public:
 	RenderComponent();
-	RenderComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject);
+	RenderComponent(Json::Value itrJSON);
 	RenderComponent(RenderComponent* componentDefinition);
 	~RenderComponent();
 
@@ -34,6 +37,9 @@ public:
 	void setTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
 
 	void outlineObject(float lineSize);
+	void setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent,
+		std::shared_ptr<AnimationComponent> animationComponent,
+		std::shared_ptr<PhysicsComponent> physicsComponent);
 
 	SDL_Rect* getRenderTextureRect();
 	SDL_Texture* getRenderTexture();
@@ -52,7 +58,6 @@ public:
 	}
 
 
-
 private:
 
 	std::shared_ptr<Texture> m_texture;
@@ -65,6 +70,10 @@ private:
 		m_renderOutline;
 	std::string
 		m_textureId;
+
+	std::shared_ptr<TransformComponent> m_refTransformComponent;
+	std::shared_ptr<AnimationComponent> m_refAnimationComponent;
+	std::shared_ptr<PhysicsComponent> m_refPhysicsComponent;
 
 
 };

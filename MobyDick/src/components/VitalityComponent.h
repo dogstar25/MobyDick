@@ -9,7 +9,7 @@ class VitalityComponent :  public Component
 {
 public:
 	VitalityComponent();
-	VitalityComponent(std::string gameObjectId);
+	VitalityComponent(Json::Value itrJSON);
 	~VitalityComponent();
 
 	void update() override;

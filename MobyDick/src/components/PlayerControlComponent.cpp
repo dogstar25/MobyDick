@@ -6,6 +6,12 @@
 #include "../GameConfig.h"
 #include "../EnumMaps.h"
 
+
+#include "AnimationComponent.h"
+#include "TransformComponent.h"
+#include "PhysicsComponent.h"
+#include "VitalityComponent.h"
+
 #include <SDL2/SDL.h>
 
 
@@ -14,31 +20,18 @@ PlayerControlComponent::PlayerControlComponent()
 
 }
 
-PlayerControlComponent::PlayerControlComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject)
+PlayerControlComponent::PlayerControlComponent(Json::Value itrJSON)
 {
 
-	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
+	Json::Value itr = itrJSON["playerControlComponent"];
 
-	//Save the pointer to parent GameObject
-	m_parentGameObject = parentGameObject;
-
-	//PlayerControlComponent
-	if (itrJSON.isMember("playerControlComponent") && itrJSON.isMember("physicsComponent") && itrJSON.isMember("vitalityComponent"))
+	for (Json::Value itrControls :itr["controls"])
 	{
-		m_parentGameObject->setComponentFlag(PLAYERCONTROL_COMPONENT);
+		int controlFlag = EnumMap::instance().toEnum(itrControls.asString());
+		m_controls.set(controlFlag);
 
-		Json::Value itr = itrJSON["playerControlComponent"];
-
-		for (Json::Value itrControls :itr["controls"])
-		{
-			int controlFlag = EnumMap::instance().toEnum(itrControls.asString());
-			m_controls.set(controlFlag);
-
-
-		}
 
 	}
-
 
 
 }
@@ -47,6 +40,20 @@ PlayerControlComponent::~PlayerControlComponent()
 {
 
 }
+
+void PlayerControlComponent::setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent,
+	std::shared_ptr<AnimationComponent> animationComponent,
+	std::shared_ptr<PhysicsComponent> physicsComponent,
+	std::shared_ptr<VitalityComponent> vitalityComponent)
+{
+
+	m_refTransformComponent = transformComponent;
+	m_refAnimationComponent = animationComponent;
+	m_refPhysicsComponent = physicsComponent;
+	m_refVitalityComponent = vitalityComponent;
+
+}
+
 
 void PlayerControlComponent::init()
 {
@@ -63,10 +70,6 @@ void PlayerControlComponent::update()
 	int direction = 0;
 	int strafe = 0;
 	const Uint8* keyStates = nullptr;
-
-	//Convenience references
-	PhysicsComponent* physicsComponent = &m_parentGameObject->physicsComponent();
-	VitalityComponent* vitalityComponent = &m_parentGameObject->vitalityComponent();
 
 	for (auto& inputEvent : EventManager::instance().playerInputEvents())
 	{
@@ -95,13 +98,33 @@ void PlayerControlComponent::update()
 				strafe = -1;
 			}
 
-			m_parentGameObject->performMovementSequence(10, direction, strafe);
+			//FIXME: moving, sound and animation change shoudl be part of a actionSequence helper class
+			if (m_refPhysicsComponent) {
+				m_refPhysicsComponent->applyMovement(m_refVitalityComponent->speed(), direction, strafe);
+			}
+			//Sound
+			//playSound(0);
+
+			//Animation
+			if (m_refAnimationComponent )
+			{
+				if (direction == 0 && strafe == 0)
+				{
+					m_refAnimationComponent->setCurrentAnimationState(ANIMATION_IDLE);
+				}
+				else
+				{
+					m_refAnimationComponent->setCurrentAnimationState(ANIMATION_RUN);
+				}
+			}
 
 			break;
 
 		case SDL_MOUSEMOTION:
 			angularVelocity = inputEvent->event.motion.xrel * GameConfig::instance().mouseSensitivity();
-			m_parentGameObject->performRotationSequence(angularVelocity);
+			if (m_refPhysicsComponent) {
+				m_refPhysicsComponent->applyRotation(angularVelocity);
+			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			//fire();

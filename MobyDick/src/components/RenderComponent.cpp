@@ -8,6 +8,10 @@
 #include "../GameConfig.h"
 #include "../TextureManager.h"
 
+#include "AnimationComponent.h"
+#include "TransformComponent.h"
+#include "PhysicsComponent.h"
+
 
 RenderComponent::RenderComponent()
 {
@@ -22,51 +26,48 @@ RenderComponent::RenderComponent(RenderComponent* componentDefinition)
 
 }
 
-RenderComponent::RenderComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject)
+RenderComponent::RenderComponent(Json::Value itrJSON)
 {
-	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
+	Json::Value itrRender = itrJSON["renderComponent"];
 
-	//Save the pointer to parent GameObject
-	m_parentGameObject = parentGameObject;
-
-	//Default values if no component configured
-	setColor(255, 255, 255, 255);
-
-	//Transform Component
-	if (itrJSON.isMember("renderComponent"))
+	if (itrRender.isMember("color"))
 	{
-		m_parentGameObject->setComponentFlag(RENDER_COMPONENT);
-
-		Json::Value itrRender = itrJSON["renderComponent"];
-
-		if (itrRender.isMember("color"))
-		{
-			setColor(
-				itrRender["color"]["red"].asInt(),
-				itrRender["color"]["green"].asInt(),
-				itrRender["color"]["blue"].asInt(),
-				itrRender["color"]["alpha"].asInt()
-			);
-		}
-		else
-		{
-			setColor(255, 255, 255, 255);
-		}
-
-		m_textureId = itrRender["textureId"].asString();
-		m_xRenderAdjustment = itrRender["xRenderAdjustment"].asFloat();
-		m_yRenderAdjustment = itrRender["yRenderAdjustment"].asFloat();
-		m_renderOutline = itrRender["renderOutline"].asFloat();
-
-		//Get Texture
-		m_texture = TextureManager::instance().getTexture(itrRender["textureId"].asString());
+		setColor(
+			itrRender["color"]["red"].asInt(),
+			itrRender["color"]["green"].asInt(),
+			itrRender["color"]["blue"].asInt(),
+			itrRender["color"]["alpha"].asInt()
+		);
 	}
+	else
+	{
+		setColor(255, 255, 255, 255);
+	}
+
+	m_textureId = itrRender["textureId"].asString();
+	m_xRenderAdjustment = itrRender["xRenderAdjustment"].asFloat();
+	m_yRenderAdjustment = itrRender["yRenderAdjustment"].asFloat();
+	m_renderOutline = itrRender["renderOutline"].asFloat();
+
+	//Get Texture
+	m_texture = TextureManager::instance().getTexture(itrRender["textureId"].asString());
 
 }
 
 
 RenderComponent::~RenderComponent()
 {
+
+}
+
+void RenderComponent::setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent,
+	std::shared_ptr<AnimationComponent> animationComponent,
+	std::shared_ptr<PhysicsComponent> physicsComponent)
+{
+
+	m_refTransformComponent = transformComponent;
+	m_refAnimationComponent = animationComponent;
+	m_refPhysicsComponent = physicsComponent;
 
 }
 
@@ -85,11 +86,11 @@ SDL_FRect RenderComponent::getRenderDestRect()
 	SDL_FRect destRect, currentPositionRect;
 
 	//Get its current position. Should be center of object
-	currentPositionRect = m_parentGameObject->transformComponent().getPositionRect();
+	currentPositionRect = m_refTransformComponent->getPositionRect();
 
 	//All objects positions are the center of the object so we have to subtract the halfsize from the x,y position
 	//because SDL wants the position to be top left corner
-	if (m_parentGameObject->hasComponentFlag(PHYSICS_COMPONENT))
+	if (m_refPhysicsComponent)
 	{
 		destRect.w = currentPositionRect.w * GameConfig::instance().scaleFactor();
 		destRect.h = currentPositionRect.h * GameConfig::instance().scaleFactor();
@@ -104,7 +105,7 @@ SDL_FRect RenderComponent::getRenderDestRect()
 	}
 
 	//Render Adjustment if it exists - mostly for composite pieces
-	if (m_parentGameObject->hasComponentFlag(PHYSICS_COMPONENT))
+	if (m_refPhysicsComponent)
 	{
 		destRect.w += (m_xRenderAdjustment / GameConfig::instance().scaleFactor());
 		destRect.h += (m_yRenderAdjustment / GameConfig::instance().scaleFactor());
@@ -131,9 +132,9 @@ SDL_Rect* RenderComponent::getRenderTextureRect()
 {
 	SDL_Rect* textureSrcRect=nullptr;
 
-	if (m_parentGameObject->hasComponentFlag(ANIMATION_COMPONENT))
+	if (m_refAnimationComponent)
 	{
-		textureSrcRect = m_parentGameObject->animationComponent().getCurrentAnimationTextureRect();
+		textureSrcRect = m_refAnimationComponent->getCurrentAnimationTextureRect();
 	}
 
 	return textureSrcRect;
@@ -144,13 +145,13 @@ float RenderComponent::getRenderAngle()
 {
 	float angle=0;
 
-	if (m_parentGameObject->hasComponentFlag(PHYSICS_COMPONENT))
+	if (m_refPhysicsComponent)
 	{
-		angle = util::radiansToDegrees(m_parentGameObject->transformComponent().angle());
+		angle = util::radiansToDegrees(m_refTransformComponent->angle());
 	}
 	else
 	{
-		angle = m_parentGameObject->transformComponent().angle();
+		angle = m_refTransformComponent->angle();
 	}
 
 	return angle;
@@ -165,9 +166,9 @@ SDL_Texture* RenderComponent::getRenderTexture()
 {
 	SDL_Texture* texture = nullptr;
 
-	if (m_parentGameObject->hasComponentFlag(ANIMATION_COMPONENT)) 
+	if (m_refAnimationComponent) 
 	{
-		texture = m_parentGameObject->animationComponent().getCurrentAnimationTexture();
+		texture = m_refAnimationComponent->getCurrentAnimationTexture();
 	}
 	else 
 	{
@@ -194,7 +195,7 @@ void RenderComponent::outlineObject(float lineSize)
 	SDL_FPoint point;
 
 	//Adjust for camera
-	if (m_parentGameObject->transformComponent().absolutePositioning() == false)
+	if (m_refTransformComponent->absolutePositioning() == false)
 	{
 		gameObjectDrawRect.x -= Camera::instance().frame().x;
 		gameObjectDrawRect.y -= Camera::instance().frame().y;

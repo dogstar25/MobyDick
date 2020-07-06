@@ -61,67 +61,12 @@ Animation::Animation(Json::Value animationDetailsJSON, Json::Value transformDeta
 
 }
 
-//Animation::Animation(GameObjectDefinition* gameObjectDefinition, std::string animationId, std::string textureId, int totalFrames, float speed)
-//{
-//
-//	//m_state = animationId;
-//	m_speed = speed;
-//	m_frameCount = totalFrames;
-//
-//	//Get pointer to textture
-//	//FIXME:Change this to simple use the 
-//	m_texture = TextureManager::instance().getTexture(textureId)->sdlTexture;
-//
-//	//Calculate how many columns and rows this animation texture has
-//	int width, height;
-//	//First get width of textture
-//	SDL_QueryTexture(m_texture, NULL, NULL, &width, &height);
-//
-//	//calculate frameSize
-//	if (gameObjectDefinition->isPhysicsObject == true)
-//	{
-//		m_frameSize.x = gameObjectDefinition->xSize * GameConfig::instance().scaleFactor();
-//		m_frameSize.y = gameObjectDefinition->ySize * GameConfig::instance().scaleFactor();
-//	}
-//	else
-//	{
-//		m_frameSize.x = gameObjectDefinition->xSize;
-//		m_frameSize.y = gameObjectDefinition->ySize;
-//
-//	}
-//
-//	//Calculate nnumber of rows and columns - remember to convert the gameObject size to pixels first
-//	int rows, columns;
-//	columns = width / m_frameSize.x;
-//	rows = height / m_frameSize.y;
-//
-//	//Calculate top left corner of each animation frame
-//	SDL_FPoint point;
-//	int frameCount = 0;
-//	for (int rowIdx = 0; rowIdx < rows; rowIdx++) 
-//	{
-//		for (int colIdx = 0; colIdx < columns; colIdx++) 
-//		{
-//
-//			point.x = colIdx * m_frameSize.x;
-//			point.y = rowIdx * m_frameSize.y;
-//
-//			m_animationFramePositions.push_back(point);
-//
-//			//do not exceed the maximum number of frames that this texture holds
-//			frameCount++;
-//			if (frameCount >= totalFrames) {
-//				break;
-//			}
-//		}
-//	}
-//}
 
 Animation::~Animation()
 {
 
-	delete m_currentTextureAnimationSrcRect;
-	delete m_texture;
+	//delete m_currentTextureAnimationSrcRect;
+	//delete m_texture;
 
 }
 

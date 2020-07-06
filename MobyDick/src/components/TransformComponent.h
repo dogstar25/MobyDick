@@ -12,7 +12,7 @@ class TransformComponent : public Component
 
 public:
 	TransformComponent();
-	TransformComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject, float xMapPos, float yMapPos, float angleAdjust);
+	TransformComponent(Json::Value itrJSON, float xMapPos, float yMapPos, float angleAdjust);
 	TransformComponent(Json::Value& componentDetailsJSON);
 	~TransformComponent();
 

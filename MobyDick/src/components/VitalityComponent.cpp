@@ -8,17 +8,13 @@ VitalityComponent::VitalityComponent()
 }
 
 
-VitalityComponent::VitalityComponent(std::string gameObjectId)
+VitalityComponent::VitalityComponent(Json::Value itrJSON)
 {
-	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 
-	//Transform Component
-	if (itrJSON.isMember("VitalityComponent"))
-	{
+	Json::Value vitalityComponentJSON = itrJSON["vitalityComponent"];
 
-		//m_componentFlags |= TRANSFORM_COMPONENT;
+	m_speed = vitalityComponentJSON["speed"].asFloat();
 
-	}
 
 }
 

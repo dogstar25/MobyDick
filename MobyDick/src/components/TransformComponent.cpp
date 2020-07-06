@@ -8,21 +8,9 @@ TransformComponent::TransformComponent()
 {
 }
 
-TransformComponent::TransformComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject, float xMapPos, float yMapPos, float angleAdjust)
+TransformComponent::TransformComponent(Json::Value itrJSON, float xMapPos, float yMapPos, float angleAdjust)
 {
-	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
-
-	//Save the pointer to parent GameObject
-	m_parentGameObject = parentGameObject;
-
-	//Convenience flag
-	bool hasPhysicsComponent = itrJSON.isMember("physicsComponent");
-
-	if (itrJSON.isMember("transformComponent"))
-	{
 		Json::Value itrTransform = itrJSON["transformComponent"];
-
-		m_parentGameObject->setComponentFlag(TRANSFORM_COMPONENT);
 
 		/*
 		If this is a physics object, then this all will get overridden current he first 
@@ -50,8 +38,6 @@ TransformComponent::TransformComponent(std::string gameObjectId, std::shared_ptr
 		}
 
 		m_absolutePositioning = itrTransform["absolutePositioning"].asBool();
-
-	}
 
 }
 

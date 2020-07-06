@@ -6,7 +6,6 @@
 #include <string>
 #include <vector>
 #include <json/json.h>
-#include <bitset>
 
 #include <Box2D/Box2D.h>
 
@@ -42,24 +41,15 @@ public:
 		m_removeFromWorld = removeFromWorld; 
 	}
 
-	auto setComponentFlag(size_t flag) {
-		m_componentFlags.set(flag, true);
-	}
+	void init();
 
-	bool hasComponentFlag(size_t flag) {
-		return m_componentFlags.test(flag);
-	}
-	void performMovementSequence(float velocity, int direction, int strafe);
-	void performRotationSequence(float angularVelocity);
-	void setAnimationState(int animationState);
-	void playSound(int soundId);
 
 	//Accessor Functions
 	auto removeFromWorld() { 
 		return m_removeFromWorld; 
 	}
 
-	auto gameObjectDefinition(){
+	auto const& gameObjectDefinition(){
 		return m_gameObjectDefinition;
 	}
 	auto& animationComponent() {
@@ -107,25 +97,21 @@ private:
 		m_removeFromWorld;
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 	std::string m_id;
-	std::bitset<32>
-		m_componentFlags;
 
-
-	void init();
 
 	//Components
-	AnimationComponent m_AnimationComponent;
-	AttachmentsComponent m_AttachmentsComponent;
-	ChildrenComponent m_ChildrenComponent;
-	CompositeComponent m_CompositeComponent;
-	ParticleComponent m_ParticleComponent;
-	PhysicsComponent m_PhysicsComponent;
-	RenderComponent m_RenderComponent;
-	TextComponent m_TextComponent;
-	TransformComponent m_TransformComponent;
-	VitalityComponent m_VitalityComponent;
-	WeaponComponent m_WeaponComponent;
-	PlayerControlComponent m_PlayerControlComponent;
+	std::shared_ptr<AnimationComponent> m_AnimationComponent;
+	std::shared_ptr<AttachmentsComponent> m_AttachmentsComponent;
+	std::shared_ptr<ChildrenComponent> m_ChildrenComponent;
+	std::shared_ptr<CompositeComponent> m_CompositeComponent;
+	std::shared_ptr<ParticleComponent> m_ParticleComponent;
+	std::shared_ptr<PhysicsComponent> m_PhysicsComponent;
+	std::shared_ptr<RenderComponent> m_RenderComponent;
+	std::shared_ptr<TextComponent> m_TextComponent;
+	std::shared_ptr<TransformComponent> m_TransformComponent;
+	std::shared_ptr<VitalityComponent> m_VitalityComponent;
+	std::shared_ptr<WeaponComponent> m_WeaponComponent;
+	std::shared_ptr<PlayerControlComponent> m_PlayerControlComponent;
 	
 	
 
