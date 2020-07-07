@@ -12,8 +12,7 @@ class TransformComponent : public Component
 
 public:
 	TransformComponent();
-	TransformComponent(Json::Value itrJSON, float xMapPos, float yMapPos, float angleAdjust);
-	TransformComponent(Json::Value& componentDetailsJSON);
+	TransformComponent(Json::Value definitionJSON, int xMapPos, int yMapPos, int angleAdjust);
 	~TransformComponent();
 
 	void update() override;
@@ -42,7 +41,6 @@ public:
 	virtual SDL_FRect  getPositionRect();
 
 private:
-
 	b2Vec2 calculatePosition(float xMapPos, float yMapPos, bool hasPhysicsComponent, Json::Value itrJSON);
 	float calculateAngle(float angle, bool isPhysicsObject);
 	float

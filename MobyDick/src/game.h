@@ -55,9 +55,6 @@ public:
 	int gameState(){
 		return m_gameState;
 	}
-	//std::array <std::vector<GameObject>, constants::MAX_GAMEOBJECT_LAYERS> {
-	//	return m_gameObjects;
-	//}
 
 private:
 
@@ -76,7 +73,7 @@ private:
 	For deletions, things with heavy number of deletes like bullets and particles should all be at 
 	the end of the vector which shoudl make for acceptable erase performance
 	*/
-	std::array <std::vector<GameObject>, constants::MAX_GAMEOBJECT_LAYERS> m_gameObjects;
+	std::array <std::vector<std::shared_ptr<GameObject>>, constants::MAX_GAMEOBJECT_LAYERS> m_gameObjects;
 
 
 };

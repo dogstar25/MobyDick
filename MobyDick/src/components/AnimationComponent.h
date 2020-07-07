@@ -14,8 +14,7 @@ class AnimationComponent :  public Component
 {
 public:
 	AnimationComponent();
-	AnimationComponent(std::string gameObjectId);
-	AnimationComponent(Json::Value itrJSON);
+	AnimationComponent(Json::Value definitionJSON);
 	~AnimationComponent();
 	void construct(Json::Value itrJSON);
 

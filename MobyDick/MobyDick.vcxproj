@@ -139,6 +139,7 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\DynamicTextManager.cpp" />
     <ClCompile Include="src\EventManager.cpp" />
     <ClCompile Include="src\components\PlayerControlComponent.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="src\components\VitalityComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\DynamicTextManager.h" />
     <ClInclude Include="src\EventManager.h" />
     <ClInclude Include="src\components\PlayerControlComponent.h" />
     <ClInclude Include="src\Renderer.h" />

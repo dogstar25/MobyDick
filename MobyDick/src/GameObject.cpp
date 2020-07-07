@@ -11,77 +11,64 @@ GameObject::~GameObject()
 
 }
 
-GameObject::GameObject()
-	: m_TransformComponent()
-{
-	this->init();
-}
-
-GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust)
+GameObject::GameObject(std::string gameObjectId, int xMapPos, int yMapPos, int angleAdjust)
 {
 
 	//Game Object Id
 	m_id = gameObjectId;
 
 	//Build components
-	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
+	Json::Value definitionJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 
 	//Animation Component
-	if (itrJSON.isMember("animationComponent") && itrJSON.isMember("transformComponent"))
+	if (definitionJSON.isMember("animationComponent") && definitionJSON.isMember("transformComponent"))
 	{
-		m_AnimationComponent = std::make_shared<AnimationComponent>(itrJSON);
+		m_AnimationComponent = std::make_shared<AnimationComponent>(definitionJSON);
 
 	}
 	//Transform Component
-	if (itrJSON.isMember("transformComponent"))
+	if (definitionJSON.isMember("transformComponent"))
 	{
-		m_TransformComponent = std::make_shared<TransformComponent>(itrJSON, xMapPos, yMapPos, angleAdjust);
+		m_TransformComponent = std::make_shared<TransformComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
 
 	}
 	//Physics Component
-	if (itrJSON.isMember("physicsComponent") && itrJSON.isMember("transformComponent"))
+	if (definitionJSON.isMember("physicsComponent") && definitionJSON.isMember("transformComponent"))
 	{
-		m_PhysicsComponent = std::make_shared<PhysicsComponent>(itrJSON, xMapPos, yMapPos, angleAdjust);
+		m_PhysicsComponent = std::make_shared<PhysicsComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
 
 	}
 	//Vitality Component
-	if (itrJSON.isMember("vitalityComponent"))
+	if (definitionJSON.isMember("vitalityComponent"))
 	{
-		m_VitalityComponent = std::make_shared<VitalityComponent>(itrJSON);
+		m_VitalityComponent = std::make_shared<VitalityComponent>(definitionJSON);
 
 	}
+
 	//Render Component
-	//if (itrJSON.isMember("renderComponent"))
-	//{
-		m_RenderComponent = std::make_shared<RenderComponent>(itrJSON);
+	m_RenderComponent = std::make_shared<RenderComponent>(definitionJSON);
 
-//	}
 	//Player control Component
-	if (itrJSON.isMember("playerControlComponent") && itrJSON.isMember("physicsComponent") && itrJSON.isMember("vitalityComponent"))
+	if (definitionJSON.isMember("playerControlComponent") && definitionJSON.isMember("physicsComponent") && definitionJSON.isMember("vitalityComponent"))
 	{
-		m_PlayerControlComponent = std::make_shared<PlayerControlComponent>(itrJSON);
+		m_PlayerControlComponent = std::make_shared<PlayerControlComponent>(definitionJSON);
 
 	}
+
+	//Text Component
+	if (definitionJSON.isMember("textComponent") && definitionJSON.isMember("transformComponent"))
+	{
+		m_TextComponent = std::make_shared<TextComponent>(gameObjectId);
+		
+	}
+
+	//Attachments Component
 
 	/*
 	Setup component dependency references
 	*/
-	if (m_AnimationComponent)
-	{
-		m_AnimationComponent->setDependencyReferences(m_TransformComponent);
-	}
-	if (m_PhysicsComponent)
-	{
-		m_PhysicsComponent->setDependencyReferences(m_TransformComponent);
-	}
-	if (m_PlayerControlComponent)
-	{
-		m_PlayerControlComponent->setDependencyReferences(m_TransformComponent, m_AnimationComponent, m_PhysicsComponent, m_VitalityComponent);
-	}
-	if (m_RenderComponent)
-	{
-		m_RenderComponent->setDependencyReferences(m_TransformComponent, m_AnimationComponent, m_PhysicsComponent);
-	}
+	_setDependecyReferences();
+
 
 
 
@@ -103,9 +90,9 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 }
 
-void GameObject::init()
+void GameObject::_setDependecyReferences()
 {
-	if(m_AnimationComponent)
+	if (m_AnimationComponent)
 	{
 		m_AnimationComponent->setDependencyReferences(m_TransformComponent);
 	}
@@ -121,7 +108,10 @@ void GameObject::init()
 	{
 		m_RenderComponent->setDependencyReferences(m_TransformComponent, m_AnimationComponent, m_PhysicsComponent);
 	}
-
+	if (m_TextComponent)
+	{
+		m_TextComponent->setDependencyReferences(m_TransformComponent, m_RenderComponent);
+	}
 
 }
 

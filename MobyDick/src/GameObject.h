@@ -32,7 +32,7 @@ public:
 	//	mTransformComponent(gameObjectId) {}
 	~GameObject();
 
-	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust);
+	GameObject(std::string gameObjectId, int xMapPos, int yMapPos, int angleAdjust);
 
 	virtual void update();
 	virtual void render();
@@ -40,9 +40,6 @@ public:
 	void setRemoveFromWorld(bool removeFromWorld) { 
 		m_removeFromWorld = removeFromWorld; 
 	}
-
-	void init();
-
 
 	//Accessor Functions
 	auto removeFromWorld() { 
@@ -91,6 +88,7 @@ public:
 
 private:
 
+	void _setDependecyReferences();
 	int
 		m_mouseState;
 	bool

@@ -19,7 +19,7 @@ class RenderComponent : public Component
 
 public:
 	RenderComponent();
-	RenderComponent(Json::Value itrJSON);
+	RenderComponent(Json::Value definitionJSON);
 	RenderComponent(RenderComponent* componentDefinition);
 	~RenderComponent();
 
@@ -53,9 +53,10 @@ public:
 	SDL_Color color() {
 		return m_color;
 	}
-	Texture* texture() {
-		return m_texture.get();
+	std::shared_ptr<Texture> texture() {
+		return m_texture;
 	}
+	
 
 
 private:

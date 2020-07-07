@@ -4,40 +4,39 @@
 #include "../GameObject.h"
 #include "../GameConfig.h"
 
+
 TransformComponent::TransformComponent()
 {
 }
 
-TransformComponent::TransformComponent(Json::Value itrJSON, float xMapPos, float yMapPos, float angleAdjust)
+TransformComponent::TransformComponent(Json::Value definitionJSON, int xMapPos, int yMapPos, int angleAdjust)
 {
-		Json::Value itrTransform = itrJSON["transformComponent"];
+		Json::Value transformComponentJSON = definitionJSON["transformComponent"];
 
-		/*
-		If this is a physics object, then this all will get overridden current he first 
-		Game loop on pyhsicsComponent.Update()
-		*/
+		m_parentGameObjectId = definitionJSON["id"].asString();;
+
 		m_angle = angleAdjust;
 
 		//FixMe: 32 is tilewidth
 		setPosition( 
-			(xMapPos * 32) + itrTransform["size"]["width"].asFloat() / 2, 
-			(yMapPos * 32) + itrTransform["size"]["height"].asFloat() / 2
+			(xMapPos * 32) + transformComponentJSON["size"]["width"].asFloat() / 2,
+			(yMapPos * 32) + transformComponentJSON["size"]["height"].asFloat() / 2
 		);
 
 		//Size of both physics and non-physics objetcs needs to be set here
 		//We cant easily get the size of the physics object later
-		if (itrJSON.isMember("physicsComponent") == true)
+		if (definitionJSON.isMember("physicsComponent") == true)
 		{
 			m_size.Set(
-				itrTransform["size"]["width"].asFloat() / GameConfig::instance().scaleFactor(), 
-				itrTransform["size"]["height"].asFloat() / GameConfig::instance().scaleFactor());
+				transformComponentJSON["size"]["width"].asFloat() / GameConfig::instance().scaleFactor(),
+				transformComponentJSON["size"]["height"].asFloat() / GameConfig::instance().scaleFactor());
 		}
 		else
 		{
-			m_size.Set(itrTransform["size"]["width"].asFloat(), itrTransform["size"]["height"].asFloat());
+			m_size.Set(transformComponentJSON["size"]["width"].asFloat(), transformComponentJSON["size"]["height"].asFloat());
 		}
 
-		m_absolutePositioning = itrTransform["absolutePositioning"].asBool();
+		m_absolutePositioning = transformComponentJSON["absolutePositioning"].asBool();
 
 }
 

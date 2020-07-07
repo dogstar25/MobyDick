@@ -140,18 +140,28 @@
                 "linearDamping": 0.0,
                 "angularDamping": 6.0,
                 "collisionCategory": "COLLISION_GENERIC"
-            },
-            "playerControlComponent":
-            {
-                "controls":
-                [
-                    "CONTROL_MOVEMENT",
-                    "CONTROL_ROTATION"
-                ]
+            }
+           
 
+        },
+        {
+            "id": "PLAYER_LABEL",
+            "description": "Player Label",
+            "transformComponent":
+            {
+                "absolutePositioning": false
+            },
+            "textComponent":
+            {
+                "value": "Player 1",
+                "dynamic": true,
+                "font": "FONT_ARIAL_REG",
+                "fontSize":  96
             }
 
         }
+      
+
 
         //{
         //    "id": "FPS_LABEL",

@@ -14,6 +14,7 @@ Animation::Animation(Json::Value animationDetailsJSON, Json::Value transformDeta
 	m_currentAnimFrame = 0;
 	m_state = EnumMap::instance().toEnum(animationDetailsJSON["state"].asString());
 	m_speed = animationDetailsJSON["speed"].asFloat();
+
 	m_frameCount = animationDetailsJSON["frames"].asInt();
 
 	//Get texture

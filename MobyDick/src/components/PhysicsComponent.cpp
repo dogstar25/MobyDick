@@ -15,11 +15,13 @@ PhysicsComponent::PhysicsComponent()
 
 }
 
-PhysicsComponent::PhysicsComponent(Json::Value itrJSON, float xMapPos, float yMapPos, float angleAdjust)
+PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, int xMapPos, int yMapPos, int angleAdjust)
 {
 	//Get reference to the animationComponent JSON config and transformComponent JSON config
-	Json::Value physicsComponentJSON = itrJSON["physicsComponent"];
-	Json::Value transformComponentJSON = itrJSON["transformComponent"];
+	Json::Value physicsComponentJSON = definitionJSON["physicsComponent"];
+	Json::Value transformComponentJSON = definitionJSON["transformComponent"];
+
+	m_parentGameObjectId = definitionJSON["id"].asString();;
 
 	m_physicsType = EnumMap::instance().toEnum(physicsComponentJSON["type"].asString());
 	m_collisionShape = EnumMap::instance().toEnum(physicsComponentJSON["collisionShape"].asString());
@@ -135,7 +137,7 @@ b2Body* PhysicsComponent::buildB2Body(Json::Value transformComponentJSON)
 	body->SetLinearDamping(m_linearDamping);
 	body->SetAngularDamping(m_angularDamping);
 
-	body->SetUserData(m_parentGameObject.get());
+	//body->SetUserData(m_parentGameObject.get());
 	//this->box2dBodyCount++;
 	return body;
 
@@ -149,12 +151,12 @@ uint16 PhysicsComponent::setCollisionMask(uint16 category)
 	switch (category) {
 	case COLLISION_GENERIC:
 		mask = COLLISION_GENERIC| COLLISION_WALL | COLLISION_PARTICLE2 | COLLISION_PARTICLE3 | COLLISION_ENEMY_FRAME
-			| COLLISION_ENEMY_ARMOR_PIECE;
+			| COLLISION_ENEMY_ARMOR_PIECE | COLLISION_PLAYER;
 		break;
 
 	case COLLISION_PLAYER:
 		mask = COLLISION_WALL | COLLISION_PARTICLE2 | COLLISION_PARTICLE3 | COLLISION_ENEMY_FRAME
-			| COLLISION_ENEMY_ARMOR_PIECE;
+			| COLLISION_ENEMY_ARMOR_PIECE | COLLISION_GENERIC;
 		break;
 	case COLLISION_WALL:
 		mask = COLLISION_PLAYER | COLLISION_PARTICLE1 | COLLISION_PARTICLE2 | COLLISION_PARTICLE3

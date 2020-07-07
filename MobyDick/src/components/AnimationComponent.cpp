@@ -11,34 +11,14 @@ AnimationComponent::AnimationComponent()
 {
 }
 
-AnimationComponent::AnimationComponent(Json::Value itrJSON)
-{
-	construct(itrJSON);
-}
-
-AnimationComponent::AnimationComponent(std::string gameObjectId)
-{
-	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
-
-	//Animation Component - requires transform component as well 
-	if (itrJSON.isMember("animationComponent") && itrJSON.isMember("transformComponent"))
-	{
-		construct(itrJSON);
-	}
-	else
-	{
-		//log error that minimum required components were not available
-	}
-
-}
-
-void AnimationComponent::construct(Json::Value itrJSON)
+AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 {
 	//Get reference to the animationComponent JSON config and transformComponent JSON config
-	Json::Value animationComponentJSON = itrJSON["animationComponent"];
-	Json::Value transformComponentJSON = itrJSON["transformComponent"];
+	Json::Value animationComponentJSON = definitionJSON["animationComponent"];
+	Json::Value transformComponentJSON = definitionJSON["transformComponent"];
 
 	//Build animationComponent details
+	m_parentGameObjectId = definitionJSON["id"].asString();;
 
 	int i = 0;
 	for (Json::Value animItr : animationComponentJSON["animations"])
@@ -55,6 +35,7 @@ void AnimationComponent::construct(Json::Value itrJSON)
 
 	}
 }
+
 
 void AnimationComponent::setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent)
 {
