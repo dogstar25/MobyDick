@@ -7,7 +7,10 @@
 
 #include "Component.h"
 
-class GameObject;
+class AnimationComponent;
+class PhysicsComponent;
+class TransformComponent;
+class VitalityComponent;
 
 
 class PlayerControlComponent : public Component
@@ -15,19 +18,30 @@ class PlayerControlComponent : public Component
 public:
 
 	PlayerControlComponent();
-	PlayerControlComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject);
+	PlayerControlComponent(Json::Value definitionJSON);
 
 	~PlayerControlComponent();
 
 	void update() override;
 
+	void setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent,
+		std::shared_ptr<AnimationComponent> animationComponent,
+		std::shared_ptr<PhysicsComponent> physicsComponent,
+		std::shared_ptr<VitalityComponent> vitalityComponent);
+
+
 
 private:
+
+
 	std::bitset<8> m_controls;
 
 	void init();
 
-
+	std::shared_ptr<TransformComponent> m_refTransformComponent;
+	std::shared_ptr<AnimationComponent> m_refAnimationComponent;
+	std::shared_ptr<PhysicsComponent> m_refPhysicsComponent;
+	std::shared_ptr<VitalityComponent> m_refVitalityComponent;
 
 };
 

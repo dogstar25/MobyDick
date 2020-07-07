@@ -11,62 +11,66 @@ GameObject::~GameObject()
 
 }
 
-void GameObject::init()
+GameObject::GameObject(std::string gameObjectId, int xMapPos, int yMapPos, int angleAdjust)
 {
 
-}
-
-GameObject::GameObject()
-	: mTransformComponent()
-{
-	this->init();
-}
-
-GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
-	mAnimationComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
-	mAttachmentsComponent(gameObjectId),
-	mChildrenComponent(gameObjectId),
-	mCompositeComponent(gameObjectId),
-	mParticleComponent(gameObjectId),
-	mPhysicsComponent(gameObjectId, std::shared_ptr<GameObject>(this), xMapPos, yMapPos, angleAdjust),
-	mPlayerControlComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
-	mRenderComponent(gameObjectId, std::shared_ptr<GameObject>(this)),
-	mTextComponent(gameObjectId),
-	mTransformComponent(gameObjectId, std::shared_ptr<GameObject>(this), xMapPos, yMapPos, angleAdjust),
-	mVitalityComponent(gameObjectId),
-	mWeaponComponent(gameObjectId)
-{
-
-	//Get a pointer to the game object definition
+	//Game Object Id
 	m_id = gameObjectId;
 
-	////Render Component
-	//if (itr.isMember("RenderComponent"))
-	//{
-	//	m_componentFlags |= RENDER_COMPONENT;
-	//	Json::Value& renderComponentJSON = itr["RenderComponent"];
-	//	this->m_components.emplace(RENDER_COMPONENT, new RenderComponent(renderComponentJSON));
-	//}
+	//Build components
+	Json::Value definitionJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 
-	////Animation Component
-	//if (itr.isMember("AnimationComponent"))
-	//{
-	//	m_componentFlags |= ANIMATION_COMPONENT;
-	//	Json::Value& animationComponentJSON = itr["AnimationComponent"];
-	//	this->m_components.emplace(ANIMATION_COMPONENT, new AnimationComponent(animationComponentJSON));
-	//}
+	//Animation Component
+	if (definitionJSON.isMember("animationComponent") && definitionJSON.isMember("transformComponent"))
+	{
+		m_AnimationComponent = std::make_shared<AnimationComponent>(definitionJSON);
 
-	//Need to call the constructor of each compoentn type to build the stuff that wasnt part of
-	//getting the component definition
+	}
+	//Transform Component
+	if (definitionJSON.isMember("transformComponent"))
+	{
+		m_TransformComponent = std::make_shared<TransformComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
+
+	}
+	//Physics Component
+	if (definitionJSON.isMember("physicsComponent") && definitionJSON.isMember("transformComponent"))
+	{
+		m_PhysicsComponent = std::make_shared<PhysicsComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
+
+	}
+	//Vitality Component
+	if (definitionJSON.isMember("vitalityComponent"))
+	{
+		m_VitalityComponent = std::make_shared<VitalityComponent>(definitionJSON);
+
+	}
+
+	//Render Component
+	m_RenderComponent = std::make_shared<RenderComponent>(definitionJSON);
+
+	//Player control Component
+	if (definitionJSON.isMember("playerControlComponent") && definitionJSON.isMember("physicsComponent") && definitionJSON.isMember("vitalityComponent"))
+	{
+		m_PlayerControlComponent = std::make_shared<PlayerControlComponent>(definitionJSON);
+
+	}
+
+	//Text Component
+	if (definitionJSON.isMember("textComponent") && definitionJSON.isMember("transformComponent"))
+	{
+		m_TextComponent = std::make_shared<TextComponent>(gameObjectId);
+		
+	}
+
+	//Attachments Component
+
+	/*
+	Setup component dependency references
+	*/
+	_setDependecyReferences();
 
 
 
-
-
-
-	//calculate position
-	//b2Vec2 position(xMapPos * Level::instance().m_tileWidth, yMapPos * Level::instance().m_tileHeight);
-	//this->setPosition(position, angleAdjust);
 
 	//is this a debug object then get the default debug definition but change its 
 	//id value to the one we passed in
@@ -79,85 +83,76 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//	m_definition = GameObjectManager::instance().gameObjectDefinitions[gameObjectId];
 	//}
 
-	//m_size.Set(m_definition->xSize, m_definition->ySize);
 
-	////color
-	//m_color = m_definition->color;
-
-	////Get pointer to the texture
-	//m_texture = TextureManager::instance().getTexture(m_definition->textureId);
-
-	////get the animation objects if they exist
-	//std::string firstState;
-	//int i = 0;
-	//if (m_definition->animationDetails.animations.size() > 0)
-	//{
-	//	Animation* animation = nullptr;
-	//	for (auto animationDefinition : m_definition->animationDetails.animations) {
-
-	//		animation = new Animation(m_definition,
-	//			animationDefinition.state,
-	//			animationDefinition.textureId,
-	//			animationDefinition.frames,
-	//			animationDefinition.speed);
-
-	//		m_animations.emplace(animationDefinition.state, animation);
-	//		//this->animations[animationDefinition.state]= animation;
-
-	//		//Save the first state id 
-	//		if (i == 0) {
-	//			firstState = animationDefinition.state;
-	//		}
-	//		++i;
-	//	}
-
-	//	//On creation, default the animation state to idle
-	//	this->m_currentAnimationState = firstState;
-	//}
 
 	////Build children if they exist
 	//this->buildChildren();
 
 }
 
+void GameObject::_setDependecyReferences()
+{
+	if (m_AnimationComponent)
+	{
+		m_AnimationComponent->setDependencyReferences(m_TransformComponent);
+	}
+	if (m_PhysicsComponent)
+	{
+		m_PhysicsComponent->setDependencyReferences(m_TransformComponent);
+	}
+	if (m_PlayerControlComponent)
+	{
+		m_PlayerControlComponent->setDependencyReferences(m_TransformComponent, m_AnimationComponent, m_PhysicsComponent, m_VitalityComponent);
+	}
+	if (m_RenderComponent)
+	{
+		m_RenderComponent->setDependencyReferences(m_TransformComponent, m_AnimationComponent, m_PhysicsComponent);
+	}
+	if (m_TextComponent)
+	{
+		m_TextComponent->setDependencyReferences(m_TransformComponent, m_RenderComponent);
+	}
+
+}
+
 void GameObject::update()
 {
 
-	if (hasComponentFlag(TRANSFORM_COMPONENT)) {
-		mTransformComponent.update();
+	if (m_TransformComponent) {
+		m_TransformComponent->update();
 	}
-	if (hasComponentFlag(PHYSICS_COMPONENT)) {
-		mPhysicsComponent.update();
+	if (m_PhysicsComponent) {
+		m_PhysicsComponent->update();
 	}
-	if (hasComponentFlag(ANIMATION_COMPONENT)) {
-		mAnimationComponent.update();
+	if (m_AnimationComponent) {
+		m_AnimationComponent->update();
 	}
-	if (hasComponentFlag(RENDER_COMPONENT)) {
-		mRenderComponent.update();
+	if (m_RenderComponent) {
+		m_RenderComponent->update();
 	}
-	if (hasComponentFlag(TEXT_COMPONENT)) {
-		mTextComponent.update();
+	if (m_TextComponent) {
+		m_TextComponent->update();
 	}
-	if (hasComponentFlag(CHILDREN_COMPONENT)) {
-		mChildrenComponent.update();
+	if (m_ChildrenComponent) {
+		m_ChildrenComponent->update();
 	}
-	if (hasComponentFlag(ATTACHMENTS_COMPONENT)) {
-		mAttachmentsComponent.update();
+	if (m_AttachmentsComponent) {
+		m_AttachmentsComponent->update();
 	}
-	if (hasComponentFlag(VITALITY_COMPONENT)) {
-		mVitalityComponent.update();
+	if (m_VitalityComponent) {
+		m_VitalityComponent->update();
 	}
-	if (hasComponentFlag(WEAPON_COMPONENT)) {
-		mWeaponComponent.update();
+	if (m_WeaponComponent) {
+		m_WeaponComponent->update();
 	}
-	if (hasComponentFlag(COMPOSITE_COMPONENT)) {
-		mCompositeComponent.update();
+	if (m_CompositeComponent) {
+		m_CompositeComponent->update();
 	}
-	if (hasComponentFlag(PARTICLE_COMPONENT)) {
-		mParticleComponent.update();
+	if (m_ParticleComponent) {
+		m_ParticleComponent->update();
 	}
-	if (hasComponentFlag(PLAYERCONTROL_COMPONENT)) {
-		mPlayerControlComponent.update();
+	if (m_PlayerControlComponent) {
+		m_PlayerControlComponent->update();
 	}
 
 
@@ -194,7 +189,7 @@ void GameObject::render()
 	//if (hasComponentFlag(RENDER_COMPONENT))
 	//{
 
-		mRenderComponent.render();
+		m_RenderComponent->render();
 		
 
 		////test outlining object
@@ -317,6 +312,7 @@ void GameObject::render()
 //
 //}
 //
+
 
 
 

@@ -5,7 +5,7 @@
 #include "GameObjectManager.h"
 #include "SoundManager.h"
 #include "Renderer.h"
-//#include "DynamicTextManager.h"
+#include "DynamicTextManager.h"
 //#include "ParticleMachine.h"
 #include "GameConfig.h"
 #include "Camera.h"
@@ -175,14 +175,23 @@ bool Game::init()
 	//gameObject = GameObjectManager::instance().buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
 	//this->addGameObject(gameObject, GameOjectLayer::MAIN);
 
-	gameObject = new GameObject("SWORDLADY", 2, 2, 180);
-	addGameObject(gameObject, GameOjectLayer::DEBUG);
+	this->m_gameObjects[GameOjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 2, 2, 0));
+	//addGameObject(gameObject, GameOjectLayer::DEBUG);
+
+	////gameObject = new GameObject("GINA_64", 2, 2, 180);
+	this->m_gameObjects[GameOjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("GINA_64", 5, 5, 0));
 
 	for (int i = 0; i < 20; i++)
 	{
-		gameObject = new GameObject("BOWMAN", 13, 13, 0);
-		addGameObject(gameObject, GameOjectLayer::MAIN);
+	this->m_gameObjects[GameOjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("BOWMAN", 13, 13, 0));
+	//////	//gameObject = new GameObject("BOWMAN", 13, 13, 0);
+	//////	//gameObject->init();
+	//////	//addGameObject(gameObject, GameOjectLayer::MAIN);
 	}
+
+	this->m_gameObjects[GameOjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 13, 13, 0));
+
+	
 
 
 	return true;
@@ -215,7 +224,7 @@ void Game::play()
 		//Increment frame counter and calculate FPS and reset the gameloop timer
 		Clock::instance().calcFps();
 
-		//DynamicTextManager::instance().updateText("FPS_VALUE", std::to_string(Clock::instance().fps()));
+		DynamicTextManager::instance().updateText("PLAYER_LABEL", std::to_string(util::generateRandomNumber(1,100)));
 
 	}
 
@@ -241,7 +250,7 @@ void Game::renderGameObjects(const std::array <std::vector<GameObject>, constant
 void Game::addGameObject(GameObject* gameObject, int layer)
 {
 
-	this->m_gameObjects[layer].push_back((*gameObject));
+	//this->m_gameObjects[layer].push_back((*gameObject));
 
 }
 
@@ -273,9 +282,9 @@ void Game::_update() {
 	for (auto& gameLayer : m_gameObjects)
 	{
 		//Update normal game objects
-		for (auto gameObject : gameLayer)
+		for (auto& gameObject : gameLayer)
 		{
-			gameObject.update();
+			gameObject->update();
 		}
 
 			//if (particleObject->removeFromWorld() == true)
@@ -313,7 +322,15 @@ void Game::_render() {
 	//m_player->render();
 
 	//Render all of the game objects in thew world
-	renderGameObjects(m_gameObjects);
+	//Render all of the game objects
+	for (auto& gameLayer : m_gameObjects)
+	{
+		//Update normal game objects
+		for (auto& gameObject : gameLayer)
+		{
+			gameObject->render();
+		}
+	}
 
 	//DebugDraw
 	//if (GameConfig::instance().b2DebugDrawMode() == true)

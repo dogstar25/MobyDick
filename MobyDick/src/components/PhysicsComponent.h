@@ -4,17 +4,22 @@
 #include <box2d/box2d.h>
 
 #include "Component.h"
+
+class TransformComponent;
+
 class PhysicsComponent : public Component
 {
 
 public:
 	PhysicsComponent();
-	PhysicsComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject, float xMapPos, float yMapPos, float angleAdjust);
+	PhysicsComponent(Json::Value definitionJSON, int xMapPos, int yMapPos, int angleAdjust);
 	~PhysicsComponent();
 
 	void update() override;
 	void applyMovement(float velocity, int direction, int strafeDirection);
 	void applyRotation( float angularVelocity);
+
+	void setDependencyReferences(std::shared_ptr<TransformComponent> transportComponent);
 
 private:
 
@@ -35,6 +40,7 @@ private:
 		m_collisionShape,
 		m_physicsType;
 
+	std::shared_ptr<TransformComponent> m_refTransFormComponent;
 
 };
 

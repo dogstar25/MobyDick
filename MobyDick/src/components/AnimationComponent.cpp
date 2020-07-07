@@ -4,48 +4,44 @@
 #include "../GameObjectManager.h"
 #include "../GameObject.h"
 
+#include "TransformComponent.h"
+
 
 AnimationComponent::AnimationComponent()
 {
 }
 
-AnimationComponent::AnimationComponent(std::string gameObjectId, std::shared_ptr<GameObject> parentGameObject)
+AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 {
-	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
+	//Get reference to the animationComponent JSON config and transformComponent JSON config
+	Json::Value animationComponentJSON = definitionJSON["animationComponent"];
+	Json::Value transformComponentJSON = definitionJSON["transformComponent"];
 
-	//Save the pointer to parent GameObject
-	m_parentGameObject = parentGameObject;
+	//Build animationComponent details
+	m_parentGameObjectId = definitionJSON["id"].asString();;
 
-	//Animation Component - requires transform component as well 
-	if (itrJSON.isMember("animationComponent") && itrJSON.isMember("transformComponent"))
+	int i = 0;
+	for (Json::Value animItr : animationComponentJSON["animations"])
 	{
-		m_parentGameObject->setComponentFlag(ANIMATION_COMPONENT);
+		i++;
+		int state = EnumMap::instance().toEnum(animItr["state"].asString());
 
-		//Get reference to the animationComponent JSON config and transformComponent JSON config
-		Json::Value animationComponentJSON = itrJSON["animationComponent"];
-		Json::Value transformComponentJSON = itrJSON["transformComponent"];
-
-		//Build animationComponent details
-		m_currentAnimationState = 1;
-
-		int i = 0;
-		for (Json::Value animItr : animationComponentJSON["animations"])
-		{
-			i++;
-			int state = EnumMap::instance().toEnum(animItr["state"].asString());
-
-			//Initialze curretn animation state to the first animation in the list
-			if (i == 1) {
-				m_currentAnimationState = state;
-			}
-			//Animation* animation = new Animation(animItr);
-			m_animations.emplace(state, new Animation(animItr, transformComponentJSON));
-
+		//Initialze current animation state to the first animation in the list
+		if (i == 1) {
+			m_currentAnimationState = state;
 		}
+		//Animation* animation = new Animation(animItr);
+		m_animations.emplace(state, new Animation(animItr, transformComponentJSON));
 
 	}
-
 }
+
+
+void AnimationComponent::setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent)
+{
+	m_refTransFormComponent = std::shared_ptr<TransformComponent>(transformComponent);
+}
+
 
 AnimationComponent::~AnimationComponent()
 {
