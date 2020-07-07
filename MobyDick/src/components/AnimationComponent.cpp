@@ -18,7 +18,7 @@ AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 	Json::Value transformComponentJSON = definitionJSON["transformComponent"];
 
 	//Build animationComponent details
-	m_parentGameObjectId = definitionJSON["id"].asString();;
+	m_gameObjectId = definitionJSON["id"].asString();;
 
 	int i = 0;
 	for (Json::Value animItr : animationComponentJSON["animations"])

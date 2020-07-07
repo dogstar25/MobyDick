@@ -30,7 +30,7 @@ RenderComponent::RenderComponent(Json::Value definitionJSON)
 {
 	Json::Value itrRender = definitionJSON["renderComponent"];
 
-	m_parentGameObjectId = definitionJSON["id"].asString();;
+	m_gameObjectId = definitionJSON["id"].asString();;
 
 	if (itrRender.isMember("color"))
 	{

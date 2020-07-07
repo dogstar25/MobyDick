@@ -25,7 +25,7 @@ PlayerControlComponent::PlayerControlComponent(Json::Value definitionJSON)
 
 	Json::Value itr = definitionJSON["playerControlComponent"];
 
-	m_parentGameObjectId = definitionJSON["id"].asString();;
+	m_gameObjectId = definitionJSON["id"].asString();;
 
 	for (Json::Value itrControls :itr["controls"])
 	{

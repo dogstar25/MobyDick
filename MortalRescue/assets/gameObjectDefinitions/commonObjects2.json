@@ -91,12 +91,12 @@
             "childrenComponent":
             {
                 "childPadding": 8,
-                "childPositionRelative": false,
+                "childPositionRelative": true,
                 "childObjects":
                 [
                     {
-                        "gameObjectId": "PLAYER_LABEL",
-                        "locationSlot": 3
+                        "gameObjectId": "BOWMAN",
+                        "locationSlot": 2
                     }
                 ]
             },
@@ -129,19 +129,8 @@
             "vitalityComponent":
             {
                 "speed": 30.0
-            },
-            "physicsComponent":
-            {
-                "type": "B2_DYNAMIC",
-                "collisionShape": "B2_BOX",
-                //"collisionRadius": 0.64,
-                "friction": 0.00,
-                "density": 100.5,
-                "linearDamping": 0.0,
-                "angularDamping": 6.0,
-                "collisionCategory": "COLLISION_GENERIC"
             }
-           
+
 
         },
         {
@@ -154,13 +143,77 @@
             "textComponent":
             {
                 "value": "Player 1",
+                "dynamic": false,
+                "font": "FONT_ARIAL_REG",
+                "fontSize": 12
+            }
+
+        },
+
+        {
+            "id": "FPS_VALUEL",
+            "description": "FPS",
+            "transformComponent":
+            {
+                "absolutePositioning": true
+            },
+            "textComponent":
+            {
+                "value": "",
                 "dynamic": true,
                 "font": "FONT_ARIAL_REG",
-                "fontSize":  96
+                "fontSize": 16
+            }
+
+        },
+        {
+            "id": "GUIPausePanel",
+            "transformComponent":
+            {
+                "size":
+                {
+                    "width": 176,
+                    "height": 164
+                },
+                "absolutePositioning": false
+            },
+
+            "childrenComponent":
+            {
+                "childPadding": 8,
+                "childPositionRelative": true,
+                "childObjects":
+                [
+                    {
+                        "gameObjectId": "ContinueButton",
+                        "locationSlot": 5
+                    },
+                    {
+                        "gameObjectId": "ContinueButton",
+                        "locationSlot": 5
+                    },
+                    {
+                        "gameObjectId": "ContinueButton",
+                        "locationSlot": 5
+                    }
+                ]
+            }
+
+        },
+        {
+            "id": "ContinueButton",
+            "transformComponent":
+            {
+                "size":
+                {
+                    "width": 128,
+                    "height": 32
+                },
+                "absolutePositioning": false
             }
 
         }
-      
+
 
 
         //{

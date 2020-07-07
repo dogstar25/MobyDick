@@ -62,6 +62,13 @@ GameObject::GameObject(std::string gameObjectId, int xMapPos, int yMapPos, int a
 		
 	}
 
+	//Children Component
+	if (definitionJSON.isMember("childrenComponent") && definitionJSON.isMember("transformComponent"))
+	{
+		m_ChildrenComponent = std::make_shared<ChildrenComponent>(gameObjectId, definitionJSON);
+
+	}
+
 	//Attachments Component
 
 	/*
@@ -112,8 +119,48 @@ void GameObject::_setDependecyReferences()
 	{
 		m_TextComponent->setDependencyReferences(m_TransformComponent, m_RenderComponent);
 	}
+	if (m_ChildrenComponent)
+	{
+		m_ChildrenComponent->setDependencyReferences(m_TransformComponent);
+	}
 
 }
+void GameObject::setPosition(b2Vec2 position, float angle)
+{
+	
+	if (m_PhysicsComponent)
+	{
+		b2Vec2 physcisPosition = { 0,0 };
+
+		//Calculate physics position and then call m_physicsComponent.update() to refresh transformComponent
+
+		//-1 means dont apply the angle
+		if (angle != -1)
+		{
+			
+		}
+		else
+		{
+			
+		}
+
+	}
+	else
+	{
+		//-1 means dont apply the angle
+		if (angle != -1)
+		{
+			m_TransformComponent->setPosition(position, angle);
+		}
+		else
+		{
+			m_TransformComponent->setPosition(position);
+		}
+	}
+
+
+}
+
 
 void GameObject::update()
 {
@@ -186,11 +233,15 @@ void GameObject::render()
 	SDL_Texture* texture=NULL;
 
 
-	//if (hasComponentFlag(RENDER_COMPONENT))
-	//{
-
-		m_RenderComponent->render();
+	//Render yourself
+	m_RenderComponent->render();
 		
+	//Render your children
+	if (m_ChildrenComponent)
+	{
+		m_ChildrenComponent->renderChildren();
+	}
+
 
 		////test outlining object
 		//if (m_definition->isMouseSelectable)
@@ -215,11 +266,6 @@ void GameObject::render()
 		//	outlineObject(2);
 		//}
 
-		////Loop through any possible child objects, in all 9 positions, and render them too
-		//if (m_definition->hasChildObjects == true)
-		//{
-		//	renderChildObjects();
-		//}
 	//}
 
 }

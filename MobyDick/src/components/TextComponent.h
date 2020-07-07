@@ -7,7 +7,6 @@
 
 class TransformComponent;
 class RenderComponent;
-class Texture;
 
 class TextComponent : public Component
 {

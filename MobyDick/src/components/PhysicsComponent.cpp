@@ -21,7 +21,7 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, int xMapPos, int 
 	Json::Value physicsComponentJSON = definitionJSON["physicsComponent"];
 	Json::Value transformComponentJSON = definitionJSON["transformComponent"];
 
-	m_parentGameObjectId = definitionJSON["id"].asString();;
+	m_gameObjectId = definitionJSON["id"].asString();;
 
 	m_physicsType = EnumMap::instance().toEnum(physicsComponentJSON["type"].asString());
 	m_collisionShape = EnumMap::instance().toEnum(physicsComponentJSON["collisionShape"].asString());
@@ -39,7 +39,7 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, int xMapPos, int 
 	//Translate the pixel oriented position into box2d meter-oriented
 	b2Vec2* position = new b2Vec2
 	(  (xMapPos * 32 + (transformComponentJSON["size"]["width"].asFloat() / 2)) / GameConfig::instance().scaleFactor(),
-		(yMapPos * 32 + (transformComponentJSON["size"]["width"].asFloat() / 2)) / GameConfig::instance().scaleFactor());
+		(yMapPos * 32 + (transformComponentJSON["size"]["height"].asFloat() / 2)) / GameConfig::instance().scaleFactor());
 
 	//Calculate the spawn Angle
 	float newAngle = util::degreesToRadians(angleAdjust);

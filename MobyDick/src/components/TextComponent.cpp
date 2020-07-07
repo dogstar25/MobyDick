@@ -20,7 +20,7 @@ TextComponent::TextComponent()
 TextComponent::TextComponent(std::string gameObjectId)
 {
 
-	m_parentGameObjectId = gameObjectId;
+	m_gameObjectId = gameObjectId;
 	m_textureId = "TX_" + gameObjectId;
 
 	if (gameObjectId.rfind("DEBUG_", 0) == 0)
@@ -67,7 +67,7 @@ TextComponent::~TextComponent()
 void TextComponent::update()
 {
 
-	std::string textureId = "TX_" + m_parentGameObjectId;
+	std::string textureId = "TX_" + m_gameObjectId;
 
 	if (TextureManager::instance().hasTexture(textureId))
 	{
@@ -134,7 +134,7 @@ std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
 	std::shared_ptr<Texture> texture;
 	SDL_Surface* surface;
 
-	newText = DynamicTextManager::instance().getTextItem(m_parentGameObjectId);
+	newText = DynamicTextManager::instance().getTextItem(m_gameObjectId);
 
 	//check the clock and see if enough time as gone by
 	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();

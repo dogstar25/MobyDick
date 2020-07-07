@@ -13,7 +13,7 @@ TransformComponent::TransformComponent(Json::Value definitionJSON, int xMapPos, 
 {
 		Json::Value transformComponentJSON = definitionJSON["transformComponent"];
 
-		m_parentGameObjectId = definitionJSON["id"].asString();;
+		m_gameObjectId = definitionJSON["id"].asString();;
 
 		m_angle = angleAdjust;
 

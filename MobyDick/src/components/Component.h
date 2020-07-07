@@ -18,7 +18,7 @@ public:
 
 protected:
 
-	std::string m_parentGameObjectId;
+	std::string m_gameObjectId;
 	
 
 

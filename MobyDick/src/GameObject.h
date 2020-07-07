@@ -41,6 +41,9 @@ public:
 		m_removeFromWorld = removeFromWorld; 
 	}
 
+	void setPosition(b2Vec2 position, float angle);
+
+
 	//Accessor Functions
 	auto removeFromWorld() { 
 		return m_removeFromWorld; 
