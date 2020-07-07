@@ -21,7 +21,7 @@ ChildrenComponent::ChildrenComponent(std::string gameObjectId, Json::Value defin
 	for (Json::Value itrChild : childrenComponentJSON["childObjects"])
 	{
 		std::string childObjectId = itrChild["gameObjectId"].asString();
-		int locationSlot = itrChild["locationSlot"].asInt();
+		int locationSlot = itrChild["locationSlot"].asInt()-1;
 
 		m_childObjects[locationSlot].emplace_back(std::make_shared<GameObject>(childObjectId, -5, -5, 0));
 
@@ -82,8 +82,7 @@ void ChildrenComponent::update()
 	
 }
 
-//
-//
+
 b2Vec2 ChildrenComponent::matchParentRotation(SDL_FRect childPositionRect, SDL_FRect parentPositionRect, float parentAngle)
 {
 	b2Vec2 adjustment;
@@ -104,10 +103,8 @@ b2Vec2 ChildrenComponent::matchParentRotation(SDL_FRect childPositionRect, SDL_F
 	float x = childCenter.x - parentCenter.x;
 	float childAngle = atan2(childCenter.y - parentCenter.y, childCenter.x - parentCenter.x);
 
-	float childAngleDegrees = util::radiansToDegrees(childAngle);
-
 	//add parent angle
-	float newAngle = childAngle + parentAngle;
+	float newAngle = childAngle + util::degreesToRadians(parentAngle);
 	b2Vec2 newChildPosition{};
 	newChildPosition.x = (radius * cos(newAngle));
 	newChildPosition.y = (radius * sin(newAngle));
@@ -123,48 +120,7 @@ b2Vec2 ChildrenComponent::matchParentRotation(SDL_FRect childPositionRect, SDL_F
 
 	return adjustment;
 }
-//
-//
-//void ChildrenComponent::updateChildObjects()
-//{
-//	short locationSlot = 0;
-//	b2Vec2 newChildPosition, childSize;
-//	SDL_FRect parentPositionRect, childPositionRect;
-//
-//	for (auto& childLocations : m_childObjects)
-//	{
-//		locationSlot++;
-//		int childNumber = 0;
-//		int childCount = childLocations.size();
-//
-//		for (auto& childObject : childLocations)
-//		{
-//			childNumber++;
-//
-//			//Calculate child position
-//			newChildPosition = this->calcChildPosition(childObject, locationSlot, childNumber, childCount);
-//
-//			// Should this child match the angle of the parent
-//			if (m_definition->childPositionRelative == true)
-//			{
-//				childObject->setPosition(newChildPosition, this->angle());
-//
-//			}
-//			else
-//			{
-//				childObject->setPosition(newChildPosition);
-//			}
-//
-//			//Since the child is a game object itself, call the update function for it
-//			//This acts as a recursive call when you have children objects 
-//			//within children objects
-//			childObject->update();
-//		}
-//	}
-//
-//}
-//
-//
+
 void ChildrenComponent::renderChildren()
 {
 	//Loop through any possible child objects, in all 9 positions, and render them too
@@ -190,66 +146,47 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 	SDL_FRect childPositionRect{};
 	float x, y, xAdj = 0, yAdj = 0;
 
+	//Parent position is center of parent
 	SDL_FRect parentPositionRect = m_refTransformComponent->getPositionRect();
 
-	//TEMP////////////////////////////////
-
-
-	//SDL_FRect testParent = { 0,0 };
-	//testParent.w = parentPositionRect.w * GameConfig::instance().scaleFactor();
-	//testParent.h = parentPositionRect.h * GameConfig::instance().scaleFactor();
-	//testParent.x = parentPositionRect.x * GameConfig::instance().scaleFactor() - (parentPositionRect.w * GameConfig::instance().scaleFactor() / 2);
-	//testParent.y = parentPositionRect.y * GameConfig::instance().scaleFactor() - (parentPositionRect.h * GameConfig::instance().scaleFactor() / 2);
-
-	//parentPositionRect = testParent;
-
-
-
-	//END TEMP///////////////////////////////
-
-	//Calculate center of parent
-	b2Vec2 parentCenter;
-	x = parentPositionRect.x + (parentPositionRect.w / 2);
-	y = parentPositionRect.y + (parentPositionRect.h / 2);
-	parentCenter.Set(x, y);
-
 	//Different calcs for the different 9 possible positions
+	//Calculate topleft corner of child
 	switch (locationSlot) {
 	case 1:
-		x = parentPositionRect.x - childSize.x;
-		y = parentPositionRect.y - childSize.y;
+		x = parentPositionRect.x - (childSize.x);
+		y = parentPositionRect.y - (childSize.y);
 		break;
 	case 2:
-		x = parentCenter.x - (childSize.x / 2);
-		y = parentPositionRect.y - childSize.y;
+		x = parentPositionRect.x;
+		y = parentPositionRect.y - (childSize.y);
 		break;
 	case 3:
-		x = parentPositionRect.x + parentPositionRect.w;
-		y = parentPositionRect.y - childSize.y;
+		x = parentPositionRect.x + childSize.x;
+		y = parentPositionRect.y - (childSize.y);
 		break;
 	case 4:
-		x = parentPositionRect.x - childSize.x;
-		y = parentCenter.y - (childSize.y / 2);
+		x = parentPositionRect.x - (childSize.x);
+		y = parentPositionRect.y;
 		break;
 	case 5:
-		x = parentCenter.x - (childSize.x / 2);
-		y = parentCenter.y - (childSize.y / 2);
+		x = parentPositionRect.x;
+		y = parentPositionRect.y;
 		break;
 	case 6:
-		x = parentPositionRect.x + parentPositionRect.w;
-		y = parentCenter.y - (childSize.y / 2);
+		x = parentPositionRect.x + childSize.x;
+		y = parentPositionRect.y;
 		break;
 	case 7:
-		x = parentPositionRect.x - childSize.x;
-		y = parentPositionRect.y + parentPositionRect.h;
+		x = parentPositionRect.x - (childSize.x);
+		y = parentPositionRect.y + childSize.y;
 		break;
 	case 8:
-		x = parentCenter.x - (childSize.x / 2);
-		y = parentPositionRect.y + parentPositionRect.h;
+		x = parentPositionRect.x;
+		y = parentPositionRect.y + childSize.y;
 		break;
 	case 9:
-		x = parentPositionRect.x + parentPositionRect.w;
-		y = parentPositionRect.y + parentPositionRect.h;
+		x = parentPositionRect.x + childSize.x;
+		y = parentPositionRect.y + childSize.y;
 		break;
 
 	}
@@ -320,5 +257,4 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 	return childPosition;
 
 }
-//
-//
+

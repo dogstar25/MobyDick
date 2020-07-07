@@ -41,8 +41,6 @@ public:
 	virtual SDL_FRect  getPositionRect();
 
 private:
-	b2Vec2 calculatePosition(float xMapPos, float yMapPos, bool hasPhysicsComponent, Json::Value itrJSON);
-	float calculateAngle(float angle, bool isPhysicsObject);
 	float
 		m_angle;
 	b2Vec2

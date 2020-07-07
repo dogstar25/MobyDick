@@ -23,18 +23,7 @@ TransformComponent::TransformComponent(Json::Value definitionJSON, int xMapPos, 
 			(yMapPos * 32) + transformComponentJSON["size"]["height"].asFloat() / 2
 		);
 
-		//Size of both physics and non-physics objetcs needs to be set here
-		//We cant easily get the size of the physics object later
-		if (definitionJSON.isMember("physicsComponent") == true)
-		{
-			m_size.Set(
-				transformComponentJSON["size"]["width"].asFloat() / GameConfig::instance().scaleFactor(),
-				transformComponentJSON["size"]["height"].asFloat() / GameConfig::instance().scaleFactor());
-		}
-		else
-		{
-			m_size.Set(transformComponentJSON["size"]["width"].asFloat(), transformComponentJSON["size"]["height"].asFloat());
-		}
+		m_size.Set(transformComponentJSON["size"]["width"].asFloat(), transformComponentJSON["size"]["height"].asFloat());
 
 		m_absolutePositioning = transformComponentJSON["absolutePositioning"].asBool();
 
@@ -46,36 +35,6 @@ TransformComponent::~TransformComponent()
 
 }
 
-b2Vec2 TransformComponent::calculatePosition(float xMapPos, float yMapPos, bool hasPhysicsComponent, Json::Value itrTransform)
-{
-	b2Vec2* position=nullptr;
-	//Physics object requires center of the object
-	if (hasPhysicsComponent)
-	{
-		position = new b2Vec2(
-			xMapPos * 32 + (itrTransform["size"]["width"].asFloat() / 2) , 
-			yMapPos * 32 + (itrTransform["size"]["width"].asFloat() / 2 ));
-	}
-	else
-	{
-		position = new b2Vec2(xMapPos * 32, yMapPos * 32);
-	}
-
-	return *position;
-}
-
-float TransformComponent::calculateAngle(float angle, bool isPhysicsObject)
-{
-	float newAngle = angle;
-
-	if (isPhysicsObject)
-	{
-		newAngle = util::degreesToRadians(angle);
-	}
-
-	return newAngle;
-
-}
 
 void TransformComponent::update()
 {

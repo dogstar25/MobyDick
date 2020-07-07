@@ -175,7 +175,7 @@ bool Game::init()
 	//gameObject = GameObjectManager::instance().buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
 	//this->addGameObject(gameObject, GameOjectLayer::MAIN);
 
-	//this->m_gameObjects[GameOjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 2, 2, 0));
+	this->m_gameObjects[GameOjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 13, 2, 0));
 	//addGameObject(gameObject, GameOjectLayer::DEBUG);
 
 	////gameObject = new GameObject("GINA_64", 2, 2, 180);
@@ -185,11 +185,11 @@ bool Game::init()
 	this->m_gameObjects[GameOjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("GUIPausePanel", 1, 1, 0));
 	
 	//for (int i = 0; i < 20; i++)
-	//{
+	{
 	//this->m_gameObjects[GameOjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("BOWMAN", 13, 13, 0));
-	//}
+	}
 
-	//this->m_gameObjects[GameOjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 13, 13, 0));
+	this->m_gameObjects[GameOjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 13, 13, 0));
 
 	
 

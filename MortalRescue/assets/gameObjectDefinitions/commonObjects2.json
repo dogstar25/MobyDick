@@ -90,14 +90,47 @@
             },
             "childrenComponent":
             {
-                "childPadding": 8,
+                "childPadding": 0,
                 "childPositionRelative": true,
                 "childObjects":
                 [
                     {
                         "gameObjectId": "BOWMAN",
+                        "locationSlot": 1
+                    },
+                    {
+                        "gameObjectId": "BOWMAN",
                         "locationSlot": 2
+                    },
+                    {
+                        "gameObjectId": "BOWMAN",
+                        "locationSlot": 3
+                    },
+                    {
+                        "gameObjectId": "BOWMAN",
+                        "locationSlot": 4
+                    },
+                    {
+                        "gameObjectId": "BOWMAN",
+                        "locationSlot": 1
+                    },
+                    {
+                        "gameObjectId": "BOWMAN",
+                        "locationSlot": 6
+                    },
+                    {
+                        "gameObjectId": "BOWMAN",
+                        "locationSlot": 7
+                    },
+                    {
+                        "gameObjectId": "BOWMAN",
+                        "locationSlot": 8
+                    },
+                    {
+                        "gameObjectId": "BOWMAN",
+                        "locationSlot": 9
                     }
+
                 ]
             },
             "playerControlComponent":
@@ -177,7 +210,17 @@
                 },
                 "absolutePositioning": false
             },
+            "renderComponent":
+            {
+                "color":
+                {
+                    "red": 56,
+                    "green": 12,
+                    "blue": 210,
+                    "alpha": 255
+                }
 
+            },
             "childrenComponent":
             {
                 "childPadding": 8,

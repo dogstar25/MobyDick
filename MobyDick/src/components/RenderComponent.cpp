@@ -92,31 +92,23 @@ SDL_FRect RenderComponent::getRenderDestRect()
 
 	//All objects positions are the center of the object so we have to subtract the halfsize from the x,y position
 	//because SDL wants the position to be top left corner
-	if (m_refPhysicsComponent)
-	{
-		destRect.w = currentPositionRect.w * GameConfig::instance().scaleFactor();
-		destRect.h = currentPositionRect.h * GameConfig::instance().scaleFactor();
-		destRect.x = currentPositionRect.x * GameConfig::instance().scaleFactor() - (currentPositionRect.w * GameConfig::instance().scaleFactor() / 2);
-		destRect.y = currentPositionRect.y * GameConfig::instance().scaleFactor() - (currentPositionRect.h * GameConfig::instance().scaleFactor() / 2);
-	}
-	else
+	//if (m_refPhysicsComponent)
+	//{
+	//	//destRect = currentPositionRect;
+	//	destRect.w = currentPositionRect.w * GameConfig::instance().scaleFactor();
+	//	destRect.h = currentPositionRect.h * GameConfig::instance().scaleFactor();
+	//	destRect.x = currentPositionRect.x * GameConfig::instance().scaleFactor() - (currentPositionRect.w * GameConfig::instance().scaleFactor() / 2);
+	//	destRect.y = currentPositionRect.y * GameConfig::instance().scaleFactor() - (currentPositionRect.h * GameConfig::instance().scaleFactor() / 2);
+	//}
+	//else
 	{
 		destRect = currentPositionRect;
 		destRect.x -= (currentPositionRect.w / 2);
 		destRect.y -= (currentPositionRect.h / 2);
 	}
 
-	//Render Adjustment if it exists - mostly for composite pieces
-	if (m_refPhysicsComponent)
-	{
-		destRect.w += (m_xRenderAdjustment / GameConfig::instance().scaleFactor());
-		destRect.h += (m_yRenderAdjustment / GameConfig::instance().scaleFactor());
-	}
-	else
-	{
-		destRect.w += m_xRenderAdjustment;
-		destRect.h += m_yRenderAdjustment;
-	}
+	destRect.w += m_xRenderAdjustment;
+	destRect.h += m_yRenderAdjustment;
 
 	//Adjust position based on current camera position - offset
 	destRect.x -= Camera::instance().frame().x;
@@ -147,14 +139,7 @@ float RenderComponent::getRenderAngle()
 {
 	float angle=0;
 
-	if (m_refPhysicsComponent)
-	{
-		angle = util::radiansToDegrees(m_refTransformComponent->angle());
-	}
-	else
-	{
-		angle = m_refTransformComponent->angle();
-	}
+	angle = m_refTransformComponent->angle();
 
 	return angle;
 }
@@ -250,7 +235,7 @@ void RenderComponent::render()
 	SDL_Rect* textureSourceRect = getRenderTextureRect();
 	const SDL_FRect destRect = getRenderDestRect();
 	SDL_Texture* texture = getRenderTexture();
-	float angle = getRenderAngle();
+	float angle = m_refTransformComponent->angle();
 
 	//Set the color
 	SDL_SetTextureAlphaMod(texture, m_color.a);

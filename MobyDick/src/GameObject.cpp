@@ -76,25 +76,6 @@ GameObject::GameObject(std::string gameObjectId, int xMapPos, int yMapPos, int a
 	*/
 	_setDependecyReferences();
 
-
-
-
-	//is this a debug object then get the default debug definition but change its 
-	//id value to the one we passed in
-	//if (gameObjectId.rfind("DEBUG_", 0) == 0)
-	//{
-	//	m_definition = GameObjectManager::instance().gameObjectDefinitions["DEBUG_ITEM"];;
-	//}
-	//else
-	//{
-	//	m_definition = GameObjectManager::instance().gameObjectDefinitions[gameObjectId];
-	//}
-
-
-
-	////Build children if they exist
-	//this->buildChildren();
-
 }
 
 void GameObject::_setDependecyReferences()

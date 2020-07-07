@@ -65,11 +65,13 @@ void PhysicsComponent::setDependencyReferences(std::shared_ptr<TransformComponen
 void PhysicsComponent::update()
 {
 	//Transfer the physicsComponent coordinates to the transformComponent
-	m_refTransFormComponent->setPosition(
-			m_physicsBody->GetPosition().x, 
-			m_physicsBody->GetPosition().y, 
-			m_physicsBody->GetAngle()
-	);
+	b2Vec2 convertedPosition{ 0,0 };
+	float convertedAngle = util::radiansToDegrees(m_physicsBody->GetAngle());
+
+	convertedPosition.x = m_physicsBody->GetPosition().x * GameConfig::instance().scaleFactor();
+	convertedPosition.y = m_physicsBody->GetPosition().y * GameConfig::instance().scaleFactor();
+
+	m_refTransFormComponent->setPosition(convertedPosition, convertedAngle);
 
 }
 
