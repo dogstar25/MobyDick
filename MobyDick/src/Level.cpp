@@ -310,7 +310,6 @@ LevelObject* Level::_determineTile(int x, int y, SDL_Surface* surface)
 void Level::_buildLevelObjects()
 {
 	LevelObject* levelObject;
-	WorldObject* worldObject;
 
 	for (int y = 0; y < m_height; y++)
 	{
@@ -321,8 +320,7 @@ void Level::_buildLevelObjects()
 			{
 				levelObject = &levelObjects[x][y];
 
-				worldObject = GameObjectManager::instance().buildGameObject <WorldObject>(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
-				Game::instance().addGameObject(worldObject, GameOjectLayer::MAIN);
+				Game::instance().addGameObject(levelObject->gameObjectId, GameObjectLayer::MAIN, x, y, levelObject->angleAdjustment);
 
 			}
 

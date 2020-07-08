@@ -2,7 +2,7 @@
 
 #include <string>
 
-//#include "Level.h"
+#include "Level.h"
 #include "TextureManager.h"
 #include "GameObjectManager.h"
 #include "SoundManager.h"
@@ -35,7 +35,7 @@ Game::~Game()
 	//Delete SDL stuff
 	SDL_DestroyWindow(m_window);
 	SDL_Quit();
-	TTF_Quit();
+	
 
 	for (int x = 0; x < constants::MAX_GAMEOBJECT_LAYERS; x++)
 	{
@@ -46,6 +46,8 @@ Game::~Game()
 
 	//Delete box2d world - should delete all bodies and fixtures within
 	delete m_physicsWorld;
+
+	TTF_Quit();
 
 
 }
@@ -84,7 +86,7 @@ bool Game::init()
 	{
 
 		//Initialize the camera
-		//Camera::instance().init();
+		Camera::instance().init();
 
 		//Init font library
 		TTF_Init();
@@ -144,7 +146,7 @@ bool Game::init()
 		Clock::instance().init();
 
 		//Load the First level
-		//Level::instance().load("level1");
+		Level::instance().load("level1");
 
 		//Initilaize Camera size and
 		Camera::instance().init();
@@ -152,27 +154,11 @@ bool Game::init()
 		
 	}
 
-	//Allocate the array of vectors for all game objects
-	//this->gameObjects = vector<unique_ptr<GameObject>>[this->MAX_LAYERS];
-
-	
 	GameObject* gameObject = NULL;
 
 	//Create the main player object
 	//m_player = GameObjectManager::instance().buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
 	//m_player->addWeapon("WEAPON1");
-
-	//set camera to center on player object
-	//
-	//TODO:Can we remove this?
-	//
-	//Camera::instance().setFramePosition(
-	//	(m_player->physicsBody()->GetPosition().x * GameConfig::instance().scaleFactor()) -
-	//	(Camera::instance().frame().w / 2),
-	//	(m_player->physicsBody()->GetPosition().y * GameConfig::instance().scaleFactor()) -
-	//	(Camera::instance().frame().h / 2));
-
-
 
 
 	
@@ -193,7 +179,7 @@ bool Game::init()
 
 	//this->m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 0.f, 0.f, 0.f));
 
-	//this->m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("FPS_VALUE", 0.f, 0.f, 0.f));
+	this->m_gameObjects[GameObjectLayer::DEBUG].emplace_back(std::make_shared<GameObject>("FPS_VALUE", 0.f, 0.f, 0.f));
 
 
 
@@ -220,7 +206,6 @@ void Game::play()
 
 	//Only update and render if we have passed the 60 fps time passage
 	if (Clock::instance().hasMetGameLoopSpeed())
-	{
 		//Handle updating objects positions and physics
 		_update();
 
@@ -230,7 +215,7 @@ void Game::play()
 		//Increment frame counter and calculate FPS and reset the gameloop timer
 		Clock::instance().calcFps();
 
-		DynamicTextManager::instance().updateText("FPS_VALUE", std::to_string(util::generateRandomNumber(1,100)));
+		DynamicTextManager::instance().updateText("FPS_VALUE", std::to_string(Clock::instance().fps()));
 
 	}
 
@@ -311,7 +296,13 @@ void Game::_update() {
 	DebugPanel::instance().addItem("Test", util::generateRandomNumber(1,10000), 8);
 	DebugPanel::instance().addItem("Test2", util::generateRandomNumber(1, 10000), 8);
 	DebugPanel::instance().addItem("Test3", util::generateRandomNumber(1, 10000), 8);
-	
+	DebugPanel::instance().addItem("Test4", util::generateRandomNumber(1, 10000), 8);
+	DebugPanel::instance().addItem("Test5", util::generateRandomNumber(1, 10000), 8);
+	DebugPanel::instance().addItem("Test6", util::generateRandomNumber(1, 10000), 8);
+	DebugPanel::instance().addItem("Test7", util::generateRandomNumber(1, 10000), 8);
+	DebugPanel::instance().addItem("Test8", util::generateRandomNumber(1, 10000), 8);
+	DebugPanel::instance().addItem("Test9", util::generateRandomNumber(1, 10000), 8);
+
 
 
 	//Clear all events

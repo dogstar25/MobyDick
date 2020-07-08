@@ -5,9 +5,11 @@
 #include <json/json.h>
 #include "Component.h"
 #include "../TextureManager.h"
+#include <SDL2/SDL.h>
 
 class TransformComponent;
 class RenderComponent;
+
 
 class TextComponent : public Component
 {
@@ -65,6 +67,9 @@ private:
 
 	std::shared_ptr<RenderComponent> m_refRenderComponent;
 	std::shared_ptr<TransformComponent> m_refTransformComponent;
+
+	//test
+	TTF_Font* m_fontObject;
 	
 
 };

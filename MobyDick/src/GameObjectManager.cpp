@@ -28,6 +28,7 @@ GameObjectManager::~GameObjectManager()
 bool GameObjectManager::init()
 {
 	load("gameObjectDefinitions/commonObjects2");
+	load("levels/level1_Objects");
 
 	return true;
 }

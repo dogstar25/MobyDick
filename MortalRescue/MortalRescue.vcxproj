@@ -200,7 +200,6 @@
     <None Include="assets\gameObjectDefinitions\components.json" />
     <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
     <None Include="assets\gameObjectDefinitions\GUIObjects.json" />
-    <None Include="assets\gameObjectDefinitions\level1Objects.json" />
     <None Include="assets\gameObjectDefinitions\objectPools.json" />
     <None Include="assets\gameObjectDefinitions\particleObjects.json" />
     <None Include="assets\levels\level1_definition.json" />

@@ -36,6 +36,10 @@ TextComponent::TextComponent(std::string gameObjectId, Json::Value definitionJSO
 		m_textValue = "Default Text";
 	}
 
+	//test
+	std::string fontFile = TextureManager::instance().getFont(m_fontId);
+	m_fontObject = TTF_OpenFont(fontFile.c_str(), m_fontSize);
+
 
 }
 
@@ -52,7 +56,7 @@ void TextComponent::construct()
 
 TextComponent::~TextComponent()
 {
-
+	TTF_CloseFont(m_fontObject);
 }
 
 void TextComponent::update()
@@ -100,9 +104,9 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 	//FIXME:Add a vector of TTF_Font* fontObject's with maybe 6 different font sizes. OPen them in the contructor
 	//and leave them open for regenerating text textures. Then close them in the deconstructor.
 	//This should save loads of time
-	TTF_Font* fontObject = TTF_OpenFont(fontFile.c_str(), m_fontSize);
-	tempSurface = TTF_RenderText_Blended(fontObject, m_textValue.c_str(), m_refRenderComponent->color());
-	TTF_CloseFont(fontObject);
+	//m_fontObject = TTF_OpenFont(fontFile.c_str(), m_fontSize);
+	tempSurface = TTF_RenderText_Blended(m_fontObject, m_textValue.c_str(), m_refRenderComponent->color());
+	//TTF_CloseFont(m_fontObject);
 
 	//Set the size of the textObject now that its texture has been generated
 	m_refTransformComponent->setSize(tempSurface->w, tempSurface->h);
