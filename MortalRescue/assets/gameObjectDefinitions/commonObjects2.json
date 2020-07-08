@@ -248,8 +248,101 @@
                 "fontSize": 12
             }
 
-        }
+        },
+        {
+            "id": "WEAPON1",
+            "description": "Weapon 1",
+            "transformComponent":
+            {
+                "size":
+                {
+                    "width": 0.64,
+                    "height": 0.64
+                },
+                "absolutePositioning": false
 
+            },
+            "physicsComponent":
+            {
+                "type": "B2_DYNAMIC",
+                "friction": 0.0,
+                "restitution": 1.0,
+                "density": 5.05,
+                "linearDamping": 0.0,
+                "angularDamping": 0.0,
+                "collisionCategory": "COLLISION_PLAYER_BULLET",
+                "anchorPoint":
+                {
+                    "x": -0.3,
+                    "y": 0.0
+                }
+            },
+            "animationComponent":
+            {
+                "animations":
+                [
+                    {
+                        "state": "ANIMATION_IDLE",
+                        "textureId": "TX_WEAPON1_IDLE",
+                        "speed": 0.5, //time in seconds for each frame. Lower the faster
+                        "frames": 3
+                    },
+                    {
+                        "state": "ANIMATION_ACTION",
+                        "textureId": "TX_WEAPON1_FIRE",
+                        "speed": 0.1, //time in seconds for each frame. Lower the faster
+                        "frames": 3
+
+                    }
+                ]
+            },
+            "weaponComponent":
+            {
+                "fireOffset": -0.5,
+                "weaponLevels":
+                [
+                    {
+                        "level": 1,
+                        "strength": 1,
+                        "levelUpTarget": 25,
+                        "color":
+                        {
+                            "red": 255,
+                            "green": 0,
+                            "blue": 0,
+                            "alpha": 255
+                        },
+                        "bulletPoolId": "BULLET1_POOL"
+                    },
+                    {
+                        "level": 2,
+                        "strength": 2,
+                        "levelUpTarget": 25,
+                        "color":
+                        {
+                            "red": 0,
+                            "green": 255,
+                            "blue": 0,
+                            "alpha": 255
+                        },
+                        "bulletPoolId": "BULLET2_POOL"
+                    },
+                    {
+                        "level": 3,
+                        "strength": 5,
+                        "levelUpTarget": 25,
+                        "color":
+                        {
+                            "red": 255,
+                            "green": 255,
+                            "blue": 255,
+                            "alpha": 255
+                        },
+                        "bulletPoolId": "BULLET2_POOL"
+                    }
+                ]
+            }
+        }
 
 
         //{
@@ -351,100 +444,6 @@
         //        }
         //    ]
         //},
-        //{
-        //    "id": "WEAPON1",
-        //    "description": "Weapon 1",
-        //    "components":
-        //    [
-        //        {
-        //            "id": "TRANSFORM_COMPONENT",
-        //            "size":
-        //            {
-        //                "width": 0.64,
-        //                "height": 0.64
-        //            }
-        //        },
-        //        {
-        //            "id": "PHYSICS_COMPONENT",
-        //            "type": "B2_DYNAMIC",
-        //            "friction": 0.0,
-        //            "restitution": 1.0,
-        //            "density": 5.05,
-        //            "linearDamping": 0.0,
-        //            "angularDamping": 0.0,
-        //            "collisionCategory": "COLLISION_PLAYER_BULLET",
-        //            "anchorPoint":
-        //            {
-        //                "x": -0.3,
-        //                "y": 0.0
-        //            }
-        //        },
-        //        {
-        //            "id": "ANIMATION_COMPONENT",
-        //            "animations":
-        //            [
 
-        //                {
-        //                    "state": "ANIMATION_IDLE",
-        //                    "textureId": "TX_WEAPON1_IDLE",
-        //                    "speed": 0.5, //time in seconds for each frame. Lower the faster
-        //                    "frames": 3
-        //                },
-        //                {
-        //                    "state": "ANIMATION_ACTION",
-        //                    "textureId": "TX_WEAPON1_FIRE",
-        //                    "speed": 0.1, //time in seconds for each frame. Lower the faster
-        //                    "frames": 3
-
-        //                }
-        //            ]
-        //        },
-        //        {
-        //            "id": "WEAPON_COMPONENT",
-        //            "fireOffset": -0.5,
-        //            "weaponLevels":
-        //            [
-        //                {
-        //                    "level": 1,
-        //                    "strength": 1,
-        //                    "levelUpTarget": 25,
-        //                    "color":
-        //                    {
-        //                        "red": 255,
-        //                        "green": 0,
-        //                        "blue": 0,
-        //                        "alpha": 255
-        //                    },
-        //                    "bulletPoolId": "BULLET1_POOL"
-        //                },
-        //                {
-        //                    "level": 2,
-        //                    "strength": 2,
-        //                    "levelUpTarget": 25,
-        //                    "color":
-        //                    {
-        //                        "red": 0,
-        //                        "green": 255,
-        //                        "blue": 0,
-        //                        "alpha": 255
-        //                    },
-        //                    "bulletPoolId": "BULLET2_POOL"
-        //                },
-        //                {
-        //                    "level": 3,
-        //                    "strength": 5,
-        //                    "levelUpTarget": 25,
-        //                    "color":
-        //                    {
-        //                        "red": 255,
-        //                        "green": 255,
-        //                        "blue": 255,
-        //                        "alpha": 255
-        //                    },
-        //                    "bulletPoolId": "BULLET2_POOL"
-        //                }
-        //            ]
-        //        }
-        //    ]
     ]
 }

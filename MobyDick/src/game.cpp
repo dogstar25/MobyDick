@@ -206,6 +206,7 @@ void Game::play()
 
 	//Only update and render if we have passed the 60 fps time passage
 	if (Clock::instance().hasMetGameLoopSpeed())
+	{
 		//Handle updating objects positions and physics
 		_update();
 
