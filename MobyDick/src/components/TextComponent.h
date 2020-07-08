@@ -2,6 +2,7 @@
 #define TEXT_COMPONENT_H
 
 #include <string>
+#include <json/json.h>
 #include "Component.h"
 #include "../TextureManager.h"
 
@@ -12,7 +13,7 @@ class TextComponent : public Component
 {
 public:
 	TextComponent();
-	TextComponent(std::string gameObjectId);
+	TextComponent(std::string gameObjectId, Json::Value definitionId);
 	~TextComponent();
 
 	void setDependencyReferences(

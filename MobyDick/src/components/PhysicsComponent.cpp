@@ -15,7 +15,7 @@ PhysicsComponent::PhysicsComponent()
 
 }
 
-PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, int xMapPos, int yMapPos, int angleAdjust)
+PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust)
 {
 	//Get reference to the animationComponent JSON config and transformComponent JSON config
 	Json::Value physicsComponentJSON = definitionJSON["physicsComponent"];

@@ -12,7 +12,7 @@ class PhysicsComponent : public Component
 
 public:
 	PhysicsComponent();
-	PhysicsComponent(Json::Value definitionJSON, int xMapPos, int yMapPos, int angleAdjust);
+	PhysicsComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust);
 	~PhysicsComponent();
 
 	void update() override;

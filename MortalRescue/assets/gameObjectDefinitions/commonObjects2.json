@@ -25,6 +25,16 @@
                         "frames": 19
                     }
                 ]
+            },
+            "physicsComponent":
+            {
+                "type": "B2_DYNAMIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.00,
+                "density": 50.5,
+                "linearDamping": 0.0,
+                "angularDamping": 10.0,
+                "collisionCategory": "COLLISION_PLAYER"
             }
 
         },
@@ -51,9 +61,9 @@
                     },
                     {
                         "state": "ANIMATION_RUN",
-                        "textureId": "TX_GINA_64_RUN",
-                        "speed": 0.10, //time in seconds for each frame. Lower the faster
-                        "frames": 4
+                        "textureId": "TX_PISTOLLADY_64_RUN",
+                        "speed": 0.03, //time in seconds for each frame. Lower the faster
+                        "frames": 16
                     }
                 ]
             },
@@ -86,7 +96,7 @@
             },
             "vitalityComponent":
             {
-                "speed": 19.5
+                "speed": 7.5
             },
             "childrenComponent":
             {
@@ -97,38 +107,6 @@
                     {
                         "gameObjectId": "BOWMAN",
                         "locationSlot": 1
-                    },
-                    {
-                        "gameObjectId": "BOWMAN",
-                        "locationSlot": 2
-                    },
-                    {
-                        "gameObjectId": "BOWMAN",
-                        "locationSlot": 3
-                    },
-                    {
-                        "gameObjectId": "BOWMAN",
-                        "locationSlot": 4
-                    },
-                    {
-                        "gameObjectId": "BOWMAN",
-                        "locationSlot": 1
-                    },
-                    {
-                        "gameObjectId": "BOWMAN",
-                        "locationSlot": 6
-                    },
-                    {
-                        "gameObjectId": "BOWMAN",
-                        "locationSlot": 7
-                    },
-                    {
-                        "gameObjectId": "BOWMAN",
-                        "locationSlot": 8
-                    },
-                    {
-                        "gameObjectId": "BOWMAN",
-                        "locationSlot": 9
                     }
 
                 ]
@@ -182,9 +160,8 @@
             }
 
         },
-
         {
-            "id": "FPS_VALUEL",
+            "id": "FPS_VALUE",
             "description": "FPS",
             "transformComponent":
             {
@@ -253,6 +230,22 @@
                     "height": 32
                 },
                 "absolutePositioning": false
+            }
+
+        },
+        {
+            "id": "DEBUG_ITEM",
+            "description": "Debug Item",
+            "transformComponent":
+            {
+                "absolutePositioning": true
+            },
+            "textComponent":
+            {
+                "value": "default",
+                "dynamic": true,
+                "font": "FONT_ARIAL_REG",
+                "fontSize": 12
             }
 
         }

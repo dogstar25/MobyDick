@@ -103,7 +103,7 @@ enum GameState{
 /*
 Game Object Layers
 */
-enum GameOjectLayer {
+enum GameObjectLayer {
 
 	BACKGROUND = 0,
 	MAIN = 1,

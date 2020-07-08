@@ -11,14 +11,22 @@ GameObject::~GameObject()
 
 }
 
-GameObject::GameObject(std::string gameObjectId, int xMapPos, int yMapPos, int angleAdjust)
+GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust)
 {
 
 	//Game Object Id
 	m_id = gameObjectId;
+	Json::Value definitionJSON;
 
 	//Build components
-	Json::Value definitionJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
+	if (gameObjectId.rfind("DEBUG_", 0) != 0)
+	{
+		definitionJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
+	}
+	else
+	{
+		definitionJSON = GameObjectManager::instance().getDefinition("DEBUG_ITEM")->definitionJSON();
+	}
 
 	//Animation Component
 	if (definitionJSON.isMember("animationComponent") && definitionJSON.isMember("transformComponent"))
@@ -58,7 +66,7 @@ GameObject::GameObject(std::string gameObjectId, int xMapPos, int yMapPos, int a
 	//Text Component
 	if (definitionJSON.isMember("textComponent") && definitionJSON.isMember("transformComponent"))
 	{
-		m_TextComponent = std::make_shared<TextComponent>(gameObjectId);
+		m_TextComponent = std::make_shared<TextComponent>(gameObjectId, definitionJSON);
 		
 	}
 

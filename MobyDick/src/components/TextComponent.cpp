@@ -17,34 +17,25 @@ TextComponent::TextComponent()
 
 
 
-TextComponent::TextComponent(std::string gameObjectId)
+TextComponent::TextComponent(std::string gameObjectId, Json::Value definitionJSON)
 {
 
 	m_gameObjectId = gameObjectId;
 	m_textureId = "TX_" + gameObjectId;
 
-	if (gameObjectId.rfind("DEBUG_", 0) == 0)
-	{
-		m_isDebugText = true;
-		m_debugId = gameObjectId;
-		m_isDynamic = true;
-		m_textValue = "default";
-		m_fontId = "FONT_ARIAL_REG";
-		m_fontSize = 12;
-		
-	}
-	else
-	{
-		Json::Value definitionJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
-		Json::Value textComponentJSON = definitionJSON["textComponent"];
+	Json::Value textComponentJSON = definitionJSON["textComponent"];
 
-		m_isDebugText = false;
-		m_isDynamic = textComponentJSON["dynamic"].asBool();
-		m_fontId = textComponentJSON["font"].asString();
-		m_textValue = textComponentJSON["value"].asString();
-		m_fontSize = textComponentJSON["fontSize"].asInt();
+	m_isDebugText = false;
+	m_isDynamic = textComponentJSON["dynamic"].asBool();
+	m_fontId = textComponentJSON["font"].asString();
+	m_textValue = textComponentJSON["value"].asString();
+	m_fontSize = textComponentJSON["fontSize"].asInt();
 
+	if (m_textValue.empty())
+	{
+		m_textValue = "Default Text";
 	}
+
 
 }
 
@@ -115,6 +106,7 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 
 	//Set the size of the textObject now that its texture has been generated
 	m_refTransformComponent->setSize(tempSurface->w, tempSurface->h);
+	m_refTransformComponent->setPosition(m_refTransformComponent->originalPosition().x + tempSurface->w/2, m_refTransformComponent->originalPosition().y + tempSurface->h/2);
 
 	texture->sdlTexture = Renderer::instance().createTextureFromSurface(tempSurface);
 	texture->surface = tempSurface;
@@ -150,6 +142,12 @@ std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
 		m_textValue = newText->textValue;
 		texture = generateTextTexture();
 		newText->hasChanged = false;
+
+	/*	m_refTransformComponent->setPosition(
+			(m_refTransformComponent->size().x / 2),
+			(m_refTransformComponent->size().y / 2)
+		);*/
+
 
 	}
 	else

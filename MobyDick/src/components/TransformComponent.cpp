@@ -3,13 +3,14 @@
 #include "../GameObjectManager.h"
 #include "../GameObject.h"
 #include "../GameConfig.h"
+#include "../DebugPanel.h"
 
 
 TransformComponent::TransformComponent()
 {
 }
 
-TransformComponent::TransformComponent(Json::Value definitionJSON, int xMapPos, int yMapPos, int angleAdjust)
+TransformComponent::TransformComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust)
 {
 		Json::Value transformComponentJSON = definitionJSON["transformComponent"];
 
@@ -23,6 +24,7 @@ TransformComponent::TransformComponent(Json::Value definitionJSON, int xMapPos, 
 			(yMapPos * 32) + transformComponentJSON["size"]["height"].asFloat() / 2
 		);
 
+		m_originalPosition = m_position;
 		m_size.Set(transformComponentJSON["size"]["width"].asFloat(), transformComponentJSON["size"]["height"].asFloat());
 
 		m_absolutePositioning = transformComponentJSON["absolutePositioning"].asBool();
@@ -38,7 +40,6 @@ TransformComponent::~TransformComponent()
 
 void TransformComponent::update()
 {
-
 }
 
 SDL_FRect TransformComponent::getPositionRect()

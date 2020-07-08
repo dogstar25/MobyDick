@@ -28,11 +28,9 @@ class GameObject
 public:
 	
 	GameObject();
-	//GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust) :
-	//	mTransformComponent(gameObjectId) {}
 	~GameObject();
 
-	GameObject(std::string gameObjectId, int xMapPos, int yMapPos, int angleAdjust);
+	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust);
 
 	virtual void update();
 	virtual void render();

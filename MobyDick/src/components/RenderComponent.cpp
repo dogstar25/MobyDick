@@ -90,22 +90,9 @@ SDL_FRect RenderComponent::getRenderDestRect()
 	//Get its current position. Should be center of object
 	currentPositionRect = m_refTransformComponent->getPositionRect();
 
-	//All objects positions are the center of the object so we have to subtract the halfsize from the x,y position
-	//because SDL wants the position to be top left corner
-	//if (m_refPhysicsComponent)
-	//{
-	//	//destRect = currentPositionRect;
-	//	destRect.w = currentPositionRect.w * GameConfig::instance().scaleFactor();
-	//	destRect.h = currentPositionRect.h * GameConfig::instance().scaleFactor();
-	//	destRect.x = currentPositionRect.x * GameConfig::instance().scaleFactor() - (currentPositionRect.w * GameConfig::instance().scaleFactor() / 2);
-	//	destRect.y = currentPositionRect.y * GameConfig::instance().scaleFactor() - (currentPositionRect.h * GameConfig::instance().scaleFactor() / 2);
-	//}
-	//else
-	{
-		destRect = currentPositionRect;
-		destRect.x -= (currentPositionRect.w / 2);
-		destRect.y -= (currentPositionRect.h / 2);
-	}
+	destRect = currentPositionRect;
+	destRect.x -= (currentPositionRect.w / 2);
+	destRect.y -= (currentPositionRect.h / 2);
 
 	destRect.w += m_xRenderAdjustment;
 	destRect.h += m_yRenderAdjustment;

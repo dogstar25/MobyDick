@@ -1,5 +1,7 @@
 #include "Game.h"
 
+#include <string>
+
 //#include "Level.h"
 #include "TextureManager.h"
 #include "GameObjectManager.h"
@@ -13,6 +15,7 @@
 #include "Clock.h"
 //#include "ObjectPoolManager.h"
 #include "EventManager.h"
+#include "DebugPanel.h"
 
 
 using namespace std::chrono_literals;
@@ -172,24 +175,27 @@ bool Game::init()
 
 
 
-	//gameObject = GameObjectManager::instance().buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
-	//this->addGameObject(gameObject, GameOjectLayer::MAIN);
+	
 
-	this->m_gameObjects[GameOjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 13, 2, 0));
+	//m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 0, 0, 0));
 	//addGameObject(gameObject, GameOjectLayer::DEBUG);
 
 	////gameObject = new GameObject("GINA_64", 2, 2, 180);
-	this->m_gameObjects[GameOjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("GINA_64", 5, 5, 0));
+	this->m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("GINA_64", 5, 5, 90));
 
 
-	this->m_gameObjects[GameOjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("GUIPausePanel", 1, 1, 0));
+	//this->m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("GUIPausePanel", 1, 1, 0));
 	
 	//for (int i = 0; i < 20; i++)
 	{
 	//this->m_gameObjects[GameOjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("BOWMAN", 13, 13, 0));
 	}
 
-	this->m_gameObjects[GameOjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 13, 13, 0));
+	//this->m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 0.f, 0.f, 0.f));
+
+	//this->m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("FPS_VALUE", 0.f, 0.f, 0.f));
+
+
 
 	
 
@@ -224,7 +230,7 @@ void Game::play()
 		//Increment frame counter and calculate FPS and reset the gameloop timer
 		Clock::instance().calcFps();
 
-		DynamicTextManager::instance().updateText("PLAYER_LABEL", std::to_string(util::generateRandomNumber(1,100)));
+		DynamicTextManager::instance().updateText("FPS_VALUE", std::to_string(util::generateRandomNumber(1,100)));
 
 	}
 
@@ -247,10 +253,10 @@ void Game::renderGameObjects(const std::array <std::vector<GameObject>, constant
 }
 
 
-void Game::addGameObject(GameObject* gameObject, int layer)
+void Game::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle)
 {
 
-	//this->m_gameObjects[layer].push_back((*gameObject));
+	this->m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle));
 
 }
 
@@ -300,6 +306,13 @@ void Game::_update() {
 		//gameObjectCollection.particleObjects().shrink_to_fit();
 
 	}
+
+
+	DebugPanel::instance().addItem("Test", util::generateRandomNumber(1,10000), 8);
+	DebugPanel::instance().addItem("Test2", util::generateRandomNumber(1, 10000), 8);
+	DebugPanel::instance().addItem("Test3", util::generateRandomNumber(1, 10000), 8);
+	
+
 
 	//Clear all events
 	EventManager::instance().clearEvents();
