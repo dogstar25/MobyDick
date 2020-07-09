@@ -139,6 +139,8 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\HeroFireAction.cpp" />
+    <ClCompile Include="src\Action.cpp" />
     <ClCompile Include="src\DebugPanel.cpp" />
     <ClCompile Include="src\DynamicTextManager.cpp" />
     <ClCompile Include="src\EventManager.cpp" />
@@ -174,6 +176,8 @@
     <ClCompile Include="src\components\VitalityComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\HeroFireAction.h" />
+    <ClInclude Include="src\Action.h" />
     <ClInclude Include="src\DebugPanel.h" />
     <ClInclude Include="src\DynamicTextManager.h" />
     <ClInclude Include="src\EventManager.h" />

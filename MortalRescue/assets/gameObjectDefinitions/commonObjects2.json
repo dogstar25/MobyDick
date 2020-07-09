@@ -341,6 +341,15 @@
                         "bulletPoolId": "BULLET2_POOL"
                     }
                 ]
+            },
+            "playerControlComponent":
+            {
+                "controls":
+                [
+
+
+                ]
+
             }
         }
 

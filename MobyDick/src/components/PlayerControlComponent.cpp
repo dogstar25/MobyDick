@@ -61,6 +61,12 @@ void PlayerControlComponent::init()
 {
 
 	m_controls.reset();
+
+	
+
+
+
+	
 }
 
 
@@ -100,36 +106,60 @@ void PlayerControlComponent::update()
 				strafe = -1;
 			}
 
-			//FIXME: moving, sound and animation change shoudl be part of a actionSequence helper class
-			if (m_refPhysicsComponent) {
-				m_refPhysicsComponent->applyMovement(m_refVitalityComponent->speed(), direction, strafe);
-			}
-			//Sound
-			//playSound(0);
+			/*
+			m_ActionComponent->actions["MOVE"].perform();
+			*/
 
-			//Animation
-			if (m_refAnimationComponent )
+			//Execute MOVEMENT
+			if (m_controls.test(CONTROL_MOVEMENT))
 			{
-				if (direction == 0 && strafe == 0)
-				{
-					m_refAnimationComponent->setCurrentAnimationState(ANIMATION_IDLE);
+				if (m_refPhysicsComponent) {
+					m_refPhysicsComponent->applyMovement(m_refVitalityComponent->speed(), direction, strafe);
 				}
-				else
+
+				//Sound
+				//playSound(0);
+
+				//Animation
+				if (m_refAnimationComponent)
 				{
-					m_refAnimationComponent->setCurrentAnimationState(ANIMATION_RUN);
+					if (direction == 0 && strafe == 0)
+					{
+						m_refAnimationComponent->setCurrentAnimationState(ANIMATION_IDLE);
+					}
+					else
+					{
+						m_refAnimationComponent->setCurrentAnimationState(ANIMATION_RUN);
+					}
 				}
 			}
+
+			//FIXME: moving, sound and animation change shoudl be part of a actionSequence helper class
+
 
 			break;
 
 		case SDL_MOUSEMOTION:
-			angularVelocity = inputEvent->event.motion.xrel * GameConfig::instance().mouseSensitivity();
-			if (m_refPhysicsComponent) {
-				m_refPhysicsComponent->applyRotation(angularVelocity);
+
+			//Execute MOVEMENT
+			if (m_controls.test(CONTROL_ROTATION))
+			{
+			/*
+			m_ActionComponent->actions["MOVE"].perform();
+			*/
+
+				angularVelocity = inputEvent->event.motion.xrel * GameConfig::instance().mouseSensitivity();
+				if (m_refPhysicsComponent) {
+					m_refPhysicsComponent->applyRotation(angularVelocity);
+				}
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
-			//fire();
+			//Execute MOVEMENT
+			if (m_controls.test(CONTROL_USE))
+			{
+				executeUse();
+			}
 			break;
 		default:
 			break;

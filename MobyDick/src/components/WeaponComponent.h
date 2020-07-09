@@ -3,16 +3,27 @@
 
 #include<string>
 #include <box2d/box2d.h>
+#include <SDL2/SDL.h>
+#include <json/json.h>
 
 #include "Component.h"
+
+struct WeaponLevelDetail {
+
+	int level;
+	int strength;
+	int levelUpTarget;
+	SDL_Color color;
+	std::string bulletPoolId;
+};
 
 class WeaponComponent : public Component
 {
 
 public:
 	WeaponComponent();
-	WeaponComponent(std::string gameObjectId);
-	WeaponComponent(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust);
+	WeaponComponent(std::string gameObjectId, Json::Value componentJSON);
+	WeaponComponent(std::string gameObjectId, Json::Value componentJSON, float xMapPos, float yMapPos, float angleAdjust);
 	~WeaponComponent();
 
 	void update();
@@ -22,7 +33,12 @@ public:
 
 
 private:
-	int	m_currentLevel;
+	int	
+		m_currentLevel;
+	float
+		m_fireOffset;
+
+	std::map<int, WeaponLevelDetail> m_weaponLevelDetails;
 
 
 };

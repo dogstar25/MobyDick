@@ -6,6 +6,7 @@
 #include <bitset>
 
 #include "Component.h"
+#include "../Action.h"
 
 class AnimationComponent;
 class PhysicsComponent;

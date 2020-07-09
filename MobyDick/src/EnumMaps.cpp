@@ -61,6 +61,8 @@ EnumMap::EnumMap()
 	//Player Control
 	m_enumMap["CONTROL_MOVEMENT"] = CONTROL_MOVEMENT;
 	m_enumMap["CONTROL_ROTATION"] = CONTROL_ROTATION;
+	m_enumMap["CONTROL_USE"] = CONTROL_USE;
+	
 	
 
 	

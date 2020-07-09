@@ -83,7 +83,8 @@ enum {
 
 	//Player Control
 	CONTROL_MOVEMENT = 1,
-	CONTROL_ROTATION = 2
+	CONTROL_ROTATION = 2,
+	CONTROL_USE = 3
 
 
 
