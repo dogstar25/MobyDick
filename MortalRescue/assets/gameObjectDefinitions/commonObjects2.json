@@ -115,8 +115,23 @@
             {
                 "controls":
                 [
-                    "CONTROL_MOVEMENT",
-                    "CONTROL_ROTATION"
+                    "CONTROL_MOVEMENT"
+                ]
+
+            },
+            "actionComponent":
+            {
+                "actions":
+                [
+                    {
+                        "actionId": "ACTION_MOVE",
+                        "actionClass": "HeroMove"
+                    },
+                    {
+                        "actionId": "ACTION_ROTATE",
+                        "actionClass": "HeroRotate"
+                    }
+
                 ]
 
             }

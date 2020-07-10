@@ -139,8 +139,12 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\HeroFireAction.cpp" />
-    <ClCompile Include="src\Action.cpp" />
+    <ClCompile Include="src\actions\HeroRotateAction.cpp" />
+    <ClCompile Include="src\actions\HeroMoveAction.cpp" />
+    <ClCompile Include="src\JsonToActionClass.cpp" />
+    <ClCompile Include="src\components\ActionComponent.cpp" />
+    <ClCompile Include="src\actions\Action.cpp" />
+    <ClCompile Include="src\actions\HeroFireAction.cpp" />
     <ClCompile Include="src\DebugPanel.cpp" />
     <ClCompile Include="src\DynamicTextManager.cpp" />
     <ClCompile Include="src\EventManager.cpp" />
@@ -174,10 +178,15 @@
     <ClCompile Include="src\Waypoint.cpp" />
     <ClCompile Include="src\components\TextComponent.cpp" />
     <ClCompile Include="src\components\VitalityComponent.cpp" />
+    <ClCompile Include="src\components\UIControlComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\HeroFireAction.h" />
-    <ClInclude Include="src\Action.h" />
+    <ClInclude Include="src\actions\HeroRotateAction.h" />
+    <ClInclude Include="src\actions\HeroMoveAction.h" />
+    <ClInclude Include="src\JsonToActionClass.h" />
+    <ClInclude Include="src\components\ActionComponent.h" />
+    <ClInclude Include="src\actions\Action.h" />
+    <ClInclude Include="src\actions\HeroFireAction.h" />
     <ClInclude Include="src\DebugPanel.h" />
     <ClInclude Include="src\DynamicTextManager.h" />
     <ClInclude Include="src\EventManager.h" />
@@ -213,6 +222,7 @@
     <ClInclude Include="src\Waypoint.h" />
     <ClInclude Include="src\components\TextComponent.h" />
     <ClInclude Include="src\components\VitalityComponent.h" />
+    <ClInclude Include="src\components\UIControlComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="ExtraLibs\SDL2main.lib" />

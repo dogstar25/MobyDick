@@ -13,6 +13,11 @@ AnimationComponent::AnimationComponent()
 
 AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 {
+
+	//new direction?
+	//m_gameObject = std::make_shared<GameObject>(*gameObject);
+
+
 	//Get reference to the animationComponent JSON config and transformComponent JSON config
 	Json::Value animationComponentJSON = definitionJSON["animationComponent"];
 	Json::Value transformComponentJSON = definitionJSON["transformComponent"];

@@ -57,9 +57,10 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	m_RenderComponent = std::make_shared<RenderComponent>(definitionJSON);
 
 	//Player control Component
-	if (definitionJSON.isMember("playerControlComponent") && definitionJSON.isMember("physicsComponent") && definitionJSON.isMember("vitalityComponent"))
+	if (definitionJSON.isMember("playerControlComponent"))
 	{
-		m_PlayerControlComponent = std::make_shared<PlayerControlComponent>(definitionJSON);
+		Json::Value componentJSON = definitionJSON["playerControlComponent"];
+		m_PlayerControlComponent = std::make_shared<PlayerControlComponent>(componentJSON, this);
 
 	}
 
@@ -77,12 +78,22 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 	}
 
+	//Action Component
+	if (definitionJSON.isMember("actionComponent"))
+	{
+		Json::Value componentJSON = definitionJSON["actionComponent"];
+		m_ActionComponent = std::make_shared<ActionComponent>(gameObjectId, componentJSON, this);
+
+	}
+
 	//Attachments Component
 
 	/*
 	Setup component dependency references
 	*/
 	_setDependecyReferences();
+
+
 
 }
 
@@ -159,6 +170,9 @@ void GameObject::update()
 	}
 	if (m_PhysicsComponent) {
 		m_PhysicsComponent->update();
+	}
+	if (m_ActionComponent) {
+		m_ActionComponent->update();
 	}
 	if (m_AnimationComponent) {
 		m_AnimationComponent->update();

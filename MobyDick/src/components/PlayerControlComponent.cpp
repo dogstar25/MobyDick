@@ -1,4 +1,7 @@
 #include "PlayerControlComponent.h"
+
+#include <iostream>
+
 #include "../GameObjectManager.h"
 #include "../Globals.h"
 #include "../GameObject.h"
@@ -11,6 +14,8 @@
 #include "TransformComponent.h"
 #include "PhysicsComponent.h"
 #include "VitalityComponent.h"
+#include "ActionComponent.h"
+#include "../GameObject.h"
 
 #include <SDL2/SDL.h>
 
@@ -20,14 +25,14 @@ PlayerControlComponent::PlayerControlComponent()
 
 }
 
-PlayerControlComponent::PlayerControlComponent(Json::Value definitionJSON)
+PlayerControlComponent::PlayerControlComponent(Json::Value componentJSON, GameObject* gameObject) : Component(gameObject)
 {
 
-	Json::Value itr = definitionJSON["playerControlComponent"];
+	//this->setGameObject(gameObject);
+	//m_gameObject = gameObject;
 
-	m_gameObjectId = definitionJSON["id"].asString();;
 
-	for (Json::Value itrControls :itr["controls"])
+	for (Json::Value itrControls : componentJSON["controls"])
 	{
 		int controlFlag = EnumMap::instance().toEnum(itrControls.asString());
 		m_controls.set(controlFlag);
@@ -73,7 +78,18 @@ void PlayerControlComponent::init()
 void PlayerControlComponent::update()
 {
 
-	int keyCode = 0, scanCode, keyCount, keyStateCount;
+	if (m_controls.test(CONTROL_MOVEMENT))
+	{
+		handleMovement();
+	}
+
+	handleActions();
+
+}
+
+
+void PlayerControlComponent::handleMovement()
+{
 	float angularVelocity = 0;
 	int direction = 0;
 	int strafe = 0;
@@ -83,12 +99,12 @@ void PlayerControlComponent::update()
 	{
 		direction = 0;
 		strafe = 0;
+		keyStates = inputEvent->keyStates;
 
 		switch (inputEvent->event.type)
 		{
 		case SDL_KEYUP:
 		case SDL_KEYDOWN:
-			keyStates = inputEvent->keyStates;
 			if (keyStates[SDL_SCANCODE_W])
 			{
 				direction = -1;
@@ -106,60 +122,29 @@ void PlayerControlComponent::update()
 				strafe = -1;
 			}
 
-			/*
-			m_ActionComponent->actions["MOVE"].perform();
-			*/
+			m_gameObject->actionComponent()->moveAction();
 
-			//Execute MOVEMENT
-			if (m_controls.test(CONTROL_MOVEMENT))
-			{
-				if (m_refPhysicsComponent) {
-					m_refPhysicsComponent->applyMovement(m_refVitalityComponent->speed(), direction, strafe);
-				}
 
-				//Sound
-				//playSound(0);
+			//m_refPhysicsComponent->applyMovement(m_refVitalityComponent->speed(), direction, strafe);
 
-				//Animation
-				if (m_refAnimationComponent)
-				{
-					if (direction == 0 && strafe == 0)
-					{
-						m_refAnimationComponent->setCurrentAnimationState(ANIMATION_IDLE);
-					}
-					else
-					{
-						m_refAnimationComponent->setCurrentAnimationState(ANIMATION_RUN);
-					}
-				}
-			}
-
-			//FIXME: moving, sound and animation change shoudl be part of a actionSequence helper class
-
+			//if (m_refAnimationComponent)
+			//{
+			//	if (direction == 0 && strafe == 0)
+			//	{
+			//		m_refAnimationComponent->setCurrentAnimationState(ANIMATION_IDLE);
+			//	}
+			//	else
+			//	{
+			//		m_refAnimationComponent->setCurrentAnimationState(ANIMATION_RUN);
+			//	}
+			//}
 
 			break;
 
 		case SDL_MOUSEMOTION:
-
-			//Execute MOVEMENT
-			if (m_controls.test(CONTROL_ROTATION))
-			{
-			/*
-			m_ActionComponent->actions["MOVE"].perform();
-			*/
-
-				angularVelocity = inputEvent->event.motion.xrel * GameConfig::instance().mouseSensitivity();
-				if (m_refPhysicsComponent) {
-					m_refPhysicsComponent->applyRotation(angularVelocity);
-				}
-			}
-			break;
-		case SDL_MOUSEBUTTONDOWN:
-			//Execute MOVEMENT
-			if (m_controls.test(CONTROL_USE))
-			{
-				executeUse();
-			}
+			m_gameObject->actionComponent()->rotateAction();
+			//angularVelocity = inputEvent->event.motion.xrel * GameConfig::instance().mouseSensitivity();
+			//m_refPhysicsComponent->applyRotation(angularVelocity);
 			break;
 		default:
 			break;
@@ -167,5 +152,40 @@ void PlayerControlComponent::update()
 
 	}
 
-
 }
+
+void PlayerControlComponent::handleActions()
+{
+	const Uint8* keyStates = nullptr;
+
+	for (auto& inputEvent : EventManager::instance().playerInputEvents())
+	{
+		keyStates = inputEvent->keyStates;
+
+		switch (inputEvent->event.type)
+		{
+		case SDL_KEYUP:
+		case SDL_KEYDOWN:
+			if (keyStates[SDL_SCANCODE_G])
+			{
+				//actionMap["DROP_WEAPON"]->perform();
+				std::cout << "Dropped Weapon" <<"\n";
+			}
+
+		case SDL_MOUSEBUTTONDOWN:
+			//Execute USE
+			if (m_controls.test(CONTROL_USE))
+			{
+				//actionMap["USE"]->perform();
+			}
+
+			break;
+		default:
+			break;
+		}
+
+	}
+}
+
+
+

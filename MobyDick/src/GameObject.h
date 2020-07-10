@@ -6,11 +6,13 @@
 #include <string>
 #include <vector>
 #include <json/json.h>
+#include <map>
 
 #include <Box2D/Box2D.h>
 
 #include "GameObjectDefinition.h"
 #include "components/TransformComponent.h"
+#include "components/ActionComponent.h"
 #include "components/AnimationComponent.h"
 #include "components/AttachmentsComponent.h"
 #include "components/ChildrenComponent.h"
@@ -53,6 +55,9 @@ public:
 	auto& animationComponent() {
 		return m_AnimationComponent;
 	}
+	auto& actionComponent() {
+		return m_ActionComponent;
+	}
 	auto& attachmentsComponent() {
 		return m_AttachmentsComponent;
 	}
@@ -87,6 +92,11 @@ public:
 		return m_WeaponComponent;
 	}
 
+
+
+
+
+
 private:
 
 	void _setDependecyReferences();
@@ -100,6 +110,7 @@ private:
 
 	//Components
 	std::shared_ptr<AnimationComponent> m_AnimationComponent;
+	std::shared_ptr<ActionComponent> m_ActionComponent;
 	std::shared_ptr<AttachmentsComponent> m_AttachmentsComponent;
 	std::shared_ptr<ChildrenComponent> m_ChildrenComponent;
 	std::shared_ptr<CompositeComponent> m_CompositeComponent;

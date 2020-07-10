@@ -6,7 +6,6 @@
 #include <bitset>
 
 #include "Component.h"
-#include "../Action.h"
 
 class AnimationComponent;
 class PhysicsComponent;
@@ -19,7 +18,7 @@ class PlayerControlComponent : public Component
 public:
 
 	PlayerControlComponent();
-	PlayerControlComponent(Json::Value definitionJSON);
+	PlayerControlComponent(Json::Value componentJSON, GameObject* gameObject);
 
 	~PlayerControlComponent();
 
@@ -34,10 +33,12 @@ public:
 
 private:
 
+	void init();
+	void handleMovement();
+	void handleActions();
+
 
 	std::bitset<8> m_controls;
-
-	void init();
 
 	std::shared_ptr<TransformComponent> m_refTransformComponent;
 	std::shared_ptr<AnimationComponent> m_refAnimationComponent;

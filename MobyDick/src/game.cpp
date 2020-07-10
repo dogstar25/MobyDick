@@ -16,6 +16,7 @@
 //#include "ObjectPoolManager.h"
 #include "EventManager.h"
 #include "DebugPanel.h"
+#include "components/ActionComponent.h"
 
 
 using namespace std::chrono_literals;
@@ -146,7 +147,7 @@ bool Game::init()
 		Clock::instance().init();
 
 		//Load the First level
-		Level::instance().load("level1");
+		//Level::instance().load("level1");
 
 		//Initilaize Camera size and
 		Camera::instance().init();
@@ -154,20 +155,19 @@ bool Game::init()
 		
 	}
 
-	GameObject* gameObject = NULL;
+	//GameObject* gameObject = NULL;
 
 	//Create the main player object
 	//m_player = GameObjectManager::instance().buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
 	//m_player->addWeapon("WEAPON1");
 
 
-	
-
 	//m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 0, 0, 0));
 	//addGameObject(gameObject, GameOjectLayer::DEBUG);
 
 	////gameObject = new GameObject("GINA_64", 2, 2, 180);
-	this->m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("GINA_64", 5, 5, 90));
+	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("GINA_64", 5.f, 5.f, 90.f);
+	this->m_gameObjects[GameObjectLayer::MAIN].push_back(gameObject);
 
 
 	//this->m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("GUIPausePanel", 1, 1, 0));
@@ -179,7 +179,7 @@ bool Game::init()
 
 	//this->m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 0.f, 0.f, 0.f));
 
-	this->m_gameObjects[GameObjectLayer::DEBUG].emplace_back(std::make_shared<GameObject>("FPS_VALUE", 0.f, 0.f, 0.f));
+	//this->m_gameObjects[GameObjectLayer::DEBUG].emplace_back(std::make_shared<GameObject>("FPS_VALUE", 0.f, 0.f, 0.f));
 
 
 
