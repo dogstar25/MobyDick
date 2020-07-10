@@ -1,15 +1,18 @@
 #include "WeaponComponent.h"
 
 #include "../GameObjectManager.h"
+#include "../GameObject.h"
 
 WeaponComponent::WeaponComponent()
 {
 
 }
 
-WeaponComponent::WeaponComponent(std::string gameObjectId, Json::Value componentJSON)
+WeaponComponent::WeaponComponent(Json::Value definitionJSON, GameObject* gameObject) :
+	Component(gameObject)
 {
-	m_gameObjectId = gameObjectId;
+	
+	Json::Value componentJSON = definitionJSON["weaponComponent"];
 
 	m_currentLevel = 1;
 

@@ -25,12 +25,11 @@ PlayerControlComponent::PlayerControlComponent()
 
 }
 
-PlayerControlComponent::PlayerControlComponent(Json::Value componentJSON, GameObject* gameObject) : Component(gameObject)
+PlayerControlComponent::PlayerControlComponent(Json::Value definitionJSON, GameObject* gameObject) :
+	Component(gameObject)
 {
 
-	//this->setGameObject(gameObject);
-	//m_gameObject = gameObject;
-
+	Json::Value componentJSON = definitionJSON["playerControlComponent"];
 
 	for (Json::Value itrControls : componentJSON["controls"])
 	{
@@ -48,18 +47,6 @@ PlayerControlComponent::~PlayerControlComponent()
 
 }
 
-void PlayerControlComponent::setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent,
-	std::shared_ptr<AnimationComponent> animationComponent,
-	std::shared_ptr<PhysicsComponent> physicsComponent,
-	std::shared_ptr<VitalityComponent> vitalityComponent)
-{
-
-	m_refTransformComponent = transformComponent;
-	m_refAnimationComponent = animationComponent;
-	m_refPhysicsComponent = physicsComponent;
-	m_refVitalityComponent = vitalityComponent;
-
-}
 
 
 void PlayerControlComponent::init()
@@ -122,29 +109,14 @@ void PlayerControlComponent::handleMovement()
 				strafe = -1;
 			}
 
-			m_gameObject->actionComponent()->moveAction();
-
-
-			//m_refPhysicsComponent->applyMovement(m_refVitalityComponent->speed(), direction, strafe);
-
-			//if (m_refAnimationComponent)
-			//{
-			//	if (direction == 0 && strafe == 0)
-			//	{
-			//		m_refAnimationComponent->setCurrentAnimationState(ANIMATION_IDLE);
-			//	}
-			//	else
-			//	{
-			//		m_refAnimationComponent->setCurrentAnimationState(ANIMATION_RUN);
-			//	}
-			//}
+			m_gameObject->actionComponent()->moveAction(direction, strafe);
 
 			break;
 
 		case SDL_MOUSEMOTION:
 			m_gameObject->actionComponent()->rotateAction();
-			//angularVelocity = inputEvent->event.motion.xrel * GameConfig::instance().mouseSensitivity();
-			//m_refPhysicsComponent->applyRotation(angularVelocity);
+			angularVelocity = inputEvent->event.motion.xrel * GameConfig::instance().mouseSensitivity();
+			m_gameObject->physicsComponent()->applyRotation(angularVelocity);
 			break;
 		default:
 			break;

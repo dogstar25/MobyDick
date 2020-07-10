@@ -14,7 +14,7 @@ class AnimationComponent :  public Component
 {
 public:
 	AnimationComponent();
-	AnimationComponent(Json::Value definitionJSON);
+	AnimationComponent(Json::Value definitionJSON, GameObject* gameObject);
 	~AnimationComponent();
 	void construct(Json::Value itrJSON);
 
@@ -36,7 +36,6 @@ private:
 	int 
 		m_currentAnimationState;
 
-	std::shared_ptr<TransformComponent> m_refTransFormComponent;
 	std::map<int, std::shared_ptr<Animation>> m_animations;
 
 };

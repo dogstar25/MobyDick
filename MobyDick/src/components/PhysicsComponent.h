@@ -12,7 +12,7 @@ class PhysicsComponent : public Component
 
 public:
 	PhysicsComponent();
-	PhysicsComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust);
+	PhysicsComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust, GameObject* gameObject);
 	~PhysicsComponent();
 
 	void update() override;
@@ -39,8 +39,6 @@ private:
 		m_collisionCategory,
 		m_collisionShape,
 		m_physicsType;
-
-	std::shared_ptr<TransformComponent> m_refTransFormComponent;
 
 };
 

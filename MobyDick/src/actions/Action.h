@@ -13,7 +13,8 @@ public:
 
 	Action();
 	~Action();
-	virtual void perform(GameObject* gameObject) = 0;
+	virtual void perform(GameObject* gameObject) {};
+	virtual void perform(GameObject* gameObject, int direction, int strafe) {};
 
 };
 

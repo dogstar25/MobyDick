@@ -18,15 +18,9 @@ RenderComponent::RenderComponent()
 
 }
 
-/*
-Used for GameObject/Component creation
-*/
-RenderComponent::RenderComponent(RenderComponent* componentDefinition)
-{
 
-}
-
-RenderComponent::RenderComponent(Json::Value definitionJSON)
+RenderComponent::RenderComponent(Json::Value definitionJSON, GameObject* gameObject) :
+	Component(gameObject)
 {
 	Json::Value itrRender = definitionJSON["renderComponent"];
 
@@ -62,16 +56,6 @@ RenderComponent::~RenderComponent()
 
 }
 
-void RenderComponent::setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent,
-	std::shared_ptr<AnimationComponent> animationComponent,
-	std::shared_ptr<PhysicsComponent> physicsComponent)
-{
-
-	m_refTransformComponent = transformComponent;
-	m_refAnimationComponent = animationComponent;
-	m_refPhysicsComponent = physicsComponent;
-
-}
 
 void RenderComponent::update()
 {
@@ -88,7 +72,7 @@ SDL_FRect RenderComponent::getRenderDestRect()
 	SDL_FRect destRect, currentPositionRect;
 
 	//Get its current position. Should be center of object
-	currentPositionRect = m_refTransformComponent->getPositionRect();
+	currentPositionRect = m_gameObject->transformComponent()->getPositionRect();
 
 	destRect = currentPositionRect;
 	destRect.x -= (currentPositionRect.w / 2);
@@ -113,9 +97,10 @@ SDL_Rect* RenderComponent::getRenderTextureRect()
 {
 	SDL_Rect* textureSrcRect=nullptr;
 
-	if (m_refAnimationComponent)
+	//if (m_gameObject->hasComponent(ANIMATION_COMPONENT))
+	if (m_gameObject->animationComponent())
 	{
-		textureSrcRect = m_refAnimationComponent->getCurrentAnimationTextureRect();
+		textureSrcRect = m_gameObject->animationComponent()->getCurrentAnimationTextureRect();
 	}
 
 	return textureSrcRect;
@@ -126,7 +111,7 @@ float RenderComponent::getRenderAngle()
 {
 	float angle=0;
 
-	angle = m_refTransformComponent->angle();
+	angle = m_gameObject->transformComponent()->angle();
 
 	return angle;
 }
@@ -140,9 +125,9 @@ SDL_Texture* RenderComponent::getRenderTexture()
 {
 	SDL_Texture* texture = nullptr;
 
-	if (m_refAnimationComponent) 
+	if (m_gameObject->animationComponent())
 	{
-		texture = m_refAnimationComponent->getCurrentAnimationTexture();
+		texture = m_gameObject->animationComponent()->getCurrentAnimationTexture();
 	}
 	else 
 	{
@@ -169,7 +154,7 @@ void RenderComponent::outlineObject(float lineSize)
 	SDL_FPoint point;
 
 	//Adjust for camera
-	if (m_refTransformComponent->absolutePositioning() == false)
+	if (m_gameObject->transformComponent()->absolutePositioning() == false)
 	{
 		gameObjectDrawRect.x -= Camera::instance().frame().x;
 		gameObjectDrawRect.y -= Camera::instance().frame().y;
@@ -222,7 +207,7 @@ void RenderComponent::render()
 	SDL_Rect* textureSourceRect = getRenderTextureRect();
 	const SDL_FRect destRect = getRenderDestRect();
 	SDL_Texture* texture = getRenderTexture();
-	float angle = m_refTransformComponent->angle();
+	float angle = m_gameObject->transformComponent()->angle();
 
 	//Set the color
 	SDL_SetTextureAlphaMod(texture, m_color.a);

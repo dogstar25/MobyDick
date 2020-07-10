@@ -71,7 +71,7 @@ void DebugPanel::addItem(std::string id, std::string value)
 			//FIXME: Level tile size 32
 			yPos = m_location.y + m_itemCount * (fontSize / (float)32);
 
-			Game::instance().addGameObject(newId, GameObjectLayer::MAIN, xPos, yPos, 0);
+			Game::instance().addGameObject(newId, GameObjectLayer::DEBUG, xPos, yPos, 0);
 
 			m_itemCount++;
 		}

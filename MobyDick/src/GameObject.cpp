@@ -3,7 +3,7 @@
 #include "GameObjectManager.h"
 #include "EventManager.h"
 
-//#include "Level.h"
+#include "Level.h"
 
 
 GameObject::~GameObject()
@@ -29,52 +29,55 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	}
 
 	//Animation Component
-	if (definitionJSON.isMember("animationComponent") && definitionJSON.isMember("transformComponent"))
+	if (definitionJSON.isMember("animationComponent"))
 	{
-		m_AnimationComponent = std::make_shared<AnimationComponent>(definitionJSON);
+		Json::Value componentJSON = definitionJSON["animationComponent"];
+		m_AnimationComponent = std::make_shared<AnimationComponent>(definitionJSON, this);
 
 	}
 	//Transform Component
 	if (definitionJSON.isMember("transformComponent"))
 	{
-		m_TransformComponent = std::make_shared<TransformComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
+		Json::Value componentJSON = definitionJSON["transformComponent"];
+		m_TransformComponent = std::make_shared<TransformComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust, this);
 
 	}
 	//Physics Component
 	if (definitionJSON.isMember("physicsComponent") && definitionJSON.isMember("transformComponent"))
 	{
-		m_PhysicsComponent = std::make_shared<PhysicsComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
+		Json::Value componentJSON = definitionJSON["physicsComponent"];
+		m_PhysicsComponent = std::make_shared<PhysicsComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust, this);
 
 	}
 	//Vitality Component
 	if (definitionJSON.isMember("vitalityComponent"))
 	{
-		m_VitalityComponent = std::make_shared<VitalityComponent>(definitionJSON);
+		Json::Value componentJSON = definitionJSON["vitalityComponent"];
+		m_VitalityComponent = std::make_shared<VitalityComponent>(definitionJSON, this);
 
 	}
-
-	//Render Component
-	m_RenderComponent = std::make_shared<RenderComponent>(definitionJSON);
 
 	//Player control Component
 	if (definitionJSON.isMember("playerControlComponent"))
 	{
 		Json::Value componentJSON = definitionJSON["playerControlComponent"];
-		m_PlayerControlComponent = std::make_shared<PlayerControlComponent>(componentJSON, this);
+		m_PlayerControlComponent = std::make_shared<PlayerControlComponent>(definitionJSON, this);
 
 	}
 
 	//Text Component
 	if (definitionJSON.isMember("textComponent") && definitionJSON.isMember("transformComponent"))
 	{
-		m_TextComponent = std::make_shared<TextComponent>(gameObjectId, definitionJSON);
+		Json::Value componentJSON = definitionJSON["textComponent"];
+		m_TextComponent = std::make_shared<TextComponent>(gameObjectId, definitionJSON, this);
 		
 	}
 
 	//Children Component
 	if (definitionJSON.isMember("childrenComponent") && definitionJSON.isMember("transformComponent"))
 	{
-		m_ChildrenComponent = std::make_shared<ChildrenComponent>(gameObjectId, definitionJSON);
+		Json::Value componentJSON = definitionJSON["childrenComponent"];
+		m_ChildrenComponent = std::make_shared<ChildrenComponent>(definitionJSON, this);
 
 	}
 
@@ -82,82 +85,92 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("actionComponent"))
 	{
 		Json::Value componentJSON = definitionJSON["actionComponent"];
-		m_ActionComponent = std::make_shared<ActionComponent>(gameObjectId, componentJSON, this);
+		m_ActionComponent = std::make_shared<ActionComponent>(definitionJSON, this);
 
 	}
 
-	//Attachments Component
-
-	/*
-	Setup component dependency references
-	*/
-	_setDependecyReferences();
+	//Render Component - Always Build
+	m_RenderComponent = std::make_shared<RenderComponent>(definitionJSON, this);
 
 
 
 }
 
-void GameObject::_setDependecyReferences()
+void GameObject::_init()
 {
-	if (m_AnimationComponent)
-	{
-		m_AnimationComponent->setDependencyReferences(m_TransformComponent);
-	}
-	if (m_PhysicsComponent)
-	{
-		m_PhysicsComponent->setDependencyReferences(m_TransformComponent);
-	}
-	if (m_PlayerControlComponent)
-	{
-		m_PlayerControlComponent->setDependencyReferences(m_TransformComponent, m_AnimationComponent, m_PhysicsComponent, m_VitalityComponent);
-	}
-	if (m_RenderComponent)
-	{
-		m_RenderComponent->setDependencyReferences(m_TransformComponent, m_AnimationComponent, m_PhysicsComponent);
-	}
-	if (m_TextComponent)
-	{
-		m_TextComponent->setDependencyReferences(m_TransformComponent, m_RenderComponent);
-	}
-	if (m_ChildrenComponent)
-	{
-		m_ChildrenComponent->setDependencyReferences(m_TransformComponent);
-	}
+	//std::shared_ptr<GameObject>gameObject = std::make_shared<GameObject>(*this);
+
+	///*if (m_AnimationComponent) {
+	//	gameObject->m_components.set(ANIMATION_COMPONENT);
+	//	m_AnimationComponent->setGameObject(gameObject);
+	//}*/
+	//if (m_ActionComponent) {
+	//	gameObject->m_components.set(ACTION_COMPONENT);
+	//	m_ActionComponent->setGameObject(gameObject);
+	//}
+	//if (m_AttachmentsComponent) {
+	//	gameObject->m_components.set(ATTACHMENTS_COMPONENT);
+	//	m_AttachmentsComponent->setGameObject(gameObject);
+	//}
+	//if (m_ChildrenComponent) {
+	//	gameObject->m_components.set(CHILDREN_COMPONENT);
+	//	m_ChildrenComponent->setGameObject(gameObject);
+	//}
+	//if (m_CompositeComponent) {
+	//	gameObject->m_components.set(COMPOSITE_COMPONENT);
+	//	m_CompositeComponent->setGameObject(gameObject);
+	//}
+	//if (m_ParticleComponent) {
+	//	gameObject->m_components.set(PARTICLE_COMPONENT);
+	//	m_ParticleComponent->setGameObject(gameObject);
+	//}
+	//if (m_PhysicsComponent) {
+	//	gameObject->m_components.set(PHYSICS_COMPONENT);
+	//	m_PhysicsComponent->setGameObject(gameObject);
+	//}
+	//if (m_PlayerControlComponent) {
+	//	gameObject->m_components.set(PLAYERCONTROL_COMPONENT);
+	//	m_PlayerControlComponent->setGameObject(gameObject);
+	//}
+	//if (m_RenderComponent) {
+	//	gameObject->m_components.set(RENDER_COMPONENT);
+	//	m_RenderComponent->setGameObject(gameObject);
+	//}
+	//if (m_TextComponent) {
+	//	gameObject->m_components.set(TEXT_COMPONENT);
+	//	m_TextComponent->setGameObject(gameObject);
+	//}
+	//if (m_TransformComponent) {
+	//	gameObject->m_components.set(TRANSFORM_COMPONENT);
+	//	m_TransformComponent->setGameObject(gameObject);
+	//}
+	//if (m_VitalityComponent) {
+	//	gameObject->m_components.set(VITALITY_COMPONENT);
+	//	m_VitalityComponent->setGameObject(gameObject);
+	//}
+	//if (m_WeaponComponent) {
+	//	gameObject->m_components.set(WEAPON_COMPONENT);
+	//	m_WeaponComponent->setGameObject(gameObject);
+	//}
+
+
+
+
 
 }
+
 void GameObject::setPosition(b2Vec2 position, float angle)
 {
 	
-	if (m_PhysicsComponent)
+	//-1 means dont apply the angle
+	if (angle != -1)
 	{
-		b2Vec2 physcisPosition = { 0,0 };
-
-		//Calculate physics position and then call m_physicsComponent.update() to refresh transformComponent
-
-		//-1 means dont apply the angle
-		if (angle != -1)
-		{
-			
-		}
-		else
-		{
-			
-		}
-
+		m_TransformComponent->setPosition(position, angle);
 	}
 	else
 	{
-		//-1 means dont apply the angle
-		if (angle != -1)
-		{
-			m_TransformComponent->setPosition(position, angle);
-		}
-		else
-		{
-			m_TransformComponent->setPosition(position);
-		}
+		m_TransformComponent->setPosition(position);
 	}
-
 
 }
 

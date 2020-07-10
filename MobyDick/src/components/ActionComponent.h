@@ -14,13 +14,14 @@ class GameObject;
 class ActionComponent : public Component
 {
 public:
-	ActionComponent(std::string gameObjectId, Json::Value componentJSON, GameObject* gameObject);
+	ActionComponent(Json::Value definitionJSON, GameObject* gameObject);
 	~ActionComponent();
 
-	void moveAction()
+	void moveAction(int direction, int strafe)
 	{
-		m_actionMap[ACTION_MOVE]->perform(m_gameObject);
+		m_actionMap[ACTION_MOVE]->perform(m_gameObject, direction, strafe);
 	}
+
 	void rotateAction()
 	{
 		m_actionMap[ACTION_ROTATE]->perform(m_gameObject);

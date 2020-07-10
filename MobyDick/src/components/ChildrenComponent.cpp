@@ -8,10 +8,9 @@ ChildrenComponent::ChildrenComponent()
 
 }
 
-ChildrenComponent::ChildrenComponent(std::string gameObjectId, Json::Value definitionJSON)
+ChildrenComponent::ChildrenComponent(Json::Value definitionJSON, GameObject* gameObject) :
+	Component(gameObject)
 {
-
-	m_gameObjectId = gameObjectId;
 
 	Json::Value childrenComponentJSON = definitionJSON["childrenComponent"];
 
@@ -23,7 +22,10 @@ ChildrenComponent::ChildrenComponent(std::string gameObjectId, Json::Value defin
 		std::string childObjectId = itrChild["gameObjectId"].asString();
 		int locationSlot = itrChild["locationSlot"].asInt()-1;
 
-		m_childObjects[locationSlot].emplace_back(std::make_shared<GameObject>(childObjectId, 5.0f, 5.0f, 0.0f));
+		std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>(childObjectId, 5.f, 5.f, 90.f);
+		gameObject->_init();
+		m_childObjects[locationSlot].push_back(gameObject);
+		
 
 	}
 
@@ -38,13 +40,6 @@ ChildrenComponent::~ChildrenComponent()
 
 }
 
-void ChildrenComponent::setDependencyReferences(
-	std::shared_ptr<TransformComponent> transformComponent)
-{
-
-	m_refTransformComponent = transformComponent;
-
-}
 
 void ChildrenComponent::update()
 {
@@ -67,7 +62,7 @@ void ChildrenComponent::update()
 			// Should this child match the angle of the parent
 			if (m_childPositionRelative == true)
 			{
-				childObject->setPosition(newChildPosition, m_refTransformComponent->angle());
+				childObject->setPosition(newChildPosition, m_gameObject->transformComponent()->angle());
 	
 			}
 			else
@@ -149,7 +144,7 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 	float x, y, xAdj = 0, yAdj = 0;
 
 	//Parent position is center of parent
-	SDL_FRect parentPositionRect = m_refTransformComponent->getPositionRect();
+	SDL_FRect parentPositionRect = m_gameObject->transformComponent()->getPositionRect();
 
 	//Different calcs for the different 9 possible positions
 	//Calculate topleft corner of child
@@ -244,7 +239,7 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 		adjustment = this->matchParentRotation(
 			childPositionRect,
 			parentPositionRect,
-			m_refTransformComponent->angle());
+			m_gameObject->transformComponent()->angle());
 
 		childPositionRect.x += adjustment.x;
 		childPositionRect.y += adjustment.y;

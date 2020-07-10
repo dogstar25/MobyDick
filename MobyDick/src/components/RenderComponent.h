@@ -19,8 +19,7 @@ class RenderComponent : public Component
 
 public:
 	RenderComponent();
-	RenderComponent(Json::Value definitionJSON);
-	RenderComponent(RenderComponent* componentDefinition);
+	RenderComponent(Json::Value definitionJSON, GameObject* gameObject);
 	~RenderComponent();
 
 	void update() override;
@@ -71,11 +70,6 @@ private:
 		m_renderOutline;
 	std::string
 		m_textureId;
-
-	std::shared_ptr<TransformComponent> m_refTransformComponent;
-	std::shared_ptr<AnimationComponent> m_refAnimationComponent;
-	std::shared_ptr<PhysicsComponent> m_refPhysicsComponent;
-
 
 };
 

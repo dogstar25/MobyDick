@@ -20,11 +20,10 @@ class ChildrenComponent :  public Component
 {
 public:
 	ChildrenComponent();
-	ChildrenComponent(std::string gameObjectId, Json::Value itrJSON);
+	ChildrenComponent(Json::Value definitionJSON, GameObject* gameObject);
 	~ChildrenComponent();
 
 	void update() override;
-	void setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent);
 	void renderChildren(); //move to render component?
 
 private:
@@ -34,7 +33,6 @@ private:
 		m_childPadding;
 	bool
 		m_childPositionRelative;
-	std::shared_ptr<TransformComponent> m_refTransformComponent;
 	std::array<std::vector<std::shared_ptr<GameObject>>, constants::CHILD_POSITIONS> m_childObjects;
 
 	b2Vec2 matchParentRotation(SDL_FRect, SDL_FRect, float); //Move to Transform? Child objects can have a reference to their parent

@@ -4,13 +4,10 @@
 #include "../JsonToActionClass.h"
 #include "../EnumMaps.h"
 
-ActionComponent::ActionComponent(std::string gameObjectId, Json::Value componentJSON, GameObject* gameObject) :
+ActionComponent::ActionComponent(Json::Value definitionJSON, GameObject* gameObject) :
 	Component(gameObject)
 {
-
-
-	//this->setGameObject(gameObject);
-	//m_gameObject = gameObject;
+	Json::Value componentJSON = definitionJSON["actionComponent"];
 
 	for (Json::Value itrAction: componentJSON["actions"])
 	{

@@ -11,19 +11,16 @@ AnimationComponent::AnimationComponent()
 {
 }
 
-AnimationComponent::AnimationComponent(Json::Value definitionJSON)
+AnimationComponent::AnimationComponent(Json::Value definitionJSON, GameObject* gameObject) :
+	Component(gameObject)
 {
-
-	//new direction?
-	//m_gameObject = std::make_shared<GameObject>(*gameObject);
-
 
 	//Get reference to the animationComponent JSON config and transformComponent JSON config
 	Json::Value animationComponentJSON = definitionJSON["animationComponent"];
 	Json::Value transformComponentJSON = definitionJSON["transformComponent"];
 
 	//Build animationComponent details
-	m_gameObjectId = definitionJSON["id"].asString();;
+	m_gameObjectId = definitionJSON["id"].asString();
 
 	int i = 0;
 	for (Json::Value animItr : animationComponentJSON["animations"])
@@ -41,11 +38,6 @@ AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 	}
 }
 
-
-void AnimationComponent::setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent)
-{
-	m_refTransFormComponent = std::shared_ptr<TransformComponent>(transformComponent);
-}
 
 
 AnimationComponent::~AnimationComponent()

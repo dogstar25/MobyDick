@@ -15,7 +15,8 @@ PhysicsComponent::PhysicsComponent()
 
 }
 
-PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust)
+PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust, GameObject* gameObject) :
+	Component(gameObject)
 {
 	//Get reference to the animationComponent JSON config and transformComponent JSON config
 	Json::Value physicsComponentJSON = definitionJSON["physicsComponent"];
@@ -55,13 +56,6 @@ PhysicsComponent::~PhysicsComponent()
 
 }
 
-void PhysicsComponent::setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent)
-{
-
-	m_refTransFormComponent = transformComponent;
-
-}
-
 void PhysicsComponent::update()
 {
 	//Transfer the physicsComponent coordinates to the transformComponent
@@ -71,7 +65,7 @@ void PhysicsComponent::update()
 	convertedPosition.x = m_physicsBody->GetPosition().x * GameConfig::instance().scaleFactor();
 	convertedPosition.y = m_physicsBody->GetPosition().y * GameConfig::instance().scaleFactor();
 
-	m_refTransFormComponent->setPosition(convertedPosition, convertedAngle);
+	m_gameObject->setPosition(convertedPosition, convertedAngle);
 
 }
 

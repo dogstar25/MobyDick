@@ -14,9 +14,3 @@ Action::~Action()
 
 }
 
-void Action::perform(GameObject* gameObject)
-{
-	std::cout << "ACTION";
-
-}
-

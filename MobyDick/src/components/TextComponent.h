@@ -15,12 +15,8 @@ class TextComponent : public Component
 {
 public:
 	TextComponent();
-	TextComponent(std::string gameObjectId, Json::Value definitionId);
+	TextComponent(std::string gameObjectId, Json::Value definitionJSON, GameObject* gameObject);
 	~TextComponent();
-
-	void setDependencyReferences(
-		std::shared_ptr<TransformComponent> transformComponent,
-		std::shared_ptr<RenderComponent> renderComponent);
 
 	void update() override;
 
@@ -64,9 +60,6 @@ private:
 		m_textValue,
 		m_debugId
 		;
-
-	std::shared_ptr<RenderComponent> m_refRenderComponent;
-	std::shared_ptr<TransformComponent> m_refTransformComponent;
 
 	//test
 	TTF_Font* m_fontObject;

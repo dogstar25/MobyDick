@@ -7,17 +7,17 @@ ParticleComponent::ParticleComponent()
 
 }
 
-ParticleComponent::ParticleComponent(std::string gameObjectId)
+ParticleComponent::ParticleComponent(const GameObject& gameObject)
 {
-	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
+	//Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 
-	//Transform Component
-	if (itrJSON.isMember("ParticleComponent"))
-	{
+	////Transform Component
+	//if (itrJSON.isMember("ParticleComponent"))
+	//{
 
-		//m_componentFlags |= TRANSFORM_COMPONENT;
+	//	//m_componentFlags |= TRANSFORM_COMPONENT;
 
-	}
+	//}
 
 }
 

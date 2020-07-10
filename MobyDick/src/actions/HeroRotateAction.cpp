@@ -14,7 +14,7 @@ HeroRotateAction::~HeroRotateAction()
 
 }
 
-void HeroRotateAction::perform(GameObject* gameObject)
+void HeroRotateAction::perform(GameObject* gameObject, int direction, int strafe)
 {
 
 	std::cout << "HERO ROTATE" << "\n";

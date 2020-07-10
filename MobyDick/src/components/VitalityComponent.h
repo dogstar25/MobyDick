@@ -5,11 +5,13 @@
 
 #include "Component.h"
 
+class GameObject;
+
 class VitalityComponent :  public Component
 {
 public:
 	VitalityComponent();
-	VitalityComponent(Json::Value itrJSON);
+	VitalityComponent(Json::Value definitionJSON, GameObject* gameObject);
 	~VitalityComponent();
 
 	void update() override;

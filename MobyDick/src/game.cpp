@@ -155,35 +155,17 @@ bool Game::init()
 		
 	}
 
-	//GameObject* gameObject = NULL;
+	m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 0.f, 0.f, 0.f));
+	m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("GINA_64", 5.f, 5.f, 0.f));
 
-	//Create the main player object
-	//m_player = GameObjectManager::instance().buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
-	//m_player->addWeapon("WEAPON1");
-
-
-	//m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 0, 0, 0));
-	//addGameObject(gameObject, GameOjectLayer::DEBUG);
-
-	////gameObject = new GameObject("GINA_64", 2, 2, 180);
-	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("GINA_64", 5.f, 5.f, 90.f);
-	this->m_gameObjects[GameObjectLayer::MAIN].push_back(gameObject);
-
-
-	//this->m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("GUIPausePanel", 1, 1, 0));
-	
 	//for (int i = 0; i < 20; i++)
 	{
 	//this->m_gameObjects[GameOjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("BOWMAN", 13, 13, 0));
 	}
 
-	//this->m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 0.f, 0.f, 0.f));
+	this->m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 7.f, 7.f, 0.f));
 
-	//this->m_gameObjects[GameObjectLayer::DEBUG].emplace_back(std::make_shared<GameObject>("FPS_VALUE", 0.f, 0.f, 0.f));
-
-
-
-	
+	this->m_gameObjects[GameObjectLayer::DEBUG].emplace_back(std::make_shared<GameObject>("FPS_VALUE", 15.f, 15.f, 45.f));
 
 
 	return true;
@@ -243,6 +225,7 @@ void Game::addGameObject(std::string gameObjectId, int layer, float xMapPos, flo
 {
 
 	this->m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle));
+	
 
 }
 

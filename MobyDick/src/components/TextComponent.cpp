@@ -9,6 +9,7 @@
 #include "../DynamicTextManager.h"
 #include "../GameConfig.h"
 #include "../texture.h"
+#include "../GameObject.h"
 
 TextComponent::TextComponent()
 {
@@ -17,14 +18,15 @@ TextComponent::TextComponent()
 
 
 
-TextComponent::TextComponent(std::string gameObjectId, Json::Value definitionJSON)
+TextComponent::TextComponent(std::string gameObjectId, Json::Value definitionJSON, GameObject* gameObject) :
+	Component(gameObject)
 {
 
-	m_gameObjectId = gameObjectId;
+	//gameObjectId can be dynamic because of the debug text so it must be passed in
 	m_textureId = "TX_" + gameObjectId;
+	m_gameObjectId = gameObjectId;
 
 	Json::Value textComponentJSON = definitionJSON["textComponent"];
-
 	m_isDebugText = false;
 	m_isDynamic = textComponentJSON["dynamic"].asBool();
 	m_fontId = textComponentJSON["font"].asString();
@@ -67,21 +69,21 @@ void TextComponent::update()
 	if (TextureManager::instance().hasTexture(textureId))
 	{
 		//If we have already set the texture, dont have to do it again
-		if (!m_refRenderComponent->texture())
+		if (!m_gameObject->renderComponent()->texture())
 		{
-			m_refRenderComponent->setTexture(TextureManager::instance().getTexture(textureId));
-			m_refTransformComponent->setSize(m_refRenderComponent->texture()->surface->w, m_refRenderComponent->texture()->surface->h);
+			m_gameObject->renderComponent()->setTexture(TextureManager::instance().getTexture(textureId));
+			m_gameObject->transformComponent()->setSize(m_gameObject->renderComponent()->texture()->surface->w, m_gameObject->renderComponent()->texture()->surface->h);
 		}
 
 	}
 	else
 	{
-		m_refRenderComponent->setTexture(generateTextTexture());
+		m_gameObject->renderComponent()->setTexture(generateTextTexture());
 	}
 
 	if (m_isDynamic == true)
 	{
-		m_refRenderComponent->setTexture(updateDynamicTextTexture());
+		m_gameObject->renderComponent()->setTexture(updateDynamicTextTexture());
 	}
 
 
@@ -105,12 +107,14 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 	//and leave them open for regenerating text textures. Then close them in the deconstructor.
 	//This should save loads of time
 	//m_fontObject = TTF_OpenFont(fontFile.c_str(), m_fontSize);
-	tempSurface = TTF_RenderText_Blended(m_fontObject, m_textValue.c_str(), m_refRenderComponent->color());
+	tempSurface = TTF_RenderText_Blended(m_fontObject, m_textValue.c_str(), m_gameObject->renderComponent()->color());
 	//TTF_CloseFont(m_fontObject);
 
 	//Set the size of the textObject now that its texture has been generated
-	m_refTransformComponent->setSize(tempSurface->w, tempSurface->h);
-	m_refTransformComponent->setPosition(m_refTransformComponent->originalPosition().x + tempSurface->w/2, m_refTransformComponent->originalPosition().y + tempSurface->h/2);
+	m_gameObject->transformComponent()->setSize(tempSurface->w, tempSurface->h);
+	m_gameObject->transformComponent()->setPosition(
+		m_gameObject->transformComponent()->originalPosition().x + tempSurface->w/2, 
+		m_gameObject->transformComponent()->originalPosition().y + tempSurface->h/2);
 
 	texture->sdlTexture = Renderer::instance().createTextureFromSurface(tempSurface);
 	texture->surface = tempSurface;
@@ -167,15 +171,7 @@ std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
 
 }
 
-void TextComponent::setDependencyReferences(
-	std::shared_ptr<TransformComponent> transformComponent,
-	std::shared_ptr<RenderComponent> renderComponent)
-{
 
-	m_refTransformComponent = transformComponent;
-	m_refRenderComponent = renderComponent;
-
-}
 
 
 

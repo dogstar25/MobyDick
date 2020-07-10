@@ -12,7 +12,7 @@ class TransformComponent : public Component
 
 public:
 	TransformComponent();
-	TransformComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust);
+	TransformComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust, GameObject* gameObject);
 	~TransformComponent();
 
 	void update() override;

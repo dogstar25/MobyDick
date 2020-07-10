@@ -32,6 +32,9 @@ public:
 	GameObject();
 	~GameObject();
 
+
+	std::string m_id;
+
 	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust);
 
 	virtual void update();
@@ -42,13 +45,20 @@ public:
 	}
 
 	void setPosition(b2Vec2 position, float angle);
-
+	bool hasComponent(int componentId) {
+		return(m_components.test(componentId) );
+	}
+	void setComponent(int componentId) {
+		m_components.set(componentId);
+	}
 
 	//Accessor Functions
 	auto removeFromWorld() { 
 		return m_removeFromWorld; 
 	}
-
+	std::string id() {
+		return m_id;
+	}
 	auto const& gameObjectDefinition(){
 		return m_gameObjectDefinition;
 	}
@@ -93,19 +103,20 @@ public:
 	}
 
 
-
+	void _init();
 
 
 
 private:
 
-	void _setDependecyReferences();
+	
 	int
 		m_mouseState;
 	bool
 		m_removeFromWorld;
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
-	std::string m_id;
+	
+	std::bitset<32> m_components;
 
 
 	//Components

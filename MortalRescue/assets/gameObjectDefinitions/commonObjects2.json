@@ -25,18 +25,7 @@
                         "frames": 19
                     }
                 ]
-            },
-            "physicsComponent":
-            {
-                "type": "B2_DYNAMIC",
-                "collisionShape": "B2_BOX",
-                "friction": 0.00,
-                "density": 50.5,
-                "linearDamping": 0.0,
-                "angularDamping": 10.0,
-                "collisionCategory": "COLLISION_PLAYER"
             }
-
         },
         {
             "id": "GINA_64",
@@ -173,6 +162,7 @@
                 "font": "FONT_ARIAL_REG",
                 "fontSize": 12
             }
+
 
         },
         {

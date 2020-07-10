@@ -10,7 +10,7 @@ class AttachmentsComponent :   public Component
 {
 public:
 	AttachmentsComponent();
-	AttachmentsComponent(std::string gameObjectId);
+	AttachmentsComponent(GameObject* gameObject);
 	~AttachmentsComponent();
 
 	void update() override;

@@ -7,7 +7,8 @@ AttachmentsComponent::AttachmentsComponent()
 
 }
 
-AttachmentsComponent::AttachmentsComponent(std::string gameObjectId)
+AttachmentsComponent::AttachmentsComponent(GameObject* gameObject) :
+	Component(gameObject)
 {
 	//Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 

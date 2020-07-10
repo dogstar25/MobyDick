@@ -7,7 +7,7 @@ public:
 	HeroRotateAction();
 	~HeroRotateAction();
 
-	void perform(GameObject* gameObject) override;
+	void perform(GameObject* gameObject, int direction, int strafe) override;
 
 };
 

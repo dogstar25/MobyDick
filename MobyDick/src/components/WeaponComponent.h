@@ -8,6 +8,8 @@
 
 #include "Component.h"
 
+class GameObject;
+
 struct WeaponLevelDetail {
 
 	int level;
@@ -22,8 +24,8 @@ class WeaponComponent : public Component
 
 public:
 	WeaponComponent();
-	WeaponComponent(std::string gameObjectId, Json::Value componentJSON);
-	WeaponComponent(std::string gameObjectId, Json::Value componentJSON, float xMapPos, float yMapPos, float angleAdjust);
+	WeaponComponent(Json::Value definitionJSON, GameObject* gameObject);
+	WeaponComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust);
 	~WeaponComponent();
 
 	void update();

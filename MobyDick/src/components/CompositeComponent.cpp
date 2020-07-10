@@ -7,17 +7,18 @@ CompositeComponent::CompositeComponent()
 
 }
 
-CompositeComponent::CompositeComponent(std::string gameObjectId)
+CompositeComponent::CompositeComponent(GameObject* gameObject) :
+	Component(gameObject)
 {
-	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
+	//Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 
-	//Transform Component
-	if (itrJSON.isMember("CompositeComponent"))
-	{
+	////Transform Component
+	//if (itrJSON.isMember("CompositeComponent"))
+	//{
 
-		//m_componentFlags |= TRANSFORM_COMPONENT;
+	//	//m_componentFlags |= TRANSFORM_COMPONENT;
 
-	}
+	//}
 
 }
 
