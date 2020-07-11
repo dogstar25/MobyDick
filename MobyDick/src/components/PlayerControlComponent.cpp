@@ -25,8 +25,7 @@ PlayerControlComponent::PlayerControlComponent()
 
 }
 
-PlayerControlComponent::PlayerControlComponent(Json::Value definitionJSON, GameObject* gameObject) :
-	Component(gameObject)
+PlayerControlComponent::PlayerControlComponent(Json::Value definitionJSON)
 {
 
 	Json::Value componentJSON = definitionJSON["playerControlComponent"];
@@ -77,6 +76,11 @@ void PlayerControlComponent::update()
 
 void PlayerControlComponent::handleMovement()
 {
+
+	//convenience reference to outside component(s)
+	auto& actionComponent =
+		std::static_pointer_cast<ActionComponent>(m_refcomponents[ACTION_COMPONENT]);
+
 	float angularVelocity = 0;
 	int direction = 0;
 	int strafe = 0;
@@ -84,6 +88,8 @@ void PlayerControlComponent::handleMovement()
 
 	for (auto& inputEvent : EventManager::instance().playerInputEvents())
 	{
+		std::chrono::steady_clock::time_point now_time;
+		std::chrono::duration<double> time_diff;
 		direction = 0;
 		strafe = 0;
 		keyStates = inputEvent->keyStates;
@@ -109,14 +115,22 @@ void PlayerControlComponent::handleMovement()
 				strafe = -1;
 			}
 
-			m_gameObject->actionComponent()->moveAction(direction, strafe);
+			actionComponent->moveAction(direction, strafe);
+			move_time_snapshot = now_time;
 
 			break;
 
 		case SDL_MOUSEMOTION:
-			m_gameObject->actionComponent()->rotateAction();
-			angularVelocity = inputEvent->event.motion.xrel * GameConfig::instance().mouseSensitivity();
-			m_gameObject->physicsComponent()->applyRotation(angularVelocity);
+
+			//check the clock and see if enough time as gone by
+			now_time = std::chrono::steady_clock::now();
+			time_diff = now_time - rotation_time_snapshot;
+			if (time_diff.count() > .03)
+			{
+				angularVelocity = inputEvent->event.motion.xrel * GameConfig::instance().mouseSensitivity();
+				actionComponent->rotateAction(angularVelocity);
+				rotation_time_snapshot = now_time;
+			}
 			break;
 		default:
 			break;
@@ -128,6 +142,10 @@ void PlayerControlComponent::handleMovement()
 
 void PlayerControlComponent::handleActions()
 {
+	//convenience reference to outside component(s)
+	auto& actionComponent =
+		std::static_pointer_cast<ActionComponent>(m_refcomponents[ACTION_COMPONENT]);
+
 	const Uint8* keyStates = nullptr;
 
 	for (auto& inputEvent : EventManager::instance().playerInputEvents())
@@ -148,7 +166,8 @@ void PlayerControlComponent::handleActions()
 			//Execute USE
 			if (m_controls.test(CONTROL_USE))
 			{
-				//actionMap["USE"]->perform();
+				actionComponent->useAction();
+				
 			}
 
 			break;

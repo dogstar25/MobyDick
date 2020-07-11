@@ -20,7 +20,7 @@ class ChildrenComponent :  public Component
 {
 public:
 	ChildrenComponent();
-	ChildrenComponent(Json::Value definitionJSON, GameObject* gameObject);
+	ChildrenComponent(Json::Value definitionJSON);
 	~ChildrenComponent();
 
 	void update() override;
@@ -36,7 +36,8 @@ private:
 	std::array<std::vector<std::shared_ptr<GameObject>>, constants::CHILD_POSITIONS> m_childObjects;
 
 	b2Vec2 matchParentRotation(SDL_FRect, SDL_FRect, float); //Move to Transform? Child objects can have a reference to their parent
-	b2Vec2 _calcChildPosition(b2Vec2 childSize, int locationSlot, int childNumber, int childCount);
+	b2Vec2 _calcChildPosition(b2Vec2 childSize, 
+		int locationSlot, int childNumber, int childCount, SDL_FRect parentPositionRec, float parentAngle);
 
 
 };

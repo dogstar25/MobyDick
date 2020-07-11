@@ -2,12 +2,8 @@
 
 #include "../GameObjectManager.h"
 
+
 ParticleComponent::ParticleComponent()
-{
-
-}
-
-ParticleComponent::ParticleComponent(const GameObject& gameObject)
 {
 	//Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 

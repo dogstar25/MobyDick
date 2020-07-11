@@ -14,9 +14,8 @@ class AnimationComponent :  public Component
 {
 public:
 	AnimationComponent();
-	AnimationComponent(Json::Value definitionJSON, GameObject* gameObject);
+	AnimationComponent(Json::Value definitionJSON);
 	~AnimationComponent();
-	void construct(Json::Value itrJSON);
 
 	void update() override;
 	SDL_Rect* getCurrentAnimationTextureRect();
@@ -30,7 +29,6 @@ public:
 		return m_animations;
 	}
 	void setCurrentAnimationState(int animationState) { m_currentAnimationState = animationState; }
-	void setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent);
 
 private:
 	int 

@@ -8,8 +8,7 @@ WeaponComponent::WeaponComponent()
 
 }
 
-WeaponComponent::WeaponComponent(Json::Value definitionJSON, GameObject* gameObject) :
-	Component(gameObject)
+WeaponComponent::WeaponComponent(Json::Value definitionJSON)
 {
 	
 	Json::Value componentJSON = definitionJSON["weaponComponent"];

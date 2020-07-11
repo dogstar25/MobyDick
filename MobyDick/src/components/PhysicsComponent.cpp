@@ -15,8 +15,7 @@ PhysicsComponent::PhysicsComponent()
 
 }
 
-PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust, GameObject* gameObject) :
-	Component(gameObject)
+PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust)
 {
 	//Get reference to the animationComponent JSON config and transformComponent JSON config
 	Json::Value physicsComponentJSON = definitionJSON["physicsComponent"];
@@ -58,15 +57,22 @@ PhysicsComponent::~PhysicsComponent()
 
 void PhysicsComponent::update()
 {
-	//Transfer the physicsComponent coordinates to the transformComponent
-	b2Vec2 convertedPosition{ 0,0 };
-	float convertedAngle = util::radiansToDegrees(m_physicsBody->GetAngle());
 
-	convertedPosition.x = m_physicsBody->GetPosition().x * GameConfig::instance().scaleFactor();
-	convertedPosition.y = m_physicsBody->GetPosition().y * GameConfig::instance().scaleFactor();
+	//convenience reference to outside component(s)
+	auto& transformComponent =
+		std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
 
-	m_gameObject->setPosition(convertedPosition, convertedAngle);
+	if (transformComponent)
+	{
+		//Transfer the physicsComponent coordinates to the transformComponent
+		b2Vec2 convertedPosition{ 0,0 };
+		float convertedAngle = util::radiansToDegrees(m_physicsBody->GetAngle());
 
+		convertedPosition.x = m_physicsBody->GetPosition().x * GameConfig::instance().scaleFactor();
+		convertedPosition.y = m_physicsBody->GetPosition().y * GameConfig::instance().scaleFactor();
+
+		transformComponent->setPosition(convertedPosition, convertedAngle);
+	}
 }
 
 b2Body* PhysicsComponent::buildB2Body(Json::Value transformComponentJSON)
@@ -146,7 +152,7 @@ uint16 PhysicsComponent::setCollisionMask(uint16 category)
 
 	switch (category) {
 	case COLLISION_GENERIC:
-		mask = COLLISION_GENERIC| COLLISION_WALL | COLLISION_PARTICLE2 | COLLISION_PARTICLE3 | COLLISION_ENEMY_FRAME
+		mask = COLLISION_WALL | COLLISION_PARTICLE2 | COLLISION_PARTICLE3 | COLLISION_ENEMY_FRAME
 			| COLLISION_ENEMY_ARMOR_PIECE | COLLISION_PLAYER;
 		break;
 
@@ -156,7 +162,7 @@ uint16 PhysicsComponent::setCollisionMask(uint16 category)
 		break;
 	case COLLISION_WALL:
 		mask = COLLISION_PLAYER | COLLISION_PARTICLE1 | COLLISION_PARTICLE2 | COLLISION_PARTICLE3
-			| COLLISION_ENEMY_FRAME | COLLISION_PLAYER_BULLET | COLLISION_ENEMY_ARMOR_PIECE;
+			| COLLISION_ENEMY_FRAME | COLLISION_PLAYER_BULLET | COLLISION_ENEMY_ARMOR_PIECE | COLLISION_GENERIC;
 		break;
 	case COLLISION_PLAYER_BULLET:
 		mask = COLLISION_WALL | COLLISION_ENEMY_ARMOR;
@@ -230,7 +236,7 @@ void PhysicsComponent::applyMovement(float velocity, int direction, int strafeDi
 	//this->physicsBody->SetTransform(vec3, this->physicsBody->GetAngle());
 	m_physicsBody->SetLinearVelocity(vec2);
 
-	//physicsBody()->ApplyLinearImpulseToCenter(vec2, true);
+	//m_physicsBody->ApplyLinearImpulseToCenter(vec2, true);
 
 
 }

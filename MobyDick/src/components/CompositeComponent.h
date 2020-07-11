@@ -31,7 +31,6 @@ class CompositeComponent : public Component
 {
 public:
 	CompositeComponent();
-	CompositeComponent(GameObject* gameObject);
 	~CompositeComponent();
 
 	void update() override;

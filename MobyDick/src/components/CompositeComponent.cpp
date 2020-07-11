@@ -2,13 +2,8 @@
 
 #include "../GameObjectManager.h"
 
+
 CompositeComponent::CompositeComponent()
-{
-
-}
-
-CompositeComponent::CompositeComponent(GameObject* gameObject) :
-	Component(gameObject)
 {
 	//Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 

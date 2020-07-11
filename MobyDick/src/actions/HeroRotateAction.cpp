@@ -14,9 +14,16 @@ HeroRotateAction::~HeroRotateAction()
 
 }
 
-void HeroRotateAction::perform(GameObject* gameObject, int direction, int strafe)
+void HeroRotateAction::perform(std::shared_ptr<PhysicsComponent> physicsComponent,
+	std::shared_ptr<AnimationComponent> animationComponent,
+	float angularVelocity
+	)
 {
 
-	std::cout << "HERO ROTATE" << "\n";
+	physicsComponent->applyRotation(angularVelocity);
 
+	if (animationComponent)
+	{
+		animationComponent->setCurrentAnimationState(ANIMATION_RUN);
+	}
 }

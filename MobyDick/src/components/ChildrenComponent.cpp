@@ -8,8 +8,7 @@ ChildrenComponent::ChildrenComponent()
 
 }
 
-ChildrenComponent::ChildrenComponent(Json::Value definitionJSON, GameObject* gameObject) :
-	Component(gameObject)
+ChildrenComponent::ChildrenComponent(Json::Value definitionJSON)
 {
 
 	Json::Value childrenComponentJSON = definitionJSON["childrenComponent"];
@@ -23,7 +22,7 @@ ChildrenComponent::ChildrenComponent(Json::Value definitionJSON, GameObject* gam
 		int locationSlot = itrChild["locationSlot"].asInt()-1;
 
 		std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>(childObjectId, 5.f, 5.f, 90.f);
-		gameObject->_init();
+		//gameObject->_init();
 		m_childObjects[locationSlot].push_back(gameObject);
 		
 
@@ -43,6 +42,14 @@ ChildrenComponent::~ChildrenComponent()
 
 void ChildrenComponent::update()
 {
+	//convenience reference to outside component(s)
+	//std::shared_ptr<TransformComponent> transformComponent =
+	//	std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
+	//TRY AUTO!!
+	auto& transformComponent =
+		std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
+
+
 
 	short locationSlot = 0;
 	
@@ -54,15 +61,22 @@ void ChildrenComponent::update()
 	
 		for (auto& childObject : childLocations)
 		{
+			std::shared_ptr<TransformComponent> childTransformComponent =
+				std::static_pointer_cast<TransformComponent>(childObject->components()[TRANSFORM_COMPONENT]);
+
+
 			childNumber++;
 	
 			//Calculate child position
-			b2Vec2 newChildPosition = _calcChildPosition(childObject->transformComponent()->size(), locationSlot, childNumber, childCount);
+			SDL_FRect parentPosition = transformComponent->getPositionRect();
+			float parentAngle = transformComponent->angle();
+			b2Vec2 newChildPosition = 
+				_calcChildPosition(childTransformComponent->size(), locationSlot, childNumber, childCount, parentPosition, parentAngle);
 	
 			// Should this child match the angle of the parent
 			if (m_childPositionRelative == true)
 			{
-				childObject->setPosition(newChildPosition, m_gameObject->transformComponent()->angle());
+				childObject->setPosition(newChildPosition, transformComponent->angle());
 	
 			}
 			else
@@ -137,14 +151,17 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 	b2Vec2 childSize,
 	int locationSlot,
 	int childNumber,
-	int childCount)
+	int childCount,
+	SDL_FRect parentPositionRec,
+	float parentAngle)
 {
 	//SDL_FRect childSize = { child->size().x, child->size().y };
 	SDL_FRect childPositionRect{};
 	float x, y, xAdj = 0, yAdj = 0;
 
 	//Parent position is center of parent
-	SDL_FRect parentPositionRect = m_gameObject->transformComponent()->getPositionRect();
+	SDL_FRect parentPositionRect = parentPositionRec;
+//	SDL_FRect parentPositionRect = m_gameObject->transformComponent()->getPositionRect();
 
 	//Different calcs for the different 9 possible positions
 	//Calculate topleft corner of child
@@ -239,7 +256,7 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 		adjustment = this->matchParentRotation(
 			childPositionRect,
 			parentPositionRect,
-			m_gameObject->transformComponent()->angle());
+			parentAngle);
 
 		childPositionRect.x += adjustment.x;
 		childPositionRect.y += adjustment.y;

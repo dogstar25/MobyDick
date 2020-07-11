@@ -11,7 +11,7 @@ class VitalityComponent :  public Component
 {
 public:
 	VitalityComponent();
-	VitalityComponent(Json::Value definitionJSON, GameObject* gameObject);
+	VitalityComponent(Json::Value definitionJSON);
 	~VitalityComponent();
 
 	void update() override;

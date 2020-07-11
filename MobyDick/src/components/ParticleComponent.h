@@ -9,7 +9,6 @@ class ParticleComponent : public Component
 {
 public:
 	ParticleComponent();
-	ParticleComponent(const GameObject& gameObject);
 	~ParticleComponent();
 
 	void update() override;

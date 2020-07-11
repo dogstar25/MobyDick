@@ -14,22 +14,12 @@ class GameObject;
 class ActionComponent : public Component
 {
 public:
-	ActionComponent(Json::Value definitionJSON, GameObject* gameObject);
+	ActionComponent(Json::Value definitionJSON);
 	~ActionComponent();
 
-	void moveAction(int direction, int strafe)
-	{
-		m_actionMap[ACTION_MOVE]->perform(m_gameObject, direction, strafe);
-	}
-
-	void rotateAction()
-	{
-		m_actionMap[ACTION_ROTATE]->perform(m_gameObject);
-	}
-	void useAction()
-	{
-		m_actionMap[ACTION_USE]->perform(m_gameObject);
-	}
+	void moveAction(int direction, int strafe);
+	void rotateAction(float angularVelocity);
+	void useAction();
 
 	std::map<int, std::shared_ptr<Action>>m_actionMap;
 

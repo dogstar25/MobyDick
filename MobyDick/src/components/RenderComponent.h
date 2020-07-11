@@ -19,7 +19,7 @@ class RenderComponent : public Component
 
 public:
 	RenderComponent();
-	RenderComponent(Json::Value definitionJSON, GameObject* gameObject);
+	RenderComponent(Json::Value definitionJSON);
 	~RenderComponent();
 
 	void update() override;
@@ -42,7 +42,6 @@ public:
 
 	SDL_Rect* getRenderTextureRect();
 	SDL_Texture* getRenderTexture();
-	float getRenderAngle();
 	SDL_Surface* getRenderSurface();
 	
 

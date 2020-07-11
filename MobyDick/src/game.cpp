@@ -79,7 +79,7 @@ bool Game::init()
 	//Reserve each layors vector for efficient object memory management
 	for (auto& gameLayer : m_gameObjects)
 	{
-		gameLayer.reserve(2000);
+		gameLayer.reserve(4000);
 	}
 
 	//Initialize world
@@ -147,7 +147,7 @@ bool Game::init()
 		Clock::instance().init();
 
 		//Load the First level
-		//Level::instance().load("level1");
+		Level::instance().load("level1");
 
 		//Initilaize Camera size and
 		Camera::instance().init();
@@ -156,12 +156,12 @@ bool Game::init()
 	}
 
 	m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 0.f, 0.f, 0.f));
-	m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("GINA_64", 5.f, 5.f, 0.f));
 
-	//for (int i = 0; i < 20; i++)
-	{
-	//this->m_gameObjects[GameOjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("BOWMAN", 13, 13, 0));
-	}
+	//for (int i = 0; i < 600; i++)
+		m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("GINA_64", 5.f, 5.f, 0.f));
+
+	//for (int i = 0; i < 3000; i++)
+		m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("BOWMAN", 5.f, 5.f, 0.f));
 
 	this->m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 7.f, 7.f, 0.f));
 
@@ -201,6 +201,9 @@ void Game::play()
 		DynamicTextManager::instance().updateText("FPS_VALUE", std::to_string(Clock::instance().fps()));
 
 	}
+
+
+	//std::sort(m_gameObjects.begin(), m_gameObjects.end());
 
 }
 
@@ -277,7 +280,7 @@ void Game::_update() {
 	}
 
 
-	DebugPanel::instance().addItem("Test", util::generateRandomNumber(1,10000), 8);
+	/*DebugPanel::instance().addItem("Test", util::generateRandomNumber(1,10000), 8);
 	DebugPanel::instance().addItem("Test2", util::generateRandomNumber(1, 10000), 8);
 	DebugPanel::instance().addItem("Test3", util::generateRandomNumber(1, 10000), 8);
 	DebugPanel::instance().addItem("Test4", util::generateRandomNumber(1, 10000), 8);
@@ -285,7 +288,7 @@ void Game::_update() {
 	DebugPanel::instance().addItem("Test6", util::generateRandomNumber(1, 10000), 8);
 	DebugPanel::instance().addItem("Test7", util::generateRandomNumber(1, 10000), 8);
 	DebugPanel::instance().addItem("Test8", util::generateRandomNumber(1, 10000), 8);
-	DebugPanel::instance().addItem("Test9", util::generateRandomNumber(1, 10000), 8);
+	DebugPanel::instance().addItem("Test9", util::generateRandomNumber(1, 10000), 8);*/
 
 
 

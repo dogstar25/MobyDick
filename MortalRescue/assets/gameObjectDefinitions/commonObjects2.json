@@ -25,6 +25,16 @@
                         "frames": 19
                     }
                 ]
+            },
+            "physicsComponent":
+            {
+                "type": "B2_DYNAMIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.00,
+                "density": 50.5,
+                "linearDamping": 0.0,
+                "angularDamping": 10.0,
+                "collisionCategory": "COLLISION_GENERIC"
             }
         },
         {
@@ -62,9 +72,9 @@
                 "collisionShape": "B2_CIRCLE",
                 "collisionRadius": 0.64,
                 "friction": 0.00,
-                "density": 50.5,
-                "linearDamping": 0.0,
-                "angularDamping": 10.0,
+                "density": 20.5,
+                "linearDamping": 2.0,
+                "angularDamping": 2.0,
                 "collisionCategory": "COLLISION_PLAYER"
             },
             "attachmentsComponent":
@@ -94,7 +104,7 @@
                 "childObjects":
                 [
                     {
-                        "gameObjectId": "BOWMAN",
+                        "gameObjectId": "PLAYER_LABEL",
                         "locationSlot": 1
                     }
 
@@ -119,6 +129,10 @@
                     {
                         "actionId": "ACTION_ROTATE",
                         "actionClass": "HeroRotate"
+                    },
+                    {
+                        "actionId": "ACTION_USE",
+                        "actionClass": "HeroFire"
                     }
 
                 ]
@@ -132,8 +146,8 @@
             {
                 "size":
                 {
-                    "width": 64,
-                    "height": 64
+                    "width": 16,
+                    "height": 16
                 },
                 "absolutePositioning": false
             },
@@ -144,6 +158,17 @@
             "vitalityComponent":
             {
                 "speed": 30.0
+            },
+            "physicsComponent":
+            {
+                "type": "B2_DYNAMIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.00,
+                "density": 10.5,
+                "linearDamping": 20.0,
+                "restitution": 0.0,
+                "angularDamping": 10.0,
+                "collisionCategory": "COLLISION_GENERIC"
             }
 
 

@@ -18,8 +18,7 @@ TextComponent::TextComponent()
 
 
 
-TextComponent::TextComponent(std::string gameObjectId, Json::Value definitionJSON, GameObject* gameObject) :
-	Component(gameObject)
+TextComponent::TextComponent(std::string gameObjectId, Json::Value definitionJSON)
 {
 
 	//gameObjectId can be dynamic because of the debug text so it must be passed in
@@ -63,27 +62,32 @@ TextComponent::~TextComponent()
 
 void TextComponent::update()
 {
+	//convenience reference to outside component(s)
+	auto& renderComponent =
+		std::static_pointer_cast<RenderComponent>(m_refcomponents[RENDER_COMPONENT]);
+	auto& transformComponent =
+		std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
 
 	std::string textureId = "TX_" + m_gameObjectId;
 
 	if (TextureManager::instance().hasTexture(textureId))
 	{
 		//If we have already set the texture, dont have to do it again
-		if (!m_gameObject->renderComponent()->texture())
+		if (renderComponent->texture())
 		{
-			m_gameObject->renderComponent()->setTexture(TextureManager::instance().getTexture(textureId));
-			m_gameObject->transformComponent()->setSize(m_gameObject->renderComponent()->texture()->surface->w, m_gameObject->renderComponent()->texture()->surface->h);
+			renderComponent->setTexture(TextureManager::instance().getTexture(textureId));
+			transformComponent->setSize(renderComponent->texture()->surface->w, renderComponent->texture()->surface->h);
 		}
 
 	}
 	else
 	{
-		m_gameObject->renderComponent()->setTexture(generateTextTexture());
+		renderComponent->setTexture(generateTextTexture());
 	}
 
 	if (m_isDynamic == true)
 	{
-		m_gameObject->renderComponent()->setTexture(updateDynamicTextTexture());
+		renderComponent->setTexture(updateDynamicTextTexture());
 	}
 
 
@@ -91,6 +95,11 @@ void TextComponent::update()
 
 std::shared_ptr<Texture> TextComponent::generateTextTexture()
 {
+	//convenience reference to outside component(s)
+	auto& renderComponent =
+		std::static_pointer_cast<RenderComponent>(m_refcomponents[RENDER_COMPONENT]);
+	auto& transformComponent =
+		std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
 
 	std::shared_ptr<Texture> texture = std::make_shared<Texture>();;
 
@@ -107,14 +116,14 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 	//and leave them open for regenerating text textures. Then close them in the deconstructor.
 	//This should save loads of time
 	//m_fontObject = TTF_OpenFont(fontFile.c_str(), m_fontSize);
-	tempSurface = TTF_RenderText_Blended(m_fontObject, m_textValue.c_str(), m_gameObject->renderComponent()->color());
+	tempSurface = TTF_RenderText_Blended(m_fontObject, m_textValue.c_str(), renderComponent->color());
 	//TTF_CloseFont(m_fontObject);
 
 	//Set the size of the textObject now that its texture has been generated
-	m_gameObject->transformComponent()->setSize(tempSurface->w, tempSurface->h);
-	m_gameObject->transformComponent()->setPosition(
-		m_gameObject->transformComponent()->originalPosition().x + tempSurface->w/2, 
-		m_gameObject->transformComponent()->originalPosition().y + tempSurface->h/2);
+	transformComponent->setSize(tempSurface->w, tempSurface->h);
+	transformComponent->setPosition(
+		transformComponent->originalPosition().x + tempSurface->w/2,
+		transformComponent->originalPosition().y + tempSurface->h/2);
 
 	texture->sdlTexture = Renderer::instance().createTextureFromSurface(tempSurface);
 	texture->surface = tempSurface;

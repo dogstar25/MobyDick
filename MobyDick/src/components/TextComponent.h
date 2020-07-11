@@ -15,7 +15,7 @@ class TextComponent : public Component
 {
 public:
 	TextComponent();
-	TextComponent(std::string gameObjectId, Json::Value definitionJSON, GameObject* gameObject);
+	TextComponent(std::string gameObjectId, Json::Value definitionJSON);
 	~TextComponent();
 
 	void update() override;

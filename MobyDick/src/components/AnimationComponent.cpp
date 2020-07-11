@@ -11,8 +11,7 @@ AnimationComponent::AnimationComponent()
 {
 }
 
-AnimationComponent::AnimationComponent(Json::Value definitionJSON, GameObject* gameObject) :
-	Component(gameObject)
+AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 {
 
 	//Get reference to the animationComponent JSON config and transformComponent JSON config
@@ -21,6 +20,7 @@ AnimationComponent::AnimationComponent(Json::Value definitionJSON, GameObject* g
 
 	//Build animationComponent details
 	m_gameObjectId = definitionJSON["id"].asString();
+	
 
 	int i = 0;
 	for (Json::Value animItr : animationComponentJSON["animations"])
@@ -44,7 +44,6 @@ AnimationComponent::~AnimationComponent()
 {
 
 	m_animations.clear();
-	//std::map<int, Animation*>().swap(m_animations);
 
 }
 
@@ -58,12 +57,12 @@ void AnimationComponent::update()
 
 SDL_Rect* AnimationComponent::getCurrentAnimationTextureRect()
 {
-	SDL_Rect* textureSrcRect = nullptr;
+	//SDL_Rect* textureSrcRect = nullptr;
 
-	textureSrcRect =
-		m_animations[m_currentAnimationState]->getCurrentTextureAnimationSrcRect();
+	return 
+		m_animations[m_currentAnimationState]->getCurrentTextureAnimationSrcRect().get();
 
-	return textureSrcRect;
+	//return textureSrcRect;
 	
 }
 

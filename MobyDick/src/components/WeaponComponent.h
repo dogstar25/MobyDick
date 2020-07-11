@@ -24,7 +24,7 @@ class WeaponComponent : public Component
 
 public:
 	WeaponComponent();
-	WeaponComponent(Json::Value definitionJSON, GameObject* gameObject);
+	WeaponComponent(Json::Value definitionJSON);
 	WeaponComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust);
 	~WeaponComponent();
 

@@ -2,6 +2,7 @@
 
 #include "GameObjectManager.h"
 #include "EventManager.h"
+#include "components/TransformComponent.h"
 
 #include "Level.h"
 
@@ -16,6 +17,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 	//Game Object Id
 	m_id = gameObjectId;
+
 	Json::Value definitionJSON;
 
 	//Build components
@@ -32,28 +34,39 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("animationComponent"))
 	{
 		Json::Value componentJSON = definitionJSON["animationComponent"];
-		m_AnimationComponent = std::make_shared<AnimationComponent>(definitionJSON, this);
+		std::shared_ptr<AnimationComponent>tempPtr = std::make_shared<AnimationComponent>(definitionJSON);
+
+		addComponent(ANIMATION_COMPONENT, tempPtr);
 
 	}
 	//Transform Component
 	if (definitionJSON.isMember("transformComponent"))
 	{
 		Json::Value componentJSON = definitionJSON["transformComponent"];
-		m_TransformComponent = std::make_shared<TransformComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust, this);
+		std::shared_ptr<TransformComponent>tempPtr = std::make_shared<TransformComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
+
+		addComponent(TRANSFORM_COMPONENT, tempPtr);
+
 
 	}
 	//Physics Component
 	if (definitionJSON.isMember("physicsComponent") && definitionJSON.isMember("transformComponent"))
 	{
 		Json::Value componentJSON = definitionJSON["physicsComponent"];
-		m_PhysicsComponent = std::make_shared<PhysicsComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust, this);
+		std::shared_ptr<PhysicsComponent>tempPtr = std::make_shared<PhysicsComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
+
+		addComponent(PHYSICS_COMPONENT, tempPtr);
+
 
 	}
 	//Vitality Component
 	if (definitionJSON.isMember("vitalityComponent"))
 	{
 		Json::Value componentJSON = definitionJSON["vitalityComponent"];
-		m_VitalityComponent = std::make_shared<VitalityComponent>(definitionJSON, this);
+		std::shared_ptr<VitalityComponent>tempPtr = std::make_shared<VitalityComponent>(definitionJSON);
+
+		addComponent(VITALITY_COMPONENT, tempPtr);
+
 
 	}
 
@@ -61,23 +74,29 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("playerControlComponent"))
 	{
 		Json::Value componentJSON = definitionJSON["playerControlComponent"];
-		m_PlayerControlComponent = std::make_shared<PlayerControlComponent>(definitionJSON, this);
+		std::shared_ptr<PlayerControlComponent>tempPtr = std::make_shared<PlayerControlComponent>(definitionJSON);
+
+		addComponent(PLAYERCONTROL_COMPONENT, tempPtr);
 
 	}
 
 	//Text Component
-	if (definitionJSON.isMember("textComponent") && definitionJSON.isMember("transformComponent"))
+	if (definitionJSON.isMember("textComponent"))
 	{
 		Json::Value componentJSON = definitionJSON["textComponent"];
-		m_TextComponent = std::make_shared<TextComponent>(gameObjectId, definitionJSON, this);
+		std::shared_ptr<TextComponent>tempPtr = std::make_shared<TextComponent>(gameObjectId, definitionJSON);
+
+		addComponent(TEXT_COMPONENT, tempPtr);
 		
 	}
 
 	//Children Component
-	if (definitionJSON.isMember("childrenComponent") && definitionJSON.isMember("transformComponent"))
+	if (definitionJSON.isMember("childrenComponent"))
 	{
 		Json::Value componentJSON = definitionJSON["childrenComponent"];
-		m_ChildrenComponent = std::make_shared<ChildrenComponent>(definitionJSON, this);
+		std::shared_ptr<ChildrenComponent>tempPtr = std::make_shared<ChildrenComponent>(definitionJSON);
+
+		addComponent(CHILDREN_COMPONENT, tempPtr);
 
 	}
 
@@ -85,91 +104,57 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("actionComponent"))
 	{
 		Json::Value componentJSON = definitionJSON["actionComponent"];
-		m_ActionComponent = std::make_shared<ActionComponent>(definitionJSON, this);
+		std::shared_ptr<ActionComponent>tempPtr = std::make_shared<ActionComponent>(definitionJSON);
+
+		addComponent(ACTION_COMPONENT, tempPtr);
 
 	}
 
 	//Render Component - Always Build
-	m_RenderComponent = std::make_shared<RenderComponent>(definitionJSON, this);
+	std::shared_ptr<RenderComponent>tempPtr = std::make_shared<RenderComponent>(definitionJSON);
 
+	addComponent(RENDER_COMPONENT, tempPtr);
 
+	//Set dependency references
+	_setDependecyReferences();
 
 }
 
-void GameObject::_init()
+//void GameObject::addComponent(int componentId, std::shared_ptr<Component> component)
+//{
+//
+//
+//
+//
+//}
+
+
+void GameObject::_setDependecyReferences()
 {
-	//std::shared_ptr<GameObject>gameObject = std::make_shared<GameObject>(*this);
-
-	///*if (m_AnimationComponent) {
-	//	gameObject->m_components.set(ANIMATION_COMPONENT);
-	//	m_AnimationComponent->setGameObject(gameObject);
-	//}*/
-	//if (m_ActionComponent) {
-	//	gameObject->m_components.set(ACTION_COMPONENT);
-	//	m_ActionComponent->setGameObject(gameObject);
-	//}
-	//if (m_AttachmentsComponent) {
-	//	gameObject->m_components.set(ATTACHMENTS_COMPONENT);
-	//	m_AttachmentsComponent->setGameObject(gameObject);
-	//}
-	//if (m_ChildrenComponent) {
-	//	gameObject->m_components.set(CHILDREN_COMPONENT);
-	//	m_ChildrenComponent->setGameObject(gameObject);
-	//}
-	//if (m_CompositeComponent) {
-	//	gameObject->m_components.set(COMPOSITE_COMPONENT);
-	//	m_CompositeComponent->setGameObject(gameObject);
-	//}
-	//if (m_ParticleComponent) {
-	//	gameObject->m_components.set(PARTICLE_COMPONENT);
-	//	m_ParticleComponent->setGameObject(gameObject);
-	//}
-	//if (m_PhysicsComponent) {
-	//	gameObject->m_components.set(PHYSICS_COMPONENT);
-	//	m_PhysicsComponent->setGameObject(gameObject);
-	//}
-	//if (m_PlayerControlComponent) {
-	//	gameObject->m_components.set(PLAYERCONTROL_COMPONENT);
-	//	m_PlayerControlComponent->setGameObject(gameObject);
-	//}
-	//if (m_RenderComponent) {
-	//	gameObject->m_components.set(RENDER_COMPONENT);
-	//	m_RenderComponent->setGameObject(gameObject);
-	//}
-	//if (m_TextComponent) {
-	//	gameObject->m_components.set(TEXT_COMPONENT);
-	//	m_TextComponent->setGameObject(gameObject);
-	//}
-	//if (m_TransformComponent) {
-	//	gameObject->m_components.set(TRANSFORM_COMPONENT);
-	//	m_TransformComponent->setGameObject(gameObject);
-	//}
-	//if (m_VitalityComponent) {
-	//	gameObject->m_components.set(VITALITY_COMPONENT);
-	//	m_VitalityComponent->setGameObject(gameObject);
-	//}
-	//if (m_WeaponComponent) {
-	//	gameObject->m_components.set(WEAPON_COMPONENT);
-	//	m_WeaponComponent->setGameObject(gameObject);
-	//}
-
-
-
-
+	//Copy all of this game objects components to each of individual components so that each component has a reference 
+	// to the other components
+	for (auto component : m_components)
+	{
+		component.second->setDependencyReferences(m_components);
+		component.second->setActive(true);
+	}
 
 }
 
 void GameObject::setPosition(b2Vec2 position, float angle)
 {
-	
+	//convenience reference to outside component(s)
+	std::shared_ptr<TransformComponent> transformComponent =
+		std::static_pointer_cast<TransformComponent>(m_components[TRANSFORM_COMPONENT]);
+
 	//-1 means dont apply the angle
 	if (angle != -1)
 	{
-		m_TransformComponent->setPosition(position, angle);
+		transformComponent->setPosition(position, angle);
 	}
 	else
 	{
-		m_TransformComponent->setPosition(position);
+		transformComponent->setPosition(position);
 	}
 
 }
@@ -177,46 +162,14 @@ void GameObject::setPosition(b2Vec2 position, float angle)
 
 void GameObject::update()
 {
+	for (auto& component : m_components)
+	{
+		if (component.second)
+		{
+			component.second->update();
+		}
+	}
 
-	if (m_TransformComponent) {
-		m_TransformComponent->update();
-	}
-	if (m_PhysicsComponent) {
-		m_PhysicsComponent->update();
-	}
-	if (m_ActionComponent) {
-		m_ActionComponent->update();
-	}
-	if (m_AnimationComponent) {
-		m_AnimationComponent->update();
-	}
-	if (m_RenderComponent) {
-		m_RenderComponent->update();
-	}
-	if (m_TextComponent) {
-		m_TextComponent->update();
-	}
-	if (m_ChildrenComponent) {
-		m_ChildrenComponent->update();
-	}
-	if (m_AttachmentsComponent) {
-		m_AttachmentsComponent->update();
-	}
-	if (m_VitalityComponent) {
-		m_VitalityComponent->update();
-	}
-	if (m_WeaponComponent) {
-		m_WeaponComponent->update();
-	}
-	if (m_CompositeComponent) {
-		m_CompositeComponent->update();
-	}
-	if (m_ParticleComponent) {
-		m_ParticleComponent->update();
-	}
-	if (m_PlayerControlComponent) {
-		m_PlayerControlComponent->update();
-	}
 
 
 	////Update the mouse state
@@ -250,131 +203,52 @@ void GameObject::render()
 
 
 	//Render yourself
-	m_RenderComponent->render();
+	std::static_pointer_cast<RenderComponent>(m_components[RENDER_COMPONENT])->render();
 		
 	//Render your children
-	if (m_ChildrenComponent)
+
+	if (m_components[CHILDREN_COMPONENT])
 	{
-		m_ChildrenComponent->renderChildren();
+		std::static_pointer_cast<ChildrenComponent>(m_components[CHILDREN_COMPONENT])->renderChildren();
 	}
-
-
-		////test outlining object
-		//if (m_definition->isMouseSelectable)
-		//{
-		//	if (m_mouseState == MOUSE_HOVER)
-		//	{
-		//		this->onMouseHoverRender();
-		//	}
-		//	else if (m_mouseState == MOUSE_HOLD)
-		//	{
-		//		this->onMouseHoldRender();
-		//	}
-		//	else if (m_mouseState == MOUSE_CLICKED)
-		//	{
-		//		this->onMouseClickRender();
-		//	}
-		//}
-
-		////Outline the object if defined
-		//if (m_definition->renderOutline)
-		//{
-		//	outlineObject(2);
-		//}
-
-	//}
 
 }
 
-
+//bool GameObject::hasComponent(int componentId) {
 //
+//	auto iter = m_components.find(componentId);
 //
-//void GameObject::onMouseHoverRender()
-//{
-//
-//	outlineObject(6);
-//}
-//
-//void GameObject::onMouseClickRender()
-//{
-//
-//	outlineObject(6);
-//
-//}
-//
-//void GameObject::onMouseHoldRender()
-//{
-//	outlineObject(2);
-//}
-//
-//void GameObject::onMouseClickEvent()
-//{
-//	std::string* actionCode;
-//
-//	actionCode = new std::string(m_definition->onClickAction);
-//	SDL_Event event;
-//	event.user.data1 = static_cast<void*>(actionCode);
-//	event.type = SDL_USEREVENT;
-//	SDL_PushEvent(&event);
-//}
-//
-//void GameObject::updateMouseState()
-//{
-//	SDL_FRect gameObjectDrawRect;
-//	gameObjectDrawRect = this->getRenderDestRect();
-//	bool isHovered = false;
-//
-//	if (m_definition->isMouseSelectable == true)
+//	if (iter != m_components.end())
 //	{
-//		//Get Mouse Position
-//		int mouseX, mouseY;
-//		SDL_GetMouseState(&mouseX, &mouseY);
-//
-//		//Is mouse over the object
-//		if (mouseX >= gameObjectDrawRect.x &&
-//			mouseX <= gameObjectDrawRect.x + gameObjectDrawRect.w &&
-//			mouseY >= gameObjectDrawRect.y &&
-//			mouseY <= gameObjectDrawRect.y + gameObjectDrawRect.h)
+//		if (iter->second && iter->second->isActive() == true)
 //		{
-//
-//			//was this object clicked?
-//			if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
-//			{
-//
-//				//Was this object already in a hold state, meaning user is holding mouse clicked on object
-//				if (m_mouseState == MOUSE_HOLD)
-//				{
-//					//stay in "hold" state while user is holding click on object
-//					while (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(SDL_BUTTON_LEFT))
-//					{
-//						SDL_PumpEvents();
-//					}
-//
-//					//User has released mouse so now execute the object onClick event
-//					//this->onMouseClick();
-//					m_mouseState = MOUSE_CLICKED;
-//
-//				}
-//				else
-//				{
-//					m_mouseState = MOUSE_HOLD;
-//				}
-//
-//			}
-//			else
-//			{
-//				m_mouseState = MOUSE_HOVER;
-//			}
+//			return true;
 //		}
 //		else
 //		{
-//			m_mouseState = MOUSE_NONE;
+//			return false;
 //		}
+//
+//	}
+//	else
+//	{
+//		return false;
+//	}
+//}
+//
+//std::shared_ptr<Component> GameObject::getRefComponent(int componentId)
+//{
+//
+//	if (hasComponent(componentId))
+//	{
+//		return m_components.at(componentId);
+//	}
+//	else
+//	{
+//		return std::shared_ptr<Component>();
 //	}
 //
 //}
-//
-
 
 
 

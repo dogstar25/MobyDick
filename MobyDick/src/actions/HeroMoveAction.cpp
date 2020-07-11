@@ -16,20 +16,25 @@ HeroMoveAction::~HeroMoveAction()
 
 }
 
-void HeroMoveAction::perform(GameObject* gameObject, int direction, int strafe)
+void HeroMoveAction::perform(
+	std::shared_ptr<PhysicsComponent> physicsComponent, 
+	std::shared_ptr<AnimationComponent> animationComponent, 
+	float speed, 
+	int direction, 
+	int strafe)
 {
 
-	gameObject->physicsComponent()->applyMovement(gameObject->vitalityComponent()->speed(), direction, strafe);
+	physicsComponent->applyMovement(speed, direction, strafe);
 
-	if (gameObject->animationComponent())
+	if (animationComponent)
 	{
 		if (direction == 0 && strafe == 0)
 		{
-			gameObject->animationComponent()->setCurrentAnimationState(ANIMATION_IDLE);
+			animationComponent->setCurrentAnimationState(ANIMATION_IDLE);
 		}
 		else
 		{
-			gameObject->animationComponent()->setCurrentAnimationState(ANIMATION_RUN);
+			animationComponent->setCurrentAnimationState(ANIMATION_RUN);
 		}
 	}
 

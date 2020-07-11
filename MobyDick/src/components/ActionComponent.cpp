@@ -4,8 +4,7 @@
 #include "../JsonToActionClass.h"
 #include "../EnumMaps.h"
 
-ActionComponent::ActionComponent(Json::Value definitionJSON, GameObject* gameObject) :
-	Component(gameObject)
+ActionComponent::ActionComponent(Json::Value definitionJSON)
 {
 	Json::Value componentJSON = definitionJSON["actionComponent"];
 
@@ -29,6 +28,41 @@ ActionComponent::ActionComponent(Json::Value definitionJSON, GameObject* gameObj
 ActionComponent::~ActionComponent()
 {
 
+}
+
+void ActionComponent::moveAction(int direction, int strafe)
+{
+	//convenience reference to outside component(s)
+	auto& physicsComponent =
+		std::static_pointer_cast<PhysicsComponent>(m_refcomponents[PHYSICS_COMPONENT]);
+	auto& animationComponent =
+		std::static_pointer_cast<AnimationComponent>(m_refcomponents[ANIMATION_COMPONENT]);
+	auto& vitalityComponent =
+		std::static_pointer_cast<VitalityComponent>(m_refcomponents[VITALITY_COMPONENT]);
+
+	m_actionMap[ACTION_MOVE]->perform(physicsComponent, animationComponent, vitalityComponent->speed(), direction, strafe);
+}
+
+void ActionComponent::rotateAction(float angularVelocity)
+{
+	//convenience reference to outside component(s)
+	auto& physicsComponent =
+		std::static_pointer_cast<PhysicsComponent>(m_refcomponents[PHYSICS_COMPONENT]);
+	auto& animationComponent =
+		std::static_pointer_cast<AnimationComponent>(m_refcomponents[ANIMATION_COMPONENT]);
+
+	m_actionMap[ACTION_ROTATE]->perform(physicsComponent, animationComponent, angularVelocity);
+}
+
+void ActionComponent::useAction()
+{
+	//convenience reference to outside component(s)
+	auto& physicsComponent =
+		std::static_pointer_cast<PhysicsComponent>(m_refcomponents[PHYSICS_COMPONENT]);
+	auto& animationComponent =
+		std::static_pointer_cast<AnimationComponent>(m_refcomponents[ANIMATION_COMPONENT]);
+
+	m_actionMap[ACTION_USE]->perform();
 }
 
 

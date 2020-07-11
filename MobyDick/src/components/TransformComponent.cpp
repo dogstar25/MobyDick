@@ -10,9 +10,7 @@ TransformComponent::TransformComponent()
 {
 }
 
-TransformComponent::TransformComponent(Json::Value definitionJSON, float xMapPos, 
-	float yMapPos, float angleAdjust, GameObject* gameObject) :
-	Component(gameObject)
+TransformComponent::TransformComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust)
 {
 		Json::Value transformComponentJSON = definitionJSON["transformComponent"];
 

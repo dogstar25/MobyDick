@@ -4,6 +4,10 @@
 #include <string>
 #include <memory>
 
+#include "../components/TransformComponent.h"
+#include "../components/AnimationComponent.h"
+#include "../components/PhysicsComponent.h"
+
 
 class GameObject;
 
@@ -13,8 +17,18 @@ public:
 
 	Action();
 	~Action();
-	virtual void perform(GameObject* gameObject) {};
-	virtual void perform(GameObject* gameObject, int direction, int strafe) {};
+	virtual void perform() {};
+	virtual void perform(
+		std::shared_ptr<PhysicsComponent> physicsComponent, 
+		std::shared_ptr<AnimationComponent> animationComponent) {};
+	virtual void perform(
+		std::shared_ptr<PhysicsComponent> physicsComponent,
+		std::shared_ptr<AnimationComponent> animationComponent,
+		float, int, int) {};
+	virtual void perform(
+		std::shared_ptr<PhysicsComponent> physicsComponent,
+		std::shared_ptr<AnimationComponent> animationComponent,
+		float) {};
 
 };
 

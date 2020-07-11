@@ -19,8 +19,7 @@ RenderComponent::RenderComponent()
 }
 
 
-RenderComponent::RenderComponent(Json::Value definitionJSON, GameObject* gameObject) :
-	Component(gameObject)
+RenderComponent::RenderComponent(Json::Value definitionJSON)
 {
 	Json::Value itrRender = definitionJSON["renderComponent"];
 
@@ -69,10 +68,14 @@ an x, y position that is the top left corner of the object (for SDL render funct
 */
 SDL_FRect RenderComponent::getRenderDestRect()
 {
+	//convenience reference to outside component(s)
+	auto& transformComponent =
+		std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
+
 	SDL_FRect destRect, currentPositionRect;
 
 	//Get its current position. Should be center of object
-	currentPositionRect = m_gameObject->transformComponent()->getPositionRect();
+	currentPositionRect = transformComponent->getPositionRect();
 
 	destRect = currentPositionRect;
 	destRect.x -= (currentPositionRect.w / 2);
@@ -95,27 +98,22 @@ represents the current frame of animation
 */
 SDL_Rect* RenderComponent::getRenderTextureRect()
 {
+	//convenience reference to outside component(s)
+	auto& transformComponent =
+		std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
+	auto& animationComponent =
+		std::static_pointer_cast<AnimationComponent>(m_refcomponents[ANIMATION_COMPONENT]);
+
 	SDL_Rect* textureSrcRect=nullptr;
 
-	//if (m_gameObject->hasComponent(ANIMATION_COMPONENT))
-	if (m_gameObject->animationComponent())
+	if (animationComponent)
 	{
-		textureSrcRect = m_gameObject->animationComponent()->getCurrentAnimationTextureRect();
+		textureSrcRect = animationComponent->getCurrentAnimationTextureRect();
 	}
 
 	return textureSrcRect;
 
 }
-
-float RenderComponent::getRenderAngle()
-{
-	float angle=0;
-
-	angle = m_gameObject->transformComponent()->angle();
-
-	return angle;
-}
-
 
 /*
 Get the actual texture to display. If this is an animated object then it will have
@@ -123,11 +121,14 @@ different textures for different animation states
 */
 SDL_Texture* RenderComponent::getRenderTexture()
 {
+	auto& animationComponent =
+		std::static_pointer_cast<AnimationComponent>(m_refcomponents[ANIMATION_COMPONENT]);
+
 	SDL_Texture* texture = nullptr;
 
-	if (m_gameObject->animationComponent())
+	if (animationComponent)
 	{
-		texture = m_gameObject->animationComponent()->getCurrentAnimationTexture();
+		texture = animationComponent->getCurrentAnimationTexture();
 	}
 	else 
 	{
@@ -147,6 +148,9 @@ SDL_Surface* RenderComponent::getRenderSurface()
 
 void RenderComponent::outlineObject(float lineSize)
 {
+	//convenience reference to outside component(s)
+	auto& transformComponent =
+		std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
 
 	std::vector<SDL_FPoint> points;
 	SDL_FRect gameObjectDrawRect = getRenderDestRect();
@@ -154,7 +158,7 @@ void RenderComponent::outlineObject(float lineSize)
 	SDL_FPoint point;
 
 	//Adjust for camera
-	if (m_gameObject->transformComponent()->absolutePositioning() == false)
+	if (transformComponent->absolutePositioning() == false)
 	{
 		gameObjectDrawRect.x -= Camera::instance().frame().x;
 		gameObjectDrawRect.y -= Camera::instance().frame().y;
@@ -202,12 +206,15 @@ void RenderComponent::setColor(int red, int green, int blue, int alpha)
 
 void RenderComponent::render()
 {
+	//convenience reference to outside component(s)
+	auto& transformComponent =
+		std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
 
 	//Get the various items for rendering
 	SDL_Rect* textureSourceRect = getRenderTextureRect();
 	const SDL_FRect destRect = getRenderDestRect();
 	SDL_Texture* texture = getRenderTexture();
-	float angle = m_gameObject->transformComponent()->angle();
+	float angle = transformComponent->angle();
 
 	//Set the color
 	SDL_SetTextureAlphaMod(texture, m_color.a);

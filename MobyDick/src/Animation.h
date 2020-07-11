@@ -24,7 +24,7 @@ public:
 	void animate();
 
 	//Accessor Functions
-	SDL_Rect* getCurrentTextureAnimationSrcRect() {
+	std::shared_ptr<SDL_Rect> getCurrentTextureAnimationSrcRect() {
 		return m_currentTextureAnimationSrcRect;
 	}
 	SDL_Texture* getTexture() {
@@ -50,7 +50,7 @@ private:
 	std::chrono::steady_clock::time_point m_timeSnapshot;
 
 	//a rectangle pointing to the animation textture of the animation frame to be displayed
-	SDL_Rect* m_currentTextureAnimationSrcRect;
+	std::shared_ptr<SDL_Rect> m_currentTextureAnimationSrcRect;
 
 	//Array of all x,y coordinates of the top left corner of each animation frame in the texture
 	std::vector<SDL_FPoint> m_animationFramePositions;

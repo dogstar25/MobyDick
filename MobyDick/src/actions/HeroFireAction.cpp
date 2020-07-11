@@ -13,9 +13,9 @@ HeroFireAction::~HeroFireAction()
 
 }
 
-void HeroFireAction::perform(GameObject* gameObject)
+void HeroFireAction::perform()
 {
 
-	std::cout << "HERO";
+	std::cout << "HEROFIRE";
 
 }

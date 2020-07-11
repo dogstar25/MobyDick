@@ -45,12 +45,19 @@ public:
 	}
 
 	void setPosition(b2Vec2 position, float angle);
-	bool hasComponent(int componentId) {
-		return(m_components.test(componentId) );
+	//bool hasComponent(int componentId);
+	//std::shared_ptr<Component> getRefComponent(int componentId);
+
+	/*
+	Template function to add component to map
+	*/
+	template <typename componentType>
+	inline void addComponent(int componentId, std::shared_ptr<componentType> component)
+	{
+		m_components.emplace(componentId, component);
 	}
-	void setComponent(int componentId) {
-		m_components.set(componentId);
-	}
+
+	void removeComponent(int componentId);
 
 	//Accessor Functions
 	auto removeFromWorld() { 
@@ -62,50 +69,11 @@ public:
 	auto const& gameObjectDefinition(){
 		return m_gameObjectDefinition;
 	}
-	auto& animationComponent() {
-		return m_AnimationComponent;
-	}
-	auto& actionComponent() {
-		return m_ActionComponent;
-	}
-	auto& attachmentsComponent() {
-		return m_AttachmentsComponent;
-	}
-	auto& childrenComponent() {
-		return m_ChildrenComponent;
-	}
-	auto& compositeComponent() {
-		return m_CompositeComponent;
-	}
-	auto& particleComponent() {
-		return m_ParticleComponent;
-	}
-	auto& physicsComponent() {
-		return m_PhysicsComponent;
-	}
-	auto& playerControlComponent() {
-		return m_PlayerControlComponent;
-	}
-	auto& renderComponent() {
-		return m_RenderComponent;
-	}
-	auto& textComponent() {
-		return m_TextComponent;
-	}
-	auto& transformComponent() {
-		return m_TransformComponent;
-	}
-	auto& vitalityComponent() {
-		return m_VitalityComponent;
-	}
-	auto& weaponComponent() {
-		return m_WeaponComponent;
+	auto& components() {
+		return m_components;
 	}
 
-
-	void _init();
-
-
+	void _setDependecyReferences();
 
 private:
 
@@ -114,27 +82,11 @@ private:
 		m_mouseState;
 	bool
 		m_removeFromWorld;
-	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
-	
-	std::bitset<32> m_components;
 
+	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 
 	//Components
-	std::shared_ptr<AnimationComponent> m_AnimationComponent;
-	std::shared_ptr<ActionComponent> m_ActionComponent;
-	std::shared_ptr<AttachmentsComponent> m_AttachmentsComponent;
-	std::shared_ptr<ChildrenComponent> m_ChildrenComponent;
-	std::shared_ptr<CompositeComponent> m_CompositeComponent;
-	std::shared_ptr<ParticleComponent> m_ParticleComponent;
-	std::shared_ptr<PhysicsComponent> m_PhysicsComponent;
-	std::shared_ptr<RenderComponent> m_RenderComponent;
-	std::shared_ptr<TextComponent> m_TextComponent;
-	std::shared_ptr<TransformComponent> m_TransformComponent;
-	std::shared_ptr<VitalityComponent> m_VitalityComponent;
-	std::shared_ptr<WeaponComponent> m_WeaponComponent;
-	std::shared_ptr<PlayerControlComponent> m_PlayerControlComponent;
-	
-	
+	std::map<int, std::shared_ptr<Component>>m_components;
 
 };
 

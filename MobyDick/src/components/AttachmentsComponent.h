@@ -10,7 +10,6 @@ class AttachmentsComponent :   public Component
 {
 public:
 	AttachmentsComponent();
-	AttachmentsComponent(GameObject* gameObject);
 	~AttachmentsComponent();
 
 	void update() override;

@@ -2,13 +2,9 @@
 
 #include "../GameObjectManager.h"
 
+
+
 AttachmentsComponent::AttachmentsComponent()
-{
-
-}
-
-AttachmentsComponent::AttachmentsComponent(GameObject* gameObject) :
-	Component(gameObject)
 {
 	//Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 

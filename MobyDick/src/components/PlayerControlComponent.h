@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <bitset>
+#include <chrono>
 
 #include "Component.h"
 
@@ -18,7 +19,7 @@ class PlayerControlComponent : public Component
 public:
 
 	PlayerControlComponent();
-	PlayerControlComponent(Json::Value definitionJSON, GameObject* gameObject);
+	PlayerControlComponent(Json::Value definitionJSON);
 
 	~PlayerControlComponent();
 
@@ -34,6 +35,8 @@ private:
 
 
 	std::bitset<8> m_controls;
+	std::chrono::steady_clock::time_point move_time_snapshot;
+	std::chrono::steady_clock::time_point rotation_time_snapshot;
 
 };
 

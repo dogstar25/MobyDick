@@ -9,8 +9,7 @@ VitalityComponent::VitalityComponent()
 }
 
 
-VitalityComponent::VitalityComponent(Json::Value definitionJSON, GameObject* gameObject) :
-	Component(gameObject)
+VitalityComponent::VitalityComponent(Json::Value definitionJSON)
 {
 
 	Json::Value vitalityComponentJSON = definitionJSON["vitalityComponent"];
