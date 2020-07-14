@@ -29,7 +29,7 @@ public:
 
 	Component();
 	~Component();
-	virtual void update();
+	virtual void update(std::shared_ptr<GameObject> gameObject);
 	void setDependencyReferences(std::map<int, std::shared_ptr<Component>>components);
 	//bool hasRefComponent(int componentId);
 	//std::shared_ptr<Component> getRefComponent(int componentId);
@@ -47,7 +47,7 @@ public:
 
 protected:
 	//Component References
-	std::map<int, std::shared_ptr<Component>>m_refcomponents;
+	//std::map<int, std::shared_ptr<Component>>m_refcomponents;
 
 private:
 	//std::bitset<32> m_componentFlags;

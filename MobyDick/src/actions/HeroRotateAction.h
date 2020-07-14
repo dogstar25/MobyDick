@@ -7,10 +7,7 @@ public:
 	HeroRotateAction();
 	~HeroRotateAction();
 
-	void perform(
-		std::shared_ptr<PhysicsComponent> physicsComponent,
-		std::shared_ptr<AnimationComponent> animationComponent,
-		float angularVelocity) override;
+	void perform(GameObject* gameObject,	float angularVelocity) override;
 
 };
 

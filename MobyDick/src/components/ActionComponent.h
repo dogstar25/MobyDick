@@ -17,9 +17,9 @@ public:
 	ActionComponent(Json::Value definitionJSON);
 	~ActionComponent();
 
-	void moveAction(int direction, int strafe);
-	void rotateAction(float angularVelocity);
-	void useAction();
+	void moveAction(GameObject* gameObject, int direction, int strafe);
+	void rotateAction(GameObject* gameObject,float angularVelocity);
+	void useAction(GameObject* gameObject);
 
 	std::map<int, std::shared_ptr<Action>>m_actionMap;
 

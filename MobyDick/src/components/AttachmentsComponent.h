@@ -12,7 +12,7 @@ public:
 	AttachmentsComponent();
 	~AttachmentsComponent();
 
-	void update() override;
+	void update(std::shared_ptr<GameObject>gameObject) override;
 
 
 private:

@@ -15,7 +15,7 @@ public:
 	TransformComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust);
 	~TransformComponent();
 
-	void update() override;
+	void update(std::shared_ptr<GameObject>gameObject) override;
 
 	void setPosition(b2Vec2 position);
 	void setPosition(float xPosition, float yPosition);

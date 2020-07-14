@@ -8,12 +8,12 @@
 #include "SoundManager.h"
 #include "Renderer.h"
 #include "DynamicTextManager.h"
-//#include "ParticleMachine.h"
+#include "ParticleMachine.h"
 #include "GameConfig.h"
 #include "Camera.h"
 //#include "GUIEvent.h"
 #include "Clock.h"
-//#include "ObjectPoolManager.h"
+#include "ObjectPoolManager.h"
 #include "EventManager.h"
 #include "DebugPanel.h"
 #include "components/ActionComponent.h"
@@ -137,7 +137,7 @@ bool Game::init()
 		GameObjectManager::instance().init();
 
 		//Initilaze the Particle Pool Manager
-		//ObjectPoolManager::instance().init();
+		ObjectPoolManager::instance().init();
 
 		//Set the mouse mode
 		SDL_ShowCursor(false);
@@ -147,7 +147,7 @@ bool Game::init()
 		Clock::instance().init();
 
 		//Load the First level
-		Level::instance().load("level1");
+		//Level::instance().load("level1");
 
 		//Initilaize Camera size and
 		Camera::instance().init();
@@ -155,17 +155,17 @@ bool Game::init()
 		
 	}
 
-	m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 0.f, 0.f, 0.f));
+	//m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 0.f, 0.f, 0.f));
 
 	//for (int i = 0; i < 600; i++)
 		m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("GINA_64", 5.f, 5.f, 0.f));
 
 	//for (int i = 0; i < 3000; i++)
-		m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("BOWMAN", 5.f, 5.f, 0.f));
+		//m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("BOWMAN", 5.f, 5.f, 0.f));
 
-	this->m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 7.f, 7.f, 0.f));
+	//m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 7.f, 7.f, 0.f));
 
-	this->m_gameObjects[GameObjectLayer::DEBUG].emplace_back(std::make_shared<GameObject>("FPS_VALUE", 15.f, 15.f, 45.f));
+	m_gameObjects[GameObjectLayer::DEBUG].emplace_back(std::make_shared<GameObject>("FPS_VALUE", 15.f, 15.f, 45.f));
 
 
 	return true;
@@ -212,15 +212,6 @@ void Game::play()
 void Game::renderGameObjects(const std::array <std::vector<GameObject>, constants::MAX_GAMEOBJECT_LAYERS>& gameObjects)
 {
 
-	//Render all of the game objects
-	for (auto gameLayer : gameObjects)
-	{
-		//Update normal game objects
-		for (auto gameObject : gameLayer)
-		{
-			gameObject.render();
-		}
-	}
 }
 
 
@@ -229,6 +220,14 @@ void Game::addGameObject(std::string gameObjectId, int layer, float xMapPos, flo
 
 	this->m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle));
 	
+
+}
+
+void Game::addGameObject(std::shared_ptr<GameObject>gameObject, int layer)
+{
+
+	this->m_gameObjects[layer].emplace_back(gameObject);
+
 
 }
 
@@ -253,26 +252,36 @@ void Game::_update() {
 	//	(Camera::instance().frame().h / 2));
 
 	// spin through list of particle tasks to execute, like exposions and emitters
-	//ParticleMachine::instance().update();
+	ParticleMachine::instance().update();
 
 	//Update all of the other non player related update chores for each game object
 	// Game objects are stored in layers
 	for (auto& gameLayer : m_gameObjects)
 	{
 		//Update normal game objects
-		for (auto& gameObject : gameLayer)
+		for (int i = 0; i < gameLayer.size(); i++)
 		{
-			gameObject->update();
-		}
+			if (gameLayer[i]->removeFromWorld())
+			{
+				gameLayer[i]->setRemoveFromWorld(false);
+				gameLayer[i]->resetParticle();
+				gameLayer.erase(gameLayer.begin() + i);
+			}
+			else
+			{
+				gameLayer[i]->update();
+			}
+			
 
-			//if (particleObject->removeFromWorld() == true)
-			//{
-			//	particleObjectRemoved = particleObject;
-			//	ObjectPoolManager::instance().reset(particleObject);
-			//	std::swap(gameObjectCollection.particleObjects()[x],
-			//		gameObjectCollection.particleObjects()[gameObjectCollection.particleObjects().size() - 1]);
-			//	gameObjectCollection.particleObjects().resize(gameObjectCollection.particleObjects().size() - 1);
-			//}
+		}
+		//if (particleObject->removeFromWorld() == true)
+		//{
+		//	particleObjectRemoved = particleObject;
+		//	gameObject.reset();
+		//	std::swap(gameObjectCollection.particleObjects()[x],
+		//		gameObjectCollection.particleObjects()[gameObjectCollection.particleObjects().size() - 1]);
+		//	gameObjectCollection.particleObjects().resize(gameObjectCollection.particleObjects().size() - 1);
+		//}
 
 		//resize the particle vector in case items were removed
 		//gameObjectCollection.particleObjects().shrink_to_fit();

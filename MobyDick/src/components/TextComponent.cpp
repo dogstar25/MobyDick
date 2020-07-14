@@ -60,13 +60,13 @@ TextComponent::~TextComponent()
 	TTF_CloseFont(m_fontObject);
 }
 
-void TextComponent::update()
+void TextComponent::update(std::shared_ptr<GameObject>gameObject)
 {
 	//convenience reference to outside component(s)
 	auto& renderComponent =
-		std::static_pointer_cast<RenderComponent>(m_refcomponents[RENDER_COMPONENT]);
+		std::static_pointer_cast<RenderComponent>(gameObject->components()[RENDER_COMPONENT]);
 	auto& transformComponent =
-		std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
+		std::static_pointer_cast<TransformComponent>(gameObject->components()[TRANSFORM_COMPONENT]);
 
 	std::string textureId = "TX_" + m_gameObjectId;
 
@@ -82,24 +82,24 @@ void TextComponent::update()
 	}
 	else
 	{
-		renderComponent->setTexture(generateTextTexture());
+		renderComponent->setTexture(generateTextTexture(gameObject));
 	}
 
 	if (m_isDynamic == true)
 	{
-		renderComponent->setTexture(updateDynamicTextTexture());
+		renderComponent->setTexture(updateDynamicTextTexture(gameObject));
 	}
 
 
 }
 
-std::shared_ptr<Texture> TextComponent::generateTextTexture()
+std::shared_ptr<Texture> TextComponent::generateTextTexture(std::shared_ptr<GameObject>gameObject)
 {
 	//convenience reference to outside component(s)
 	auto& renderComponent =
-		std::static_pointer_cast<RenderComponent>(m_refcomponents[RENDER_COMPONENT]);
+		std::static_pointer_cast<RenderComponent>(gameObject->components()[RENDER_COMPONENT]);
 	auto& transformComponent =
-		std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
+		std::static_pointer_cast<TransformComponent>(gameObject->components()[TRANSFORM_COMPONENT]);
 
 	std::shared_ptr<Texture> texture = std::make_shared<Texture>();;
 
@@ -136,7 +136,7 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 
 }
 
-std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
+std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture(std::shared_ptr<GameObject>gameObject)
 {
 
 	TextItem* newText;
@@ -157,7 +157,7 @@ std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
 
 		//Build new texture
 		m_textValue = newText->textValue;
-		texture = generateTextTexture();
+		texture = generateTextTexture(gameObject);
 		newText->hasChanged = false;
 
 	/*	m_refTransformComponent->setPosition(

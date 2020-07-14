@@ -16,6 +16,8 @@
 #include "VitalityComponent.h"
 #include "ActionComponent.h"
 #include "../GameObject.h"
+#include "../ParticleEmission.h"
+#include "../ParticleMachine.h"
 
 #include <SDL2/SDL.h>
 
@@ -61,25 +63,25 @@ void PlayerControlComponent::init()
 }
 
 
-void PlayerControlComponent::update()
+void PlayerControlComponent::update(std::shared_ptr<GameObject>gameObject)
 {
 
 	if (m_controls.test(CONTROL_MOVEMENT))
 	{
-		handleMovement();
+		handleMovement(gameObject);
 	}
 
-	handleActions();
+	handleActions(gameObject);
 
 }
 
 
-void PlayerControlComponent::handleMovement()
+void PlayerControlComponent::handleMovement(std::shared_ptr<GameObject>gameObject)
 {
 
 	//convenience reference to outside component(s)
 	auto& actionComponent =
-		std::static_pointer_cast<ActionComponent>(m_refcomponents[ACTION_COMPONENT]);
+		std::static_pointer_cast<ActionComponent>(gameObject->components()[ACTION_COMPONENT]);
 
 	float angularVelocity = 0;
 	int direction = 0;
@@ -115,8 +117,7 @@ void PlayerControlComponent::handleMovement()
 				strafe = -1;
 			}
 
-			actionComponent->moveAction(direction, strafe);
-			move_time_snapshot = now_time;
+			actionComponent->moveAction(gameObject.get(), direction, strafe);
 
 			break;
 
@@ -128,7 +129,7 @@ void PlayerControlComponent::handleMovement()
 			if (time_diff.count() > .03)
 			{
 				angularVelocity = inputEvent->event.motion.xrel * GameConfig::instance().mouseSensitivity();
-				actionComponent->rotateAction(angularVelocity);
+				actionComponent->rotateAction(gameObject.get(), angularVelocity);
 				rotation_time_snapshot = now_time;
 			}
 			break;
@@ -140,11 +141,11 @@ void PlayerControlComponent::handleMovement()
 
 }
 
-void PlayerControlComponent::handleActions()
+void PlayerControlComponent::handleActions(std::shared_ptr<GameObject>gameObject)
 {
 	//convenience reference to outside component(s)
 	auto& actionComponent =
-		std::static_pointer_cast<ActionComponent>(m_refcomponents[ACTION_COMPONENT]);
+		std::static_pointer_cast<ActionComponent>(gameObject->components()[ACTION_COMPONENT]);
 
 	const Uint8* keyStates = nullptr;
 
@@ -161,12 +162,13 @@ void PlayerControlComponent::handleActions()
 				//actionMap["DROP_WEAPON"]->perform();
 				std::cout << "Dropped Weapon" <<"\n";
 			}
-
+			break;
 		case SDL_MOUSEBUTTONDOWN:
 			//Execute USE
+			testParticle();
 			if (m_controls.test(CONTROL_USE))
 			{
-				actionComponent->useAction();
+				actionComponent->useAction(gameObject.get());
 				
 			}
 
@@ -178,5 +180,38 @@ void PlayerControlComponent::handleActions()
 	}
 }
 
+void PlayerControlComponent::testParticle()
+{
 
+	//use the collision point for the particle emission
+	float x = 4;
+	float y = 4;
+	b2Vec2 particleOrigin = { x,y };
+
+	//temp color code
+	SDL_Color colorMin = { 0,0,0,255 };
+	SDL_Color colorMax = { 225,255,255,255 };
+
+
+	ParticleEmission* particleEmission = new ParticleEmission(
+		"SMOKE1_POOL",
+		particleOrigin, //min position
+		particleOrigin,	//max position
+		5,	//Force Min
+		15,	//force Max
+		1.55,	//Lifetime Min
+		1.55,	//Lifetime Max
+		true,	// Alpha fade
+		0,	//Angle min
+		360,	//Angle Max
+		12,	//Size Min
+		32,	//Size Max
+		colorMin,	//Color Min
+		colorMax,	//Color Max
+		30,	//Particle count min
+		60	//Particle count max
+	);
+	ParticleMachine::instance().add(particleEmission);
+
+}
 

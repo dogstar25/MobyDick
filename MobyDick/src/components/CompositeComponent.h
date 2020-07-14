@@ -33,7 +33,7 @@ public:
 	CompositeComponent();
 	~CompositeComponent();
 
-	void update() override;
+	void update(std::shared_ptr<GameObject>gameObject) override;
 
 
 private:

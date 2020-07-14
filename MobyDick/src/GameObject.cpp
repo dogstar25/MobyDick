@@ -17,6 +17,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 	//Game Object Id
 	m_id = gameObjectId;
+	m_removeFromWorld = false;
 
 	Json::Value definitionJSON;
 
@@ -110,6 +111,16 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 	}
 
+	//Particle Component
+	if (definitionJSON.isMember("particleComponent"))
+	{
+		Json::Value componentJSON = definitionJSON["particleComponent"];
+		std::shared_ptr<ParticleComponent>tempPtr = std::make_shared<ParticleComponent>(definitionJSON);
+
+		addComponent(PARTICLE_COMPONENT, tempPtr);
+
+	}
+
 	//Render Component - Always Build
 	std::shared_ptr<RenderComponent>tempPtr = std::make_shared<RenderComponent>(definitionJSON);
 
@@ -135,8 +146,11 @@ void GameObject::_setDependecyReferences()
 	// to the other components
 	for (auto component : m_components)
 	{
-		component.second->setDependencyReferences(m_components);
-		component.second->setActive(true);
+		//component.second->setDependencyReferences(m_components);
+		if (component) {
+			component->setActive(true);
+
+		}
 	}
 
 }
@@ -164,9 +178,9 @@ void GameObject::update()
 {
 	for (auto& component : m_components)
 	{
-		if (component.second)
+		if (component)
 		{
-			component.second->update();
+			component->update(shared_from_this());
 		}
 	}
 
@@ -203,7 +217,7 @@ void GameObject::render()
 
 
 	//Render yourself
-	std::static_pointer_cast<RenderComponent>(m_components[RENDER_COMPONENT])->render();
+	std::static_pointer_cast<RenderComponent>(m_components[RENDER_COMPONENT])->render(shared_from_this());
 		
 	//Render your children
 
@@ -250,5 +264,18 @@ void GameObject::render()
 //
 //}
 
+void GameObject::resetParticle()
+{
+
+	//convenience reference to outside component(s)
+	auto& physicsComponent =
+		std::static_pointer_cast<PhysicsComponent>(m_components[PHYSICS_COMPONENT]);
+	auto& particleComponent =
+		std::static_pointer_cast<ParticleComponent>(m_components[PARTICLE_COMPONENT]);
+
+	particleComponent->reset();
+	physicsComponent->setOffGrid();
+
+}
 
 

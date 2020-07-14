@@ -23,15 +23,15 @@ public:
 
 	~PlayerControlComponent();
 
-	void update() override;
+	void update(std::shared_ptr<GameObject>gameObject) override;
 
-
+	void testParticle();
 
 private:
 
 	void init();
-	void handleMovement();
-	void handleActions();
+	void handleMovement(std::shared_ptr<GameObject>gameObject);
+	void handleActions(std::shared_ptr<GameObject>gameObject);
 
 
 	std::bitset<8> m_controls;

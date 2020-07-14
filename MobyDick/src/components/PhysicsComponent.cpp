@@ -28,6 +28,7 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, float xMapPos, fl
 	m_collisionRadius = physicsComponentJSON["collisionRadius"].asFloat();
 	m_friction = physicsComponentJSON["friction"].asFloat();
 	m_density = physicsComponentJSON["density"].asFloat();
+	m_restitution = physicsComponentJSON["restitution"].asFloat();
 	m_linearDamping = physicsComponentJSON["linearDamping"].asFloat();
 	m_angularDamping = physicsComponentJSON["angularDamping"].asFloat();
 	m_collisionCategory = EnumMap::instance().toEnum(physicsComponentJSON["collisionCategory"].asString());
@@ -54,13 +55,34 @@ PhysicsComponent::~PhysicsComponent()
 {
 
 }
-
-void PhysicsComponent::update()
+void PhysicsComponent::setTransform(b2Vec2 positionVector, float angle)
 {
+	m_physicsBody->SetTransform(positionVector, angle);
+
+}
+
+void PhysicsComponent::setPhysicsBodyActive(bool  active)
+{
+	m_physicsBody->SetActive(active);
+
+}
+
+void PhysicsComponent::setLinearVelocity(b2Vec2 velocityVector)
+{
+	m_physicsBody->SetLinearVelocity(velocityVector);
+}
+
+void PhysicsComponent::update(std::shared_ptr<GameObject>gameObject)
+{
+	//update the UserData - only once - cant do it in the constructor
+	if (m_physicsBody->GetUserData() == nullptr)
+	{
+		m_physicsBody->SetUserData(gameObject.get());
+	}
 
 	//convenience reference to outside component(s)
 	auto& transformComponent =
-		std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
+		std::static_pointer_cast<TransformComponent>(gameObject->components()[TRANSFORM_COMPONENT]);
 
 	if (transformComponent)
 	{
@@ -246,3 +268,12 @@ void PhysicsComponent::applyRotation(float angularVelocity)
 	m_physicsBody->SetAngularVelocity(angularVelocity);
 }
 
+void PhysicsComponent::setOffGrid()
+{
+	b2Vec2 velocityVector = b2Vec2(0, 0);
+	b2Vec2 positionVector = b2Vec2(-50, -50);
+
+	m_physicsBody->SetTransform(positionVector, 0);
+	m_physicsBody->SetLinearVelocity(velocityVector);
+	m_physicsBody->SetActive(false);
+}

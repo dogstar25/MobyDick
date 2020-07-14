@@ -73,7 +73,7 @@
                 "collisionRadius": 0.64,
                 "friction": 0.00,
                 "density": 20.5,
-                "linearDamping": 2.0,
+                "linearDamping": 0.2,
                 "angularDamping": 2.0,
                 "collisionCategory": "COLLISION_PLAYER"
             },
@@ -100,7 +100,7 @@
             "childrenComponent":
             {
                 "childPadding": 0,
-                "childPositionRelative": true,
+                "childPositionRelative": false,
                 "childObjects":
                 [
                     {

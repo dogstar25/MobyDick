@@ -18,7 +18,7 @@ public:
 	TextComponent(std::string gameObjectId, Json::Value definitionJSON);
 	~TextComponent();
 
-	void update() override;
+	void update(std::shared_ptr<GameObject>gameObject) override;
 
 	//Accessor functions
 	bool isDynamic() {
@@ -42,8 +42,8 @@ public:
 
 private:
 
-	std::shared_ptr<Texture> generateTextTexture();
-	std::shared_ptr<Texture> updateDynamicTextTexture();
+	std::shared_ptr<Texture> generateTextTexture(std::shared_ptr<GameObject>gameObject);
+	std::shared_ptr<Texture> updateDynamicTextTexture(std::shared_ptr<GameObject>gameObject);
 
 	void construct();
 

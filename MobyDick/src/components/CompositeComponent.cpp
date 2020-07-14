@@ -21,7 +21,7 @@ CompositeComponent::~CompositeComponent()
 {
 
 }
-void CompositeComponent::update()
+void CompositeComponent::update(std::shared_ptr<GameObject>gameObject)
 {
 
 }

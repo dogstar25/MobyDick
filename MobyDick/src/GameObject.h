@@ -7,6 +7,7 @@
 #include <vector>
 #include <json/json.h>
 #include <map>
+#include <unordered_map>
 
 #include <Box2D/Box2D.h>
 
@@ -25,7 +26,7 @@
 #include "components/VitalityComponent.h"
 #include "components/WeaponComponent.h"
 
-class GameObject
+class GameObject : public std::enable_shared_from_this<GameObject>
 {
 public:
 	
@@ -54,7 +55,7 @@ public:
 	template <typename componentType>
 	inline void addComponent(int componentId, std::shared_ptr<componentType> component)
 	{
-		m_components.emplace(componentId, component);
+		m_components[componentId] = component;
 	}
 
 	void removeComponent(int componentId);
@@ -72,7 +73,7 @@ public:
 	auto& components() {
 		return m_components;
 	}
-
+	void resetParticle();
 	void _setDependecyReferences();
 
 private:
@@ -86,7 +87,7 @@ private:
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 
 	//Components
-	std::map<int, std::shared_ptr<Component>>m_components;
+	std::array<std::shared_ptr<Component>, 32>m_components;
 
 };
 

@@ -30,37 +30,22 @@ ActionComponent::~ActionComponent()
 
 }
 
-void ActionComponent::moveAction(int direction, int strafe)
+void ActionComponent::moveAction(GameObject* gameObject, int direction, int strafe)
 {
-	//convenience reference to outside component(s)
-	auto& physicsComponent =
-		std::static_pointer_cast<PhysicsComponent>(m_refcomponents[PHYSICS_COMPONENT]);
-	auto& animationComponent =
-		std::static_pointer_cast<AnimationComponent>(m_refcomponents[ANIMATION_COMPONENT]);
-	auto& vitalityComponent =
-		std::static_pointer_cast<VitalityComponent>(m_refcomponents[VITALITY_COMPONENT]);
 
-	m_actionMap[ACTION_MOVE]->perform(physicsComponent, animationComponent, vitalityComponent->speed(), direction, strafe);
+	m_actionMap[ACTION_MOVE]->perform(gameObject, direction, strafe);
+
 }
 
-void ActionComponent::rotateAction(float angularVelocity)
+void ActionComponent::rotateAction(GameObject* gameObject, float angularVelocity)
 {
-	//convenience reference to outside component(s)
-	auto& physicsComponent =
-		std::static_pointer_cast<PhysicsComponent>(m_refcomponents[PHYSICS_COMPONENT]);
-	auto& animationComponent =
-		std::static_pointer_cast<AnimationComponent>(m_refcomponents[ANIMATION_COMPONENT]);
 
-	m_actionMap[ACTION_ROTATE]->perform(physicsComponent, animationComponent, angularVelocity);
+	m_actionMap[ACTION_ROTATE]->perform(gameObject, angularVelocity);
 }
 
-void ActionComponent::useAction()
+void ActionComponent::useAction(GameObject* gameObject)
 {
-	//convenience reference to outside component(s)
-	auto& physicsComponent =
-		std::static_pointer_cast<PhysicsComponent>(m_refcomponents[PHYSICS_COMPONENT]);
-	auto& animationComponent =
-		std::static_pointer_cast<AnimationComponent>(m_refcomponents[ANIMATION_COMPONENT]);
+
 
 	m_actionMap[ACTION_USE]->perform();
 }

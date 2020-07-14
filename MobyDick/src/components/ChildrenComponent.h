@@ -23,7 +23,7 @@ public:
 	ChildrenComponent(Json::Value definitionJSON);
 	~ChildrenComponent();
 
-	void update() override;
+	void update(std::shared_ptr<GameObject>gameObject) override;
 	void renderChildren(); //move to render component?
 
 private:

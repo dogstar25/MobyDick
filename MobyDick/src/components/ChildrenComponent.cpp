@@ -40,16 +40,14 @@ ChildrenComponent::~ChildrenComponent()
 }
 
 
-void ChildrenComponent::update()
+void ChildrenComponent::update(std::shared_ptr<GameObject>gameObject)
 {
 	//convenience reference to outside component(s)
 	//std::shared_ptr<TransformComponent> transformComponent =
 	//	std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
 	//TRY AUTO!!
 	auto& transformComponent =
-		std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
-
-
+		std::static_pointer_cast<TransformComponent>(gameObject->components()[TRANSFORM_COMPONENT]);
 
 	short locationSlot = 0;
 	

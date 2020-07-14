@@ -18,17 +18,9 @@ public:
 	Action();
 	~Action();
 	virtual void perform() {};
-	virtual void perform(
-		std::shared_ptr<PhysicsComponent> physicsComponent, 
-		std::shared_ptr<AnimationComponent> animationComponent) {};
-	virtual void perform(
-		std::shared_ptr<PhysicsComponent> physicsComponent,
-		std::shared_ptr<AnimationComponent> animationComponent,
-		float, int, int) {};
-	virtual void perform(
-		std::shared_ptr<PhysicsComponent> physicsComponent,
-		std::shared_ptr<AnimationComponent> animationComponent,
-		float) {};
+	virtual void perform(GameObject*) {};
+	virtual void perform(GameObject*, int, int) {};
+	virtual void perform(GameObject*, float) {};
 
 };
 

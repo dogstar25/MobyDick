@@ -22,10 +22,10 @@ public:
 	RenderComponent(Json::Value definitionJSON);
 	~RenderComponent();
 
-	void update() override;
-	void render();
+	void update(std::shared_ptr<GameObject>gameObject) override;
+	void render(std::shared_ptr<GameObject>gameObject);
 
-	SDL_FRect  getRenderDestRect();
+	SDL_FRect  getRenderDestRect(std::shared_ptr<GameObject>gameObject);
 	void setColor(SDL_Color color) {
 		m_color = color;
 	}
@@ -35,13 +35,13 @@ public:
 	void setColor(int red, int green, int blue, int alpha);
 	void setTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
 
-	void outlineObject(float lineSize);
+	void outlineObject(std::shared_ptr<GameObject>gameObject, float lineSize);
 	void setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent,
 		std::shared_ptr<AnimationComponent> animationComponent,
 		std::shared_ptr<PhysicsComponent> physicsComponent);
 
-	SDL_Rect* getRenderTextureRect();
-	SDL_Texture* getRenderTexture();
+	SDL_Rect* getRenderTextureRect(std::shared_ptr<GameObject>gameObject);
+	SDL_Texture* getRenderTexture(std::shared_ptr<GameObject>gameObject);
 	SDL_Surface* getRenderSurface();
 	
 

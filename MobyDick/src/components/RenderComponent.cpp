@@ -56,7 +56,7 @@ RenderComponent::~RenderComponent()
 }
 
 
-void RenderComponent::update()
+void RenderComponent::update(std::shared_ptr<GameObject>gameObject)
 {
 
 }
@@ -66,11 +66,11 @@ Get the destination for rendering the gameObject
 The end result should be a rectangle with a width and height in pixels and
 an x, y position that is the top left corner of the object (for SDL render function)
 */
-SDL_FRect RenderComponent::getRenderDestRect()
+SDL_FRect RenderComponent::getRenderDestRect(std::shared_ptr<GameObject>gameObject)
 {
 	//convenience reference to outside component(s)
 	auto& transformComponent =
-		std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
+		std::static_pointer_cast<TransformComponent>(gameObject->components()[TRANSFORM_COMPONENT]);
 
 	SDL_FRect destRect, currentPositionRect;
 
@@ -96,13 +96,13 @@ Get the portion of the gameObject texture to render
 For animated objects, this is the portion of the texture that
 represents the current frame of animation
 */
-SDL_Rect* RenderComponent::getRenderTextureRect()
+SDL_Rect* RenderComponent::getRenderTextureRect(std::shared_ptr<GameObject>gameObject)
 {
 	//convenience reference to outside component(s)
 	auto& transformComponent =
-		std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
+		std::static_pointer_cast<TransformComponent>(gameObject->components()[TRANSFORM_COMPONENT]);
 	auto& animationComponent =
-		std::static_pointer_cast<AnimationComponent>(m_refcomponents[ANIMATION_COMPONENT]);
+		std::static_pointer_cast<AnimationComponent>(gameObject->components()[ANIMATION_COMPONENT]);
 
 	SDL_Rect* textureSrcRect=nullptr;
 
@@ -119,10 +119,10 @@ SDL_Rect* RenderComponent::getRenderTextureRect()
 Get the actual texture to display. If this is an animated object then it will have
 different textures for different animation states
 */
-SDL_Texture* RenderComponent::getRenderTexture()
+SDL_Texture* RenderComponent::getRenderTexture(std::shared_ptr<GameObject>gameObject)
 {
 	auto& animationComponent =
-		std::static_pointer_cast<AnimationComponent>(m_refcomponents[ANIMATION_COMPONENT]);
+		std::static_pointer_cast<AnimationComponent>(gameObject->components()[ANIMATION_COMPONENT]);
 
 	SDL_Texture* texture = nullptr;
 
@@ -146,14 +146,14 @@ SDL_Surface* RenderComponent::getRenderSurface()
 
 }
 
-void RenderComponent::outlineObject(float lineSize)
+void RenderComponent::outlineObject(std::shared_ptr<GameObject>gameObject, float lineSize)
 {
 	//convenience reference to outside component(s)
 	auto& transformComponent =
-		std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
+		std::static_pointer_cast<TransformComponent>(gameObject->components()[TRANSFORM_COMPONENT]);
 
 	std::vector<SDL_FPoint> points;
-	SDL_FRect gameObjectDrawRect = getRenderDestRect();
+	SDL_FRect gameObjectDrawRect = getRenderDestRect(gameObject);
 	float saveScaleX, saveScaleY;
 	SDL_FPoint point;
 
@@ -204,16 +204,16 @@ void RenderComponent::setColor(int red, int green, int blue, int alpha)
 
 }
 
-void RenderComponent::render()
+void RenderComponent::render(std::shared_ptr<GameObject>gameObject)
 {
 	//convenience reference to outside component(s)
 	auto& transformComponent =
-		std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
+		std::static_pointer_cast<TransformComponent>(gameObject->components()[TRANSFORM_COMPONENT]);
 
 	//Get the various items for rendering
-	SDL_Rect* textureSourceRect = getRenderTextureRect();
-	const SDL_FRect destRect = getRenderDestRect();
-	SDL_Texture* texture = getRenderTexture();
+	SDL_Rect* textureSourceRect = getRenderTextureRect(gameObject);
+	const SDL_FRect destRect = getRenderDestRect(gameObject);
+	SDL_Texture* texture = getRenderTexture(gameObject);
 	float angle = transformComponent->angle();
 
 	//Set the color

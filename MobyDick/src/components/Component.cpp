@@ -24,7 +24,7 @@ Component::~Component()
 
 }
 
-void Component::update()
+void Component::update(std::shared_ptr<GameObject>gameObject)
 {
 
 
@@ -32,7 +32,7 @@ void Component::update()
 
 void Component::setDependencyReferences(std::map<int, std::shared_ptr<Component>>components)
 {
-	m_refcomponents = components;
+	//m_refcomponents = components;
 }
 
 
