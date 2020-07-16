@@ -1,23 +1,17 @@
 {
-    "gameObjects":
-    [
+    "gameObjects": [
         {
             "id": "SWORDLADY",
             "description": "SwordLady",
-            "transformComponent":
-            {
-                "size":
-                {
+            "transformComponent": {
+                "size": {
                     "width": 64,
                     "height": 43.75
                 },
                 "absolutePositioning": false
-
             },
-            "animationComponent":
-            {
-                "animations":
-                [
+            "animationComponent": {
+                "animations": [
                     {
                         "state": "ANIMATION_IDLE",
                         "textureId": "TX_SWORDLADY1_IDLE",
@@ -26,8 +20,7 @@
                     }
                 ]
             },
-            "physicsComponent":
-            {
+            "physicsComponent": {
                 "type": "B2_DYNAMIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.00,
@@ -39,19 +32,15 @@
         },
         {
             "id": "GINA_64",
-            "transformComponent":
-            {
-                "size":
-                {
+            "transformComponent": {
+                "size": {
                     "width": 64,
                     "height": 64
                 },
                 "absolutePositioning": false
             },
-            "animationComponent":
-            {
-                "animations":
-                [
+            "animationComponent": {
+                "animations": [
                     {
                         "state": "ANIMATION_IDLE",
                         "textureId": "TX_GINA_64_IDLE",
@@ -60,68 +49,50 @@
                     },
                     {
                         "state": "ANIMATION_RUN",
-                        "textureId": "TX_PISTOLLADY_64_RUN",
-                        "speed": 0.03, //time in seconds for each frame. Lower the faster
-                        "frames": 16
+                        "textureId": "TX_GINA_64_RUN",
+                        "speed": 0.10, //time in seconds for each frame. Lower the faster
+                        "frames": 4
                     }
                 ]
             },
-            "physicsComponent":
-            {
+            "physicsComponent": {
                 "type": "B2_DYNAMIC",
                 "collisionShape": "B2_CIRCLE",
                 "collisionRadius": 0.64,
                 "friction": 0.00,
-                "density": 20.5,
-                "linearDamping": 0.2,
+                "density": 25.5,
+                "linearDamping": 1.2,
                 "angularDamping": 2.0,
-                "collisionCategory": "COLLISION_PLAYER"
+                "collisionCategory": "COLLISION_PLAYER",
+                "anchorPoint": {
+                    "x": 0.8,
+                    "y": 0.0
+                }
             },
-            "attachmentsComponent":
-            {
-                "attachments":
-                [
-                    {
-                        "gameObjectId": "WEAPON1",
-                        "anchorPoint":
-                        {
-                            "x": 0.8,
-                            "y": 0.0
-                        },
-                        "jointType": "WELD"
-                    }
-                ]
-
+            "inventoryComponent": {
             },
-            "vitalityComponent":
-            {
+            "vitalityComponent": {
                 "speed": 7.5
             },
-            "childrenComponent":
-            {
+            "childrenComponent": {
                 "childPadding": 0,
                 "childPositionRelative": false,
-                "childObjects":
-                [
+                "childObjects": [
                     {
                         "gameObjectId": "PLAYER_LABEL",
-                        "locationSlot": 1
+                        "locationSlot": 3
                     }
-
                 ]
             },
-            "playerControlComponent":
-            {
-                "controls":
-                [
-                    "CONTROL_MOVEMENT"
+            "playerControlComponent": {
+                "controls": [
+                    "CONTROL_MOVEMENT",
+                    "CONTROL_USE"
                 ]
 
             },
-            "actionComponent":
-            {
-                "actions":
-                [
+            "actionComponent": {
+                "actions": [
                     {
                         "actionId": "ACTION_MOVE",
                         "actionClass": "HeroMove"
@@ -132,7 +103,7 @@
                     },
                     {
                         "actionId": "ACTION_USE",
-                        "actionClass": "HeroFire"
+                        "actionClass": "HeroUse"
                     }
 
                 ]
@@ -142,25 +113,20 @@
         },
         {
             "id": "BOWMAN",
-            "transformComponent":
-            {
-                "size":
-                {
+            "transformComponent": {
+                "size": {
                     "width": 16,
                     "height": 16
                 },
                 "absolutePositioning": false
             },
-            "renderComponent":
-            {
+            "renderComponent": {
                 "textureId": "TX_BOWMAN1"
             },
-            "vitalityComponent":
-            {
+            "vitalityComponent": {
                 "speed": 30.0
             },
-            "physicsComponent":
-            {
+            "physicsComponent": {
                 "type": "B2_DYNAMIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.00,
@@ -176,29 +142,24 @@
         {
             "id": "PLAYER_LABEL",
             "description": "Player Label",
-            "transformComponent":
-            {
+            "transformComponent": {
                 "absolutePositioning": false
             },
-            "textComponent":
-            {
+            "textComponent": {
                 "value": "Player 1",
                 "dynamic": false,
                 "font": "FONT_ARIAL_REG",
                 "fontSize": 12
             }
-
-
         },
         {
+
             "id": "FPS_VALUE",
             "description": "FPS",
-            "transformComponent":
-            {
+            "transformComponent": {
                 "absolutePositioning": true
             },
-            "textComponent":
-            {
+            "textComponent": {
                 "value": "",
                 "dynamic": true,
                 "font": "FONT_ARIAL_REG",
@@ -207,33 +168,27 @@
 
         },
         {
+
             "id": "GUIPausePanel",
-            "transformComponent":
-            {
-                "size":
-                {
+            "transformComponent": {
+                "size": {
                     "width": 176,
                     "height": 164
                 },
                 "absolutePositioning": false
             },
-            "renderComponent":
-            {
-                "color":
-                {
+            "renderComponent": {
+                "color": {
                     "red": 56,
                     "green": 12,
                     "blue": 210,
                     "alpha": 255
                 }
-
             },
-            "childrenComponent":
-            {
+            "childrenComponent": {
                 "childPadding": 8,
                 "childPositionRelative": true,
-                "childObjects":
-                [
+                "childObjects": [
                     {
                         "gameObjectId": "ContinueButton",
                         "locationSlot": 5
@@ -248,14 +203,11 @@
                     }
                 ]
             }
-
         },
         {
             "id": "ContinueButton",
-            "transformComponent":
-            {
-                "size":
-                {
+            "transformComponent": {
+                "size": {
                     "width": 128,
                     "height": 32
                 },
@@ -266,12 +218,10 @@
         {
             "id": "DEBUG_ITEM",
             "description": "Debug Item",
-            "transformComponent":
-            {
+            "transformComponent": {
                 "absolutePositioning": true
             },
-            "textComponent":
-            {
+            "textComponent": {
                 "value": "default",
                 "dynamic": true,
                 "font": "FONT_ARIAL_REG",
@@ -282,35 +232,28 @@
         {
             "id": "WEAPON1",
             "description": "Weapon 1",
-            "transformComponent":
-            {
-                "size":
-                {
-                    "width": 0.64,
-                    "height": 0.64
+            "transformComponent": {
+                "size": {
+                    "width": 16,
+                    "height": 16
                 },
                 "absolutePositioning": false
-
             },
-            "physicsComponent":
-            {
+            "physicsComponent": {
                 "type": "B2_DYNAMIC",
                 "friction": 0.0,
-                "restitution": 1.0,
-                "density": 5.05,
-                "linearDamping": 0.0,
-                "angularDamping": 0.0,
+                "restitution": 0.0,
+                "density": 2.05,
+                "linearDamping": 3.0,
+                "angularDamping": 1.0,
                 "collisionCategory": "COLLISION_PLAYER_BULLET",
-                "anchorPoint":
-                {
-                    "x": -0.3,
+                "anchorPoint": {
+                    "x": -0.2,
                     "y": 0.0
                 }
             },
-            "animationComponent":
-            {
-                "animations":
-                [
+            "animationComponent": {
+                "animations": [
                     {
                         "state": "ANIMATION_IDLE",
                         "textureId": "TX_WEAPON1_IDLE",
@@ -322,21 +265,25 @@
                         "textureId": "TX_WEAPON1_FIRE",
                         "speed": 0.1, //time in seconds for each frame. Lower the faster
                         "frames": 3
-
                     }
                 ]
             },
-            "weaponComponent":
-            {
+            "actionComponent": {
+                "actions": [
+                    {
+                        "actionId": "ACTION_USE",
+                        "actionClass": "HeroFire"
+                    }
+                ]
+            },
+            "weaponComponent": {
                 "fireOffset": -0.5,
-                "weaponLevels":
-                [
+                "weaponLevels": [
                     {
                         "level": 1,
                         "strength": 1,
                         "levelUpTarget": 25,
-                        "color":
-                        {
+                        "color": {
                             "red": 255,
                             "green": 0,
                             "blue": 0,
@@ -348,8 +295,7 @@
                         "level": 2,
                         "strength": 2,
                         "levelUpTarget": 25,
-                        "color":
-                        {
+                        "color": {
                             "red": 0,
                             "green": 255,
                             "blue": 0,
@@ -361,8 +307,7 @@
                         "level": 3,
                         "strength": 5,
                         "levelUpTarget": 25,
-                        "color":
-                        {
+                        "color": {
                             "red": 255,
                             "green": 255,
                             "blue": 255,
@@ -371,15 +316,6 @@
                         "bulletPoolId": "BULLET2_POOL"
                     }
                 ]
-            },
-            "playerControlComponent":
-            {
-                "controls":
-                [
-
-
-                ]
-
             }
         }
 

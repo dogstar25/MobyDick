@@ -17,7 +17,7 @@ public:
 
 	Action();
 	~Action();
-	virtual void perform() {};
+	virtual void perform(){};
 	virtual void perform(GameObject*) {};
 	virtual void perform(GameObject*, int, int) {};
 	virtual void perform(GameObject*, float) {};

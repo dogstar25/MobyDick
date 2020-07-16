@@ -8,7 +8,7 @@ public:
 	HeroFireAction();
 	~HeroFireAction();
 
-	void perform() override;
+	void perform(GameObject* gameObject) override;
 
 
 

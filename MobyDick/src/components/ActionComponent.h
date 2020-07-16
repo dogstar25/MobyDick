@@ -21,6 +21,12 @@ public:
 	void rotateAction(GameObject* gameObject,float angularVelocity);
 	void useAction(GameObject* gameObject);
 
+	//Accessor functions
+	std::map<int, std::shared_ptr<Action>> actionMap() {
+		return m_actionMap;
+	}
+
+private:
 	std::map<int, std::shared_ptr<Action>>m_actionMap;
 
 };

@@ -45,9 +45,7 @@ void ActionComponent::rotateAction(GameObject* gameObject, float angularVelocity
 
 void ActionComponent::useAction(GameObject* gameObject)
 {
-
-
-	m_actionMap[ACTION_USE]->perform();
+	m_actionMap[ACTION_USE]->perform(gameObject);
 }
 
 

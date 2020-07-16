@@ -1,26 +1,20 @@
 {
-    "gameObjects":
-    [
+    "gameObjects": [
         {
             "id": "PARTICLE_SMOKE_1",
             "description": "Smoke Particle 1",
-            "transformComponent":
-            {
-                "size":
-                {
+            "transformComponent": {
+                "size": {
                     "width": 32,
                     "height": 32
                 }
             },
-            "particleComponent":
-            {
+            "particleComponent": {
             },
-            "renderComponent":
-            {
+            "renderComponent": {
                 "textureId": "TX_SMOKE_PARTICLE_2"
             },
-            "physicsComponent":
-            {
+            "physicsComponent": {
                 "type": "B2_DYNAMIC",
                 "collisionShape": "B2_CIRCLE",
                 "collisionRadius": 0.16,
@@ -35,18 +29,14 @@
         {
             "id": "BULLET1",
             "description": "Bullet 1",
-            "transformComponent":
-            {
-                "size":
-                {
+            "transformComponent": {
+                "size": {
                     "width": 6,
                     "height": 3
                 }
             },
-            "animationComponent":
-            {
-                "animations":
-                [
+            "animationComponent": {
+                "animations": [
                     {
                         "state": "ACTIVE",
                         "textureId": "TX_BULLET1",
@@ -55,11 +45,9 @@
                     }
                 ]
             },
-            "particleComponent":
-            {
+            "particleComponent": {
             },
-            "physicsComponent":
-            {
+            "physicsComponent": {
                 "type": "B2_DYNAMIC",
                 "collisionShape": "B2_CIRCLE",
                 "collisionRadius": 0.16,
@@ -74,18 +62,14 @@
         {
             "id": "DEFLECT1",
             "description": "Deflect 1",
-            "transformComponent":
-            {
-                "size":
-                {
+            "transformComponent": {
+                "size": {
                     "width": 64,
                     "height": 64
                 }
             },
-            "animationComponent":
-            {
-                "animations":
-                [
+            "animationComponent": {
+                "animations": [
                     {
                         "state": "ACTIVE",
                         "textureId": "TX_DEFLECT1_64",
@@ -94,8 +78,7 @@
                     }
                 ]
             },
-            "physicsComponent":
-            {
+            "physicsComponent": {
                 "type": "B2_DYNAMIC",
                 "collisionShape": "B2_CIRCLE",
                 "collisionRadius": 0.16,

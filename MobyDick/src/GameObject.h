@@ -73,7 +73,8 @@ public:
 	auto& components() {
 		return m_components;
 	}
-	void resetParticle();
+	void reset();
+	void addInventoryItem(std::shared_ptr<GameObject>gameObject, std::shared_ptr<GameObject>inventoryObject);
 	void _setDependecyReferences();
 
 private:

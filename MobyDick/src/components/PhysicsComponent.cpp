@@ -32,6 +32,9 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, float xMapPos, fl
 	m_linearDamping = physicsComponentJSON["linearDamping"].asFloat();
 	m_angularDamping = physicsComponentJSON["angularDamping"].asFloat();
 	m_collisionCategory = EnumMap::instance().toEnum(physicsComponentJSON["collisionCategory"].asString());
+	
+	m_objectAnchorPoint.Set(physicsComponentJSON["anchorPoint"]["x"].asFloat(),
+		physicsComponentJSON["anchorPoint"]["y"].asFloat());
 
 	//Build the physics body
 	m_physicsBody = buildB2Body(transformComponentJSON);
@@ -39,8 +42,8 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, float xMapPos, fl
 	//Calculate the spawn position
 	//Translate the pixel oriented position into box2d meter-oriented
 	b2Vec2* position = new b2Vec2
-	(  (xMapPos * 32 + (transformComponentJSON["size"]["width"].asFloat() / 2)) / GameConfig::instance().scaleFactor(),
-		(yMapPos * 32 + (transformComponentJSON["size"]["height"].asFloat() / 2)) / GameConfig::instance().scaleFactor());
+	(  (xMapPos * Game::instance().worldTileWidth() + (transformComponentJSON["size"]["width"].asFloat() / 2)) / GameConfig::instance().scaleFactor(),
+		(yMapPos * Game::instance().worldTileHeight() + (transformComponentJSON["size"]["height"].asFloat() / 2)) / GameConfig::instance().scaleFactor());
 
 	//Calculate the spawn Angle
 	float newAngle = util::degreesToRadians(angleAdjust);
@@ -276,4 +279,31 @@ void PhysicsComponent::setOffGrid()
 	m_physicsBody->SetTransform(positionVector, 0);
 	m_physicsBody->SetLinearVelocity(velocityVector);
 	m_physicsBody->SetActive(false);
+}
+
+void PhysicsComponent::attachItem(std::shared_ptr<GameObject>inventoryObject)
+{
+	//Get physics component of the inventory object
+	auto& inventoryObjectPhysicsComponent =
+		std::static_pointer_cast<PhysicsComponent>(inventoryObject->components()[PHYSICS_COMPONENT]);
+
+	b2WeldJointDef weldJointDef;
+	weldJointDef.referenceAngle;
+	weldJointDef.bodyA = m_physicsBody;
+	weldJointDef.bodyB = inventoryObjectPhysicsComponent->m_physicsBody;
+	weldJointDef.collideConnected = false;
+
+	b2Vec2 worldObjectAnchorPoint = {
+		m_objectAnchorPoint.x,
+		m_objectAnchorPoint.y
+	};
+	weldJointDef.localAnchorA = worldObjectAnchorPoint;
+
+	b2Vec2 weaponsAnchorPoint = {
+		inventoryObjectPhysicsComponent->m_objectAnchorPoint.x,
+		inventoryObjectPhysicsComponent->m_objectAnchorPoint.y
+	};
+	weldJointDef.localAnchorB = weaponsAnchorPoint;
+	(b2WeldJointDef*)Game::instance().physicsWorld()->CreateJoint(&weldJointDef);
+
 }

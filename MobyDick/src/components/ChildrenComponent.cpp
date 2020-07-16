@@ -21,7 +21,7 @@ ChildrenComponent::ChildrenComponent(Json::Value definitionJSON)
 		std::string childObjectId = itrChild["gameObjectId"].asString();
 		int locationSlot = itrChild["locationSlot"].asInt()-1;
 
-		std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>(childObjectId, 5.f, 5.f, 90.f);
+		std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>(childObjectId, 5.f, 5.f, 0.f);
 		//gameObject->_init();
 		m_childObjects[locationSlot].push_back(gameObject);
 		

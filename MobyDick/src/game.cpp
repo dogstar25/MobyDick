@@ -38,7 +38,7 @@ Game::~Game()
 	SDL_Quit();
 	
 
-	for (int x = 0; x < constants::MAX_GAMEOBJECT_LAYERS; x++)
+	for (int x = 0; x < MAX_GAMEOBJECT_LAYERS; x++)
 	{
 		m_gameObjects[x].clear();
 	}
@@ -147,7 +147,7 @@ bool Game::init()
 		Clock::instance().init();
 
 		//Load the First level
-		//Level::instance().load("level1");
+		Level::instance().load("level1");
 
 		//Initilaize Camera size and
 		Camera::instance().init();
@@ -158,14 +158,15 @@ bool Game::init()
 	//m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 0.f, 0.f, 0.f));
 
 	//for (int i = 0; i < 600; i++)
-		m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("GINA_64", 5.f, 5.f, 0.f));
-
+	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("GINA_64", 5.f, 5.f, 0.f);
+	Game::instance().addGameObject(gameObject, GameObjectLayer::MAIN);
+	gameObject->addInventoryItem(gameObject, std::make_shared<GameObject>("WEAPON1", 5.f, 5.f, 0.f));
 	//for (int i = 0; i < 3000; i++)
 		//m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("BOWMAN", 5.f, 5.f, 0.f));
 
 	//m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 7.f, 7.f, 0.f));
 
-	m_gameObjects[GameObjectLayer::DEBUG].emplace_back(std::make_shared<GameObject>("FPS_VALUE", 15.f, 15.f, 45.f));
+	m_gameObjects[GameObjectLayer::DEBUG].emplace_back(std::make_shared<GameObject>("FPS_VALUE", 1.f, 1.f, 0.f));
 
 
 	return true;
@@ -187,7 +188,7 @@ void Game::play()
 	EventManager::instance().pollEvents();
 
 	//Only update and render if we have passed the 60 fps time passage
-	if (Clock::instance().hasMetGameLoopSpeed())
+	//if (Clock::instance().hasMetGameLoopSpeed())
 	{
 		//Handle updating objects positions and physics
 		_update();
@@ -202,14 +203,11 @@ void Game::play()
 
 	}
 
-
-	//std::sort(m_gameObjects.begin(), m_gameObjects.end());
-
 }
 
 
 
-void Game::renderGameObjects(const std::array <std::vector<GameObject>, constants::MAX_GAMEOBJECT_LAYERS>& gameObjects)
+void Game::renderGameObjects(const std::array <std::vector<GameObject>, MAX_GAMEOBJECT_LAYERS>& gameObjects)
 {
 
 }
@@ -256,20 +254,20 @@ void Game::_update() {
 
 	//Update all of the other non player related update chores for each game object
 	// Game objects are stored in layers
-	for (auto& gameLayer : m_gameObjects)
+	for (auto& gameObjects : m_gameObjects)
 	{
 		//Update normal game objects
-		for (int i = 0; i < gameLayer.size(); i++)
+		for (int i = 0; i < gameObjects.size(); i++)
 		{
-			if (gameLayer[i]->removeFromWorld())
+			if (gameObjects[i]->removeFromWorld())
 			{
-				gameLayer[i]->setRemoveFromWorld(false);
-				gameLayer[i]->resetParticle();
-				gameLayer.erase(gameLayer.begin() + i);
+				gameObjects[i]->setRemoveFromWorld(false);
+				gameObjects[i]->reset();
+				gameObjects.erase(gameObjects.begin() + i);
 			}
 			else
 			{
-				gameLayer[i]->update();
+				gameObjects[i]->update();
 			}
 			
 
@@ -360,18 +358,6 @@ void Game::_handleEvents() {
 				m_gameState = QUIT;
 				//guiEvent->run();
 			}
-			else
-			{
-				//m_player->handlePlayerMovementEvent(&event);
-			}
-			break;
-
-		case SDL_MOUSEMOTION:
-			//m_player->handlePlayerMovementEvent(&event);
-			break;
-		case SDL_MOUSEBUTTONDOWN:
-			//this->testSound();
-			//m_player->fire();
 			break;
 		case SDL_USEREVENT:
 			delete event.user.data1;

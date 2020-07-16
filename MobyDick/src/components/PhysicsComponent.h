@@ -22,9 +22,12 @@ public:
 	void setTransform(b2Vec2 positionVector, float angle);
 	void setLinearVelocity(b2Vec2 velocityVector);
 	void setPhysicsBodyActive(bool  active);
+	void attachItem(std::shared_ptr<GameObject>inventoryObject);
 
-
-	void setDependencyReferences(std::shared_ptr<TransformComponent> transportComponent);
+	//Accessor functions
+	b2Vec2 objectAnchorPoint() {
+		return m_objectAnchorPoint;
+	}
 
 private:
 
@@ -44,6 +47,8 @@ private:
 		m_collisionCategory,
 		m_collisionShape,
 		m_physicsType;
+	b2Vec2
+		m_objectAnchorPoint;
 
 };
 

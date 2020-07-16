@@ -139,6 +139,8 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\actions\HeroUseAction.cpp" />
+    <ClCompile Include="src\components\InventoryComponent.cpp" />
     <ClCompile Include="src\actions\HeroRotateAction.cpp" />
     <ClCompile Include="src\actions\HeroMoveAction.cpp" />
     <ClCompile Include="src\JsonToActionClass.cpp" />
@@ -184,6 +186,8 @@
     <ClCompile Include="src\components\UIControlComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\actions\HeroUseAction.h" />
+    <ClInclude Include="src\components\InventoryComponent.h" />
     <ClInclude Include="src\actions\HeroRotateAction.h" />
     <ClInclude Include="src\actions\HeroMoveAction.h" />
     <ClInclude Include="src\JsonToActionClass.h" />

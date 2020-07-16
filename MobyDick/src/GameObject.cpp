@@ -3,8 +3,10 @@
 #include "GameObjectManager.h"
 #include "EventManager.h"
 #include "components/TransformComponent.h"
+#include "components/InventoryComponent.h"
 
 #include "Level.h"
+#include "game.h"
 
 
 GameObject::~GameObject()
@@ -18,6 +20,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Game Object Id
 	m_id = gameObjectId;
 	m_removeFromWorld = false;
+	std::shared_ptr<Component>tempPtr;
 
 	Json::Value definitionJSON;
 
@@ -31,31 +34,24 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 		definitionJSON = GameObjectManager::instance().getDefinition("DEBUG_ITEM")->definitionJSON();
 	}
 
+	//Always build a render and transform component
+	tempPtr = std::make_shared<RenderComponent>(definitionJSON);
+	addComponent(RENDER_COMPONENT, tempPtr);
+	tempPtr = std::make_shared<TransformComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
+	addComponent(TRANSFORM_COMPONENT, tempPtr);
+
 	//Animation Component
 	if (definitionJSON.isMember("animationComponent"))
 	{
-		Json::Value componentJSON = definitionJSON["animationComponent"];
-		std::shared_ptr<AnimationComponent>tempPtr = std::make_shared<AnimationComponent>(definitionJSON);
-
+		tempPtr = std::make_shared<AnimationComponent>(definitionJSON);
 		addComponent(ANIMATION_COMPONENT, tempPtr);
 
 	}
-	//Transform Component
-	if (definitionJSON.isMember("transformComponent"))
-	{
-		Json::Value componentJSON = definitionJSON["transformComponent"];
-		std::shared_ptr<TransformComponent>tempPtr = std::make_shared<TransformComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
 
-		addComponent(TRANSFORM_COMPONENT, tempPtr);
-
-
-	}
 	//Physics Component
 	if (definitionJSON.isMember("physicsComponent") && definitionJSON.isMember("transformComponent"))
 	{
-		Json::Value componentJSON = definitionJSON["physicsComponent"];
-		std::shared_ptr<PhysicsComponent>tempPtr = std::make_shared<PhysicsComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
-
+		tempPtr = std::make_shared<PhysicsComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
 		addComponent(PHYSICS_COMPONENT, tempPtr);
 
 
@@ -63,20 +59,14 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Vitality Component
 	if (definitionJSON.isMember("vitalityComponent"))
 	{
-		Json::Value componentJSON = definitionJSON["vitalityComponent"];
-		std::shared_ptr<VitalityComponent>tempPtr = std::make_shared<VitalityComponent>(definitionJSON);
-
+		tempPtr = std::make_shared<VitalityComponent>(definitionJSON);
 		addComponent(VITALITY_COMPONENT, tempPtr);
-
-
 	}
 
 	//Player control Component
 	if (definitionJSON.isMember("playerControlComponent"))
 	{
-		Json::Value componentJSON = definitionJSON["playerControlComponent"];
-		std::shared_ptr<PlayerControlComponent>tempPtr = std::make_shared<PlayerControlComponent>(definitionJSON);
-
+		tempPtr = std::make_shared<PlayerControlComponent>(definitionJSON);
 		addComponent(PLAYERCONTROL_COMPONENT, tempPtr);
 
 	}
@@ -84,9 +74,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Text Component
 	if (definitionJSON.isMember("textComponent"))
 	{
-		Json::Value componentJSON = definitionJSON["textComponent"];
-		std::shared_ptr<TextComponent>tempPtr = std::make_shared<TextComponent>(gameObjectId, definitionJSON);
-
+		tempPtr = std::make_shared<TextComponent>(gameObjectId, definitionJSON);
 		addComponent(TEXT_COMPONENT, tempPtr);
 		
 	}
@@ -94,9 +82,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Children Component
 	if (definitionJSON.isMember("childrenComponent"))
 	{
-		Json::Value componentJSON = definitionJSON["childrenComponent"];
-		std::shared_ptr<ChildrenComponent>tempPtr = std::make_shared<ChildrenComponent>(definitionJSON);
-
+		tempPtr = std::make_shared<ChildrenComponent>(definitionJSON);
 		addComponent(CHILDREN_COMPONENT, tempPtr);
 
 	}
@@ -104,9 +90,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Action Component
 	if (definitionJSON.isMember("actionComponent"))
 	{
-		Json::Value componentJSON = definitionJSON["actionComponent"];
-		std::shared_ptr<ActionComponent>tempPtr = std::make_shared<ActionComponent>(definitionJSON);
-
+		tempPtr = std::make_shared<ActionComponent>(definitionJSON);
 		addComponent(ACTION_COMPONENT, tempPtr);
 
 	}
@@ -114,17 +98,18 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Particle Component
 	if (definitionJSON.isMember("particleComponent"))
 	{
-		Json::Value componentJSON = definitionJSON["particleComponent"];
-		std::shared_ptr<ParticleComponent>tempPtr = std::make_shared<ParticleComponent>(definitionJSON);
-
+		tempPtr = std::make_shared<ParticleComponent>(definitionJSON);
 		addComponent(PARTICLE_COMPONENT, tempPtr);
 
 	}
 
-	//Render Component - Always Build
-	std::shared_ptr<RenderComponent>tempPtr = std::make_shared<RenderComponent>(definitionJSON);
+	//Inventory Component
+	if (definitionJSON.isMember("inventoryComponent"))
+	{
+		tempPtr = std::make_shared<InventoryComponent>();
+		addComponent(INVENTORY_COMPONENT, tempPtr);
 
-	addComponent(RENDER_COMPONENT, tempPtr);
+	}
 
 	//Set dependency references
 	_setDependecyReferences();
@@ -264,7 +249,7 @@ void GameObject::render()
 //
 //}
 
-void GameObject::resetParticle()
+void GameObject::reset()
 {
 
 	//convenience reference to outside component(s)
@@ -275,6 +260,26 @@ void GameObject::resetParticle()
 
 	particleComponent->reset();
 	physicsComponent->setOffGrid();
+
+}
+
+void GameObject::addInventoryItem(std::shared_ptr<GameObject>gameObject, std::shared_ptr<GameObject>inventoryObject)
+{
+	//convenience reference to outside component(s)
+	auto& inventoryComponent =
+		std::static_pointer_cast<InventoryComponent>(m_components[INVENTORY_COMPONENT]);
+	auto& physicsComponent =
+		std::static_pointer_cast<PhysicsComponent>(m_components[PHYSICS_COMPONENT]);
+
+	size_t itemCount = inventoryComponent->addItem( gameObject, inventoryObject);
+	//If this is the only iventory item, then attach it to the player of whatever object this is
+	if (itemCount == 1)
+	{
+		physicsComponent->attachItem(inventoryObject);
+	}
+
+	//Also add the item to the world
+	Game::instance().addGameObject(inventoryObject, GameObjectLayer::DEBUG);
 
 }
 

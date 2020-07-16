@@ -117,7 +117,10 @@ void PlayerControlComponent::handleMovement(std::shared_ptr<GameObject>gameObjec
 				strafe = -1;
 			}
 
-			actionComponent->moveAction(gameObject.get(), direction, strafe);
+			if (auto action = actionComponent->actionMap()[ACTION_MOVE])
+			{
+				action->perform(gameObject.get(), direction, strafe);
+			}
 
 			break;
 
@@ -129,7 +132,11 @@ void PlayerControlComponent::handleMovement(std::shared_ptr<GameObject>gameObjec
 			if (time_diff.count() > .03)
 			{
 				angularVelocity = inputEvent->event.motion.xrel * GameConfig::instance().mouseSensitivity();
-				actionComponent->rotateAction(gameObject.get(), angularVelocity);
+				if (auto action = actionComponent->actionMap()[ACTION_ROTATE])
+				{
+					action->perform(gameObject.get(), angularVelocity);
+				}
+				//actionComponent->rotateAction(gameObject.get(), angularVelocity);
 				rotation_time_snapshot = now_time;
 			}
 			break;
@@ -165,10 +172,14 @@ void PlayerControlComponent::handleActions(std::shared_ptr<GameObject>gameObject
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			//Execute USE
-			testParticle();
+			//testParticle();
 			if (m_controls.test(CONTROL_USE))
 			{
-				actionComponent->useAction(gameObject.get());
+				if (auto action = actionComponent->actionMap()[ACTION_USE])
+				{
+					action->perform(gameObject.get());
+				}
+				//actionComponent->useAction(gameObject.get());
 				
 			}
 

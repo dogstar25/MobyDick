@@ -4,8 +4,7 @@
 #include <string>
 #include <map>
 
-#include <SDL2/SDL_pixels.h>
-
+#include <SDL2/SDL.h>
 
 /*
 Overloaded operators used throught the game
@@ -20,13 +19,58 @@ static bool operator !=(SDL_Color a, SDL_Color b)
 	return (a.r != b.r) || (a.g != b.g) || (a.b != b.b);
 }
 
-namespace constants
-{
+static const size_t MAX_GAMEOBJECT_LAYERS = 4;
+static const size_t CHILD_POSITIONS = 9;
 
-	static constexpr int MAX_GAMEOBJECT_LAYERS = 4;
-	static constexpr short CHILD_POSITIONS = 9;
+//Mouse State
+static const size_t MOUSE_NONE = 0;
+static const size_t MOUSE_HOVER = 1;
+static const size_t MOUSE_HOLD = 2;
+static const size_t MOUSE_CLICKED = 3;
 
-}
+//Collision Groups
+static const size_t COLLISION_GENERIC = 1;
+static const size_t COLLISION_PLAYER = 2;
+static const size_t COLLISION_WALL = 4;
+static const size_t COLLISION_PLAYER_BULLET = 8;
+static const size_t COLLISION_PARTICLE1 = 16;
+static const size_t COLLISION_PARTICLE2 = 32;
+static const size_t COLLISION_PARTICLE3 = 64;
+static const size_t COLLISION_ENEMY_FRAME = 128;
+static const size_t COLLISION_ENEMY_ARMOR = 256;
+static const size_t COLLISION_ENEMY_ARMOR_PIECE = 512;
+
+//Components
+static const size_t ACTION_COMPONENT = 1;
+static const size_t ANIMATION_COMPONENT = 2;
+static const size_t ATTACHMENTS_COMPONENT = 3;
+static const size_t CHILDREN_COMPONENT = 4;
+static const size_t COMPOSITE_COMPONENT = 5;
+static const size_t TRANSFORM_COMPONENT = 6;
+static const size_t PARTICLE_COMPONENT = 7;
+static const size_t PHYSICS_COMPONENT = 8;
+static const size_t RENDER_COMPONENT = 9;
+static const size_t TEXT_COMPONENT = 10;
+static const size_t VITALITY_COMPONENT = 11;
+static const size_t WEAPON_COMPONENT = 12;
+static const size_t PLAYERCONTROL_COMPONENT = 13;
+static const size_t INVENTORY_COMPONENT = 14;
+
+//Animation States
+static const size_t ANIMATION_IDLE = 0;
+static const size_t ANIMATION_RUN = 1;
+static const size_t ANIMATION_ACTIVE = 3;
+static const size_t ANIMATION_ACTION = 4;
+
+//Player Control
+static const size_t CONTROL_MOVEMENT = 1;
+static const size_t CONTROL_USE = 2;
+
+//Actions
+static const size_t ACTION_MOVE = 1;
+static const size_t ACTION_ROTATE = 2;
+static const size_t ACTION_USE = 3;
+
 
 namespace util
 {
@@ -40,62 +84,6 @@ namespace util
 
 };
 
-//Change these to consts?
-enum {
-	//Mouse State
-	MOUSE_NONE = 0,
-	MOUSE_HOVER = 1,
-	MOUSE_HOLD = 2,
-	MOUSE_CLICKED = 3,
-
-	//Collision Groups
-	COLLISION_GENERIC = 1,
-	COLLISION_PLAYER = 2,
-	COLLISION_WALL = 4,
-	COLLISION_PLAYER_BULLET = 8,
-	COLLISION_PARTICLE1 = 16,
-	COLLISION_PARTICLE2 = 32,
-	COLLISION_PARTICLE3 = 64,
-	COLLISION_ENEMY_FRAME = 128,
-	COLLISION_ENEMY_ARMOR = 256,
-	COLLISION_ENEMY_ARMOR_PIECE = 512,
-
-	//Components
-	ACTION_COMPONENT = 1,
-	ANIMATION_COMPONENT = 2,
-	ATTACHMENTS_COMPONENT = 3,
-	CHILDREN_COMPONENT = 4,
-	COMPOSITE_COMPONENT = 5,
-	TRANSFORM_COMPONENT = 6,
-	PARTICLE_COMPONENT = 7,
-	PHYSICS_COMPONENT = 8,
-	RENDER_COMPONENT = 9,
-	TEXT_COMPONENT = 10,
-	VITALITY_COMPONENT = 11,
-	WEAPON_COMPONENT = 12,
-	PLAYERCONTROL_COMPONENT = 13,
-
-	//Animation States
-	ANIMATION_IDLE = 0,
-	ANIMATION_RUN = 1,
-
-	ANIMATION_ACTIVE = 3,
-	ANIMATION_ACTION = 4,
-
-	//Player Control
-	CONTROL_MOVEMENT = 1,
-	CONTROL_USE = 2,
-
-	//Actions
-	ACTION_MOVE = 1,
-	ACTION_ROTATE = 2,
-	ACTION_USE = 3
-
-
-
-
-};
-
 /*
 Game State
 */
@@ -103,7 +91,6 @@ enum GameState{
 	QUIT = 0,
 	PLAY = 1,
 	PAUSE = 2
-
 };
 
 

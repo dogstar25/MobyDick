@@ -68,8 +68,7 @@ void DebugPanel::addItem(std::string id, std::string value)
 
 			//Calculate the position of the debug text item
 			xPos = m_location.x;
-			//FIXME: Level tile size 32
-			yPos = m_location.y + m_itemCount * (fontSize / (float)32);
+			yPos = m_location.y + m_itemCount * (fontSize / (float)Level::instance().m_tileHeight);
 
 			Game::instance().addGameObject(newId, GameObjectLayer::DEBUG, xPos, yPos, 0);
 

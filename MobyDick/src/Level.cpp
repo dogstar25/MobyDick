@@ -94,6 +94,9 @@ void Level::_loadDefinition(std::string levelId)
 		m_levelBounds.w = m_width * m_tileWidth;
 		m_levelBounds.h = m_height * m_tileHeight;
 
+		//Initialize World bounds
+		Game::instance().setWorldParams(m_levelBounds, m_tileWidth, m_tileHeight);
+
 		LevelObject* locationDefinition = NULL;
 		std::string locationId;
 		for (auto itr : root["locationObjects"])
