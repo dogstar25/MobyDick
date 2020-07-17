@@ -160,9 +160,9 @@ bool Game::init()
 	//for (int i = 0; i < 600; i++)
 	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("GINA_64", 5.f, 5.f, 0.f);
 	Game::instance().addGameObject(gameObject, GameObjectLayer::MAIN);
-	gameObject->addInventoryItem(gameObject, std::make_shared<GameObject>("WEAPON1", 5.f, 5.f, 0.f));
-	//for (int i = 0; i < 3000; i++)
-		//m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("BOWMAN", 5.f, 5.f, 0.f));
+	gameObject->addInventoryItem(std::make_shared<GameObject>("WEAPON1", 5.f, 5.f, 0.f));
+//	for (int i = 0; i < 10000; i++)
+		m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 5.f, 5.f, 0.f));
 
 	//m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 7.f, 7.f, 0.f));
 

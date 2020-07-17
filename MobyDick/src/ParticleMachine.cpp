@@ -114,15 +114,10 @@ void ParticleMachine::emit(
 		if (particle != NULL)
 		{
 
-			auto& physicsComponent =
-				std::static_pointer_cast<PhysicsComponent>(particle->components()[PHYSICS_COMPONENT]);
-			auto& renderComponent =
-				std::static_pointer_cast<RenderComponent>(particle->components()[RENDER_COMPONENT]);
-			auto& particleComponent =
-				std::static_pointer_cast<ParticleComponent>(particle->components()[PARTICLE_COMPONENT]);
-			auto& transformComponent =
-				std::static_pointer_cast<TransformComponent>(particle->components()[TRANSFORM_COMPONENT]);
-
+			auto& physicsComponent = particle->getComponent<PhysicsComponent>();
+			auto& renderComponent = particle->getComponent<RenderComponent>();
+			auto& particleComponent = particle->getComponent<ParticleComponent>();
+			auto& transformComponent = particle->getComponent<TransformComponent>();
 
 			//Generate a random force
 			int force = 0;

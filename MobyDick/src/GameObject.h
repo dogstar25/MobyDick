@@ -8,6 +8,7 @@
 #include <json/json.h>
 #include <map>
 #include <unordered_map>
+#include <typeindex>
 
 #include <Box2D/Box2D.h>
 
@@ -53,9 +54,28 @@ public:
 	Template function to add component to map
 	*/
 	template <typename componentType>
-	inline void addComponent(int componentId, std::shared_ptr<componentType> component)
+	inline void addComponent(std::shared_ptr<componentType> component)
 	{
-		m_components[componentId] = component;
+		m_components[std::type_index(typeid (*component))] = component;
+	}
+
+	template <typename componentType>
+	inline std::shared_ptr<componentType> getComponent()
+	{
+	
+		std::type_index index (typeid(componentType));
+		if (m_components.count(std::type_index(typeid(componentType))) != 0)
+		{
+			return std::static_pointer_cast<componentType>(m_components[index]);
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
+
+	template <typename componentType> bool hasComponent() {
+		return(m_components.count(std::type_index(typeid(componentType))) != 0);
 	}
 
 	void removeComponent(int componentId);
@@ -74,7 +94,7 @@ public:
 		return m_components;
 	}
 	void reset();
-	void addInventoryItem(std::shared_ptr<GameObject>gameObject, std::shared_ptr<GameObject>inventoryObject);
+	void addInventoryItem(std::shared_ptr<GameObject>inventoryObject);
 	void _setDependecyReferences();
 
 private:
@@ -88,7 +108,9 @@ private:
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 
 	//Components
-	std::array<std::shared_ptr<Component>, 32>m_components;
+	//std::array<std::shared_ptr<Component>, 32>m_components;
+	std::map<std::type_index, std::shared_ptr<Component>>m_components;
+	std::bitset<32> m_componentFlags;
 
 };
 

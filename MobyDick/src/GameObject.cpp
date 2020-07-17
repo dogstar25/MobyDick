@@ -36,15 +36,15 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 	//Always build a render and transform component
 	tempPtr = std::make_shared<RenderComponent>(definitionJSON);
-	addComponent(RENDER_COMPONENT, tempPtr);
+	addComponent(tempPtr);
 	tempPtr = std::make_shared<TransformComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
-	addComponent(TRANSFORM_COMPONENT, tempPtr);
+	addComponent(tempPtr);
 
 	//Animation Component
 	if (definitionJSON.isMember("animationComponent"))
 	{
 		tempPtr = std::make_shared<AnimationComponent>(definitionJSON);
-		addComponent(ANIMATION_COMPONENT, tempPtr);
+		addComponent(tempPtr);
 
 	}
 
@@ -52,7 +52,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("physicsComponent") && definitionJSON.isMember("transformComponent"))
 	{
 		tempPtr = std::make_shared<PhysicsComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
-		addComponent(PHYSICS_COMPONENT, tempPtr);
+		addComponent(tempPtr);
 
 
 	}
@@ -60,14 +60,14 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("vitalityComponent"))
 	{
 		tempPtr = std::make_shared<VitalityComponent>(definitionJSON);
-		addComponent(VITALITY_COMPONENT, tempPtr);
+		addComponent(tempPtr);
 	}
 
 	//Player control Component
 	if (definitionJSON.isMember("playerControlComponent"))
 	{
 		tempPtr = std::make_shared<PlayerControlComponent>(definitionJSON);
-		addComponent(PLAYERCONTROL_COMPONENT, tempPtr);
+		addComponent(tempPtr);
 
 	}
 
@@ -75,7 +75,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("textComponent"))
 	{
 		tempPtr = std::make_shared<TextComponent>(gameObjectId, definitionJSON);
-		addComponent(TEXT_COMPONENT, tempPtr);
+		addComponent(tempPtr);
 		
 	}
 
@@ -83,7 +83,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("childrenComponent"))
 	{
 		tempPtr = std::make_shared<ChildrenComponent>(definitionJSON);
-		addComponent(CHILDREN_COMPONENT, tempPtr);
+		addComponent(tempPtr);
 
 	}
 
@@ -91,7 +91,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("actionComponent"))
 	{
 		tempPtr = std::make_shared<ActionComponent>(definitionJSON);
-		addComponent(ACTION_COMPONENT, tempPtr);
+		addComponent(tempPtr);
 
 	}
 
@@ -99,7 +99,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("particleComponent"))
 	{
 		tempPtr = std::make_shared<ParticleComponent>(definitionJSON);
-		addComponent(PARTICLE_COMPONENT, tempPtr);
+		addComponent(tempPtr);
 
 	}
 
@@ -107,7 +107,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("inventoryComponent"))
 	{
 		tempPtr = std::make_shared<InventoryComponent>();
-		addComponent(INVENTORY_COMPONENT, tempPtr);
+		addComponent(tempPtr);
 
 	}
 
@@ -131,29 +131,21 @@ void GameObject::_setDependecyReferences()
 	// to the other components
 	for (auto component : m_components)
 	{
-		//component.second->setDependencyReferences(m_components);
-		if (component) {
-			component->setActive(true);
-
-		}
+		component.second->setActive(true);
 	}
 
 }
 
 void GameObject::setPosition(b2Vec2 position, float angle)
 {
-	//convenience reference to outside component(s)
-	std::shared_ptr<TransformComponent> transformComponent =
-		std::static_pointer_cast<TransformComponent>(m_components[TRANSFORM_COMPONENT]);
-
 	//-1 means dont apply the angle
 	if (angle != -1)
 	{
-		transformComponent->setPosition(position, angle);
+		getComponent<TransformComponent>()->setPosition(position, angle);
 	}
 	else
 	{
-		transformComponent->setPosition(position);
+		getComponent<TransformComponent>()->setPosition(position);
 	}
 
 }
@@ -163,10 +155,7 @@ void GameObject::update()
 {
 	for (auto& component : m_components)
 	{
-		if (component)
-		{
-			component->update(shared_from_this());
-		}
+		component.second->update(shared_from_this());
 	}
 
 
@@ -202,13 +191,13 @@ void GameObject::render()
 
 
 	//Render yourself
-	std::static_pointer_cast<RenderComponent>(m_components[RENDER_COMPONENT])->render(shared_from_this());
+	getComponent<RenderComponent>()->render(shared_from_this());
 		
 	//Render your children
 
-	if (m_components[CHILDREN_COMPONENT])
+	if (getComponent<ChildrenComponent>())
 	{
-		std::static_pointer_cast<ChildrenComponent>(m_components[CHILDREN_COMPONENT])->renderChildren();
+		getComponent<ChildrenComponent>()->renderChildren();
 	}
 
 }
@@ -252,30 +241,18 @@ void GameObject::render()
 void GameObject::reset()
 {
 
-	//convenience reference to outside component(s)
-	auto& physicsComponent =
-		std::static_pointer_cast<PhysicsComponent>(m_components[PHYSICS_COMPONENT]);
-	auto& particleComponent =
-		std::static_pointer_cast<ParticleComponent>(m_components[PARTICLE_COMPONENT]);
-
-	particleComponent->reset();
-	physicsComponent->setOffGrid();
+	getComponent<ParticleComponent>()->reset();
+	getComponent<PhysicsComponent>()->setOffGrid();
 
 }
 
-void GameObject::addInventoryItem(std::shared_ptr<GameObject>gameObject, std::shared_ptr<GameObject>inventoryObject)
+void GameObject::addInventoryItem(std::shared_ptr<GameObject>inventoryObject)
 {
-	//convenience reference to outside component(s)
-	auto& inventoryComponent =
-		std::static_pointer_cast<InventoryComponent>(m_components[INVENTORY_COMPONENT]);
-	auto& physicsComponent =
-		std::static_pointer_cast<PhysicsComponent>(m_components[PHYSICS_COMPONENT]);
-
-	size_t itemCount = inventoryComponent->addItem( gameObject, inventoryObject);
+	size_t itemCount = getComponent<InventoryComponent>()->addItem( inventoryObject);
 	//If this is the only iventory item, then attach it to the player of whatever object this is
 	if (itemCount == 1)
 	{
-		physicsComponent->attachItem(inventoryObject);
+		getComponent<PhysicsComponent>()->attachItem(inventoryObject);
 	}
 
 	//Also add the item to the world

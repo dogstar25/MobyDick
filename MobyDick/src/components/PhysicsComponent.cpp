@@ -83,21 +83,14 @@ void PhysicsComponent::update(std::shared_ptr<GameObject>gameObject)
 		m_physicsBody->SetUserData(gameObject.get());
 	}
 
-	//convenience reference to outside component(s)
-	auto& transformComponent =
-		std::static_pointer_cast<TransformComponent>(gameObject->components()[TRANSFORM_COMPONENT]);
+	//Transfer the physicsComponent coordinates to the transformComponent
+	b2Vec2 convertedPosition{ 0,0 };
+	float convertedAngle = util::radiansToDegrees(m_physicsBody->GetAngle());
 
-	if (transformComponent)
-	{
-		//Transfer the physicsComponent coordinates to the transformComponent
-		b2Vec2 convertedPosition{ 0,0 };
-		float convertedAngle = util::radiansToDegrees(m_physicsBody->GetAngle());
+	convertedPosition.x = m_physicsBody->GetPosition().x * GameConfig::instance().scaleFactor();
+	convertedPosition.y = m_physicsBody->GetPosition().y * GameConfig::instance().scaleFactor();
 
-		convertedPosition.x = m_physicsBody->GetPosition().x * GameConfig::instance().scaleFactor();
-		convertedPosition.y = m_physicsBody->GetPosition().y * GameConfig::instance().scaleFactor();
-
-		transformComponent->setPosition(convertedPosition, convertedAngle);
-	}
+	gameObject->getComponent<TransformComponent>()->setPosition(convertedPosition, convertedAngle);
 }
 
 b2Body* PhysicsComponent::buildB2Body(Json::Value transformComponentJSON)
@@ -108,6 +101,7 @@ b2Body* PhysicsComponent::buildB2Body(Json::Value transformComponentJSON)
 
 	//Default the position to zero.
 	bodyDef.position.SetZero();
+	bodyDef.allowSleep = true;
 	b2Body* body = Game::instance().physicsWorld()->CreateBody(&bodyDef);
 
 	b2Shape* shape;
@@ -284,8 +278,7 @@ void PhysicsComponent::setOffGrid()
 void PhysicsComponent::attachItem(std::shared_ptr<GameObject>inventoryObject)
 {
 	//Get physics component of the inventory object
-	auto& inventoryObjectPhysicsComponent =
-		std::static_pointer_cast<PhysicsComponent>(inventoryObject->components()[PHYSICS_COMPONENT]);
+	auto& inventoryObjectPhysicsComponent = inventoryObject->getComponent<PhysicsComponent>();
 
 	b2WeldJointDef weldJointDef;
 	weldJointDef.referenceAngle;

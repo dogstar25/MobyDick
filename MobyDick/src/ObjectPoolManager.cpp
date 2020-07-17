@@ -94,8 +94,7 @@ std::shared_ptr<GameObject> ObjectPoolManager::getParticle(std::string poolId)
 	for (auto particle : this->m_objectPool[poolId])
 	{
 		//convenience reference to outside component(s)
-		auto& particleComponent =
-			std::static_pointer_cast<ParticleComponent>(particle->components()[PARTICLE_COMPONENT]);
+		auto& particleComponent = particle->getComponent<ParticleComponent>();
 
 		if (particleComponent->isAvailable() == true)
 		{

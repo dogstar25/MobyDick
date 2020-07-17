@@ -47,7 +47,7 @@ void ChildrenComponent::update(std::shared_ptr<GameObject>gameObject)
 	//	std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
 	//TRY AUTO!!
 	auto& transformComponent =
-		std::static_pointer_cast<TransformComponent>(gameObject->components()[TRANSFORM_COMPONENT]);
+		gameObject->getComponent<TransformComponent>();
 
 	short locationSlot = 0;
 	
@@ -59,9 +59,7 @@ void ChildrenComponent::update(std::shared_ptr<GameObject>gameObject)
 	
 		for (auto& childObject : childLocations)
 		{
-			std::shared_ptr<TransformComponent> childTransformComponent =
-				std::static_pointer_cast<TransformComponent>(childObject->components()[TRANSFORM_COMPONENT]);
-
+			auto& childTransformComponent =	childObject->getComponent<TransformComponent>();
 
 			childNumber++;
 	

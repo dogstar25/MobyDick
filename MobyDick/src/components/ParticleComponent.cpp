@@ -31,10 +31,6 @@ ParticleComponent::~ParticleComponent()
 void ParticleComponent::update(std::shared_ptr<GameObject>gameObject)
 {
 
-	//convenience reference to outside component(s)
-	auto& renderComponent =
-		std::static_pointer_cast<RenderComponent>(gameObject->components()[RENDER_COMPONENT]);
-
 	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
 	std::chrono::duration<double, std::milli> timeDiffMilliSeconds = now_time - m_time_snapshot;
 
@@ -57,7 +53,7 @@ void ParticleComponent::update(std::shared_ptr<GameObject>gameObject)
 			//If this particle should fade over time, then adjust its alpha value
 			if (m_isLifetimeAlphaFade)
 			{
-				renderComponent->setColorAlpha(int(255 * (m_lifetimeRemaining / m_lifetime)));
+				gameObject->getComponent<RenderComponent>()->setColorAlpha(int(255 * (m_lifetimeRemaining / m_lifetime)));
 			}
 
 

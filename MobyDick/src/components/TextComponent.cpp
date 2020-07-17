@@ -63,10 +63,8 @@ TextComponent::~TextComponent()
 void TextComponent::update(std::shared_ptr<GameObject>gameObject)
 {
 	//convenience reference to outside component(s)
-	auto& renderComponent =
-		std::static_pointer_cast<RenderComponent>(gameObject->components()[RENDER_COMPONENT]);
-	auto& transformComponent =
-		std::static_pointer_cast<TransformComponent>(gameObject->components()[TRANSFORM_COMPONENT]);
+	auto& renderComponent = gameObject->getComponent<RenderComponent>();
+	auto& transformComponent = gameObject->getComponent<TransformComponent>();
 
 	std::string textureId = "TX_" + m_gameObjectId;
 
@@ -96,10 +94,8 @@ void TextComponent::update(std::shared_ptr<GameObject>gameObject)
 std::shared_ptr<Texture> TextComponent::generateTextTexture(std::shared_ptr<GameObject>gameObject)
 {
 	//convenience reference to outside component(s)
-	auto& renderComponent =
-		std::static_pointer_cast<RenderComponent>(gameObject->components()[RENDER_COMPONENT]);
-	auto& transformComponent =
-		std::static_pointer_cast<TransformComponent>(gameObject->components()[TRANSFORM_COMPONENT]);
+	auto& renderComponent = gameObject->getComponent<RenderComponent>();
+	auto& transformComponent = gameObject->getComponent<TransformComponent>();
 
 	std::shared_ptr<Texture> texture = std::make_shared<Texture>();;
 

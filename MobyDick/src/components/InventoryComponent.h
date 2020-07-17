@@ -12,7 +12,7 @@ public:
 	InventoryComponent();
 	~InventoryComponent();
 
-	size_t addItem(std::shared_ptr<GameObject>gameObject, std::shared_ptr<GameObject>inventoryObject);
+	size_t addItem(std::shared_ptr<GameObject>inventoryObject);
 
 	std::vector<std::weak_ptr<GameObject>> items() {
 		return m_items;

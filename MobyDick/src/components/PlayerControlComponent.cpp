@@ -80,8 +80,7 @@ void PlayerControlComponent::handleMovement(std::shared_ptr<GameObject>gameObjec
 {
 
 	//convenience reference to outside component(s)
-	auto& actionComponent =
-		std::static_pointer_cast<ActionComponent>(gameObject->components()[ACTION_COMPONENT]);
+	auto& actionComponent =	gameObject->getComponent<ActionComponent>();
 
 	float angularVelocity = 0;
 	int direction = 0;
@@ -151,8 +150,7 @@ void PlayerControlComponent::handleMovement(std::shared_ptr<GameObject>gameObjec
 void PlayerControlComponent::handleActions(std::shared_ptr<GameObject>gameObject)
 {
 	//convenience reference to outside component(s)
-	auto& actionComponent =
-		std::static_pointer_cast<ActionComponent>(gameObject->components()[ACTION_COMPONENT]);
+	auto& actionComponent = gameObject->getComponent<ActionComponent>();
 
 	const Uint8* keyStates = nullptr;
 

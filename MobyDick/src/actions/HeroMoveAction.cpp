@@ -22,12 +22,9 @@ HeroMoveAction::~HeroMoveAction()
 
 void HeroMoveAction::perform(GameObject* gameObject, int direction, int strafe)
 {
-	auto& physicsComponent =
-		std::static_pointer_cast<PhysicsComponent>(gameObject->components()[PHYSICS_COMPONENT]);
-	auto& animationComponent =
-		std::static_pointer_cast<AnimationComponent>(gameObject->components()[ANIMATION_COMPONENT]);
-	auto& vitalityComponent =
-		std::static_pointer_cast<VitalityComponent>(gameObject->components()[VITALITY_COMPONENT]);
+	auto& physicsComponent = gameObject->getComponent<PhysicsComponent>();
+	auto& animationComponent = gameObject->getComponent<AnimationComponent>();
+	auto& vitalityComponent = gameObject->getComponent<VitalityComponent>();
 
 	physicsComponent->applyMovement(vitalityComponent->speed(), direction, strafe);
 
