@@ -35,13 +35,22 @@ public:
 	static Game& instance();
 	bool init();
 	void play();
-	static void renderGameObjects(const std::array <std::vector<GameObject>, constants::MAX_GAMEOBJECT_LAYERS>&);
+	static void renderGameObjects(const std::array <std::vector<GameObject>, MAX_GAMEOBJECT_LAYERS>&);
 	
-	void addGameObject(GameObject* gameObject, int);
+	void addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle);
+	void addGameObject(std::shared_ptr<GameObject>gameObject, int layer);
+
 	void setGameState(int state) {
 		m_gameState = state;
 	}
-	
+	void setWorldParams(SDL_Rect bounds, int worldTileWidth, int worldTileHeight)
+	{
+		m_WorldBounds = bounds;
+		m_WorldTileWidth = worldTileWidth;
+		m_WorldTileHeight = worldTileHeight;
+
+	}
+
 	//Accessor Functions
 	b2World* physicsWorld() {
 		return m_physicsWorld;
@@ -55,6 +64,15 @@ public:
 	int gameState(){
 		return m_gameState;
 	}
+	SDL_Rect worldBounds() {
+		return m_WorldBounds;
+	}
+	int worldTileWidth() {
+		return m_WorldTileWidth;
+	}
+	int worldTileHeight() {
+		return m_WorldTileHeight;
+	}
 
 private:
 
@@ -67,13 +85,16 @@ private:
 	SDL_Window* m_window;
 	GameObject* m_player;
 	int m_gameState;
+	SDL_Rect m_WorldBounds;
+	int m_WorldTileWidth;
+	int m_WorldTileHeight;
 
 	/*Fixed array of Layers
 	Each layer contains a vector of GameObjects
 	For deletions, things with heavy number of deletes like bullets and particles should all be at 
 	the end of the vector which shoudl make for acceptable erase performance
 	*/
-	std::array <std::vector<std::shared_ptr<GameObject>>, constants::MAX_GAMEOBJECT_LAYERS> m_gameObjects;
+	std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> m_gameObjects;
 
 
 };

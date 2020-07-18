@@ -1,6 +1,8 @@
 #include "GameConfig.h"
 
 #include <json/json.h>
+#include "Globals.h"
+#include "game.h"
 
 #include <fstream>
 
@@ -43,6 +45,10 @@ bool GameConfig::init(std::string configFile)
 	m_windowWidth = root["window"]["width"].asInt();
 	m_windowHeight = root["window"]["height"].asInt();
 	m_windowFullscreen = root["window"]["fullscreen"].asBool();
+
+	//Global World sizes
+	SDL_Rect bounds = { m_windowWidth, m_windowHeight };
+	Game::instance().setWorldParams(bounds, 32, 32);
 
 	return true;
 }

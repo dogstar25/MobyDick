@@ -9,6 +9,7 @@
 #include "../DynamicTextManager.h"
 #include "../GameConfig.h"
 #include "../texture.h"
+#include "../GameObject.h"
 
 TextComponent::TextComponent()
 {
@@ -17,34 +18,29 @@ TextComponent::TextComponent()
 
 
 
-TextComponent::TextComponent(std::string gameObjectId)
+TextComponent::TextComponent(std::string gameObjectId, Json::Value definitionJSON)
 {
 
-	m_parentGameObjectId = gameObjectId;
+	//gameObjectId can be dynamic because of the debug text so it must be passed in
 	m_textureId = "TX_" + gameObjectId;
+	m_gameObjectId = gameObjectId;
 
-	if (gameObjectId.rfind("DEBUG_", 0) == 0)
+	Json::Value textComponentJSON = definitionJSON["textComponent"];
+	m_isDebugText = false;
+	m_isDynamic = textComponentJSON["dynamic"].asBool();
+	m_fontId = textComponentJSON["font"].asString();
+	m_textValue = textComponentJSON["value"].asString();
+	m_fontSize = textComponentJSON["fontSize"].asInt();
+
+	if (m_textValue.empty())
 	{
-		m_isDebugText = true;
-		m_debugId = gameObjectId;
-		m_isDynamic = true;
-		m_textValue = "default";
-		m_fontId = "FONT_ARIAL_REG";
-		m_fontSize = 12;
-		
+		m_textValue = "Default Text";
 	}
-	else
-	{
-		Json::Value definitionJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
-		Json::Value textComponentJSON = definitionJSON["textComponent"];
 
-		m_isDebugText = false;
-		m_isDynamic = textComponentJSON["dynamic"].asBool();
-		m_fontId = textComponentJSON["font"].asString();
-		m_textValue = textComponentJSON["value"].asString();
-		m_fontSize = textComponentJSON["fontSize"].asInt();
+	//test
+	std::string fontFile = TextureManager::instance().getFont(m_fontId);
+	m_fontObject = TTF_OpenFont(fontFile.c_str(), m_fontSize);
 
-	}
 
 }
 
@@ -61,39 +57,45 @@ void TextComponent::construct()
 
 TextComponent::~TextComponent()
 {
-
+	TTF_CloseFont(m_fontObject);
 }
 
-void TextComponent::update()
+void TextComponent::update(std::shared_ptr<GameObject>gameObject)
 {
+	//convenience reference to outside component(s)
+	auto& renderComponent = gameObject->getComponent<RenderComponent>();
+	auto& transformComponent = gameObject->getComponent<TransformComponent>();
 
-	std::string textureId = "TX_" + m_parentGameObjectId;
+	std::string textureId = "TX_" + m_gameObjectId;
 
 	if (TextureManager::instance().hasTexture(textureId))
 	{
 		//If we have already set the texture, dont have to do it again
-		if (!m_refRenderComponent->texture())
+		if (renderComponent->texture())
 		{
-			m_refRenderComponent->setTexture(TextureManager::instance().getTexture(textureId));
-			m_refTransformComponent->setSize(m_refRenderComponent->texture()->surface->w, m_refRenderComponent->texture()->surface->h);
+			renderComponent->setTexture(TextureManager::instance().getTexture(textureId));
+			transformComponent->setSize(renderComponent->texture()->surface->w, renderComponent->texture()->surface->h);
 		}
 
 	}
 	else
 	{
-		m_refRenderComponent->setTexture(generateTextTexture());
+		renderComponent->setTexture(generateTextTexture(gameObject));
 	}
 
 	if (m_isDynamic == true)
 	{
-		m_refRenderComponent->setTexture(updateDynamicTextTexture());
+		renderComponent->setTexture(updateDynamicTextTexture(gameObject));
 	}
 
 
 }
 
-std::shared_ptr<Texture> TextComponent::generateTextTexture()
+std::shared_ptr<Texture> TextComponent::generateTextTexture(std::shared_ptr<GameObject>gameObject)
 {
+	//convenience reference to outside component(s)
+	auto& renderComponent = gameObject->getComponent<RenderComponent>();
+	auto& transformComponent = gameObject->getComponent<TransformComponent>();
 
 	std::shared_ptr<Texture> texture = std::make_shared<Texture>();;
 
@@ -109,12 +111,15 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 	//FIXME:Add a vector of TTF_Font* fontObject's with maybe 6 different font sizes. OPen them in the contructor
 	//and leave them open for regenerating text textures. Then close them in the deconstructor.
 	//This should save loads of time
-	TTF_Font* fontObject = TTF_OpenFont(fontFile.c_str(), m_fontSize);
-	tempSurface = TTF_RenderText_Blended(fontObject, m_textValue.c_str(), m_refRenderComponent->color());
-	TTF_CloseFont(fontObject);
+	//m_fontObject = TTF_OpenFont(fontFile.c_str(), m_fontSize);
+	tempSurface = TTF_RenderText_Blended(m_fontObject, m_textValue.c_str(), renderComponent->color());
+	//TTF_CloseFont(m_fontObject);
 
 	//Set the size of the textObject now that its texture has been generated
-	m_refTransformComponent->setSize(tempSurface->w, tempSurface->h);
+	transformComponent->setSize(tempSurface->w, tempSurface->h);
+	transformComponent->setPosition(
+		transformComponent->originalPosition().x + tempSurface->w/2,
+		transformComponent->originalPosition().y + tempSurface->h/2);
 
 	texture->sdlTexture = Renderer::instance().createTextureFromSurface(tempSurface);
 	texture->surface = tempSurface;
@@ -127,14 +132,14 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 
 }
 
-std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
+std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture(std::shared_ptr<GameObject>gameObject)
 {
 
 	TextItem* newText;
 	std::shared_ptr<Texture> texture;
 	SDL_Surface* surface;
 
-	newText = DynamicTextManager::instance().getTextItem(m_parentGameObjectId);
+	newText = DynamicTextManager::instance().getTextItem(m_gameObjectId);
 
 	//check the clock and see if enough time as gone by
 	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
@@ -148,8 +153,14 @@ std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
 
 		//Build new texture
 		m_textValue = newText->textValue;
-		texture = generateTextTexture();
+		texture = generateTextTexture(gameObject);
 		newText->hasChanged = false;
+
+	/*	m_refTransformComponent->setPosition(
+			(m_refTransformComponent->size().x / 2),
+			(m_refTransformComponent->size().y / 2)
+		);*/
+
 
 	}
 	else
@@ -165,15 +176,7 @@ std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
 
 }
 
-void TextComponent::setDependencyReferences(
-	std::shared_ptr<TransformComponent> transformComponent,
-	std::shared_ptr<RenderComponent> renderComponent)
-{
 
-	m_refTransformComponent = transformComponent;
-	m_refRenderComponent = renderComponent;
-
-}
 
 
 

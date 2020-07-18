@@ -2,22 +2,22 @@
 #define OBJECT_POOL_MANAGER_H
 
 #include <string>
-#include <map>
+#include <unordered_map>
 #include <vector>
+#include <memory>
 
-class ParticleObject;
+class GameObject;
 
 class ObjectPoolManager
 {
 public:
 	static ObjectPoolManager& instance();
 	void init();
-	void reset(ParticleObject* particle);
 
-	ParticleObject* getParticle(std::string);
+	std::shared_ptr<GameObject> getParticle(std::string);
 
 	//Accessor Functions
-	const std::map <std::string, std::vector<ParticleObject*>>& objectPool(){
+	const std::unordered_map <std::string, std::vector<std::shared_ptr<GameObject>>>& objectPool() {
 		return m_objectPool;
 	}
 
@@ -25,7 +25,7 @@ private:
 	ObjectPoolManager();
 	~ObjectPoolManager();
 
-	std::map <std::string, std::vector<ParticleObject*>> m_objectPool;
+	std::unordered_map <std::string, std::vector<std::shared_ptr<GameObject>>> m_objectPool;
 
 
 

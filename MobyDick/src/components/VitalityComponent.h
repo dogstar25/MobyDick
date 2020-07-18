@@ -5,14 +5,16 @@
 
 #include "Component.h"
 
+class GameObject;
+
 class VitalityComponent :  public Component
 {
 public:
 	VitalityComponent();
-	VitalityComponent(Json::Value itrJSON);
+	VitalityComponent(Json::Value definitionJSON);
 	~VitalityComponent();
 
-	void update() override;
+	void update(std::shared_ptr<GameObject>gameObject) override;
 
 	//Accessor functions
 	float speed() {
@@ -25,13 +27,6 @@ private:
 		m_strength,
 		m_health;
 
-	std::chrono::duration<float, std::milli> m_lifetime;
-	std::chrono::duration<float, std::milli> m_lifetimeRemaining;
-	std::chrono::steady_clock::time_point time_snapshot;
-
-	bool
-		isLifetimeAlphaFade,
-		hasInfiniteLifetime;
 
 
 };

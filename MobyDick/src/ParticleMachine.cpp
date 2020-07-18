@@ -1,8 +1,6 @@
 #include "ParticleMachine.h"
 
 
-
-#include "ParticleObject.h"
 #include "ObjectPoolManager.h"
 #include "Game.h"
 #include "GameConfig.h"
@@ -110,11 +108,17 @@ void ParticleMachine::emit(
 	{
 
 		//Get the particle object from the pre-populated particle pool
-		ParticleObject* particle = ObjectPoolManager::instance().getParticle(poolId);
+		std::shared_ptr<GameObject> particle = ObjectPoolManager::instance().getParticle(poolId);
 
 		//If the returned particle is null, then the pool has run out, so do nothing
 		if (particle != NULL)
 		{
+
+			auto& physicsComponent = particle->getComponent<PhysicsComponent>();
+			auto& renderComponent = particle->getComponent<RenderComponent>();
+			auto& particleComponent = particle->getComponent<ParticleComponent>();
+			auto& transformComponent = particle->getComponent<TransformComponent>();
+
 			//Generate a random force
 			int force = 0;
 			if (forceMin != forceMax)
@@ -127,7 +131,7 @@ void ParticleMachine::emit(
 			}
 
 			//Set lifetime alpha fade flag
-			particle->isLifetimeAlphaFade = alphaFade;
+			particleComponent->m_isLifetimeAlphaFade = alphaFade;
 
 			//Set the color of the particle. Randomize the color values if they are different
 			SDL_Color color = { 255,255,255,255 };
@@ -141,7 +145,7 @@ void ParticleMachine::emit(
 			{
 				color = colorRangeBegin;
 			}
-			particle->setColor(color);
+			renderComponent->setColor(color);
 
 			//Set the size of the particle. If zero is passed in then default to the particle size
 			//in th eparticle definition
@@ -157,15 +161,13 @@ void ParticleMachine::emit(
 					particleSize = particleSizeMax;
 				}
 
-				//FIXME:Add a override function to setSize to particleObject to automatically multiply the scalefactor
-				particle->setSize(
-					particleSize * GameConfig::instance().scaleFactor(), 
-					particleSize * GameConfig::instance().scaleFactor()	);
+				transformComponent->setSize( particleSize, particleSize);
 
 			}
 
 			//Set the particles lifetime in miliseconds. If a zero is passed in, then it will remain the value 
 			//when it was built freom the pool definition
+			particleComponent->m_time_snapshot = std::chrono::steady_clock::now();
 			float particleLifetime = 0;
 			if (lifetimeMin != 0 && lifetimeMax != 0)
 			{
@@ -178,11 +180,12 @@ void ParticleMachine::emit(
 					particleLifetime = lifetimeMax;
 				}
 
-				particle->lifetime = particle->lifetimeRemaining = std::chrono::duration<float>(particleLifetime);
+				particleComponent->m_lifetime = particleComponent->m_lifetimeRemaining = std::chrono::duration<float>(particleLifetime);
+				particleComponent->m_hasInfiniteLifetime = false;
 			}
 			else
 			{
-				particle->hasInfiniteLifetime = true;
+				particleComponent->m_hasInfiniteLifetime = true;
 			}
 
 
@@ -208,13 +211,17 @@ void ParticleMachine::emit(
 				positionVector = originMax;
 			}
 
+			positionVector.x /= GameConfig::instance().scaleFactor();
+			positionVector.y /= GameConfig::instance().scaleFactor();
+
+
 			//Set both eh starting position and the velocity of th eparticle
-			particle->physicsBody()->SetTransform(positionVector, particleAngle);
-			particle->physicsBody()->SetLinearVelocity(velocityVector);
-			//particle->physicsBody->SetBullet(true);
+			physicsComponent->setPhysicsBodyActive(true);
+			physicsComponent->setTransform(positionVector, particleAngle);
+			physicsComponent->setLinearVelocity(velocityVector);
 
 			//Add the particle to the game world
-			Game::instance().addGameObject(particle, GameOjectLayer::MAIN);
+			Game::instance().addGameObject(particle, GameObjectLayer::MAIN);
 		}
 
 	}

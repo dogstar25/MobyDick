@@ -139,9 +139,22 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\actions\HeroUseAction.cpp" />
+    <ClCompile Include="src\components\InventoryComponent.cpp" />
+    <ClCompile Include="src\actions\HeroRotateAction.cpp" />
+    <ClCompile Include="src\actions\HeroMoveAction.cpp" />
+    <ClCompile Include="src\JsonToActionClass.cpp" />
+    <ClCompile Include="src\components\ActionComponent.cpp" />
+    <ClCompile Include="src\actions\Action.cpp" />
+    <ClCompile Include="src\actions\HeroFireAction.cpp" />
+    <ClCompile Include="src\DebugPanel.cpp" />
     <ClCompile Include="src\DynamicTextManager.cpp" />
     <ClCompile Include="src\EventManager.cpp" />
     <ClCompile Include="src\components\PlayerControlComponent.cpp" />
+    <ClCompile Include="src\Level.cpp" />
+    <ClCompile Include="src\ObjectPoolManager.cpp" />
+    <ClCompile Include="src\ParticleEmission.cpp" />
+    <ClCompile Include="src\ParticleMachine.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\components\AnimationComponent.cpp" />
     <ClCompile Include="src\components\AttachmentsComponent.cpp" />
@@ -170,11 +183,25 @@
     <ClCompile Include="src\Waypoint.cpp" />
     <ClCompile Include="src\components\TextComponent.cpp" />
     <ClCompile Include="src\components\VitalityComponent.cpp" />
+    <ClCompile Include="src\components\UIControlComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\actions\HeroUseAction.h" />
+    <ClInclude Include="src\components\InventoryComponent.h" />
+    <ClInclude Include="src\actions\HeroRotateAction.h" />
+    <ClInclude Include="src\actions\HeroMoveAction.h" />
+    <ClInclude Include="src\JsonToActionClass.h" />
+    <ClInclude Include="src\components\ActionComponent.h" />
+    <ClInclude Include="src\actions\Action.h" />
+    <ClInclude Include="src\actions\HeroFireAction.h" />
+    <ClInclude Include="src\DebugPanel.h" />
     <ClInclude Include="src\DynamicTextManager.h" />
     <ClInclude Include="src\EventManager.h" />
     <ClInclude Include="src\components\PlayerControlComponent.h" />
+    <ClInclude Include="src\Level.h" />
+    <ClInclude Include="src\ObjectPoolManager.h" />
+    <ClInclude Include="src\ParticleEmission.h" />
+    <ClInclude Include="src\ParticleMachine.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\components\AnimationComponent.h" />
     <ClInclude Include="src\components\AttachmentsComponent.h" />
@@ -205,6 +232,7 @@
     <ClInclude Include="src\Waypoint.h" />
     <ClInclude Include="src\components\TextComponent.h" />
     <ClInclude Include="src\components\VitalityComponent.h" />
+    <ClInclude Include="src\components\UIControlComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="ExtraLibs\SDL2main.lib" />

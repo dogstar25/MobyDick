@@ -12,14 +12,22 @@ class PhysicsComponent : public Component
 
 public:
 	PhysicsComponent();
-	PhysicsComponent(Json::Value definitionJSON, int xMapPos, int yMapPos, int angleAdjust);
+	PhysicsComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust);
 	~PhysicsComponent();
 
-	void update() override;
+	void update(std::shared_ptr<GameObject>gameObject) override;
 	void applyMovement(float velocity, int direction, int strafeDirection);
 	void applyRotation( float angularVelocity);
+	void setOffGrid();
+	void setTransform(b2Vec2 positionVector, float angle);
+	void setLinearVelocity(b2Vec2 velocityVector);
+	void setPhysicsBodyActive(bool  active);
+	void attachItem(std::shared_ptr<GameObject>inventoryObject);
 
-	void setDependencyReferences(std::shared_ptr<TransformComponent> transportComponent);
+	//Accessor functions
+	b2Vec2 objectAnchorPoint() {
+		return m_objectAnchorPoint;
+	}
 
 private:
 
@@ -39,8 +47,8 @@ private:
 		m_collisionCategory,
 		m_collisionShape,
 		m_physicsType;
-
-	std::shared_ptr<TransformComponent> m_refTransFormComponent;
+	b2Vec2
+		m_objectAnchorPoint;
 
 };
 

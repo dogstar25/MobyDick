@@ -12,10 +12,10 @@ class TransformComponent : public Component
 
 public:
 	TransformComponent();
-	TransformComponent(Json::Value definitionJSON, int xMapPos, int yMapPos, int angleAdjust);
+	TransformComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust);
 	~TransformComponent();
 
-	void update() override;
+	void update(std::shared_ptr<GameObject>gameObject) override;
 
 	void setPosition(b2Vec2 position);
 	void setPosition(float xPosition, float yPosition);
@@ -31,6 +31,9 @@ public:
 	b2Vec2 position() {
 		return m_position;
 	}
+	b2Vec2 originalPosition() {
+		return m_originalPosition;
+	}
 	float angle() {
 		return m_angle;
 	}
@@ -41,13 +44,12 @@ public:
 	virtual SDL_FRect  getPositionRect();
 
 private:
-	b2Vec2 calculatePosition(float xMapPos, float yMapPos, bool hasPhysicsComponent, Json::Value itrJSON);
-	float calculateAngle(float angle, bool isPhysicsObject);
 	float
 		m_angle;
 	b2Vec2
 		m_position,
-		m_size;
+		m_size,
+		m_originalPosition;
 	bool
 		m_absolutePositioning;
 

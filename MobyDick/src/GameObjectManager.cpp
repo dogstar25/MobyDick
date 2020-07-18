@@ -28,6 +28,8 @@ GameObjectManager::~GameObjectManager()
 bool GameObjectManager::init()
 {
 	load("gameObjectDefinitions/commonObjects2");
+	load("levels/level1_Objects");
+	load("gameObjectDefinitions/particleObjects");
 
 	return true;
 }
@@ -82,7 +84,23 @@ std::shared_ptr<GameObjectDefinition> GameObjectManager::getDefinition(std::stri
 		return std::make_shared< GameObjectDefinition>(m_gameObjectDefinitions[definitionId]);
 	}
 
+
 }
+
+bool GameObjectManager::hasDefinition(std::string definitionId)
+{
+
+	if (m_gameObjectDefinitions.find(definitionId) == this->m_gameObjectDefinitions.end())
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+
+}
+
 
 
 

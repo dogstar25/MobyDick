@@ -31,10 +31,9 @@ class CompositeComponent : public Component
 {
 public:
 	CompositeComponent();
-	CompositeComponent(std::string gameObjectId);
 	~CompositeComponent();
 
-	void update() override;
+	void update(std::shared_ptr<GameObject>gameObject) override;
 
 
 private:

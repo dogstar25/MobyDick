@@ -90,7 +90,7 @@ void Animation::animate()
 		}
 
 		//build the rectangle that points to the current animation frame
-		SDL_Rect* rect = new SDL_Rect();
+		std::shared_ptr<SDL_Rect> rect = std::make_shared<SDL_Rect>();
 
 		rect->x = m_animationFramePositions[m_currentAnimFrame].x;
 		rect->y = m_animationFramePositions[m_currentAnimFrame].y;

@@ -4,6 +4,7 @@
 #include <memory>
 #include <string>
 #include <bitset>
+#include <chrono>
 
 #include "Component.h"
 
@@ -22,26 +23,20 @@ public:
 
 	~PlayerControlComponent();
 
-	void update() override;
+	void update(std::shared_ptr<GameObject>gameObject) override;
 
-	void setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent,
-		std::shared_ptr<AnimationComponent> animationComponent,
-		std::shared_ptr<PhysicsComponent> physicsComponent,
-		std::shared_ptr<VitalityComponent> vitalityComponent);
-
-
+	void testParticle();
 
 private:
 
+	void init();
+	void handleMovement(std::shared_ptr<GameObject>gameObject);
+	void handleActions(std::shared_ptr<GameObject>gameObject);
+
 
 	std::bitset<8> m_controls;
-
-	void init();
-
-	std::shared_ptr<TransformComponent> m_refTransformComponent;
-	std::shared_ptr<AnimationComponent> m_refAnimationComponent;
-	std::shared_ptr<PhysicsComponent> m_refPhysicsComponent;
-	std::shared_ptr<VitalityComponent> m_refVitalityComponent;
+	std::chrono::steady_clock::time_point move_time_snapshot;
+	std::chrono::steady_clock::time_point rotation_time_snapshot;
 
 };
 

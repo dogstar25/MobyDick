@@ -2,22 +2,18 @@
 
 #include "../GameObjectManager.h"
 
+
 CompositeComponent::CompositeComponent()
 {
+	//Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 
-}
+	////Transform Component
+	//if (itrJSON.isMember("CompositeComponent"))
+	//{
 
-CompositeComponent::CompositeComponent(std::string gameObjectId)
-{
-	Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
+	//	//m_componentFlags |= TRANSFORM_COMPONENT;
 
-	//Transform Component
-	if (itrJSON.isMember("CompositeComponent"))
-	{
-
-		//m_componentFlags |= TRANSFORM_COMPONENT;
-
-	}
+	//}
 
 }
 
@@ -25,7 +21,7 @@ CompositeComponent::~CompositeComponent()
 {
 
 }
-void CompositeComponent::update()
+void CompositeComponent::update(std::shared_ptr<GameObject>gameObject)
 {
 
 }

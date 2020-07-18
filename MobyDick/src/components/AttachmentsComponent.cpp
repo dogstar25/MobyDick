@@ -2,12 +2,9 @@
 
 #include "../GameObjectManager.h"
 
+
+
 AttachmentsComponent::AttachmentsComponent()
-{
-
-}
-
-AttachmentsComponent::AttachmentsComponent(std::string gameObjectId)
 {
 	//Json::Value itrJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 
@@ -26,7 +23,7 @@ AttachmentsComponent::~AttachmentsComponent()
 
 }
 
-void AttachmentsComponent::update()
+void AttachmentsComponent::update(std::shared_ptr<GameObject>gameObject)
 {
 
 }

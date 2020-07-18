@@ -20,10 +20,9 @@ class RenderComponent : public Component
 public:
 	RenderComponent();
 	RenderComponent(Json::Value definitionJSON);
-	RenderComponent(RenderComponent* componentDefinition);
 	~RenderComponent();
 
-	void update() override;
+	void update(std::shared_ptr<GameObject>gameObject) override;
 	void render();
 
 	SDL_FRect  getRenderDestRect();
@@ -37,13 +36,10 @@ public:
 	void setTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
 
 	void outlineObject(float lineSize);
-	void setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent,
-		std::shared_ptr<AnimationComponent> animationComponent,
-		std::shared_ptr<PhysicsComponent> physicsComponent);
+	void setDependencyReferences(GameObject* gameObject);
 
 	SDL_Rect* getRenderTextureRect();
 	SDL_Texture* getRenderTexture();
-	float getRenderAngle();
 	SDL_Surface* getRenderSurface();
 	
 
@@ -72,10 +68,8 @@ private:
 	std::string
 		m_textureId;
 
-	std::shared_ptr<TransformComponent> m_refTransformComponent;
-	std::shared_ptr<AnimationComponent> m_refAnimationComponent;
-	std::shared_ptr<PhysicsComponent> m_refPhysicsComponent;
-
+	AnimationComponent* m_animationComponent;
+	TransformComponent* m_transformComponent;
 
 };
 

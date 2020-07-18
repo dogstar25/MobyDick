@@ -24,9 +24,9 @@
   },
   "debugPanel": {
     "show": true,
-    "xPos": 1,
-    "yPos": 3,
-    "fontSize": 16
+    "xPos": 2,
+    "yPos": 2,
+    "fontSize": 12
   }
 }
   

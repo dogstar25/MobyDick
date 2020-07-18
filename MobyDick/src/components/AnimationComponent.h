@@ -16,9 +16,8 @@ public:
 	AnimationComponent();
 	AnimationComponent(Json::Value definitionJSON);
 	~AnimationComponent();
-	void construct(Json::Value itrJSON);
 
-	void update() override;
+	void update(std::shared_ptr<GameObject>gameObject) override;
 	SDL_Rect* getCurrentAnimationTextureRect();
 	SDL_Texture* getCurrentAnimationTexture();
 
@@ -30,13 +29,11 @@ public:
 		return m_animations;
 	}
 	void setCurrentAnimationState(int animationState) { m_currentAnimationState = animationState; }
-	void setDependencyReferences(std::shared_ptr<TransformComponent> transformComponent);
 
 private:
 	int 
 		m_currentAnimationState;
 
-	std::shared_ptr<TransformComponent> m_refTransFormComponent;
 	std::map<int, std::shared_ptr<Animation>> m_animations;
 
 };

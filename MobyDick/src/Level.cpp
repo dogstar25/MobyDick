@@ -94,6 +94,9 @@ void Level::_loadDefinition(std::string levelId)
 		m_levelBounds.w = m_width * m_tileWidth;
 		m_levelBounds.h = m_height * m_tileHeight;
 
+		//Initialize World bounds
+		Game::instance().setWorldParams(m_levelBounds, m_tileWidth, m_tileHeight);
+
 		LevelObject* locationDefinition = NULL;
 		std::string locationId;
 		for (auto itr : root["locationObjects"])
@@ -310,7 +313,6 @@ LevelObject* Level::_determineTile(int x, int y, SDL_Surface* surface)
 void Level::_buildLevelObjects()
 {
 	LevelObject* levelObject;
-	WorldObject* worldObject;
 
 	for (int y = 0; y < m_height; y++)
 	{
@@ -321,8 +323,7 @@ void Level::_buildLevelObjects()
 			{
 				levelObject = &levelObjects[x][y];
 
-				worldObject = GameObjectManager::instance().buildGameObject <WorldObject>(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
-				Game::instance().addGameObject(worldObject, GameOjectLayer::MAIN);
+				Game::instance().addGameObject(levelObject->gameObjectId, GameObjectLayer::MAIN, x, y, levelObject->angleAdjustment);
 
 			}
 

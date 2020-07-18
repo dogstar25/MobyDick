@@ -1,18 +1,22 @@
 #include "Game.h"
 
-//#include "Level.h"
+#include <string>
+
+#include "Level.h"
 #include "TextureManager.h"
 #include "GameObjectManager.h"
 #include "SoundManager.h"
 #include "Renderer.h"
 #include "DynamicTextManager.h"
-//#include "ParticleMachine.h"
+#include "ParticleMachine.h"
 #include "GameConfig.h"
 #include "Camera.h"
 //#include "GUIEvent.h"
 #include "Clock.h"
-//#include "ObjectPoolManager.h"
+#include "ObjectPoolManager.h"
 #include "EventManager.h"
+#include "DebugPanel.h"
+#include "components/ActionComponent.h"
 
 
 using namespace std::chrono_literals;
@@ -32,9 +36,9 @@ Game::~Game()
 	//Delete SDL stuff
 	SDL_DestroyWindow(m_window);
 	SDL_Quit();
-	TTF_Quit();
+	
 
-	for (int x = 0; x < constants::MAX_GAMEOBJECT_LAYERS; x++)
+	for (int x = 0; x < MAX_GAMEOBJECT_LAYERS; x++)
 	{
 		m_gameObjects[x].clear();
 	}
@@ -43,6 +47,8 @@ Game::~Game()
 
 	//Delete box2d world - should delete all bodies and fixtures within
 	delete m_physicsWorld;
+
+	TTF_Quit();
 
 
 }
@@ -73,7 +79,7 @@ bool Game::init()
 	//Reserve each layors vector for efficient object memory management
 	for (auto& gameLayer : m_gameObjects)
 	{
-		gameLayer.reserve(2000);
+		gameLayer.reserve(4000);
 	}
 
 	//Initialize world
@@ -81,7 +87,7 @@ bool Game::init()
 	{
 
 		//Initialize the camera
-		//Camera::instance().init();
+		Camera::instance().init();
 
 		//Init font library
 		TTF_Init();
@@ -131,7 +137,7 @@ bool Game::init()
 		GameObjectManager::instance().init();
 
 		//Initilaze the Particle Pool Manager
-		//ObjectPoolManager::instance().init();
+		ObjectPoolManager::instance().init();
 
 		//Set the mouse mode
 		SDL_ShowCursor(false);
@@ -141,7 +147,7 @@ bool Game::init()
 		Clock::instance().init();
 
 		//Load the First level
-		//Level::instance().load("level1");
+		Level::instance().load("level1");
 
 		//Initilaize Camera size and
 		Camera::instance().init();
@@ -149,49 +155,18 @@ bool Game::init()
 		
 	}
 
-	//Allocate the array of vectors for all game objects
-	//this->gameObjects = vector<unique_ptr<GameObject>>[this->MAX_LAYERS];
+	//m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 0.f, 0.f, 0.f));
 
-	
-	GameObject* gameObject = NULL;
+	//for (int i = 0; i < 600; i++)
+	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("GINA_64", 5.f, 5.f, 0.f);
+	Game::instance().addGameObject(gameObject, GameObjectLayer::MAIN);
+	gameObject->addInventoryItem(std::make_shared<GameObject>("WEAPON1", 5.f, 5.f, 0.f));
+//	for (int i = 0; i < 10000; i++)
+		m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 5.f, 5.f, 0.f));
 
-	//Create the main player object
-	//m_player = GameObjectManager::instance().buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
-	//m_player->addWeapon("WEAPON1");
+	//m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 7.f, 7.f, 0.f));
 
-	//set camera to center on player object
-	//
-	//TODO:Can we remove this?
-	//
-	//Camera::instance().setFramePosition(
-	//	(m_player->physicsBody()->GetPosition().x * GameConfig::instance().scaleFactor()) -
-	//	(Camera::instance().frame().w / 2),
-	//	(m_player->physicsBody()->GetPosition().y * GameConfig::instance().scaleFactor()) -
-	//	(Camera::instance().frame().h / 2));
-
-
-
-
-	//gameObject = GameObjectManager::instance().buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
-	//this->addGameObject(gameObject, GameOjectLayer::MAIN);
-
-	this->m_gameObjects[GameOjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 2, 2, 0));
-	//addGameObject(gameObject, GameOjectLayer::DEBUG);
-
-	////gameObject = new GameObject("GINA_64", 2, 2, 180);
-	this->m_gameObjects[GameOjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("GINA_64", 5, 5, 0));
-
-	for (int i = 0; i < 20; i++)
-	{
-	this->m_gameObjects[GameOjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("BOWMAN", 13, 13, 0));
-	//////	//gameObject = new GameObject("BOWMAN", 13, 13, 0);
-	//////	//gameObject->init();
-	//////	//addGameObject(gameObject, GameOjectLayer::MAIN);
-	}
-
-	this->m_gameObjects[GameOjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 13, 13, 0));
-
-	
+	m_gameObjects[GameObjectLayer::DEBUG].emplace_back(std::make_shared<GameObject>("FPS_VALUE", 1.f, 1.f, 0.f));
 
 
 	return true;
@@ -224,7 +199,7 @@ void Game::play()
 		//Increment frame counter and calculate FPS and reset the gameloop timer
 		Clock::instance().calcFps();
 
-		DynamicTextManager::instance().updateText("PLAYER_LABEL", std::to_string(util::generateRandomNumber(1,100)));
+		DynamicTextManager::instance().updateText("FPS_VALUE", std::to_string(Clock::instance().fps()));
 
 	}
 
@@ -232,25 +207,25 @@ void Game::play()
 
 
 
-void Game::renderGameObjects(const std::array <std::vector<GameObject>, constants::MAX_GAMEOBJECT_LAYERS>& gameObjects)
+void Game::renderGameObjects(const std::array <std::vector<GameObject>, MAX_GAMEOBJECT_LAYERS>& gameObjects)
 {
 
-	//Render all of the game objects
-	for (auto gameLayer : gameObjects)
-	{
-		//Update normal game objects
-		for (auto gameObject : gameLayer)
-		{
-			gameObject.render();
-		}
-	}
 }
 
 
-void Game::addGameObject(GameObject* gameObject, int layer)
+void Game::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle)
 {
 
-	//this->m_gameObjects[layer].push_back((*gameObject));
+	this->m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle));
+	
+
+}
+
+void Game::addGameObject(std::shared_ptr<GameObject>gameObject, int layer)
+{
+
+	this->m_gameObjects[layer].emplace_back(gameObject);
+
 
 }
 
@@ -265,41 +240,70 @@ void Game::_update() {
 
 	//Update the camera frame to point to the new player position
 	//
-	//TODO:Instead of this, give the camera an object/position to follow
-	//and the camera will follow on its own
-	//
-	//Camera::instance().setFramePosition(
-	//	(m_player->physicsBody()->GetPosition().x * GameConfig::instance().scaleFactor()) -
-	//	(Camera::instance().frame().w / 2),
-	//	(m_player->physicsBody()->GetPosition().y * GameConfig::instance().scaleFactor()) -
-	//	(Camera::instance().frame().h / 2));
 
 	// spin through list of particle tasks to execute, like exposions and emitters
-	//ParticleMachine::instance().update();
+	ParticleMachine::instance().update();
 
 	//Update all of the other non player related update chores for each game object
 	// Game objects are stored in layers
-	for (auto& gameLayer : m_gameObjects)
+	for (auto& gameObjects : m_gameObjects)
 	{
-		//Update normal game objects
-		for (auto& gameObject : gameLayer)
-		{
-			gameObject->update();
-		}
 
-			//if (particleObject->removeFromWorld() == true)
-			//{
-			//	particleObjectRemoved = particleObject;
-			//	ObjectPoolManager::instance().reset(particleObject);
-			//	std::swap(gameObjectCollection.particleObjects()[x],
-			//		gameObjectCollection.particleObjects()[gameObjectCollection.particleObjects().size() - 1]);
-			//	gameObjectCollection.particleObjects().resize(gameObjectCollection.particleObjects().size() - 1);
-			//}
+		for (int i = 0; i < gameObjects.size(); i++)
+		{
+
+
+			//TODO:Instead of this, give the camera an object/position to follow
+			//and the camera will follow on its own
+			//
+			if (gameObjects[i]->id().compare("GINA_64") == 0) {
+				Camera::instance().setFramePosition(
+					(gameObjects[i]->getComponent<TransformComponent>()->position().x) -
+					(Camera::instance().frame().w / 2),
+					(gameObjects[i]->getComponent<TransformComponent>()->position().y) -
+					(Camera::instance().frame().h / 2));
+			}
+
+
+			if (gameObjects[i]->removeFromWorld())
+			{
+				gameObjects[i]->setRemoveFromWorld(false);
+				gameObjects[i]->reset();
+				gameObjects.erase(gameObjects.begin() + i);
+			}
+			else
+			{
+				gameObjects[i]->update();
+			}
+			
+
+		}
+		//if (particleObject->removeFromWorld() == true)
+		//{
+		//	particleObjectRemoved = particleObject;
+		//	gameObject.reset();
+		//	std::swap(gameObjectCollection.particleObjects()[x],
+		//		gameObjectCollection.particleObjects()[gameObjectCollection.particleObjects().size() - 1]);
+		//	gameObjectCollection.particleObjects().resize(gameObjectCollection.particleObjects().size() - 1);
+		//}
 
 		//resize the particle vector in case items were removed
 		//gameObjectCollection.particleObjects().shrink_to_fit();
 
 	}
+
+
+	/*DebugPanel::instance().addItem("Test", util::generateRandomNumber(1,10000), 8);
+	DebugPanel::instance().addItem("Test2", util::generateRandomNumber(1, 10000), 8);
+	DebugPanel::instance().addItem("Test3", util::generateRandomNumber(1, 10000), 8);
+	DebugPanel::instance().addItem("Test4", util::generateRandomNumber(1, 10000), 8);
+	DebugPanel::instance().addItem("Test5", util::generateRandomNumber(1, 10000), 8);
+	DebugPanel::instance().addItem("Test6", util::generateRandomNumber(1, 10000), 8);
+	DebugPanel::instance().addItem("Test7", util::generateRandomNumber(1, 10000), 8);
+	DebugPanel::instance().addItem("Test8", util::generateRandomNumber(1, 10000), 8);
+	DebugPanel::instance().addItem("Test9", util::generateRandomNumber(1, 10000), 8);*/
+
+
 
 	//Clear all events
 	EventManager::instance().clearEvents();
@@ -360,18 +364,6 @@ void Game::_handleEvents() {
 				m_gameState = QUIT;
 				//guiEvent->run();
 			}
-			else
-			{
-				//m_player->handlePlayerMovementEvent(&event);
-			}
-			break;
-
-		case SDL_MOUSEMOTION:
-			//m_player->handlePlayerMovementEvent(&event);
-			break;
-		case SDL_MOUSEBUTTONDOWN:
-			//this->testSound();
-			//m_player->fire();
 			break;
 		case SDL_USEREVENT:
 			delete event.user.data1;

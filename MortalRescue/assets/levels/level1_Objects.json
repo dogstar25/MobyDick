@@ -1,126 +1,217 @@
 {
-  //Remember that gameObject size is in meters, so 32pixels is 1.28 meters when gamescale is 25
-  "gameObjects": [
-    {
-      "description": "Wall Open",
-      "id": "WALL1_OPEN",
-      "type": "WORLD_OBJECT",
-      "physicsObject": {
-        "type": "B2_STATIC",
-        "friction": 0.3,
-        "collisionCategory": "COLLISION_WALL"
-      },
-      "texture": "TX_WALL1_OPEN",
-      "color": {
-        "red": 38,
-        "green": 195,
-        "blue": 15,
-        "alpha": 255,
-        "random": false
-      },
-      "xSize": 1.28,
-      "ySize": 1.28
-    },
-    {
-      "description": "Wall Column ",
-      "id": "WALL1_COLUMN",
-      "type": "WORLD_OBJECT",
-      "physicsObject": {
-        "type": "B2_STATIC",
-        "friction": 0.3,
-        "collisionCategory": "COLLISION_WALL"
-      },
-      "texture": "TX_WALL1_COLUMN",
-      "color": {
-        "red": 38,
-        "green": 195,
-        "blue": 15,
-        "alpha": 255,
-        "random": false
-      },
-      "xSize": 1.28,
-      "ySize": 1.28
-    },
-    {
-      "description": "Wall Corner ",
-      "id": "WALL1_CORNER",
-      "type": "WORLD_OBJECT",
-      "physicsObject": {
-        "type": "B2_STATIC",
-        "friction": 0.3,
-        "collisionCategory": "COLLISION_WALL"
-      },
-      "texture": "TX_WALL1_CORNER",
-      "color": {
-        "red": 38,
-        "green": 195,
-        "blue": 15,
-        "alpha": 255,
-        "random": false
-      },
-      "xSize": 1.28,
-      "ySize": 1.28
-    },
-    {
-      "description": "Wall End",
-      "id": "WALL1_END",
-      "type": "WORLD_OBJECT",
-      "physicsObject": {
-        "type": "B2_STATIC",
-        "friction": 0.3,
-        "collisionCategory": "COLLISION_WALL"
-      },
-      "texture": "TX_WALL1_END",
-      "color": {
-        "red": 38,
-        "green": 195,
-        "blue": 15,
-        "alpha": 255,
-        "random": false
-      },
-      "xSize": 1.28,
-      "ySize": 1.28
-    },
-    {
-      "description": "Wall Hall",
-      "id": "WALL1_HALL",
-      "type": "WORLD_OBJECT",
-      "physicsObject": {
-        "type": "B2_STATIC",
-        "friction": 0.3,
-        "collisionCategory": "COLLISION_WALL"
-      },
-      "texture": "TX_WALL1_HALL",
-      "color": {
-        "red": 38,
-        "green": 195,
-        "blue": 15,
-        "alpha": 255,
-        "random": false
-      },
-      "xSize": 1.28,
-      "ySize": 1.28
-    },
-    {
-      "description": "Wall Wall",
-      "id": "WALL1_WALL",
-      "type": "WORLD_OBJECT",
-      "physicsObject": {
-        "type": "B2_STATIC",
-        "friction": 0.3,
-        "collisionCategory": "COLLISION_WALL"
-      },
-      "texture": "TX_WALL1_WALL",
-      "color": {
-        "red": 38,
-        "green": 195,
-        "blue": 15,
-        "alpha": 255,
-        "random": false
-      },
-      "xSize": 1.28,
-      "ySize": 1.28
-    }
+    "gameObjects":
+    [
+        {
+            "id": "WALL1_OPEN",
+            "description": "WALL1_OPEN",
+            "transformComponent":
+            {
+                "size":
+                {
+                    "width": 32,
+                    "height": 32
+                },
+                "absolutePositioning": false
 
-  ]
+            },
+            "renderComponent":
+            {
+                "textureId": "TX_WALL1_OPEN",
+                "color":
+                {
+                    "red": 38,
+                    "green": 195,
+                    "blue": 15,
+                    "alpha": 255,
+                    "random": false
+                }
+
+            },
+            "physicsComponent":
+            {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.3,
+                "collisionCategory": "COLLISION_WALL"
+            }
+
+        },
+        {
+            "id": "WALL1_COLUMN",
+            "description": "WALL1_COLUMN",
+            "transformComponent":
+            {
+                "size":
+                {
+                    "width": 32,
+                    "height": 32
+                },
+                "absolutePositioning": false
+
+            },
+            "renderComponent":
+            {
+                "textureId": "TX_WALL1_COLUMN",
+                "color":
+                {
+                    "red": 38,
+                    "green": 195,
+                    "blue": 15,
+                    "alpha": 255,
+                    "random": false
+                }
+
+            },
+            "physicsComponent":
+            {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.3,
+                "collisionCategory": "COLLISION_WALL"
+            }
+
+        },
+        {
+            "id": "WALL1_CORNER",
+            "description": "WALL1_CORNER",
+            "transformComponent":
+            {
+                "size":
+                {
+                    "width": 32,
+                    "height": 32
+                },
+                "absolutePositioning": false
+
+            },
+            "renderComponent":
+            {
+                "textureId": "TX_WALL1_CORNER",
+                "color":
+                {
+                    "red": 38,
+                    "green": 195,
+                    "blue": 15,
+                    "alpha": 255,
+                    "random": false
+                }
+
+            },
+            "physicsComponent":
+            {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.3,
+                "collisionCategory": "COLLISION_WALL"
+            }
+
+        },
+        {
+            "id": "WALL1_END",
+            "description": "WALL1_END",
+            "transformComponent":
+            {
+                "size":
+                {
+                    "width": 32,
+                    "height": 32
+                },
+                "absolutePositioning": false
+
+            },
+            "renderComponent":
+            {
+                "textureId": "TX_WALL1_END",
+                "color":
+                {
+                    "red": 38,
+                    "green": 195,
+                    "blue": 15,
+                    "alpha": 255,
+                    "random": false
+                }
+
+            },
+            "physicsComponent":
+            {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.3,
+                "collisionCategory": "COLLISION_WALL"
+            }
+
+        },
+        {
+            "id": "WALL1_HALL",
+            "description": "WALL1_HALL",
+            "transformComponent":
+            {
+                "size":
+                {
+                    "width": 32,
+                    "height": 32
+                },
+                "absolutePositioning": false
+
+            },
+            "renderComponent":
+            {
+                "textureId": "TX_WALL1_HALL",
+                "color":
+                {
+                    "red": 38,
+                    "green": 195,
+                    "blue": 15,
+                    "alpha": 255,
+                    "random": false
+                }
+
+            },
+            "physicsComponent":
+            {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.3,
+                "collisionCategory": "COLLISION_WALL"
+            }
+
+        },
+
+        {
+            "id": "WALL1_WALL",
+            "description": "WALL1_WALL",
+            "transformComponent":
+            {
+                "size":
+                {
+                    "width": 32,
+                    "height": 32
+                },
+                "absolutePositioning": false
+
+            },
+            "renderComponent":
+            {
+                "textureId": "TX_WALL1_WALL",
+                "color":
+                {
+                    "red": 38,
+                    "green": 195,
+                    "blue": 15,
+                    "alpha": 255,
+                    "random": false
+                }
+
+            },
+            "physicsComponent":
+            {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.3,
+                "collisionCategory": "COLLISION_WALL"
+            }
+
+        }
+
+    ]
 }
