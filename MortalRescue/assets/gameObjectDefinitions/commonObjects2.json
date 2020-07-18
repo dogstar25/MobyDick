@@ -51,8 +51,9 @@
                 "collisionShape": "B2_CIRCLE",
                 "collisionRadius": 0.64,
                 "friction": 0.00,
-                "density": 25.5,
-                "linearDamping": 1.2,
+                "restitution": 0.0,
+                "density": 50.5,
+                "linearDamping": 0.2,
                 "angularDamping": 2.0,
                 "collisionCategory": "COLLISION_PLAYER",
                 "anchorPoint": {
@@ -80,7 +81,6 @@
                     "CONTROL_MOVEMENT",
                     "CONTROL_USE"
                 ]
-
             },
             "actionComponent": {
                 "actions": [
@@ -96,11 +96,8 @@
                         "actionId": "ACTION_USE",
                         "actionClass": "HeroUse"
                     }
-
                 ]
-
             }
-
         },
         {
             "id": "BOWMAN",
@@ -127,8 +124,6 @@
                 "angularDamping": 10.0,
                 "collisionCategory": "COLLISION_GENERIC"
             }
-
-
         },
         {
             "id": "PLAYER_LABEL",
@@ -144,7 +139,6 @@
             }
         },
         {
-
             "id": "FPS_VALUE",
             "description": "FPS",
             "transformComponent": {
@@ -156,10 +150,8 @@
                 "font": "FONT_ARIAL_REG",
                 "fontSize": 16
             }
-
         },
         {
-
             "id": "GUIPausePanel",
             "transformComponent": {
                 "size": {
@@ -204,7 +196,6 @@
                 },
                 "absolutePositioning": false
             }
-
         },
         {
             "id": "DEBUG_ITEM",
@@ -218,7 +209,6 @@
                 "font": "FONT_ARIAL_REG",
                 "fontSize": 12
             }
-
         },
         {
             "id": "WEAPON1",
@@ -309,107 +299,5 @@
                 ]
             }
         }
-
-
-        //{
-        //    "id": "FPS_LABEL",
-        //    "description": "FPS Label",
-        //    "Components":
-        //    [
-        //        {
-        //            "id": "TRANSFORM_COMPONENT",
-        //            "size":
-        //            {
-        //                "width": 0,
-        //                "height": 32
-        //            },
-        //            "absolutePositioning": false
-        //        },
-        //        {
-        //            "id": "TEXT_COMPONENT",
-        //            "value": "FPS",
-        //            "dynamic": false,
-        //            "font": "FONT_ARIAL_REG"
-        //        }
-        //    ]
-        //},
-        //{
-        //    "id": "PLAYER_LABEL",
-        //    "description": "Player Label",
-        //    "Components":
-        //    [
-        //        {
-        //            "id": "TRANSFORM_COMPONENT",
-        //            "size":
-        //            {
-        //                "width": 0,
-        //                "height": 12
-        //            },
-        //            "absolutePositioning": false
-        //        },
-        //        {
-        //            "id": "TEXT_COMPONENT",
-        //            "value": "FPS",
-        //            "dynamic": false,
-        //            "font": "FONT_ARIAL_REG"
-        //        }
-        //    ]
-        //},
-        //{
-        //    "id": "FPS_VALUE",
-        //    "description": "FPS Value Text",
-        //    "Components":
-        //    [
-        //        {
-        //            "id": "TRANSFORM_COMPONENT",
-        //            "size":
-        //            {
-        //                "width": 0,
-        //                "height": 32
-        //            },
-        //            "absolutePositioning": true
-        //        },
-        //        {
-        //            "id": "TEXT_COMPONENT",
-        //            "value": "FPS",
-        //            "dynamic": false,
-        //            "font": "FONT_ARIAL_REG"
-        //        },
-        //        {
-        //            "id": "RENDER_COMPONENT",
-        //            "color":
-        //            {
-        //                "red": 255,
-        //                "green": 0,
-        //                "blue": 0,
-        //                "alpha": 255
-        //            }
-        //        }
-
-        //    ]
-        //},
-        //{
-        //    "id": "DEBUG_ITEM",
-        //    "description": "Debug Item",
-        //    "Components":
-        //    [
-        //        {
-        //            "id": "TRANSFORM_COMPONENT",
-        //            "size":
-        //            {
-        //                "width": 0,
-        //                "height": 12
-        //            },
-        //            "absolutePositioning": true
-        //        },
-        //        {
-        //            "id": "TEXT_COMPONENT",
-        //            "value": "FPS",
-        //            "dynamic": true,
-        //            "font": "FONT_ARIAL_REG"
-        //        }
-        //    ]
-        //},
-
     ]
 }

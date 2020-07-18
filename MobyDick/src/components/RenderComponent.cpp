@@ -7,6 +7,7 @@
 #include "../Globals.h"
 #include "../GameConfig.h"
 #include "../TextureManager.h"
+#include "../game.h"
 
 #include "AnimationComponent.h"
 #include "TransformComponent.h"
@@ -66,12 +67,12 @@ Get the destination for rendering the gameObject
 The end result should be a rectangle with a width and height in pixels and
 an x, y position that is the top left corner of the object (for SDL render function)
 */
-SDL_FRect RenderComponent::getRenderDestRect(std::shared_ptr<GameObject>gameObject)
+SDL_FRect RenderComponent::getRenderDestRect()
 {
 	SDL_FRect destRect, currentPositionRect;
 
 	//Get its current position. Should be center of object
-	currentPositionRect = gameObject->getComponent<TransformComponent>()->getPositionRect();
+	currentPositionRect = m_transformComponent->getPositionRect();
 
 	destRect = currentPositionRect;
 	destRect.x -= (currentPositionRect.w / 2);
@@ -81,8 +82,11 @@ SDL_FRect RenderComponent::getRenderDestRect(std::shared_ptr<GameObject>gameObje
 	destRect.h += m_yRenderAdjustment;
 
 	//Adjust position based on current camera position - offset
-	destRect.x -= Camera::instance().frame().x;
-	destRect.y -= Camera::instance().frame().y;
+	if (m_transformComponent->absolutePositioning() == false)
+	{
+		destRect.x -= Camera::instance().frame().x;
+		destRect.y -= Camera::instance().frame().y;
+	}
 
 	return destRect;
 }
@@ -92,14 +96,14 @@ Get the portion of the gameObject texture to render
 For animated objects, this is the portion of the texture that
 represents the current frame of animation
 */
-SDL_Rect* RenderComponent::getRenderTextureRect(std::shared_ptr<GameObject>gameObject)
+SDL_Rect* RenderComponent::getRenderTextureRect()
 {
 
 	SDL_Rect* textureSrcRect=nullptr;
 
-	if (gameObject->getComponent<AnimationComponent>())
+	if (m_animationComponent)
 	{
-		textureSrcRect = gameObject->getComponent<AnimationComponent>()->getCurrentAnimationTextureRect();
+		textureSrcRect = m_animationComponent->getCurrentAnimationTextureRect();
 	}
 
 	return textureSrcRect;
@@ -110,14 +114,14 @@ SDL_Rect* RenderComponent::getRenderTextureRect(std::shared_ptr<GameObject>gameO
 Get the actual texture to display. If this is an animated object then it will have
 different textures for different animation states
 */
-SDL_Texture* RenderComponent::getRenderTexture(std::shared_ptr<GameObject>gameObject)
+SDL_Texture* RenderComponent::getRenderTexture()
 {
 
 	SDL_Texture* texture = nullptr;
 
-	if (gameObject->getComponent<AnimationComponent>())
+	if (m_animationComponent)
 	{
-		texture = gameObject->getComponent<AnimationComponent>()->getCurrentAnimationTexture();
+		texture = m_animationComponent->getCurrentAnimationTexture();
 	}
 	else 
 	{
@@ -135,16 +139,16 @@ SDL_Surface* RenderComponent::getRenderSurface()
 
 }
 
-void RenderComponent::outlineObject(std::shared_ptr<GameObject>gameObject, float lineSize)
+void RenderComponent::outlineObject(float lineSize)
 {
 
 	std::vector<SDL_FPoint> points;
-	SDL_FRect gameObjectDrawRect = getRenderDestRect(gameObject);
+	SDL_FRect gameObjectDrawRect = getRenderDestRect();
 	float saveScaleX, saveScaleY;
 	SDL_FPoint point;
 
 	//Adjust for camera
-	if (gameObject->getComponent<TransformComponent>()->absolutePositioning() == false)
+	if (m_transformComponent->absolutePositioning() == false)
 	{
 		gameObjectDrawRect.x -= Camera::instance().frame().x;
 		gameObjectDrawRect.y -= Camera::instance().frame().y;
@@ -190,33 +194,61 @@ void RenderComponent::setColor(int red, int green, int blue, int alpha)
 
 }
 
-void RenderComponent::render(std::shared_ptr<GameObject>gameObject)
+void RenderComponent::render()
 {
-	//Get the various items for rendering
-	SDL_Rect* textureSourceRect = getRenderTextureRect(gameObject);
-	const SDL_FRect destRect = getRenderDestRect(gameObject);
-	SDL_Texture* texture = getRenderTexture(gameObject);
-	float angle = gameObject->getComponent<TransformComponent>()->angle();
+	//Check if this object is in the viewable area of the world
+	//Add a tiles width to the camera to buffer it some
+	const SDL_FRect positionRect = m_transformComponent->getPositionRect();
+	SDL_Rect gameObjectPosRect = { positionRect.x, positionRect.y, positionRect.w, positionRect.h };
+	SDL_Rect cameraRect = { Camera::instance().frame().x, 
+		Camera::instance().frame().y, 
+		Camera::instance().frame().w+ Game::instance().worldTileWidth(),
+		Camera::instance().frame().h+ Game::instance().worldTileHeight() };
+	
+	/*
+	If this object is within the viewable are or if its absolute positioned then render it
+	*/
+	if (SDL_HasIntersection(&gameObjectPosRect, &cameraRect) || 
+		m_transformComponent->absolutePositioning() == true)
+	{
+		const SDL_FRect destRect = getRenderDestRect();
+		SDL_Rect* textureSourceRect = getRenderTextureRect();
+		SDL_Texture* texture = getRenderTexture();
+		float angle = m_transformComponent->angle();
 
-	//Set the color
-	SDL_SetTextureAlphaMod(texture, m_color.a);
+		//Set the color
+		SDL_SetTextureAlphaMod(texture, m_color.a);
 
-	//SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD);
+		//SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD);
 
-	//Set the render color based on the objects color
-	SDL_SetTextureColorMod(texture, m_color.r, m_color.g, m_color.b);
+		//Set the render color based on the objects color
+		SDL_SetTextureColorMod(texture, m_color.r, m_color.g, m_color.b);
 
-	//Render the texture
-	SDL_RenderCopyExF(
-		Renderer::instance().SDLRenderer(), 
-		texture, 
-		textureSourceRect, 
-		&destRect, 
-		angle, 
-		NULL, 
-		SDL_FLIP_NONE);
+		//Render the texture
+		SDL_RenderCopyExF(
+			Renderer::instance().SDLRenderer(),
+			texture,
+			textureSourceRect,
+			&destRect,
+			angle,
+			NULL,
+			SDL_FLIP_NONE);
+	}
+	else
+	{
+		int todd = 1;
+	}
+}
+
+void RenderComponent::setDependencyReferences(GameObject* gameObject)
+{
+
+	m_animationComponent = gameObject->getComponent<AnimationComponent>().get();
+	m_transformComponent = gameObject->getComponent<TransformComponent>().get();
 
 }
+
+
 
 //void RenderComponent::render(SDL_FRect* destRect, SDL_Color color)
 //{

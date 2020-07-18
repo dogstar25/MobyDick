@@ -188,7 +188,7 @@ void Game::play()
 	EventManager::instance().pollEvents();
 
 	//Only update and render if we have passed the 60 fps time passage
-	//if (Clock::instance().hasMetGameLoopSpeed())
+	if (Clock::instance().hasMetGameLoopSpeed())
 	{
 		//Handle updating objects positions and physics
 		_update();
@@ -240,14 +240,6 @@ void Game::_update() {
 
 	//Update the camera frame to point to the new player position
 	//
-	//TODO:Instead of this, give the camera an object/position to follow
-	//and the camera will follow on its own
-	//
-	//Camera::instance().setFramePosition(
-	//	(m_player->physicsBody()->GetPosition().x * GameConfig::instance().scaleFactor()) -
-	//	(Camera::instance().frame().w / 2),
-	//	(m_player->physicsBody()->GetPosition().y * GameConfig::instance().scaleFactor()) -
-	//	(Camera::instance().frame().h / 2));
 
 	// spin through list of particle tasks to execute, like exposions and emitters
 	ParticleMachine::instance().update();
@@ -256,9 +248,23 @@ void Game::_update() {
 	// Game objects are stored in layers
 	for (auto& gameObjects : m_gameObjects)
 	{
-		//Update normal game objects
+
 		for (int i = 0; i < gameObjects.size(); i++)
 		{
+
+
+			//TODO:Instead of this, give the camera an object/position to follow
+			//and the camera will follow on its own
+			//
+			if (gameObjects[i]->id().compare("GINA_64") == 0) {
+				Camera::instance().setFramePosition(
+					(gameObjects[i]->getComponent<TransformComponent>()->position().x) -
+					(Camera::instance().frame().w / 2),
+					(gameObjects[i]->getComponent<TransformComponent>()->position().y) -
+					(Camera::instance().frame().h / 2));
+			}
+
+
 			if (gameObjects[i]->removeFromWorld())
 			{
 				gameObjects[i]->setRemoveFromWorld(false);

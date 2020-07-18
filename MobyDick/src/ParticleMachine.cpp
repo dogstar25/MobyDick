@@ -211,6 +211,10 @@ void ParticleMachine::emit(
 				positionVector = originMax;
 			}
 
+			positionVector.x /= GameConfig::instance().scaleFactor();
+			positionVector.y /= GameConfig::instance().scaleFactor();
+
+
 			//Set both eh starting position and the velocity of th eparticle
 			physicsComponent->setPhysicsBodyActive(true);
 			physicsComponent->setTransform(positionVector, particleAngle);

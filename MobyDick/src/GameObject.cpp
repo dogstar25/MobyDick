@@ -134,6 +134,9 @@ void GameObject::_setDependecyReferences()
 		component.second->setActive(true);
 	}
 
+	//SetRenderComponent dependencies
+	getComponent<RenderComponent>()->setDependencyReferences(this);
+
 }
 
 void GameObject::setPosition(b2Vec2 position, float angle)
@@ -191,7 +194,7 @@ void GameObject::render()
 
 
 	//Render yourself
-	getComponent<RenderComponent>()->render(shared_from_this());
+	getComponent<RenderComponent>()->render();
 		
 	//Render your children
 
