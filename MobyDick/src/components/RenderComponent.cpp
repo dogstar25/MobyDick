@@ -24,20 +24,18 @@ RenderComponent::RenderComponent(Json::Value definitionJSON)
 {
 	Json::Value itrRender = definitionJSON["renderComponent"];
 
-	m_gameObjectId = definitionJSON["id"].asString();;
-
 	if (itrRender.isMember("color"))
 	{
-		setColor(
+		m_color = {
 			itrRender["color"]["red"].asInt(),
 			itrRender["color"]["green"].asInt(),
 			itrRender["color"]["blue"].asInt(),
 			itrRender["color"]["alpha"].asInt()
-		);
+		};
 	}
 	else
 	{
-		setColor(255, 255, 255, 255);
+		m_color = { 255, 255, 255, 255 };
 	}
 
 	m_textureId = itrRender["textureId"].asString();

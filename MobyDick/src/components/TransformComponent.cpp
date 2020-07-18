@@ -14,15 +14,13 @@ TransformComponent::TransformComponent(Json::Value definitionJSON, float xMapPos
 {
 		Json::Value transformComponentJSON = definitionJSON["transformComponent"];
 
-		m_gameObjectId = definitionJSON["id"].asString();;
-
 		m_angle = angleAdjust;
 
 		//FixMe: 32 is tilewidth
-		setPosition( 
+		m_position = {
 			(xMapPos * 32) + transformComponentJSON["size"]["width"].asFloat() / 2,
 			(yMapPos * 32) + transformComponentJSON["size"]["height"].asFloat() / 2
-		);
+		};
 
 		m_originalPosition = m_position;
 		m_size.Set(transformComponentJSON["size"]["width"].asFloat(), transformComponentJSON["size"]["height"].asFloat());

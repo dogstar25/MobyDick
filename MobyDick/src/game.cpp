@@ -4,7 +4,7 @@
 
 #include "Level.h"
 #include "TextureManager.h"
-#include "GameObjectManager.h"
+#include "EntityDefinitionManager.h"
 #include "SoundManager.h"
 #include "Renderer.h"
 #include "DynamicTextManager.h"
@@ -17,6 +17,7 @@
 #include "EventManager.h"
 #include "DebugPanel.h"
 #include "components/ActionComponent.h"
+#include "systems/RenderSystem.h"
 
 
 using namespace std::chrono_literals;
@@ -36,20 +37,11 @@ Game::~Game()
 	//Delete SDL stuff
 	SDL_DestroyWindow(m_window);
 	SDL_Quit();
-	
-
-	for (int x = 0; x < MAX_GAMEOBJECT_LAYERS; x++)
-	{
-		m_gameObjects[x].clear();
-	}
-
-	delete m_player;
 
 	//Delete box2d world - should delete all bodies and fixtures within
 	delete m_physicsWorld;
 
 	TTF_Quit();
-
 
 }
 
@@ -59,8 +51,6 @@ Game::Game()
 	m_physicsWorld = nullptr;
 
 	m_window = nullptr;
-
-	m_player = nullptr;
 
 }
 
@@ -72,16 +62,11 @@ bool Game::init()
 
 	m_gameState = GameState::PLAY;
 
+	m_gameCoordinator.Init();
 
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
 	
-	//Reserve each layors vector for efficient object memory management
-	for (auto& gameLayer : m_gameObjects)
-	{
-		gameLayer.reserve(4000);
-	}
-
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
@@ -134,10 +119,10 @@ bool Game::init()
 		}*/
 
 		//Initilaze the Game Object Manager
-		GameObjectManager::instance().init();
+		EntityDefinitionManager::instance().init();
 
 		//Initilaze the Particle Pool Manager
-		ObjectPoolManager::instance().init();
+		//ObjectPoolManager::instance().init();
 
 		//Set the mouse mode
 		SDL_ShowCursor(false);
@@ -152,21 +137,16 @@ bool Game::init()
 		//Initilaize Camera size and
 		Camera::instance().init();
 
+		//Initialize various entity systems
+		m_renderSystem = m_gameCoordinator.GetSystem<RenderSystem>();
+		m_renderSystem->init();
+
+
 		
 	}
 
-	//m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 0.f, 0.f, 0.f));
 
-	//for (int i = 0; i < 600; i++)
-	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("GINA_64", 5.f, 5.f, 0.f);
-	Game::instance().addGameObject(gameObject, GameObjectLayer::MAIN);
-	gameObject->addInventoryItem(std::make_shared<GameObject>("WEAPON1", 5.f, 5.f, 0.f));
-//	for (int i = 0; i < 10000; i++)
-		m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 5.f, 5.f, 0.f));
-
-	//m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 7.f, 7.f, 0.f));
-
-	m_gameObjects[GameObjectLayer::DEBUG].emplace_back(std::make_shared<GameObject>("FPS_VALUE", 1.f, 1.f, 0.f));
+	m_gameCoordinator.addEntity("BOWMAN", 4, 4, 0);
 
 
 	return true;
@@ -207,90 +187,11 @@ void Game::play()
 
 
 
-void Game::renderGameObjects(const std::array <std::vector<GameObject>, MAX_GAMEOBJECT_LAYERS>& gameObjects)
-{
-
-}
-
-
-void Game::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle)
-{
-
-	this->m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle));
-	
-
-}
-
-void Game::addGameObject(std::shared_ptr<GameObject>gameObject, int layer)
-{
-
-	this->m_gameObjects[layer].emplace_back(gameObject);
-
-
-}
-
-
-
-
 void Game::_update() {
 
 
-	//Specifiaclly handle input and stuff for the one player gameObject
-	//m_player->update();
+	m_renderSystem->update();
 
-	//Update the camera frame to point to the new player position
-	//
-
-	// spin through list of particle tasks to execute, like exposions and emitters
-	ParticleMachine::instance().update();
-
-	//Update all of the other non player related update chores for each game object
-	// Game objects are stored in layers
-	for (auto& gameObjects : m_gameObjects)
-	{
-
-		for (int i = 0; i < gameObjects.size(); i++)
-		{
-
-
-			//TODO:Instead of this, give the camera an object/position to follow
-			//and the camera will follow on its own
-			//
-			if (gameObjects[i]->id().compare("GINA_64") == 0) {
-				Camera::instance().setFramePosition(
-					(gameObjects[i]->getComponent<TransformComponent>()->position().x) -
-					(Camera::instance().frame().w / 2),
-					(gameObjects[i]->getComponent<TransformComponent>()->position().y) -
-					(Camera::instance().frame().h / 2));
-			}
-
-
-			if (gameObjects[i]->removeFromWorld())
-			{
-				gameObjects[i]->setRemoveFromWorld(false);
-				gameObjects[i]->reset();
-				gameObjects.erase(gameObjects.begin() + i);
-			}
-			else
-			{
-				gameObjects[i]->update();
-			}
-			
-
-		}
-		//if (particleObject->removeFromWorld() == true)
-		//{
-		//	particleObjectRemoved = particleObject;
-		//	gameObject.reset();
-		//	std::swap(gameObjectCollection.particleObjects()[x],
-		//		gameObjectCollection.particleObjects()[gameObjectCollection.particleObjects().size() - 1]);
-		//	gameObjectCollection.particleObjects().resize(gameObjectCollection.particleObjects().size() - 1);
-		//}
-
-		//resize the particle vector in case items were removed
-		//gameObjectCollection.particleObjects().shrink_to_fit();
-
-	}
 
 
 	/*DebugPanel::instance().addItem("Test", util::generateRandomNumber(1,10000), 8);
@@ -322,19 +223,7 @@ void Game::_render() {
 	//Clear the graphics display
 	Renderer::instance().clear();
 
-	//render the player
-	//m_player->render();
-
-	//Render all of the game objects in thew world
-	//Render all of the game objects
-	for (auto& gameLayer : m_gameObjects)
-	{
-		//Update normal game objects
-		for (auto& gameObject : gameLayer)
-		{
-			gameObject->render();
-		}
-	}
+	m_renderSystem->render();
 
 	//DebugDraw
 	//if (GameConfig::instance().b2DebugDrawMode() == true)

@@ -6,11 +6,11 @@
 
 #include "GameObjectDefinition.h"
 
-class GameObjectManager
+class EntityDefinitionManager
 {
 public:
 		
-	static GameObjectManager& instance();
+	static EntityDefinitionManager& instance();
 
 	bool init();
 	void load(std::string);
@@ -20,8 +20,8 @@ public:
 
 
 private:
-	GameObjectManager();
-	~GameObjectManager();
+	EntityDefinitionManager();
+	~EntityDefinitionManager();
 
 	//Map of the definitions of all posible game objects in the game/level
 	std::map<std::string, GameObjectDefinition> m_gameObjectDefinitions;

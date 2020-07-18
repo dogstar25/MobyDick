@@ -3,8 +3,8 @@
 
 #include <memory>
 #include <SDL2/SDL.h>
+#include <json/json.h>
 
-#include "Component.h"
 #include "../Texture.h"
 #include "TransformComponent.h"
 #include "AnimationComponent.h"
@@ -14,63 +14,17 @@ class PhysicsComponent;
 class TransformComponent;
 
 
-class RenderComponent : public Component
+struct RenderComponent
 {
+	std::shared_ptr<Texture> m_texture;
+	SDL_Color m_color;
+	float m_xRenderAdjustment;
+	float m_yRenderAdjustment;
+	bool m_renderOutline;
+	std::string m_textureId;
 
-public:
 	RenderComponent();
 	RenderComponent(Json::Value definitionJSON);
-	~RenderComponent();
-
-	void update(std::shared_ptr<GameObject>gameObject) override;
-	void render();
-
-	SDL_FRect  getRenderDestRect();
-	void setColor(SDL_Color color) {
-		m_color = color;
-	}
-	void setColorAlpha(int alpha) {
-		m_color.a = alpha;
-	}
-	void setColor(int red, int green, int blue, int alpha);
-	void setTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
-
-	void outlineObject(float lineSize);
-	void setDependencyReferences(GameObject* gameObject);
-
-	SDL_Rect* getRenderTextureRect();
-	SDL_Texture* getRenderTexture();
-	SDL_Surface* getRenderSurface();
-	
-
-	//void render(SDL_FRect* destRect, SDL_Color color);
-
-	//Accessors
-	SDL_Color color() {
-		return m_color;
-	}
-	std::shared_ptr<Texture> texture() {
-		return m_texture;
-	}
-	
-
-
-private:
-
-	std::shared_ptr<Texture> m_texture;
-	SDL_Color
-		m_color;
-	float
-		m_xRenderAdjustment,
-		m_yRenderAdjustment;
-	bool
-		m_renderOutline;
-	std::string
-		m_textureId;
-
-	AnimationComponent* m_animationComponent;
-	TransformComponent* m_transformComponent;
-
 };
 
 

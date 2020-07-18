@@ -15,7 +15,9 @@
 //#include "GameObjectContactListener.h"
 //#include "DebugDraw.h"
 //#include "DebugPanel.h"
-#include "GameObjectCollection.h"
+#include "ecs/Coordinator.hpp"
+
+
 
 
 
@@ -52,6 +54,9 @@ public:
 	}
 
 	//Accessor Functions
+	Coordinator& gameCoordinator() {
+		return m_gameCoordinator;
+	}
 	b2World* physicsWorld() {
 		return m_physicsWorld;
 	}
@@ -83,18 +88,18 @@ private:
 
 	b2World* m_physicsWorld;
 	SDL_Window* m_window;
-	GameObject* m_player;
 	int m_gameState;
+
 	SDL_Rect m_WorldBounds;
 	int m_WorldTileWidth;
 	int m_WorldTileHeight;
 
-	/*Fixed array of Layers
-	Each layer contains a vector of GameObjects
-	For deletions, things with heavy number of deletes like bullets and particles should all be at 
-	the end of the vector which shoudl make for acceptable erase performance
-	*/
-	std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> m_gameObjects;
+	//Main game ECS coordinator
+	Coordinator m_gameCoordinator;
+
+	//Entity systems
+	std::shared_ptr<RenderSystem> m_renderSystem;
+
 
 
 };

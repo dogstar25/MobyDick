@@ -1,22 +1,22 @@
-#include "GameObjectManager.h"
+#include "EntityDefinitionManager.h"
 
 #include <fstream>
 
 
 
-GameObjectManager& GameObjectManager::instance()
+EntityDefinitionManager& EntityDefinitionManager::instance()
 {
-	static GameObjectManager singletonInstance;
+	static EntityDefinitionManager singletonInstance;
 	return singletonInstance;
 }
 
 
-GameObjectManager::GameObjectManager()
+EntityDefinitionManager::EntityDefinitionManager()
 {
 
 }
 
-GameObjectManager::~GameObjectManager()
+EntityDefinitionManager::~EntityDefinitionManager()
 {
 
 	//Use clear and swap to ensure free memory
@@ -25,7 +25,7 @@ GameObjectManager::~GameObjectManager()
 }
 
 
-bool GameObjectManager::init()
+bool EntityDefinitionManager::init()
 {
 	load("gameObjectDefinitions/commonObjects2");
 	load("levels/level1_Objects");
@@ -46,7 +46,7 @@ bool GameObjectManager::init()
 
 
 
-void GameObjectManager::load(std::string gameObjectAssetsFilename)
+void EntityDefinitionManager::load(std::string gameObjectAssetsFilename)
 {
 	//Read file and stream it to a JSON object
 	Json::Value root;
@@ -70,7 +70,7 @@ void GameObjectManager::load(std::string gameObjectAssetsFilename)
 /*
 	Retrieve the GameObjetc Definition
 */
-std::shared_ptr<GameObjectDefinition> GameObjectManager::getDefinition(std::string definitionId)
+std::shared_ptr<GameObjectDefinition> EntityDefinitionManager::getDefinition(std::string definitionId)
 {
 
 	if (m_gameObjectDefinitions.find(definitionId) == this->m_gameObjectDefinitions.end())
@@ -87,7 +87,7 @@ std::shared_ptr<GameObjectDefinition> GameObjectManager::getDefinition(std::stri
 
 }
 
-bool GameObjectManager::hasDefinition(std::string definitionId)
+bool EntityDefinitionManager::hasDefinition(std::string definitionId)
 {
 
 	if (m_gameObjectDefinitions.find(definitionId) == this->m_gameObjectDefinitions.end())

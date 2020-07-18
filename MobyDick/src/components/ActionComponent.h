@@ -4,29 +4,15 @@
 #include "Component.h"
 
 #include <map>
-#include <json/json.h>
+#include <memory>
+#include <map>
 
 #include "../actions/Action.h"
 #include "../Globals.h"
 
-class GameObject;
 
-class ActionComponent : public Component
+struct ActionComponent
 {
-public:
-	ActionComponent(Json::Value definitionJSON);
-	~ActionComponent();
-
-	void moveAction(GameObject* gameObject, int direction, int strafe);
-	void rotateAction(GameObject* gameObject,float angularVelocity);
-	void useAction(GameObject* gameObject);
-
-	//Accessor functions
-	std::map<int, std::shared_ptr<Action>> actionMap() {
-		return m_actionMap;
-	}
-
-private:
 	std::map<int, std::shared_ptr<Action>>m_actionMap;
 
 };
