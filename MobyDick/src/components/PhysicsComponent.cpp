@@ -75,20 +75,6 @@ void PhysicsComponent::setLinearVelocity(b2Vec2 velocityVector)
 
 void PhysicsComponent::update()
 {
-	//update the UserData - only once - cant do it in the constructor
-	if (m_physicsBody->GetUserData() == nullptr)
-	{
-		m_physicsBody->SetUserData(gameObject.get());
-	}
-
-	//Transfer the physicsComponent coordinates to the transformComponent
-	b2Vec2 convertedPosition{ 0,0 };
-	float convertedAngle = util::radiansToDegrees(m_physicsBody->GetAngle());
-
-	convertedPosition.x = m_physicsBody->GetPosition().x * GameConfig::instance().scaleFactor();
-	convertedPosition.y = m_physicsBody->GetPosition().y * GameConfig::instance().scaleFactor();
-
-	gameObject->getComponent<TransformComponent>()->setPosition(convertedPosition, convertedAngle);
 }
 
 b2Body* PhysicsComponent::_buildB2Body(Json::Value transformComponentJSON)
