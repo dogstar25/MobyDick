@@ -5,7 +5,6 @@
 #include "TransformComponent.h"
 #include "../EntityDefinitionManager.h"
 #include "../Globals.h"
-#include "../GameObject.h"
 #include "../EnumMaps.h"
 #include "../GameConfig.h"
 #include "../Game.h"
@@ -52,10 +51,6 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, float xMapPos, fl
 
 }
 
-PhysicsComponent::~PhysicsComponent()
-{
-
-}
 void PhysicsComponent::setTransform(b2Vec2 positionVector, float angle)
 {
 	m_physicsBody->SetTransform(positionVector, angle);

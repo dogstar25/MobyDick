@@ -1,5 +1,4 @@
 #include "TransformComponent.h"
-#include "../GameObjectDefinition.h"
 #include "../GameConfig.h"
 #include "../DebugPanel.h"
 
@@ -24,12 +23,6 @@ TransformComponent::TransformComponent(Json::Value definitionJSON, float xMapPos
 		m_size.Set(transformComponentJSON["size"]["width"].asFloat(), transformComponentJSON["size"]["height"].asFloat());
 
 		m_absolutePositioning = transformComponentJSON["absolutePositioning"].asBool();
-
-}
-
-
-TransformComponent::~TransformComponent()
-{
 
 }
 

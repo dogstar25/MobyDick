@@ -2,7 +2,6 @@
 
 #include "../Renderer.h"
 #include "../Camera.h"
-#include "../GameObject.h"
 #include "../Globals.h"
 #include "../GameConfig.h"
 #include "../TextureManager.h"
@@ -42,12 +41,6 @@ RenderComponent::RenderComponent(Json::Value definitionJSON)
 
 	//Get Texture
 	m_texture = TextureManager::instance().getTexture(itrRender["textureId"].asString());
-
-}
-
-
-RenderComponent::~RenderComponent()
-{
 
 }
 

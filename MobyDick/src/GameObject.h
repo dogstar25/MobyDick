@@ -12,7 +12,6 @@
 
 #include <Box2D/Box2D.h>
 
-#include "GameObjectDefinition.h"
 #include "components/TransformComponent.h"
 #include "components/ActionComponent.h"
 #include "components/AnimationComponent.h"

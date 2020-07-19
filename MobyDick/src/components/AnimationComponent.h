@@ -5,12 +5,11 @@
 #include <map>
 #include <json/json.h>
 
-#include "Component.h"
 #include "../Animation.h"
 
 class TransformComponent;
 
-class AnimationComponent :  public Component
+class AnimationComponent
 {
 public:
 	AnimationComponent();

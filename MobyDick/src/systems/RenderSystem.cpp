@@ -7,6 +7,7 @@
 #include "../components/TransformComponent.h"
 #include "../components/PhysicsComponent.h"
 #include "../components/AnimationComponent.h"
+#include "../components/RenderComponent.h"
 #include "../Renderer.h"
 
 void RenderSystem::update()

@@ -11,10 +11,6 @@
 #include <memory>
 
 #include "Globals.h"
-#include "GameObject.h"
-//#include "GameObjectContactListener.h"
-//#include "DebugDraw.h"
-//#include "DebugPanel.h"
 #include "ecs/Coordinator.hpp"
 #include "systems/RenderSystem.h"
 #include "systems/PhysicsSystem.h"
@@ -39,11 +35,6 @@ public:
 	static Game& instance();
 	bool init();
 	void play();
-	static void renderGameObjects(const std::array <std::vector<GameObject>, MAX_GAMEOBJECT_LAYERS>&);
-	
-	void addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle);
-	void addGameObject(std::shared_ptr<GameObject>gameObject, int layer);
-
 	void setGameState(int state) {
 		m_gameState = state;
 	}

@@ -1,10 +1,10 @@
-#ifndef GAME_OBJECT_MANAGER_H
-#define GAME_OBJECT_MANAGER_H
+#ifndef ENTITY_DEFINITION_MANAGER_H
+#define ENTITY_DEFINITION_MANAGER_H
 
 #include <string>
 #include <map>
 
-#include "GameObjectDefinition.h"
+#include "EntityDefinition.h"
 
 class EntityDefinitionManager
 {
@@ -15,7 +15,7 @@ public:
 	bool init();
 	void load(std::string);
 	
-	std::shared_ptr<GameObjectDefinition> getDefinition(std::string gameObjectId);
+	std::shared_ptr<EntityDefinition> getDefinition(std::string gameObjectId);
 	bool hasDefinition(std::string gameObjectId);
 
 
@@ -24,7 +24,7 @@ private:
 	~EntityDefinitionManager();
 
 	//Map of the definitions of all posible game objects in the game/level
-	std::map<std::string, GameObjectDefinition> m_gameObjectDefinitions;
+	std::map<std::string, EntityDefinition> m_entityDefinitions;
 
 
 	

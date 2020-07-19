@@ -1,9 +1,4 @@
 #include "AnimationComponent.h"
-
-#include "../EnumMaps.h"
-#include "../GameObjectManager.h"
-#include "../GameObject.h"
-
 #include "TransformComponent.h"
 
 

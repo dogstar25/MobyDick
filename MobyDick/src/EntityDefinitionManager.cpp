@@ -20,8 +20,8 @@ EntityDefinitionManager::~EntityDefinitionManager()
 {
 
 	//Use clear and swap to ensure free memory
-	this->m_gameObjectDefinitions.clear();
-	std::map<std::string, GameObjectDefinition>().swap(this->m_gameObjectDefinitions);
+	this->m_entityDefinitions.clear();
+	std::map<std::string, EntityDefinition>().swap(this->m_entityDefinitions);
 }
 
 
@@ -55,13 +55,13 @@ void EntityDefinitionManager::load(std::string gameObjectAssetsFilename)
 	ifs >> root;
 
 	std::string id, textureId;
-	GameObjectDefinition* gameObjectDefinition;
+	EntityDefinition* entityDefinition;
 
 	for (Json::Value itr : root["gameObjects"])
 	{
 		std::string gameObjectId = itr["id"].asString();
 
-		m_gameObjectDefinitions.emplace(gameObjectId, *(new GameObjectDefinition(itr)));
+		m_entityDefinitions.emplace(gameObjectId, *(new EntityDefinition(itr)));
 	}
 }
 
@@ -70,10 +70,10 @@ void EntityDefinitionManager::load(std::string gameObjectAssetsFilename)
 /*
 	Retrieve the GameObjetc Definition
 */
-std::shared_ptr<GameObjectDefinition> EntityDefinitionManager::getDefinition(std::string definitionId)
+std::shared_ptr<EntityDefinition> EntityDefinitionManager::getDefinition(std::string definitionId)
 {
 
-	if (m_gameObjectDefinitions.find(definitionId) == this->m_gameObjectDefinitions.end())
+	if (m_entityDefinitions.find(definitionId) == this->m_entityDefinitions.end())
 	{
 		//FIXME: make it so that there at least 1  dummy definition in the map that it defaults to when nothign found
 		//shoudl never happen
@@ -81,7 +81,7 @@ std::shared_ptr<GameObjectDefinition> EntityDefinitionManager::getDefinition(std
 	}
 	else
 	{
-		return std::make_shared< GameObjectDefinition>(m_gameObjectDefinitions[definitionId]);
+		return std::make_shared< EntityDefinition>(m_entityDefinitions[definitionId]);
 	}
 
 
@@ -90,7 +90,7 @@ std::shared_ptr<GameObjectDefinition> EntityDefinitionManager::getDefinition(std
 bool EntityDefinitionManager::hasDefinition(std::string definitionId)
 {
 
-	if (m_gameObjectDefinitions.find(definitionId) == this->m_gameObjectDefinitions.end())
+	if (m_entityDefinitions.find(definitionId) == this->m_entityDefinitions.end())
 	{
 		return false;
 	}

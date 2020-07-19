@@ -33,9 +33,6 @@
     <ClCompile Include="src\GameConfig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObjectDefinition.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameObjectManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -75,9 +72,6 @@
     <ClCompile Include="src\DynamicTextManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\JsonToActionClass.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ParticleEmission.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -94,6 +88,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\systems\RenderSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EntityDefinition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -114,9 +111,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameConfig.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameObjectDefinition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameObjectManager.h">
@@ -164,9 +158,6 @@
     <ClInclude Include="src\DynamicTextManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\JsonToActionClass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\ParticleEmission.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -204,6 +195,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\components\AnimationComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\EntityDefinition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

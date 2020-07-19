@@ -9,13 +9,13 @@
 #include <vector>
 
 
-class GameObjectDefinition
+class EntityDefinition
 {
 public:
 
-	GameObjectDefinition();
-	GameObjectDefinition(Json::Value gameObjectDefinitionJSON);
-	~GameObjectDefinition();
+	EntityDefinition();
+	EntityDefinition(Json::Value entityDefinitionJSON);
+	~EntityDefinition();
 
 	bool hasComponent(unsigned int componentId) {
 		return (m_componentFlags & componentId);
@@ -32,8 +32,7 @@ public:
 
 private:
 
-	std::string
-		m_id;
+	std::string	m_id;
 	unsigned int m_componentFlags;
 	Json::Value m_definitionJSON;
 
