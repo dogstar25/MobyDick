@@ -1,7 +1,5 @@
 #include "TransformComponent.h"
 #include "../GameObjectDefinition.h"
-#include "../GameObjectManager.h"
-#include "../GameObject.h"
 #include "../GameConfig.h"
 #include "../DebugPanel.h"
 
@@ -36,10 +34,6 @@ TransformComponent::~TransformComponent()
 }
 
 
-void TransformComponent::update(std::shared_ptr<GameObject>gameObject)
-{
-}
-
 SDL_FRect TransformComponent::getPositionRect()
 {
 	SDL_FRect positionRect;
@@ -54,42 +48,4 @@ SDL_FRect TransformComponent::getPositionRect()
 
 }
 
-void TransformComponent::setPosition(b2Vec2 position)
-{
-	m_position = position;
-}
 
-void TransformComponent::setPosition(float xPosition, float yPosition)
-{
-	m_position.x = xPosition;
-	m_position.y = yPosition;
-}
-
-void TransformComponent::setPosition(b2Vec2 position, float angle)
-{
-	m_position = position;
-	m_angle = angle;
-}
-
-void TransformComponent::setPosition(float xPosition, float yPosition, float angle)
-{
-	m_position.x = xPosition;
-	m_position.y = yPosition;
-	m_angle = angle;
-}
-
-void TransformComponent::setSize(b2Vec2 size)
-{
-	m_size = size;
-}
-
-void TransformComponent::setSize(float xSize, float ySize)
-{
-	m_size.x = xSize;
-	m_size.y = ySize;
-}
-
-void TransformComponent::setAngle(float angle)
-{
-	m_angle = angle;
-}

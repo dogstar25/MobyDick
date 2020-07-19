@@ -2,18 +2,18 @@
 
 #include <string>
 
-#include "Level.h"
+//#include "Level.h"
 #include "TextureManager.h"
 #include "EntityDefinitionManager.h"
 #include "SoundManager.h"
 #include "Renderer.h"
 #include "DynamicTextManager.h"
-#include "ParticleMachine.h"
+//#include "ParticleMachine.h"
 #include "GameConfig.h"
 #include "Camera.h"
 //#include "GUIEvent.h"
 #include "Clock.h"
-#include "ObjectPoolManager.h"
+//#include "ObjectPoolManager.h"
 #include "EventManager.h"
 #include "DebugPanel.h"
 #include "components/ActionComponent.h"
@@ -132,10 +132,7 @@ bool Game::init()
 		Clock::instance().init();
 
 		//Load the First level
-		Level::instance().load("level1");
-
-		//Initilaize Camera size and
-		Camera::instance().init();
+		//Level::instance().load("level1");
 
 		//Initialize various entity systems
 		m_renderSystem = m_gameCoordinator.GetSystem<RenderSystem>();

@@ -16,6 +16,7 @@
 //#include "DebugDraw.h"
 //#include "DebugPanel.h"
 #include "ecs/Coordinator.hpp"
+#include "systems/RenderSystem.h"
 
 
 
@@ -62,9 +63,6 @@ public:
 	}
 	SDL_Window* window() {
 		return m_window;
-	}
-	GameObject* player() {
-		return m_player;
 	}
 	int gameState(){
 		return m_gameState;

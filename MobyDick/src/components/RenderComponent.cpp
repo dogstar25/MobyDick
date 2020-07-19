@@ -2,7 +2,6 @@
 
 #include "../Renderer.h"
 #include "../Camera.h"
-#include "../GameObjectManager.h"
 #include "../GameObject.h"
 #include "../Globals.h"
 #include "../GameConfig.h"

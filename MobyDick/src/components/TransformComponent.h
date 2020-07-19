@@ -2,6 +2,7 @@
 #define TRANSFORM_COMPONENT_H
 
 #include "box2d/box2d.h"
+#include "json/json.h"
 
 struct TransformComponent
 {
@@ -13,6 +14,8 @@ struct TransformComponent
 
 	TransformComponent();
 	TransformComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust);
+
+	SDL_FRect getPositionRect();
 };
 
 #endif

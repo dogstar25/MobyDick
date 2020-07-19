@@ -2,6 +2,7 @@
 #define PHYSICS_COMPONENT_H
 
 #include <box2d/box2d.h>
+#include <json/json.h>
 
 struct PhysicsComponent
 {
@@ -16,6 +17,18 @@ struct PhysicsComponent
 	uint16 m_collisionShape;
 	uint16 m_physicsType;
 	b2Vec2 m_objectAnchorPoint;
+
+	PhysicsComponent();
+	PhysicsComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust);
+	void setTransform(b2Vec2 positionVector, float angle);
+	void setPhysicsBodyActive(bool  active);
+	void setLinearVelocity(b2Vec2 velocityVector);
+	void update();
+
+private:
+	b2Body* _buildB2Body(Json::Value definitionJSON);
+	uint16 _setCollisionMask(uint16 category);
+
 };
 
 #endif

@@ -140,15 +140,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\ecs\GameCoordinator.cpp" />
-    <ClCompile Include="src\actions\HeroUseAction.cpp" />
-    <ClCompile Include="src\actions\HeroRotateAction.cpp" />
-    <ClCompile Include="src\actions\HeroMoveAction.cpp" />
     <ClCompile Include="src\ecs\Coordinator.cpp" />
     <ClCompile Include="src\EntityDefinitionManager.cpp" />
     <ClCompile Include="src\JsonToActionClass.cpp" />
-    <ClCompile Include="src\actions\Action.cpp" />
-    <ClCompile Include="src\actions\HeroFireAction.cpp" />
-    <ClCompile Include="src\DebugPanel.cpp" />
     <ClCompile Include="src\DynamicTextManager.cpp" />
     <ClCompile Include="src\EventManager.cpp" />
     <ClCompile Include="src\ParticleEmission.cpp" />
@@ -163,7 +157,6 @@
     <ClCompile Include="src\EnumMaps.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\GameConfig.cpp" />
-    <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\GameObjectDefinition.cpp" />
     <ClCompile Include="src\GameObjectManager.cpp" />
     <ClCompile Include="src\Globals.cpp" />
@@ -176,9 +169,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ecs\GameCoordinator.h" />
-    <ClInclude Include="src\actions\HeroUseAction.h" />
-    <ClInclude Include="src\actions\HeroRotateAction.h" />
-    <ClInclude Include="src\actions\HeroMoveAction.h" />
     <ClInclude Include="src\ECS\ComponentArray.hpp" />
     <ClInclude Include="src\ECS\ComponentManager.hpp" />
     <ClInclude Include="src\ECS\Coordinator.hpp" />
@@ -188,9 +178,6 @@
     <ClInclude Include="src\ECS\Types.hpp" />
     <ClInclude Include="src\EntityDefinitionManager.h" />
     <ClInclude Include="src\JsonToActionClass.h" />
-    <ClInclude Include="src\actions\Action.h" />
-    <ClInclude Include="src\actions\HeroFireAction.h" />
-    <ClInclude Include="src\DebugPanel.h" />
     <ClInclude Include="src\DynamicTextManager.h" />
     <ClInclude Include="src\EventManager.h" />
     <ClInclude Include="src\ParticleEmission.h" />
@@ -207,7 +194,6 @@
     <ClInclude Include="src\EnumMaps.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\GameConfig.h" />
-    <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\GameObjectDefinition.h" />
     <ClInclude Include="src\GameObjectManager.h" />
     <ClInclude Include="src\Globals.h" />

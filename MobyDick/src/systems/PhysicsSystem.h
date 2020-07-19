@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ecs/System.hpp"
+#include "../ecs/System.hpp"
 
 
 class Event;

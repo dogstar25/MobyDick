@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "TransformComponent.h"
-#include "../GameObjectManager.h"
+#include "../EntityDefinitionManager.h"
 #include "../Globals.h"
 #include "../GameObject.h"
 #include "../EnumMaps.h"
@@ -21,8 +21,6 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, float xMapPos, fl
 	Json::Value physicsComponentJSON = definitionJSON["physicsComponent"];
 	Json::Value transformComponentJSON = definitionJSON["transformComponent"];
 
-	m_gameObjectId = definitionJSON["id"].asString();;
-
 	m_physicsType = EnumMap::instance().toEnum(physicsComponentJSON["type"].asString());
 	m_collisionShape = EnumMap::instance().toEnum(physicsComponentJSON["collisionShape"].asString());
 	m_collisionRadius = physicsComponentJSON["collisionRadius"].asFloat();
@@ -37,7 +35,7 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, float xMapPos, fl
 		physicsComponentJSON["anchorPoint"]["y"].asFloat());
 
 	//Build the physics body
-	m_physicsBody = buildB2Body(transformComponentJSON);
+	m_physicsBody = _buildB2Body(transformComponentJSON);
 
 	//Calculate the spawn position
 	//Translate the pixel oriented position into box2d meter-oriented
@@ -75,7 +73,7 @@ void PhysicsComponent::setLinearVelocity(b2Vec2 velocityVector)
 	m_physicsBody->SetLinearVelocity(velocityVector);
 }
 
-void PhysicsComponent::update(std::shared_ptr<GameObject>gameObject)
+void PhysicsComponent::update()
 {
 	//update the UserData - only once - cant do it in the constructor
 	if (m_physicsBody->GetUserData() == nullptr)
@@ -93,7 +91,7 @@ void PhysicsComponent::update(std::shared_ptr<GameObject>gameObject)
 	gameObject->getComponent<TransformComponent>()->setPosition(convertedPosition, convertedAngle);
 }
 
-b2Body* PhysicsComponent::buildB2Body(Json::Value transformComponentJSON)
+b2Body* PhysicsComponent::_buildB2Body(Json::Value transformComponentJSON)
 {
 	b2BodyDef bodyDef;
 
@@ -149,7 +147,7 @@ b2Body* PhysicsComponent::buildB2Body(Json::Value transformComponentJSON)
 
 	//collision category
 	fixtureDef.filter.categoryBits = m_collisionCategory;
-	uint16 mask = this->setCollisionMask(m_collisionCategory);
+	uint16 mask = this->_setCollisionMask(m_collisionCategory);
 	fixtureDef.filter.maskBits = mask;
 
 	// Add the shape to the body.
@@ -164,7 +162,7 @@ b2Body* PhysicsComponent::buildB2Body(Json::Value transformComponentJSON)
 
 }
 
-uint16 PhysicsComponent::setCollisionMask(uint16 category)
+uint16 PhysicsComponent::_setCollisionMask(uint16 category)
 {
 	uint16 mask = 0;
 

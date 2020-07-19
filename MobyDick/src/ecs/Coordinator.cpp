@@ -12,12 +12,13 @@ void Coordinator::addEntity(std::string entityDefinitionId, float xMapPos, float
 	//Build components
 	definitionJSON = EntityDefinitionManager::instance().getDefinition(entityDefinitionId)->definitionJSON();
 
-	//Always create a Transform component
+	//Get an available entity
 	auto entity = CreateEntity();
+
+	//Always create a Transform component
 	AddComponent(entity, TransformComponent(definitionJSON, xMapPos, yMapPos, angleAdjust));
 
 	//Always create a Render component
-	auto entity = CreateEntity();
 	AddComponent(entity, RenderComponent(definitionJSON));
 
 	//Animation Component

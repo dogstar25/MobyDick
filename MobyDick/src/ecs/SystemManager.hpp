@@ -26,7 +26,7 @@ public:
 	std::shared_ptr<T> GetSystem()
 	{
 		const char* typeName = typeid(T).name();
-		return(mSystems[typeName]);
+		return(std::static_pointer_cast<T>(mSystems[typeName]));
 	}
 
 	template<typename T>
