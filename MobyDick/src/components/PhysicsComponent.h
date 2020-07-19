@@ -23,6 +23,9 @@ struct PhysicsComponent
 	void setTransform(b2Vec2 positionVector, float angle);
 	void setPhysicsBodyActive(bool  active);
 	void setLinearVelocity(b2Vec2 velocityVector);
+	void applyMovement(float velocity, int direction, int strafeDirection);
+	void applyRotation(float angularVelocity);
+	void setOffGrid();
 	void update();
 
 private:

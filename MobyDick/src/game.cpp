@@ -187,7 +187,9 @@ void Game::play()
 void Game::_update() {
 
 
+	m_physicsSystem->update();
 	m_renderSystem->update();
+
 
 
 
@@ -220,7 +222,7 @@ void Game::_render() {
 	//Clear the graphics display
 	Renderer::instance().clear();
 
-	m_renderSystem->render();
+	m_renderSystem->update();
 
 	//DebugDraw
 	//if (GameConfig::instance().b2DebugDrawMode() == true)

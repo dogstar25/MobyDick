@@ -1,8 +1,9 @@
 #ifndef TRANSFORM_COMPONENT_H
 #define TRANSFORM_COMPONENT_H
 
-#include "box2d/box2d.h"
-#include "json/json.h"
+#include <box2d/box2d.h>
+#include <json/json.h>
+#include <SDL2/SDL.h>
 
 struct TransformComponent
 {

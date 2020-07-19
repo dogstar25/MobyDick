@@ -197,6 +197,9 @@ uint16 PhysicsComponent::_setCollisionMask(uint16 category)
 }
 
 
+/*
+FixMe:Move these movement related things to a movement system?
+*/
 void PhysicsComponent::applyMovement(float velocity, int direction, int strafeDirection)
 {
 
@@ -259,28 +262,28 @@ void PhysicsComponent::setOffGrid()
 	m_physicsBody->SetActive(false);
 }
 
-void PhysicsComponent::attachItem(std::shared_ptr<GameObject>inventoryObject)
-{
-	//Get physics component of the inventory object
-	auto& inventoryObjectPhysicsComponent = inventoryObject->getComponent<PhysicsComponent>();
-
-	b2WeldJointDef weldJointDef;
-	weldJointDef.referenceAngle;
-	weldJointDef.bodyA = m_physicsBody;
-	weldJointDef.bodyB = inventoryObjectPhysicsComponent->m_physicsBody;
-	weldJointDef.collideConnected = false;
-
-	b2Vec2 worldObjectAnchorPoint = {
-		m_objectAnchorPoint.x,
-		m_objectAnchorPoint.y
-	};
-	weldJointDef.localAnchorA = worldObjectAnchorPoint;
-
-	b2Vec2 weaponsAnchorPoint = {
-		inventoryObjectPhysicsComponent->m_objectAnchorPoint.x,
-		inventoryObjectPhysicsComponent->m_objectAnchorPoint.y
-	};
-	weldJointDef.localAnchorB = weaponsAnchorPoint;
-	(b2WeldJointDef*)Game::instance().physicsWorld()->CreateJoint(&weldJointDef);
-
-}
+//void PhysicsComponent::attachItem(std::shared_ptr<GameObject>inventoryObject)
+//{
+//	//Get physics component of the inventory object
+//	auto& inventoryObjectPhysicsComponent = inventoryObject->getComponent<PhysicsComponent>();
+//
+//	b2WeldJointDef weldJointDef;
+//	weldJointDef.referenceAngle;
+//	weldJointDef.bodyA = m_physicsBody;
+//	weldJointDef.bodyB = inventoryObjectPhysicsComponent->m_physicsBody;
+//	weldJointDef.collideConnected = false;
+//
+//	b2Vec2 worldObjectAnchorPoint = {
+//		m_objectAnchorPoint.x,
+//		m_objectAnchorPoint.y
+//	};
+//	weldJointDef.localAnchorA = worldObjectAnchorPoint;
+//
+//	b2Vec2 weaponsAnchorPoint = {
+//		inventoryObjectPhysicsComponent->m_objectAnchorPoint.x,
+//		inventoryObjectPhysicsComponent->m_objectAnchorPoint.y
+//	};
+//	weldJointDef.localAnchorB = weaponsAnchorPoint;
+//	(b2WeldJointDef*)Game::instance().physicsWorld()->CreateJoint(&weldJointDef);
+//
+//}

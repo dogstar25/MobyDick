@@ -9,9 +9,9 @@ class Event;
 class PhysicsSystem : public System
 {
 public:
-	void Init();
+	void init();
 
-	void Update();
+	void update();
 
 private:
 	

@@ -4,7 +4,7 @@
 #include "../components/TransformComponent.h"
 #include "../components/PhysicsComponent.h"
 
-void PhysicsSystem::Update()
+void PhysicsSystem::update()
 {
 
 	/*

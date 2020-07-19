@@ -17,6 +17,7 @@
 //#include "DebugPanel.h"
 #include "ecs/Coordinator.hpp"
 #include "systems/RenderSystem.h"
+#include "systems/PhysicsSystem.h"
 
 
 
@@ -97,6 +98,7 @@ private:
 
 	//Entity systems
 	std::shared_ptr<RenderSystem> m_renderSystem;
+	std::shared_ptr<PhysicsSystem> m_physicsSystem;
 
 
 

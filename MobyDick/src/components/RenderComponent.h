@@ -25,6 +25,7 @@ struct RenderComponent
 
 	RenderComponent();
 	RenderComponent(Json::Value definitionJSON);
+	void setColor(int red, int green, int blue, int alpha);
 };
 
 
