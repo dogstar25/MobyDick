@@ -62,7 +62,7 @@ bool Game::init()
 
 	m_gameState = GameState::PLAY;
 
-	m_gameCoordinator.Init();
+	m_gameCoordinator.init();
 
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
@@ -187,7 +187,7 @@ void Game::play()
 void Game::_update() {
 
 
-	m_physicsSystem->update();
+	//m_physicsSystem->update();
 	m_renderSystem->update();
 
 

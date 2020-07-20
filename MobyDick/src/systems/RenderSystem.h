@@ -15,8 +15,8 @@ public:
 	void update();
 
 	SDL_FRect getRenderDestRect(RenderComponent& renderComponent, TransformComponent& transformComponent);
-	SDL_Rect* getRenderTextureRect(AnimationComponent& animationComponent);
-	SDL_Texture* getRenderTexture(AnimationComponent& animationComponent, RenderComponent& renderComponent);
+	SDL_Rect* getRenderTextureRect(AnimationComponent&animationComponent);
+	SDL_Texture* getRenderTexture(RenderComponent& renderComponent, AnimationComponent&animationComponent);
 
 };
 

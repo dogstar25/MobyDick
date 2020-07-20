@@ -3,6 +3,7 @@
 
 class GameCoordinator : public Coordinator
 {
+public:
 
 	GameCoordinator();
 	~GameCoordinator();

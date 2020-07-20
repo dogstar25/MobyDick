@@ -14,7 +14,7 @@ class Coordinator
 public:
 	Coordinator() {}
 	~Coordinator() {}
-	void Init()
+	void init()
 	{
 		mComponentManager = std::make_unique<ComponentManager>();
 		mEntityManager = std::make_unique<EntityManager>();
@@ -81,6 +81,11 @@ public:
 		return mComponentManager->GetComponentType<T>();
 	}
 
+	template<typename T>
+	bool hasComponent(Entity entity)
+	{
+		return mComponentManager->hasComponent<T>(entity);
+	}
 
 	// System methods
 	template<typename T>

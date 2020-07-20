@@ -2,6 +2,7 @@
 #include "../EntityDefinitionManager.h"
 #include "../components/RenderComponent.h"
 #include "../components/TransformComponent.h"
+#include "../components/PhysicsComponent.h"
 
 #include <json/json.h>
 
@@ -22,11 +23,10 @@ void Coordinator::addEntity(std::string entityDefinitionId, float xMapPos, float
 	AddComponent(entity, RenderComponent(definitionJSON));
 
 	//Animation Component
-	/*if (definitionJSON.isMember("animationComponent"))
+	if (definitionJSON.isMember("physicsComponent"))
 	{
-		auto entity = CreateEntity();
-		AddComponent(entity, AnimationComponent(definitionJSON));
+		AddComponent(entity, PhysicsComponent(definitionJSON, xMapPos, yMapPos, angleAdjust));
 
-	}*/
+	}
 
 }

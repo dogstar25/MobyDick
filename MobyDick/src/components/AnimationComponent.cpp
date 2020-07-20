@@ -1,5 +1,6 @@
 #include "AnimationComponent.h"
 #include "TransformComponent.h"
+#include "../EnumMaps.h"
 
 
 AnimationComponent::AnimationComponent()
@@ -12,10 +13,6 @@ AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 	//Get reference to the animationComponent JSON config and transformComponent JSON config
 	Json::Value animationComponentJSON = definitionJSON["animationComponent"];
 	Json::Value transformComponentJSON = definitionJSON["transformComponent"];
-
-	//Build animationComponent details
-	m_gameObjectId = definitionJSON["id"].asString();
-	
 
 	int i = 0;
 	for (Json::Value animItr : animationComponentJSON["animations"])
@@ -42,12 +39,12 @@ AnimationComponent::~AnimationComponent()
 
 }
 
-void AnimationComponent::update(std::shared_ptr<GameObject>gameObject)
-{
-
-	m_animations[m_currentAnimationState]->animate();
-
-}
+//void AnimationComponent::update(std::shared_ptr<GameObject>gameObject)
+//{
+//
+//	m_animations[m_currentAnimationState]->animate();
+//
+//}
 
 
 SDL_Rect* AnimationComponent::getCurrentAnimationTextureRect()

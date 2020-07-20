@@ -1,11 +1,14 @@
-#ifndef ANIMATION_COMPONENT_H
-#define ANIMATION_COMPONENT_H
+#ifndef ANIMATION_H
+#define ANIMATION_H
 
+#include <chrono>
 #include <string>
-#include <map>
+#include <vector> 
+#include <SDL2/SDL.h>
+#include <Box2D/Box2D.h>
 #include <json/json.h>
 
-#include "../Animation.h"
+class GameObjectDefinition;
 
 struct Animation
 {
@@ -28,20 +31,6 @@ struct Animation
 
 	Animation();
 	Animation(Json::Value animationDetailsJSON, Json::Value transformComponentJSON);
-
-};
-
-struct AnimationComponent
-{
-
-	int m_currentAnimationState;
-	std::map<int, std::shared_ptr<Animation>> m_animations;
-
-	AnimationComponent();
-	AnimationComponent(Json::Value definitionJSON);
-
-	SDL_Rect* getCurrentAnimationTextureRect();
-	SDL_Texture* getCurrentAnimationTexture();
 
 };
 

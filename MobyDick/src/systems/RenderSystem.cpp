@@ -8,65 +8,70 @@
 #include "../components/PhysicsComponent.h"
 #include "../components/AnimationComponent.h"
 #include "../components/RenderComponent.h"
+#include "../ecs/GameCoordinator.h"
 #include "../Renderer.h"
 
 void RenderSystem::update()
 {
-	for (auto& entity : mEntities)
-	{
-		auto& renderComponent = Game::instance().gameCoordinator().GetComponent<RenderComponent>(entity);
-		auto& transformComponent = Game::instance().gameCoordinator().GetComponent<TransformComponent>(entity);
-
-		/*
-		FixMe:Make the animation system put the sourceTexureRect and the current texture in the render component
-			and we wont need the animation component here. Trying to have the renderer ONLY need the render and transform 
-			component
-		*/
-		auto& animationComponent = Game::instance().gameCoordinator().GetComponent<AnimationComponent>(entity);
-		
-		//Check if this object is in the viewable area of the world
-		//Add a tiles width to the camera to buffer it some
-		const SDL_FRect positionRect = transformComponent.getPositionRect();
-		SDL_Rect gameObjectPosRect = { positionRect.x, positionRect.y, positionRect.w, positionRect.h };
-		SDL_Rect cameraRect = { Camera::instance().frame().x,
-			Camera::instance().frame().y,
-			Camera::instance().frame().w + Game::instance().worldTileWidth(),
-			Camera::instance().frame().h + Game::instance().worldTileHeight() };
-
-		/*
-		If this object is within the viewable are or if its absolute positioned then render it
-		*/
-		if (SDL_HasIntersection(&gameObjectPosRect, &cameraRect) ||
-			transformComponent.m_absolutePositioning == true)
+		for (auto& entity : mEntities)
 		{
-			const SDL_FRect destRect = getRenderDestRect(renderComponent, transformComponent);
-			SDL_Rect* textureSourceRect = getRenderTextureRect(animationComponent);
-			SDL_Texture* texture = getRenderTexture(animationComponent, renderComponent);
-			float angle = transformComponent.m_angle;
+			auto& renderComponent = Game::instance().gameCoordinator().GetComponent<RenderComponent>(entity);
+			auto& transformComponent = Game::instance().gameCoordinator().GetComponent<TransformComponent>(entity);
 
-			//Set the color
-			SDL_SetTextureAlphaMod(texture, renderComponent.m_color.a);
+			/*
+			FixMe:Make the animation system put the sourceTexureRect and the current texture in the render component
+				and we wont need the animation component here. Trying to have the renderer ONLY need the render and transform
+				component
+			*/
+			AnimationComponent animationComponent;
+			if (Game::instance().gameCoordinator().hasComponent<AnimationComponent>(entity))
+			{
+				animationComponent = Game::instance().gameCoordinator().GetComponent<AnimationComponent>(entity);
+			}
 
-			//SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD);
+			//Check if this object is in the viewable area of the world
+			//Add a tiles width to the camera to buffer it some
+			const SDL_FRect positionRect = transformComponent.getPositionRect();
+			SDL_Rect gameObjectPosRect = { positionRect.x, positionRect.y, positionRect.w, positionRect.h };
+			SDL_Rect cameraRect = { Camera::instance().frame().x,
+				Camera::instance().frame().y,
+				Camera::instance().frame().w + Game::instance().worldTileWidth(),
+				Camera::instance().frame().h + Game::instance().worldTileHeight() };
 
-			//Set the render color based on the objects color
-			SDL_SetTextureColorMod(texture, renderComponent.m_color.r, renderComponent.m_color.g, renderComponent.m_color.b);
+			/*
+			If this object is within the viewable are or if its absolute positioned then render it
+			*/
+			if (SDL_HasIntersection(&gameObjectPosRect, &cameraRect) ||
+				transformComponent.m_absolutePositioning == true)
+			{
+				const SDL_FRect destRect = getRenderDestRect(renderComponent, transformComponent);
+				SDL_Rect* textureSourceRect = getRenderTextureRect(animationComponent);
+				SDL_Texture* texture = getRenderTexture(renderComponent, animationComponent);
+				float angle = transformComponent.m_angle;
 
-			//Render the texture
-			SDL_RenderCopyExF(
-				Renderer::instance().SDLRenderer(),
-				texture,
-				textureSourceRect,
-				&destRect,
-				angle,
-				NULL,
-				SDL_FLIP_NONE);
+				//Set the color
+				SDL_SetTextureAlphaMod(texture, renderComponent.m_color.a);
+
+				//SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD);
+
+				//Set the render color based on the objects color
+				SDL_SetTextureColorMod(texture, renderComponent.m_color.r, renderComponent.m_color.g, renderComponent.m_color.b);
+
+				//Render the texture
+				SDL_RenderCopyExF(
+					Renderer::instance().SDLRenderer(),
+					texture,
+					textureSourceRect,
+					&destRect,
+					angle,
+					NULL,
+					SDL_FLIP_NONE);
+			}
+			else
+			{
+				int todd = 1;
+			}
 		}
-		else
-		{
-			int todd = 1;
-		}
-	}
 }
 
 void RenderSystem::init()
@@ -133,7 +138,7 @@ SDL_Rect* RenderSystem::getRenderTextureRect(AnimationComponent& animationCompon
 Get the actual texture to display. If this is an animated object then it will have
 different textures for different animation states
 */
-SDL_Texture* RenderSystem::getRenderTexture(AnimationComponent& animationComponent, RenderComponent& renderComponent)
+SDL_Texture* RenderSystem::getRenderTexture(RenderComponent& renderComponent, AnimationComponent& animationComponent)
 {
 
 	SDL_Texture* texture = nullptr;

@@ -139,6 +139,7 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\components\AnimationComponent.cpp" />
     <ClCompile Include="src\ecs\GameCoordinator.cpp" />
     <ClCompile Include="src\ecs\Coordinator.cpp" />
     <ClCompile Include="src\EntityDefinitionManager.cpp" />
@@ -157,7 +158,6 @@
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\GameConfig.cpp" />
     <ClCompile Include="src\EntityDefinition.cpp" />
-    <ClCompile Include="src\GameObjectManager.cpp" />
     <ClCompile Include="src\Globals.cpp" />
     <ClCompile Include="src\SoundManager.cpp" />
     <ClCompile Include="src\systems\PhysicsSystem.cpp" />
@@ -194,7 +194,6 @@
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\GameConfig.h" />
     <ClInclude Include="src\EntityDefinition.h" />
-    <ClInclude Include="src\GameObjectManager.h" />
     <ClInclude Include="src\Globals.h" />
     <ClInclude Include="src\SoundManager.h" />
     <ClInclude Include="src\systems\PhysicsSystem.h" />

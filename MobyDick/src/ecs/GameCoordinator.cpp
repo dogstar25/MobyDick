@@ -20,11 +20,12 @@ GameCoordinator::~GameCoordinator()
 
 void GameCoordinator::init()
 {
-	Coordinator::Init();
+	Coordinator::init();
 
 	RegisterComponent<TransformComponent>();
 	RegisterComponent<PhysicsComponent>();
 	RegisterComponent<RenderComponent>();
+	RegisterComponent<AnimationComponent>();
 
 	RegisterSystem<PhysicsSystem>();
 	RegisterSystem<RenderSystem>();

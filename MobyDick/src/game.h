@@ -11,7 +11,7 @@
 #include <memory>
 
 #include "Globals.h"
-#include "ecs/Coordinator.hpp"
+#include "ecs/GameCoordinator.h"
 #include "systems/RenderSystem.h"
 #include "systems/PhysicsSystem.h"
 
@@ -85,7 +85,7 @@ private:
 	int m_WorldTileHeight;
 
 	//Main game ECS coordinator
-	Coordinator m_gameCoordinator;
+	GameCoordinator m_gameCoordinator;
 
 	//Entity systems
 	std::shared_ptr<RenderSystem> m_renderSystem;
