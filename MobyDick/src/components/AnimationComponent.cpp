@@ -32,44 +32,4 @@ AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 
 
 
-AnimationComponent::~AnimationComponent()
-{
-
-	m_animations.clear();
-
-}
-
-//void AnimationComponent::update(std::shared_ptr<GameObject>gameObject)
-//{
-//
-//	m_animations[m_currentAnimationState]->animate();
-//
-//}
-
-
-SDL_Rect* AnimationComponent::getCurrentAnimationTextureRect()
-{
-	//SDL_Rect* textureSrcRect = nullptr;
-
-	return 
-		m_animations[m_currentAnimationState]->getCurrentTextureAnimationSrcRect().get();
-
-	//return textureSrcRect;
-	
-}
-
-SDL_Texture* AnimationComponent::getCurrentAnimationTexture()
-{
-	SDL_Texture* texture = nullptr;
-
-	texture =
-		m_animations[m_currentAnimationState]->getTexture();
-
-	return texture;
-
-}
-
-
-
-
 

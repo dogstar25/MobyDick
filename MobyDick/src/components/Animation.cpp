@@ -1,7 +1,7 @@
 #include "Animation.h"
 
-#include "EnumMaps.h"
-#include "TextureManager.h"
+#include "../EnumMaps.h"
+#include "../TextureManager.h"
 
 
 Animation::Animation()
@@ -59,15 +59,6 @@ Animation::Animation(Json::Value animationDetailsJSON, Json::Value transformDeta
 			}
 		}
 	}
-
-}
-
-
-Animation::~Animation()
-{
-
-	//delete m_currentTextureAnimationSrcRect;
-	//delete m_texture;
 
 }
 

@@ -6,6 +6,7 @@
 
 #include "../systems/PhysicsSystem.h"
 #include "../systems/RenderSystem.h"
+#include "../systems/AnimationSystem.h"
 
 
 GameCoordinator::GameCoordinator()
@@ -29,5 +30,6 @@ void GameCoordinator::init()
 
 	RegisterSystem<PhysicsSystem>();
 	RegisterSystem<RenderSystem>();
+	RegisterSystem<AnimationSystem>();
 
 }

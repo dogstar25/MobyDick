@@ -3,9 +3,10 @@
 
 #include <string>
 #include <map>
+#include <chrono>
+#include <SDL2/SDL.h>
+#include <box2d/box2d.h>
 #include <json/json.h>
-
-#include "../Animation.h"
 
 struct Animation
 {

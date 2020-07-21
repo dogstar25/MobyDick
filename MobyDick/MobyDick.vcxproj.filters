@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Animation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -90,17 +87,17 @@
     <ClCompile Include="src\EntityDefinition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GameObjectManager.cpp">
+    <ClCompile Include="src\components\AnimationComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\components\AnimationComponent.cpp">
+    <ClCompile Include="src\components\Animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\systems\AnimationSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Animation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -200,7 +197,10 @@
     <ClInclude Include="src\EntityDefinition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GameObjectManager.h">
+    <ClInclude Include="src\components\Animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\systems\AnimationSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

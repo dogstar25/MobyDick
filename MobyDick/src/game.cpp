@@ -137,13 +137,18 @@ bool Game::init()
 		//Initialize various entity systems
 		m_renderSystem = m_gameCoordinator.GetSystem<RenderSystem>();
 		m_renderSystem->init();
+		m_animationSystem = m_gameCoordinator.GetSystem<AnimationSystem>();
+		m_animationSystem->init();
+		m_physicsSystem = m_gameCoordinator.GetSystem<PhysicsSystem>();
+		m_physicsSystem->init();
 
 
 		
 	}
 
 
-	m_gameCoordinator.addEntity("BOWMAN", 4, 4, 0);
+	//m_gameCoordinator.addEntity("BOWMAN", 4, 4, 0);
+	m_gameCoordinator.addEntity("SWORDLADY", 6, 6, 0);
 
 
 	return true;
@@ -187,7 +192,7 @@ void Game::play()
 void Game::_update() {
 
 
-	//m_physicsSystem->update();
+	m_animationSystem->update();
 	m_renderSystem->update();
 
 

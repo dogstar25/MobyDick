@@ -38,6 +38,7 @@ RenderComponent::RenderComponent(Json::Value definitionJSON)
 	m_xRenderAdjustment = itrRender["xRenderAdjustment"].asFloat();
 	m_yRenderAdjustment = itrRender["yRenderAdjustment"].asFloat();
 	m_renderOutline = itrRender["renderOutline"].asFloat();
+	m_currentTextureAnimationSrcRect = nullptr;
 
 	//Get Texture
 	m_texture = TextureManager::instance().getTexture(itrRender["textureId"].asString());

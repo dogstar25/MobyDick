@@ -4,6 +4,19 @@
 #include "../components/TransformComponent.h"
 #include "../components/PhysicsComponent.h"
 
+
+void PhysicsSystem::init()
+{
+	/*
+	Build the component signature for this system
+	*/
+	Signature signature;
+	signature.set(Game::instance().gameCoordinator().GetComponentType<PhysicsComponent>());
+	signature.set(Game::instance().gameCoordinator().GetComponentType<TransformComponent>());
+
+	Game::instance().gameCoordinator().SetSystemSignature<PhysicsSystem>(signature);
+}
+
 void PhysicsSystem::update()
 {
 

@@ -14,9 +14,7 @@
 #include "ecs/GameCoordinator.h"
 #include "systems/RenderSystem.h"
 #include "systems/PhysicsSystem.h"
-
-
-
+#include "systems/AnimationSystem.h"
 
 
 /*
@@ -90,6 +88,7 @@ private:
 	//Entity systems
 	std::shared_ptr<RenderSystem> m_renderSystem;
 	std::shared_ptr<PhysicsSystem> m_physicsSystem;
+	std::shared_ptr<AnimationSystem> m_animationSystem;
 
 
 

@@ -18,17 +18,6 @@ void RenderSystem::update()
 			auto& renderComponent = Game::instance().gameCoordinator().GetComponent<RenderComponent>(entity);
 			auto& transformComponent = Game::instance().gameCoordinator().GetComponent<TransformComponent>(entity);
 
-			/*
-			FixMe:Make the animation system put the sourceTexureRect and the current texture in the render component
-				and we wont need the animation component here. Trying to have the renderer ONLY need the render and transform
-				component
-			*/
-			AnimationComponent animationComponent;
-			if (Game::instance().gameCoordinator().hasComponent<AnimationComponent>(entity))
-			{
-				animationComponent = Game::instance().gameCoordinator().GetComponent<AnimationComponent>(entity);
-			}
-
 			//Check if this object is in the viewable area of the world
 			//Add a tiles width to the camera to buffer it some
 			const SDL_FRect positionRect = transformComponent.getPositionRect();
@@ -45,8 +34,8 @@ void RenderSystem::update()
 				transformComponent.m_absolutePositioning == true)
 			{
 				const SDL_FRect destRect = getRenderDestRect(renderComponent, transformComponent);
-				SDL_Rect* textureSourceRect = getRenderTextureRect(animationComponent);
-				SDL_Texture* texture = getRenderTexture(renderComponent, animationComponent);
+				SDL_Rect* textureSourceRect = getRenderTextureRect(renderComponent);
+				SDL_Texture* texture = getRenderTexture(renderComponent);
 				float angle = transformComponent.m_angle;
 
 				//Set the color
@@ -120,17 +109,10 @@ Get the portion of the gameObject texture to render
 For animated objects, this is the portion of the texture that
 represents the current frame of animation
 */
-SDL_Rect* RenderSystem::getRenderTextureRect(AnimationComponent& animationComponent)
+SDL_Rect* RenderSystem::getRenderTextureRect(RenderComponent& renderComponent)
 {
 
-	SDL_Rect* textureSrcRect = nullptr;
-
-	if (animationComponent.m_animations.empty() == false)
-	{
-		textureSrcRect = animationComponent.getCurrentAnimationTextureRect();
-	}
-
-	return textureSrcRect;
+	return renderComponent.m_currentTextureAnimationSrcRect.get();
 
 }
 
@@ -138,21 +120,10 @@ SDL_Rect* RenderSystem::getRenderTextureRect(AnimationComponent& animationCompon
 Get the actual texture to display. If this is an animated object then it will have
 different textures for different animation states
 */
-SDL_Texture* RenderSystem::getRenderTexture(RenderComponent& renderComponent, AnimationComponent& animationComponent)
+SDL_Texture* RenderSystem::getRenderTexture(RenderComponent& renderComponent)
 {
 
-	SDL_Texture* texture = nullptr;
-
-	if (animationComponent.m_animations.empty() == false)
-	{
-		texture = animationComponent.getCurrentAnimationTexture();
-	}
-	else
-	{
-		texture = renderComponent.m_texture->sdlTexture;
-	}
-
-	return texture;
+	return renderComponent.m_texture->sdlTexture;
 }
 
 

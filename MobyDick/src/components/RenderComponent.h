@@ -22,6 +22,7 @@ struct RenderComponent
 	float m_yRenderAdjustment;
 	bool m_renderOutline;
 	std::string m_textureId;
+	std::shared_ptr<SDL_Rect> m_currentTextureAnimationSrcRect;
 
 	RenderComponent();
 	RenderComponent(Json::Value definitionJSON);
