@@ -1,6 +1,7 @@
 #include "Game.h"
 
 #include <iostream>
+#include <SDL2/SDL.h>
 
 
 int main(int argc, char* args[])
@@ -24,7 +25,5 @@ int main(int argc, char* args[])
 			break;
 		}
 	}
-
-
 	return 0;
 }

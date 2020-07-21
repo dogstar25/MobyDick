@@ -90,9 +90,6 @@
     <ClCompile Include="src\components\AnimationComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\components\Animation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\systems\AnimationSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -195,9 +192,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\EntityDefinition.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\components\Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\systems\AnimationSystem.h">

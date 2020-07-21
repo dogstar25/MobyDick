@@ -8,6 +8,8 @@
 #include <Box2D/Box2D.h>
 #include <json/json.h>
 
+#include "../Texture.h"
+
 class GameObjectDefinition;
 
 struct Animation
@@ -26,7 +28,7 @@ struct Animation
 	//Array of all x,y coordinates of the top left corner of each animation frame in the texture
 	std::vector<SDL_FPoint> m_animationFramePositions;
 
-	std::shared_ptr<SDL_Texture> m_texture;
+	std::shared_ptr<Texture> m_texture;
 	void animate();
 
 	Animation();

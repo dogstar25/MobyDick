@@ -32,7 +32,7 @@ void AnimationSystem::update()
 
 		//Get the current animation item and copy its texture to the render component
 		auto& animation = animationComponent.m_animations[animationComponent.m_currentAnimationState];
-		renderComponent.m_texture->sdlTexture = animation->m_texture;
+		renderComponent.m_texture = animation->m_texture;
 
 		//Update the animation texture source rectangle and then copy it and the current animation texture to the 
 		//RenderComponent for later rendering
@@ -58,13 +58,11 @@ void AnimationSystem::update()
 
 			rect->x = animation->m_animationFramePositions[animation->m_currentAnimFrame].x;
 			rect->y = animation->m_animationFramePositions[animation->m_currentAnimFrame].y;
-
 			rect->w = animation->m_frameSize.x;
 			rect->h = animation->m_frameSize.y;
+			animation->m_currentTextureAnimationSrcRect = rect;
 
-			//animation->m_currentTextureAnimationSrcRect = rect;
-
-			//Copy the source rect to the render component
+			//Also Copy the source rect to the render component
 			renderComponent.m_currentTextureAnimationSrcRect = rect;
 
 		}

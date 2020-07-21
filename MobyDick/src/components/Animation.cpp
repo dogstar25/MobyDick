@@ -20,20 +20,14 @@ Animation::Animation(Json::Value animationDetailsJSON, Json::Value transformDeta
 	//Get texture
 	std::string textureId = animationDetailsJSON["textureId"].asString();
 
-	m_texture = TextureManager::instance().getTexture(textureId)->sdlTexture;
+	m_texture = TextureManager::instance().getTexture(textureId);
 	m_currentTextureAnimationSrcRect = nullptr;
 
 	//Calculate how many columns and rows this animation texture has
 	int width, height;
 	//First get width of textture
-	SDL_QueryTexture(m_texture, NULL, NULL, &width, &height);
+	SDL_QueryTexture(m_texture->sdlTexture, NULL, NULL, &width, &height);
 
-	//calculate frameSize
-	//if (gameObjectDefinition->isPhysicsObject == true)
-	//{
-	//	m_frameSize.x = gameObjectDefinition->xSize * GameConfig::instance().scaleFactor();
-	//	m_frameSize.y = gameObjectDefinition->ySize * GameConfig::instance().scaleFactor();
-	//}
 	m_frameSize.x = transformDetailsJSON["size"]["width"].asFloat();
 	m_frameSize.y = transformDetailsJSON["size"]["height"].asFloat();
 

@@ -38,7 +38,7 @@ void RenderSystem::update()
 				SDL_Texture* texture = getRenderTexture(renderComponent);
 				float angle = transformComponent.m_angle;
 
-				//Set the color
+				//Set the alpha
 				SDL_SetTextureAlphaMod(texture, renderComponent.m_color.a);
 
 				//SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD);

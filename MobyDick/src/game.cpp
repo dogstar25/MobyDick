@@ -54,6 +54,9 @@ Game::Game()
 
 }
 
+
+
+
 /*
 Initialize Game
 */
@@ -175,13 +178,19 @@ void Game::play()
 		//Handle updating objects positions and physics
 		_update();
 
+		
+
 		//render everything
 		_render();
+
+		
 
 		//Increment frame counter and calculate FPS and reset the gameloop timer
 		Clock::instance().calcFps();
 
 		DynamicTextManager::instance().updateText("FPS_VALUE", std::to_string(Clock::instance().fps()));
+
+		
 
 	}
 
@@ -193,7 +202,12 @@ void Game::_update() {
 
 
 	m_animationSystem->update();
+
+	//SDL_DestroyTexture(Game::instance().testTex);
+
 	m_renderSystem->update();
+
+	//SDL_DestroyTexture(Game::instance().testTex);
 
 
 

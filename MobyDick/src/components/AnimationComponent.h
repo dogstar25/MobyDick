@@ -1,12 +1,15 @@
 #ifndef ANIMATION_COMPONENT_H
 #define ANIMATION_COMPONENT_H
 
+#include <memory>
+
 #include <string>
 #include <map>
 #include <chrono>
 #include <SDL2/SDL.h>
 #include <box2d/box2d.h>
 #include <json/json.h>
+#include "../texture.h"
 
 struct Animation
 {
@@ -24,7 +27,7 @@ struct Animation
 	//Array of all x,y coordinates of the top left corner of each animation frame in the texture
 	std::vector<SDL_FPoint> m_animationFramePositions;
 
-	SDL_Texture* m_texture;
+	std::shared_ptr<Texture> m_texture;
 	void animate();
 
 	Animation();
