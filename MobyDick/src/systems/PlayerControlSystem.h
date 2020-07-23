@@ -4,8 +4,6 @@
 class PlayerControlSystem :  public System
 {
 public:
-	PlayerControlSystem();
-	~PlayerControlSystem();
 
 	void update();
 	void init();

@@ -139,6 +139,16 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\actions\Action.cpp" />
+    <ClCompile Include="src\actions\HeroFireAction.cpp" />
+    <ClCompile Include="src\actions\HeroMoveAction.cpp" />
+    <ClCompile Include="src\actions\HeroRotateAction.cpp" />
+    <ClCompile Include="src\actions\HeroUseAction.cpp" />
+    <ClCompile Include="src\components\ActionComponent.cpp" />
+    <ClCompile Include="src\components\PlayerControlComponent.cpp" />
+    <ClCompile Include="src\components\VitalityComponent.cpp" />
+    <ClCompile Include="src\JsonToActionClass.cpp" />
+    <ClCompile Include="src\systems\PlayerControlSystem.cpp" />
     <ClCompile Include="src\systems\AnimationSystem.cpp" />
     <ClCompile Include="src\components\AnimationComponent.cpp" />
     <ClCompile Include="src\ecs\GameCoordinator.cpp" />
@@ -167,6 +177,16 @@
     <ClCompile Include="src\Waypoint.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\actions\Action.h" />
+    <ClInclude Include="src\actions\HeroFireAction.h" />
+    <ClInclude Include="src\actions\HeroMoveAction.h" />
+    <ClInclude Include="src\actions\HeroRotateAction.h" />
+    <ClInclude Include="src\actions\HeroUseAction.h" />
+    <ClInclude Include="src\components\ActionComponent.h" />
+    <ClInclude Include="src\components\PlayerControlComponent.h" />
+    <ClInclude Include="src\components\VitalityComponent.h" />
+    <ClInclude Include="src\JsonToActionClass.h" />
+    <ClInclude Include="src\systems\PlayerControlSystem.h" />
     <ClInclude Include="src\systems\AnimationSystem.h" />
     <ClInclude Include="src\components\AnimationComponent.h" />
     <ClInclude Include="src\ecs\GameCoordinator.h" />

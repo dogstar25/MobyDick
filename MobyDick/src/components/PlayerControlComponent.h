@@ -14,9 +14,10 @@ class VitalityComponent;
 
 struct PlayerControlComponent
 {
-	PlayerControlComponent(Json::Value definitionJSON);
-
 	std::bitset<8> m_controls;
+
+	PlayerControlComponent() {}
+	PlayerControlComponent(Json::Value definitionJSON);
 
 };
 

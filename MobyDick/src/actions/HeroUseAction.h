@@ -3,8 +3,6 @@
 
 #include "Action.h"
 
-class GameObject;
-
 class HeroUseAction : public Action
 {
 public:

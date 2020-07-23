@@ -15,7 +15,7 @@ void PlayerControlSystem::init()
 	signature.set(Game::instance().gameCoordinator().GetComponentType<PlayerControlComponent>());
 	signature.set(Game::instance().gameCoordinator().GetComponentType<ActionComponent>());
 
-	Game::instance().gameCoordinator().SetSystemSignature<AnimationSystem>(signature);
+	Game::instance().gameCoordinator().SetSystemSignature<PlayerControlSystem>(signature);
 
 }
 

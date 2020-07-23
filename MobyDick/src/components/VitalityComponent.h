@@ -5,14 +5,13 @@
 
 #include "Component.h"
 
-class GameObject;
-
 struct VitalityComponent
 {
-	float speed;
-	float strength;
-	float health;
+	float speed=0;
+	float strength=0;
+	float health=0;
 
+	VitalityComponent(){}
 	VitalityComponent(Json::Value definitionJSON);
 };
 

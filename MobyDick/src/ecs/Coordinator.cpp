@@ -4,6 +4,9 @@
 #include "../components/TransformComponent.h"
 #include "../components/PhysicsComponent.h"
 #include "../components/AnimationComponent.h"
+#include "../components/PlayerControlComponent.h"
+#include "../components/VitalityComponent.h"
+#include "../components/ActionComponent.h"
 
 
 
@@ -40,4 +43,26 @@ void Coordinator::addEntity(std::string entityDefinitionId, float xMapPos, float
 		AddComponent(entity, AnimationComponent(definitionJSON));
 
 	}
+
+	//Player Control Component
+	if (definitionJSON.isMember("playerControlComponent"))
+	{
+		AddComponent(entity, PlayerControlComponent(definitionJSON));
+
+	}
+
+	//Action Control Component
+	if (definitionJSON.isMember("actionComponent"))
+	{
+		AddComponent(entity, ActionComponent(definitionJSON));
+
+	}
+
+	//Vitality Control Component
+	if (definitionJSON.isMember("vitalityComponent"))
+	{
+		AddComponent(entity, VitalityComponent(definitionJSON));
+
+	}
+
 }

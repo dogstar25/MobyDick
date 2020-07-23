@@ -1,5 +1,4 @@
 #include "ActionComponent.h"
-#include "../GameObject.h"
 #include "../actions/HeroFireAction.h"
 #include "../JsonToActionClass.h"
 #include "../EnumMaps.h"

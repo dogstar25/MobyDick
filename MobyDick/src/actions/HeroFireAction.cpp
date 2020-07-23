@@ -2,8 +2,8 @@
 #include <iostream>
 #include <box2d/box2d.h>
 #include <SDL2/SDL.h>
-#include "../ParticleEmission.h"
-#include "../ParticleMachine.h"
+//#include "../ParticleEmission.h"
+//#include "../ParticleMachine.h"
 #include "../game.h"
 #include "../components/TransformComponent.h"
 
@@ -24,10 +24,10 @@ void HeroFireAction::perform(Entity entity)
 
 	auto& transformComponent = Game::instance().gameCoordinator().GetComponent<TransformComponent>(entity);
 
-	ParticleMachine::instance().fireBullet("BULLET1_POOL",
-		transformComponent.m_position,
-		transformComponent.m_angle,
-		40);
+	//ParticleMachine::instance().fireBullet("BULLET1_POOL",
+	//	transformComponent.m_position,
+	//	transformComponent.m_angle,
+	//	40);
 
 
 	////use the collision point for the particle emission

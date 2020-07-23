@@ -7,9 +7,8 @@
 #include "../components/TransformComponent.h"
 #include "../components/AnimationComponent.h"
 #include "../components/PhysicsComponent.h"
+#include "../ecs/Types.hpp"
 
-
-class GameObject;
 
 class Action
 {
@@ -18,9 +17,9 @@ public:
 	Action();
 	~Action();
 	virtual void perform(){};
-	virtual void perform(GameObject*) {};
-	virtual void perform(GameObject*, int, int) {};
-	virtual void perform(GameObject*, float) {};
+	virtual void perform(Entity) {};
+	virtual void perform(Entity, int, int) {};
+	virtual void perform(Entity, float) {};
 
 };
 

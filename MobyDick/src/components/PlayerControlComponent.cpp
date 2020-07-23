@@ -10,10 +10,6 @@ PlayerControlComponent::PlayerControlComponent(Json::Value definitionJSON)
 	{
 		int controlFlag = EnumMap::instance().toEnum(itrControls.asString());
 		m_controls.set(controlFlag);
-
-
 	}
-
-
 }
 

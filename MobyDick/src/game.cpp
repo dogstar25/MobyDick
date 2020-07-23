@@ -155,6 +155,10 @@ bool Game::init()
 	//m_gameCoordinator.addEntity("BOWMAN", 4, 4, 0);
 	//m_gameCoordinator.addEntity("SWORDLADY", 6, 6, 0);
 	m_gameCoordinator.addEntity("GINA_64", 6, 6, 0);
+	m_gameCoordinator.addEntity("GINA_64", 7, 6, 0);
+	m_gameCoordinator.addEntity("GINA_64", 8, 6, 0);
+	m_gameCoordinator.addEntity("GINA_64", 9, 6, 0);
+	m_gameCoordinator.addEntity("GINA_64", 6, 8, 0);
 
 
 	return true;
@@ -200,6 +204,7 @@ void Game::play()
 void Game::_update() {
 
 	m_playerControlSystem->update();
+	m_physicsSystem->update();
 	m_animationSystem->update();
 	m_renderSystem->update();
 	
