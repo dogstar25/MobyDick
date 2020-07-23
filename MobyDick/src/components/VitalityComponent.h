@@ -7,28 +7,13 @@
 
 class GameObject;
 
-class VitalityComponent :  public Component
+struct VitalityComponent
 {
-public:
-	VitalityComponent();
+	float speed;
+	float strength;
+	float health;
+
 	VitalityComponent(Json::Value definitionJSON);
-	~VitalityComponent();
-
-	void update(std::shared_ptr<GameObject>gameObject) override;
-
-	//Accessor functions
-	float speed() {
-		return m_speed;
-	}
-
-private:
-	float
-		m_speed,
-		m_strength,
-		m_health;
-
-
-
 };
 
 #endif

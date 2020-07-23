@@ -3,7 +3,7 @@
 #include <iostream>
 #include <memory>
 
-#include "../GameObject.h"
+#include "../game.h"
 #include "../components/PhysicsComponent.h"
 #include "../components/AnimationComponent.h"
 #include "../components/VitalityComponent.h"
@@ -20,24 +20,28 @@ HeroMoveAction::~HeroMoveAction()
 
 }
 
-void HeroMoveAction::perform(GameObject* gameObject, int direction, int strafe)
+void HeroMoveAction::perform(Entity entity, int direction, int strafe)
 {
-	auto& physicsComponent = gameObject->getComponent<PhysicsComponent>();
-	auto& animationComponent = gameObject->getComponent<AnimationComponent>();
-	auto& vitalityComponent = gameObject->getComponent<VitalityComponent>();
+	auto& physicsComponent = Game::instance().gameCoordinator().GetComponent<PhysicsComponent>(entity);
+	auto& vitalityComponent = Game::instance().gameCoordinator().GetComponent<VitalityComponent>(entity);
 
-	physicsComponent->applyMovement(vitalityComponent->speed(), direction, strafe);
+	//Move
+	physicsComponent.applyMovement(vitalityComponent.speed, direction, strafe);
 
-	if (animationComponent)
+	//Animate
+	if (Game::instance().gameCoordinator().hasComponent<AnimationComponent>(entity))
 	{
+		auto& animationComponent = Game::instance().gameCoordinator().GetComponent<AnimationComponent>(entity);
+
 		if (direction == 0 && strafe == 0)
 		{
-			animationComponent->setCurrentAnimationState(ANIMATION_IDLE);
+			animationComponent.m_currentAnimationState = ANIMATION_IDLE;
 		}
 		else
 		{
-			animationComponent->setCurrentAnimationState(ANIMATION_RUN);
+			animationComponent.m_currentAnimationState = ANIMATION_RUN;
 		}
+
 	}
 
 }

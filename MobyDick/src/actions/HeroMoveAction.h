@@ -7,7 +7,7 @@ public:
 	HeroMoveAction();
 	~HeroMoveAction();
 
-	void perform(GameObject* gameObject, int direction, int strafe) override;
+	void perform(Entity entity, int direction, int strafe) override;
 
 };
 

@@ -3,6 +3,9 @@
         {
             "id": "SWORDLADY",
             "description": "SwordLady",
+            "identityTags": [
+                "TAG_PLAYER"
+            ],
             "transformComponent": {
                 "size": {
                     "width": 64,

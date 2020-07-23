@@ -20,5 +20,7 @@ using Entity = std::uint32_t;
 const Entity MAX_ENTITIES = 5000;
 using ComponentType = std::uint8_t;
 const ComponentType MAX_COMPONENTS = 32;
+const std::uint32_t MAX_IDENTITY_TAGS =	32;
 using Signature = std::bitset<MAX_COMPONENTS>;
+using IdentityTags = std::bitset<MAX_IDENTITY_TAGS>;
 

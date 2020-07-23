@@ -144,6 +144,8 @@ bool Game::init()
 		m_animationSystem->init();
 		m_physicsSystem = m_gameCoordinator.GetSystem<PhysicsSystem>();
 		m_physicsSystem->init();
+		m_playerControlSystem = m_gameCoordinator.GetSystem<PlayerControlSystem>();
+		m_playerControlSystem->init();
 
 
 		
@@ -151,7 +153,8 @@ bool Game::init()
 
 
 	//m_gameCoordinator.addEntity("BOWMAN", 4, 4, 0);
-	m_gameCoordinator.addEntity("SWORDLADY", 6, 6, 0);
+	//m_gameCoordinator.addEntity("SWORDLADY", 6, 6, 0);
+	m_gameCoordinator.addEntity("GINA_64", 6, 6, 0);
 
 
 	return true;
@@ -178,12 +181,8 @@ void Game::play()
 		//Handle updating objects positions and physics
 		_update();
 
-		
-
 		//render everything
 		_render();
-
-		
 
 		//Increment frame counter and calculate FPS and reset the gameloop timer
 		Clock::instance().calcFps();
@@ -200,17 +199,10 @@ void Game::play()
 
 void Game::_update() {
 
-
+	m_playerControlSystem->update();
 	m_animationSystem->update();
-
-	//SDL_DestroyTexture(Game::instance().testTex);
-
 	m_renderSystem->update();
-
-	//SDL_DestroyTexture(Game::instance().testTex);
-
-
-
+	
 
 	/*DebugPanel::instance().addItem("Test", util::generateRandomNumber(1,10000), 8);
 	DebugPanel::instance().addItem("Test2", util::generateRandomNumber(1, 10000), 8);

@@ -1,20 +1,21 @@
 #ifndef ACTION_COMPONENT_H
 #define ACTION_COMPONENT_H
 
-#include "Component.h"
-
 #include <map>
 #include <memory>
-#include <map>
 
 #include "../actions/Action.h"
-#include "../Globals.h"
 
 
 struct ActionComponent
 {
+	ActionComponent(Json::Value definitionJSON);
+
 	std::map<int, std::shared_ptr<Action>>m_actionMap;
 
+	void moveAction(Entity entity, int direction, int strafe);
+	void rotateAction(Entity entity, float angularVelocity);
+	void useAction(Entity entity);
 };
 
 

@@ -13,6 +13,8 @@ public:
 	{
 		for (Entity entity = 0; entity < MAX_ENTITIES; ++entity)
 		{
+			mIdentityTags[entity] = 0;
+			mRemoveFromWorld[entity] = false;
 			mAvailableEntities.push(entity);
 		}
 	}
@@ -54,5 +56,7 @@ public:
 private:
 	std::queue<Entity> mAvailableEntities{};
 	std::array<Signature, MAX_ENTITIES> mSignatures{};
+	std::array<IdentityTags, MAX_ENTITIES> mIdentityTags{};
+	std::array<bool, MAX_ENTITIES> mRemoveFromWorld{};
 	uint32_t mLivingEntityCount{};
 };

@@ -15,6 +15,7 @@
 #include "systems/RenderSystem.h"
 #include "systems/PhysicsSystem.h"
 #include "systems/AnimationSystem.h"
+#include "systems/PlayerControlSystem.h"
 
 
 /*
@@ -89,7 +90,7 @@ private:
 	std::shared_ptr<RenderSystem> m_renderSystem;
 	std::shared_ptr<PhysicsSystem> m_physicsSystem;
 	std::shared_ptr<AnimationSystem> m_animationSystem;
-
+	std::shared_ptr<PlayerControlSystem> m_playerControlSystem;
 
 
 };

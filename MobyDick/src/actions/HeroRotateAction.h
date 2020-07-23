@@ -7,7 +7,7 @@ public:
 	HeroRotateAction();
 	~HeroRotateAction();
 
-	void perform(GameObject* gameObject, float angularVelocity) override;
+	void perform(Entity entity, float angularVelocity) override;
 
 };
 

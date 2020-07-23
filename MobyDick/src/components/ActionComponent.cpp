@@ -4,6 +4,8 @@
 #include "../JsonToActionClass.h"
 #include "../EnumMaps.h"
 
+#include "../ecs/Types.hpp"
+
 ActionComponent::ActionComponent(Json::Value definitionJSON)
 {
 	Json::Value componentJSON = definitionJSON["actionComponent"];
@@ -21,31 +23,21 @@ ActionComponent::ActionComponent(Json::Value definitionJSON)
 		m_actionMap.emplace(action, JsonToActionClass::instance().toClass(stringActionClass));
 
 	}
-
-
 }
 
-ActionComponent::~ActionComponent()
+void ActionComponent::moveAction(Entity entity, int direction, int strafe)
 {
-
+	m_actionMap[ACTION_MOVE]->perform(entity, direction, strafe);
 }
 
-void ActionComponent::moveAction(GameObject* gameObject, int direction, int strafe)
+void ActionComponent::rotateAction(Entity entity, float angularVelocity)
 {
-
-	m_actionMap[ACTION_MOVE]->perform(gameObject, direction, strafe);
-
+	m_actionMap[ACTION_ROTATE]->perform(entity, angularVelocity);
 }
 
-void ActionComponent::rotateAction(GameObject* gameObject, float angularVelocity)
+void ActionComponent::useAction(Entity entity)
 {
-
-	m_actionMap[ACTION_ROTATE]->perform(gameObject, angularVelocity);
-}
-
-void ActionComponent::useAction(GameObject* gameObject)
-{
-	m_actionMap[ACTION_USE]->perform(gameObject);
+	m_actionMap[ACTION_USE]->perform(entity);
 }
 
 

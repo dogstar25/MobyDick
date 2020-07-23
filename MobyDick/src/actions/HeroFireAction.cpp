@@ -4,7 +4,8 @@
 #include <SDL2/SDL.h>
 #include "../ParticleEmission.h"
 #include "../ParticleMachine.h"
-#include "../GameObject.h"
+#include "../game.h"
+#include "../components/TransformComponent.h"
 
 
 HeroFireAction::HeroFireAction()
@@ -18,14 +19,14 @@ HeroFireAction::~HeroFireAction()
 
 }
 
-void HeroFireAction::perform(GameObject* gameObject)
+void HeroFireAction::perform(Entity entity)
 {
 
-
+	auto& transformComponent = Game::instance().gameCoordinator().GetComponent<TransformComponent>(entity);
 
 	ParticleMachine::instance().fireBullet("BULLET1_POOL",
-		gameObject->getComponent<TransformComponent>()->position(),
-		gameObject->getComponent<TransformComponent>()->angle(),
+		transformComponent.m_position,
+		transformComponent.m_angle,
 		40);
 
 

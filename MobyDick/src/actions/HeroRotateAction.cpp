@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "../GameObject.h"
+#include "../game.h"
 #include "../components/PhysicsComponent.h"
 #include "../components/AnimationComponent.h"
 
@@ -19,15 +19,17 @@ HeroRotateAction::~HeroRotateAction()
 
 }
 
-void HeroRotateAction::perform(GameObject* gameObject, float angularVelocity )
+void HeroRotateAction::perform(Entity entity, float angularVelocity )
 {
-	auto& physicsComponent = gameObject->getComponent<PhysicsComponent>();
-	auto& animationComponent = gameObject->getComponent<AnimationComponent>();
+	auto& physicsComponent = Game::instance().gameCoordinator().GetComponent<PhysicsComponent>(entity);
 
-	physicsComponent->applyRotation(angularVelocity);
+	//Rotate
+	physicsComponent.applyRotation(angularVelocity);
 
-	if (animationComponent)
+	//Animate
+	if (Game::instance().gameCoordinator().hasComponent<AnimationComponent>(entity))
 	{
-		animationComponent->setCurrentAnimationState(ANIMATION_RUN);
+		auto& animationComponent = Game::instance().gameCoordinator().GetComponent<AnimationComponent>(entity);
+		animationComponent.m_currentAnimationState = ANIMATION_RUN;
 	}
 }

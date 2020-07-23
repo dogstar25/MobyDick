@@ -12,7 +12,7 @@ public:
 	HeroUseAction();
 	~HeroUseAction();
 
-	void perform(GameObject* gameObject) override;
+	void perform(Entity entity) override;
 
 
 
