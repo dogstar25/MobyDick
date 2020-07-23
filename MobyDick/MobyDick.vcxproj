@@ -148,6 +148,7 @@
     <ClCompile Include="src\components\PlayerControlComponent.cpp" />
     <ClCompile Include="src\components\VitalityComponent.cpp" />
     <ClCompile Include="src\JsonToActionClass.cpp" />
+    <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\systems\PlayerControlSystem.cpp" />
     <ClCompile Include="src\systems\AnimationSystem.cpp" />
     <ClCompile Include="src\components\AnimationComponent.cpp" />
@@ -186,6 +187,7 @@
     <ClInclude Include="src\components\PlayerControlComponent.h" />
     <ClInclude Include="src\components\VitalityComponent.h" />
     <ClInclude Include="src\JsonToActionClass.h" />
+    <ClInclude Include="src\Level.h" />
     <ClInclude Include="src\systems\PlayerControlSystem.h" />
     <ClInclude Include="src\systems\AnimationSystem.h" />
     <ClInclude Include="src\components\AnimationComponent.h" />

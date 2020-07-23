@@ -2,7 +2,7 @@
 
 #include <string>
 
-//#include "Level.h"
+#include "Level.h"
 #include "TextureManager.h"
 #include "EntityDefinitionManager.h"
 #include "SoundManager.h"
@@ -134,9 +134,6 @@ bool Game::init()
 		//Initialize the clock object
 		Clock::instance().init();
 
-		//Load the First level
-		//Level::instance().load("level1");
-
 		//Initialize various entity systems
 		m_renderSystem = m_gameCoordinator.GetSystem<RenderSystem>();
 		m_renderSystem->init();
@@ -147,6 +144,8 @@ bool Game::init()
 		m_playerControlSystem = m_gameCoordinator.GetSystem<PlayerControlSystem>();
 		m_playerControlSystem->init();
 
+		//Load the First level
+		Level::instance().load("level1");
 
 		
 	}
@@ -180,7 +179,7 @@ void Game::play()
 	EventManager::instance().pollEvents();
 
 	//Only update and render if we have passed the 60 fps time passage
-	if (Clock::instance().hasMetGameLoopSpeed())
+	//if (Clock::instance().hasMetGameLoopSpeed())
 	{
 		//Handle updating objects positions and physics
 		_update();

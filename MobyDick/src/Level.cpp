@@ -7,7 +7,7 @@
 
 #include "Globals.h"
 #include "TextureManager.h"
-#include "GameObjectManager.h"
+#include "EntityDefinitionManager.h"
 #include "Game.h"
 
 
@@ -102,7 +102,7 @@ void Level::_loadDefinition(std::string levelId)
 		for (auto itr : root["locationObjects"])
 		{
 			locationDefinition = new LevelObject();
-			locationDefinition->gameObjectId = itr["gameObjectId"].asString();
+			locationDefinition->entityDefinitionId = itr["gameObjectId"].asString();
 			locationId = itr["id"].asString();
 			m_locationObjects.emplace(locationId, locationDefinition);
 
@@ -186,7 +186,7 @@ LevelObject* Level::_determineTile(int x, int y, SDL_Surface* surface)
 
 	//Init level object
 	levelObject = new LevelObject();
-	levelObject->gameObjectId = "";
+	levelObject->entityDefinitionId = "";
 
 	//If this is a wall, get the pixel to the left, right, top, and bottom 
 	//- check if we are on the edge while grabbing pixel 
@@ -232,77 +232,77 @@ LevelObject* Level::_determineTile(int x, int y, SDL_Surface* surface)
 		//build levelObject Here
 		if (borderWalls == open)
 		{
-			levelObject->gameObjectId = "WALL1_OPEN";
+			levelObject->entityDefinitionId = "WALL1_OPEN";
 		}
 		else if (borderWalls == topEnd)
 		{
-			levelObject->gameObjectId = "WALL1_END";
+			levelObject->entityDefinitionId = "WALL1_END";
 		}
 		else if (borderWalls == bottomEnd)
 		{
-			levelObject->gameObjectId = "WALL1_END";
+			levelObject->entityDefinitionId = "WALL1_END";
 			levelObject->angleAdjustment = 180;
 		}
 		else if (borderWalls == rightEnd)
 		{
-			levelObject->gameObjectId = "WALL1_END";
+			levelObject->entityDefinitionId = "WALL1_END";
 			levelObject->angleAdjustment = 90;
 		}
 		else if (borderWalls == leftEnd)
 		{
-			levelObject->gameObjectId = "WALL1_END";
+			levelObject->entityDefinitionId = "WALL1_END";
 			levelObject->angleAdjustment = -90;
 		}
 		else if (borderWalls == topLeftCorner)
 		{
-			levelObject->gameObjectId = "WALL1_CORNER";
+			levelObject->entityDefinitionId = "WALL1_CORNER";
 		}
 		else if (borderWalls == topRightCorner)
 		{
-			levelObject->gameObjectId = "WALL1_CORNER";
+			levelObject->entityDefinitionId = "WALL1_CORNER";
 			levelObject->angleAdjustment = 90;
 		}
 		else if (borderWalls == bottomLeftCorner)
 		{
-			levelObject->gameObjectId = "WALL1_CORNER";
+			levelObject->entityDefinitionId = "WALL1_CORNER";
 			levelObject->angleAdjustment = -90;
 		}
 		else if (borderWalls == bottomRightCorner)
 		{
-			levelObject->gameObjectId = "WALL1_CORNER";
+			levelObject->entityDefinitionId = "WALL1_CORNER";
 			levelObject->angleAdjustment = 180;
 		}
 		else if (borderWalls == hallHorz)
 		{
-			levelObject->gameObjectId = "WALL1_HALL";
+			levelObject->entityDefinitionId = "WALL1_HALL";
 		}
 		else if (borderWalls == hallVert)
 		{
-			levelObject->gameObjectId = "WALL1_HALL";
+			levelObject->entityDefinitionId = "WALL1_HALL";
 			levelObject->angleAdjustment = 90;
 		}
 		else if (borderWalls == topWall)
 		{
-			levelObject->gameObjectId = "WALL1_WALL";
+			levelObject->entityDefinitionId = "WALL1_WALL";
 		}
 		else if (borderWalls == rightWall)
 		{
-			levelObject->gameObjectId = "WALL1_WALL";
+			levelObject->entityDefinitionId = "WALL1_WALL";
 			levelObject->angleAdjustment = 90;
 		}
 		else if (borderWalls == bottomWall)
 		{
-			levelObject->gameObjectId = "WALL1_WALL";
+			levelObject->entityDefinitionId = "WALL1_WALL";
 			levelObject->angleAdjustment = 180;
 		}
 		else if (borderWalls == leftWall)
 		{
-			levelObject->gameObjectId = "WALL1_WALL";
+			levelObject->entityDefinitionId = "WALL1_WALL";
 			levelObject->angleAdjustment = -90;
 		}
 		else if (borderWalls == column)
 		{
-			levelObject->gameObjectId = "WALL1_COLUMN";
+			levelObject->entityDefinitionId = "WALL1_COLUMN";
 		}
 	}
 
@@ -319,11 +319,11 @@ void Level::_buildLevelObjects()
 		for (int x = 0; x < m_width; x++)
 		{
 
-			if (levelObjects[x][y].gameObjectId.empty() == false)
+			if (levelObjects[x][y].entityDefinitionId.empty() == false)
 			{
 				levelObject = &levelObjects[x][y];
 
-				Game::instance().addGameObject(levelObject->gameObjectId, GameObjectLayer::MAIN, x, y, levelObject->angleAdjustment);
+				Game::instance().gameCoordinator().addEntity(levelObject->entityDefinitionId, x, y, levelObject->angleAdjustment);
 
 			}
 

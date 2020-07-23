@@ -10,7 +10,7 @@
 
 struct LevelObject
 {
-	std::string gameObjectId;
+	std::string entityDefinitionId;
 	int angleAdjustment;
 };
 
