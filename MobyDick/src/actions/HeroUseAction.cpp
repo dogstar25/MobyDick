@@ -29,7 +29,8 @@ void HeroUseAction::perform(GameObject* gameObject)
 	if (auto& item = inventoryComponent->items()[inventoryComponent->activeItem()].lock())
 	{
 		//Perform the UseAction of this item
-		item->getComponent<ActionComponent>()->useAction(item.get());
+		//item->getComponent<ActionComponent>()->useAction(item.get());
+		item->getComponent<ActionComponent>()->actionMap()[ACTION_USE]->perform(item.get());
 	}
 
 

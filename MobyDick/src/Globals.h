@@ -67,9 +67,11 @@ static const size_t CONTROL_MOVEMENT = 1;
 static const size_t CONTROL_USE = 2;
 
 //Actions
+static const size_t ACTION_NONE = 0;
 static const size_t ACTION_MOVE = 1;
 static const size_t ACTION_ROTATE = 2;
 static const size_t ACTION_USE = 3;
+
 
 
 namespace util

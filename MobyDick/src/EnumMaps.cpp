@@ -64,6 +64,7 @@ EnumMap::EnumMap()
 	m_enumMap["CONTROL_USE"] = CONTROL_USE;
 
 	//Actions
+	m_enumMap["ACTION_NONE"] = ACTION_NONE;
 	m_enumMap["ACTION_MOVE"] = ACTION_MOVE;
 	m_enumMap["ACTION_ROTATE"] = ACTION_ROTATE;
 	m_enumMap["ACTION_USE"] = ACTION_USE;

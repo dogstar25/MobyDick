@@ -19,12 +19,12 @@ HeroRotateAction::~HeroRotateAction()
 
 }
 
-void HeroRotateAction::perform(GameObject* gameObject, float angularVelocity )
+void HeroRotateAction::perform(GameObject* gameObject)
 {
 	auto& physicsComponent = gameObject->getComponent<PhysicsComponent>();
 	auto& animationComponent = gameObject->getComponent<AnimationComponent>();
 
-	physicsComponent->applyRotation(angularVelocity);
+	physicsComponent->applyRotation(m_angularVelocity);
 
 	if (animationComponent)
 	{

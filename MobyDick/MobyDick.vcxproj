@@ -139,6 +139,7 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\actions\NoAction.cpp" />
     <ClCompile Include="src\actions\HeroUseAction.cpp" />
     <ClCompile Include="src\components\InventoryComponent.cpp" />
     <ClCompile Include="src\actions\HeroRotateAction.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="src\components\UIControlComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\actions\NoAction.h" />
     <ClInclude Include="src\actions\HeroUseAction.h" />
     <ClInclude Include="src\components\InventoryComponent.h" />
     <ClInclude Include="src\actions\HeroRotateAction.h" />

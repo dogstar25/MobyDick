@@ -13,7 +13,7 @@ ActionComponent::ActionComponent(Json::Value definitionJSON)
 		//Get the name of the class to be used as the action as a string
 		std::string stringActionClass = itrAction["actionClass"].asString();
 
-		//Get the Enum that reprsents the Game Objects action as an int
+		//Get the Enum that represents the Game Objects action as an int
 		int action = EnumMap::instance().toEnum(itrAction["actionId"].asString());
 
 		//Get the actual action Class object and put it in the map for this particular gameObject action
@@ -22,7 +22,8 @@ ActionComponent::ActionComponent(Json::Value definitionJSON)
 
 	}
 
-
+	auto noAction = EnumMap::instance().toEnum("ACTION_NONE");
+	m_actionMap.emplace(noAction, JsonToActionClass::instance().toClass("NoAction"));
 }
 
 ActionComponent::~ActionComponent()
@@ -30,23 +31,31 @@ ActionComponent::~ActionComponent()
 
 }
 
-void ActionComponent::moveAction(GameObject* gameObject, int direction, int strafe)
+void ActionComponent::update(std::shared_ptr<GameObject>gameObject)
 {
 
-	m_actionMap[ACTION_MOVE]->perform(gameObject, direction, strafe);
 
 }
 
-void ActionComponent::rotateAction(GameObject* gameObject, float angularVelocity)
+void ActionComponent::addAction(std::shared_ptr<Action> action)
 {
-
-	m_actionMap[ACTION_ROTATE]->perform(gameObject, angularVelocity);
 }
 
-void ActionComponent::useAction(GameObject* gameObject)
+
+std::shared_ptr<Action> ActionComponent::getAction(size_t actionId)
 {
-	m_actionMap[ACTION_USE]->perform(gameObject);
+
+	if (m_actionMap[actionId])
+	{
+		return m_actionMap[actionId];
+	}
+	else
+	{
+		return m_actionMap[ACTION_NONE];
+	}
+
 }
+
 
 
 

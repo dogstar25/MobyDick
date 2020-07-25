@@ -14,6 +14,8 @@ public:
 
 	void perform(GameObject* gameObject) override;
 
+	void setUseParms(std::string) {};
+
 
 
 };

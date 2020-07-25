@@ -1,6 +1,7 @@
 #include "PlayerControlComponent.h"
 
 #include <iostream>
+#include <typeindex>
 
 #include "../GameObjectManager.h"
 #include "../Globals.h"
@@ -116,28 +117,16 @@ void PlayerControlComponent::handleMovement(std::shared_ptr<GameObject>gameObjec
 				strafe = -1;
 			}
 
-			if (auto action = actionComponent->actionMap()[ACTION_MOVE])
-			{
-				action->perform(gameObject.get(), direction, strafe);
-			}
+			actionComponent->getAction(ACTION_MOVE)->setMoveParms(direction, strafe);
+			actionComponent->getAction(ACTION_MOVE)->perform(gameObject.get());
 
 			break;
 
 		case SDL_MOUSEMOTION:
 
-			//check the clock and see if enough time as gone by
-			now_time = std::chrono::steady_clock::now();
-			time_diff = now_time - rotation_time_snapshot;
-			if (time_diff.count() > .03)
-			{
-				angularVelocity = inputEvent->event.motion.xrel * GameConfig::instance().mouseSensitivity();
-				if (auto action = actionComponent->actionMap()[ACTION_ROTATE])
-				{
-					action->perform(gameObject.get(), angularVelocity);
-				}
-				//actionComponent->rotateAction(gameObject.get(), angularVelocity);
-				rotation_time_snapshot = now_time;
-			}
+			angularVelocity = inputEvent->event.motion.xrel * GameConfig::instance().mouseSensitivity();
+			actionComponent->getAction(ACTION_ROTATE)->setRotateParms(angularVelocity);
+			actionComponent->getAction(ACTION_ROTATE)->perform(gameObject.get());
 			break;
 		default:
 			break;
@@ -170,15 +159,9 @@ void PlayerControlComponent::handleActions(std::shared_ptr<GameObject>gameObject
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			//Execute USE
-			//testParticle();
 			if (m_controls.test(CONTROL_USE))
 			{
-				if (auto action = actionComponent->actionMap()[ACTION_USE])
-				{
-					action->perform(gameObject.get());
-				}
-				//actionComponent->useAction(gameObject.get());
-				
+				actionComponent->getAction(ACTION_USE)->perform(gameObject.get());
 			}
 
 			break;
