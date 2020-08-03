@@ -57,7 +57,7 @@ RenderComponent::~RenderComponent()
 }
 
 
-void RenderComponent::update(std::shared_ptr<GameObject>gameObject)
+void RenderComponent::update()
 {
 
 }

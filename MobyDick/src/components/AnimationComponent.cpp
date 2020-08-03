@@ -47,7 +47,7 @@ AnimationComponent::~AnimationComponent()
 
 }
 
-void AnimationComponent::update(std::shared_ptr<GameObject>gameObject)
+void AnimationComponent::update()
 {
 
 	m_animations[m_currentAnimationState]->animate();

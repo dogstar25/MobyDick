@@ -38,7 +38,7 @@ TransformComponent::~TransformComponent()
 }
 
 
-void TransformComponent::update(std::shared_ptr<GameObject>gameObject)
+void TransformComponent::update()
 {
 }
 

@@ -16,6 +16,8 @@
 //#include "DebugDraw.h"
 //#include "DebugPanel.h"
 #include "GameObjectCollection.h"
+#include "GameConfig.h"
+#include "SceneManager.h"
 
 
 
@@ -40,7 +42,7 @@ public:
 	void addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle);
 	void addGameObject(std::shared_ptr<GameObject>gameObject, int layer);
 
-	void setGameState(int state) {
+	void setGameState(GameState state) {
 		m_gameState = state;
 	}
 	void setWorldParams(SDL_Rect bounds, int worldTileWidth, int worldTileHeight)
@@ -50,6 +52,11 @@ public:
 		m_WorldTileHeight = worldTileHeight;
 
 	}
+	void stepB2PhysicsWorld() {
+		m_physicsWorld->Step(GameConfig::instance().timeStep(),
+			GameConfig::instance().velocityIterations(),
+			GameConfig::instance().positionIterations());
+	}
 
 	//Accessor Functions
 	b2World* physicsWorld() {
@@ -58,10 +65,7 @@ public:
 	SDL_Window* window() {
 		return m_window;
 	}
-	GameObject* player() {
-		return m_player;
-	}
-	int gameState(){
+	GameState gameState(){
 		return m_gameState;
 	}
 	SDL_Rect worldBounds() {
@@ -80,11 +84,9 @@ private:
 	void _update();
 	void _handleEvents();
 
-
 	b2World* m_physicsWorld;
 	SDL_Window* m_window;
-	GameObject* m_player;
-	int m_gameState;
+	GameState m_gameState;
 	SDL_Rect m_WorldBounds;
 	int m_WorldTileWidth;
 	int m_WorldTileHeight;

@@ -1,10 +1,12 @@
 #include "Game.h"
 
+#include "config_data/scenes.h"
 #include <string>
-
+#include <gsl/gsl>
 #include "Level.h"
 #include "TextureManager.h"
 #include "GameObjectManager.h"
+#include "SceneManager.h"
 #include "SoundManager.h"
 #include "Renderer.h"
 #include "DynamicTextManager.h"
@@ -14,9 +16,9 @@
 //#include "GUIEvent.h"
 #include "Clock.h"
 #include "ObjectPoolManager.h"
-#include "EventManager.h"
 #include "DebugPanel.h"
 #include "components/ActionComponent.h"
+#include "Globals.h"
 
 
 using namespace std::chrono_literals;
@@ -43,9 +45,7 @@ Game::~Game()
 		m_gameObjects[x].clear();
 	}
 
-	delete m_player;
-
-	//Delete box2d world - should delete all bodies and fixtures within
+	////Delete box2d world - should delete all bodies and fixtures within
 	delete m_physicsWorld;
 
 	TTF_Quit();
@@ -56,11 +56,9 @@ Game::~Game()
 Game::Game()
 {
 
-	m_physicsWorld = nullptr;
+	//m_physicsWorld = nullptr;
 
 	m_window = nullptr;
-
-	m_player = nullptr;
 
 }
 
@@ -72,15 +70,13 @@ bool Game::init()
 
 	m_gameState = GameState::PLAY;
 
-
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
 	
-	//Reserve each layors vector for efficient object memory management
-	for (auto& gameLayer : m_gameObjects)
-	{
-		gameLayer.reserve(4000);
-	}
+	//for (auto& gameLayer : m_gameObjects)
+	//{
+	//	gameLayer.reserve(4000);
+	//}
 
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
@@ -118,7 +114,7 @@ bool Game::init()
 
 		//Initialize the sound manager
 		SoundManager::instance().initSound();
-		SoundManager::instance().playMusic("MUSIC_AMBIENCE_1", -1);
+		//SoundManager::instance().playMusic("MUSIC_AMBIENCE_1", -1);
 
 		// Construct a physics world object, which will hold and simulate the physics objects.
 		m_physicsWorld = new b2World(GameConfig::instance().gravity());
@@ -139,15 +135,18 @@ bool Game::init()
 		//Initilaze the Particle Pool Manager
 		ObjectPoolManager::instance().init();
 
+		//Initilaize the SceneManager
+		SceneManager::instance().init();
+
 		//Set the mouse mode
-		SDL_ShowCursor(false);
-		SDL_SetRelativeMouseMode(SDL_TRUE);
+		/*SDL_ShowCursor(false);
+		SDL_SetRelativeMouseMode(SDL_TRUE);*/
 
 		//Initialize the clock object
 		Clock::instance().init();
 
 		//Load the First level
-		Level::instance().load("level1");
+		//Level::instance().load("level1");
 
 		//Initilaize Camera size and
 		Camera::instance().init();
@@ -155,18 +154,57 @@ bool Game::init()
 		
 	}
 
-	//m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 0.f, 0.f, 0.f));
+	/*Scene* mainScene = SceneManager::instance().addScene();
+	mainScene->init(MOUSE_MODE_CONTROLLER, "", 2000);
+	mainScene->addGameObject("BOWMAN", GameObjectLayer::MAIN, 4,4,0);
+	mainScene->setState(SceneState::RUN);
 
-	//for (int i = 0; i < 600; i++)
-	std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("GINA_64", 5.f, 5.f, 0.f);
-	Game::instance().addGameObject(gameObject, GameObjectLayer::MAIN);
-	gameObject->addInventoryItem(std::make_shared<GameObject>("WEAPON1", 5.f, 5.f, 0.f));
-//	for (int i = 0; i < 10000; i++)
-		m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 5.f, 5.f, 0.f));
+	std::unique_ptr<Scene> mainScene2 = std::make_unique<Scene>();
+	mainScene2->init(MOUSE_MODE_CONTROLLER, "", 2000);
+	mainScene2->addGameObject("BOWMAN", GameObjectLayer::MAIN, 4, 4, 0);
+	mainScene2->setState(SceneState::RUN);
+	SceneManager::instance().addScene(std::move(mainScene2));*/
 
-	//m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 7.f, 7.f, 0.f));
 
-	m_gameObjects[GameObjectLayer::DEBUG].emplace_back(std::make_shared<GameObject>("FPS_VALUE", 1.f, 1.f, 0.f));
+	//SceneManager::instance().scenes().emplace(std::make_unique<Scene>(GameScene::INTRO));
+	//SceneManager::instance().scenes().top()->addGameObject("BOWMAN", GameObjectLayer::MAIN, 4, 4, 0);
+	//SceneManager::instance().scenes().top()->setState(SceneState::RUN);
+	//SceneManager::instance().scenes().top()->init(MOUSE_MODE_CONTROLLER, "", 2000);
+
+	Scene& temp = SceneManager::instance().pushScene("SCENE_PLAY");
+	temp.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0);
+	//temp.init(MOUSE_MODE_CONTROLLER, "level1", SDLK_UNKNOWN, 1000);
+	//temp.addGameObject("BOWMAN", GameObjectLayer::MAIN, 4, 4, 0);
+	//temp.addGameObject("SWORDLADY", GameObjectLayer::MAIN, 8, 8, 0);
+	////temp.addGameObject("GINA_64", GameObjectLayer::MAIN, 8, 8, 0);
+
+	//SceneAction sceneAction = { SCENE_ACTION_ADD , "GAMESCENE_PAUSE_MENU" };
+	//temp.addKeyAction(SDLK_ESCAPE, sceneAction);
+
+
+
+
+	/*for (auto& sc : SceneManager::instance().scenes()) {
+
+
+
+	}*/
+
+
+
+	//m_currentGameSpace->init(MOUSE_MODE_CONTROLLER, "level1", 4000);
+
+	//std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("GINA_64", 5.f, 5.f, 0.f);
+	//m_currentGameSpace->addGameObject("GINA_64", GameObjectLayer::MAIN, 4.f, 4.f, 0.f);
+
+	//std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("GINA_64", 5.f, 5.f, 0.f);
+	//Game::instance().addGameObject(gameObject, GameObjectLayer::MAIN);
+	//gameObject->addInventoryItem(std::make_shared<GameObject>("WEAPON1", 5.f, 5.f, 0.f));
+	//	m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 5.f, 5.f, 0.f));
+
+	////m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 7.f, 7.f, 0.f));
+
+	//m_gameObjects[GameObjectLayer::DEBUG].emplace_back(std::make_shared<GameObject>("FPS_VALUE", 1.f, 1.f, 0.f));
 
 
 	return true;
@@ -179,202 +217,36 @@ Main Play Loop
 void Game::play()
 {
 
-
-	//Capture the amount of time that has passed since last loop and accumulate time for both
-	//the FPS calculation and the game loop timer
-	Clock::instance().update();
-
-	//_handleEvents();
-	EventManager::instance().pollEvents();
-
-	//Only update and render if we have passed the 60 fps time passage
-	if (Clock::instance().hasMetGameLoopSpeed())
-	{
-		//Handle updating objects positions and physics
-		_update();
-
-		//render everything
-		_render();
-
-		//Increment frame counter and calculate FPS and reset the gameloop timer
-		Clock::instance().calcFps();
-
-		DynamicTextManager::instance().updateText("FPS_VALUE", std::to_string(Clock::instance().fps()));
-
-	}
-
-}
-
-
-
-void Game::renderGameObjects(const std::array <std::vector<GameObject>, MAX_GAMEOBJECT_LAYERS>& gameObjects)
-{
-
-}
-
-
-void Game::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle)
-{
-
-	this->m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle));
-	
-
-}
-
-void Game::addGameObject(std::shared_ptr<GameObject>gameObject, int layer)
-{
-
-	this->m_gameObjects[layer].emplace_back(gameObject);
-
-
-}
-
-
-
-
-void Game::_update() {
-
-
-	//Specifiaclly handle input and stuff for the one player gameObject
-	//m_player->update();
-
-	//Update the camera frame to point to the new player position
-	//
-
-	// spin through list of particle tasks to execute, like exposions and emitters
-	ParticleMachine::instance().update();
-
-	//Update all of the other non player related update chores for each game object
-	// Game objects are stored in layers
-	for (auto& gameObjects : m_gameObjects)
+	while (m_gameState != GameState::QUIT)
 	{
 
-		for (int i = 0; i < gameObjects.size(); i++)
-		{
+		std::optional<SceneAction> action = SceneManager::instance().pollEvents();
 
-
-			//TODO:Instead of this, give the camera an object/position to follow
-			//and the camera will follow on its own
-			//
-			if (gameObjects[i]->id().compare("GINA_64") == 0) {
-				Camera::instance().setFramePosition(
-					(gameObjects[i]->getComponent<TransformComponent>()->position().x) -
-					(Camera::instance().frame().w / 2),
-					(gameObjects[i]->getComponent<TransformComponent>()->position().y) -
-					(Camera::instance().frame().h / 2));
+		if (action.has_value()) {
+			if (action->actionCode == SCENE_ACTION_QUIT) {
+				m_gameState = GameState::QUIT;
 			}
-
-
-			if (gameObjects[i]->removeFromWorld())
-			{
-				gameObjects[i]->setRemoveFromWorld(false);
-				gameObjects[i]->reset();
-				gameObjects.erase(gameObjects.begin() + i);
+			else if (action->actionCode == SCENE_ACTION_EXIT) {
+				SceneManager::instance().popScene();
 			}
-			else
-			{
-				gameObjects[i]->update();
+			else if (action->actionCode == SCENE_ACTION_ADD) {
+				SceneManager::instance().pushScene(action->sceneId);
 			}
-			
-
+			else if (action->actionCode == SCENE_ACTION_REPLACE) {
+				SceneManager::instance().popScene();
+				SceneManager::instance().pushScene(action->sceneId);
+			}
 		}
-		//if (particleObject->removeFromWorld() == true)
-		//{
-		//	particleObjectRemoved = particleObject;
-		//	gameObject.reset();
-		//	std::swap(gameObjectCollection.particleObjects()[x],
-		//		gameObjectCollection.particleObjects()[gameObjectCollection.particleObjects().size() - 1]);
-		//	gameObjectCollection.particleObjects().resize(gameObjectCollection.particleObjects().size() - 1);
-		//}
 
-		//resize the particle vector in case items were removed
-		//gameObjectCollection.particleObjects().shrink_to_fit();
-
+		SceneManager::instance().run();
 	}
-
-
-	/*DebugPanel::instance().addItem("Test", util::generateRandomNumber(1,10000), 8);
-	DebugPanel::instance().addItem("Test2", util::generateRandomNumber(1, 10000), 8);
-	DebugPanel::instance().addItem("Test3", util::generateRandomNumber(1, 10000), 8);
-	DebugPanel::instance().addItem("Test4", util::generateRandomNumber(1, 10000), 8);
-	DebugPanel::instance().addItem("Test5", util::generateRandomNumber(1, 10000), 8);
-	DebugPanel::instance().addItem("Test6", util::generateRandomNumber(1, 10000), 8);
-	DebugPanel::instance().addItem("Test7", util::generateRandomNumber(1, 10000), 8);
-	DebugPanel::instance().addItem("Test8", util::generateRandomNumber(1, 10000), 8);
-	DebugPanel::instance().addItem("Test9", util::generateRandomNumber(1, 10000), 8);*/
-
-
-
-	//Clear all events
-	EventManager::instance().clearEvents();
-
-	//Step the box2d physics world
-	m_physicsWorld->Step(GameConfig::instance().timeStep(),
-		GameConfig::instance().velocityIterations(),
-		GameConfig::instance().positionIterations());
 
 }
 
 
 
-void Game::_render() {
 
-	//Clear the graphics display
-	Renderer::instance().clear();
 
-	//render the player
-	//m_player->render();
-
-	//Render all of the game objects in thew world
-	//Render all of the game objects
-	for (auto& gameLayer : m_gameObjects)
-	{
-		//Update normal game objects
-		for (auto& gameObject : gameLayer)
-		{
-			gameObject->render();
-		}
-	}
-
-	//DebugDraw
-	//if (GameConfig::instance().b2DebugDrawMode() == true)
-	//{
-	//	m_physicsWorld->DrawDebugData();
-	//}
-
-	//Push all drawn things to the graphics display
-	Renderer::instance().present();
-
-}
-
-void Game::_handleEvents() {
-	SDL_Event event;
-
-	if (SDL_PollEvent(&event)) {
-
-		switch (event.type) 
-		{
-		case SDL_QUIT:
-			m_gameState = QUIT;
-		case SDL_KEYDOWN:
-		case SDL_KEYUP:
-			if ((char)event.key.keysym.sym == SDLK_ESCAPE && event.type == SDL_KEYDOWN)
-			{
-				//std::unique_ptr<GUIEvent> guiEvent = std::make_unique<GUIEvent>("GUIPausePanel");
-				m_gameState = QUIT;
-				//guiEvent->run();
-			}
-			break;
-		case SDL_USEREVENT:
-			delete event.user.data1;
-			break;
-		default:
-			break;
-		}
-
-		
-	}
-}
 
 
 

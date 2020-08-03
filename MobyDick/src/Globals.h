@@ -19,7 +19,7 @@ static bool operator !=(SDL_Color a, SDL_Color b)
 	return (a.r != b.r) || (a.g != b.g) || (a.b != b.b);
 }
 
-static const size_t MAX_GAMEOBJECT_LAYERS = 4;
+static const size_t MAX_GAMEOBJECT_LAYERS = 3;
 static const size_t CHILD_POSITIONS = 9;
 
 //Mouse State
@@ -27,6 +27,10 @@ static const size_t MOUSE_NONE = 0;
 static const size_t MOUSE_HOVER = 1;
 static const size_t MOUSE_HOLD = 2;
 static const size_t MOUSE_CLICKED = 3;
+
+//Mouse Modes
+static const size_t MOUSE_MODE_NAVIGATE = 0;
+static const size_t MOUSE_MODE_CONTROLLER = 1;
 
 //Collision Groups
 static const size_t COLLISION_GENERIC = 1;
@@ -72,6 +76,25 @@ static const size_t ACTION_MOVE = 1;
 static const size_t ACTION_ROTATE = 2;
 static const size_t ACTION_USE = 3;
 
+//GameSpace Types
+static const size_t GAMESPACE_INTRO = 0;
+static const size_t GAMESPACE_PLAY = 1;
+static const size_t GAMESPACE_GAMEOVER = 2;
+static const size_t GAMESPACE_MENU = 3;
+
+//Scene Action Codes
+static const size_t SCENE_ACTION_QUIT = 0;
+static const size_t SCENE_ACTION_ADD = 1;
+static const size_t SCENE_ACTION_REPLACE = 2;
+static const size_t SCENE_ACTION_EXIT = 3;
+
+//Scene Tags
+static const size_t SCENETAG_MENU = 1;
+
+//Game Layers
+static const size_t LAYER_BACKGROUND = 0;
+static const size_t LAYER_MAIN = 1;
+static const size_t LAYER_TEXT = 2;
 
 
 namespace util
@@ -89,25 +112,18 @@ namespace util
 /*
 Game State
 */
-enum GameState{ 
+enum class GameState{ 
 	QUIT = 0,
 	PLAY = 1,
-	PAUSE = 2
+	PAUSE = 2,
+	EXIT = 3
 };
 
-
-/*
-Game Object Layers
-*/
-enum GameObjectLayer {
-
-	BACKGROUND = 0,
-	MAIN = 1,
-	TEXT = 2,
-	DEBUG = 3,
+enum class SceneState {
+	RUN = 0,
+	PAUSE = 1,
+	EXIT = 2
 };
-
-
 
 
 

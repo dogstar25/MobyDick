@@ -5,6 +5,7 @@
 #include "../ParticleEmission.h"
 #include "../ParticleMachine.h"
 #include "../GameObject.h"
+#include "../Scene.h"
 
 
 HeroFireAction::HeroFireAction()
@@ -23,10 +24,10 @@ void HeroFireAction::perform(GameObject* gameObject)
 
 
 
-	ParticleMachine::instance().fireBullet("BULLET1_POOL",
-		gameObject->getComponent<TransformComponent>()->position(),
-		gameObject->getComponent<TransformComponent>()->angle(),
-		40);
+	//gameObject->scene()->particleMachine().fireBullet("BULLET1_POOL",
+	//	gameObject->getComponent<TransformComponent>()->position(),
+	//	gameObject->getComponent<TransformComponent>()->angle(),
+	//	40);
 
 
 	////use the collision point for the particle emission

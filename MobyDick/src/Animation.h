@@ -5,7 +5,7 @@
 #include <string>
 #include <vector> 
 #include <SDL2/SDL.h>
-#include <Box2D/Box2D.h>
+#include <box2d/box2d.h>
 #include <json/json.h>
 
 class GameObjectDefinition;

@@ -1,0 +1,79 @@
+{
+    "scenes": [
+        {
+            "id": "SCENE_INTRO",
+            "mouseMode": "MOUSE_MODE_NAVIGATE",
+            "maxObjects": 500
+        },
+        {
+            "id": "SCENE_PLAY",
+            "mouseMode": "MOUSE_MODE_CONTROLLER",
+            "maxObjects": 5000,
+            "firstLevel": "level1", //still need level managing implemented
+            "tags": [
+                "SCENETAG_MENU"
+            ],
+            "gameObjects": [
+                {
+                    "gameObjectId": "BOWMAN",
+                    "layer": "LAYER_MAIN",
+                    "location": {
+                        "x": 4,
+                        "y": 4
+                    }
+
+                }
+            ],
+            "keyActions": [
+                {
+                    "keyCode": "SDLK_ESCAPE",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_ADD",
+                        "newSceneId": "SCENE_PAUSE_MENU"
+                    }
+
+                }
+            ]
+        },
+        {
+            "id": "SCENE_GAMEOVER",
+            "mouseMode": "MOUSE_NAVIGATE",
+            "maxObjects": 500
+        },
+        {
+            "id": "SCENE_PAUSE_MENU",
+            "mouseMode": "MOUSE_MODE_NAVIGATE",
+            "maxObjects": 24,
+            "tags": [
+                "SCENETAG_MENU"
+            ],
+            "gameObjects": [
+                {
+                    "gameObjectId": "BOWMAN",
+                    "layer": "LAYER_TEXT",
+                    "location": {
+                        "x": 6,
+                        "y": 6
+                    }
+                }
+            ],
+            "keyActions": [
+                {
+                    "keyCode": "SDLK_ESCAPE",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_EXIT"
+                    }
+
+                }
+            ]
+        },
+        {
+            "id": "SCENE_AREYOUSURE_MENU",
+            "mouseMode": "MOUSE_MODE_NAVIGATE",
+            "maxObjects": 24,
+            "tags": [
+                "SCENETAG_MENU"
+            ]
+        }
+    ]
+}

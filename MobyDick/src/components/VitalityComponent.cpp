@@ -24,7 +24,7 @@ VitalityComponent::~VitalityComponent()
 
 }
 
-void VitalityComponent::update(std::shared_ptr<GameObject>gameObject)
+void VitalityComponent::update()
 {
 
 }

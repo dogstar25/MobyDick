@@ -39,11 +39,13 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
+    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
+    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -72,10 +74,18 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(IncludePath)</IncludePath>
     <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\lib\</OutDir>
+    <CopyLocalProjectReference>true</CopyLocalProjectReference>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(IncludePath)</IncludePath>
     <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\lib\</OutDir>
+    <CopyLocalProjectReference>true</CopyLocalProjectReference>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <VcpkgCurrentInstalledDir>$(VcpkgRoot)\installed\$(VcpkgTriplet)\</VcpkgCurrentInstalledDir>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <VcpkgCurrentInstalledDir>$(VcpkgRoot)\installed\$(VcpkgTriplet)\</VcpkgCurrentInstalledDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -110,6 +120,7 @@
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <SDLCheck>true</SDLCheck>
+      <WarningLevel>Level1</WarningLevel>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>
@@ -117,6 +128,7 @@
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <Verbose>true</Verbose>
     </Lib>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -126,6 +138,7 @@
     <ClCompile>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <SDLCheck>true</SDLCheck>
+      <WarningLevel>Level1</WarningLevel>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>
@@ -133,12 +146,15 @@
       <AdditionalLibraryDirectories>
       </AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+      <Verbose>true</Verbose>
     </Lib>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\SceneManager.cpp" />
+    <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\actions\NoAction.cpp" />
     <ClCompile Include="src\actions\HeroUseAction.cpp" />
     <ClCompile Include="src\components\InventoryComponent.cpp" />
@@ -150,7 +166,6 @@
     <ClCompile Include="src\actions\HeroFireAction.cpp" />
     <ClCompile Include="src\DebugPanel.cpp" />
     <ClCompile Include="src\DynamicTextManager.cpp" />
-    <ClCompile Include="src\EventManager.cpp" />
     <ClCompile Include="src\components\PlayerControlComponent.cpp" />
     <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\ObjectPoolManager.cpp" />
@@ -187,6 +202,9 @@
     <ClCompile Include="src\components\UIControlComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\config_data\scenes.h" />
+    <ClInclude Include="src\SceneManager.h" />
+    <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\actions\NoAction.h" />
     <ClInclude Include="src\actions\HeroUseAction.h" />
     <ClInclude Include="src\components\InventoryComponent.h" />
@@ -198,7 +216,6 @@
     <ClInclude Include="src\actions\HeroFireAction.h" />
     <ClInclude Include="src\DebugPanel.h" />
     <ClInclude Include="src\DynamicTextManager.h" />
-    <ClInclude Include="src\EventManager.h" />
     <ClInclude Include="src\components\PlayerControlComponent.h" />
     <ClInclude Include="src\Level.h" />
     <ClInclude Include="src\ObjectPoolManager.h" />

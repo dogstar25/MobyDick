@@ -15,7 +15,7 @@ public:
 	PhysicsComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust);
 	~PhysicsComponent();
 
-	void update(std::shared_ptr<GameObject>gameObject) override;
+	void update() override;
 	void applyMovement(float velocity, int direction, int strafeDirection);
 	void applyRotation( float angularVelocity);
 	void setOffGrid();

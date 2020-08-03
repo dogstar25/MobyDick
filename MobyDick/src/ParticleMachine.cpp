@@ -5,17 +5,14 @@
 #include "Game.h"
 #include "GameConfig.h"
 #include "Globals.h"
+#include "Scene.h"
 
 
 
-ParticleMachine& ParticleMachine::instance()
+ParticleMachine::ParticleMachine(Scene* scene)
 {
-	static ParticleMachine singletonInstance;
-	return singletonInstance;
 
-}
-ParticleMachine::ParticleMachine()
-{
+	m_parentScene = scene;
 }
 
 
@@ -114,10 +111,10 @@ void ParticleMachine::emit(
 		if (particle != NULL)
 		{
 
-			auto& physicsComponent = particle->getComponent<PhysicsComponent>();
-			auto& renderComponent = particle->getComponent<RenderComponent>();
-			auto& particleComponent = particle->getComponent<ParticleComponent>();
-			auto& transformComponent = particle->getComponent<TransformComponent>();
+			const auto& physicsComponent = particle->getComponent<PhysicsComponent>();
+			const auto& renderComponent = particle->getComponent<RenderComponent>();
+			const auto& particleComponent = particle->getComponent<ParticleComponent>();
+			const auto& transformComponent = particle->getComponent<TransformComponent>();
 
 			//Generate a random force
 			int force = 0;
@@ -221,7 +218,7 @@ void ParticleMachine::emit(
 			physicsComponent->setLinearVelocity(velocityVector);
 
 			//Add the particle to the game world
-			Game::instance().addGameObject(particle, GameObjectLayer::MAIN);
+			m_parentScene->addGameObject(particle, LAYER_MAIN);
 		}
 
 	}

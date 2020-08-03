@@ -23,7 +23,7 @@ AttachmentsComponent::~AttachmentsComponent()
 
 }
 
-void AttachmentsComponent::update(std::shared_ptr<GameObject>gameObject)
+void AttachmentsComponent::update()
 {
 
 }

@@ -16,7 +16,7 @@ public:
 	ParticleComponent(Json::Value definitionJSON);
 	~ParticleComponent();
 
-	void update(std::shared_ptr<GameObject>gameObject) override;
+	void update() override;
 	void reset();
 
 	bool isActive() {

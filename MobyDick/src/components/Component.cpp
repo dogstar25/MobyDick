@@ -24,7 +24,7 @@ Component::~Component()
 
 }
 
-void Component::update(std::shared_ptr<GameObject>gameObject)
+void Component::update()
 {
 
 

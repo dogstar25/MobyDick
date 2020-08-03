@@ -39,7 +39,8 @@ void EventManager::pollEvents()
 	const Uint8* keyStates = nullptr;
 	//Handle special events and everything else should be player control
 	//input related so staore it for later
-	while (SDL_PollEvent(&event)) {
+	while (SDL_PollEvent(&event) && this->m_state != GameState::EXIT)
+	{
 
 		switch (event.type)
 		{
@@ -48,9 +49,34 @@ void EventManager::pollEvents()
 			keyCode = event.key.keysym.sym;
 			if (keyCode == SDLK_ESCAPE)
 			{
-				//std::unique_ptr<GUIEvent> guiEvent = std::make_unique<GUIEvent>("GUIPausePanel");
-				Game::instance().setGameState(QUIT);
-				//guiEvent->run();
+				Game::instance().changeGameSpace(GAMESPACE_MENU);
+				this->m_state = GameState::EXIT;
+				//OR
+
+				std::unique_ptr<GameSpace> gameMenu = std::make_unique<GameSpace>(GAMESPACE_MENU);
+				gameMenu->run();
+
+			}
+		case SDL_USEREVENT:
+			std::string* actionCode = static_cast<std::string*>(event.user.data1);
+			if (actionCode != NULL && actionCode->empty() == false)
+			{
+				if (actionCode->compare("CONTINUE") == 0)
+				{
+					Game::instance().changeGameSpace(savedLastGameSpace);
+					this->m_state = GameState::EXIT;
+					
+
+				}
+				else if (actionCode->compare("QUIT") == 0)
+				{
+					state = EXITGUI;
+					event.type = SDL_QUIT;
+					SDL_PushEvent(&event);
+
+				}
+
+				delete event.user.data1;
 			}
 			else
 			{

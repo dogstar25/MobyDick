@@ -75,12 +75,12 @@ void PhysicsComponent::setLinearVelocity(b2Vec2 velocityVector)
 	m_physicsBody->SetLinearVelocity(velocityVector);
 }
 
-void PhysicsComponent::update(std::shared_ptr<GameObject>gameObject)
+void PhysicsComponent::update()
 {
 	//update the UserData - only once - cant do it in the constructor
 	if (m_physicsBody->GetUserData() == nullptr)
 	{
-		m_physicsBody->SetUserData(gameObject.get());
+		m_physicsBody->SetUserData(parent());
 	}
 
 	//Transfer the physicsComponent coordinates to the transformComponent
@@ -90,7 +90,7 @@ void PhysicsComponent::update(std::shared_ptr<GameObject>gameObject)
 	convertedPosition.x = m_physicsBody->GetPosition().x * GameConfig::instance().scaleFactor();
 	convertedPosition.y = m_physicsBody->GetPosition().y * GameConfig::instance().scaleFactor();
 
-	gameObject->getComponent<TransformComponent>()->setPosition(convertedPosition, convertedAngle);
+	parent()->getComponent<TransformComponent>()->setPosition(convertedPosition, convertedAngle);
 }
 
 b2Body* PhysicsComponent::buildB2Body(Json::Value transformComponentJSON)
@@ -103,6 +103,7 @@ b2Body* PhysicsComponent::buildB2Body(Json::Value transformComponentJSON)
 	bodyDef.position.SetZero();
 	bodyDef.allowSleep = true;
 	b2Body* body = Game::instance().physicsWorld()->CreateBody(&bodyDef);
+	//b2Body* body = Game::instance().physicsWorld()->CreateBody(&bodyDef);
 
 	b2Shape* shape;
 	b2PolygonShape box;
@@ -278,7 +279,7 @@ void PhysicsComponent::setOffGrid()
 void PhysicsComponent::attachItem(std::shared_ptr<GameObject>inventoryObject)
 {
 	//Get physics component of the inventory object
-	auto& inventoryObjectPhysicsComponent = inventoryObject->getComponent<PhysicsComponent>();
+	const auto& inventoryObjectPhysicsComponent = inventoryObject->getComponent<PhysicsComponent>();
 
 	b2WeldJointDef weldJointDef;
 	weldJointDef.referenceAngle;

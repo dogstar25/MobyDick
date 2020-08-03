@@ -22,7 +22,7 @@ ChildrenComponent::ChildrenComponent(Json::Value definitionJSON)
 		int locationSlot = itrChild["locationSlot"].asInt()-1;
 
 		std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>(childObjectId, 5.f, 5.f, 0.f);
-		//gameObject->_init();
+		gameObject->init();
 		m_childObjects[locationSlot].push_back(gameObject);
 		
 
@@ -40,14 +40,14 @@ ChildrenComponent::~ChildrenComponent()
 }
 
 
-void ChildrenComponent::update(std::shared_ptr<GameObject>gameObject)
+void ChildrenComponent::update()
 {
 	//convenience reference to outside component(s)
 	//std::shared_ptr<TransformComponent> transformComponent =
 	//	std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
 	//TRY AUTO!!
-	auto& transformComponent =
-		gameObject->getComponent<TransformComponent>();
+	const auto& transformComponent =
+		parent()->getComponent<TransformComponent>();
 
 	short locationSlot = 0;
 	
@@ -59,7 +59,7 @@ void ChildrenComponent::update(std::shared_ptr<GameObject>gameObject)
 	
 		for (auto& childObject : childLocations)
 		{
-			auto& childTransformComponent =	childObject->getComponent<TransformComponent>();
+			const auto& childTransformComponent =	childObject->getComponent<TransformComponent>();
 
 			childNumber++;
 	

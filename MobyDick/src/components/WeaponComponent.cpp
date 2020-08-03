@@ -43,7 +43,7 @@ WeaponComponent::~WeaponComponent()
 
 }
 
-void WeaponComponent::update(std::shared_ptr<GameObject>gameObject)
+void WeaponComponent::update()
 {
 
 }

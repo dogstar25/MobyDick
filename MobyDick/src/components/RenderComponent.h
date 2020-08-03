@@ -22,7 +22,7 @@ public:
 	RenderComponent(Json::Value definitionJSON);
 	~RenderComponent();
 
-	void update(std::shared_ptr<GameObject>gameObject) override;
+	void update() override;
 	void render();
 
 	SDL_FRect  getRenderDestRect();

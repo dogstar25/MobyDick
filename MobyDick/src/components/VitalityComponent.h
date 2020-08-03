@@ -14,7 +14,7 @@ public:
 	VitalityComponent(Json::Value definitionJSON);
 	~VitalityComponent();
 
-	void update(std::shared_ptr<GameObject>gameObject) override;
+	void update() override;
 
 	//Accessor functions
 	float speed() {

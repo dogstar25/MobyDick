@@ -29,7 +29,7 @@ public:
 
 	Component();
 	~Component();
-	virtual void update(std::shared_ptr<GameObject> gameObject);
+	virtual void update();
 	void setDependencyReferences(std::map<int, std::shared_ptr<Component>>components);
 	//bool hasRefComponent(int componentId);
 	//std::shared_ptr<Component> getRefComponent(int componentId);
@@ -42,16 +42,23 @@ public:
 	bool isActive() {
 		return m_active;
 	}
+	void setParent(GameObject* gameObject) {
+
+		m_parentGameObject = gameObject;
+	}
+	GameObject* parent() {
+
+		return m_parentGameObject;
+	}
 
 	std::string m_gameObjectId;
 
 protected:
-	//Component References
-	//std::map<int, std::shared_ptr<Component>>m_refcomponents;
+	bool m_active;
+	GameObject* m_parentGameObject;
 
 private:
 	//std::bitset<32> m_componentFlags;
-	bool m_active;
 
 
 	//std::shared_ptr<AnimationComponent> m_refAnimationComponent;

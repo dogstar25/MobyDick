@@ -8,6 +8,8 @@
 
 #include "Waypoint.h"
 
+class Scene;
+
 struct LevelObject
 {
 	std::string gameObjectId;
@@ -30,7 +32,7 @@ public:
 	void addLevelObject(int xIndex, int yIndex, LevelObject levelObject);
 	void setLevelObjectArraySize(int width, int height);
 
-	void load(std::string levelId);
+	void load(std::string levelId, Scene* scene);
 
 	//Accessor Functions
 	std::string description() {
@@ -49,7 +51,7 @@ private:
 
 	LevelObject* _determineTile(int, int, SDL_Surface*);
 	void _loadDefinition(std::string levelId);
-	void _buildLevelObjects();
+	void _buildLevelObjects(Scene* scene);
 
 };
 

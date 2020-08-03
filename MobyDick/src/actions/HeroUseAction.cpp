@@ -23,10 +23,10 @@ The Heroes UseAction is usually to Perform the UseAction of the Hero's activeIte
 void HeroUseAction::perform(GameObject* gameObject)
 {
 	//Get the Heroes inventory component
-	auto& inventoryComponent = gameObject->getComponent<InventoryComponent>();
+	const auto& inventoryComponent = gameObject->getComponent<InventoryComponent>();
 
 	//Get active inventory item 
-	if (auto& item = inventoryComponent->items()[inventoryComponent->activeItem()].lock())
+	if (const auto& item = inventoryComponent->items()[inventoryComponent->activeItem()].lock())
 	{
 		//Perform the UseAction of this item
 		//item->getComponent<ActionComponent>()->useAction(item.get());

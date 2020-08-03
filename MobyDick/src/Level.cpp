@@ -115,7 +115,7 @@ void Level::_loadDefinition(std::string levelId)
 	}
 }
 
-void Level::load(std::string levelId)
+void Level::load(std::string levelId, Scene* scene)
 {
 
 	SDL_Texture* levelImage;
@@ -163,7 +163,7 @@ void Level::load(std::string levelId)
 
 	//Build all of the objects that make up this level and store them
 	//In the main gameObject collection
-	_buildLevelObjects();
+	_buildLevelObjects(scene);
 }
 
 LevelObject* Level::_determineTile(int x, int y, SDL_Surface* surface)
@@ -310,7 +310,7 @@ LevelObject* Level::_determineTile(int x, int y, SDL_Surface* surface)
 
 }
 
-void Level::_buildLevelObjects()
+void Level::_buildLevelObjects(Scene* scene)
 {
 	LevelObject* levelObject;
 
@@ -323,7 +323,7 @@ void Level::_buildLevelObjects()
 			{
 				levelObject = &levelObjects[x][y];
 
-				Game::instance().addGameObject(levelObject->gameObjectId, GameObjectLayer::MAIN, x, y, levelObject->angleAdjustment);
+				scene->addGameObject(levelObject->gameObjectId, LAYER_MAIN, x, y, levelObject->angleAdjustment);
 
 			}
 

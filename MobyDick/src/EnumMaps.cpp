@@ -18,6 +18,10 @@ EnumMap::EnumMap()
 	m_enumMap["MOUSE_NONE"] = MOUSE_HOLD;
 	m_enumMap["MOUSE_HOVER"] = MOUSE_CLICKED;
 
+	//Mouse Modes
+	m_enumMap["MOUSE_MODE_NAVIGATE"] = MOUSE_MODE_NAVIGATE;
+	m_enumMap["MOUSE_MODE_CONTROLLER"] = MOUSE_MODE_CONTROLLER;
+
 	//Collision Groups
 	m_enumMap["COLLISION_GENERIC"] = COLLISION_GENERIC;
 	m_enumMap["COLLISION_PLAYER"] = COLLISION_PLAYER;
@@ -63,14 +67,28 @@ EnumMap::EnumMap()
 	m_enumMap["CONTROL_MOVEMENT"] = CONTROL_MOVEMENT;
 	m_enumMap["CONTROL_USE"] = CONTROL_USE;
 
-	//Actions
+	//Game Object Actions
 	m_enumMap["ACTION_NONE"] = ACTION_NONE;
 	m_enumMap["ACTION_MOVE"] = ACTION_MOVE;
 	m_enumMap["ACTION_ROTATE"] = ACTION_ROTATE;
 	m_enumMap["ACTION_USE"] = ACTION_USE;
-	
 
+	//Keys
+	m_enumMap["SDLK_ESCAPE"] = SDLK_ESCAPE;
+
+	//Scene Action Codes
+	m_enumMap["SCENE_ACTION_QUIT"] = SCENE_ACTION_QUIT;
+	m_enumMap["SCENE_ACTION_ADD"] = SCENE_ACTION_ADD;
+	m_enumMap["SCENE_ACTION_REPLACE"] = SCENE_ACTION_REPLACE;
+	m_enumMap["SCENE_ACTION_EXIT"] = SCENE_ACTION_EXIT;
+
+	//Scene Tags
+	m_enumMap["SCENETAG_MENU"] = SCENETAG_MENU;
 	
+	//Game Layers
+	m_enumMap["LAYER_BACKGROUND"] = LAYER_BACKGROUND;
+	m_enumMap["LAYER_MAIN"] = LAYER_MAIN;
+	m_enumMap["LAYER_TEXT"] = LAYER_TEXT;
 
 }
 

@@ -4,9 +4,9 @@
 #include <typeindex>
 
 #include "../GameObjectManager.h"
+#include "../SceneManager.h"
 #include "../Globals.h"
 #include "../GameObject.h"
-#include "../EventManager.h"
 #include "../GameConfig.h"
 #include "../EnumMaps.h"
 
@@ -19,6 +19,7 @@
 #include "../GameObject.h"
 #include "../ParticleEmission.h"
 #include "../ParticleMachine.h"
+#include "../Scene.h"
 
 #include <SDL2/SDL.h>
 
@@ -64,39 +65,39 @@ void PlayerControlComponent::init()
 }
 
 
-void PlayerControlComponent::update(std::shared_ptr<GameObject>gameObject)
+void PlayerControlComponent::update()
 {
 
 	if (m_controls.test(CONTROL_MOVEMENT))
 	{
-		handleMovement(gameObject);
+		handleMovement();
 	}
 
-	handleActions(gameObject);
+	handleActions();
 
 }
 
 
-void PlayerControlComponent::handleMovement(std::shared_ptr<GameObject>gameObject)
+void PlayerControlComponent::handleMovement()
 {
 
 	//convenience reference to outside component(s)
-	auto& actionComponent =	gameObject->getComponent<ActionComponent>();
+	const auto& actionComponent = parent()->getComponent<ActionComponent>();
 
 	float angularVelocity = 0;
 	int direction = 0;
 	int strafe = 0;
 	const Uint8* keyStates = nullptr;
 
-	for (auto& inputEvent : EventManager::instance().playerInputEvents())
+	for (auto& inputEvent : SceneManager::instance().playerInputEvents())
 	{
 		std::chrono::steady_clock::time_point now_time;
 		std::chrono::duration<double> time_diff;
 		direction = 0;
 		strafe = 0;
-		keyStates = inputEvent->keyStates;
+		keyStates = inputEvent.keyStates;
 
-		switch (inputEvent->event.type)
+		switch (inputEvent.event.type)
 		{
 		case SDL_KEYUP:
 		case SDL_KEYDOWN:
@@ -117,16 +118,22 @@ void PlayerControlComponent::handleMovement(std::shared_ptr<GameObject>gameObjec
 				strafe = -1;
 			}
 
+			/*
+			Make this work?!
+			*/
+			//Action moveAction = Action{direction, strafe};
+			//actionComponent->perform(moveAction);
+
 			actionComponent->getAction(ACTION_MOVE)->setMoveParms(direction, strafe);
-			actionComponent->getAction(ACTION_MOVE)->perform(gameObject.get());
+			actionComponent->getAction(ACTION_MOVE)->perform(parent());
 
 			break;
 
 		case SDL_MOUSEMOTION:
 
-			angularVelocity = inputEvent->event.motion.xrel * GameConfig::instance().mouseSensitivity();
+			angularVelocity = inputEvent.event.motion.xrel * GameConfig::instance().mouseSensitivity();
 			actionComponent->getAction(ACTION_ROTATE)->setRotateParms(angularVelocity);
-			actionComponent->getAction(ACTION_ROTATE)->perform(gameObject.get());
+			actionComponent->getAction(ACTION_ROTATE)->perform(parent());
 			break;
 		default:
 			break;
@@ -136,18 +143,18 @@ void PlayerControlComponent::handleMovement(std::shared_ptr<GameObject>gameObjec
 
 }
 
-void PlayerControlComponent::handleActions(std::shared_ptr<GameObject>gameObject)
+void PlayerControlComponent::handleActions()
 {
 	//convenience reference to outside component(s)
-	auto& actionComponent = gameObject->getComponent<ActionComponent>();
+	const auto& actionComponent = parent()->getComponent<ActionComponent>();
 
 	const Uint8* keyStates = nullptr;
 
-	for (auto& inputEvent : EventManager::instance().playerInputEvents())
+	for (auto& inputEvent : SceneManager::instance().playerInputEvents())
 	{
-		keyStates = inputEvent->keyStates;
+		keyStates = inputEvent.keyStates;
 
-		switch (inputEvent->event.type)
+		switch (inputEvent.event.type)
 		{
 		case SDL_KEYUP:
 		case SDL_KEYDOWN:
@@ -161,7 +168,7 @@ void PlayerControlComponent::handleActions(std::shared_ptr<GameObject>gameObject
 			//Execute USE
 			if (m_controls.test(CONTROL_USE))
 			{
-				actionComponent->getAction(ACTION_USE)->perform(gameObject.get());
+				actionComponent->getAction(ACTION_USE)->perform(parent());
 			}
 
 			break;
@@ -172,38 +179,5 @@ void PlayerControlComponent::handleActions(std::shared_ptr<GameObject>gameObject
 	}
 }
 
-void PlayerControlComponent::testParticle()
-{
 
-	//use the collision point for the particle emission
-	float x = 4;
-	float y = 4;
-	b2Vec2 particleOrigin = { x,y };
-
-	//temp color code
-	SDL_Color colorMin = { 0,0,0,255 };
-	SDL_Color colorMax = { 225,255,255,255 };
-
-
-	ParticleEmission* particleEmission = new ParticleEmission(
-		"SMOKE1_POOL",
-		particleOrigin, //min position
-		particleOrigin,	//max position
-		5,	//Force Min
-		15,	//force Max
-		1.55,	//Lifetime Min
-		1.55,	//Lifetime Max
-		true,	// Alpha fade
-		0,	//Angle min
-		360,	//Angle Max
-		12,	//Size Min
-		32,	//Size Max
-		colorMin,	//Color Min
-		colorMax,	//Color Max
-		30,	//Particle count min
-		60	//Particle count max
-	);
-	ParticleMachine::instance().add(particleEmission);
-
-}
 

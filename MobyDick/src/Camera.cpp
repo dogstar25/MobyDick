@@ -25,7 +25,7 @@ void Camera::setFramePosition(int x, int y)
 	int xPos, yPos;
 
 	//If no level is loaded, then frame does not move
-	//if (Level::instance().m_id.empty() == false)
+	if (Level::instance().m_id.empty() == false)
 	{
 		//Check far left limit
 		if (x < Level::instance().m_levelBounds.x)

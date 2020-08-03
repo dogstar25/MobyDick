@@ -28,7 +28,7 @@ public:
 	WeaponComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust);
 	~WeaponComponent();
 
-	void update(std::shared_ptr<GameObject>gameObject);
+	void update();
 	void fire(const b2Vec2& origin, const float& angle, const float& fireOffset);
 	bool checkLevelUp(const int& pieceCount);
 	void levelUp();

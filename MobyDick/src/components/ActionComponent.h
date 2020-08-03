@@ -21,7 +21,7 @@ public:
 
 	std::shared_ptr<Action> getAction(size_t actionId);
 	void addAction(std::shared_ptr<Action> action);
-	void update(std::shared_ptr<GameObject>gameObject);
+	void update();
 
 	//Accessor functions
 	std::map<int, std::shared_ptr<Action>> actionMap() {

@@ -17,7 +17,7 @@ public:
 	AnimationComponent(Json::Value definitionJSON);
 	~AnimationComponent();
 
-	void update(std::shared_ptr<GameObject>gameObject) override;
+	void update() override;
 	SDL_Rect* getCurrentAnimationTextureRect();
 	SDL_Texture* getCurrentAnimationTexture();
 

@@ -27,6 +27,10 @@
 #include "components/VitalityComponent.h"
 #include "components/WeaponComponent.h"
 
+//#include "Scene.h"
+
+class Scene;
+
 class GameObject : public std::enable_shared_from_this<GameObject>
 {
 public:
@@ -78,7 +82,7 @@ public:
 		return(m_components.count(std::type_index(typeid(componentType))) != 0);
 	}
 
-	void removeComponent(int componentId);
+	void init();
 
 	//Accessor Functions
 	auto removeFromWorld() { 
@@ -93,12 +97,12 @@ public:
 	auto& components() {
 		return m_components;
 	}
+
 	void reset();
 	void addInventoryItem(std::shared_ptr<GameObject>inventoryObject);
 	void _setDependecyReferences();
 
 private:
-
 	
 	int
 		m_mouseState;
@@ -108,7 +112,6 @@ private:
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 
 	//Components
-	//std::array<std::shared_ptr<Component>, 32>m_components;
 	std::map<std::type_index, std::shared_ptr<Component>>m_components;
 	std::bitset<32> m_componentFlags;
 

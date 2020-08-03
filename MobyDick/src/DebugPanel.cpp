@@ -70,7 +70,7 @@ void DebugPanel::addItem(std::string id, std::string value)
 			xPos = m_location.x;
 			yPos = m_location.y + m_itemCount * (fontSize / (float)Level::instance().m_tileHeight);
 
-			Game::instance().addGameObject(newId, GameObjectLayer::DEBUG, xPos, yPos, 0);
+			//Game::instance().addGameObject(newId, GameObjectLayer::DEBUG, xPos, yPos, 0);
 
 			m_itemCount++;
 		}

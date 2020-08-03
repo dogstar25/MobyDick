@@ -1,11 +1,11 @@
 #include "GameObject.h"
 
 #include "GameObjectManager.h"
-#include "EventManager.h"
 #include "components/TransformComponent.h"
 #include "components/InventoryComponent.h"
 
 #include "Level.h"
+#include "Scene.h"
 #include "game.h"
 
 
@@ -111,9 +111,6 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 	}
 
-	//Set dependency references
-	_setDependecyReferences();
-
 }
 
 //void GameObject::addComponent(int componentId, std::shared_ptr<Component> component)
@@ -158,7 +155,7 @@ void GameObject::update()
 {
 	for (auto& component : m_components)
 	{
-		component.second->update(shared_from_this());
+		component.second->update();
 	}
 
 
@@ -259,8 +256,36 @@ void GameObject::addInventoryItem(std::shared_ptr<GameObject>inventoryObject)
 	}
 
 	//Also add the item to the world
-	Game::instance().addGameObject(inventoryObject, GameObjectLayer::DEBUG);
+	//Game::instance().addGameObject(inventoryObject, GameObjectLayer::DEBUG);
 
 }
 
+void GameObject::init()
+{
 
+
+	for (auto& component : m_components){
+
+		component.second->setParent(this);
+
+	}
+
+	//auto& childrenComponent = getComponent<ChildrenComponent>();
+
+	//for (const auto& childLocations : childrenComponent->childObjects()) {
+	//	for (const auto& childObject : childLocations) {
+
+	//		childObject->se
+
+	//	}
+
+	//}
+
+	//OR
+
+	//Set dependency references
+	_setDependecyReferences();
+
+
+
+}

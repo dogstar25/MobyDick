@@ -31,7 +31,7 @@ ActionComponent::~ActionComponent()
 
 }
 
-void ActionComponent::update(std::shared_ptr<GameObject>gameObject)
+void ActionComponent::update()
 {
 
 

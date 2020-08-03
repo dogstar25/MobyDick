@@ -28,7 +28,7 @@ ParticleComponent::~ParticleComponent()
 
 }
 
-void ParticleComponent::update(std::shared_ptr<GameObject>gameObject)
+void ParticleComponent::update()
 {
 
 	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
@@ -42,8 +42,7 @@ void ParticleComponent::update(std::shared_ptr<GameObject>gameObject)
 		{
 
 			//Mark this object for removal so that the removal loop will delete it
-			gameObject->setRemoveFromWorld(true);
-
+			parent()->setRemoveFromWorld(true);
 
 		}
 		else
@@ -53,7 +52,7 @@ void ParticleComponent::update(std::shared_ptr<GameObject>gameObject)
 			//If this particle should fade over time, then adjust its alpha value
 			if (m_isLifetimeAlphaFade)
 			{
-				gameObject->getComponent<RenderComponent>()->setColorAlpha(int(255 * (m_lifetimeRemaining / m_lifetime)));
+				parent()->getComponent<RenderComponent>()->setColorAlpha(int(255 * (m_lifetimeRemaining / m_lifetime)));
 			}
 
 

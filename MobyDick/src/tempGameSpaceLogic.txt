@@ -1,0 +1,66 @@
+
+
+source.cpp
+
+while (!QUIT)
+{
+	
+
+	Game->Play()
+
+}
+
+
+Game.cpp
+
+Play()
+{
+	
+	while(!QUIT)
+	{
+
+		switch(GameSpace.id)
+
+			case INTRO:
+				IntroGameSpace.Init()
+				IntroGameSpace.Run()
+				break;
+			case GAME_PLAY:
+				GamePlayGameSpace.Init()
+				GamePlayGameSpace.Run()
+				break;
+
+	}
+
+}
+
+
+
+GameSpace.cpp
+
+Run()
+{
+	
+	while(!EXIT_GAMESPACE)
+	{
+
+		handleEvents();
+		update();
+		render();
+
+	}
+
+}
+
+handleEvents()
+{
+	
+	If Event == EXIT1
+		Game::instance().SetGameSpace(this->NextGameSpace)
+	If Event == EXIT2
+		Game::instance().SetGameSpace(this->PrevGameSpace)
+
+
+
+
+}

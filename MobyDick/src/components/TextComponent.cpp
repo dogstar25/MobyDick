@@ -60,11 +60,11 @@ TextComponent::~TextComponent()
 	TTF_CloseFont(m_fontObject);
 }
 
-void TextComponent::update(std::shared_ptr<GameObject>gameObject)
+void TextComponent::update()
 {
 	//convenience reference to outside component(s)
-	auto& renderComponent = gameObject->getComponent<RenderComponent>();
-	auto& transformComponent = gameObject->getComponent<TransformComponent>();
+	const auto& renderComponent = parent()->getComponent<RenderComponent>();
+	const auto& transformComponent = parent()->getComponent<TransformComponent>();
 
 	std::string textureId = "TX_" + m_gameObjectId;
 
@@ -80,22 +80,22 @@ void TextComponent::update(std::shared_ptr<GameObject>gameObject)
 	}
 	else
 	{
-		renderComponent->setTexture(generateTextTexture(gameObject));
+		renderComponent->setTexture(generateTextTexture());
 	}
 
 	if (m_isDynamic == true)
 	{
-		renderComponent->setTexture(updateDynamicTextTexture(gameObject));
+		renderComponent->setTexture(updateDynamicTextTexture());
 	}
 
 
 }
 
-std::shared_ptr<Texture> TextComponent::generateTextTexture(std::shared_ptr<GameObject>gameObject)
+std::shared_ptr<Texture> TextComponent::generateTextTexture()
 {
 	//convenience reference to outside component(s)
-	auto& renderComponent = gameObject->getComponent<RenderComponent>();
-	auto& transformComponent = gameObject->getComponent<TransformComponent>();
+	const auto& renderComponent = parent()->getComponent<RenderComponent>();
+	const auto& transformComponent = parent()->getComponent<TransformComponent>();
 
 	std::shared_ptr<Texture> texture = std::make_shared<Texture>();;
 
@@ -132,7 +132,7 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture(std::shared_ptr<Game
 
 }
 
-std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture(std::shared_ptr<GameObject>gameObject)
+std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
 {
 
 	TextItem* newText;
@@ -153,7 +153,7 @@ std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture(std::shared_ptr
 
 		//Build new texture
 		m_textValue = newText->textValue;
-		texture = generateTextTexture(gameObject);
+		texture = generateTextTexture();
 		newText->hasChanged = false;
 
 	/*	m_refTransformComponent->setPosition(
