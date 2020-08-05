@@ -1,5 +1,4 @@
-#include "HeroMoveAction.h"
-#include "HeroFireAction.h"
+#include "ActorMoveAction.h"
 #include <iostream>
 #include <memory>
 
@@ -9,18 +8,25 @@
 #include "../components/VitalityComponent.h"
 
 
-HeroMoveAction::HeroMoveAction()
+ActorMoveAction::ActorMoveAction() :
+	MoveAction(0, 0)
 {
 
 }
 
-HeroMoveAction::~HeroMoveAction()
+ActorMoveAction::ActorMoveAction(int direction, int strafe) : 
+	MoveAction(direction, strafe)
+{
+
+}
+
+ActorMoveAction::~ActorMoveAction()
 {
 
 
 }
 
-void HeroMoveAction::perform(GameObject* gameObject)
+void ActorMoveAction::perform(GameObject* gameObject)
 {
 	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>();
 	const auto& animationComponent = gameObject->getComponent<AnimationComponent>();

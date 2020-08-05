@@ -1,4 +1,4 @@
-#include "HeroRotateAction.h"
+#include "ActorRotateAction.h"
 
 #include <iostream>
 
@@ -8,18 +8,25 @@
 
 
 
-HeroRotateAction::HeroRotateAction()
+ActorRotateAction::ActorRotateAction() :
+	RotateAction(0)
 {
 
 }
 
-HeroRotateAction::~HeroRotateAction()
+ActorRotateAction::ActorRotateAction(float angularVelocity) :
+	RotateAction(angularVelocity)
+{
+
+}
+
+ActorRotateAction::~ActorRotateAction()
 {
 
 
 }
 
-void HeroRotateAction::perform(GameObject* gameObject)
+void ActorRotateAction::perform(GameObject* gameObject)
 {
 	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>();
 	const auto& animationComponent = gameObject->getComponent<AnimationComponent>();

@@ -153,17 +153,20 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\actions\InteractAction.cpp" />
+    <ClCompile Include="src\actions\MoveAction.cpp" />
+    <ClCompile Include="src\actions\RotateAction.cpp" />
+    <ClCompile Include="src\actions\ItemUsageAction.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\actions\NoAction.cpp" />
-    <ClCompile Include="src\actions\HeroUseAction.cpp" />
+    <ClCompile Include="src\actions\ActorUseAction.cpp" />
     <ClCompile Include="src\components\InventoryComponent.cpp" />
-    <ClCompile Include="src\actions\HeroRotateAction.cpp" />
-    <ClCompile Include="src\actions\HeroMoveAction.cpp" />
+    <ClCompile Include="src\actions\ActorRotateAction.cpp" />
+    <ClCompile Include="src\actions\ActorMoveAction.cpp" />
     <ClCompile Include="src\JsonToActionClass.cpp" />
     <ClCompile Include="src\components\ActionComponent.cpp" />
     <ClCompile Include="src\actions\Action.cpp" />
-    <ClCompile Include="src\actions\HeroFireAction.cpp" />
     <ClCompile Include="src\DebugPanel.cpp" />
     <ClCompile Include="src\DynamicTextManager.cpp" />
     <ClCompile Include="src\components\PlayerControlComponent.cpp" />
@@ -200,20 +203,25 @@
     <ClCompile Include="src\components\TextComponent.cpp" />
     <ClCompile Include="src\components\VitalityComponent.cpp" />
     <ClCompile Include="src\components\UIControlComponent.cpp" />
+    <ClCompile Include="src\actions\UseAction.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\actions\InteractAction.h" />
+    <ClInclude Include="src\actions\MoveAction.h" />
+    <ClInclude Include="src\actions\RotateAction.h" />
+    <ClInclude Include="src\actions\ItemUsageAction.h" />
+    <ClInclude Include="src\config_data\GameDefinitions.h" />
     <ClInclude Include="src\config_data\scenes.h" />
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\actions\NoAction.h" />
-    <ClInclude Include="src\actions\HeroUseAction.h" />
+    <ClInclude Include="src\actions\ActorUseAction.h" />
     <ClInclude Include="src\components\InventoryComponent.h" />
-    <ClInclude Include="src\actions\HeroRotateAction.h" />
-    <ClInclude Include="src\actions\HeroMoveAction.h" />
+    <ClInclude Include="src\actions\ActorRotateAction.h" />
+    <ClInclude Include="src\actions\ActorMoveAction.h" />
     <ClInclude Include="src\JsonToActionClass.h" />
     <ClInclude Include="src\components\ActionComponent.h" />
     <ClInclude Include="src\actions\Action.h" />
-    <ClInclude Include="src\actions\HeroFireAction.h" />
     <ClInclude Include="src\DebugPanel.h" />
     <ClInclude Include="src\DynamicTextManager.h" />
     <ClInclude Include="src\components\PlayerControlComponent.h" />
@@ -252,6 +260,7 @@
     <ClInclude Include="src\components\TextComponent.h" />
     <ClInclude Include="src\components\VitalityComponent.h" />
     <ClInclude Include="src\components\UIControlComponent.h" />
+    <ClInclude Include="src\actions\UseAction.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="ExtraLibs\SDL2main.lib" />

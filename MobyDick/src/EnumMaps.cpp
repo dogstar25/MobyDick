@@ -72,6 +72,7 @@ EnumMap::EnumMap()
 	m_enumMap["ACTION_MOVE"] = ACTION_MOVE;
 	m_enumMap["ACTION_ROTATE"] = ACTION_ROTATE;
 	m_enumMap["ACTION_USE"] = ACTION_USE;
+	m_enumMap["ACTION_INTERACT"] = ACTION_INTERACT;
 
 	//Keys
 	m_enumMap["SDLK_ESCAPE"] = SDLK_ESCAPE;

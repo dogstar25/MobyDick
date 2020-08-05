@@ -86,15 +86,15 @@
                 "actions": [
                     {
                         "actionId": "ACTION_MOVE",
-                        "actionClass": "HeroMove"
+                        "actionClass": "ActorMove"
                     },
                     {
                         "actionId": "ACTION_ROTATE",
-                        "actionClass": "HeroRotate"
+                        "actionClass": "ActorRotate"
                     },
                     {
                         "actionId": "ACTION_USE",
-                        "actionClass": "HeroUse"
+                        "actionClass": "ActorUse"
                     }
                 ]
             }
@@ -253,7 +253,7 @@
                 "actions": [
                     {
                         "actionId": "ACTION_USE",
-                        "actionClass": "HeroFire"
+                        "actionClass": "ActorFire"
                     }
                 ]
             },

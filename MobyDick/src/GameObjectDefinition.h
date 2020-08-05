@@ -17,10 +17,6 @@ public:
 	GameObjectDefinition(Json::Value gameObjectDefinitionJSON);
 	~GameObjectDefinition();
 
-	bool hasComponent(unsigned int componentId) {
-		return (m_componentFlags & componentId);
-	}
-
 	void setDefinitionJSON(Json::Value definitionJSON) {
 		m_definitionJSON = definitionJSON;
 	}
@@ -34,7 +30,6 @@ private:
 
 	std::string
 		m_id;
-	unsigned int m_componentFlags;
 	Json::Value m_definitionJSON;
 
 

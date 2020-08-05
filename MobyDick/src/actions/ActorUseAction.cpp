@@ -1,4 +1,4 @@
-#include "HeroUseAction.h"
+#include "ActorUseAction.h"
 
 #include <memory>
 
@@ -6,23 +6,23 @@
 #include "../components/ActionComponent.h"
 #include "../GameObject.h"
 
-HeroUseAction::HeroUseAction()
+ActorUseAction::ActorUseAction()
 {
 
 }
 
-HeroUseAction::~HeroUseAction()
+ActorUseAction::~ActorUseAction()
 {
 
 
 }
 
 /*
-The Heroes UseAction is usually to Perform the UseAction of the Hero's activeItem from his inventory
+The Actores UseAction is usually to Perform the UseAction of the Actor's activeItem from his inventory
 */
-void HeroUseAction::perform(GameObject* gameObject)
+void ActorUseAction::perform(GameObject* gameObject)
 {
-	//Get the Heroes inventory component
+	//Get the Actores inventory component
 	const auto& inventoryComponent = gameObject->getComponent<InventoryComponent>();
 
 	//Get active inventory item 
@@ -30,7 +30,7 @@ void HeroUseAction::perform(GameObject* gameObject)
 	{
 		//Perform the UseAction of this item
 		//item->getComponent<ActionComponent>()->useAction(item.get());
-		item->getComponent<ActionComponent>()->actionMap()[ACTION_USE]->perform(item.get());
+		//item->getComponent<ActionComponent>()->perform();
 	}
 
 

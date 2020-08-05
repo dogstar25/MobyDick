@@ -16,6 +16,9 @@
 #include "PhysicsComponent.h"
 #include "VitalityComponent.h"
 #include "ActionComponent.h"
+#include "../actions/MoveAction.h"
+#include "../actions/RotateAction.h"
+#include "../actions/UseAction.h"
 #include "../GameObject.h"
 #include "../ParticleEmission.h"
 #include "../ParticleMachine.h"
@@ -101,6 +104,7 @@ void PlayerControlComponent::handleMovement()
 		{
 		case SDL_KEYUP:
 		case SDL_KEYDOWN:
+		{
 			if (keyStates[SDL_SCANCODE_W])
 			{
 				direction = -1;
@@ -118,23 +122,19 @@ void PlayerControlComponent::handleMovement()
 				strafe = -1;
 			}
 
-			/*
-			Make this work?!
-			*/
-			//Action moveAction = Action{direction, strafe};
-			//actionComponent->perform(moveAction);
-
-			actionComponent->getAction(ACTION_MOVE)->setMoveParms(direction, strafe);
-			actionComponent->getAction(ACTION_MOVE)->perform(parent());
+			MoveAction action = MoveAction(direction, strafe);
+			actionComponent->perform(action);
 
 			break;
-
+		}
 		case SDL_MOUSEMOTION:
-
+		{
 			angularVelocity = inputEvent.event.motion.xrel * GameConfig::instance().mouseSensitivity();
-			actionComponent->getAction(ACTION_ROTATE)->setRotateParms(angularVelocity);
-			actionComponent->getAction(ACTION_ROTATE)->perform(parent());
+			RotateAction action(angularVelocity);
+			actionComponent->perform(action);
+
 			break;
+		}
 		default:
 			break;
 		}
@@ -168,7 +168,8 @@ void PlayerControlComponent::handleActions()
 			//Execute USE
 			if (m_controls.test(CONTROL_USE))
 			{
-				actionComponent->getAction(ACTION_USE)->perform(parent());
+				UseAction action = UseAction();
+				actionComponent->perform(action);
 			}
 
 			break;

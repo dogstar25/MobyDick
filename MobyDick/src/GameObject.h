@@ -104,16 +104,12 @@ public:
 
 private:
 	
-	int
-		m_mouseState;
-	bool
-		m_removeFromWorld;
+	bool m_removeFromWorld;
 
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 
 	//Components
 	std::map<std::type_index, std::shared_ptr<Component>>m_components;
-	std::bitset<32> m_componentFlags;
 
 };
 

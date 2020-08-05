@@ -1,6 +1,5 @@
 #include "ActionComponent.h"
 #include "../GameObject.h"
-#include "../actions/HeroFireAction.h"
 #include "../JsonToActionClass.h"
 #include "../EnumMaps.h"
 
@@ -16,14 +15,21 @@ ActionComponent::ActionComponent(Json::Value definitionJSON)
 		//Get the Enum that represents the Game Objects action as an int
 		int action = EnumMap::instance().toEnum(itrAction["actionId"].asString());
 
-		//Get the actual action Class object and put it in the map for this particular gameObject action
-		//i.e. This objects "USE" actionClass could be "FireBullet" or it could be "HealPlayer"
-		m_actionMap.emplace(action, JsonToActionClass::instance().toClass(stringActionClass));
+		if (action == ACTION_MOVE) {
+			m_moveAction = JsonToActionClass::instance().toMoveClass(stringActionClass);
+		}
+		else if (action == ACTION_ROTATE) {
+			m_rotateAction = JsonToActionClass::instance().toRotateClass(stringActionClass);
+		}
+		else if (action == ACTION_USE) {
+			m_useAction = JsonToActionClass::instance().toUseClass(stringActionClass);
+		}
+		else if (action == ACTION_INTERACT) {
+			m_interactAction = JsonToActionClass::instance().toInteractClass(stringActionClass);
+		}
 
 	}
 
-	auto noAction = EnumMap::instance().toEnum("ACTION_NONE");
-	m_actionMap.emplace(noAction, JsonToActionClass::instance().toClass("NoAction"));
 }
 
 ActionComponent::~ActionComponent()
@@ -36,6 +42,34 @@ void ActionComponent::update()
 
 
 }
+
+
+void ActionComponent::perform(MoveAction action)
+{
+	m_moveAction->setDirection(action.direction());
+	m_moveAction->setStrafe(action.strafe());
+	m_moveAction->perform(m_parentGameObject);
+}
+
+void ActionComponent::perform(RotateAction action)
+{
+	m_rotateAction->perform(m_parentGameObject);
+}
+
+void ActionComponent::perform(UseAction action)
+{
+	m_useAction->perform(m_parentGameObject);
+}
+
+void ActionComponent::perform(InteractAction action)
+{
+	m_interactAction->perform(m_parentGameObject);
+}
+
+
+
+
+
 
 void ActionComponent::addAction(std::shared_ptr<Action> action)
 {

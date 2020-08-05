@@ -19,82 +19,83 @@ static bool operator !=(SDL_Color a, SDL_Color b)
 	return (a.r != b.r) || (a.g != b.g) || (a.b != b.b);
 }
 
-static const size_t MAX_GAMEOBJECT_LAYERS = 3;
-static const size_t CHILD_POSITIONS = 9;
+constexpr int MAX_GAMEOBJECT_LAYERS = 3;
+constexpr int CHILD_POSITIONS = 9;
 
 //Mouse State
-static const size_t MOUSE_NONE = 0;
-static const size_t MOUSE_HOVER = 1;
-static const size_t MOUSE_HOLD = 2;
-static const size_t MOUSE_CLICKED = 3;
+constexpr int MOUSE_NONE = 0;
+constexpr int MOUSE_HOVER = 1;
+constexpr int MOUSE_HOLD = 2;
+constexpr int MOUSE_CLICKED = 3;
 
 //Mouse Modes
-static const size_t MOUSE_MODE_NAVIGATE = 0;
-static const size_t MOUSE_MODE_CONTROLLER = 1;
+constexpr int MOUSE_MODE_NAVIGATE = 0;
+constexpr int MOUSE_MODE_CONTROLLER = 1;
 
 //Collision Groups
-static const size_t COLLISION_GENERIC = 1;
-static const size_t COLLISION_PLAYER = 2;
-static const size_t COLLISION_WALL = 4;
-static const size_t COLLISION_PLAYER_BULLET = 8;
-static const size_t COLLISION_PARTICLE1 = 16;
-static const size_t COLLISION_PARTICLE2 = 32;
-static const size_t COLLISION_PARTICLE3 = 64;
-static const size_t COLLISION_ENEMY_FRAME = 128;
-static const size_t COLLISION_ENEMY_ARMOR = 256;
-static const size_t COLLISION_ENEMY_ARMOR_PIECE = 512;
+constexpr int COLLISION_GENERIC = 1;
+constexpr int COLLISION_PLAYER = 2;
+constexpr int COLLISION_WALL = 4;
+constexpr int COLLISION_PLAYER_BULLET = 8;
+constexpr int COLLISION_PARTICLE1 = 16;
+constexpr int COLLISION_PARTICLE2 = 32;
+constexpr int COLLISION_PARTICLE3 = 64;
+constexpr int COLLISION_ENEMY_FRAME = 128;
+constexpr int COLLISION_ENEMY_ARMOR = 256;
+constexpr int COLLISION_ENEMY_ARMOR_PIECE = 512;
 
 //Components
-static const size_t ACTION_COMPONENT = 1;
-static const size_t ANIMATION_COMPONENT = 2;
-static const size_t ATTACHMENTS_COMPONENT = 3;
-static const size_t CHILDREN_COMPONENT = 4;
-static const size_t COMPOSITE_COMPONENT = 5;
-static const size_t TRANSFORM_COMPONENT = 6;
-static const size_t PARTICLE_COMPONENT = 7;
-static const size_t PHYSICS_COMPONENT = 8;
-static const size_t RENDER_COMPONENT = 9;
-static const size_t TEXT_COMPONENT = 10;
-static const size_t VITALITY_COMPONENT = 11;
-static const size_t WEAPON_COMPONENT = 12;
-static const size_t PLAYERCONTROL_COMPONENT = 13;
-static const size_t INVENTORY_COMPONENT = 14;
+constexpr int ACTION_COMPONENT = 1;
+constexpr int ANIMATION_COMPONENT = 2;
+constexpr int ATTACHMENTS_COMPONENT = 3;
+constexpr int CHILDREN_COMPONENT = 4;
+constexpr int COMPOSITE_COMPONENT = 5;
+constexpr int TRANSFORM_COMPONENT = 6;
+constexpr int PARTICLE_COMPONENT = 7;
+constexpr int PHYSICS_COMPONENT = 8;
+constexpr int RENDER_COMPONENT = 9;
+constexpr int TEXT_COMPONENT = 10;
+constexpr int VITALITY_COMPONENT = 11;
+constexpr int WEAPON_COMPONENT = 12;
+constexpr int PLAYERCONTROL_COMPONENT = 13;
+constexpr int INVENTORY_COMPONENT = 14;
 
 //Animation States
-static const size_t ANIMATION_IDLE = 0;
-static const size_t ANIMATION_RUN = 1;
-static const size_t ANIMATION_ACTIVE = 3;
-static const size_t ANIMATION_ACTION = 4;
+constexpr int ANIMATION_IDLE = 0;
+constexpr int ANIMATION_RUN = 1;
+constexpr int ANIMATION_ACTIVE = 3;
+constexpr int ANIMATION_ACTION = 4;
 
 //Player Control
-static const size_t CONTROL_MOVEMENT = 1;
-static const size_t CONTROL_USE = 2;
+constexpr int CONTROL_MOVEMENT = 1;
+constexpr int CONTROL_USE = 2;
 
 //Actions
-static const size_t ACTION_NONE = 0;
-static const size_t ACTION_MOVE = 1;
-static const size_t ACTION_ROTATE = 2;
-static const size_t ACTION_USE = 3;
+constexpr int ACTION_NONE = 0;
+constexpr int ACTION_MOVE = 1;
+constexpr int ACTION_ROTATE = 2;
+constexpr int ACTION_USE = 3;
+constexpr int ACTION_INTERACT = 4;
 
 //GameSpace Types
-static const size_t GAMESPACE_INTRO = 0;
-static const size_t GAMESPACE_PLAY = 1;
-static const size_t GAMESPACE_GAMEOVER = 2;
-static const size_t GAMESPACE_MENU = 3;
+constexpr int GAMESPACE_INTRO = 0;
+constexpr int GAMESPACE_PLAY = 1;
+constexpr int GAMESPACE_GAMEOVER = 2;
+constexpr int GAMESPACE_MENU = 3;
 
 //Scene Action Codes
-static const size_t SCENE_ACTION_QUIT = 0;
-static const size_t SCENE_ACTION_ADD = 1;
-static const size_t SCENE_ACTION_REPLACE = 2;
-static const size_t SCENE_ACTION_EXIT = 3;
+constexpr int SCENE_ACTION_QUIT = 0;
+constexpr int SCENE_ACTION_ADD = 1;
+constexpr int SCENE_ACTION_REPLACE = 2;
+constexpr int SCENE_ACTION_EXIT = 3;
 
 //Scene Tags
-static const size_t SCENETAG_MENU = 1;
+constexpr int SCENETAG_MENU = 1;
 
 //Game Layers
-static const size_t LAYER_BACKGROUND = 0;
-static const size_t LAYER_MAIN = 1;
-static const size_t LAYER_TEXT = 2;
+constexpr int LAYER_BACKGROUND = 0;
+constexpr int LAYER_MAIN = 1;
+constexpr int LAYER_TEXT = 2;
 
 
 namespace util

@@ -49,7 +49,7 @@
             ],
             "gameObjects": [
                 {
-                    "gameObjectId": "BOWMAN",
+                    "gameObjectId": "GUIPausePanel",
                     "layer": "LAYER_TEXT",
                     "location": {
                         "x": 6,

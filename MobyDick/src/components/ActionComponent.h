@@ -8,6 +8,10 @@
 
 #include <queue>
 #include "../actions/Action.h"
+#include "../actions/MoveAction.h"
+#include "../actions/RotateAction.h"
+#include "../actions/InteractAction.h"
+#include "../actions/UseAction.h"
 #include "../Globals.h"
 
 
@@ -23,13 +27,26 @@ public:
 	void addAction(std::shared_ptr<Action> action);
 	void update();
 
-	//Accessor functions
-	std::map<int, std::shared_ptr<Action>> actionMap() {
-		return m_actionMap;
-	}
+	void perform(MoveAction action);
+	void perform(RotateAction action);
+	void perform(UseAction action);
+	void perform(InteractAction action);
+
 
 private:
+	
+	std::shared_ptr<MoveAction> m_moveAction;
+	std::shared_ptr<RotateAction> m_rotateAction;
+	std::shared_ptr<UseAction> m_useAction;
+	std::shared_ptr<InteractAction> m_interactAction;
+	
+	
 	std::map<int, std::shared_ptr<Action>>m_actionMap;
+
+
+
+
+
 
 
 };

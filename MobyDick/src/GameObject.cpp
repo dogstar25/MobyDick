@@ -20,7 +20,6 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Game Object Id
 	m_id = gameObjectId;
 	m_removeFromWorld = false;
-	std::shared_ptr<Component>tempPtr;
 
 	Json::Value definitionJSON;
 
@@ -35,80 +34,61 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	}
 
 	//Always build a render and transform component
-	tempPtr = std::make_shared<RenderComponent>(definitionJSON);
-	addComponent(tempPtr);
-	tempPtr = std::make_shared<TransformComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
-	addComponent(tempPtr);
+	addComponent(std::make_shared<RenderComponent>(definitionJSON));
+	addComponent(std::make_shared<TransformComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust));
 
 	//Animation Component
 	if (definitionJSON.isMember("animationComponent"))
 	{
-		tempPtr = std::make_shared<AnimationComponent>(definitionJSON);
-		addComponent(tempPtr);
-
+		addComponent(std::make_shared<AnimationComponent>(definitionJSON));
 	}
 
 	//Physics Component
 	if (definitionJSON.isMember("physicsComponent") && definitionJSON.isMember("transformComponent"))
 	{
-		tempPtr = std::make_shared<PhysicsComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
-		addComponent(tempPtr);
-
-
+		addComponent(std::make_shared<PhysicsComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust));
 	}
+
 	//Vitality Component
 	if (definitionJSON.isMember("vitalityComponent"))
 	{
-		tempPtr = std::make_shared<VitalityComponent>(definitionJSON);
-		addComponent(tempPtr);
+		addComponent(std::make_shared<VitalityComponent>(definitionJSON));
 	}
 
 	//Player control Component
 	if (definitionJSON.isMember("playerControlComponent"))
 	{
-		tempPtr = std::make_shared<PlayerControlComponent>(definitionJSON);
-		addComponent(tempPtr);
-
+		addComponent(std::make_shared<PlayerControlComponent>(definitionJSON));
 	}
 
 	//Text Component
 	if (definitionJSON.isMember("textComponent"))
 	{
-		tempPtr = std::make_shared<TextComponent>(gameObjectId, definitionJSON);
-		addComponent(tempPtr);
-		
+		addComponent(std::make_shared<TextComponent>(gameObjectId, definitionJSON));
 	}
 
 	//Children Component
 	if (definitionJSON.isMember("childrenComponent"))
 	{
-		tempPtr = std::make_shared<ChildrenComponent>(definitionJSON);
-		addComponent(tempPtr);
-
+		addComponent(std::make_shared<ChildrenComponent>(definitionJSON));
 	}
 
 	//Action Component
 	if (definitionJSON.isMember("actionComponent"))
 	{
-		tempPtr = std::make_shared<ActionComponent>(definitionJSON);
-		addComponent(tempPtr);
-
+		addComponent(std::make_shared<ActionComponent>(definitionJSON));
 	}
 
 	//Particle Component
 	if (definitionJSON.isMember("particleComponent"))
 	{
-		tempPtr = std::make_shared<ParticleComponent>(definitionJSON);
-		addComponent(tempPtr);
-
+		addComponent(std::make_shared<ParticleComponent>(definitionJSON));
 	}
 
 	//Inventory Component
 	if (definitionJSON.isMember("inventoryComponent"))
 	{
-		tempPtr = std::make_shared<InventoryComponent>();
-		addComponent(tempPtr);
-
+		addComponent(std::make_shared<InventoryComponent>());
 	}
 
 }

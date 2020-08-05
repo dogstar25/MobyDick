@@ -33,6 +33,7 @@ namespace SceneConfigData {
 			"SCENE_PLAY", 
 			MOUSE_MODE_NAVIGATE,	
 			2000,	
+
 			{
 				"level1", "level2", "level3"
 			},

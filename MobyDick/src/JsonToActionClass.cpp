@@ -1,8 +1,7 @@
 #include "JsonToActionClass.h"
-#include "actions/HeroFireAction.h"
-#include "actions/HeroMoveAction.h"
-#include "actions/HeroRotateAction.h"
-#include "actions/HeroUseAction.h"
+#include "actions/ActorMoveAction.h"
+#include "actions/ActorRotateAction.h"
+#include "actions/ActorUseAction.h"
 #include "actions/NoAction.h"
 
 JsonToActionClass& JsonToActionClass::instance()
@@ -14,11 +13,9 @@ JsonToActionClass& JsonToActionClass::instance()
 
 JsonToActionClass::JsonToActionClass()
 {
-	jsonToAction["NoAction"] = std::make_shared<NoAction>();
-	jsonToAction["HeroFire"] = std::make_shared<HeroFireAction>();
-	jsonToAction["HeroMove"] = std::make_shared<HeroMoveAction>();
-	jsonToAction["HeroRotate"] = std::make_shared<HeroRotateAction>();
-	jsonToAction["HeroUse"] = std::make_shared<HeroUseAction>();
+	jsonToMoveAction["ActorMove"] = std::make_shared<ActorMoveAction>();
+	jsonToRotateAction["ActorRotate"] = std::make_shared<ActorRotateAction>();
+	jsonToUseAction["ActorUse"] = std::make_shared<ActorUseAction>();
 
 }
 

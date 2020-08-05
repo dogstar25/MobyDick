@@ -20,6 +20,9 @@
 #include "components/ActionComponent.h"
 #include "Globals.h"
 
+#include "config_data/scenes.h"
+#include "config_data/GameDefinitions.h"
+
 
 using namespace std::chrono_literals;
 
@@ -67,6 +70,12 @@ Initialize Game
 */
 bool Game::init()
 {
+
+	string it = todd::testit[0].id;
+	//SceneConfigData::scenes;
+
+	//std::string test = todd::commonGameObjects[0].id;
+
 
 	m_gameState = GameState::PLAY;
 
