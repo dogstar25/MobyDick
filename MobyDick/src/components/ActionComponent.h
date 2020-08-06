@@ -23,30 +23,20 @@ public:
 	ActionComponent(Json::Value definitionJSON);
 	~ActionComponent();
 
-	std::shared_ptr<Action> getAction(size_t actionId);
-	void addAction(std::shared_ptr<Action> action);
 	void update();
 
-	void perform(MoveAction action);
-	void perform(RotateAction action);
-	void perform(UseAction action);
-	void perform(InteractAction action);
+	std::shared_ptr<MoveAction> buildMoveAction(int direction, int strafe);
+	std::shared_ptr<RotateAction> buildRotateAction(float angularVelocity);
+	std::shared_ptr<UseAction> buildUseAction();
+	std::shared_ptr<InteractAction> buildInteractAction();
 
-
+	void performMoveAction(int direction, int strafe);
+	void performRotateAction(float angularVelocity);
+	void performUseAction();
+	void performInteractAction();
 private:
 	
-	std::shared_ptr<MoveAction> m_moveAction;
-	std::shared_ptr<RotateAction> m_rotateAction;
-	std::shared_ptr<UseAction> m_useAction;
-	std::shared_ptr<InteractAction> m_interactAction;
-	
-	
-	std::map<int, std::shared_ptr<Action>>m_actionMap;
-
-
-
-
-
+	std::map<int, std::string> m_actions;
 
 
 };

@@ -13,7 +13,6 @@
 #include "ParticleMachine.h"
 #include "GameConfig.h"
 #include "Camera.h"
-//#include "GUIEvent.h"
 #include "Clock.h"
 #include "ObjectPoolManager.h"
 #include "DebugPanel.h"
@@ -71,7 +70,7 @@ Initialize Game
 bool Game::init()
 {
 
-	string it = todd::testit[0].id;
+	//string it = todd::testit[0].id;
 	//SceneConfigData::scenes;
 
 	//std::string test = todd::commonGameObjects[0].id;

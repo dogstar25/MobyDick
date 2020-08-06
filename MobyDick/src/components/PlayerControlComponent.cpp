@@ -10,7 +10,6 @@
 #include "../GameConfig.h"
 #include "../EnumMaps.h"
 
-
 #include "AnimationComponent.h"
 #include "TransformComponent.h"
 #include "PhysicsComponent.h"
@@ -41,10 +40,7 @@ PlayerControlComponent::PlayerControlComponent(Json::Value definitionJSON)
 	{
 		int controlFlag = EnumMap::instance().toEnum(itrControls.asString());
 		m_controls.set(controlFlag);
-
-
 	}
-
 
 }
 
@@ -53,20 +49,12 @@ PlayerControlComponent::~PlayerControlComponent()
 
 }
 
-
-
 void PlayerControlComponent::init()
 {
 
 	m_controls.reset();
 
-	
-
-
-
-	
 }
-
 
 void PlayerControlComponent::update()
 {
@@ -79,7 +67,6 @@ void PlayerControlComponent::update()
 	handleActions();
 
 }
-
 
 void PlayerControlComponent::handleMovement()
 {
@@ -122,16 +109,14 @@ void PlayerControlComponent::handleMovement()
 				strafe = -1;
 			}
 
-			MoveAction action = MoveAction(direction, strafe);
-			actionComponent->perform(action);
+			actionComponent->performMoveAction(direction, strafe);
 
 			break;
 		}
 		case SDL_MOUSEMOTION:
 		{
 			angularVelocity = inputEvent.event.motion.xrel * GameConfig::instance().mouseSensitivity();
-			RotateAction action(angularVelocity);
-			actionComponent->perform(action);
+			actionComponent->performRotateAction(angularVelocity);
 
 			break;
 		}
@@ -168,8 +153,7 @@ void PlayerControlComponent::handleActions()
 			//Execute USE
 			if (m_controls.test(CONTROL_USE))
 			{
-				UseAction action = UseAction();
-				actionComponent->perform(action);
+				actionComponent->performUseAction();
 			}
 
 			break;

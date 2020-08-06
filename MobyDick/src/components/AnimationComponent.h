@@ -31,8 +31,8 @@ public:
 	void setCurrentAnimationState(int animationState) { m_currentAnimationState = animationState; }
 
 private:
-	int 
-		m_currentAnimationState;
+
+	int m_currentAnimationState;
 
 	std::map<int, std::shared_ptr<Animation>> m_animations;
 

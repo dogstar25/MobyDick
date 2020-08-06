@@ -27,7 +27,7 @@ GameObjectManager::~GameObjectManager()
 
 bool GameObjectManager::init()
 {
-	load("gameObjectDefinitions/commonObjects2");
+	load("gameObjectDefinitions/commonObjects");
 	load("levels/level1_Objects");
 	load("gameObjectDefinitions/particleObjects");
 

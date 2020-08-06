@@ -49,7 +49,7 @@
             ],
             "gameObjects": [
                 {
-                    "gameObjectId": "GUIPausePanel",
+                    "gameObjectId": "GUI_PAUSE_PANEL",
                     "layer": "LAYER_TEXT",
                     "location": {
                         "x": 6,

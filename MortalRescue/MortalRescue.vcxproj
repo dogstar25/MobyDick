@@ -215,7 +215,6 @@
     <None Include="assets\config\gameScenes.json" />
     <None Include="assets\gameConfig.json" />
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />
-    <None Include="assets\gameObjectDefinitions\commonObjects2.json" />
     <None Include="assets\gameObjectDefinitions\components.json" />
     <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
     <None Include="assets\gameObjectDefinitions\GUIObjects.json" />

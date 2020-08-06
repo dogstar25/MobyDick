@@ -121,14 +121,13 @@
     <None Include="assets\gameConfig.json" />
     <None Include="assets\textureAssets.json" />
     <None Include="assets\sound\soundAssets.json" />
-    <None Include="assets\gameObjectDefinitions\commonObjects.json" />
-    <None Include="assets\gameObjectDefinitions\commonObjects2.json" />
     <None Include="assets\gameObjectDefinitions\components.json" />
     <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
     <None Include="assets\gameObjectDefinitions\GUIObjects.json" />
     <None Include="assets\gameObjectDefinitions\objectPools.json" />
     <None Include="assets\gameObjectDefinitions\particleObjects.json" />
     <None Include="assets\config\gameScenes.json" />
+    <None Include="assets\gameObjectDefinitions\commonObjects.json" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\arial.ttf" />

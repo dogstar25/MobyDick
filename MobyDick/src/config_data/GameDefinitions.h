@@ -103,36 +103,36 @@ namespace todd
 
 	};
 
-	vector<GameObjectDefinition> testit =
-	{
-		{
-			"GINA_64",
+	//vector<GameObjectDefinition> testit =
+	//{
+	//	{
+	//		"GINA_64",
 
-			//transform component
-			{
-				{64, 64},
-				false
-			},
-			//Animation Component
-			{
-				{
-					{ ANIMATION_IDLE,"TX_GINA_64_IDLE", 0.10, 1 },
-					{ ANIMATION_RUN,"TX_GINA_64_RUN", 0.10, 4 }
-				}
-			},
-			//Action component
-			{
-				{
-					 { ACTION_MOVE, new ActorMoveAction() },
-					 { ACTION_ROTATE, new ActorRotateAction() },
-					 { ACTION_USE, new ActorUseAction() }
-				}
-			},
-			//Physics component
-			//{b2_dynamicBody,b2Shape::e_circle, rad,  fr, re, de,   lin, ang,  COLLISION_PLAYER, anchorPt}
-			{  }
-		}
-	};
+	//		//transform component
+	//		{
+	//			{64, 64},
+	//			false
+	//		},
+	//		//Animation Component
+	//		{
+	//			{
+	//				{ ANIMATION_IDLE,"TX_GINA_64_IDLE", 0.10, 1 },
+	//				{ ANIMATION_RUN,"TX_GINA_64_RUN", 0.10, 4 }
+	//			}
+	//		},
+	//		//Action component
+	//		{
+	//			{
+	//				 { ACTION_MOVE, new ActorMoveAction() },
+	//				 { ACTION_ROTATE, new ActorRotateAction() },
+	//				 { ACTION_USE, new ActorUseAction() }
+	//			}
+	//		},
+	//		//Physics component
+	//		//{b2_dynamicBody,b2Shape::e_circle, rad,  fr, re, de,   lin, ang,  COLLISION_PLAYER, anchorPt}
+	//		{  }
+	//	}
+	//};
 
 
 	inline void test() {

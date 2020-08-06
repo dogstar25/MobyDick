@@ -1,6 +1,6 @@
 #include "ActionComponent.h"
 #include "../GameObject.h"
-#include "../JsonToActionClass.h"
+#include "../actions/ActionMaps.h"
 #include "../EnumMaps.h"
 
 ActionComponent::ActionComponent(Json::Value definitionJSON)
@@ -10,23 +10,12 @@ ActionComponent::ActionComponent(Json::Value definitionJSON)
 	for (Json::Value itrAction: componentJSON["actions"])
 	{
 		//Get the name of the class to be used as the action as a string
-		std::string stringActionClass = itrAction["actionClass"].asString();
+		std::string actionCode = itrAction["actionClass"].asString();
 
 		//Get the Enum that represents the Game Objects action as an int
-		int action = EnumMap::instance().toEnum(itrAction["actionId"].asString());
+		int actionId = EnumMap::instance().toEnum(itrAction["actionId"].asString());
 
-		if (action == ACTION_MOVE) {
-			m_moveAction = JsonToActionClass::instance().toMoveClass(stringActionClass);
-		}
-		else if (action == ACTION_ROTATE) {
-			m_rotateAction = JsonToActionClass::instance().toRotateClass(stringActionClass);
-		}
-		else if (action == ACTION_USE) {
-			m_useAction = JsonToActionClass::instance().toUseClass(stringActionClass);
-		}
-		else if (action == ACTION_INTERACT) {
-			m_interactAction = JsonToActionClass::instance().toInteractClass(stringActionClass);
-		}
+		m_actions.emplace(actionId, actionCode);
 
 	}
 
@@ -43,51 +32,59 @@ void ActionComponent::update()
 
 }
 
+std::shared_ptr<MoveAction> ActionComponent::buildMoveAction(int direction, int strafe) {
 
-void ActionComponent::perform(MoveAction action)
-{
-	m_moveAction->setDirection(action.direction());
-	m_moveAction->setStrafe(action.strafe());
-	m_moveAction->perform(m_parentGameObject);
+	std::string actionId = m_actions.at(ACTION_MOVE);
+	std::shared_ptr<MoveAction> action = ActionMaps::instance().getMoveAction(actionId);
+	action->setDirection(direction);
+	action->setStrafe(strafe);
+
+	return action;
 }
 
-void ActionComponent::perform(RotateAction action)
-{
-	m_rotateAction->perform(m_parentGameObject);
+std::shared_ptr<RotateAction> ActionComponent::buildRotateAction(float angularVelocity) {
+
+	std::string actionId = m_actions.at(ACTION_ROTATE);
+	std::shared_ptr<RotateAction> action = ActionMaps::instance().getRotateAction(actionId);
+	action->setAngularVelocity(angularVelocity);
+
+	return action;
 }
 
-void ActionComponent::perform(UseAction action)
-{
-	m_useAction->perform(m_parentGameObject);
+std::shared_ptr<UseAction> ActionComponent::buildUseAction() {
+
+	std::string actionId = m_actions.at(ACTION_USE);
+	std::shared_ptr<UseAction> action = ActionMaps::instance().getUseAction(actionId);
+
+	return action;
 }
 
-void ActionComponent::perform(InteractAction action)
-{
-	m_interactAction->perform(m_parentGameObject);
+std::shared_ptr<InteractAction> ActionComponent::buildInteractAction() {
+
+	std::string actionId = m_actions.at(ACTION_INTERACT);
+	std::shared_ptr<InteractAction> action = ActionMaps::instance().getInteractAction(actionId);
+
+	return action;
 }
 
-
-
-
-
-
-void ActionComponent::addAction(std::shared_ptr<Action> action)
+void ActionComponent::performMoveAction(int direction, int strafe)
 {
+	buildMoveAction(direction, strafe)->perform(m_parentGameObject);
 }
 
-
-std::shared_ptr<Action> ActionComponent::getAction(size_t actionId)
+void ActionComponent::performRotateAction(float angularVelocity)
 {
+	buildRotateAction(angularVelocity)->perform(m_parentGameObject);
+}
 
-	if (m_actionMap[actionId])
-	{
-		return m_actionMap[actionId];
-	}
-	else
-	{
-		return m_actionMap[ACTION_NONE];
-	}
+void ActionComponent::performUseAction()
+{
+	buildUseAction()->perform(m_parentGameObject);
+}
 
+void ActionComponent::performInteractAction()
+{
+	buildInteractAction()->perform(m_parentGameObject);
 }
 
 

@@ -164,7 +164,7 @@
     <ClCompile Include="src\components\InventoryComponent.cpp" />
     <ClCompile Include="src\actions\ActorRotateAction.cpp" />
     <ClCompile Include="src\actions\ActorMoveAction.cpp" />
-    <ClCompile Include="src\JsonToActionClass.cpp" />
+    <ClCompile Include="src\actions\ActionMaps.cpp" />
     <ClCompile Include="src\components\ActionComponent.cpp" />
     <ClCompile Include="src\actions\Action.cpp" />
     <ClCompile Include="src\DebugPanel.cpp" />
@@ -219,7 +219,7 @@
     <ClInclude Include="src\components\InventoryComponent.h" />
     <ClInclude Include="src\actions\ActorRotateAction.h" />
     <ClInclude Include="src\actions\ActorMoveAction.h" />
-    <ClInclude Include="src\JsonToActionClass.h" />
+    <ClInclude Include="src\actions\ActionMaps.h" />
     <ClInclude Include="src\components\ActionComponent.h" />
     <ClInclude Include="src\actions\Action.h" />
     <ClInclude Include="src\DebugPanel.h" />
