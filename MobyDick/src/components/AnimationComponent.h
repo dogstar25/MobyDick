@@ -29,10 +29,12 @@ public:
 		return m_animations;
 	}
 	void setCurrentAnimationState(int animationState) { m_currentAnimationState = animationState; }
-
+	void animate(int animationState, int animationMode);
 private:
 
 	int m_currentAnimationState;
+	int m_currentAnimationMode;
+	int m_defaultAnimationState;
 
 	std::map<int, std::shared_ptr<Animation>> m_animations;
 

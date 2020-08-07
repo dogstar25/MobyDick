@@ -1,5 +1,7 @@
 #include "Animation.h"
 
+#include <iostream>
+
 #include "EnumMaps.h"
 #include "TextureManager.h"
 
@@ -71,7 +73,7 @@ Animation::~Animation()
 
 }
 
-void Animation::animate()
+int Animation::animate()
 {
 	//check the clock and see if enough time as gone by
 	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
@@ -79,6 +81,8 @@ void Animation::animate()
 
 	if (time_diff.count() >= m_speed)
 	{
+		std::cout << "Animating frame " << m_currentAnimFrame << "\n";
+
 		m_timeSnapshot = now_time;
 
 		//Increment animation frame counter and reset if it exceeds last one
@@ -101,5 +105,7 @@ void Animation::animate()
 		m_currentTextureAnimationSrcRect = rect;
 
 	}
+
+	return this->m_currentAnimFrame;
 }
 

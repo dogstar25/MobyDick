@@ -52,7 +52,8 @@ void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, cons
 	//Add the first point to the end to complete closed shape
 	points[vertexCount] = firstPoint;
 
-	Renderer::instance().drawPoints(points);
+	SDL_Color sdlColor = { 255,255,255,255 };
+	Renderer::instance().drawPoints(points, sdlColor);
 
 	delete[] points;
 }
@@ -93,7 +94,8 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2
 		end = end + newCenter;
 		angle += d_a;
 		
-		Renderer::instance().drawLine(start, end);
+		SDL_Color sdlColor = { 255,255,255,255 };
+		Renderer::instance().drawLine(start, end, sdlColor);
 	}
 
 
@@ -101,7 +103,8 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2
 
 void DebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 {
-	Renderer::instance().drawLine(p1, p2);
+	SDL_Color sdlColor = { 255,255,255,255 };
+	Renderer::instance().drawLine(p1, p2, sdlColor);
 
 }
 

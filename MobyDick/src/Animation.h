@@ -21,7 +21,7 @@ public:
 		int totalFrames, float speed);
 	~Animation();
 
-	void animate();
+	int animate();
 
 	//Accessor Functions
 	std::shared_ptr<SDL_Rect> getCurrentTextureAnimationSrcRect() {

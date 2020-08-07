@@ -54,7 +54,7 @@
                 "restitution": 0.0,
                 "density": 50.5,
                 "linearDamping": 0.2,
-                "angularDamping": 2.0,
+                "angularDamping": 3.0,
                 "collisionCategory": "COLLISION_PLAYER",
                 "anchorPoint": {
                     "x": 0.8,
@@ -158,7 +158,7 @@
                     "width": 176,
                     "height": 164
                 },
-                "absolutePositioning": false
+                "absolutePositioning": true
             },
             "renderComponent": {
                 "color": {
@@ -166,6 +166,15 @@
                     "green": 0,
                     "blue": 0,
                     "alpha": 255
+                },
+                "outline": {
+                    "thickness": 1,
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
                 }
             },
             "childrenComponent": {
@@ -202,6 +211,15 @@
                     "green": 0,
                     "blue": 0,
                     "alpha": 255
+                },
+                "outline": {
+                    "thickness": 1,
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
                 }
             },
             "childrenComponent": {
@@ -228,6 +246,15 @@
                     "green": 0,
                     "blue": 0,
                     "alpha": 255
+                },
+                "outline": {
+                    "thickness": 1,
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
                 }
             },
             "childrenComponent": {
@@ -254,6 +281,15 @@
                     "green": 0,
                     "blue": 0,
                     "alpha": 255
+                },
+                "outline": {
+                    "thickness": 1,
+                    "color": {
+                        "red": 3,
+                        "green": 4,
+                        "blue": 200,
+                        "alpha": 255
+                    }
                 }
             },
             "childrenComponent": {

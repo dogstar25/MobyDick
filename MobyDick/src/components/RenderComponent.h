@@ -35,7 +35,7 @@ public:
 	void setColor(int red, int green, int blue, int alpha);
 	void setTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
 
-	void outlineObject(float lineSize);
+	void outlineObject(float lineSize, SDL_Color color);
 	void setDependencyReferences(GameObject* gameObject);
 
 	SDL_Rect* getRenderTextureRect();
@@ -59,10 +59,13 @@ private:
 
 	std::shared_ptr<Texture> m_texture;
 	SDL_Color
-		m_color;
+		m_color,
+		m_outLineColor;
 	float
 		m_xRenderAdjustment,
 		m_yRenderAdjustment;
+	int
+		m_outlineThickness;
 	bool
 		m_renderOutline;
 	std::string

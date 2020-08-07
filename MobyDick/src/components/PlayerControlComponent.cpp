@@ -59,72 +59,14 @@ void PlayerControlComponent::init()
 void PlayerControlComponent::update()
 {
 
+	handleActions();
+
 	if (m_controls.test(CONTROL_MOVEMENT))
 	{
 		handleMovement();
 	}
 
-	handleActions();
-
-}
-
-void PlayerControlComponent::handleMovement()
-{
-
-	//convenience reference to outside component(s)
-	const auto& actionComponent = parent()->getComponent<ActionComponent>();
-
-	float angularVelocity = 0;
-	int direction = 0;
-	int strafe = 0;
-	const Uint8* keyStates = nullptr;
-
-	for (auto& inputEvent : SceneManager::instance().playerInputEvents())
-	{
-		std::chrono::steady_clock::time_point now_time;
-		std::chrono::duration<double> time_diff;
-		direction = 0;
-		strafe = 0;
-		keyStates = inputEvent.keyStates;
-
-		switch (inputEvent.event.type)
-		{
-		case SDL_KEYUP:
-		case SDL_KEYDOWN:
-		{
-			if (keyStates[SDL_SCANCODE_W])
-			{
-				direction = -1;
-			}
-			if (keyStates[SDL_SCANCODE_S])
-			{
-				direction = 1;
-			}
-			if (keyStates[SDL_SCANCODE_A])
-			{
-				strafe = 1;
-			}
-			if (keyStates[SDL_SCANCODE_D])
-			{
-				strafe = -1;
-			}
-
-			actionComponent->performMoveAction(direction, strafe);
-
-			break;
-		}
-		case SDL_MOUSEMOTION:
-		{
-			angularVelocity = inputEvent.event.motion.xrel * GameConfig::instance().mouseSensitivity();
-			actionComponent->performRotateAction(angularVelocity);
-
-			break;
-		}
-		default:
-			break;
-		}
-
-	}
+	
 
 }
 
@@ -141,12 +83,12 @@ void PlayerControlComponent::handleActions()
 
 		switch (inputEvent.event.type)
 		{
-		case SDL_KEYUP:
+			//case SDL_KEYUP:
 		case SDL_KEYDOWN:
 			if (keyStates[SDL_SCANCODE_G])
 			{
 				//actionMap["DROP_WEAPON"]->perform();
-				std::cout << "Dropped Weapon" <<"\n";
+				std::cout << "Dropped Weapon" << "\n";
 			}
 			break;
 		case SDL_MOUSEBUTTONDOWN:
@@ -163,6 +105,102 @@ void PlayerControlComponent::handleActions()
 
 	}
 }
+
+void PlayerControlComponent::handleMovement()
+{
+	int mouseX=0, mouseY=0;
+	int direction = 0, strafe = 0;
+
+	//convenience reference to outside component(s)
+	const auto& actionComponent = parent()->getComponent<ActionComponent>();
+
+	//Handle Keyboard related movement
+	const uint8_t* currentKeyStates = SDL_GetKeyboardState(NULL);
+
+	if (currentKeyStates[SDL_SCANCODE_W])
+	{
+		direction = -1;
+	}
+	if (currentKeyStates[SDL_SCANCODE_S])
+	{
+		direction = 1;
+	}
+	if (currentKeyStates[SDL_SCANCODE_A])
+	{
+		strafe = 1;
+	}
+	if (currentKeyStates[SDL_SCANCODE_D])
+	{
+		strafe = -1;
+	}
+
+	actionComponent->performMoveAction(direction, strafe);
+
+	//Handle Mouse related movement
+	const uint32_t currentMouseStates = SDL_GetRelativeMouseState(&mouseX, &mouseY);
+
+	int angularVelocity = mouseX * GameConfig::instance().mouseSensitivity();
+	actionComponent->performRotateAction(angularVelocity);
+
+
+}
+
+//void PlayerControlComponent::handleMovement()
+//{
+//
+//	//convenience reference to outside component(s)
+//	const auto& actionComponent = parent()->getComponent<ActionComponent>();
+//
+//	const Uint8* keyStates = nullptr;
+//
+//	for (auto& inputEvent : SceneManager::instance().playerInputEvents())
+//	{
+//		int direction = 0;
+//		int strafe = 0;
+//		keyStates = inputEvent.keyStates;
+//
+//		switch (inputEvent.event.type)
+//		{
+//		case SDL_KEYUP:
+//		case SDL_KEYDOWN:
+//		{
+//			if (keyStates[SDL_SCANCODE_W])
+//			{
+//				direction = -1;
+//			}
+//			if (keyStates[SDL_SCANCODE_S])
+//			{
+//				direction = 1;
+//			}
+//			if (keyStates[SDL_SCANCODE_A])
+//			{
+//				strafe = 1;
+//			}
+//			if (keyStates[SDL_SCANCODE_D])
+//			{
+//				strafe = -1;
+//			}
+//
+//			actionComponent->performMoveAction(direction, strafe);
+//
+//			break;
+//		}
+//		case SDL_MOUSEMOTION:
+//		{
+//			angularVelocity = inputEvent.event.motion.xrel * GameConfig::instance().mouseSensitivity();
+//			actionComponent->performRotateAction(angularVelocity);
+//
+//			break;
+//		}
+//		default:
+//			break;
+//		}
+//
+//	}
+//
+//}
+
+
 
 
 

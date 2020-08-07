@@ -1,5 +1,7 @@
 #include "AnimationComponent.h"
 
+#include <iostream>
+
 #include "../EnumMaps.h"
 #include "../GameObjectManager.h"
 #include "../GameObject.h"
@@ -21,6 +23,12 @@ AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 	//Build animationComponent details
 	m_gameObjectId = definitionJSON["id"].asString();
 	
+	if (definitionJSON.isMember("defaultState")) {
+		m_defaultAnimationState = EnumMap::instance().toEnum(definitionJSON["defaultState"].asString());
+	}
+	else {
+		m_defaultAnimationState=0;
+	}
 
 	int i = 0;
 	for (Json::Value animItr : animationComponentJSON["animations"])
@@ -50,7 +58,27 @@ AnimationComponent::~AnimationComponent()
 void AnimationComponent::update()
 {
 
-	m_animations[m_currentAnimationState]->animate();
+	std::cout << "Animating state " << m_currentAnimationState << "\n";
+	auto animationFrame = m_animations[m_currentAnimationState]->animate();
+
+	//If this animation has completed and it was a one-time animate, then reset the current
+	//animation to the deafult in continuous mode
+	if (animationFrame == 0) {
+
+		std::cout << "reset state " << m_currentAnimationState << "\n";
+		if (m_currentAnimationMode == ANIMATE_ONE_TIME) {
+			m_currentAnimationMode = ANIMATE_CONTINUOUS;
+			m_currentAnimationState = m_defaultAnimationState;
+		}
+	}
+
+}
+
+void AnimationComponent::animate(int animationState, int animationMode)
+{
+
+	m_currentAnimationState = animationState;
+	m_currentAnimationMode = animationMode;
 
 }
 

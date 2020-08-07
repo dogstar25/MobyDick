@@ -243,16 +243,6 @@ void PhysicsComponent::applyMovement(float velocity, int direction, int strafeDi
 
 	vec2 = (directionVector + strafeVector);
 
-	//Update Animation state
-	/*if (vec2.Length() > 0)
-	{
-		this->setCurrentAnimationState("RUN");
-	}
-	else
-	{
-		this->setCurrentAnimationState("IDLE");
-	}*/
-
 	//this->physicsBody->SetTransform(vec3, this->physicsBody->GetAngle());
 	m_physicsBody->SetLinearVelocity(vec2);
 

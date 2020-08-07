@@ -1,34 +1,28 @@
 {
-    "gameObjects":
-    [
+    "gameObjects": [
         {
             "id": "WALL1_OPEN",
             "description": "WALL1_OPEN",
-            "transformComponent":
-            {
-                "size":
-                {
+            "transformComponent": {
+                "size": {
                     "width": 32,
                     "height": 32
                 },
                 "absolutePositioning": false
 
             },
-            "renderComponent":
-            {
+            "renderComponent": {
                 "textureId": "TX_WALL1_OPEN",
-                "color":
-                {
-                    "red": 38,
-                    "green": 195,
-                    "blue": 15,
+                "color": {
+                    "red": 0,
+                    "green": 206,
+                    "blue": 209,
                     "alpha": 255,
                     "random": false
                 }
 
             },
-            "physicsComponent":
-            {
+            "physicsComponent": {
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3,
@@ -39,31 +33,26 @@
         {
             "id": "WALL1_COLUMN",
             "description": "WALL1_COLUMN",
-            "transformComponent":
-            {
-                "size":
-                {
+            "transformComponent": {
+                "size": {
                     "width": 32,
                     "height": 32
                 },
                 "absolutePositioning": false
 
             },
-            "renderComponent":
-            {
+            "renderComponent": {
                 "textureId": "TX_WALL1_COLUMN",
-                "color":
-                {
-                    "red": 38,
-                    "green": 195,
-                    "blue": 15,
+                "color": {
+                    "red": 0,
+                    "green": 206,
+                    "blue": 209,
                     "alpha": 255,
                     "random": false
                 }
 
             },
-            "physicsComponent":
-            {
+            "physicsComponent": {
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3,
@@ -74,31 +63,26 @@
         {
             "id": "WALL1_CORNER",
             "description": "WALL1_CORNER",
-            "transformComponent":
-            {
-                "size":
-                {
+            "transformComponent": {
+                "size": {
                     "width": 32,
                     "height": 32
                 },
                 "absolutePositioning": false
 
             },
-            "renderComponent":
-            {
+            "renderComponent": {
                 "textureId": "TX_WALL1_CORNER",
-                "color":
-                {
-                    "red": 38,
-                    "green": 195,
-                    "blue": 15,
+                "color": {
+                    "red": 0,
+                    "green": 255,
+                    "blue": 255,
                     "alpha": 255,
                     "random": false
                 }
 
             },
-            "physicsComponent":
-            {
+            "physicsComponent": {
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3,
@@ -109,21 +93,17 @@
         {
             "id": "WALL1_END",
             "description": "WALL1_END",
-            "transformComponent":
-            {
-                "size":
-                {
+            "transformComponent": {
+                "size": {
                     "width": 32,
                     "height": 32
                 },
                 "absolutePositioning": false
 
             },
-            "renderComponent":
-            {
+            "renderComponent": {
                 "textureId": "TX_WALL1_END",
-                "color":
-                {
+                "color": {
                     "red": 38,
                     "green": 195,
                     "blue": 15,
@@ -132,8 +112,7 @@
                 }
 
             },
-            "physicsComponent":
-            {
+            "physicsComponent": {
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3,
@@ -144,31 +123,26 @@
         {
             "id": "WALL1_HALL",
             "description": "WALL1_HALL",
-            "transformComponent":
-            {
-                "size":
-                {
+            "transformComponent": {
+                "size": {
                     "width": 32,
                     "height": 32
                 },
                 "absolutePositioning": false
 
             },
-            "renderComponent":
-            {
+            "renderComponent": {
                 "textureId": "TX_WALL1_HALL",
-                "color":
-                {
-                    "red": 38,
-                    "green": 195,
-                    "blue": 15,
+                "color": {
+                    "red": 175,
+                    "green": 238,
+                    "blue": 238,
                     "alpha": 255,
                     "random": false
                 }
 
             },
-            "physicsComponent":
-            {
+            "physicsComponent": {
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3,
@@ -180,21 +154,17 @@
         {
             "id": "WALL1_WALL",
             "description": "WALL1_WALL",
-            "transformComponent":
-            {
-                "size":
-                {
+            "transformComponent": {
+                "size": {
                     "width": 32,
                     "height": 32
                 },
                 "absolutePositioning": false
 
             },
-            "renderComponent":
-            {
+            "renderComponent": {
                 "textureId": "TX_WALL1_WALL",
-                "color":
-                {
+                "color": {
                     "red": 38,
                     "green": 195,
                     "blue": 15,
@@ -203,8 +173,7 @@
                 }
 
             },
-            "physicsComponent":
-            {
+            "physicsComponent": {
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3,

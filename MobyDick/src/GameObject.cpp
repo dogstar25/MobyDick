@@ -1,5 +1,7 @@
 #include "GameObject.h"
 
+#include <iostream>
+
 #include "GameObjectManager.h"
 #include "components/TransformComponent.h"
 #include "components/InventoryComponent.h"
@@ -133,6 +135,12 @@ void GameObject::setPosition(b2Vec2 position, float angle)
 
 void GameObject::update()
 {
+
+	if (this->m_id.compare("GINA_64") == 0) {
+		std::cout << "Updateing GINA" << "\n";
+	}
+
+
 	for (auto& component : m_components)
 	{
 		component.second->update();

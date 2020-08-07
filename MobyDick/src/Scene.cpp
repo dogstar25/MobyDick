@@ -26,11 +26,7 @@ Scene::Scene(std::string sceneId)
 
 	//Set the mouse mode
 	auto mouseMode = EnumMap::instance().toEnum(definitionJSON["mouseMode"].asString());
-	if (mouseMode == MOUSE_MODE_CONTROLLER) {
-
-		SDL_ShowCursor(false);
-		SDL_SetRelativeMouseMode(SDL_TRUE);
-	}
+	m_mouseMode = mouseMode;
 
 	//Load the First level - ToDo: need level managing implemented somehow
 	auto levelId = definitionJSON["firstLevel"].asString();
@@ -261,3 +257,22 @@ void Scene::clearEvents()
 	//m_PlayerInputEvents.clear();
 }
 
+void Scene::applyControlMode()
+{
+
+	if (m_mouseMode == MOUSE_MODE_CONTROLLER) {
+
+		SDL_ShowCursor(false);
+		SDL_SetRelativeMouseMode(SDL_TRUE);
+	}
+	else {
+		SDL_ShowCursor(true);
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+
+	}
+
+
+
+
+
+}

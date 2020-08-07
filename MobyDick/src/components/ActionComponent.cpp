@@ -34,6 +34,7 @@ void ActionComponent::update()
 
 std::shared_ptr<MoveAction> ActionComponent::buildMoveAction(int direction, int strafe) {
 
+
 	std::string actionId = m_actions.at(ACTION_MOVE);
 	std::shared_ptr<MoveAction> action = ActionMaps::instance().getMoveAction(actionId);
 	action->setDirection(direction);

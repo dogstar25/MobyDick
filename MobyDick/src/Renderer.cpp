@@ -91,22 +91,22 @@ void Renderer::drawPoly(b2Body* body)
 
 }
 
-void Renderer::drawPoints(SDL_FPoint* points)
+void Renderer::drawPoints(SDL_FPoint* points, SDL_Color color)
 {
 
-	SDL_SetRenderDrawColor(m_SDLRenderer, 255, 255, 255, 255);
+	SDL_SetRenderDrawColor(m_SDLRenderer, color.r, color.b, color.g, color.a);
 	SDL_RenderDrawLinesF(m_SDLRenderer, points, 5);
 
 }
 
-void Renderer::drawLine(b2Vec2 start, b2Vec2 end)
+void Renderer::drawLine(b2Vec2 start, b2Vec2 end, SDL_Color color)
 {
-	SDL_SetRenderDrawColor(m_SDLRenderer, 255, 255, 255, 255);
+	SDL_SetRenderDrawColor(m_SDLRenderer, color.r, color.b, color.g, color.a);
 	SDL_RenderDrawLineF(m_SDLRenderer, start.x, start.y, end.x, end.y);
 
 }
 
-void Renderer::outlineObject(std::vector<SDL_FPoint> points, float lineSize)
+void Renderer::outlineObject(std::vector<SDL_FPoint> points, float lineSize, SDL_Color color)
 {
 
 	float saveScaleX, saveScaleY;
@@ -114,11 +114,11 @@ void Renderer::outlineObject(std::vector<SDL_FPoint> points, float lineSize)
 	//Set render scale to match linesize passed in
 	SDL_RenderGetScale(m_SDLRenderer, &saveScaleX, &saveScaleY);
 	SDL_RenderSetScale(m_SDLRenderer, lineSize, lineSize);
-	this->drawPoints(points.data());
+
+	this->drawPoints(points.data(), color);
 
 	//Rest Scale to whatever is was before
 	SDL_RenderSetScale(m_SDLRenderer, saveScaleX, saveScaleY);
-
 
 }
 

@@ -18,9 +18,9 @@ public:
 	bool clear();
 	SDL_Texture* createTextureFromSurface(SDL_Surface* surface);
 	void drawPoly(b2Body* body);
-	void drawPoints(SDL_FPoint*);
-	void drawLine(b2Vec2, b2Vec2);
-	void outlineObject(std::vector<SDL_FPoint> points, float lineSize);
+	void drawPoints(SDL_FPoint*, SDL_Color color);
+	void drawLine(b2Vec2, b2Vec2, SDL_Color color);
+	void outlineObject(std::vector<SDL_FPoint> points, float lineSize, SDL_Color color);
 
 
 	SDL_Renderer* SDLRenderer() {

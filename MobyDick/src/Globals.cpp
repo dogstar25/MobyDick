@@ -4,6 +4,7 @@
 #include <sstream>
 
 #include <box2d/b2_math.h>
+#include <json/json.h>
 
 
 
@@ -68,6 +69,18 @@ namespace util
 		ss.precision(decDigits); // set # places after decimal
 		ss << x;
 		return ss.str();
+	}
+
+	const SDL_Color JsonToColor(Json::Value JsonColor) {
+
+		SDL_Color color;
+		color.r = JsonColor["red"].asInt();
+		color.b= JsonColor["blue"].asInt();
+		color.g = JsonColor["green"].asInt();
+		color.a = JsonColor["alpha"].asInt();
+
+		return color;
+
 	}
 
 }

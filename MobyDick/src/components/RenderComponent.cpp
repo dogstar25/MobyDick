@@ -1,5 +1,7 @@
 #include "RenderComponent.h"
 
+#include <json/json.h>
+
 #include "../Renderer.h"
 #include "../Camera.h"
 #include "../GameObjectManager.h"
@@ -28,12 +30,7 @@ RenderComponent::RenderComponent(Json::Value definitionJSON)
 
 	if (itrRender.isMember("color"))
 	{
-		setColor(
-			itrRender["color"]["red"].asInt(),
-			itrRender["color"]["green"].asInt(),
-			itrRender["color"]["blue"].asInt(),
-			itrRender["color"]["alpha"].asInt()
-		);
+		m_color = util::JsonToColor(itrRender["color"]);
 	}
 	else
 	{
@@ -43,7 +40,12 @@ RenderComponent::RenderComponent(Json::Value definitionJSON)
 	m_textureId = itrRender["textureId"].asString();
 	m_xRenderAdjustment = itrRender["xRenderAdjustment"].asFloat();
 	m_yRenderAdjustment = itrRender["yRenderAdjustment"].asFloat();
-	m_renderOutline = itrRender["renderOutline"].asFloat();
+
+	if (itrRender.isMember("outline")) {
+		m_renderOutline = true;
+		m_outlineThickness = itrRender["outline"]["thickness"].asInt();
+		m_outLineColor =  util::JsonToColor(itrRender["outline"]["color"]);
+	}
 
 	//Get Texture
 	m_texture = TextureManager::instance().getTexture(itrRender["textureId"].asString());
@@ -139,7 +141,7 @@ SDL_Surface* RenderComponent::getRenderSurface()
 
 }
 
-void RenderComponent::outlineObject(float lineSize)
+void RenderComponent::outlineObject(float lineSize, SDL_Color color)
 {
 
 	std::vector<SDL_FPoint> points;
@@ -179,7 +181,7 @@ void RenderComponent::outlineObject(float lineSize)
 	point.y = gameObjectDrawRect.y / lineSize;
 	points.push_back(point);
 
-	Renderer::instance().outlineObject(points, lineSize);
+	Renderer::instance().outlineObject(points, lineSize, color);
 
 	points.clear();
 
@@ -233,11 +235,13 @@ void RenderComponent::render()
 			angle,
 			NULL,
 			SDL_FLIP_NONE);
+
+		//Outline the gameObject if defined to 
+		if (m_renderOutline == true) {
+			outlineObject(m_outlineThickness, m_outLineColor);
+		}
 	}
-	else
-	{
-		int todd = 1;
-	}
+
 }
 
 void RenderComponent::setDependencyReferences(GameObject* gameObject)

@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 
 #include <fstream>
+#include <iostream>
 
 #include "game.h"
 #include "Renderer.h"
@@ -140,10 +141,19 @@ std::optional<SceneAction> SceneManager::pollEvents()
 	const Uint8* keyStates = nullptr;
 	std::optional<SceneAction> sceneAction;
 
+	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+	if (currentKeyStates[SDL_SCANCODE_S]) {
+		std::cout << "\033[1;32m S Key Down!\033[0m" << "\n";
+	}
+
 	//Handle special events and everything else should be player control
 	//input related so staore it for later
 	while (SDL_PollEvent(&event) && sceneAction.has_value() == false)
 	{
+
+
+		//SDL_GetMouseState
+
 		switch (event.type)
 		{
 			case SDL_KEYUP:
@@ -161,9 +171,10 @@ std::optional<SceneAction> SceneManager::pollEvents()
 
 				/*
 				If no mapping was found for the keycode, then assume that
-				it is player movement related and store it for later
+				it is player action related and store it for later
 				*/
 				if (sceneAction.has_value() == false) {
+					std::cout << "\033[1;31m Store Key\033[0m" << keyCode << "\n";
 					PlayerInputEvent& playerInputEvent = m_PlayerInputEvents.emplace_back();
 					playerInputEvent.event = event;
 
@@ -184,9 +195,9 @@ std::optional<SceneAction> SceneManager::pollEvents()
 				delete event.user.data1;
 				break;
 			}
-			case SDL_MOUSEMOTION:
-			case SDL_MOUSEBUTTONDOWN:
 			case SDL_MOUSEBUTTONUP:
+			//case SDL_MOUSEMOTION:
+			//case SDL_MOUSEBUTTONDOWN:
 			{
 				PlayerInputEvent& playerInputEvent = m_PlayerInputEvents.emplace_back();
 				playerInputEvent.event = event;

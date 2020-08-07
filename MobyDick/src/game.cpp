@@ -141,7 +141,7 @@ bool Game::init()
 		GameObjectManager::instance().init();
 
 		//Initilaze the Particle Pool Manager
-		ObjectPoolManager::instance().init();
+		//ObjectPoolManager::instance().init();
 
 		//Initilaize the SceneManager
 		SceneManager::instance().init();
@@ -180,6 +180,7 @@ bool Game::init()
 	//SceneManager::instance().scenes().top()->init(MOUSE_MODE_CONTROLLER, "", 2000);
 
 	Scene& temp = SceneManager::instance().pushScene("SCENE_PLAY");
+	temp.applyControlMode();
 	temp.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0);
 	//temp.init(MOUSE_MODE_CONTROLLER, "level1", SDLK_UNKNOWN, 1000);
 	//temp.addGameObject("BOWMAN", GameObjectLayer::MAIN, 4, 4, 0);
@@ -244,6 +245,9 @@ void Game::play()
 				SceneManager::instance().popScene();
 				SceneManager::instance().pushScene(action->sceneId);
 			}
+
+			//Apply the mouse control mode based on what the new "top" scene wants
+			SceneManager::instance().scenes().back().applyControlMode();
 		}
 
 		SceneManager::instance().run();

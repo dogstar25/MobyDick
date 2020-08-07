@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 
+#include <json/json.h>
 #include <SDL2/SDL.h>
 
 /*
@@ -66,6 +67,10 @@ constexpr int ANIMATION_RUN = 1;
 constexpr int ANIMATION_ACTIVE = 3;
 constexpr int ANIMATION_ACTION = 4;
 
+//Animation Modes
+constexpr int ANIMATE_ONE_TIME = 0;
+constexpr int ANIMATE_CONTINUOUS = 1;
+
 //Player Control
 constexpr int CONTROL_MOVEMENT = 1;
 constexpr int CONTROL_USE = 2;
@@ -107,6 +112,7 @@ namespace util
 	const float radiansToDegrees(float angleInRadians);
 	const float degreesToRadians(float angleInDegrees);
 	const std::string floatToString(float x, int decDigits);
+	const SDL_Color JsonToColor(Json::Value JsonColor);
 
 };
 
