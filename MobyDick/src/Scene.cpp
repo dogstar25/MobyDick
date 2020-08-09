@@ -25,8 +25,8 @@ Scene::Scene(std::string sceneId)
 	}
 
 	//Set the mouse mode
-	auto mouseMode = EnumMap::instance().toEnum(definitionJSON["mouseMode"].asString());
-	m_mouseMode = mouseMode;
+	auto inputControlMode = EnumMap::instance().toEnum(definitionJSON["inputControlMode"].asString());
+	m_inputControlMode = inputControlMode;
 
 	//Load the First level - ToDo: need level managing implemented somehow
 	auto levelId = definitionJSON["firstLevel"].asString();
@@ -90,13 +90,6 @@ void Scene::init(size_t mouseMode, std::string levelId, SDL_Keycode exitKey, siz
 	for (auto& gameLayer : m_gameObjects)
 	{
 		gameLayer.reserve(maxObjects);
-	}
-
-	//Set the mouse mode
-	if (mouseMode == MOUSE_MODE_CONTROLLER)
-	{
-		SDL_ShowCursor(false);
-		SDL_SetRelativeMouseMode(SDL_TRUE);
 	}
 
 	//Load the First level
@@ -257,22 +250,17 @@ void Scene::clearEvents()
 	//m_PlayerInputEvents.clear();
 }
 
-void Scene::applyControlMode()
+void Scene::applyCurrentControlMode()
 {
 
-	if (m_mouseMode == MOUSE_MODE_CONTROLLER) {
+	Game::instance().setInputControlMode(m_inputControlMode);
+}
 
-		SDL_ShowCursor(false);
-		SDL_SetRelativeMouseMode(SDL_TRUE);
-	}
-	else {
-		SDL_ShowCursor(true);
-		SDL_SetRelativeMouseMode(SDL_FALSE);
+void Scene::setInputControlMode(int inputControlMode)
+{
 
-	}
-
-
-
-
+	m_inputControlMode = inputControlMode;
+	applyCurrentControlMode();
 
 }
+

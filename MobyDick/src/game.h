@@ -58,6 +58,8 @@ public:
 			GameConfig::instance().positionIterations());
 	}
 
+	void setInputControlMode(int inputControlMode);
+
 	//Accessor Functions
 	b2World* physicsWorld() {
 		return m_physicsWorld;

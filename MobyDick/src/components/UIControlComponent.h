@@ -1,14 +1,24 @@
 #pragma once
-class UIControlComponent
+#include "Component.h"
+
+class UIControlComponent : public Component
 {
-	/*
-	This component will handle onMouse hover and onMouseClick
+public:
 
-	If we are in mouse interface mode, where we see the mouse SDL_RELATVE mouse mode would be false
+	UIControlComponent();
+	UIControlComponent(Json::Value definitionJSON);
+	~UIControlComponent();
+	void update();
 
-	WHen we are in this mouse interface mode, all clickable objects, including GameObjects 
-	are sortof considered to be buttons
-	*/
+
+private:
+	std::bitset<8> m_controls;
+
+
+
+
+
+	
 
 };
 

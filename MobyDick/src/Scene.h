@@ -36,7 +36,7 @@ public:
 	void addGameObject(GameObject* gameObject, int layer);
 	void addGameObject(std::shared_ptr<GameObject> gameObject, int layer);
 	void addKeyAction(SDL_Keycode, SceneAction);
-	void applyControlMode();
+	void applyCurrentControlMode();
 
 
 	std::string id() {
@@ -56,6 +56,7 @@ public:
 	SceneState state() {
 		return m_state;
 	}
+	void setInputControlMode(int inputControlMode);
 
 	std::optional<SceneAction> getkeycodeAction(SDL_Keycode keycode) {
 		if (m_sceneKeyActions.find(keycode) != m_sceneKeyActions.end()) {
@@ -70,7 +71,7 @@ public:
 private:
 	std::string m_id;
 	SceneState m_state;
-	int m_mouseMode;
+	int m_inputControlMode;
 	std::bitset<8> m_sceneTags;
 	ParticleMachine m_particleMachine {this};
 	std::map<SDL_Keycode, SceneAction> m_sceneKeyActions;

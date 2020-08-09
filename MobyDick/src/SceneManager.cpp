@@ -52,51 +52,6 @@ void SceneManager::load(std::string sceneDefinitionsFilename)
 	}
 }
 
-//Scene* SceneManager::addScene()
-//{
-//
-//	return m_scenes.emplace(std::make_unique<Scene>()).get();
-//	//scene = nullptr;
-//
-//}
-
-//void SceneManager::addScene(std::unique_ptr<Scene> scene)
-//{
-//
-//	m_scenes.emplace(std::move(scene));
-//
-//}
-
-
-void SceneManager::pushIntroScene()
-{
-
-	Scene& scene = SceneManager::instance().scenes().emplace_back("GAMESCENE_INTRO");
-
-	scene.init(MOUSE_MODE_CONTROLLER, "level1", SDLK_UNKNOWN, 1000);
-	scene.addGameObject("BOWMAN", LAYER_MAIN, 4, 4, 0);
-	scene.addGameObject("SWORDLADY", LAYER_MAIN, 8, 8, 0);
-	scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0);
-
-	SceneAction sceneAction = { SCENE_ACTION_ADD , "GAMESCENE_PAUSE_MENU" };
-	scene.addKeyAction(SDLK_ESCAPE, sceneAction);
-	//scene.addKeyAction(SDLK_ESCAPE, { SceneActionCode::NEW , "GAMESCENE_PAUSE_MENU" });
-
-
-}
-
-void SceneManager::pushPauseMenuScene()
-{
-	Scene& scene = SceneManager::instance().scenes().emplace_back("GAMESCENE_PAUSE_MENU");
-	scene.init(MOUSE_MODE_NAVIGATE, "", SDLK_ESCAPE,  32);
-	scene.addGameObject("GUIPausePanel", LAYER_MAIN, 4, 4, 0);
-
-	SceneAction sceneAction = { SCENE_ACTION_EXIT , "" };
-	scene.addKeyAction(SDLK_ESCAPE, sceneAction);
-
-
-}
-
 
 void SceneManager::run()
 {

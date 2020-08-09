@@ -31,7 +31,7 @@ namespace SceneConfigData {
 	{
 		{
 			"SCENE_PLAY", 
-			MOUSE_MODE_NAVIGATE,	
+			CONTROL_MODE_PLAY,	
 			2000,	
 
 			{

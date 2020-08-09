@@ -68,6 +68,22 @@ std::shared_ptr<InteractAction> ActionComponent::buildInteractAction() {
 	return action;
 }
 
+std::shared_ptr<Action> ActionComponent::buildOnHoverAction() {
+
+	std::string actionId = m_actions.at(ACTION_INTERACT);
+	std::shared_ptr<InteractAction> action = ActionMaps::instance().getInteractAction(actionId);
+
+	return action;
+}
+
+std::shared_ptr<Action> ActionComponent::buildOnClickAction() {
+
+	std::string actionId = m_actions.at(ACTION_INTERACT);
+	std::shared_ptr<InteractAction> action = ActionMaps::instance().getInteractAction(actionId);
+
+	return action;
+}
+
 void ActionComponent::performMoveAction(int direction, int strafe)
 {
 	buildMoveAction(direction, strafe)->perform(m_parentGameObject);
@@ -87,6 +103,17 @@ void ActionComponent::performInteractAction()
 {
 	buildInteractAction()->perform(m_parentGameObject);
 }
+
+void ActionComponent::performOnHoverAction()
+{
+	buildInteractAction()->perform(m_parentGameObject);
+}
+
+void ActionComponent::performOnClickAction()
+{
+	buildInteractAction()->perform(m_parentGameObject);
+}
+
 
 
 

@@ -61,7 +61,7 @@ void PlayerControlComponent::update()
 
 	handleActions();
 
-	if (m_controls.test(CONTROL_MOVEMENT))
+	if (m_controls.test(INPUT_CONTROL_MOVEMENT))
 	{
 		handleMovement();
 	}
@@ -93,7 +93,7 @@ void PlayerControlComponent::handleActions()
 			break;
 		case SDL_MOUSEBUTTONDOWN:
 			//Execute USE
-			if (m_controls.test(CONTROL_USE))
+			if (m_controls.test(INPUT_CONTROL_USE))
 			{
 				actionComponent->performUseAction();
 			}

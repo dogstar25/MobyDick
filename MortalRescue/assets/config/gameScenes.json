@@ -7,7 +7,7 @@
         },
         {
             "id": "SCENE_PLAY",
-            "mouseMode": "MOUSE_MODE_CONTROLLER",
+            "inputControlMode": "CONTROL_MODE_PLAY",
             "maxObjects": 5000,
             "firstLevel": "level1", //still need level managing implemented
             "tags": [
@@ -37,12 +37,12 @@
         },
         {
             "id": "SCENE_GAMEOVER",
-            "mouseMode": "MOUSE_NAVIGATE",
+            "inputControlMode": "MOUSE_NAVIGATE",
             "maxObjects": 500
         },
         {
             "id": "SCENE_PAUSE_MENU",
-            "mouseMode": "MOUSE_MODE_NAVIGATE",
+            "inputControlMode": "CONTROL_MODE_SELECT",
             "maxObjects": 24,
             "tags": [
                 "SCENETAG_MENU"
@@ -69,7 +69,7 @@
         },
         {
             "id": "SCENE_AREYOUSURE_MENU",
-            "mouseMode": "MOUSE_MODE_NAVIGATE",
+            "inputControlMode": "CONTROL_MODE_SELECT",
             "maxObjects": 24,
             "tags": [
                 "SCENETAG_MENU"

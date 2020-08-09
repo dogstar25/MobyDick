@@ -29,11 +29,15 @@ public:
 	std::shared_ptr<RotateAction> buildRotateAction(float angularVelocity);
 	std::shared_ptr<UseAction> buildUseAction();
 	std::shared_ptr<InteractAction> buildInteractAction();
+	std::shared_ptr<Action> buildOnHoverAction();
+	std::shared_ptr<Action> buildOnClickAction();
 
 	void performMoveAction(int direction, int strafe);
 	void performRotateAction(float angularVelocity);
 	void performUseAction();
 	void performInteractAction();
+	void performOnHoverAction();
+	void performOnClickAction();
 private:
 	
 	std::map<int, std::string> m_actions;

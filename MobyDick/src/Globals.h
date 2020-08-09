@@ -20,6 +20,7 @@ static bool operator !=(SDL_Color a, SDL_Color b)
 	return (a.r != b.r) || (a.g != b.g) || (a.b != b.b);
 }
 
+
 constexpr int MAX_GAMEOBJECT_LAYERS = 3;
 constexpr int CHILD_POSITIONS = 9;
 
@@ -30,8 +31,8 @@ constexpr int MOUSE_HOLD = 2;
 constexpr int MOUSE_CLICKED = 3;
 
 //Mouse Modes
-constexpr int MOUSE_MODE_NAVIGATE = 0;
-constexpr int MOUSE_MODE_CONTROLLER = 1;
+constexpr int CONTROL_MODE_SELECT = 0;
+constexpr int CONTROL_MODE_PLAY = 1;
 
 //Collision Groups
 constexpr int COLLISION_GENERIC = 1;
@@ -72,8 +73,10 @@ constexpr int ANIMATE_ONE_TIME = 0;
 constexpr int ANIMATE_CONTINUOUS = 1;
 
 //Player Control
-constexpr int CONTROL_MOVEMENT = 1;
-constexpr int CONTROL_USE = 2;
+constexpr int INPUT_CONTROL_MOVEMENT = 1;
+constexpr int INPUT_CONTROL_USE = 2;
+constexpr int INPUT_CONTROL_HOVER = 3;
+constexpr int INPUT_CONTROL_CLICK = 4;
 
 //Actions
 constexpr int ACTION_NONE = 0;
@@ -81,6 +84,8 @@ constexpr int ACTION_MOVE = 1;
 constexpr int ACTION_ROTATE = 2;
 constexpr int ACTION_USE = 3;
 constexpr int ACTION_INTERACT = 4;
+constexpr int ACTION_ON_HOVER = 5;
+constexpr int ACTION_ON_CLICK = 6;
 
 //GameSpace Types
 constexpr int GAMESPACE_INTRO = 0;

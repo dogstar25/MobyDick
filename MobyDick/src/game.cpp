@@ -180,7 +180,7 @@ bool Game::init()
 	//SceneManager::instance().scenes().top()->init(MOUSE_MODE_CONTROLLER, "", 2000);
 
 	Scene& temp = SceneManager::instance().pushScene("SCENE_PLAY");
-	temp.applyControlMode();
+	temp.applyCurrentControlMode();
 	temp.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0);
 	//temp.init(MOUSE_MODE_CONTROLLER, "level1", SDLK_UNKNOWN, 1000);
 	//temp.addGameObject("BOWMAN", GameObjectLayer::MAIN, 4, 4, 0);
@@ -247,7 +247,7 @@ void Game::play()
 			}
 
 			//Apply the mouse control mode based on what the new "top" scene wants
-			SceneManager::instance().scenes().back().applyControlMode();
+			SceneManager::instance().scenes().back().applyCurrentControlMode();
 		}
 
 		SceneManager::instance().run();
@@ -255,7 +255,19 @@ void Game::play()
 
 }
 
+void Game::setInputControlMode(int inputControlMode)
+{
+	if (inputControlMode == CONTROL_MODE_PLAY) {
 
+		SDL_ShowCursor(false);
+		SDL_SetRelativeMouseMode(SDL_TRUE);
+	}
+	else if(inputControlMode == CONTROL_MODE_SELECT) {
+		SDL_ShowCursor(true);
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+
+	}
+}
 
 
 

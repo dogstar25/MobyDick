@@ -153,6 +153,8 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\actions\ContinueGameClickAction.cpp" />
+    <ClCompile Include="src\actions\DefaultOnHoverAction.cpp" />
     <ClCompile Include="src\actions\InteractAction.cpp" />
     <ClCompile Include="src\actions\MoveAction.cpp" />
     <ClCompile Include="src\actions\RotateAction.cpp" />
@@ -206,6 +208,8 @@
     <ClCompile Include="src\actions\UseAction.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\actions\ContinueGameClickAction.h" />
+    <ClInclude Include="src\actions\DefaultOnHoverAction.h" />
     <ClInclude Include="src\actions\InteractAction.h" />
     <ClInclude Include="src\actions\MoveAction.h" />
     <ClInclude Include="src\actions\RotateAction.h" />

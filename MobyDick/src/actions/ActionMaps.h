@@ -32,10 +32,19 @@ public:
 	}
 
 private:
+
+	/*
+	TODO:Try have only 1 map of :
+	std::map<std::string, std::shared_ptr<Action>>m_actionMap
+
+	Because Action and MoveAction are virtual it should work
+	*/
 	std::map<std::string, std::shared_ptr<MoveAction>>m_MoveActionMap;
 	std::map<std::string, std::shared_ptr<RotateAction>>m_RotateActionMap;
 	std::map<std::string, std::shared_ptr<UseAction>>m_UseActionMap;
 	std::map<std::string, std::shared_ptr<InteractAction>>m_InteractActionMap;
+	std::map<std::string, std::shared_ptr<Action>>m_onHoverActionMap;
+	std::map<std::string, std::shared_ptr<Action>>m_onClickActionMap;
 
 };
 
