@@ -93,9 +93,13 @@ void Renderer::drawPoly(b2Body* body)
 
 void Renderer::drawPoints(SDL_FPoint* points, SDL_Color color)
 {
-
+	SDL_Color saveCurrentColor = {};
+	SDL_GetRenderDrawColor(m_SDLRenderer, &saveCurrentColor.r, &saveCurrentColor.g, &saveCurrentColor.b, &saveCurrentColor.a);
 	SDL_SetRenderDrawColor(m_SDLRenderer, color.r, color.b, color.g, color.a);
+
 	SDL_RenderDrawLinesF(m_SDLRenderer, points, 5);
+
+	SDL_SetRenderDrawColor(m_SDLRenderer, saveCurrentColor.r, saveCurrentColor.b, saveCurrentColor.g, saveCurrentColor.a);
 
 }
 

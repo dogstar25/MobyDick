@@ -27,8 +27,8 @@ public:
 
 	std::shared_ptr<MoveAction> buildMoveAction(int direction, int strafe);
 	std::shared_ptr<RotateAction> buildRotateAction(float angularVelocity);
-	std::shared_ptr<UseAction> buildUseAction();
-	std::shared_ptr<InteractAction> buildInteractAction();
+	std::shared_ptr<Action> buildUseAction();
+	std::shared_ptr<Action> buildInteractAction();
 	std::shared_ptr<Action> buildOnHoverAction();
 	std::shared_ptr<Action> buildOnClickAction();
 

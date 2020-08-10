@@ -95,6 +95,10 @@ EnumMap::EnumMap()
 	m_enumMap["LAYER_MAIN"] = LAYER_MAIN;
 	m_enumMap["LAYER_TEXT"] = LAYER_TEXT;
 
+	//Game Object Display Modes
+	m_enumMap["DISPLAY_UI_MODE_STANDARD"] = DISPLAY_UI_MODE_STANDARD;
+	m_enumMap["DISPLAY_UI_MODE_ONHOVER"] = DISPLAY_UI_MODE_ONHOVER;
+	m_enumMap["DISPLAY_UI_MODE_ONCLICK"] = DISPLAY_UI_MODE_ONCLICK;
 }
 
 EnumMap::~EnumMap()

@@ -49,10 +49,17 @@ SDL_FRect TransformComponent::getPositionRect()
 	positionRect.w = m_size.x;
 	positionRect.h = m_size.y;
 
-	positionRect.x = m_position.x;
-	positionRect.y = m_position.y;
+	//Adjust to make it top left
+	positionRect.x = m_position.x - (m_size.x / 2);
+	positionRect.y = m_position.y - (m_size.y / 2);
 
 	return positionRect;
+
+}
+
+SDL_FPoint TransformComponent::getCenterPosition()
+{
+	return SDL_FPoint{ m_position.x, m_position.y };
 
 }
 

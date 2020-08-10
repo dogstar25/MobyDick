@@ -107,6 +107,11 @@ constexpr int LAYER_BACKGROUND = 0;
 constexpr int LAYER_MAIN = 1;
 constexpr int LAYER_TEXT = 2;
 
+//Game Object Display Modes
+constexpr int MAX_GAMEOBJECT_DISPLAY_UI_MODES = 3;
+constexpr int DISPLAY_UI_MODE_STANDARD = 0;
+constexpr int DISPLAY_UI_MODE_ONHOVER = 1;
+constexpr int DISPLAY_UI_MODE_ONCLICK = 2;
 
 namespace util
 {

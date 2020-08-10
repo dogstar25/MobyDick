@@ -13,6 +13,14 @@ class AnimationComponent;
 class PhysicsComponent;
 class TransformComponent;
 
+struct DisplayMode
+{
+	SDL_Color color;
+	bool outlined;
+	SDL_Color outlineColor;
+	int outlineWidth;
+};
+
 
 class RenderComponent : public Component
 {
@@ -70,6 +78,8 @@ private:
 		m_renderOutline;
 	std::string
 		m_textureId;
+
+	DisplayMode displayModes[MAX_GAMEOBJECT_DISPLAY_UI_MODES];
 
 	AnimationComponent* m_animationComponent;
 	TransformComponent* m_transformComponent;

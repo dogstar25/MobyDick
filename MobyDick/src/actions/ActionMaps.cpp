@@ -14,11 +14,11 @@ ActionMaps& ActionMaps::instance()
 
 ActionMaps::ActionMaps()
 {
-	m_MoveActionMap["ActorMove"] = std::make_shared<ActorMoveAction>();
-	m_RotateActionMap["ActorRotate"] = std::make_shared<ActorRotateAction>();
-	m_UseActionMap["ActorUse"] = std::make_shared<ActorUseAction>();
-	m_onHoverActionMap["DefaultHover"] = std::make_shared<DefaultOnHoverAction>();
-	m_onHoverActionMap["ContinueClick"] = std::make_shared<ContinueGameClickAction>();
+	m_actionMap["ActorMove"] = std::make_shared<ActorMoveAction>();
+	m_actionMap["ActorRotate"] = std::make_shared<ActorRotateAction>();
+	m_actionMap["ActorUse"] = std::make_shared<ActorUseAction>();
+	m_actionMap["DefaultHover"] = std::make_shared<DefaultOnHoverAction>();
+	m_actionMap["ContinueClick"] = std::make_shared<ContinueGameClickAction>();
 
 
 }

@@ -18,33 +18,13 @@ public:
 	ActionMaps();
 	~ActionMaps();
 
-	std::shared_ptr<MoveAction> getMoveAction(std::string jsonAction) {
-		return m_MoveActionMap[jsonAction];
-	}
-	std::shared_ptr<RotateAction> getRotateAction(std::string jsonAction) {
-		return m_RotateActionMap[jsonAction];
-	}
-	std::shared_ptr<UseAction> getUseAction(std::string jsonAction) {
-		return m_UseActionMap[jsonAction];
-	}
-	std::shared_ptr<InteractAction> getInteractAction(std::string jsonAction) {
-		return m_InteractActionMap[jsonAction];
+	std::shared_ptr<Action> getAction(std::string jsonAction) {
+		return m_actionMap[jsonAction];
 	}
 
 private:
 
-	/*
-	TODO:Try have only 1 map of :
-	std::map<std::string, std::shared_ptr<Action>>m_actionMap
-
-	Because Action and MoveAction are virtual it should work
-	*/
-	std::map<std::string, std::shared_ptr<MoveAction>>m_MoveActionMap;
-	std::map<std::string, std::shared_ptr<RotateAction>>m_RotateActionMap;
-	std::map<std::string, std::shared_ptr<UseAction>>m_UseActionMap;
-	std::map<std::string, std::shared_ptr<InteractAction>>m_InteractActionMap;
-	std::map<std::string, std::shared_ptr<Action>>m_onHoverActionMap;
-	std::map<std::string, std::shared_ptr<Action>>m_onClickActionMap;
+	std::map<std::string, std::shared_ptr<Action>>m_actionMap;
 
 };
 

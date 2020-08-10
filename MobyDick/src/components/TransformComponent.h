@@ -41,7 +41,8 @@ public:
 		return m_absolutePositioning;
 	}
 
-	virtual SDL_FRect  getPositionRect();
+	SDL_FRect  getPositionRect();
+	SDL_FPoint getCenterPosition();
 
 private:
 	float

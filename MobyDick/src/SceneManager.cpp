@@ -152,7 +152,7 @@ std::optional<SceneAction> SceneManager::pollEvents()
 			}
 			case SDL_MOUSEBUTTONUP:
 			//case SDL_MOUSEMOTION:
-			//case SDL_MOUSEBUTTONDOWN:
+			case SDL_MOUSEBUTTONDOWN:
 			{
 				PlayerInputEvent& playerInputEvent = m_PlayerInputEvents.emplace_back();
 				playerInputEvent.event = event;

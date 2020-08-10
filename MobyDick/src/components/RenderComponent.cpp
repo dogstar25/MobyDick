@@ -74,11 +74,7 @@ SDL_FRect RenderComponent::getRenderDestRect()
 	SDL_FRect destRect, currentPositionRect;
 
 	//Get its current position. Should be center of object
-	currentPositionRect = m_transformComponent->getPositionRect();
-
-	destRect = currentPositionRect;
-	destRect.x -= (currentPositionRect.w / 2);
-	destRect.y -= (currentPositionRect.h / 2);
+	destRect = m_transformComponent->getPositionRect();
 
 	destRect.w += m_xRenderAdjustment;
 	destRect.h += m_yRenderAdjustment;
@@ -149,12 +145,12 @@ void RenderComponent::outlineObject(float lineSize, SDL_Color color)
 	float saveScaleX, saveScaleY;
 	SDL_FPoint point;
 
-	//Adjust for camera
-	if (m_transformComponent->absolutePositioning() == false)
+	////Adjust for camera
+	/*if (m_transformComponent->absolutePositioning() == false)
 	{
 		gameObjectDrawRect.x -= Camera::instance().frame().x;
 		gameObjectDrawRect.y -= Camera::instance().frame().y;
-	}
+	}*/
 
 	//topleft
 	point.x = gameObjectDrawRect.x / lineSize;

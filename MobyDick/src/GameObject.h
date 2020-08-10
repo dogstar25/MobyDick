@@ -26,6 +26,7 @@
 #include "components/TextComponent.h"
 #include "components/VitalityComponent.h"
 #include "components/WeaponComponent.h"
+#include "components/UIControlComponent.h"
 
 //#include "Scene.h"
 

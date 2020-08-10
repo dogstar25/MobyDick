@@ -1,10 +1,17 @@
 #include "UIControlComponent.h"
 
+#include <iostream>
+
 #include "../EnumMaps.h"
 #include "../SceneManager.h"
 
 
 UIControlComponent::UIControlComponent()
+{
+
+}
+
+UIControlComponent::~UIControlComponent()
 {
 
 }
@@ -40,7 +47,7 @@ void UIControlComponent::update()
 	gameObjectPosition.h = (int)transformComponent->getPositionRect().h;
 
 	//Get current mouse position
-	const uint32_t currentMouseStates = SDL_GetRelativeMouseState(&mouseX, &mouseY);
+	const uint32_t currentMouseStates = SDL_GetMouseState(&mouseX, &mouseY);
 	SDL_Point mouseLocation[1] = { mouseX , mouseY };
 	bool mouseIsOnGameObject = SDL_PointInRect(mouseLocation, &gameObjectPosition);
 

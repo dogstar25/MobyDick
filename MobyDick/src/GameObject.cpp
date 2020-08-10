@@ -93,6 +93,12 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 		addComponent(std::make_shared<InventoryComponent>());
 	}
 
+	//UIControl Component
+	if (definitionJSON.isMember("UIControlComponent"))
+	{
+		addComponent(std::make_shared<UIControlComponent>(definitionJSON));
+	}
+
 }
 
 //void GameObject::addComponent(int componentId, std::shared_ptr<Component> component)

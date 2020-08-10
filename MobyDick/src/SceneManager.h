@@ -32,8 +32,6 @@ public:
 	void popScene();
 	Scene& pushScene(std::string sceneId);
 
-	void pushIntroScene();
-	void pushPauseMenuScene();
 	std::optional<SceneAction> getSceneKeyAction(SDL_Keycode);
 
 	auto currentSceneIndex(){

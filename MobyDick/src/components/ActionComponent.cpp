@@ -3,6 +3,8 @@
 #include "../actions/ActionMaps.h"
 #include "../EnumMaps.h"
 
+#include "../actions/MoveAction.h"
+
 ActionComponent::ActionComponent(Json::Value definitionJSON)
 {
 	Json::Value componentJSON = definitionJSON["actionComponent"];
@@ -35,8 +37,8 @@ void ActionComponent::update()
 std::shared_ptr<MoveAction> ActionComponent::buildMoveAction(int direction, int strafe) {
 
 
-	std::string actionId = m_actions.at(ACTION_MOVE);
-	std::shared_ptr<MoveAction> action = ActionMaps::instance().getMoveAction(actionId);
+	std::string actionKey = m_actions.at(ACTION_MOVE);
+	std::shared_ptr<MoveAction> action = std::dynamic_pointer_cast<MoveAction>(ActionMaps::instance().getAction(actionKey));
 	action->setDirection(direction);
 	action->setStrafe(strafe);
 
@@ -46,40 +48,40 @@ std::shared_ptr<MoveAction> ActionComponent::buildMoveAction(int direction, int 
 std::shared_ptr<RotateAction> ActionComponent::buildRotateAction(float angularVelocity) {
 
 	std::string actionId = m_actions.at(ACTION_ROTATE);
-	std::shared_ptr<RotateAction> action = ActionMaps::instance().getRotateAction(actionId);
+	std::shared_ptr<RotateAction> action = std::dynamic_pointer_cast<RotateAction>(ActionMaps::instance().getAction(actionId));
 	action->setAngularVelocity(angularVelocity);
 
 	return action;
 }
 
-std::shared_ptr<UseAction> ActionComponent::buildUseAction() {
+std::shared_ptr<Action> ActionComponent::buildUseAction() {
 
 	std::string actionId = m_actions.at(ACTION_USE);
-	std::shared_ptr<UseAction> action = ActionMaps::instance().getUseAction(actionId);
+	std::shared_ptr<Action> action = ActionMaps::instance().getAction(actionId);
 
 	return action;
 }
 
-std::shared_ptr<InteractAction> ActionComponent::buildInteractAction() {
+std::shared_ptr<Action> ActionComponent::buildInteractAction() {
 
 	std::string actionId = m_actions.at(ACTION_INTERACT);
-	std::shared_ptr<InteractAction> action = ActionMaps::instance().getInteractAction(actionId);
+	std::shared_ptr<Action> action = ActionMaps::instance().getAction(actionId);
 
 	return action;
 }
 
 std::shared_ptr<Action> ActionComponent::buildOnHoverAction() {
 
-	std::string actionId = m_actions.at(ACTION_INTERACT);
-	std::shared_ptr<InteractAction> action = ActionMaps::instance().getInteractAction(actionId);
+	std::string actionId = m_actions.at(ACTION_ON_HOVER);
+	std::shared_ptr<Action> action = ActionMaps::instance().getAction(actionId);
 
 	return action;
 }
 
 std::shared_ptr<Action> ActionComponent::buildOnClickAction() {
 
-	std::string actionId = m_actions.at(ACTION_INTERACT);
-	std::shared_ptr<InteractAction> action = ActionMaps::instance().getInteractAction(actionId);
+	std::string actionId = m_actions.at(ACTION_ON_CLICK);
+	std::shared_ptr<Action> action = ActionMaps::instance().getAction(actionId);
 
 	return action;
 }
@@ -106,12 +108,12 @@ void ActionComponent::performInteractAction()
 
 void ActionComponent::performOnHoverAction()
 {
-	buildInteractAction()->perform(m_parentGameObject);
+	buildOnHoverAction()->perform(m_parentGameObject);
 }
 
 void ActionComponent::performOnClickAction()
 {
-	buildInteractAction()->perform(m_parentGameObject);
+	buildOnClickAction()->perform(m_parentGameObject);
 }
 
 
