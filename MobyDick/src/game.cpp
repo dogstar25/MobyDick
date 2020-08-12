@@ -73,7 +73,7 @@ bool Game::init()
 	//string it = todd::testit[0].id;
 	//SceneConfigData::scenes;
 
-	//std::string test = todd::commonGameObjects[0].id;
+	//std::string test = todd::testit[0].id;
 
 
 	m_gameState = GameState::PLAY;
@@ -179,9 +179,12 @@ bool Game::init()
 	//SceneManager::instance().scenes().top()->setState(SceneState::RUN);
 	//SceneManager::instance().scenes().top()->init(MOUSE_MODE_CONTROLLER, "", 2000);
 
-	Scene& temp = SceneManager::instance().pushScene("SCENE_PLAY");
-	temp.applyCurrentControlMode();
-	temp.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0);
+	Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
+	scene.applyCurrentControlMode();
+	scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0);
+	scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1, 0);
+	scene.addGameObject("SWORDLADY", LAYER_MAIN, 12, 1, 0);
+
 	//temp.init(MOUSE_MODE_CONTROLLER, "level1", SDLK_UNKNOWN, 1000);
 	//temp.addGameObject("BOWMAN", GameObjectLayer::MAIN, 4, 4, 0);
 	//temp.addGameObject("SWORDLADY", GameObjectLayer::MAIN, 8, 8, 0);

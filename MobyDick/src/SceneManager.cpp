@@ -105,10 +105,6 @@ std::optional<SceneAction> SceneManager::pollEvents()
 	//input related so staore it for later
 	while (SDL_PollEvent(&event) && sceneAction.has_value() == false)
 	{
-
-
-		//SDL_GetMouseState
-
 		switch (event.type)
 		{
 			case SDL_KEYUP:

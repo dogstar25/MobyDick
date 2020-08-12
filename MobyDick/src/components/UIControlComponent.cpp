@@ -23,8 +23,8 @@ UIControlComponent::UIControlComponent(Json::Value definitionJSON)
 
 	for (Json::Value itrControls : componentJSON["controls"])
 	{
-		int controlFlag = EnumMap::instance().toEnum(itrControls.asString());
-		m_controls.set(controlFlag);
+		/*int controlFlag = EnumMap::instance().toEnum(itrControls.asString());
+		m_controls.set(controlFlag);*/
 	}
 
 }
@@ -51,10 +51,12 @@ void UIControlComponent::update()
 	SDL_Point mouseLocation[1] = { mouseX , mouseY };
 	bool mouseIsOnGameObject = SDL_PointInRect(mouseLocation, &gameObjectPosition);
 
-	//Handle OnHove if it is defined for this object
-	if (m_controls.test(INPUT_CONTROL_HOVER) && mouseIsOnGameObject) {
-
+	//Handle OnHover
+	if (mouseIsOnGameObject) {
 		actionComponent->performOnHoverAction();
+	}
+	else {
+		actionComponent->performOnHoverOutAction();
 	}
 
 	for (auto& inputEvent : SceneManager::instance().playerInputEvents())
@@ -62,7 +64,6 @@ void UIControlComponent::update()
 		switch (inputEvent.event.type)
 		{
 		case SDL_MOUSEBUTTONDOWN:
-			if (m_controls.test(INPUT_CONTROL_CLICK))
 			{
 				SDL_Point mouseClick[1] = { inputEvent.event.button.x , inputEvent.event.button.y };
 				if (SDL_PointInRect(mouseClick, &gameObjectPosition)) {

@@ -21,101 +21,104 @@ static bool operator !=(SDL_Color a, SDL_Color b)
 }
 
 
-constexpr int MAX_GAMEOBJECT_LAYERS = 3;
-constexpr int CHILD_POSITIONS = 9;
+inline constexpr int MAX_GAMEOBJECT_LAYERS = 3;
+inline constexpr int CHILD_POSITIONS = 9;
 
 //Mouse State
-constexpr int MOUSE_NONE = 0;
-constexpr int MOUSE_HOVER = 1;
-constexpr int MOUSE_HOLD = 2;
-constexpr int MOUSE_CLICKED = 3;
+inline constexpr int MOUSE_NONE = 0;
+inline constexpr int MOUSE_HOVER = 1;
+inline constexpr int MOUSE_HOLD = 2;
+inline constexpr int MOUSE_CLICKED = 3;
 
 //Mouse Modes
-constexpr int CONTROL_MODE_SELECT = 0;
-constexpr int CONTROL_MODE_PLAY = 1;
+inline constexpr int CONTROL_MODE_SELECT = 0;
+inline constexpr int CONTROL_MODE_PLAY = 1;
 
 //Collision Groups
-constexpr int COLLISION_GENERIC = 1;
-constexpr int COLLISION_PLAYER = 2;
-constexpr int COLLISION_WALL = 4;
-constexpr int COLLISION_PLAYER_BULLET = 8;
-constexpr int COLLISION_PARTICLE1 = 16;
-constexpr int COLLISION_PARTICLE2 = 32;
-constexpr int COLLISION_PARTICLE3 = 64;
-constexpr int COLLISION_ENEMY_FRAME = 128;
-constexpr int COLLISION_ENEMY_ARMOR = 256;
-constexpr int COLLISION_ENEMY_ARMOR_PIECE = 512;
+inline constexpr int COLLISION_GENERIC = 1;
+inline constexpr int COLLISION_PLAYER = 2;
+inline constexpr int COLLISION_WALL = 4;
+inline constexpr int COLLISION_PLAYER_BULLET = 8;
+inline constexpr int COLLISION_PARTICLE1 = 16;
+inline constexpr int COLLISION_PARTICLE2 = 32;
+inline constexpr int COLLISION_PARTICLE3 = 64;
+inline constexpr int COLLISION_ENEMY_FRAME = 128;
+inline constexpr int COLLISION_ENEMY_ARMOR = 256;
+inline constexpr int COLLISION_ENEMY_ARMOR_PIECE = 512;
 
 //Components
-constexpr int ACTION_COMPONENT = 1;
-constexpr int ANIMATION_COMPONENT = 2;
-constexpr int ATTACHMENTS_COMPONENT = 3;
-constexpr int CHILDREN_COMPONENT = 4;
-constexpr int COMPOSITE_COMPONENT = 5;
-constexpr int TRANSFORM_COMPONENT = 6;
-constexpr int PARTICLE_COMPONENT = 7;
-constexpr int PHYSICS_COMPONENT = 8;
-constexpr int RENDER_COMPONENT = 9;
-constexpr int TEXT_COMPONENT = 10;
-constexpr int VITALITY_COMPONENT = 11;
-constexpr int WEAPON_COMPONENT = 12;
-constexpr int PLAYERCONTROL_COMPONENT = 13;
-constexpr int INVENTORY_COMPONENT = 14;
+inline constexpr int ACTION_COMPONENT = 1;
+inline constexpr int ANIMATION_COMPONENT = 2;
+inline constexpr int ATTACHMENTS_COMPONENT = 3;
+inline constexpr int CHILDREN_COMPONENT = 4;
+inline constexpr int COMPOSITE_COMPONENT = 5;
+inline constexpr int TRANSFORM_COMPONENT = 6;
+inline constexpr int PARTICLE_COMPONENT = 7;
+inline constexpr int PHYSICS_COMPONENT = 8;
+inline constexpr int RENDER_COMPONENT = 9;
+inline constexpr int TEXT_COMPONENT = 10;
+inline constexpr int VITALITY_COMPONENT = 11;
+inline constexpr int WEAPON_COMPONENT = 12;
+inline constexpr int PLAYERCONTROL_COMPONENT = 13;
+inline constexpr int INVENTORY_COMPONENT = 14;
 
 //Animation States
-constexpr int ANIMATION_IDLE = 0;
-constexpr int ANIMATION_RUN = 1;
-constexpr int ANIMATION_ACTIVE = 3;
-constexpr int ANIMATION_ACTION = 4;
+inline constexpr int ANIMATION_IDLE = 0;
+inline constexpr int ANIMATION_RUN = 1;
+inline constexpr int ANIMATION_ACTIVE = 3;
+inline constexpr int ANIMATION_ACTION = 4;
 
 //Animation Modes
-constexpr int ANIMATE_ONE_TIME = 0;
-constexpr int ANIMATE_CONTINUOUS = 1;
+inline constexpr int ANIMATE_ONE_TIME = 0;
+inline constexpr int ANIMATE_CONTINUOUS = 1;
 
 //Player Control
-constexpr int INPUT_CONTROL_MOVEMENT = 1;
-constexpr int INPUT_CONTROL_USE = 2;
-constexpr int INPUT_CONTROL_HOVER = 3;
-constexpr int INPUT_CONTROL_CLICK = 4;
+inline constexpr int INPUT_CONTROL_MOVEMENT = 1;
+inline constexpr int INPUT_CONTROL_USE = 2;
+inline constexpr int INPUT_CONTROL_HOVER = 3;
+inline constexpr int INPUT_CONTROL_CLICK = 4;
 
 //Actions
-constexpr int ACTION_NONE = 0;
-constexpr int ACTION_MOVE = 1;
-constexpr int ACTION_ROTATE = 2;
-constexpr int ACTION_USE = 3;
-constexpr int ACTION_INTERACT = 4;
-constexpr int ACTION_ON_HOVER = 5;
-constexpr int ACTION_ON_CLICK = 6;
+inline constexpr int ACTION_NONE = 0;
+inline constexpr int ACTION_MOVE = 1;
+inline constexpr int ACTION_ROTATE = 2;
+inline constexpr int ACTION_USE = 3;
+inline constexpr int ACTION_INTERACT = 4;
+inline constexpr int ACTION_ON_HOVER = 5;
+inline constexpr int ACTION_ON_CLICK = 6;
+inline constexpr int ACTION_ON_HOVER_OUT = 7;
 
 //GameSpace Types
-constexpr int GAMESPACE_INTRO = 0;
-constexpr int GAMESPACE_PLAY = 1;
-constexpr int GAMESPACE_GAMEOVER = 2;
-constexpr int GAMESPACE_MENU = 3;
+inline constexpr int GAMESPACE_INTRO = 0;
+inline constexpr int GAMESPACE_PLAY = 1;
+inline constexpr int GAMESPACE_GAMEOVER = 2;
+inline constexpr int GAMESPACE_MENU = 3;
 
 //Scene Action Codes
-constexpr int SCENE_ACTION_QUIT = 0;
-constexpr int SCENE_ACTION_ADD = 1;
-constexpr int SCENE_ACTION_REPLACE = 2;
-constexpr int SCENE_ACTION_EXIT = 3;
+inline constexpr int SCENE_ACTION_QUIT = 0;
+inline constexpr int SCENE_ACTION_ADD = 1;
+inline constexpr int SCENE_ACTION_REPLACE = 2;
+inline constexpr int SCENE_ACTION_EXIT = 3;
 
 //Scene Tags
-constexpr int SCENETAG_MENU = 1;
+inline constexpr int SCENETAG_MENU = 1;
 
 //Game Layers
-constexpr int LAYER_BACKGROUND = 0;
-constexpr int LAYER_MAIN = 1;
-constexpr int LAYER_TEXT = 2;
+inline constexpr int LAYER_BACKGROUND = 0;
+inline constexpr int LAYER_MAIN = 1;
+inline constexpr int LAYER_TEXT = 2;
 
 //Game Object Display Modes
-constexpr int MAX_GAMEOBJECT_DISPLAY_UI_MODES = 3;
-constexpr int DISPLAY_UI_MODE_STANDARD = 0;
-constexpr int DISPLAY_UI_MODE_ONHOVER = 1;
-constexpr int DISPLAY_UI_MODE_ONCLICK = 2;
+inline constexpr int MAX_GAMEOBJECT_DISPLAY_UI_MODES = 3;
+inline constexpr int DISPLAY_UI_MODE_STANDARD = 0;
+inline constexpr int DISPLAY_UI_MODE_ONHOVER = 1;
+inline constexpr int DISPLAY_UI_MODE_ONCLICK = 2;
+
+//Game Object Display Schemes
+inline constexpr int DEFAULT_HOVER_SCHEME = 0;
 
 namespace util
 {
-
 	const int generateRandomNumber(int min, int max);
 	const float generateRandomNumber(float min, float max);
 	const SDL_Color generateRandomColor();

@@ -40,7 +40,7 @@ AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 		if (i == 1) {
 			m_currentAnimationState = state;
 		}
-		//Animation* animation = new Animation(animItr);
+
 		m_animations.emplace(state, new Animation(animItr, transformComponentJSON));
 
 	}
@@ -59,16 +59,16 @@ void AnimationComponent::update()
 {
 
 	std::cout << "Animating state " << m_currentAnimationState << "\n";
-	auto animationFrame = m_animations[m_currentAnimationState]->animate();
+	assert(m_animations.find(m_currentAnimationState) != m_animations.end() && "Animation State not found in animations collection");
+	auto animationFrame = m_animations.at(m_currentAnimationState)->animate();
 
 	//If this animation has completed and it was a one-time animate, then reset the current
-	//animation to the deafult in continuous mode
+	//animation to the default, and put it in continuous mode (probably IDLE)
 	if (animationFrame == 0) {
 
-		std::cout << "reset state " << m_currentAnimationState << "\n";
 		if (m_currentAnimationMode == ANIMATE_ONE_TIME) {
-			m_currentAnimationMode = ANIMATE_CONTINUOUS;
 			m_currentAnimationState = m_defaultAnimationState;
+			m_currentAnimationMode = ANIMATE_CONTINUOUS;
 		}
 	}
 
@@ -85,21 +85,19 @@ void AnimationComponent::animate(int animationState, int animationMode)
 
 SDL_Rect* AnimationComponent::getCurrentAnimationTextureRect()
 {
-	//SDL_Rect* textureSrcRect = nullptr;
+	assert(m_animations.find(m_currentAnimationState) != m_animations.end() && "Animation State not found in animations collection");
 
-	return 
-		m_animations[m_currentAnimationState]->getCurrentTextureAnimationSrcRect().get();
+	const auto& animationTextureRect = m_animations.at(m_currentAnimationState)->getCurrentTextureAnimationSrcRect();
+	return animationTextureRect.get();
 
-	//return textureSrcRect;
-	
 }
 
 SDL_Texture* AnimationComponent::getCurrentAnimationTexture()
 {
 	SDL_Texture* texture = nullptr;
 
-	texture =
-		m_animations[m_currentAnimationState]->getTexture();
+	assert(m_animations.find(m_currentAnimationState) != m_animations.end() && "Animation State not found in animations collection");
+	texture = m_animations.at(m_currentAnimationState)->getTexture();
 
 	return texture;
 

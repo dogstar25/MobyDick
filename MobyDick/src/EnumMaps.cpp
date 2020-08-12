@@ -76,6 +76,7 @@ EnumMap::EnumMap()
 	m_enumMap["ACTION_USE"] = ACTION_USE;
 	m_enumMap["ACTION_INTERACT"] = ACTION_INTERACT;
 	m_enumMap["ACTION_ON_HOVER"] = ACTION_ON_HOVER;
+	m_enumMap["ACTION_ON_HOVER_OUT"] = ACTION_ON_HOVER_OUT;
 	m_enumMap["ACTION_ON_CLICK"] = ACTION_ON_CLICK;
 
 	//Keys
@@ -104,27 +105,13 @@ EnumMap::EnumMap()
 EnumMap::~EnumMap()
 {
 	m_enumMap.clear();
-
 }
 
-size_t EnumMap::toEnum(std::string name)
+const int EnumMap::toEnum(std::string name)
 {
+	assert(m_enumMap.find(name) != m_enumMap.end() && "Constant Name wasnt found in EnumMap");
 
-	auto iter = m_enumMap.find(name);
-
-	if (iter != m_enumMap.end())
-	{
-		return m_enumMap[name];
-	}
-	else
-	{
-		//FIXME: this could be problematic. Need to consider throwing an error. A zero being returned can be a valid enum
-		//a -1 might get used in a bitwise operation and make a hard to find bug
-		return(-1);
-	}
-
-	
-
+	return m_enumMap[name];
 }
 
 

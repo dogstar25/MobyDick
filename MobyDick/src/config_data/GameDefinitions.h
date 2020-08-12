@@ -78,15 +78,15 @@ namespace todd
 
 	struct PysicsComponent
 	{
-		b2BodyType		b2BodyType;
-		b2Shape::Type	b2Shape;
+		int				b2BodyType;
+		int				b2Shape;
 		float			radius;
 		float			friction;
 		float			restitution;
 		float			density;
 		float			linearDamping;
 		float			angularDamping;
-		uint16			collisionCategory;
+		int				collisionCategory;
 		Vec2			anchorPoint;
 	};
 
@@ -103,41 +103,45 @@ namespace todd
 
 	};
 
-	//vector<GameObjectDefinition> testit =
-	//{
-	//	{
-	//		"GINA_64",
-
-	//		//transform component
-	//		{
-	//			{64, 64},
-	//			false
-	//		},
-	//		//Animation Component
-	//		{
-	//			{
-	//				{ ANIMATION_IDLE,"TX_GINA_64_IDLE", 0.10, 1 },
-	//				{ ANIMATION_RUN,"TX_GINA_64_RUN", 0.10, 4 }
-	//			}
-	//		},
-	//		//Action component
-	//		{
-	//			{
-	//				 { ACTION_MOVE, new ActorMoveAction() },
-	//				 { ACTION_ROTATE, new ActorRotateAction() },
-	//				 { ACTION_USE, new ActorUseAction() }
-	//			}
-	//		},
-	//		//Physics component
-	//		//{b2_dynamicBody,b2Shape::e_circle, rad,  fr, re, de,   lin, ang,  COLLISION_PLAYER, anchorPt}
-	//		{  }
-	//	}
-	//};
+	/*vector<GameObjectDefinition> testit =
+	{
+		{
+			.id = "GINA_64",
+			.transformComponent = {.size = {.width = 64, .height = 64}, .absolutePositioning = false },
+			.animationComponent = {
+				.animations = {
+					{.state = ANIMATION_IDLE, .textureId = "TX_GINA_64_IDLE", .speed = 0.10, .frames = 1 },
+					{.state = ANIMATION_RUN,  .textureId = "TX_GINA_64_RUN",  .speed = 0.10, .frames = 4 }
+				}
+			},
+			.actionComponent = {
+				.actions = {
+					 {.actionId = ACTION_MOVE,   .action = new ActorMoveAction() },
+					 {.actionId = ACTION_ROTATE, .action = new ActorRotateAction() },
+					 {.actionId = ACTION_USE,    .action = new ActorUseAction() }
+				}
+			},
+			.physicsComponent = {
+				.b2BodyType = b2_dynamicBody,
+				.b2Shape = b2Shape::e_circle,
+				.radius = 1,
+				.friction = 1,
+				.restitution = 1,
+				.density = 1,
+				.linearDamping = 1,
+				.angularDamping = 1,
+				.collisionCategory = COLLISION_PLAYER,
+				.anchorPoint = {.x = 1, .y = 1}
+				}
+		}
+	};*/
 
 
 	inline void test() {
 		GameObjectDefinition test2;
 		
+		
+
 		//GINA_64
 		test2.id = "GINA_64";
 		//Transform Component

@@ -1,5 +1,6 @@
 #include "Renderer.h"
 
+#include "Globals.h"
 #include "GameConfig.h"
 
 Renderer::Renderer()
@@ -22,6 +23,11 @@ void Renderer::init(SDL_Window* window)
 	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 	m_SDLRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawColor(m_SDLRenderer, 0, 0, 0, 0);
+
+	//Load various Game Object Display Schemes
+	_loadDisplaySchemes();
+
+
 
 }
 
@@ -126,27 +132,19 @@ void Renderer::outlineObject(std::vector<SDL_FPoint> points, float lineSize, SDL
 
 }
 
-//void Renderer::render(SDL_Texture* texture, SDL_Color color, SDL_Rect* textureSourceRect, SDL_FRect* destRect, float angle)
-//{
-//	//Set the color
-//	SDL_SetTextureAlphaMod(texture, color.a);
-//
-//	//SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD);
-//
-//	//Set the render color based on the objects color
-//	SDL_SetTextureColorMod(texture, color.r, color.g, color.b);
-//
-//	//Render the texture
-//	SDL_RenderCopyExF(m_Renderer, texture, textureSourceRect, destRect, angle, NULL, SDL_FLIP_NONE);
-//
-//}
-//
-//void Renderer::render(SDL_FRect* destRect, SDL_Color color)
-//{
-//
-//	//Render the rectangle
-//	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, color.a);
-//	SDL_RenderFillRectF(m_Renderer, destRect);
-//
-//}
+void Renderer::_loadDisplaySchemes()
+{
+
+	DisplayScheme displayScheme;
+
+	//
+	//Default Hover Scheme
+	//
+	displayScheme.outlined = true;
+	displayScheme.outlineColor = { 0,0,255,255 };
+	displayScheme.outlineWidth = 2;
+	m_displaySchemes.insert(std::make_pair(DEFAULT_HOVER_SCHEME, displayScheme));
+
+
+}
 

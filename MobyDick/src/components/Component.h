@@ -30,12 +30,7 @@ public:
 	Component();
 	~Component();
 	virtual void update();
-	void setDependencyReferences(std::map<int, std::shared_ptr<Component>>components);
-	//bool hasRefComponent(int componentId);
-	//std::shared_ptr<Component> getRefComponent(int componentId);
-	//void setComponentFlags(std::bitset<32> gameObjectComponentFlags) {
-	//	m_componentFlags = gameObjectComponentFlags;
-	//}
+
 	void setActive(bool active) {
 		m_active = active;
 	}

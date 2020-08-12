@@ -20,6 +20,11 @@ public:
 	void update() override;
 	SDL_Rect* getCurrentAnimationTextureRect();
 	SDL_Texture* getCurrentAnimationTexture();
+	void animate(int animationState, int animationMode);
+
+	void setCurrentAnimationState(int animationState) { 
+		m_currentAnimationState = animationState; 
+	}
 
 	//Accessors
 	int currentAnimationState() {
@@ -28,8 +33,7 @@ public:
 	std::map<int, std::shared_ptr<Animation>>& animations() {
 		return m_animations;
 	}
-	void setCurrentAnimationState(int animationState) { m_currentAnimationState = animationState; }
-	void animate(int animationState, int animationMode);
+
 private:
 
 	int m_currentAnimationState;

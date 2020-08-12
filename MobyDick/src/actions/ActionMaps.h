@@ -4,6 +4,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <assert.h>
 
 #include "Action.h"
 #include "UseAction.h"
@@ -18,8 +19,11 @@ public:
 	ActionMaps();
 	~ActionMaps();
 
-	std::shared_ptr<Action> getAction(std::string jsonAction) {
-		return m_actionMap[jsonAction];
+	std::shared_ptr<Action> getAction(std::string actionKey) {
+
+		assert(m_actionMap.find(actionKey) != m_actionMap.end() && "ActionKey was not found in ActionMaps collection");
+
+		return m_actionMap[actionKey];
 	}
 
 private:

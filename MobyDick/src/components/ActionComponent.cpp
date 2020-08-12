@@ -1,4 +1,7 @@
 #include "ActionComponent.h"
+
+#include <assert.h>
+
 #include "../GameObject.h"
 #include "../actions/ActionMaps.h"
 #include "../EnumMaps.h"
@@ -17,7 +20,7 @@ ActionComponent::ActionComponent(Json::Value definitionJSON)
 		//Get the Enum that represents the Game Objects action as an int
 		int actionId = EnumMap::instance().toEnum(itrAction["actionId"].asString());
 
-		m_actions.emplace(actionId, actionCode);
+		m_actions[actionId] = actionCode;
 
 	}
 
@@ -34,21 +37,43 @@ void ActionComponent::update()
 
 }
 
-std::shared_ptr<MoveAction> ActionComponent::buildMoveAction(int direction, int strafe) {
+std::shared_ptr<MoveAction> ActionComponent::buildMoveAction(int direction, int strafe) 
+{
 
+	std::shared_ptr<MoveAction> action;
 
-	std::string actionKey = m_actions.at(ACTION_MOVE);
-	std::shared_ptr<MoveAction> action = std::dynamic_pointer_cast<MoveAction>(ActionMaps::instance().getAction(actionKey));
+	//Get the action if it exists, otherwise we will use the default actionClass for this action type
+	std::optional<std::string> actionKey = _getActionKey(ACTION_MOVE);
+
+	if (actionKey) {
+		action = std::dynamic_pointer_cast<MoveAction>(ActionMaps::instance().getAction(actionKey->data()));
+	}
+	else {
+		action = std::dynamic_pointer_cast<MoveAction>(ActionMaps::instance().getAction("DefaultMove"));
+	}
+
 	action->setDirection(direction);
 	action->setStrafe(strafe);
 
 	return action;
+
 }
 
-std::shared_ptr<RotateAction> ActionComponent::buildRotateAction(float angularVelocity) {
+std::shared_ptr<RotateAction> ActionComponent::buildRotateAction(float angularVelocity) 
+{
 
-	std::string actionId = m_actions.at(ACTION_ROTATE);
-	std::shared_ptr<RotateAction> action = std::dynamic_pointer_cast<RotateAction>(ActionMaps::instance().getAction(actionId));
+	std::shared_ptr<RotateAction> action;
+
+	//Get the action if it exists, otherwise we will use the default actionClass for this action type
+	std::optional<std::string> actionKey = _getActionKey(ACTION_ROTATE);
+
+	if (actionKey) {
+		action = std::dynamic_pointer_cast<RotateAction>(ActionMaps::instance().getAction(actionKey->data()));
+	}
+	else {
+		action = std::dynamic_pointer_cast<RotateAction>(ActionMaps::instance().getAction("DefaultRotate"));
+	}
+
 	action->setAngularVelocity(angularVelocity);
 
 	return action;
@@ -56,32 +81,87 @@ std::shared_ptr<RotateAction> ActionComponent::buildRotateAction(float angularVe
 
 std::shared_ptr<Action> ActionComponent::buildUseAction() {
 
-	std::string actionId = m_actions.at(ACTION_USE);
-	std::shared_ptr<Action> action = ActionMaps::instance().getAction(actionId);
+
+	std::shared_ptr<Action> action;
+
+	//Get the action if it exists, otherwise we will use the default actionClass for this action type
+	std::optional<std::string> actionKey = _getActionKey(ACTION_USE);
+
+	if (actionKey) {
+		action = ActionMaps::instance().getAction(actionKey->data());
+	}
+	else {
+		action = ActionMaps::instance().getAction("NoAction");
+	}
 
 	return action;
 }
 
 std::shared_ptr<Action> ActionComponent::buildInteractAction() {
 
-	std::string actionId = m_actions.at(ACTION_INTERACT);
-	std::shared_ptr<Action> action = ActionMaps::instance().getAction(actionId);
+	std::shared_ptr<Action> action;
+
+	//Get the action if it exists, otherwise we will use the default actionClass for this action type
+	std::optional<std::string> actionKey = _getActionKey(ACTION_INTERACT);
+
+	if (actionKey) {
+		action = ActionMaps::instance().getAction(actionKey->data());
+	}
+	else {
+		action = ActionMaps::instance().getAction("NoAction");
+	}
 
 	return action;
 }
 
 std::shared_ptr<Action> ActionComponent::buildOnHoverAction() {
 
-	std::string actionId = m_actions.at(ACTION_ON_HOVER);
-	std::shared_ptr<Action> action = ActionMaps::instance().getAction(actionId);
+	std::shared_ptr<Action> action;
+
+	//Get the action if it exists, otherwise we will use the default actionClass for this action type
+	std::optional<std::string> actionKey = _getActionKey(ACTION_ON_HOVER);
+
+	if (actionKey) {
+		action = ActionMaps::instance().getAction(actionKey->data());
+	}
+	else {
+		action = ActionMaps::instance().getAction("DefaultHover");
+	}
+
+	return action;
+
+}
+
+std::shared_ptr<Action> ActionComponent::buildOnHoverOutAction() {
+
+	std::shared_ptr<Action> action;
+
+	//Get the action if it exists, otherwise we will use the default actionClass for this action type
+	std::optional<std::string> actionKey = _getActionKey(ACTION_ON_HOVER_OUT);
+
+	if (actionKey) {
+		action = ActionMaps::instance().getAction(actionKey->data());
+	}
+	else {
+		action = ActionMaps::instance().getAction("DefaultHoverOut");
+	}
 
 	return action;
 }
 
 std::shared_ptr<Action> ActionComponent::buildOnClickAction() {
 
-	std::string actionId = m_actions.at(ACTION_ON_CLICK);
-	std::shared_ptr<Action> action = ActionMaps::instance().getAction(actionId);
+	std::shared_ptr<Action> action;
+
+	//Get the action if it exists, otherwise we will use the default actionClass for this action type
+	std::optional<std::string> actionKey = _getActionKey(ACTION_ON_CLICK);
+
+	if (actionKey) {
+		action = ActionMaps::instance().getAction(actionKey->data());
+	}
+	else {
+		action = ActionMaps::instance().getAction("NoAction");
+	}
 
 	return action;
 }
@@ -111,11 +191,27 @@ void ActionComponent::performOnHoverAction()
 	buildOnHoverAction()->perform(m_parentGameObject);
 }
 
+void ActionComponent::performOnHoverOutAction()
+{
+	buildOnHoverOutAction()->perform(m_parentGameObject);
+}
+
 void ActionComponent::performOnClickAction()
 {
 	buildOnClickAction()->perform(m_parentGameObject);
 }
 
+std::optional<std::string> ActionComponent::_getActionKey(int actionType)
+{
+
+	if (m_actions.find(actionType) != m_actions.end()) {
+		return m_actions.at(actionType);
+	}
+	else {
+		return std::nullopt;
+	}
+	
+}
 
 
 

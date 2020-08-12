@@ -36,13 +36,13 @@
     <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
     <EnableASAN>false</EnableASAN>
@@ -75,17 +75,27 @@
     <IncludePath>$(IncludePath)</IncludePath>
     <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\lib\</OutDir>
     <CopyLocalProjectReference>true</CopyLocalProjectReference>
+    <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(IncludePath)</IncludePath>
     <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\lib\</OutDir>
     <CopyLocalProjectReference>true</CopyLocalProjectReference>
+    <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <VcpkgCurrentInstalledDir>$(VcpkgRoot)\installed\$(VcpkgTriplet)\</VcpkgCurrentInstalledDir>
+    <VcpkgEnableManifest>false</VcpkgEnableManifest>
+    <VcpkgUseStatic>false</VcpkgUseStatic>
+    <VcpkgAutoLink>true</VcpkgAutoLink>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <VcpkgCurrentInstalledDir>$(VcpkgRoot)\installed\$(VcpkgTriplet)\</VcpkgCurrentInstalledDir>
+    <VcpkgEnableManifest>false</VcpkgEnableManifest>
+    <VcpkgUseStatic>false</VcpkgUseStatic>
+    <VcpkgAutoLink>true</VcpkgAutoLink>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -118,9 +128,12 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <SDLCheck>true</SDLCheck>
-      <WarningLevel>Level1</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <Optimization>Full</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>
@@ -131,14 +144,25 @@
       <Verbose>true</Verbose>
     </Lib>
     <ProjectReference>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <SDLCheck>true</SDLCheck>
-      <WarningLevel>Level1</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <Optimization>Full</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>
@@ -149,16 +173,30 @@
       <Verbose>true</Verbose>
     </Lib>
     <ProjectReference>
-      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\actions\DefaultMoveAction.cpp" />
+    <ClCompile Include="src\actions\DefaultRotateAction.cpp" />
+    <ClCompile Include="src\actions\QuitGameAction.cpp" />
+    <ClCompile Include="src\actions\DefaultOnHoverOutAction.cpp" />
     <ClCompile Include="src\actions\ContinueGameClickAction.cpp" />
     <ClCompile Include="src\actions\DefaultOnHoverAction.cpp" />
     <ClCompile Include="src\actions\InteractAction.cpp" />
     <ClCompile Include="src\actions\MoveAction.cpp" />
     <ClCompile Include="src\actions\RotateAction.cpp" />
     <ClCompile Include="src\actions\ItemUsageAction.cpp" />
+    <ClCompile Include="src\MortalRescue.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\actions\NoAction.cpp" />
@@ -208,6 +246,10 @@
     <ClCompile Include="src\actions\UseAction.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\actions\DefaultMoveAction.h" />
+    <ClInclude Include="src\actions\DefaultRotateAction.h" />
+    <ClInclude Include="src\actions\QuitGameAction.h" />
+    <ClInclude Include="src\actions\DefaultOnHoverOutAction.h" />
     <ClInclude Include="src\actions\ContinueGameClickAction.h" />
     <ClInclude Include="src\actions\DefaultOnHoverAction.h" />
     <ClInclude Include="src\actions\InteractAction.h" />
@@ -271,6 +313,70 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="MobyDick.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\blueprints\drone1_blueprint.png" />
+    <Image Include="assets\blueprints\drone1_test.png" />
+    <Image Include="assets\blueprints\level1.png" />
+    <Image Include="assets\blueprints\level_test.png" />
+    <Image Include="assets\bowman1.png" />
+    <Image Include="assets\bullet1.png" />
+    <Image Include="assets\deflect1.png" />
+    <Image Include="assets\enemyFrame1_128.png" />
+    <Image Include="assets\gina_Idle_64.png" />
+    <Image Include="assets\gina_Run_64.png" />
+    <Image Include="assets\levels\level1_blueprint.png" />
+    <Image Include="assets\particle1.png" />
+    <Image Include="assets\particle2.png" />
+    <Image Include="assets\pieceAngle1_8.png" />
+    <Image Include="assets\pieceAngle2_8.png" />
+    <Image Include="assets\pieceAngle3_8.png" />
+    <Image Include="assets\pieceAngle4_8.png" />
+    <Image Include="assets\pieceFull_8.png" />
+    <Image Include="assets\pistolLady128_Run.png" />
+    <Image Include="assets\pistolLady64_Run.png" />
+    <Image Include="assets\spaceship1.png" />
+    <Image Include="assets\square_128.png" />
+    <Image Include="assets\swordLady64_Idle.png" />
+    <Image Include="assets\tile1.png" />
+    <Image Include="assets\wall1_column.png" />
+    <Image Include="assets\wall1_corner.png" />
+    <Image Include="assets\wall1_end.png" />
+    <Image Include="assets\wall1_hall.png" />
+    <Image Include="assets\wall1_open.png" />
+    <Image Include="assets\wall1_wall.png" />
+    <Image Include="assets\weapon1.png" />
+    <Image Include="assets\weapon1_FIRE.png" />
+    <Image Include="assets\weapon1_IDLE.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\config\gameScenes.json" />
+    <None Include="assets\gameConfig.json" />
+    <None Include="assets\gameObjectDefinitions\commonObjects.json" />
+    <None Include="assets\gameObjectDefinitions\components.json" />
+    <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
+    <None Include="assets\gameObjectDefinitions\GUIObjects.json" />
+    <None Include="assets\gameObjectDefinitions\objectPools.json" />
+    <None Include="assets\gameObjectDefinitions\particleObjects.json" />
+    <None Include="assets\levels\level1_definition.json" />
+    <None Include="assets\levels\level1_Objects.json" />
+    <None Include="assets\sound\soundAssets.json" />
+    <None Include="assets\textureAssets.json" />
+    <None Include="vcpkg.json_old" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="assets\sound\ambience_deep_shining.wav" />
+    <Media Include="assets\sound\impact_metal_shell_001.wav" />
+    <Media Include="assets\sound\impact_metal_shell_002.wav" />
+    <Media Include="assets\sound\impact_metal_shell_003.wav" />
+    <Media Include="assets\sound\pick_up_001.wav" />
+    <Media Include="assets\sound\pick_up_002.wav" />
+    <Media Include="assets\sound\weapon1_fire1.wav" />
+    <Media Include="assets\sound\weapon_laser_002.wav" />
+    <Media Include="assets\sound\weapon_laser_004.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\arial.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

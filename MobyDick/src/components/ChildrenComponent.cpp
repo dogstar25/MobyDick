@@ -36,12 +36,7 @@ ChildrenComponent::~ChildrenComponent()
 
 void ChildrenComponent::update()
 {
-	//convenience reference to outside component(s)
-	//std::shared_ptr<TransformComponent> transformComponent =
-	//	std::static_pointer_cast<TransformComponent>(m_refcomponents[TRANSFORM_COMPONENT]);
-	//TRY AUTO!!
-	const auto& transformComponent =
-		parent()->getComponent<TransformComponent>();
+	const auto& transformComponent = parent()->getComponent<TransformComponent>();
 
 	short locationSlot = 0;
 	
@@ -53,7 +48,7 @@ void ChildrenComponent::update()
 	
 		for (auto& childObject : childLocations)
 		{
-			const auto& childTransformComponent =	childObject->getComponent<TransformComponent>();
+			const auto& childTransformComponent = childObject->getComponent<TransformComponent>();
 
 			childNumber++;
 	
@@ -84,37 +79,6 @@ void ChildrenComponent::update()
 }
 
 
-b2Vec2 ChildrenComponent::matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float parentAngle)
-{
-	b2Vec2 adjustment;
-
-	//calculate radius of circle defined by parent and initial child position
-	//This is the hypotenus
-	float radius = 0;
-	radius = sqrt(powf((childPosition.x - parentPosition.x), 2) + powf((childPosition.y - parentPosition.y), 2));
-
-	//calculate the angle of where child is at
-	float y = childPosition.y - parentPosition.y;
-	float x = childPosition.x - parentPosition.x;
-	float childAngle = atan2(childPosition.y - parentPosition.y, childPosition.x - parentPosition.x);
-
-	//add parent angle
-	float newAngle = childAngle + util::degreesToRadians(parentAngle);
-	b2Vec2 newChildPosition{};
-	newChildPosition.x = (radius * cos(newAngle));
-	newChildPosition.y = (radius * sin(newAngle));
-
-	newChildPosition.x += parentPosition.x;
-	newChildPosition.y += parentPosition.y;
-
-	//newChildPosition.x -= (childPositionRect.w / 2);
-	//newChildPosition.y -= (childPositionRect.h / 2);
-
-	adjustment.x = newChildPosition.x - childPosition.x;
-	adjustment.y = newChildPosition.y - childPosition.y;
-
-	return adjustment;
-}
 
 void ChildrenComponent::renderChildren()
 {
@@ -196,7 +160,7 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 	{
 		float oddEvenadjustValue = 0;
 		int stepCount = 0;
-		b2Vec2 firstChildPosition;
+		b2Vec2 firstChildPosition = {};
 
 		//calculate vertical step adjustment depending on even or odd
 		if (childCount % 2 == 0)
@@ -214,9 +178,8 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 
 		//Calculate 1st child object position based on the previous childPosition calculated
 		//values based on location slot
-		firstChildPosition.x =
-			childPosition.x;
-		firstChildPosition.y =
+		firstChildPosition.x = childPosition.x;
+		firstChildPosition.y = 
 			childPosition.y -
 			oddEvenadjustValue -
 			((childSize.y + m_childPadding) * stepCount);
@@ -227,17 +190,13 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 		childPosition.y =
 			firstChildPosition.y + ((childSize.y + m_childPadding) * childNumber);
 
-
 	}
 
 	if (m_childPositionRelative == true)
 	{
 		b2Vec2 adjustment{};
 
-		adjustment = this->matchParentRotation(
-			childPosition,
-			parentPosition,
-			parentAngle);
+		adjustment = this->_matchParentRotation(childPosition, parentPosition, parentAngle);
 
 		childPosition.x += adjustment.x;
 		childPosition.y += adjustment.y;
@@ -249,5 +208,34 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 	b2Vec2 b2Vec2ChildPosition = { childPosition.x, childPosition.y };
 	return b2Vec2ChildPosition;
 
+}
+
+b2Vec2 ChildrenComponent::_matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float parentAngle)
+{
+	b2Vec2 adjustment;
+
+	//calculate radius of circle defined by parent and initial child position
+	//This is the hypotenus
+	float radius = 0;
+	radius = sqrt(powf((childPosition.x - parentPosition.x), 2) + powf((childPosition.y - parentPosition.y), 2));
+
+	//calculate the angle of where child is at
+	float y = childPosition.y - parentPosition.y;
+	float x = childPosition.x - parentPosition.x;
+	float childAngle = atan2(childPosition.y - parentPosition.y, childPosition.x - parentPosition.x);
+
+	//add parent angle
+	float newAngle = childAngle + util::degreesToRadians(parentAngle);
+	b2Vec2 newChildPosition{};
+	newChildPosition.x = (radius * cos(newAngle));
+	newChildPosition.y = (radius * sin(newAngle));
+
+	newChildPosition.x += parentPosition.x;
+	newChildPosition.y += parentPosition.y;
+
+	adjustment.x = newChildPosition.x - childPosition.x;
+	adjustment.y = newChildPosition.y - childPosition.y;
+
+	return adjustment;
 }
 

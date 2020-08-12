@@ -4,14 +4,16 @@
 #include "Component.h"
 
 #include <map>
+#include <optional>
+
 #include <json/json.h>
 
-#include <queue>
 #include "../actions/Action.h"
 #include "../actions/MoveAction.h"
 #include "../actions/RotateAction.h"
 #include "../actions/InteractAction.h"
 #include "../actions/UseAction.h"
+#include "../actions/NoAction.h"
 #include "../Globals.h"
 
 
@@ -30,6 +32,7 @@ public:
 	std::shared_ptr<Action> buildUseAction();
 	std::shared_ptr<Action> buildInteractAction();
 	std::shared_ptr<Action> buildOnHoverAction();
+	std::shared_ptr<Action> buildOnHoverOutAction();
 	std::shared_ptr<Action> buildOnClickAction();
 
 	void performMoveAction(int direction, int strafe);
@@ -37,9 +40,13 @@ public:
 	void performUseAction();
 	void performInteractAction();
 	void performOnHoverAction();
+	void performOnHoverOutAction();
 	void performOnClickAction();
+
 private:
 	
+	std::optional<std::string> _getActionKey(int actionType);
+
 	std::map<int, std::string> m_actions;
 
 

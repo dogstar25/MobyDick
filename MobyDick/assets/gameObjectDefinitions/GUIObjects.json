@@ -1,0 +1,145 @@
+{
+  "gameObjects": [
+    {
+      "id": "GUIPausePanel",
+      "description": "Pause Panel",
+      "type": "GAME_OBJECT",
+      "xSize": 176,
+      "ySize": 164,
+      "absolutePositioning": true,
+      "color": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 255
+      },
+      "childPadding": 8,
+      "childPositionRelative": false,
+      "renderOutline": true,
+      "childObjects": [
+        {
+          "gameObjectId": "ContinueButton",
+          "locationSlot": 5
+        },
+        {
+          "gameObjectId": "QuitButton",
+          "locationSlot": 5
+        },
+        {
+          "gameObjectId": "SettingsButton",
+          "locationSlot": 5
+        }
+      ]
+    },
+    {
+      "id": "QuitButton",
+      "description": "Quit Button",
+      "type": "GAME_OBJECT",
+      "xSize": 128,
+      "ySize": 32,
+      "absolutePositioning": true,
+      "uiEvents": {
+        "onClickAction": "QUIT"
+      },
+      "color": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 175
+      },
+      "childObjects": [
+        {
+          "gameObjectId": "QUIT_LABEL",
+          "locationSlot": 5
+        }
+      ]
+    },
+
+    {
+      "id": "ContinueButton",
+      "description": "Continue Button",
+      "type": "GAME_OBJECT",
+      "xSize": 128,
+      "ySize": 32,
+      "absolutePositioning": true,
+      "uiEvents": {
+        "onClickAction": "CONTINUE"
+      },
+      "color": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 175
+      },
+      "childObjects": [
+        {
+          "gameObjectId": "CONTINUE_LABEL",
+          "locationSlot": 5
+        }
+      ]
+    },
+
+    {
+      "id": "SettingsButton",
+      "description": "Settings Button",
+      "type": "GAME_OBJECT",
+      "xSize": 128,
+      "ySize": 32,
+      "absolutePositioning": true,
+      "uiEvents": {
+        "onClickAction": "SETTINGS"
+      },
+      "color": {
+        "red": 0,
+        "green": 0,
+        "blue": 0,
+        "alpha": 175
+      },
+      "childObjects": [
+        {
+          "gameObjectId": "SETTINGS_LABEL",
+          "locationSlot": 5
+        }
+      ]
+    },
+    {
+      "id": "QUIT_LABEL",
+      "type": "TEXT_OBJECT",
+      "description": "Quit Button Label",
+      "absolutePositioning": true,
+      "text": {
+        "value": "Quit",
+        "dynamic": false,
+        "font": "FONT_ARIAL_REG",
+        "size": 22
+      }
+
+    },
+    {
+      "id": "CONTINUE_LABEL",
+      "type": "TEXT_OBJECT",
+      "description": "Continue Button Label",
+      "absolutePositioning": true,
+      "text": {
+        "value": "Continue",
+        "dynamic": false,
+        "font": "FONT_ARIAL_REG",
+        "size": 22
+      }
+    },
+    {
+      "id": "SETTINGS_LABEL",
+      "type": "TEXT_OBJECT",
+      "description": "Settings Button Label",
+      "absolutePositioning": true,
+      "text": {
+        "value": "Settings",
+        "dynamic": false,
+        "font": "FONT_ARIAL_REG",
+        "size": 22
+      }
+    }
+
+
+  ]
+}

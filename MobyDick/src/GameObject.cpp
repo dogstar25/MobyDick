@@ -152,27 +152,6 @@ void GameObject::update()
 		component.second->update();
 	}
 
-
-
-	////Update the mouse state
-	//if (SDL_GetRelativeMouseMode() == SDL_FALSE)
-	//{
-	//	this->updateMouseState();
-	//}
-
-	////This object was clicked, so push whatever event is tied to its onClick event property
-	//if (m_mouseState == MOUSE_CLICKED)
-	//{
-	//	this->onMouseClickEvent();
-	//}
-
-	////Loop through any possible child objects and update their
-	//// position to reflect parent objects position
-	//if (m_definition->hasChildObjects == true)
-	//{
-	//	updateChildObjects();
-	//}
-
 }
 
 
@@ -256,28 +235,12 @@ void GameObject::addInventoryItem(std::shared_ptr<GameObject>inventoryObject)
 
 void GameObject::init()
 {
-
-
 	for (auto& component : m_components){
 
 		component.second->setParent(this);
 
 	}
 
-	//auto& childrenComponent = getComponent<ChildrenComponent>();
-
-	//for (const auto& childLocations : childrenComponent->childObjects()) {
-	//	for (const auto& childObject : childLocations) {
-
-	//		childObject->se
-
-	//	}
-
-	//}
-
-	//OR
-
-	//Set dependency references
 	_setDependecyReferences();
 
 

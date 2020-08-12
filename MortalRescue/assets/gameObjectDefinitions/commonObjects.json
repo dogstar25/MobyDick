@@ -248,11 +248,21 @@
                 "absolutePositioning": false
             },
             "renderComponent": {
+
                 "color": {
                     "red": 0,
                     "green": 0,
                     "blue": 0,
                     "alpha": 255
+                },
+                "outline": {
+                    "thickness": 1,
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
                 }
             },
             "childrenComponent": {
@@ -274,6 +284,10 @@
                     {
                         "actionId": "ACTION_ON_HOVER",
                         "actionClass": "DefaultHover"
+                    },
+                    {
+                        "actionId": "ACTION_ON_HOVER_OUT",
+                        "actionClass": "DefaultHoverOut"
                     },
                     {
                         "actionId": "ACTION_ON_CLICK",
@@ -316,6 +330,29 @@
                         "locationSlot": 5
                     }
                 ]
+            },
+            "UIControlComponent": {
+                "controls": [
+                    "INPUT_CONTROL_HOVER",
+                    "INPUT_CONTROL_CLICK"
+                ]
+            },
+            "actionComponent": {
+                "actions": [
+                    {
+                        "actionId": "ACTION_ON_HOVER",
+                        "actionClass": "DefaultHover"
+                    },
+                    {
+                        "actionId": "ACTION_ON_HOVER_OUT",
+                        "actionClass": "DefaultHoverOut"
+                    },
+                    {
+                        "actionId": "ACTION_ON_CLICK",
+                        "actionClass": "QuitClick"
+                    }
+
+                ]
             }
         },
         {
@@ -337,9 +374,9 @@
                 "outline": {
                     "thickness": 1,
                     "color": {
-                        "red": 3,
-                        "green": 4,
-                        "blue": 200,
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
                         "alpha": 255
                     }
                 }
@@ -350,6 +387,29 @@
                         "gameObjectId": "SETTINGS_LABEL",
                         "locationSlot": 5
                     }
+                ]
+            },
+            "UIControlComponent": {
+                "controls": [
+                    "INPUT_CONTROL_HOVER",
+                    "INPUT_CONTROL_CLICK"
+                ]
+            },
+            "actionComponent": {
+                "actions": [
+                    {
+                        "actionId": "ACTION_ON_HOVER",
+                        "actionClass": "DefaultHover"
+                    },
+                    {
+                        "actionId": "ACTION_ON_HOVER_OUT",
+                        "actionClass": "DefaultHoverOut"
+                    },
+                    {
+                        "actionId": "ACTION_ON_CLICK",
+                        "actionClass": "ContinueClick"
+                    }
+
                 ]
             }
         },

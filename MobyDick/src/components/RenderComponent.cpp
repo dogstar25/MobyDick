@@ -197,12 +197,12 @@ void RenderComponent::render()
 	//Check if this object is in the viewable area of the world
 	//Add a tiles width to the camera to buffer it some
 	const SDL_FRect positionRect = m_transformComponent->getPositionRect();
-	SDL_Rect gameObjectPosRect = { positionRect.x, positionRect.y, positionRect.w, positionRect.h };
-	SDL_Rect cameraRect = { Camera::instance().frame().x, 
-		Camera::instance().frame().y, 
-		Camera::instance().frame().w+ Game::instance().worldTileWidth(),
-		Camera::instance().frame().h+ Game::instance().worldTileHeight() };
-	
+	SDL_Rect gameObjectPosRect={ (int)positionRect.x, (int)positionRect.y, (int)positionRect.w, (int)positionRect.h };
+	SDL_Rect cameraRect = { (int)Camera::instance().frame().x,
+		(int)Camera::instance().frame().y,
+		(int)Camera::instance().frame().w+ Game::instance().worldTileWidth(),
+		(int)Camera::instance().frame().h+ Game::instance().worldTileHeight() };
+
 	/*
 	If this object is within the viewable are or if its absolute positioned then render it
 	*/
@@ -214,14 +214,21 @@ void RenderComponent::render()
 		SDL_Texture* texture = getRenderTexture();
 		float angle = m_transformComponent->angle();
 
-		//Set the color
-		SDL_SetTextureAlphaMod(texture, m_color.a);
+		//Set the color. Use the DisplayScene values if there is one
+		if (m_displayScheme.has_value() && m_displayScheme->color.has_value()) {
 
-		//SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD);
-
-		//Set the render color based on the objects color
-		SDL_SetTextureColorMod(texture, m_color.r, m_color.g, m_color.b);
-
+			SDL_SetTextureAlphaMod(texture, m_displayScheme->color->a);
+			SDL_SetTextureColorMod(texture,
+				m_displayScheme->color->r,
+				m_displayScheme->color->g,
+				m_displayScheme->color->b);
+		}
+		else
+		{
+			SDL_SetTextureAlphaMod(texture, m_color.a);
+			SDL_SetTextureColorMod(texture, m_color.r, m_color.g, m_color.b);
+		}
+		
 		//Render the texture
 		SDL_RenderCopyExF(
 			Renderer::instance().SDLRenderer(),
@@ -233,8 +240,15 @@ void RenderComponent::render()
 			SDL_FLIP_NONE);
 
 		//Outline the gameObject if defined to 
-		if (m_renderOutline == true) {
-			outlineObject(m_outlineThickness, m_outLineColor);
+		if (m_displayScheme.has_value() && m_displayScheme->outlined == true) {
+
+			outlineObject(m_displayScheme->outlineWidth, m_displayScheme->outlineColor);
+		}
+		else {
+
+			if (m_renderOutline == true) {
+				outlineObject(m_outlineThickness, m_outLineColor);
+			}
 		}
 	}
 
@@ -248,7 +262,15 @@ void RenderComponent::setDependencyReferences(GameObject* gameObject)
 
 }
 
+void RenderComponent::applyDisplayScheme(const uint8_t displayScheme)
+{
+	m_displayScheme = Renderer::instance().getDisplayScheme(displayScheme);
+}
 
+void RenderComponent::removeDisplayScheme()
+{
+	m_displayScheme.reset();
+}
 
 //void RenderComponent::render(SDL_FRect* destRect, SDL_Color color)
 //{

@@ -37,9 +37,10 @@ private:
 		m_childPadding;
 	bool
 		m_childPositionRelative;
+
 	std::array<std::vector<std::shared_ptr<GameObject>>, CHILD_POSITIONS> m_childObjects;
 
-	b2Vec2 matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float); //Move to Transform? Child objects can have a reference to their parent
+	b2Vec2 _matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float); //Move to Transform? Child objects can have a reference to their parent
 	b2Vec2 _calcChildPosition(b2Vec2 childSize, 
 		int locationSlot, int childNumber, int childCount, SDL_FPoint parentPositionRec, float parentAngle);
 

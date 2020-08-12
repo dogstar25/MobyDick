@@ -2,25 +2,19 @@
 #define RENDER_COMPONENT_H
 
 #include <memory>
+#include <optional>
+
 #include <SDL2/SDL.h>
 
 #include "Component.h"
 #include "../Texture.h"
 #include "TransformComponent.h"
 #include "AnimationComponent.h"
+#include "../Renderer.h"
 
 class AnimationComponent;
 class PhysicsComponent;
 class TransformComponent;
-
-struct DisplayMode
-{
-	SDL_Color color;
-	bool outlined;
-	SDL_Color outlineColor;
-	int outlineWidth;
-};
-
 
 class RenderComponent : public Component
 {
@@ -34,24 +28,25 @@ public:
 	void render();
 
 	SDL_FRect  getRenderDestRect();
-	void setColor(SDL_Color color) {
-		m_color = color;
-	}
-	void setColorAlpha(int alpha) {
-		m_color.a = alpha;
-	}
 	void setColor(int red, int green, int blue, int alpha);
 	void setTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
 
 	void outlineObject(float lineSize, SDL_Color color);
 	void setDependencyReferences(GameObject* gameObject);
+	void applyDisplayScheme(const uint8_t);
+	void removeDisplayScheme();
 
 	SDL_Rect* getRenderTextureRect();
 	SDL_Texture* getRenderTexture();
 	SDL_Surface* getRenderSurface();
 	
 
-	//void render(SDL_FRect* destRect, SDL_Color color);
+	void setColor(SDL_Color color) {
+		m_color = color;
+	}
+	void setColorAlpha(int alpha) {
+		m_color.a = alpha;
+	}
 
 	//Accessors
 	SDL_Color color() {
@@ -79,7 +74,7 @@ private:
 	std::string
 		m_textureId;
 
-	DisplayMode displayModes[MAX_GAMEOBJECT_DISPLAY_UI_MODES];
+	std::optional<DisplayScheme> m_displayScheme;
 
 	AnimationComponent* m_animationComponent;
 	TransformComponent* m_transformComponent;
