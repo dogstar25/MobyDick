@@ -32,7 +32,7 @@ public:
 	void update();
 	std::string pollEvents();
 	void clearEvents();
-	void addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle);
+	void addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle=0., bool cameraFollow=false);
 	void addGameObject(GameObject* gameObject, int layer);
 	void addGameObject(std::shared_ptr<GameObject> gameObject, int layer);
 	void addKeyAction(SDL_Keycode, SceneAction);
@@ -65,7 +65,6 @@ public:
 		else {
 			return std::nullopt;
 		}
-
 	}
 	
 private:

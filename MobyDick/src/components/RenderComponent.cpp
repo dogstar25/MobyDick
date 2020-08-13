@@ -146,11 +146,11 @@ void RenderComponent::outlineObject(float lineSize, SDL_Color color)
 	SDL_FPoint point;
 
 	////Adjust for camera
-	/*if (m_transformComponent->absolutePositioning() == false)
+	if (m_transformComponent->absolutePositioning() == false)
 	{
 		gameObjectDrawRect.x -= Camera::instance().frame().x;
 		gameObjectDrawRect.y -= Camera::instance().frame().y;
-	}*/
+	}
 
 	//topleft
 	point.x = gameObjectDrawRect.x / lineSize;

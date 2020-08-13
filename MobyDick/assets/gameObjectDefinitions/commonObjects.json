@@ -245,7 +245,7 @@
                     "width": 128,
                     "height": 32
                 },
-                "absolutePositioning": false
+                "absolutePositioning": true
             },
             "renderComponent": {
 
@@ -304,7 +304,7 @@
                     "width": 128,
                     "height": 32
                 },
-                "absolutePositioning": false
+                "absolutePositioning": true
             },
             "renderComponent": {
                 "color": {
@@ -362,7 +362,7 @@
                     "width": 128,
                     "height": 32
                 },
-                "absolutePositioning": false
+                "absolutePositioning": true
             },
             "renderComponent": {
                 "color": {

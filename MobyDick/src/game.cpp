@@ -75,17 +75,11 @@ bool Game::init()
 
 	//std::string test = todd::testit[0].id;
 
-
 	m_gameState = GameState::PLAY;
 
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
 	
-	//for (auto& gameLayer : m_gameObjects)
-	//{
-	//	gameLayer.reserve(4000);
-	//}
-
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
@@ -146,10 +140,6 @@ bool Game::init()
 		//Initilaize the SceneManager
 		SceneManager::instance().init();
 
-		//Set the mouse mode
-		/*SDL_ShowCursor(false);
-		SDL_SetRelativeMouseMode(SDL_TRUE);*/
-
 		//Initialize the clock object
 		Clock::instance().init();
 
@@ -181,9 +171,9 @@ bool Game::init()
 
 	Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
 	scene.applyCurrentControlMode();
-	scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0);
-	scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1, 0);
-	scene.addGameObject("SWORDLADY", LAYER_MAIN, 12, 1, 0);
+	scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
+	scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);
+	scene.addGameObject("SWORDLADY", LAYER_MAIN, 12, 1);
 
 	//temp.init(MOUSE_MODE_CONTROLLER, "level1", SDLK_UNKNOWN, 1000);
 	//temp.addGameObject("BOWMAN", GameObjectLayer::MAIN, 4, 4, 0);

@@ -20,6 +20,18 @@ Camera& Camera::instance()
 
 }
 
+void Camera::update()
+{
+
+	if (m_followMe) {
+
+		auto& followObjectTransformComponent = m_followMe.value()->getComponent<TransformComponent>();
+		setFramePosition(followObjectTransformComponent->position().x -	(m_frame.w / 2),
+			followObjectTransformComponent->position().y - (m_frame.h / 2));
+	}
+
+}
+
 void Camera::setFramePosition(int x, int y)
 {
 	int xPos, yPos;

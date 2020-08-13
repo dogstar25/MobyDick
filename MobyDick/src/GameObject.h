@@ -83,7 +83,7 @@ public:
 		return(m_components.count(std::type_index(typeid(componentType))) != 0);
 	}
 
-	void init();
+	void init(bool cameraFollow=false);
 
 	//Accessor Functions
 	auto removeFromWorld() { 

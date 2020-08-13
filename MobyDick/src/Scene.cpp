@@ -137,23 +137,14 @@ void Scene::update() {
 	// spin through list of particle tasks to execute, like exposions and emitters
 	m_particleMachine.update();
 
+	Camera::instance().update();
+
 	//Update all of the other non player related update chores for each game object
 	// Game objects are stored in layers
 	for (auto& gameObjects : m_gameObjects)
 	{
 		for (int i = 0; i < gameObjects.size(); i++)
 		{
-
-			//TODO:Instead of this, give the camera an object/position to follow
-			//and the camera will follow on its own
-			//
-			//if (gameObjects[i]->id().compare("GINA_64") == 0) {
-			//	Camera::instance().setFramePosition(
-			//		(gameObjects[i]->getComponent<TransformComponent>()->position().x) -
-			//		(Camera::instance().frame().w / 2),
-			//		(gameObjects[i]->getComponent<TransformComponent>()->position().y) -
-			//		(Camera::instance().frame().h / 2));
-			//}
 
 			if (gameObjects[i]->removeFromWorld())
 			{
@@ -206,7 +197,7 @@ void Scene::render() {
 
 }
 
-void Scene::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle)
+void Scene::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow)
 {
 
 	/*
@@ -214,7 +205,7 @@ void Scene::addGameObject(std::string gameObjectId, int layer, float xMapPos, fl
 	We have to call init after construction in order to set the pointer refrences correctly.i.e all components will store a raw
 	pointer to gameObject and all gameObjects will store a raw pointer to the scene.
 	*/
-	this->m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle))->init();
+	this->m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle))->init(cameraFollow);
 
 	//std::unique_ptr<GameObject> gameObject = std::make_unique<GameObject>(gameObjectId, xMapPos, yMapPos, angle);
 	//this->m_gameObjects[layer].emplace_back(std::move(gameObject))->init(this);

@@ -9,6 +9,7 @@
 #include "Level.h"
 #include "Scene.h"
 #include "game.h"
+#include "Camera.h"
 
 
 GameObject::~GameObject()
@@ -233,7 +234,7 @@ void GameObject::addInventoryItem(std::shared_ptr<GameObject>inventoryObject)
 
 }
 
-void GameObject::init()
+void GameObject::init(bool cameraFollow)
 {
 	for (auto& component : m_components){
 
@@ -243,6 +244,8 @@ void GameObject::init()
 
 	_setDependecyReferences();
 
-
+	if (cameraFollow) {
+		Camera::instance().setFollowMe(this);
+	}
 
 }
