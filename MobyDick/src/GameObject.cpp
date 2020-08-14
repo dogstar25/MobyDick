@@ -143,11 +143,6 @@ void GameObject::setPosition(b2Vec2 position, float angle)
 void GameObject::update()
 {
 
-	if (this->m_id.compare("GINA_64") == 0) {
-		std::cout << "Updateing GINA" << "\n";
-	}
-
-
 	for (auto& component : m_components)
 	{
 		component.second->update();
@@ -220,17 +215,14 @@ void GameObject::reset()
 
 }
 
-void GameObject::addInventoryItem(std::shared_ptr<GameObject>inventoryObject)
+void GameObject::addInventoryItem( GameObject* gameObject)
 {
-	size_t itemCount = getComponent<InventoryComponent>()->addItem( inventoryObject);
+	size_t itemCount = getComponent<InventoryComponent>()->addItem(gameObject);
 	//If this is the only iventory item, then attach it to the player of whatever object this is
 	if (itemCount == 1)
 	{
-		getComponent<PhysicsComponent>()->attachItem(inventoryObject);
+		getComponent<PhysicsComponent>()->attachItem(gameObject);
 	}
-
-	//Also add the item to the world
-	//Game::instance().addGameObject(inventoryObject, GameObjectLayer::DEBUG);
 
 }
 

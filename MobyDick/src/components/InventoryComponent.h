@@ -2,6 +2,8 @@
 #define INVENTORY_COMPONENT_H
 
 #include <vector>
+#include <assert.h>
+
 #include "Component.h"
 
 class GameObject;
@@ -12,20 +14,27 @@ public:
 	InventoryComponent();
 	~InventoryComponent();
 
-	size_t addItem(std::shared_ptr<GameObject>inventoryObject);
+	int addItem(GameObject* gameObject);
 
-	std::vector<std::weak_ptr<GameObject>> items() {
+	std::vector<GameObject*> items() {
 		return m_items;
 	}
 
-	size_t activeItem() {
+	int activeItem() {
 		return m_activeItem;
+	}
+
+	GameObject* getActiveItem() {
+
+		assert(m_activeItem < m_items.size() && "activeItem is out of range of current items");
+
+		return m_items[m_activeItem];
 	}
 
 private:
 
-	size_t m_activeItem;
-	std::vector<std::weak_ptr<GameObject>> m_items;
+	int m_activeItem;
+	std::vector<GameObject*> m_items;
 
 
 

@@ -266,7 +266,7 @@ void PhysicsComponent::setOffGrid()
 	m_physicsBody->SetActive(false);
 }
 
-void PhysicsComponent::attachItem(std::shared_ptr<GameObject>inventoryObject)
+void PhysicsComponent::attachItem(GameObject* inventoryObject)
 {
 	//Get physics component of the inventory object
 	const auto& inventoryObjectPhysicsComponent = inventoryObject->getComponent<PhysicsComponent>();

@@ -58,7 +58,7 @@ AnimationComponent::~AnimationComponent()
 void AnimationComponent::update()
 {
 
-	std::cout << "Animating state " << m_currentAnimationState << "\n";
+	//std::cout << "Animating state " << m_currentAnimationState << "\n";
 	assert(m_animations.find(m_currentAnimationState) != m_animations.end() && "Animation State not found in animations collection");
 	auto animationFrame = m_animations.at(m_currentAnimationState)->animate();
 

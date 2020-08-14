@@ -61,52 +61,18 @@
                     "y": 0.0
                 }
             },
-            "inventoryComponent": {
-            },
+            "inventoryComponent": {},
             "vitalityComponent": {
                 "speed": 7.5
             },
             "childrenComponent": {
                 "childPadding": 0,
-                "childPositionRelative": true,
+                "childPositionRelative": false,
                 "childObjects": [
                     {
                         "gameObjectId": "PLAYER_LABEL",
                         "locationSlot": 1
-                    },
-                    {
-                        "gameObjectId": "PLAYER_LABEL",
-                        "locationSlot": 2
-                    },
-                    {
-                        "gameObjectId": "PLAYER_LABEL",
-                        "locationSlot": 3
-                    },
-                    {
-                        "gameObjectId": "PLAYER_LABEL",
-                        "locationSlot": 4
-                    },
-                    {
-                        "gameObjectId": "PLAYER_LABEL",
-                        "locationSlot": 5
-                    },
-                    {
-                        "gameObjectId": "PLAYER_LABEL",
-                        "locationSlot": 6
-                    },
-                    {
-                        "gameObjectId": "PLAYER_LABEL",
-                        "locationSlot": 7
-                    },
-                    {
-                        "gameObjectId": "PLAYER_LABEL",
-                        "locationSlot": 8
-                    },
-                    {
-                        "gameObjectId": "PLAYER_LABEL",
-                        "locationSlot": 9
                     }
-
                 ]
             },
             "playerControlComponent": {
@@ -200,7 +166,8 @@
                     "width": 176,
                     "height": 164
                 },
-                "absolutePositioning": true
+                "absolutePositioning": true,
+                "centeredPositioning": true
             },
             "renderComponent": {
                 "color": {
@@ -460,6 +427,7 @@
             },
             "physicsComponent": {
                 "type": "B2_DYNAMIC",
+                "collisionShape": "B2_BOX",
                 "friction": 0.0,
                 "restitution": 0.0,
                 "density": 2.05,
@@ -491,7 +459,7 @@
                 "actions": [
                     {
                         "actionId": "ACTION_USE",
-                        "actionClass": "ActorFire"
+                        "actionClass": "NoAction"
                     }
                 ]
             },

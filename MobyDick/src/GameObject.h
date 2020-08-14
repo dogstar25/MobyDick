@@ -52,12 +52,7 @@ public:
 	}
 
 	void setPosition(b2Vec2 position, float angle);
-	//bool hasComponent(int componentId);
-	//std::shared_ptr<Component> getRefComponent(int componentId);
 
-	/*
-	Template function to add component to map
-	*/
 	template <typename componentType>
 	inline void addComponent(std::shared_ptr<componentType> component)
 	{
@@ -100,7 +95,7 @@ public:
 	}
 
 	void reset();
-	void addInventoryItem(std::shared_ptr<GameObject>inventoryObject);
+	void addInventoryItem(GameObject* gameObject);
 	void _setDependecyReferences();
 
 private:

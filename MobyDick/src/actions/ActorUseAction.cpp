@@ -23,14 +23,13 @@ The Actores UseAction is usually to Perform the UseAction of the Actor's activeI
 void ActorUseAction::perform(GameObject* gameObject)
 {
 	//Get the Actores inventory component
-	const auto& inventoryComponent = gameObject->getComponent<InventoryComponent>();
+	const std::shared_ptr<InventoryComponent> inventoryComponent = gameObject->getComponent<InventoryComponent>();
 
 	//Get active inventory item 
-	if (const auto& item = inventoryComponent->items()[inventoryComponent->activeItem()].lock())
+	if (const auto item = inventoryComponent->getActiveItem())
 	{
 		//Perform the UseAction of this item
-		//item->getComponent<ActionComponent>()->useAction(item.get());
-		//item->getComponent<ActionComponent>()->perform();
+		item->getComponent<ActionComponent>()->performUseAction();
 	}
 
 

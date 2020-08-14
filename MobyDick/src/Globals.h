@@ -145,6 +145,14 @@ enum class SceneState {
 	EXIT = 2
 };
 
+namespace WindowPosition {
+
+	inline constexpr int CENTER = 0;
+	inline constexpr int TOP_LEFT = 1;
+	inline constexpr int TOP_CENTER = 2;
+	inline constexpr int TOP_RIGHT = 3;
+}
+
 
 
 #endif

@@ -3,6 +3,7 @@
 #include "../GameObjectManager.h"
 #include "../GameObject.h"
 #include "../GameConfig.h"
+#include "../Game.h"
 #include "../DebugPanel.h"
 
 
@@ -18,16 +19,31 @@ TransformComponent::TransformComponent(Json::Value definitionJSON, float xMapPos
 
 		m_angle = angleAdjust;
 
-		//FixMe: 32 is tilewidth
-		setPosition( 
-			(xMapPos * 32) + transformComponentJSON["size"]["width"].asFloat() / 2,
-			(yMapPos * 32) + transformComponentJSON["size"]["height"].asFloat() / 2
-		);
+		auto objectWidth = transformComponentJSON["size"]["width"].asFloat();
+		auto objectHeight = transformComponentJSON["size"]["height"].asFloat();
+
+		m_centeredPositioning = transformComponentJSON["centeredPositioning"].asBool();
+
+		if (m_centeredPositioning == true) {
+
+			setPosition(
+				((xMapPos * Game::instance().worldTileWidth()) + objectWidth / 2) - (objectWidth  / 2),
+				((yMapPos * Game::instance().worldTileHeight()) + objectHeight / 2) - (objectHeight / 2)
+			);
+		}
+		else {
+
+			setPosition(
+				(xMapPos * Game::instance().worldTileWidth()) + objectWidth / 2,
+				(yMapPos * Game::instance().worldTileHeight()) + objectHeight / 2
+			);
+		}
 
 		m_originalPosition = m_position;
 		m_size.Set(transformComponentJSON["size"]["width"].asFloat(), transformComponentJSON["size"]["height"].asFloat());
 
 		m_absolutePositioning = transformComponentJSON["absolutePositioning"].asBool();
+		
 
 }
 

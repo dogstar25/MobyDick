@@ -149,65 +149,19 @@ bool Game::init()
 		//Initilaize Camera size and
 		Camera::instance().init();
 
-		
 	}
 
-	/*Scene* mainScene = SceneManager::instance().addScene();
-	mainScene->init(MOUSE_MODE_CONTROLLER, "", 2000);
-	mainScene->addGameObject("BOWMAN", GameObjectLayer::MAIN, 4,4,0);
-	mainScene->setState(SceneState::RUN);
-
-	std::unique_ptr<Scene> mainScene2 = std::make_unique<Scene>();
-	mainScene2->init(MOUSE_MODE_CONTROLLER, "", 2000);
-	mainScene2->addGameObject("BOWMAN", GameObjectLayer::MAIN, 4, 4, 0);
-	mainScene2->setState(SceneState::RUN);
-	SceneManager::instance().addScene(std::move(mainScene2));*/
-
-
-	//SceneManager::instance().scenes().emplace(std::make_unique<Scene>(GameScene::INTRO));
-	//SceneManager::instance().scenes().top()->addGameObject("BOWMAN", GameObjectLayer::MAIN, 4, 4, 0);
-	//SceneManager::instance().scenes().top()->setState(SceneState::RUN);
-	//SceneManager::instance().scenes().top()->init(MOUSE_MODE_CONTROLLER, "", 2000);
-
+	//Load a first scene
 	Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
 	scene.applyCurrentControlMode();
-	scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
+
+	//Load the player and some other objects
+	auto playerObject = scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
+	auto weaponObject = scene.addGameObject("WEAPON1", LAYER_MAIN, 8, 8, 0, true);
+	playerObject->addInventoryItem(weaponObject);
+
 	scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);
-	scene.addGameObject("SWORDLADY", LAYER_MAIN, 12, 1);
-
-	//temp.init(MOUSE_MODE_CONTROLLER, "level1", SDLK_UNKNOWN, 1000);
-	//temp.addGameObject("BOWMAN", GameObjectLayer::MAIN, 4, 4, 0);
-	//temp.addGameObject("SWORDLADY", GameObjectLayer::MAIN, 8, 8, 0);
-	////temp.addGameObject("GINA_64", GameObjectLayer::MAIN, 8, 8, 0);
-
-	//SceneAction sceneAction = { SCENE_ACTION_ADD , "GAMESCENE_PAUSE_MENU" };
-	//temp.addKeyAction(SDLK_ESCAPE, sceneAction);
-
-
-
-
-	/*for (auto& sc : SceneManager::instance().scenes()) {
-
-
-
-	}*/
-
-
-
-	//m_currentGameSpace->init(MOUSE_MODE_CONTROLLER, "level1", 4000);
-
-	//std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("GINA_64", 5.f, 5.f, 0.f);
-	//m_currentGameSpace->addGameObject("GINA_64", GameObjectLayer::MAIN, 4.f, 4.f, 0.f);
-
-	//std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>("GINA_64", 5.f, 5.f, 0.f);
-	//Game::instance().addGameObject(gameObject, GameObjectLayer::MAIN);
-	//gameObject->addInventoryItem(std::make_shared<GameObject>("WEAPON1", 5.f, 5.f, 0.f));
-	//	m_gameObjects[GameObjectLayer::MAIN].emplace_back(std::make_shared<GameObject>("SWORDLADY", 5.f, 5.f, 0.f));
-
-	////m_gameObjects[GameObjectLayer::BACKGROUND].emplace_back(std::make_shared<GameObject>("PLAYER_LABEL", 7.f, 7.f, 0.f));
-
-	//m_gameObjects[GameObjectLayer::DEBUG].emplace_back(std::make_shared<GameObject>("FPS_VALUE", 1.f, 1.f, 0.f));
-
+	scene.addGameObject("SWORDLADY", LAYER_MAIN, 1, 1);
 
 	return true;
 }

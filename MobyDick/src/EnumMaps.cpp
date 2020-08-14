@@ -100,6 +100,9 @@ EnumMap::EnumMap()
 	m_enumMap["DISPLAY_UI_MODE_STANDARD"] = DISPLAY_UI_MODE_STANDARD;
 	m_enumMap["DISPLAY_UI_MODE_ONHOVER"] = DISPLAY_UI_MODE_ONHOVER;
 	m_enumMap["DISPLAY_UI_MODE_ONCLICK"] = DISPLAY_UI_MODE_ONCLICK;
+
+	//Global Screen Position
+	m_enumMap["WindowPosition::CENTER"] = WindowPosition::CENTER;
 }
 
 EnumMap::~EnumMap()

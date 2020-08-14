@@ -32,11 +32,12 @@ public:
 	void update();
 	std::string pollEvents();
 	void clearEvents();
-	void addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle=0., bool cameraFollow=false);
+	GameObject* addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle=0., bool cameraFollow=false);
 	void addGameObject(GameObject* gameObject, int layer);
 	void addGameObject(std::shared_ptr<GameObject> gameObject, int layer);
 	void addKeyAction(SDL_Keycode, SceneAction);
 	void applyCurrentControlMode();
+	SDL_Point calcWindowPosition(int globalPosition);
 
 
 	std::string id() {

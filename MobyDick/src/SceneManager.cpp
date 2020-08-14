@@ -6,6 +6,7 @@
 #include "game.h"
 #include "Renderer.h"
 #include "Clock.h"
+#include "DynamicTextManager.h"
 
 
 SceneManager::SceneManager()
@@ -84,6 +85,7 @@ void SceneManager::run()
 		//Increment frame counter and calculate FPS and reset the gameloop timer
 		Clock::instance().calcFps();
 
+		DynamicTextManager::instance().updateText("FPS_VALUE", std::to_string(Clock::instance().fps()));
 	}
 
 }
@@ -97,9 +99,6 @@ std::optional<SceneAction> SceneManager::pollEvents()
 	std::optional<SceneAction> sceneAction;
 
 	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-	if (currentKeyStates[SDL_SCANCODE_S]) {
-		std::cout << "\033[1;32m S Key Down!\033[0m" << "\n";
-	}
 
 	//Handle special events and everything else should be player control
 	//input related so staore it for later
@@ -125,7 +124,7 @@ std::optional<SceneAction> SceneManager::pollEvents()
 				it is player action related and store it for later
 				*/
 				if (sceneAction.has_value() == false) {
-					std::cout << "\033[1;31m Store Key\033[0m" << keyCode << "\n";
+					//std::cout << "\033[1;31m Store Key\033[0m" << keyCode << "\n";
 					PlayerInputEvent& playerInputEvent = m_PlayerInputEvents.emplace_back();
 					playerInputEvent.event = event;
 

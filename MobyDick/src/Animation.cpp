@@ -81,7 +81,7 @@ int Animation::animate()
 
 	if (time_diff.count() >= m_speed)
 	{
-		std::cout << "Animating frame " << m_currentAnimFrame << "\n";
+		//std::cout << "Animating frame " << m_currentAnimFrame << "\n";
 
 		m_timeSnapshot = now_time;
 

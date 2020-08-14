@@ -40,6 +40,9 @@ public:
 	bool absolutePositioning() {
 		return m_absolutePositioning;
 	}
+	bool centeredPositioning() {
+		return m_centeredPositioning;
+	}
 
 	SDL_FRect  getPositionRect();
 	SDL_FPoint getCenterPosition();
@@ -52,7 +55,8 @@ private:
 		m_size,
 		m_originalPosition;
 	bool
-		m_absolutePositioning;
+		m_absolutePositioning,
+		m_centeredPositioning;;
 
 
 };

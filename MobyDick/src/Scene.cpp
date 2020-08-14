@@ -1,5 +1,7 @@
 #include "Scene.h"
 
+#include <cmath>
+
 #include "Level.h"
 #include "Clock.h"
 #include "Camera.h"
@@ -46,10 +48,22 @@ Scene::Scene(std::string sceneId)
 	for (Json::Value gameObjectJSON : definitionJSON["gameObjects"]) {
 
 		auto id = gameObjectJSON["gameObjectId"].asString();
-		auto locationX = gameObjectJSON["location"]["x"].asInt();
-		auto locationY = gameObjectJSON["location"]["y"].asInt();
+
 		auto layer = EnumMap::instance().toEnum(gameObjectJSON["layer"].asString());
-		addGameObject(id, layer, locationX, locationY, 0);
+
+		//Determine location
+		auto location = gameObjectJSON["location"];
+		if (location.isMember("windowPosition")) {
+
+			auto windowPosition = EnumMap::instance().toEnum(gameObjectJSON["location"]["windowPosition"].asString());
+			SDL_Point location = calcWindowPosition(windowPosition);
+			addGameObject(id, layer, location.x, location.y, 0);
+		}
+		else {
+			auto locationX = gameObjectJSON["location"]["x"].asInt();
+			auto locationY = gameObjectJSON["location"]["y"].asInt();
+			addGameObject(id, layer, locationX, locationY, 0);
+		}
 	}
 
 	//Keycode actions
@@ -197,7 +211,7 @@ void Scene::render() {
 
 }
 
-void Scene::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow)
+GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow)
 {
 
 	/*
@@ -205,10 +219,10 @@ void Scene::addGameObject(std::string gameObjectId, int layer, float xMapPos, fl
 	We have to call init after construction in order to set the pointer refrences correctly.i.e all components will store a raw
 	pointer to gameObject and all gameObjects will store a raw pointer to the scene.
 	*/
-	this->m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle))->init(cameraFollow);
+	auto& gameObject = this->m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle));
+	gameObject->init(cameraFollow);
 
-	//std::unique_ptr<GameObject> gameObject = std::make_unique<GameObject>(gameObjectId, xMapPos, yMapPos, angle);
-	//this->m_gameObjects[layer].emplace_back(std::move(gameObject))->init(this);
+	return gameObject.get();
 
 
 
@@ -255,3 +269,20 @@ void Scene::setInputControlMode(int inputControlMode)
 
 }
 
+SDL_Point Scene::calcWindowPosition(int globalPosition)
+{
+	SDL_Point globalPoint = {};
+
+	if (globalPosition == WindowPosition::CENTER) {
+
+		globalPoint.x = round(GameConfig::instance().windowWidth() / Game::instance().worldTileWidth() / 2);
+		globalPoint.y = round(GameConfig::instance().windowHeight() / Game::instance().worldTileHeight() / 2);
+
+	}
+	else {
+		/* Need other calcs added*/
+	}
+
+	return globalPoint;
+
+}

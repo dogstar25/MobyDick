@@ -22,7 +22,7 @@ public:
 	void setTransform(b2Vec2 positionVector, float angle);
 	void setLinearVelocity(b2Vec2 velocityVector);
 	void setPhysicsBodyActive(bool  active);
-	void attachItem(std::shared_ptr<GameObject>inventoryObject);
+	void attachItem(GameObject* inventoryObject);
 
 	//Accessor functions
 	b2Vec2 objectAnchorPoint() {

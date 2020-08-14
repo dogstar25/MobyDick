@@ -10,16 +10,13 @@
             "inputControlMode": "CONTROL_MODE_PLAY",
             "maxObjects": 5000,
             "firstLevel": "level1", //still need level managing implemented
-            "tags": [
-                "SCENETAG_MENU"
-            ],
             "gameObjects": [
                 {
                     "gameObjectId": "BOWMAN",
                     "layer": "LAYER_MAIN",
                     "location": {
-                        "x": 4,
-                        "y": 4
+                        "x": 1,
+                        "y": 1
                     }
 
                 }
@@ -52,8 +49,7 @@
                     "gameObjectId": "GUI_PAUSE_PANEL",
                     "layer": "LAYER_TEXT",
                     "location": {
-                        "x": 6,
-                        "y": 6
+                        "windowPosition": "WindowPosition::CENTER"
                     }
                 }
             ],

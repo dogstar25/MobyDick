@@ -15,10 +15,10 @@ InventoryComponent::~InventoryComponent()
 
 }
 
-size_t InventoryComponent::addItem(std::shared_ptr<GameObject>inventoryObject)
+int InventoryComponent::addItem(GameObject* gameObject)
 {
 
-	m_items.push_back(inventoryObject);
+	m_items.push_back(gameObject);
 
 	return(m_items.size());
 
