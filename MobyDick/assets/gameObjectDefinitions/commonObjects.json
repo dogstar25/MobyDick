@@ -2,6 +2,7 @@
     "gameObjects": [
         {
             "id": "SWORDLADY",
+            "category": "ObjectCategory::FRIENDLY_UNIT",
             "description": "SwordLady",
             "transformComponent": {
                 "size": {
@@ -23,6 +24,7 @@
         },
         {
             "id": "GINA_64",
+            "category": "ObjectCategory::PLAYER",
             "transformComponent": {
                 "size": {
                     "width": 64,
@@ -55,7 +57,7 @@
                 "density": 50.5,
                 "linearDamping": 0.2,
                 "angularDamping": 3.0,
-                "collisionCategory": "COLLISION_PLAYER",
+                //"collisionCategory": "CollisionCat::PLAYER",
                 "anchorPoint": {
                     "x": 0.8,
                     "y": 0.0
@@ -109,6 +111,7 @@
         },
         {
             "id": "BOWMAN",
+            "category": "ObjectCategory::FRIENDLY_UNIT",
             "transformComponent": {
                 "size": {
                     "width": 64,
@@ -130,7 +133,7 @@
                 "linearDamping": 20.0,
                 "restitution": 0.0,
                 "angularDamping": 10.0,
-                "collisionCategory": "COLLISION_GENERIC"
+                "collisionCategory": "CollisionCat::COMMON"
             }
         },
         {
@@ -417,6 +420,7 @@
         },
         {
             "id": "WEAPON1",
+            "category": "ObjectCategory::COLLECTABLE",
             "description": "Weapon 1",
             "transformComponent": {
                 "size": {
@@ -433,7 +437,7 @@
                 "density": 2.05,
                 "linearDamping": 3.0,
                 "angularDamping": 1.0,
-                "collisionCategory": "COLLISION_PLAYER_BULLET",
+                //"collisionCategory": "CollisionCat::COLLECTABLE",
                 "anchorPoint": {
                     "x": -0.2,
                     "y": 0.0

@@ -23,7 +23,7 @@
                 "restitution": 0.3,
                 "linearDamping": 0.0,
                 "angularDamping": 0.0,
-                "collisionCategory": "COLLISION_PARTICLE1"
+                "collisionCategory": "CollisionCat::PARTICLE"
             }
         },
         {
@@ -56,7 +56,7 @@
                 "restitution": 0.3,
                 "linearDamping": 0.0,
                 "angularDamping": 0.0,
-                "collisionCategory": "COLLISION_PLAYER_BULLET"
+                "collisionCategory": "CollisionCat::PROJECTILE"
             }
         },
         {
@@ -87,7 +87,7 @@
                 "restitution": 0.3,
                 "linearDamping": 0.0,
                 "angularDamping": 12.0,
-                "collisionCategory": "COLLISION_PLAYER_BULLET"
+                "collisionCategory": "CollisionCat::PARTICLE"
             }
         }
 

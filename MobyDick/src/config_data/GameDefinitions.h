@@ -156,7 +156,7 @@ namespace todd
 		test2.actionComponent.actions.emplace_back(ActionItem() = { ACTION_USE, new ActorUseAction() });
 		//Physics Component
 		//test2.physicsComponent { b2_dynamicBody, b2Shape::e_circle, rad, fr, re, de, lin, ang,  COLLISION_PLAYER };
-		test2.physicsComponent = { b2_dynamicBody, b2Shape::e_circle, 0.64, 0, 0, 50.5, 0.2, 2.0,  COLLISION_PLAYER};
+		test2.physicsComponent = { b2_dynamicBody, b2Shape::e_circle, 0.64, 0, 0, 50.5, 0.2, 2.0,  ObjectCategory::PLAYER};
 		test2.physicsComponent.anchorPoint = { 1, 1 };
 	}
 

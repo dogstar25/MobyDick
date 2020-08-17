@@ -2,6 +2,7 @@
     "gameObjects": [
         {
             "id": "WALL1_OPEN",
+            "category": "ObjectCategory::WALL",
             "description": "WALL1_OPEN",
             "transformComponent": {
                 "size": {
@@ -25,13 +26,14 @@
             "physicsComponent": {
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
-                "friction": 0.3,
-                "collisionCategory": "COLLISION_WALL"
+                "friction": 0.3
+               // "collisionCategory": "CollisionCat::WALL"
             }
 
         },
         {
             "id": "WALL1_COLUMN",
+            "category": "ObjectCategory::WALL",
             "description": "WALL1_COLUMN",
             "transformComponent": {
                 "size": {
@@ -56,12 +58,13 @@
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3,
-                "collisionCategory": "COLLISION_WALL"
+                "collisionCategory": "CollisionCat::WALL"
             }
 
         },
         {
             "id": "WALL1_CORNER",
+            "category": "ObjectCategory::WALL",
             "description": "WALL1_CORNER",
             "transformComponent": {
                 "size": {
@@ -86,12 +89,13 @@
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3,
-                "collisionCategory": "COLLISION_WALL"
+                "collisionCategory": "CollisionCat::WALL"
             }
 
         },
         {
             "id": "WALL1_END",
+            "category": "ObjectCategory::WALL",
             "description": "WALL1_END",
             "transformComponent": {
                 "size": {
@@ -116,12 +120,13 @@
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3,
-                "collisionCategory": "COLLISION_WALL"
+                "collisionCategory": "CollisionCat::WALL"
             }
 
         },
         {
             "id": "WALL1_HALL",
+            "category": "ObjectCategory::WALL",
             "description": "WALL1_HALL",
             "transformComponent": {
                 "size": {
@@ -146,13 +151,14 @@
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3,
-                "collisionCategory": "COLLISION_WALL"
+                "collisionCategory": "CollisionCat::WALL"
             }
 
         },
 
         {
             "id": "WALL1_WALL",
+            "category": "ObjectCategory::WALL",
             "description": "WALL1_WALL",
             "transformComponent": {
                 "size": {
@@ -177,7 +183,7 @@
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3,
-                "collisionCategory": "COLLISION_WALL"
+                "collisionCategory": "CollisionCat::WALL"
             }
 
         }

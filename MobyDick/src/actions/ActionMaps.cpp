@@ -32,6 +32,10 @@ ActionMaps::ActionMaps()
 	m_actionMap["ContinueClick"] = std::make_shared<ContinueGameClickAction>();
 	m_actionMap["QuitClick"] = std::make_shared<QuitGameAction>();
 
+	m_actionMap["COLL_Player_Wall"] = std::make_shared<NoAction>();
+	//OR
+	m_actionMap["CollisionTag01_CollisionTag04"] = std::make_shared<NoAction>();
+
 }
 
 

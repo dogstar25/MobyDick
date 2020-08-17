@@ -17,6 +17,8 @@
 #include "ObjectPoolManager.h"
 #include "DebugPanel.h"
 #include "components/ActionComponent.h"
+#include "ContactFilter.h"
+#include "ContactListener.h"
 #include "Globals.h"
 
 #include "config_data/scenes.h"
@@ -121,8 +123,10 @@ bool Game::init()
 		// Construct a physics world object, which will hold and simulate the physics objects.
 		m_physicsWorld = new b2World(GameConfig::instance().gravity());
 		m_physicsWorld->SetAutoClearForces(true);
-		//Add a collision contact listener
-		//m_physicsWorld->SetContactListener(&m_gameObjectContactListner);
+
+		//Add a collision contact listener and filter for box2d callbacks
+		m_physicsWorld->SetContactListener(&ContactListener::instance());
+		m_physicsWorld->SetContactFilter(&ContactFilter::instance());
 
 		//Debug Mode
 		/*if (GameConfig::instance().b2DebugDrawMode() == true)

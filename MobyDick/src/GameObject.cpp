@@ -10,6 +10,7 @@
 #include "Scene.h"
 #include "game.h"
 #include "Camera.h"
+#include "EnumMaps.h"
 
 
 GameObject::~GameObject()
@@ -19,10 +20,6 @@ GameObject::~GameObject()
 
 GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust)
 {
-
-	//Game Object Id
-	m_id = gameObjectId;
-	m_removeFromWorld = false;
 
 	Json::Value definitionJSON;
 
@@ -35,6 +32,17 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	{
 		definitionJSON = GameObjectManager::instance().getDefinition("DEBUG_ITEM")->definitionJSON();
 	}
+
+	//Category and Id
+	m_id = gameObjectId;
+	if (definitionJSON.isMember("category")) {
+		m_category = EnumMap::instance().toEnum(definitionJSON["category"].asString());
+	}
+	else {
+		m_category = 0;
+	}
+	
+	m_removeFromWorld = false;
 
 	//Always build a render and transform component
 	addComponent(std::make_shared<RenderComponent>(definitionJSON));

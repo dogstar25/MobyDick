@@ -34,17 +34,41 @@ inline constexpr int MOUSE_CLICKED = 3;
 inline constexpr int CONTROL_MODE_SELECT = 0;
 inline constexpr int CONTROL_MODE_PLAY = 1;
 
-//Collision Groups
-inline constexpr int COLLISION_GENERIC = 1;
-inline constexpr int COLLISION_PLAYER = 2;
-inline constexpr int COLLISION_WALL = 4;
-inline constexpr int COLLISION_PLAYER_BULLET = 8;
-inline constexpr int COLLISION_PARTICLE1 = 16;
-inline constexpr int COLLISION_PARTICLE2 = 32;
-inline constexpr int COLLISION_PARTICLE3 = 64;
-inline constexpr int COLLISION_ENEMY_FRAME = 128;
-inline constexpr int COLLISION_ENEMY_ARMOR = 256;
-inline constexpr int COLLISION_ENEMY_ARMOR_PIECE = 512;
+//Game Object Categories
+namespace ObjectCategory {
+	inline constexpr int MAX_OBJECT_CATEGORIES = 32;
+
+	inline constexpr int COLLECTABLE = 0;
+	inline constexpr int COMMON = 1;
+	inline constexpr int ENEMY_BULLET = 2;
+	inline constexpr int ENEMY_FRAME = 3;
+	inline constexpr int ENEMY_UNIT = 4;
+	inline constexpr int FRIENDLY_BULLET = 5;
+	inline constexpr int FRIENDLY_FRAME = 6;
+	inline constexpr int FRIENDLY_UNIT = 7;
+	inline constexpr int PLAYER = 8;
+	inline constexpr int SMOKE_PARTICLE = 9;
+	inline constexpr int SOLID_PARTICLE = 10;
+	inline constexpr int WALL = 11;
+
+}
+
+namespace ObjectCategoryLabel {
+
+	inline constexpr auto COLLECTABLE = "Collectable";
+	inline constexpr auto COMMON = "Common";
+	inline constexpr auto ENEMY_BULLET = "EnemyBullet";
+	inline constexpr auto ENEMY_FRAME = "EnenmyObjectFrame";
+	inline constexpr auto ENEMY_UNIT = "EnemyUnit";
+	inline constexpr auto FRIENDLY_BULLET = "EnemyBullet";
+	inline constexpr auto FRIENDLY_FRAME = "FriendlyFrame";
+	inline constexpr auto FRIENDLY_UNIT = "FriendlyUnit";
+	inline constexpr auto PLAYER = "Player";
+	inline constexpr auto SMOKE_PARTICLE = "SmokeParticle";
+	inline constexpr auto SOLID_PARTICLE = "SolidParticle";
+	inline constexpr auto WALL = "Wall";
+
+}
 
 //Components
 inline constexpr int ACTION_COMPONENT = 1;

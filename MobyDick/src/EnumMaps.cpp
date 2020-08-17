@@ -23,16 +23,18 @@ EnumMap::EnumMap()
 	m_enumMap["CONTROL_MODE_PLAY"] = CONTROL_MODE_PLAY;
 
 	//Collision Groups
-	m_enumMap["COLLISION_GENERIC"] = COLLISION_GENERIC;
-	m_enumMap["COLLISION_PLAYER"] = COLLISION_PLAYER;
-	m_enumMap["COLLISION_WALL"] = COLLISION_WALL;
-	m_enumMap["COLLISION_PLAYER_BULLET"] = COLLISION_PLAYER_BULLET;
-	m_enumMap["COLLISION_PARTICLE1"] = COLLISION_PARTICLE1;
-	m_enumMap["COLLISION_PARTICLE2"] = COLLISION_PARTICLE2;
-	m_enumMap["COLLISION_PARTICLE3"] = COLLISION_PARTICLE3;
-	m_enumMap["COLLISION_ENEMY_FRAME"] = COLLISION_ENEMY_FRAME;
-	m_enumMap["COLLISION_ENEMY_ARMOR"] = COLLISION_ENEMY_ARMOR;
-	m_enumMap["COLLISION_ENEMY_ARMOR_PIECE"] = COLLISION_ENEMY_ARMOR_PIECE;
+	m_enumMap["ObjectCategory::COLLECTABLE"] = ObjectCategory::COLLECTABLE;
+	m_enumMap["ObjectCategory::COMMON"] = ObjectCategory::COMMON;
+	m_enumMap["ObjectCategory::ENEMY_BULLET"] = ObjectCategory::ENEMY_BULLET;
+	m_enumMap["ObjectCategory::ENEMY_FRAME"] = ObjectCategory::ENEMY_FRAME;
+	m_enumMap["ObjectCategory::ENEMY_UNIT"] = ObjectCategory::ENEMY_UNIT;
+	m_enumMap["ObjectCategory::FRIENDLY_BULLET"] = ObjectCategory::FRIENDLY_BULLET;
+	m_enumMap["ObjectCategory::FRIENDLY_FRAME"] = ObjectCategory::FRIENDLY_FRAME;
+	m_enumMap["ObjectCategory::FRIENDLY_UNIT"] = ObjectCategory::FRIENDLY_UNIT;
+	m_enumMap["ObjectCategory::PLAYER"] = ObjectCategory::PLAYER;
+	m_enumMap["ObjectCategory::SMOKE_PARTICLE"] = ObjectCategory::SMOKE_PARTICLE;
+	m_enumMap["ObjectCategory::SOLID_PARTICLE"] = ObjectCategory::SOLID_PARTICLE;
+	m_enumMap["ObjectCategory::WALL"] = ObjectCategory::WALL;
 
 	//Box2d Related
 	m_enumMap["B2_STATIC"] = b2_staticBody;

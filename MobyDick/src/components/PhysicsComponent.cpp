@@ -9,6 +9,7 @@
 #include "../EnumMaps.h"
 #include "../GameConfig.h"
 #include "../Game.h"
+#include "../CollisionManager.h"
 
 PhysicsComponent::PhysicsComponent()
 {
@@ -31,13 +32,13 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, float xMapPos, fl
 	m_restitution = physicsComponentJSON["restitution"].asFloat();
 	m_linearDamping = physicsComponentJSON["linearDamping"].asFloat();
 	m_angularDamping = physicsComponentJSON["angularDamping"].asFloat();
-	m_collisionCategory = EnumMap::instance().toEnum(physicsComponentJSON["collisionCategory"].asString());
+	//m_collisionCategory = EnumMap::instance().toEnum(physicsComponentJSON["collisionCategory"].asString());
 	
 	m_objectAnchorPoint.Set(physicsComponentJSON["anchorPoint"]["x"].asFloat(),
 		physicsComponentJSON["anchorPoint"]["y"].asFloat());
 
 	//Build the physics body
-	m_physicsBody = buildB2Body(transformComponentJSON);
+	m_physicsBody = _buildB2Body(physicsComponentJSON, transformComponentJSON);
 
 	//Calculate the spawn position
 	//Translate the pixel oriented position into box2d meter-oriented
@@ -93,7 +94,7 @@ void PhysicsComponent::update()
 	parent()->getComponent<TransformComponent>()->setPosition(convertedPosition, convertedAngle);
 }
 
-b2Body* PhysicsComponent::buildB2Body(Json::Value transformComponentJSON)
+b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::Value transformComponentJSON)
 {
 	b2BodyDef bodyDef;
 
@@ -149,9 +150,9 @@ b2Body* PhysicsComponent::buildB2Body(Json::Value transformComponentJSON)
 	fixtureDef.restitution = m_restitution;
 
 	//collision category
-	fixtureDef.filter.categoryBits = m_collisionCategory;
-	uint16 mask = this->setCollisionMask(m_collisionCategory);
-	fixtureDef.filter.maskBits = mask;
+	//fixtureDef.filter.categoryBits = m_collisionCategory;
+	//uint16 mask = CollisionManager::instance().getCollisionMask(m_collisionCategory);
+	//fixtureDef.filter.maskBits = mask;
 
 	// Add the shape to the body.
 	body->CreateFixture(&fixtureDef);
@@ -165,49 +166,9 @@ b2Body* PhysicsComponent::buildB2Body(Json::Value transformComponentJSON)
 
 }
 
-uint16 PhysicsComponent::setCollisionMask(uint16 category)
+uint16 PhysicsComponent::_setCollisionMask(Json::Value physicsComponentJSON)
 {
 	uint16 mask = 0;
-
-
-	switch (category) {
-	case COLLISION_GENERIC:
-		mask = COLLISION_WALL | COLLISION_PARTICLE2 | COLLISION_PARTICLE3 | COLLISION_ENEMY_FRAME
-			| COLLISION_ENEMY_ARMOR_PIECE | COLLISION_PLAYER;
-		break;
-
-	case COLLISION_PLAYER:
-		mask = COLLISION_WALL | COLLISION_PARTICLE2 | COLLISION_PARTICLE3 | COLLISION_ENEMY_FRAME
-			| COLLISION_ENEMY_ARMOR_PIECE | COLLISION_GENERIC;
-		break;
-	case COLLISION_WALL:
-		mask = COLLISION_PLAYER | COLLISION_PARTICLE1 | COLLISION_PARTICLE2 | COLLISION_PARTICLE3
-			| COLLISION_ENEMY_FRAME | COLLISION_PLAYER_BULLET | COLLISION_ENEMY_ARMOR_PIECE | COLLISION_GENERIC;
-		break;
-	case COLLISION_PLAYER_BULLET:
-		mask = COLLISION_WALL | COLLISION_ENEMY_ARMOR;
-		break;
-	case COLLISION_PARTICLE1:
-		mask = COLLISION_WALL | COLLISION_PLAYER;
-		break;
-	case COLLISION_PARTICLE2:
-		mask = COLLISION_WALL | COLLISION_PLAYER;
-		break;
-	case COLLISION_PARTICLE3:
-		mask = COLLISION_WALL | COLLISION_PLAYER;
-		break;
-	case COLLISION_ENEMY_FRAME:
-		mask = COLLISION_WALL | COLLISION_PLAYER | COLLISION_ENEMY_ARMOR_PIECE;
-		break;
-	case COLLISION_ENEMY_ARMOR:
-		mask = COLLISION_PLAYER_BULLET;
-		break;
-	case COLLISION_ENEMY_ARMOR_PIECE:
-		mask = COLLISION_PLAYER | COLLISION_WALL | COLLISION_ENEMY_FRAME | COLLISION_ENEMY_ARMOR_PIECE;
-		break;
-
-
-	}
 
 	return mask;
 

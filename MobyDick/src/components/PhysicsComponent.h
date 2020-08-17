@@ -31,8 +31,8 @@ public:
 
 private:
 
-	b2Body* buildB2Body(Json::Value transformComponentJSON);
-	uint16 setCollisionMask(uint16 category);
+	b2Body* _buildB2Body(Json::Value physicsComponentJSON, Json::Value transformComponentJSON);
+	uint16 _setCollisionMask(Json::Value physicsComponentJSON);
 
 	b2Body* m_physicsBody;
 

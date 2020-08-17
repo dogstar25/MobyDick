@@ -130,7 +130,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <SDLCheck>true</SDLCheck>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Full</Optimization>
@@ -188,6 +188,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CollisionManager.cpp" />
     <ClCompile Include="src\actions\DefaultMoveAction.cpp" />
     <ClCompile Include="src\actions\DefaultRotateAction.cpp" />
     <ClCompile Include="src\actions\QuitGameAction.cpp" />
@@ -198,6 +199,8 @@
     <ClCompile Include="src\actions\MoveAction.cpp" />
     <ClCompile Include="src\actions\RotateAction.cpp" />
     <ClCompile Include="src\actions\ItemUsageAction.cpp" />
+    <ClCompile Include="src\ContactFilter.cpp" />
+    <ClCompile Include="src\ContactListener.cpp" />
     <ClCompile Include="src\MortalRescue.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\Scene.cpp" />
@@ -248,6 +251,7 @@
     <ClCompile Include="src\actions\UseAction.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\CollisionManager.h" />
     <ClInclude Include="src\actions\DefaultMoveAction.h" />
     <ClInclude Include="src\actions\DefaultRotateAction.h" />
     <ClInclude Include="src\actions\QuitGameAction.h" />
@@ -260,6 +264,8 @@
     <ClInclude Include="src\actions\ItemUsageAction.h" />
     <ClInclude Include="src\config_data\GameDefinitions.h" />
     <ClInclude Include="src\config_data\scenes.h" />
+    <ClInclude Include="src\ContactFilter.h" />
+    <ClInclude Include="src\ContactListener.h" />
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\actions\NoAction.h" />
@@ -352,6 +358,7 @@
     <Image Include="assets\weapon1_IDLE.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\config\collisionConfig.json" />
     <None Include="assets\config\gameScenes.json" />
     <None Include="assets\gameConfig.json" />
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />

@@ -41,6 +41,7 @@ public:
 
 
 	std::string m_id;
+	int m_category=0;
 
 	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust);
 
@@ -87,6 +88,10 @@ public:
 	std::string id() {
 		return m_id;
 	}
+	int category() {
+		return m_category;
+	}
+
 	auto const& gameObjectDefinition(){
 		return m_gameObjectDefinition;
 	}
