@@ -33,6 +33,12 @@ namespace todd
 		int y;
 	};
 
+	struct Vec2_f
+	{
+		float x;
+		float y;
+	};
+
 	/*
 	*	TRANSFORM COMPONENT
 	*/
@@ -87,7 +93,7 @@ namespace todd
 		float			linearDamping;
 		float			angularDamping;
 		int				collisionCategory;
-		Vec2			anchorPoint;
+		Vec2_f			anchorPoint;
 	};
 
 	struct GameObjectDefinition
@@ -141,8 +147,9 @@ namespace todd
 		GameObjectDefinition test2;
 		
 		
-
+		/////////////////////////////////
 		//GINA_64
+		////////////////////////////////
 		test2.id = "GINA_64";
 		//Transform Component
 		test2.transformComponent.size = { 64,64 };
@@ -155,9 +162,17 @@ namespace todd
 		test2.actionComponent.actions.emplace_back(ActionItem() = { ACTION_ROTATE, new ActorRotateAction() });
 		test2.actionComponent.actions.emplace_back(ActionItem() = { ACTION_USE, new ActorUseAction() });
 		//Physics Component
-		//test2.physicsComponent { b2_dynamicBody, b2Shape::e_circle, rad, fr, re, de, lin, ang,  COLLISION_PLAYER };
-		test2.physicsComponent = { b2_dynamicBody, b2Shape::e_circle, 0.64, 0, 0, 50.5, 0.2, 2.0,  ObjectCategory::PLAYER};
-		test2.physicsComponent.anchorPoint = { 1, 1 };
+		test2.physicsComponent = { 
+			.b2BodyType = b2_dynamicBody, 
+			.b2Shape = b2Shape::e_circle, 
+			.radius = 0.64, 
+			.friction = 0, 
+			.restitution = 0, 
+			.density = 50.5, 
+			.linearDamping = 0.2, 
+			.angularDamping = 2.0,  
+			.collisionCategory = IdTag::PLAYER,
+			.anchorPoint = {.8, 0} };
 	}
 
 }

@@ -2,7 +2,7 @@
     "gameObjects": [
         {
             "id": "WALL1_OPEN",
-            "category": "ObjectCategory::WALL",
+            "idTag": "IdTag::WALL",
             "description": "WALL1_OPEN",
             "transformComponent": {
                 "size": {
@@ -27,13 +27,13 @@
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3
-               // "collisionCategory": "CollisionCat::WALL"
+                // "collisionCategory": "CollisionCat::WALL"
             }
 
         },
         {
             "id": "WALL1_COLUMN",
-            "category": "ObjectCategory::WALL",
+            "idTag": "IdTag::WALL",
             "description": "WALL1_COLUMN",
             "transformComponent": {
                 "size": {
@@ -64,7 +64,7 @@
         },
         {
             "id": "WALL1_CORNER",
-            "category": "ObjectCategory::WALL",
+            "idTag": "IdTag::WALL",
             "description": "WALL1_CORNER",
             "transformComponent": {
                 "size": {
@@ -95,7 +95,7 @@
         },
         {
             "id": "WALL1_END",
-            "category": "ObjectCategory::WALL",
+            "idTag": "IdTag::WALL",
             "description": "WALL1_END",
             "transformComponent": {
                 "size": {
@@ -126,7 +126,7 @@
         },
         {
             "id": "WALL1_HALL",
-            "category": "ObjectCategory::WALL",
+            "idTag": "IdTag::WALL",
             "description": "WALL1_HALL",
             "transformComponent": {
                 "size": {
@@ -158,7 +158,7 @@
 
         {
             "id": "WALL1_WALL",
-            "category": "ObjectCategory::WALL",
+            "idTag": "IdTag::WALL",
             "description": "WALL1_WALL",
             "transformComponent": {
                 "size": {

@@ -18,7 +18,7 @@ public:
 	bool ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB) override;
 
 private:
-	std::vector<std::bitset<ObjectCategory::MAX_OBJECT_CATEGORIES>> m_collisionMasks;
+	std::vector<std::bitset<IdTag::MAX_OBJECT_CATEGORIES>> m_collisionMasks;
 
 };
 

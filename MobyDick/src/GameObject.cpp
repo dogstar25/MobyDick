@@ -35,12 +35,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 	//Category and Id
 	m_id = gameObjectId;
-	if (definitionJSON.isMember("category")) {
-		m_category = EnumMap::instance().toEnum(definitionJSON["category"].asString());
-	}
-	else {
-		m_category = 0;
-	}
+	m_idTag = EnumMap::instance().toEnum(definitionJSON["idTag"].asString());
 	
 	m_removeFromWorld = false;
 

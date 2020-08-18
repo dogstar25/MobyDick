@@ -2,6 +2,8 @@
     "gameObjects": [
         {
             "id": "PARTICLE_SMOKE_1",
+            "idTag": "IdTag::SMOKE_PARTICLE",
+            "traitTags": [],
             "description": "Smoke Particle 1",
             "transformComponent": {
                 "size": {
@@ -28,6 +30,8 @@
         },
         {
             "id": "BULLET1",
+            "idTag": "IdTag::PLAYER_BULLET",
+            "traitTags": [],
             "description": "Bullet 1",
             "transformComponent": {
                 "size": {
@@ -61,6 +65,8 @@
         },
         {
             "id": "DEFLECT1",
+            "idTag": "IdTag::DEFLECT_EFFECT",
+            "traitTags": [],
             "description": "Deflect 1",
             "transformComponent": {
                 "size": {

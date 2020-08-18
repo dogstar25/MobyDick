@@ -8,123 +8,81 @@
 ContactFilter::ContactFilter()
 {
 
-	using namespace ObjectCategory;
+	using namespace IdTag;
 
-	m_collisionMasks.resize(ObjectCategory::MAX_OBJECT_CATEGORIES);
+	m_collisionMasks.resize(IdTag::MAX_OBJECT_CATEGORIES);
 
-	//Common
-	m_collisionMasks[COMMON].reset();
-	m_collisionMasks[COMMON].set(COLLECTABLE, true);
-	m_collisionMasks[COMMON].set(COMMON, true);
-	m_collisionMasks[COMMON].set(ENEMY_BULLET, true);
-	m_collisionMasks[COMMON].set(ENEMY_FRAME, true);
-	m_collisionMasks[COMMON].set(ENEMY_UNIT, true);
-	m_collisionMasks[COMMON].set(FRIENDLY_BULLET, true);
-	m_collisionMasks[COMMON].set(FRIENDLY_FRAME, true);
-	m_collisionMasks[COMMON].set(FRIENDLY_UNIT, true);
-	m_collisionMasks[COMMON].set(PLAYER, true);
-	m_collisionMasks[COMMON].set(SMOKE_PARTICLE, true);
-	m_collisionMasks[COMMON].set(SOLID_PARTICLE, true);
-	m_collisionMasks[COMMON].set(WALL, true);
+	//General - set all to collide
+	m_collisionMasks[GENERAL].reset();
+	m_collisionMasks[GENERAL].flip();
 
-	//Collectable
-	m_collisionMasks[COLLECTABLE].reset();
-	m_collisionMasks[COLLECTABLE].set(COMMON, true);
-	m_collisionMasks[COLLECTABLE].set(ENEMY_FRAME, true);
-	m_collisionMasks[COLLECTABLE].set(ENEMY_UNIT, true);
-	m_collisionMasks[COLLECTABLE].set(FRIENDLY_FRAME, true);
-	m_collisionMasks[COLLECTABLE].set(PLAYER, true);
-	m_collisionMasks[COLLECTABLE].set(WALL, true);
+	//Intangible - set all to intangle
+	m_collisionMasks[DEFLECT_EFFECT].reset();
+	m_collisionMasks[SMOKE_PARTICLE].reset();
 
-	//ENEMY_BULLET
-	m_collisionMasks[ENEMY_BULLET].reset();
-	m_collisionMasks[ENEMY_BULLET].set(COMMON, true);
-	m_collisionMasks[ENEMY_BULLET].set(FRIENDLY_UNIT, true);
-	m_collisionMasks[ENEMY_BULLET].set(WALL, true);
+	//Non-stationary
+	//DRONE_BRAIN
+	m_collisionMasks[DRONE_BRAIN].reset();
+	m_collisionMasks[DRONE_BRAIN].set(WALL);
 
-	//ENEMY_OBJECT_FRAME
-	m_collisionMasks[ENEMY_FRAME].reset();
-	m_collisionMasks[ENEMY_FRAME].set(COLLECTABLE, true);
-	m_collisionMasks[ENEMY_FRAME].set(COMMON, true);
-	m_collisionMasks[ENEMY_FRAME].set(FRIENDLY_FRAME, true);
-	m_collisionMasks[ENEMY_FRAME].set(FRIENDLY_UNIT, true);
-	m_collisionMasks[ENEMY_FRAME].set(PLAYER, true);
-	m_collisionMasks[ENEMY_FRAME].set(SOLID_PARTICLE, true);
-	m_collisionMasks[ENEMY_FRAME].set(WALL, true);
+	//DRONE_FRAME
+	m_collisionMasks[DRONE_FRAME].reset();
+	m_collisionMasks[DRONE_FRAME].set(HEAVY_PARTICLE);
+	m_collisionMasks[DRONE_FRAME].set(PLAYER);
+	m_collisionMasks[DRONE_FRAME].set(SHIELD_SCRAP);
+	m_collisionMasks[DRONE_FRAME].set(SURVIVOR);
+	m_collisionMasks[DRONE_FRAME].set(WALL);
 
-	//ENEMY_UNIT
-	m_collisionMasks[ENEMY_UNIT].reset();
-	m_collisionMasks[ENEMY_UNIT].set(COMMON, true);
-	m_collisionMasks[ENEMY_UNIT].set(FRIENDLY_BULLET, true);
-	m_collisionMasks[ENEMY_UNIT].set(FRIENDLY_UNIT, true);
-	m_collisionMasks[ENEMY_UNIT].set(PLAYER, true);
-	m_collisionMasks[ENEMY_UNIT].set(SOLID_PARTICLE, true);
-	m_collisionMasks[ENEMY_UNIT].set(SOLID_PARTICLE, true);
+	//DRONE_SHIELD
+	m_collisionMasks[DRONE_SHIELD].reset();
+	m_collisionMasks[DRONE_SHIELD].set(HEAVY_PARTICLE);
+	m_collisionMasks[DRONE_SHIELD].set(LIGHT_PARTICLE);
+	m_collisionMasks[DRONE_SHIELD].set(PLAYER_BULLET);
+
+	//DRONE_WEAPON
+	m_collisionMasks[DRONE_WEAPON].reset();
+	m_collisionMasks[DRONE_WEAPON].set(FRIENDLY_BULLET);
+	m_collisionMasks[DRONE_WEAPON].set(HEAVY_PARTICLE);
+	m_collisionMasks[DRONE_WEAPON].set(PLAYER);
+	m_collisionMasks[DRONE_WEAPON].set(PLAYER_BULLET);
+	m_collisionMasks[DRONE_WEAPON].set(SURVIVOR);
+	m_collisionMasks[DRONE_WEAPON].set(WALL);
 
 	//FRIENDLY_BULLET
 	m_collisionMasks[FRIENDLY_BULLET].reset();
-	m_collisionMasks[FRIENDLY_BULLET].set(COMMON, true);
-	m_collisionMasks[FRIENDLY_BULLET].set(ENEMY_UNIT, true);
-	m_collisionMasks[FRIENDLY_BULLET].set(WALL, true);
+	m_collisionMasks[FRIENDLY_BULLET].set(WALL);
 
-	//FRIENDLY_OBJECT_FRAME
-	m_collisionMasks[FRIENDLY_FRAME].reset();
-	m_collisionMasks[FRIENDLY_FRAME].set(COLLECTABLE, true);
-	m_collisionMasks[FRIENDLY_FRAME].set(COMMON, true);
-	m_collisionMasks[FRIENDLY_FRAME].set(ENEMY_FRAME, true);
-	m_collisionMasks[FRIENDLY_FRAME].set(ENEMY_UNIT, true);
-	m_collisionMasks[FRIENDLY_FRAME].set(FRIENDLY_UNIT, true);
-	m_collisionMasks[FRIENDLY_FRAME].set(PLAYER, true);
-	m_collisionMasks[FRIENDLY_FRAME].set(SOLID_PARTICLE, true);
-	m_collisionMasks[FRIENDLY_FRAME].set(WALL, true);
+	//ENEMY_BULLET
+	m_collisionMasks[ENEMY_BULLET].reset();
+	m_collisionMasks[ENEMY_BULLET].set(PLAYER);
+	m_collisionMasks[ENEMY_BULLET].set(SURVIVOR);
+	m_collisionMasks[ENEMY_BULLET].set(WALL);
 
-	//FRIENDLY_UNIT
-	m_collisionMasks[FRIENDLY_UNIT].reset();
-	m_collisionMasks[FRIENDLY_UNIT].set(COMMON, true);
-	m_collisionMasks[FRIENDLY_UNIT].set(ENEMY_BULLET, true);
-	m_collisionMasks[FRIENDLY_UNIT].set(ENEMY_FRAME, true);
-	m_collisionMasks[FRIENDLY_UNIT].set(ENEMY_UNIT, true);
-	m_collisionMasks[FRIENDLY_UNIT].set(FRIENDLY_FRAME, true);
-	m_collisionMasks[FRIENDLY_UNIT].set(FRIENDLY_UNIT, true);
-	m_collisionMasks[FRIENDLY_UNIT].set(PLAYER, true);
-	m_collisionMasks[FRIENDLY_UNIT].set(SOLID_PARTICLE, true);
-	m_collisionMasks[FRIENDLY_UNIT].set(WALL, true);
+	//HEAVY_PARTICLE
+	m_collisionMasks[HEAVY_PARTICLE].reset();
+	m_collisionMasks[HEAVY_PARTICLE].set(WALL);
+
+	//LIGHT_PARTICLE
+	m_collisionMasks[LIGHT_PARTICLE].reset();
+	m_collisionMasks[LIGHT_PARTICLE].set(WALL);
 
 	//PLAYER
 	m_collisionMasks[PLAYER].reset();
-	m_collisionMasks[PLAYER].set(COLLECTABLE, true);
-	m_collisionMasks[PLAYER].set(COMMON, true);
-	m_collisionMasks[PLAYER].set(ENEMY_BULLET, true);
-	m_collisionMasks[PLAYER].set(ENEMY_FRAME, true);
-	m_collisionMasks[PLAYER].set(ENEMY_UNIT, true);
-	m_collisionMasks[PLAYER].set(FRIENDLY_FRAME, true);
-	m_collisionMasks[PLAYER].set(FRIENDLY_UNIT, true);
-	m_collisionMasks[PLAYER].set(SOLID_PARTICLE, true);
-	m_collisionMasks[PLAYER].set(WALL, true);
+	m_collisionMasks[PLAYER].set(SHIELD_SCRAP);
+	m_collisionMasks[PLAYER].set(SURVIVOR);
+	m_collisionMasks[PLAYER].set(WALL);
 
-	//SMOKE_PARTICLE
-	m_collisionMasks[SMOKE_PARTICLE].reset();
+	//PLAYER_BULLET
+	m_collisionMasks[PLAYER_BULLET].reset();
+	m_collisionMasks[PLAYER_BULLET].set(WALL);
 
-	//SOLID_PARTICLE
-	m_collisionMasks[SOLID_PARTICLE].reset();
-	m_collisionMasks[SOLID_PARTICLE].set(COMMON, true);
-	m_collisionMasks[SOLID_PARTICLE].set(ENEMY_UNIT, true);
-	m_collisionMasks[PLAYER].set(PLAYER, true);
-	m_collisionMasks[PLAYER].set(WALL, true);
+	//SHIELD_SCRAP
+	m_collisionMasks[SHIELD_SCRAP].reset();
+	m_collisionMasks[SHIELD_SCRAP].set(WALL);
 
-	//WALL
-	m_collisionMasks[WALL].reset();
-	m_collisionMasks[WALL].set(COLLECTABLE, true);
-	m_collisionMasks[WALL].set(COMMON, true);
-	m_collisionMasks[WALL].set(ENEMY_BULLET, true);
-	m_collisionMasks[WALL].set(ENEMY_FRAME, true);
-	m_collisionMasks[WALL].set(ENEMY_UNIT, true);
-	m_collisionMasks[WALL].set(FRIENDLY_BULLET, true);
-	m_collisionMasks[WALL].set(FRIENDLY_FRAME, true);
-	m_collisionMasks[WALL].set(FRIENDLY_UNIT, true);
-	m_collisionMasks[WALL].set(PLAYER, true);
-	m_collisionMasks[WALL].set(SOLID_PARTICLE, true);
-
+	//SURVIVOR
+	m_collisionMasks[SURVIVOR].reset();
+	m_collisionMasks[SURVIVOR].set(WALL);
 
 
 }
@@ -157,11 +115,11 @@ bool ContactFilter::ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB)
 		return false;
 	}
 
-	auto gameObjectAMask = m_collisionMasks[gameObjectA->m_category];
-	auto gameObjectBMask = m_collisionMasks[gameObjectB->m_category];
+	auto gameObjectAMask = m_collisionMasks[gameObjectA->idTag()];
+	auto gameObjectBMask = m_collisionMasks[gameObjectB->idTag()];
 
-	if (gameObjectAMask.test(gameObjectB->m_category) ||
-		gameObjectBMask.test(gameObjectA->m_category)) {
+	if (gameObjectAMask.test(gameObjectB->idTag()) ||
+		gameObjectBMask.test(gameObjectA->idTag())) {
 		return true;
 	}
 	else {

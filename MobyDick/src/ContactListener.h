@@ -22,6 +22,7 @@ public:
 	void EndContact(b2Contact*);
 
 	void handleContact(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
+	void player_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
 	//void bulletWall(WorldObject* bullet, WorldObject* wall, b2Vec2 contactPoint);
 	//void bulletPiece(WorldObject* bullet, WorldObject* wall, b2Vec2 contactPoint);
 	//void bulletPieceExplode(WorldObject* bullet, WorldObject* wall, b2Vec2 contactPoint);

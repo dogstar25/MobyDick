@@ -130,7 +130,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <SDLCheck>true</SDLCheck>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Full</Optimization>
@@ -358,13 +358,11 @@
     <Image Include="assets\weapon1_IDLE.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\config\collisionConfig.json" />
     <None Include="assets\config\gameScenes.json" />
     <None Include="assets\gameConfig.json" />
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />
     <None Include="assets\gameObjectDefinitions\components.json" />
     <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
-    <None Include="assets\gameObjectDefinitions\GUIObjects.json" />
     <None Include="assets\gameObjectDefinitions\objectPools.json" />
     <None Include="assets\gameObjectDefinitions\particleObjects.json" />
     <None Include="assets\levels\level1_definition.json" />

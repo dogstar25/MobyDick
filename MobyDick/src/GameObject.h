@@ -41,7 +41,6 @@ public:
 
 
 	std::string m_id;
-	int m_category=0;
 
 	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust);
 
@@ -88,8 +87,8 @@ public:
 	std::string id() {
 		return m_id;
 	}
-	int category() {
-		return m_category;
+	int idTag() {
+		return m_idTag;
 	}
 
 	auto const& gameObjectDefinition(){
@@ -105,6 +104,7 @@ public:
 
 private:
 	
+	int m_idTag;
 	bool m_removeFromWorld;
 
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;

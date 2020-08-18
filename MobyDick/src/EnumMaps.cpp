@@ -22,19 +22,24 @@ EnumMap::EnumMap()
 	m_enumMap["CONTROL_MODE_SELECT"] = CONTROL_MODE_SELECT;
 	m_enumMap["CONTROL_MODE_PLAY"] = CONTROL_MODE_PLAY;
 
-	//Collision Groups
-	m_enumMap["ObjectCategory::COLLECTABLE"] = ObjectCategory::COLLECTABLE;
-	m_enumMap["ObjectCategory::COMMON"] = ObjectCategory::COMMON;
-	m_enumMap["ObjectCategory::ENEMY_BULLET"] = ObjectCategory::ENEMY_BULLET;
-	m_enumMap["ObjectCategory::ENEMY_FRAME"] = ObjectCategory::ENEMY_FRAME;
-	m_enumMap["ObjectCategory::ENEMY_UNIT"] = ObjectCategory::ENEMY_UNIT;
-	m_enumMap["ObjectCategory::FRIENDLY_BULLET"] = ObjectCategory::FRIENDLY_BULLET;
-	m_enumMap["ObjectCategory::FRIENDLY_FRAME"] = ObjectCategory::FRIENDLY_FRAME;
-	m_enumMap["ObjectCategory::FRIENDLY_UNIT"] = ObjectCategory::FRIENDLY_UNIT;
-	m_enumMap["ObjectCategory::PLAYER"] = ObjectCategory::PLAYER;
-	m_enumMap["ObjectCategory::SMOKE_PARTICLE"] = ObjectCategory::SMOKE_PARTICLE;
-	m_enumMap["ObjectCategory::SOLID_PARTICLE"] = ObjectCategory::SOLID_PARTICLE;
-	m_enumMap["ObjectCategory::WALL"] = ObjectCategory::WALL;
+	m_enumMap["IdTag::GENERAL"] = IdTag::GENERAL;
+	m_enumMap["IdTag::DEFLECT_EFFECT"] = IdTag::DEFLECT_EFFECT;
+	m_enumMap["IdTag::SMOKE_PARTICLE"] = IdTag::SMOKE_PARTICLE;
+	m_enumMap["IdTag::DRONE_BRAIN"] = IdTag::DRONE_BRAIN;
+	m_enumMap["IdTag::DRONE_SHIELD"] = IdTag::DRONE_SHIELD;
+	m_enumMap["IdTag::DRONE_WEAPON"] = IdTag::DRONE_WEAPON;
+	m_enumMap["IdTag::ENEMY_BULLET"] = IdTag::ENEMY_BULLET;
+	m_enumMap["IdTag::FRIENDLY_BULLET"] = IdTag::FRIENDLY_BULLET;
+	m_enumMap["IdTag::GUI"] = IdTag::GUI;
+	m_enumMap["IdTag::HEAVY_PARTICLE"] = IdTag::HEAVY_PARTICLE;
+	m_enumMap["IdTag::LIGHT_PARTICLE"] = IdTag::LIGHT_PARTICLE;
+	m_enumMap["IdTag::PLAYER"] = IdTag::PLAYER;
+	m_enumMap["IdTag::PLAYER_BULLET"] = IdTag::PLAYER_BULLET;
+	m_enumMap["IdTag::SHIELD_SCRAP"] = IdTag::SHIELD_SCRAP;
+	m_enumMap["IdTag::SURVIVOR"] = IdTag::SURVIVOR;
+	m_enumMap["IdTag::MEDKIT"] = IdTag::MEDKIT;
+	m_enumMap["IdTag::WALL"] = IdTag::WALL;
+	m_enumMap["IdTag::WEAPON_PICKUP"] = IdTag::WEAPON_PICKUP;
 
 	//Box2d Related
 	m_enumMap["B2_STATIC"] = b2_staticBody;

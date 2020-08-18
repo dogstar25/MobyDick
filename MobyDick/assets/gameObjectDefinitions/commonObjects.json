@@ -2,7 +2,8 @@
     "gameObjects": [
         {
             "id": "SWORDLADY",
-            "category": "ObjectCategory::FRIENDLY_UNIT",
+            "idTag": "IdTag::GENERAL",
+            "traitTags": [],
             "description": "SwordLady",
             "transformComponent": {
                 "size": {
@@ -24,7 +25,8 @@
         },
         {
             "id": "GINA_64",
-            "category": "ObjectCategory::PLAYER",
+            "idTag": "IdTag::PLAYER",
+            "traitTags": [],
             "transformComponent": {
                 "size": {
                     "width": 64,
@@ -111,7 +113,8 @@
         },
         {
             "id": "BOWMAN",
-            "category": "ObjectCategory::FRIENDLY_UNIT",
+            "idTag": "IdTag::GENERAL",
+            "traitTags": [],
             "transformComponent": {
                 "size": {
                     "width": 64,
@@ -138,6 +141,8 @@
         },
         {
             "id": "PLAYER_LABEL",
+            "idTag": "IdTag::GENERAL",
+            "traitTags": [],
             "description": "Player Label",
             "transformComponent": {
                 "absolutePositioning": false
@@ -151,6 +156,8 @@
         },
         {
             "id": "FPS_VALUE",
+            "idTag": "IdTag::GENERAL",
+            "traitTags": [],
             "description": "FPS",
             "transformComponent": {
                 "absolutePositioning": true
@@ -164,6 +171,8 @@
         },
         {
             "id": "GUI_PAUSE_PANEL",
+            "idTag": "IdTag::GUI",
+            "traitTags": [],
             "transformComponent": {
                 "size": {
                     "width": 176,
@@ -210,6 +219,8 @@
         },
         {
             "id": "CONTINUE_BUTTON",
+            "idTag": "IdTag::GUI",
+            "traitTags": [],
             "transformComponent": {
                 "size": {
                     "width": 128,
@@ -269,6 +280,8 @@
         },
         {
             "id": "QUIT_BUTTON",
+            "idTag": "IdTag::GUI",
+            "traitTags": [],
             "transformComponent": {
                 "size": {
                     "width": 128,
@@ -327,6 +340,8 @@
         },
         {
             "id": "SETTINGS_BUTTON",
+            "idTag": "IdTag::GUI",
+            "traitTags": [],
             "transformComponent": {
                 "size": {
                     "width": 128,
@@ -371,6 +386,8 @@
         },
         {
             "id": "CONTINUE_LABEL",
+            "idTag": "IdTag::GUI",
+            "traitTags": [],
             "transformComponent": {
                 "absolutePositioning": true
             },
@@ -383,6 +400,8 @@
         },
         {
             "id": "QUIT_LABEL",
+            "idTag": "IdTag::GUI",
+            "traitTags": [],
             "transformComponent": {
                 "absolutePositioning": true
             },
@@ -395,6 +414,8 @@
         },
         {
             "id": "SETTINGS_LABEL",
+            "idTag": "IdTag::GUI",
+            "traitTags": [],
             "transformComponent": {
                 "absolutePositioning": true
             },
@@ -407,6 +428,8 @@
         },
         {
             "id": "DEBUG_ITEM",
+            "idTag": "IdTag::GENERAL",
+            "traitTags": [],
             "description": "Debug Item",
             "transformComponent": {
                 "absolutePositioning": true
@@ -420,6 +443,8 @@
         },
         {
             "id": "WEAPON1",
+            "idTag": "IdTag::WEAPON_PICKUP",
+            "traitTags": [],
             "category": "ObjectCategory::COLLECTABLE",
             "description": "Weapon 1",
             "transformComponent": {

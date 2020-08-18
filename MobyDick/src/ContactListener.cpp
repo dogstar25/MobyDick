@@ -4,22 +4,23 @@
 
 #include "Globals.h"
 #include "GameObject.h"
+#include "contact_events/ContactEvent.h"
 
 
 ContactListener::ContactListener()
 {
 
-	m_ObjectCategoryLabels[ObjectCategory::COLLECTABLE] = ObjectCategoryLabel::COLLECTABLE;
-	m_ObjectCategoryLabels[ObjectCategory::COMMON] = ObjectCategoryLabel::COMMON;
-	m_ObjectCategoryLabels[ObjectCategory::ENEMY_BULLET] = ObjectCategoryLabel::ENEMY_BULLET;
-	m_ObjectCategoryLabels[ObjectCategory::ENEMY_FRAME] = ObjectCategoryLabel::ENEMY_FRAME;
-	m_ObjectCategoryLabels[ObjectCategory::ENEMY_UNIT] = ObjectCategoryLabel::ENEMY_UNIT;
-	m_ObjectCategoryLabels[ObjectCategory::FRIENDLY_BULLET] = ObjectCategoryLabel::ENEMY_FRAME;
-	m_ObjectCategoryLabels[ObjectCategory::FRIENDLY_UNIT] = ObjectCategoryLabel::FRIENDLY_UNIT;
-	m_ObjectCategoryLabels[ObjectCategory::PLAYER] = ObjectCategoryLabel::PLAYER;
-	m_ObjectCategoryLabels[ObjectCategory::SMOKE_PARTICLE] = ObjectCategoryLabel::SMOKE_PARTICLE;
-	m_ObjectCategoryLabels[ObjectCategory::SOLID_PARTICLE] = ObjectCategoryLabel::SOLID_PARTICLE;
-	m_ObjectCategoryLabels[ObjectCategory::WALL] = ObjectCategoryLabel::WALL;
+	//m_ObjectCategoryLabels[IdTag::COLLECTABLE] = IdTag::COLLECTABLE;
+	//m_ObjectCategoryLabels[ObjectCategory::COMMON] = ObjectCategoryLabel::COMMON;
+	//m_ObjectCategoryLabels[ObjectCategory::ENEMY_BULLET] = ObjectCategoryLabel::ENEMY_BULLET;
+	//m_ObjectCategoryLabels[ObjectCategory::ENEMY_FRAME] = ObjectCategoryLabel::ENEMY_FRAME;
+	//m_ObjectCategoryLabels[ObjectCategory::ENEMY_UNIT] = ObjectCategoryLabel::ENEMY_UNIT;
+	//m_ObjectCategoryLabels[ObjectCategory::FRIENDLY_BULLET] = ObjectCategoryLabel::ENEMY_FRAME;
+	//m_ObjectCategoryLabels[ObjectCategory::FRIENDLY_UNIT] = ObjectCategoryLabel::FRIENDLY_UNIT;
+	//m_ObjectCategoryLabels[ObjectCategory::PLAYER] = ObjectCategoryLabel::PLAYER;
+	//m_ObjectCategoryLabels[ObjectCategory::SMOKE_PARTICLE] = ObjectCategoryLabel::SMOKE_PARTICLE;
+	//m_ObjectCategoryLabels[ObjectCategory::SOLID_PARTICLE] = ObjectCategoryLabel::SOLID_PARTICLE;
+	//m_ObjectCategoryLabels[ObjectCategory::WALL] = ObjectCategoryLabel::WALL;
 
 }
 
@@ -68,18 +69,48 @@ void ContactListener::EndContact(b2Contact* contact)
 
 void ContactListener::handleContact(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
 {
-	auto category1 = contact1->category();
-	auto category2 = contact2->category();
+	auto category1 = contact1->idTag();
+	auto category2 = contact2->idTag();
 	std::string collisionActionClass = {};
 
-	if (m_ObjectCategoryLabels[category1] < m_ObjectCategoryLabels[category2]) {
-		collisionActionClass = { m_ObjectCategoryLabels[category1] + "_" + m_ObjectCategoryLabels[category2] };
+	//if (m_ObjectCategoryLabels[category1] < m_ObjectCategoryLabels[category2]) {
+	//	collisionActionClass = { m_ObjectCategoryLabels[category1] + "_" + m_ObjectCategoryLabels[category2] };
+	//}
+	//else {
+	//	collisionActionClass = { m_ObjectCategoryLabels[category2] + "_" + m_ObjectCategoryLabels[category1] };
+	//}
+
+	//std::cout << "Class is " << collisionActionClass << "\n";
+
+	if ((category1 == IdTag::PLAYER && category2 == IdTag::WALL) ||
+		(category2 == IdTag::PLAYER && category1 == IdTag::WALL)) {
+
+		player_wall(contact1, contact2, contactPoint);
+
+	}
+}
+
+void ContactListener::player_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+{
+	GameObject* player;
+	GameObject* wall;
+
+	if (contact1->idTag() == IdTag::PLAYER) {
+		player = contact1;
+		wall = contact2;
 	}
 	else {
-		collisionActionClass = { m_ObjectCategoryLabels[category2] + "_" + m_ObjectCategoryLabels[category1] };
+		player = contact2;
+		wall = contact1;
 	}
-	
-	std::cout << "Class is " << collisionActionClass << "\n";
+
+	std::cout << "player_wall called\n";
+
+
+}
+
+
+
 
 	/*
 	CollisionAction?
@@ -98,7 +129,6 @@ void ContactListener::handleContact(GameObject* contact1, GameObject* contact2, 
 
 	*/
 
-	int todd = 1;
 	//if (contact1->definition()->id.compare("BULLET1") == 0 ||
 	//	contact2->definition()->id.compare("BULLET1") == 0 ||
 	//	contact1->definition()->id.compare("BULLET2") == 0 ||
@@ -170,7 +200,7 @@ void ContactListener::handleContact(GameObject* contact1, GameObject* contact2, 
 	//}
 
 
-}
+
 
 //void ContactListener::playerBitPiece(PlayerObject* player, WorldObject* piece, b2Vec2 contactPoint)
 //{

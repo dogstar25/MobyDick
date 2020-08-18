@@ -22,6 +22,15 @@ ActionComponent::ActionComponent(Json::Value definitionJSON)
 
 		m_actions[actionId] = actionCode;
 
+		/*
+		Instead of having an actionMap
+		Check for the various actionId's here and set an action for each action type here
+
+		m_rotateAction = make_shared<ActorRotateAction>();
+		etc
+		
+		*/
+
 	}
 
 }
@@ -173,6 +182,10 @@ void ActionComponent::performMoveAction(int direction, int strafe)
 
 void ActionComponent::performRotateAction(float angularVelocity)
 {
+	/*
+	action = std::dynamic_pointer_cast<RotateAction>m_rotateAction;
+	action->perform(m_parentGameObject);
+	*/
 	buildRotateAction(angularVelocity)->perform(m_parentGameObject);
 }
 
