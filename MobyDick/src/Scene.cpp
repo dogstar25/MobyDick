@@ -219,7 +219,7 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMap
 	We have to call init after construction in order to set the pointer refrences correctly.i.e all components will store a raw
 	pointer to gameObject and all gameObjects will store a raw pointer to the scene.
 	*/
-	auto& gameObject = this->m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle));
+	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle));
 	gameObject->init(cameraFollow);
 
 	return gameObject.get();

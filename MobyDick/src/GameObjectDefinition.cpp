@@ -123,7 +123,7 @@ GameObjectDefinition::GameObjectDefinition(Json::Value gameObjectDefinitionJSON)
 	//	for (auto levelItr : itr["composite"]["levels"])
 	//	{
 	//		compositeLevel.levelNum = levelItr["level"].asInt();
-	//		compositeLevel.strength = levelItr["strength"].asInt();
+	//		compositeLevel.force = levelItr["force"].asInt();
 
 	//		compositeLevel.color.r = levelItr["color"]["red"].asInt();
 	//		compositeLevel.color.g = levelItr["color"]["green"].asInt();
@@ -146,7 +146,7 @@ GameObjectDefinition::GameObjectDefinition(Json::Value gameObjectDefinitionJSON)
 	//{
 	//	weaponLevelDetails.level = weaponItr["level"].asInt();
 	//	weaponLevelDetails.levelUpTarget = weaponItr["levelUpTarget"].asInt();
-	//	weaponLevelDetails.strength = weaponItr["strength"].asInt();
+	//	weaponLevelDetails.force = weaponItr["force"].asInt();
 	//	weaponLevelDetails.bulletPoolId = weaponItr["bulletPoolId"].asString();
 	//	weaponLevelDetails.color.r = weaponItr["color"]["red"].asInt();
 	//	weaponLevelDetails.color.g = weaponItr["color"]["green"].asInt();

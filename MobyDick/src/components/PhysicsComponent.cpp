@@ -252,3 +252,15 @@ void PhysicsComponent::attachItem(GameObject* inventoryObject)
 	(b2WeldJointDef*)Game::instance().physicsWorld()->CreateJoint(&weldJointDef);
 
 }
+
+void PhysicsComponent::setFixedRotation(bool fixedRotation)
+{
+	m_physicsBody->SetFixedRotation(fixedRotation);
+}
+
+void PhysicsComponent::setBullet(bool isBullet)
+{
+	m_physicsBody->SetBullet(isBullet);
+}
+
+

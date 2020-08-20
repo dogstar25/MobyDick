@@ -85,7 +85,7 @@
             "levels": [
                 {
                     "level": 1,
-                    "strength": 1,
+                    "force": 1,
                     "color": {
                         "red": 255,
                         "green": 0,
@@ -95,7 +95,7 @@
                 },
                 {
                     "level": 2,
-                    "strength": 2,
+                    "force": 2,
                     "color": {
                         "red": 129,
                         "green": 98,
@@ -105,7 +105,7 @@
                 },
                 {
                     "level": 3,
-                    "strength": 3,
+                    "force": 3,
                     "color": {
                         "red": 0,
                         "green": 25,
@@ -115,7 +115,7 @@
                 },
                 {
                     "level": 4,
-                    "strength": 25,
+                    "force": 25,
                     "color": {
                         "red": 255,
                         "green": 0,

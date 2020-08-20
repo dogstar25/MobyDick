@@ -139,7 +139,7 @@ bool Game::init()
 		GameObjectManager::instance().init();
 
 		//Initilaze the Particle Pool Manager
-		//ObjectPoolManager::instance().init();
+		ObjectPoolManager::instance().init();
 
 		//Initilaize the SceneManager
 		SceneManager::instance().init();
@@ -161,11 +161,14 @@ bool Game::init()
 
 	//Load the player and some other objects
 	auto playerObject = scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
-	auto weaponObject = scene.addGameObject("WEAPON1", LAYER_MAIN, 8, 8, 0, true);
+	auto weaponObject = scene.addGameObject("PISTOL", LAYER_MAIN, 8, 8, 0, true);
 	playerObject->addInventoryItem(weaponObject);
 
+	
 	scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);
-	scene.addGameObject("SWORDLADY", LAYER_MAIN, 1, 1);
+	scene.addGameObject("SWORDLADY", LAYER_MAIN, 10, 1);
+
+
 
 	return true;
 }
@@ -218,6 +221,14 @@ void Game::setInputControlMode(int inputControlMode)
 		SDL_SetRelativeMouseMode(SDL_FALSE);
 
 	}
+}
+
+void Game::addGameObject(std::shared_ptr<GameObject>gameObject, int layer)
+{
+	//Add the gameObject to the currently active scene using back()
+	SceneManager::instance().scenes().back().addGameObject(gameObject, layer);
+
+
 }
 
 

@@ -109,98 +109,24 @@ void ContactListener::player_wall(GameObject* contact1, GameObject* contact2, b2
 
 }
 
+void ContactListener::bullet_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+{
+	GameObject* bullet;
+	GameObject* wall;
+
+	if (contact1->idTag() == IdTag::FRIENDLY_BULLET) {
+		bullet = contact1;
+		wall = contact2;
+	}
+	else {
+		bullet = contact2;
+		wall = contact1;
+	}
+
+	std::cout << "bullet_wall called\n";
 
 
-
-	/*
-	CollisionAction?
-	EventAction?
-	WorldAction
-	CollisionEvent
-	ContactEvent - I like this one
-	ContactAction
-	ContactActivity
-	
-	These actions would be handled by some other class (collisionManager?)
-	It will pass both objects and the contact point to the function
-	The contactAction would execute, and then ..maybe...we call onCollision of each of the objects 
-	passing in the other object it hit to do object specific stuff.
-	It could have a onCOllision action built specifically for it, using the actionManager actionClass framework
-
-	*/
-
-	//if (contact1->definition()->id.compare("BULLET1") == 0 ||
-	//	contact2->definition()->id.compare("BULLET1") == 0 ||
-	//	contact1->definition()->id.compare("BULLET2") == 0 ||
-	//	contact2->definition()->id.compare("BULLET2") == 0)
-	//{
-	//	//Bullet Wall contact
-	//	if (contact1->definition()->id.compare(0, 4, "WALL") == 0 ||
-	//		contact2->definition()->id.compare(0, 4, "WALL") == 0)
-	//	{
-	//		if (contact1->definition()->id.compare("BULLET1") == 0 ||
-	//			contact1->definition()->id.compare("BULLET2") == 0)
-	//		{
-	//			bullet = contact1;
-	//			wall = contact2;
-	//		}
-	//		else if (contact2->definition()->id.compare("BULLET1") == 0 ||
-	//				 contact2->definition()->id.compare("BULLET2") == 0) 
-	//		{
-	//			bullet = contact2;
-	//			wall = contact1;
-	//		}
-
-	//		this->bulletWall(bullet, wall, contactPoint);
-	//	}
-
-	//	//Bullet Piece contact
-	//	if (contact1->definition()->id.compare(5, 5, "PIECE") == 0 ||
-	//		contact1->definition()->id.compare(7, 5, "PIECE") == 0 ||
-	//		contact2->definition()->id.compare(5, 5, "PIECE") == 0 ||
-	//		contact2->definition()->id.compare(7, 5, "PIECE") == 0)
-	//	{
-	//		if (contact1->definition()->id.compare("BULLET1") == 0 ||
-	//			contact1->definition()->id.compare("BULLET2") == 0) {
-	//			bullet = contact1;
-	//			piece = contact2;
-	//		}
-	//		else if (contact2->definition()->id.compare("BULLET1") == 0 ||
-	//				 contact2->definition()->id.compare("BULLET2") == 0) 
-	//		{
-	//			bullet = contact2;
-	//			piece = contact1;
-	//		}
-
-	//		this->bulletPiece(bullet, piece, contactPoint);
-
-	//	}
-
-	//}
-	//if (contact1->definition()->id.compare("GINA_64") == 0 ||
-	//	contact2->definition()->id.compare("GINA_64") == 0)
-	//{
-	//	//Bullet Wall contact
-	//	if (contact1->definition()->id.compare("ANGLE_BIT_PIECE") == 0 ||
-	//		contact2->definition()->id.compare("ANGLE_BIT_PIECE") == 0)
-	//	{
-	//		if (contact1->definition()->id.compare("GINA_64") == 0) {
-	//			player = dynamic_cast<PlayerObject*>(contact1);
-	//			piece = contact2;
-	//		}
-	//		else if (contact2->definition()->id.compare("GINA_64") == 0) {
-	//			player = dynamic_cast<PlayerObject*>(contact2);
-	//			piece = contact1;
-	//		}
-
-	//		this->playerBitPiece(player, piece, contactPoint);
-
-
-	//	}
-	//}
-
-
-
+}
 
 //void ContactListener::playerBitPiece(PlayerObject* player, WorldObject* piece, b2Vec2 contactPoint)
 //{
@@ -261,7 +187,7 @@ void ContactListener::player_wall(GameObject* contact1, GameObject* contact2, b2
 //
 //	//Set flag for piece to be removed from world
 //	//only if bullet was strong enough
-//	if (piece->testStrength(bullet->strength())) {
+//	if (piece->testStrength(bullet->force())) {
 //		piece->setRemoveFromWorld(true);
 //		bulletPieceExplode(bullet,piece,contactPoint);
 //	}

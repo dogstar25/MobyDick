@@ -29,7 +29,7 @@ void ActorUseAction::perform(GameObject* gameObject)
 	if (const auto item = inventoryComponent->getActiveItem())
 	{
 		//Perform the UseAction of this item
-		item->getComponent<ActionComponent>()->performUseAction();
+		item->getComponent<ActionComponent>()->performUsageAction();
 	}
 
 

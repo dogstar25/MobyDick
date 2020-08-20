@@ -16,6 +16,10 @@ public:
 
 	void update() override;
 
+	void setForce(float force) {
+		m_force = force;
+	}
+
 	//Accessor functions
 	float speed() {
 		return m_speed;
@@ -24,7 +28,8 @@ public:
 private:
 	float
 		m_speed,
-		m_strength,
+		m_force,
+		m_durability,
 		m_health;
 
 

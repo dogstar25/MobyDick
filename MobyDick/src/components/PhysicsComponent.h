@@ -22,11 +22,20 @@ public:
 	void setTransform(b2Vec2 positionVector, float angle);
 	void setLinearVelocity(b2Vec2 velocityVector);
 	void setPhysicsBodyActive(bool  active);
+	void setFixedRotation(bool fixedRotation);
+	void setBullet(bool isBullet);
+
 	void attachItem(GameObject* inventoryObject);
 
 	//Accessor functions
 	b2Vec2 objectAnchorPoint() {
 		return m_objectAnchorPoint;
+	}
+	b2Vec2 position() {
+		return m_physicsBody->GetPosition();
+	}
+	float angle() {
+		return m_physicsBody->GetAngle();
 	}
 
 private:

@@ -188,6 +188,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\actions\PistolFireAction.cpp" />
     <ClCompile Include="src\CollisionManager.cpp" />
     <ClCompile Include="src\actions\DefaultMoveAction.cpp" />
     <ClCompile Include="src\actions\DefaultRotateAction.cpp" />
@@ -251,6 +252,7 @@
     <ClCompile Include="src\actions\UseAction.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\actions\PistolFireAction.h" />
     <ClInclude Include="src\CollisionManager.h" />
     <ClInclude Include="src\actions\DefaultMoveAction.h" />
     <ClInclude Include="src\actions\DefaultRotateAction.h" />

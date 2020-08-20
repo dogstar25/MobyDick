@@ -11,7 +11,7 @@
 struct CompositeLevel
 {
 	short levelNum;
-	short strength;
+	short force;
 	SDL_Color color;
 };
 

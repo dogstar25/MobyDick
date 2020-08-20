@@ -39,7 +39,6 @@ public:
 	void play();
 	static void renderGameObjects(const std::array <std::vector<GameObject>, MAX_GAMEOBJECT_LAYERS>&);
 	
-	void addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle);
 	void addGameObject(std::shared_ptr<GameObject>gameObject, int layer);
 
 	void setGameState(GameState state) {

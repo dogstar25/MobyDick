@@ -45,7 +45,8 @@ void ObjectPoolManager::init()
 			//std::shared_ptr<GameObject> particle =
 			//	std::make_shared<GameObject>(gameObjectId, -50, -50, 0);
 
-			m_objectPool[poolId].emplace_back(std::make_shared<GameObject>(gameObjectId, -50.0f, -50.0f, 0.0f));
+			auto& gameObject = m_objectPool[poolId].emplace_back(std::make_shared<GameObject>(gameObjectId, -50.0f, -50.0f, 0.0f));
+			gameObject->init(false);
 
 
 

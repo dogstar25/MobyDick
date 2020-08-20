@@ -2,6 +2,7 @@
 #include "ActorMoveAction.h"
 #include "ActorRotateAction.h"
 #include "ActorUseAction.h"
+#include "PistolFireAction.h"
 #include "ContinueGameClickAction.h"
 #include "QuitGameAction.h"
 #include "DefaultOnHoverAction.h"
@@ -28,6 +29,8 @@ ActionMaps::ActionMaps()
 	m_actionMap["ActorMove"] = std::make_shared<ActorMoveAction>();
 	m_actionMap["ActorRotate"] = std::make_shared<ActorRotateAction>();
 	m_actionMap["ActorUse"] = std::make_shared<ActorUseAction>();
+
+	m_actionMap["PistolFire"] = std::make_shared<PistolFireAction>();
 
 	m_actionMap["ContinueClick"] = std::make_shared<ContinueGameClickAction>();
 	m_actionMap["QuitClick"] = std::make_shared<QuitGameAction>();

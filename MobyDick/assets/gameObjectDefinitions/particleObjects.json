@@ -42,7 +42,7 @@
             "animationComponent": {
                 "animations": [
                     {
-                        "state": "ACTIVE",
+                        "state": "ANIMATION_ACTIVE",
                         "textureId": "TX_BULLET1",
                         "speed": 0.02,
                         "frames": 4
@@ -50,6 +50,12 @@
                 ]
             },
             "particleComponent": {
+            },
+            "vitalityComponent": {
+                "speed": 30
+            },
+            "renderComponent": {
+                "textureId": "TX_WEAPON1_FIRE"
             },
             "physicsComponent": {
                 "type": "B2_DYNAMIC",

@@ -442,7 +442,7 @@
             }
         },
         {
-            "id": "WEAPON1",
+            "id": "PISTOL",
             "idTag": "IdTag::WEAPON_PICKUP",
             "traitTags": [],
             "category": "ObjectCategory::COLLECTABLE",
@@ -487,8 +487,8 @@
             "actionComponent": {
                 "actions": [
                     {
-                        "actionId": "ACTION_USE",
-                        "actionClass": "NoAction"
+                        "actionId": "ACTION_USAGE",
+                        "actionClass": "PistolFire"
                     }
                 ]
             },
@@ -497,7 +497,7 @@
                 "weaponLevels": [
                     {
                         "level": 1,
-                        "strength": 1,
+                        "force": 1,
                         "levelUpTarget": 25,
                         "color": {
                             "red": 255,
@@ -509,7 +509,7 @@
                     },
                     {
                         "level": 2,
-                        "strength": 2,
+                        "force": 2,
                         "levelUpTarget": 25,
                         "color": {
                             "red": 0,
@@ -521,7 +521,7 @@
                     },
                     {
                         "level": 3,
-                        "strength": 5,
+                        "force": 5,
                         "levelUpTarget": 25,
                         "color": {
                             "red": 255,

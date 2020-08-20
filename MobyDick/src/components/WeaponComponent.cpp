@@ -1,7 +1,12 @@
 #include "WeaponComponent.h"
 
 #include "../GameObjectManager.h"
+#include "../ObjectPoolManager.h"
+#include "../SoundManager.h"
 #include "../GameObject.h"
+#include "../Scene.h"
+#include "../game.h"
+#include "../Globals.h"
 
 WeaponComponent::WeaponComponent()
 {
@@ -21,17 +26,17 @@ WeaponComponent::WeaponComponent(Json::Value definitionJSON)
 	{
 		int level = itrWeaponLevel["level"].asInt();
 
-		/*std::shared_ptr<WeaponLevelDetail>weaponLevelDetail = std::make_shared< WeaponLevelDetail>();
+		WeaponLevelDetail weaponLevelDetail;
 
-		weaponLevelDetail->level = itrWeaponLevel["level"].asInt();
-		weaponLevelDetail->levelUpTarget = itrWeaponLevel["levelUpTarget"].asInt();
-		weaponLevelDetail->strength = itrWeaponLevel["strength"].asInt();
-		weaponLevelDetail->color.r = itrWeaponLevel["color"]["red"].asUInt();
-		weaponLevelDetail->color.g = itrWeaponLevel["color"]["red"].asUInt();
-		weaponLevelDetail->color.b = itrWeaponLevel["color"]["red"].asUInt();
-		weaponLevelDetail->color.a = itrWeaponLevel["color"]["red"].asUInt();
-		weaponLevelDetail->bulletPoolId = itrWeaponLevel["bulletPoolId"].asString();
-		m_weaponLevelDetails.emplace(level, std::move(weaponLevelDetail));*/
+		weaponLevelDetail.level = itrWeaponLevel["level"].asInt();
+		weaponLevelDetail.levelUpTarget = itrWeaponLevel["levelUpTarget"].asInt();
+		weaponLevelDetail.force = itrWeaponLevel["force"].asInt();
+		weaponLevelDetail.color.r = itrWeaponLevel["color"]["red"].asUInt();
+		weaponLevelDetail.color.g = itrWeaponLevel["color"]["red"].asUInt();
+		weaponLevelDetail.color.b = itrWeaponLevel["color"]["red"].asUInt();
+		weaponLevelDetail.color.a = itrWeaponLevel["color"]["red"].asUInt();
+		weaponLevelDetail.bulletPoolId = itrWeaponLevel["bulletPoolId"].asString();
+		m_weaponLevelDetails.emplace(level, std::move(weaponLevelDetail));
 
 	}
 
@@ -48,50 +53,54 @@ void WeaponComponent::update()
 
 }
 
-void WeaponComponent::fire(const b2Vec2& origin, const float& angle, const float& fireOffset)
+void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 {
-	//std::string bulletPoolId =
-	//	this->definition()->weaponDetails.weaponLevelDetails[m_currentLevel].bulletPoolId;
+	std::string bulletPoolId =
+		m_weaponLevelDetails.at(m_currentLevel).bulletPoolId;
+	
+	//Get a free bullet
+	std::shared_ptr<GameObject> bullet = ObjectPoolManager::instance().getParticle(bulletPoolId);
 
-	//ParticleObject* bullet = ObjectPoolManager::instance().getParticle(bulletPoolId);
-	//if (bullet != NULL) {
+	//Get references to the bullets components
+	auto& vitalityComponent = bullet->getComponent<VitalityComponent>();
+	auto& physicsComponent = bullet->getComponent<PhysicsComponent>();
+	auto& renderComponent = bullet->getComponent<RenderComponent>();
 
-	//	//Sound
-	//	SoundManager::instance().playSound("SFX_LASER_002");
+	if (bullet != NULL) {
 
-	//	SDL_Color color = this->definition()->weaponDetails.weaponLevelDetails[m_currentLevel].color;
-	//	int strength = this->definition()->weaponDetails.weaponLevelDetails[m_currentLevel].strength;
+		SDL_Color color = m_weaponLevelDetails.at(m_currentLevel).color;
+		int force = m_weaponLevelDetails.at(m_currentLevel).force;
 
-	//	//Calculate the origin of the bullet
-	//	float dx = origin.x + cos(angle);
-	//	float dy = origin.y + sin(angle);
+		//Calculate the origin of the bullet
+		float dx = origin.x + cos(angle);
+		float dy = origin.y + sin(angle);
 
-	//	//Calculate offset values of bullet spawning origin adding an offset for the fireing object
-	//	float xAdj = cos(angle) * (fireOffset);
-	//	float yAdj = sin(angle) * (fireOffset);
+		//Calculate offset values of bullet spawning origin adding an offset for the fireing object
+		float xAdj = cos(angle) * (m_fireOffset);
+		float yAdj = sin(angle) * (m_fireOffset);
 
-	//	dx += xAdj;
-	//	dy += yAdj;
+		dx += xAdj;
+		dy += yAdj;
 
-	//	//Bullet Strength
-	//	bullet->setStrength(strength);
+		//Bullet Strength
+		vitalityComponent->setForce(force);
 
-	//	b2Vec2 positionVector = b2Vec2(dx, dy);
+		b2Vec2 positionVector = b2Vec2(dx, dy);
 
-	//	dx = cos(angle) * bullet->speed(); // make speed configurable
-	//	dy = sin(angle) * bullet->speed(); // Y-component.
-	//	b2Vec2 velocityVector = b2Vec2(dx, dy);
+		dx = cos(angle) * vitalityComponent->speed(); // make speed configurable
+		dy = sin(angle) * vitalityComponent->speed(); // Y-component.
+		b2Vec2 velocityVector = b2Vec2(dx, dy);
 
-	//	bullet->physicsBody()->SetFixedRotation(true);
-	//	bullet->physicsBody()->SetTransform(positionVector, angle);
-	//	bullet->physicsBody()->SetLinearVelocity(velocityVector);
-	//	bullet->physicsBody()->SetBullet(true);
+		physicsComponent->setFixedRotation(true);
+		physicsComponent->setTransform(positionVector, angle);
+		physicsComponent->setLinearVelocity(velocityVector);
+		physicsComponent->setBullet(true);
 
-	//	bullet->setColor(color);
+		renderComponent->setColor(color);
 
-	//	//Add the bullet object to the main gameObject collection
-	//	Game::instance().addGameObject(bullet, GameOjectLayer::MAIN);
-	//}
+		//Add the bullet object to the main gameObject collection
+		Game::instance().addGameObject(bullet, LAYER_MAIN);
+	}
 
 }
 

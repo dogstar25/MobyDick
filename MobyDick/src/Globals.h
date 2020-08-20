@@ -128,10 +128,11 @@ inline constexpr int ACTION_NONE = 0;
 inline constexpr int ACTION_MOVE = 1;
 inline constexpr int ACTION_ROTATE = 2;
 inline constexpr int ACTION_USE = 3;
-inline constexpr int ACTION_INTERACT = 4;
-inline constexpr int ACTION_ON_HOVER = 5;
-inline constexpr int ACTION_ON_CLICK = 6;
-inline constexpr int ACTION_ON_HOVER_OUT = 7;
+inline constexpr int ACTION_USAGE = 4;
+inline constexpr int ACTION_INTERACT = 5;
+inline constexpr int ACTION_ON_HOVER = 6;
+inline constexpr int ACTION_ON_CLICK = 7;
+inline constexpr int ACTION_ON_HOVER_OUT = 8;
 
 //GameSpace Types
 inline constexpr int GAMESPACE_INTRO = 0;

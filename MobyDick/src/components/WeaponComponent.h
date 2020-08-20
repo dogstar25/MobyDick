@@ -13,7 +13,7 @@ class GameObject;
 struct WeaponLevelDetail {
 
 	int level;
-	int strength;
+	int force;
 	int levelUpTarget;
 	SDL_Color color;
 	std::string bulletPoolId;
@@ -29,7 +29,7 @@ public:
 	~WeaponComponent();
 
 	void update();
-	void fire(const b2Vec2& origin, const float& angle, const float& fireOffset);
+	void fire(const b2Vec2& origin, const float& angle);
 	bool checkLevelUp(const int& pieceCount);
 	void levelUp();
 

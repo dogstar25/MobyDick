@@ -4,6 +4,7 @@
 #include "Component.h"
 
 #include <map>
+#include <vector>
 #include <optional>
 
 #include <json/json.h>
@@ -38,16 +39,20 @@ public:
 	void performMoveAction(int direction, int strafe);
 	void performRotateAction(float angularVelocity);
 	void performUseAction();
+	void performUsageAction();
 	void performInteractAction();
 	void performOnHoverAction();
 	void performOnHoverOutAction();
 	void performOnClickAction();
 
+	//Try different approach
+	//std::shared_ptr<Action> m_moveAction;
+
+	std::vector<std::shared_ptr<Action>>m_actions;
+
+
 private:
 	
-	std::optional<std::string> _getActionKey(int actionType);
-
-	std::map<int, std::string> m_actions;
 
 
 };
