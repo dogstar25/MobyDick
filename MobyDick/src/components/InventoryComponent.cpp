@@ -1,6 +1,5 @@
 #include "InventoryComponent.h"
 
-#include "../GameObject.h"
 
 
 InventoryComponent::InventoryComponent()
@@ -15,7 +14,7 @@ InventoryComponent::~InventoryComponent()
 
 }
 
-int InventoryComponent::addItem(GameObject* gameObject)
+size_t InventoryComponent::addItem(GameObject* gameObject)
 {
 
 	m_items.push_back(gameObject);

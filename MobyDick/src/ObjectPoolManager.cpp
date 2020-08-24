@@ -1,10 +1,8 @@
 #include "ObjectPoolManager.h"
 
 #include <fstream>
-#include <chrono>
-#include <json/json.h>
 
-#include "GameObjectManager.h"
+
 #include "GameObject.h"
 
 
@@ -25,8 +23,6 @@ void ObjectPoolManager::init()
 	//Get and store config values
 	std::string gameObjectId, poolId;
 	int maxItems;
-	float lifetime;
-	std::chrono::duration<float, std::milli> lifetimeDur;
 
 	//Loop through every texture defined in the config file, create a texture object
 	//and store it in the main texture map
@@ -42,27 +38,9 @@ void ObjectPoolManager::init()
 
 		for (int index = 0; index < maxItems; index++) {
 
-			//std::shared_ptr<GameObject> particle =
-			//	std::make_shared<GameObject>(gameObjectId, -50, -50, 0);
-
 			auto& gameObject = m_objectPool[poolId].emplace_back(std::make_shared<GameObject>(gameObjectId, -50.0f, -50.0f, 0.0f));
 			gameObject->init(false);
 
-
-
-			//particle->isAvailable = true;
-			////convert seconds into miliseconds
-			//particle->lifetime = particle->lifetimeRemaining = std::chrono::duration<float>(lifetime);
-			//particle->poolId = poolId;
-			//particle->setActive(false);
-
-
-
-			//particle = GameObjectManager::instance().buildGameObject <ParticleObject>(gameObjectId, -50, -50, 0);
-			//Game::instance().addGameObject(levelObject->gameObjectId, GameObjectLayer::MAIN, x, y, levelObject->angleAdjustment);
-
-		
-			//m_objectPool[poolId].push_back(particle);
 		}
 
 	}
@@ -88,25 +66,28 @@ ObjectPoolManager::~ObjectPoolManager()
 	
 }
 
-std::shared_ptr<GameObject> ObjectPoolManager::getParticle(std::string poolId)
+std::optional<std::shared_ptr<GameObject>> ObjectPoolManager::getPooledObject(std::string poolId)
 {
-	std::shared_ptr<GameObject>availParticle;
-
-	for (auto particle : this->m_objectPool[poolId])
+	for (auto& pooledObject : m_objectPool[poolId])
 	{
 		//convenience reference to outside component(s)
-		const auto& particleComponent = particle->getComponent<ParticleComponent>();
+		const auto& poolComponent = pooledObject->getComponent<PoolComponent>();
+		const auto& vitalityComponent = pooledObject->getComponent<VitalityComponent>();
+		const auto& physicsComponent = pooledObject->getComponent<PhysicsComponent>();
 
-		if (particleComponent->isAvailable() == true)
+		if (poolComponent->isAvailable() == true)
 		{
-			particleComponent->setAvailable(false);
-			particleComponent->setActive(true);
-			availParticle = particle;
-			break;
+			pooledObject->setRemoveFromWorld(false);
+
+			poolComponent->setAvailable(false);
+			physicsComponent->setPhysicsBodyActive(true);
+			vitalityComponent->setTimeSnapshot(std::chrono::steady_clock::now());
+			vitalityComponent->setLifetimeRemaining(vitalityComponent->lifetime());
+			return pooledObject;
 		}
 	}
 
-	return (availParticle);
+	return std::nullopt;
 
 }
 

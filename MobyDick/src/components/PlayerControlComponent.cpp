@@ -1,29 +1,12 @@
 #include "PlayerControlComponent.h"
 
 #include <iostream>
-#include <typeindex>
 
-#include "../GameObjectManager.h"
 #include "../SceneManager.h"
-#include "../Globals.h"
-#include "../GameObject.h"
 #include "../GameConfig.h"
 #include "../EnumMaps.h"
 
-#include "AnimationComponent.h"
-#include "TransformComponent.h"
-#include "PhysicsComponent.h"
-#include "VitalityComponent.h"
-#include "ActionComponent.h"
-#include "../actions/MoveAction.h"
-#include "../actions/RotateAction.h"
-#include "../actions/UseAction.h"
-#include "../GameObject.h"
-#include "../ParticleEmission.h"
-#include "../ParticleMachine.h"
-#include "../Scene.h"
 
-#include <SDL2/SDL.h>
 
 
 PlayerControlComponent::PlayerControlComponent()
@@ -139,7 +122,7 @@ void PlayerControlComponent::handleMovement()
 	//Handle Mouse related movement
 	const uint32_t currentMouseStates = SDL_GetRelativeMouseState(&mouseX, &mouseY);
 
-	int angularVelocity = mouseX * GameConfig::instance().mouseSensitivity();
+	float angularVelocity = mouseX * GameConfig::instance().mouseSensitivity();
 	actionComponent->performRotateAction(angularVelocity);
 
 

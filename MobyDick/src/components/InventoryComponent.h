@@ -14,7 +14,7 @@ public:
 	InventoryComponent();
 	~InventoryComponent();
 
-	int addItem(GameObject* gameObject);
+	size_t addItem(GameObject* gameObject);
 
 	std::vector<GameObject*> items() {
 		return m_items;

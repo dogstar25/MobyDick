@@ -55,7 +55,6 @@ void GameObjectManager::load(std::string gameObjectAssetsFilename)
 	ifs >> root;
 
 	std::string id, textureId;
-	GameObjectDefinition* gameObjectDefinition;
 
 	for (Json::Value itr : root["gameObjects"])
 	{

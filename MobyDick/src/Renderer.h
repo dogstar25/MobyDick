@@ -17,6 +17,22 @@ struct DisplayScheme
 	int outlineWidth;
 };
 
+namespace DisplaySchemes {
+
+	static const DisplayScheme outline{
+
+		.color = (std::in_place, SDL_Color{255,255,255,255} ),
+		.outlined = true,
+		.outlineColor = {0,255,0,255},
+		.outlineWidth = {1}
+	};
+
+	/*
+	....Add more DisplaySchemes here
+	*/
+}
+
+
 class Renderer
 {
 public:
@@ -37,17 +53,8 @@ public:
 		return m_SDLRenderer;
 	}
 
-	DisplayScheme getDisplayScheme(uint8_t displayScheme) {
-
-		return m_displaySchemes.at(displayScheme);
-
-	}
-
 private:
 	SDL_Renderer* m_SDLRenderer;
-	std::map<int, DisplayScheme> m_displaySchemes;
-
-	void _loadDisplaySchemes();
 
 
 };

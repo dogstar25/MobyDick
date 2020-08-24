@@ -1,13 +1,10 @@
 #include "Scene.h"
 
-#include <cmath>
+#include <cassert>
 
 #include "Level.h"
-#include "Clock.h"
 #include "Camera.h"
 #include "game.h"
-#include "Renderer.h"
-#include "Globals.h"
 #include "EnumMaps.h"
 
 Scene::Scene(std::string sceneId)
@@ -52,16 +49,16 @@ Scene::Scene(std::string sceneId)
 		auto layer = EnumMap::instance().toEnum(gameObjectJSON["layer"].asString());
 
 		//Determine location
-		auto location = gameObjectJSON["location"];
-		if (location.isMember("windowPosition")) {
+		auto locationJSON = gameObjectJSON["location"];
+		if (locationJSON.isMember("windowPosition")) {
 
 			auto windowPosition = EnumMap::instance().toEnum(gameObjectJSON["location"]["windowPosition"].asString());
-			SDL_Point location = calcWindowPosition(windowPosition);
+			SDL_FPoint location = calcWindowPosition(windowPosition);
 			addGameObject(id, layer, location.x, location.y, 0);
 		}
 		else {
-			auto locationX = gameObjectJSON["location"]["x"].asInt();
-			auto locationY = gameObjectJSON["location"]["y"].asInt();
+			auto locationX = gameObjectJSON["location"]["x"].asFloat();
+			auto locationY = gameObjectJSON["location"]["y"].asFloat();
 			addGameObject(id, layer, locationX, locationY, 0);
 		}
 	}
@@ -148,28 +145,28 @@ void Scene::run()
 void Scene::update() {
 
 
-	// spin through list of particle tasks to execute, like exposions and emitters
-	m_particleMachine.update();
-
 	Camera::instance().update();
 
-	//Update all of the other non player related update chores for each game object
-	// Game objects are stored in layers
+	// Remove all objects that should be removed in first pass
 	for (auto& gameObjects : m_gameObjects)
 	{
 		for (int i = 0; i < gameObjects.size(); i++)
 		{
-
 			if (gameObjects[i]->removeFromWorld())
 			{
-				gameObjects[i]->setRemoveFromWorld(false);
-				gameObjects[i]->reset();
+				gameObjects[i]->reset();//not every object is pooled so need a different spot to handle this
 				gameObjects.erase(gameObjects.begin() + i);
 			}
-			else
-			{
-				gameObjects[i]->update();
-			}
+		}
+	}
+
+	//Update each gameObject in all layers
+	for (auto& gameObjectLayer : m_gameObjects)
+	{
+		for (auto& gameObject : gameObjectLayer)
+		{
+			assert(gameObject != nullptr && "GameObject is null");
+			gameObject->update();
 		}
 	}
 
@@ -191,14 +188,18 @@ void Scene::render() {
 	//Renderer::instance().clear();
 
 	//Render all of the game objects
+	int i = 0;
 	for (auto& gameLayer : m_gameObjects)
 	{
 		//Update normal game objects
 		for (auto& gameObject : gameLayer)
 		{
+			i++;
 			gameObject->render();
 		}
 	}
+
+	//std::cout << "rendered " << i << "\n";
 
 	//DebugDraw
 	//if (GameConfig::instance().b2DebugDrawMode() == true)
@@ -219,6 +220,7 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMap
 	We have to call init after construction in order to set the pointer refrences correctly.i.e all components will store a raw
 	pointer to gameObject and all gameObjects will store a raw pointer to the scene.
 	*/
+
 	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle));
 	gameObject->init(cameraFollow);
 
@@ -269,14 +271,14 @@ void Scene::setInputControlMode(int inputControlMode)
 
 }
 
-SDL_Point Scene::calcWindowPosition(int globalPosition)
+SDL_FPoint Scene::calcWindowPosition(int globalPosition)
 {
-	SDL_Point globalPoint = {};
+	SDL_FPoint globalPoint = {};
 
 	if (globalPosition == WindowPosition::CENTER) {
 
-		globalPoint.x = round(GameConfig::instance().windowWidth() / Game::instance().worldTileWidth() / 2);
-		globalPoint.y = round(GameConfig::instance().windowHeight() / Game::instance().worldTileHeight() / 2);
+		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / Game::instance().worldTileWidth() / 2);
+		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / Game::instance().worldTileHeight() / 2);
 
 	}
 	else {

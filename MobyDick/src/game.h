@@ -40,6 +40,7 @@ public:
 	static void renderGameObjects(const std::array <std::vector<GameObject>, MAX_GAMEOBJECT_LAYERS>&);
 	
 	void addGameObject(std::shared_ptr<GameObject>gameObject, int layer);
+	GameObject* addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle = 0., bool cameraFollow = false);
 
 	void setGameState(GameState state) {
 		m_gameState = state;

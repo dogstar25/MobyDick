@@ -3,11 +3,7 @@
 #include <iostream>
 #include <fstream>
 
-#include <json/json.h>
 
-#include "Globals.h"
-#include "TextureManager.h"
-#include "GameObjectManager.h"
 #include "Game.h"
 
 
@@ -118,9 +114,6 @@ void Level::_loadDefinition(std::string levelId)
 void Level::load(std::string levelId, Scene* scene)
 {
 
-	SDL_Texture* levelImage;
-	SDL_PixelFormat* fmt;
-	SDL_Color* color;
 	SDL_Surface* surface;
 
 	//Load the Level definition
@@ -314,16 +307,13 @@ void Level::_buildLevelObjects(Scene* scene)
 {
 	LevelObject* levelObject;
 
-	for (int y = 0; y < m_height; y++)
-	{
-		for (int x = 0; x < m_width; x++)
-		{
+	for (int y = 0; y < m_height; y++) {
+		for (int x = 0; x < m_width; x++) {
 
-			if (levelObjects[x][y].gameObjectId.empty() == false)
-			{
+			if (levelObjects[x][y].gameObjectId.empty() == false) {
 				levelObject = &levelObjects[x][y];
 
-				scene->addGameObject(levelObject->gameObjectId, LAYER_MAIN, x, y, levelObject->angleAdjustment);
+				scene->addGameObject( levelObject->gameObjectId, LAYER_MAIN, (float)x, (float)y, (float)levelObject->angleAdjustment);
 
 			}
 

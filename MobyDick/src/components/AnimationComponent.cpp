@@ -1,12 +1,9 @@
 #include "AnimationComponent.h"
 
-#include <iostream>
 
 #include "../EnumMaps.h"
-#include "../GameObjectManager.h"
 #include "../GameObject.h"
 
-#include "TransformComponent.h"
 
 
 AnimationComponent::AnimationComponent()
@@ -23,8 +20,8 @@ AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 	//Build animationComponent details
 	m_gameObjectId = definitionJSON["id"].asString();
 	
-	if (definitionJSON.isMember("defaultState")) {
-		m_defaultAnimationState = EnumMap::instance().toEnum(definitionJSON["defaultState"].asString());
+	if (animationComponentJSON.isMember("defaultState")) {
+		m_defaultAnimationState = EnumMap::instance().toEnum(animationComponentJSON["defaultState"].asString());
 	}
 	else {
 		m_defaultAnimationState=0;
@@ -64,6 +61,11 @@ void AnimationComponent::update()
 
 	//If this animation has completed and it was a one-time animate, then reset the current
 	//animation to the default, and put it in continuous mode (probably IDLE)
+	if (parent()->idTag() == IdTag::PLAYER_BULLET) {
+		int i = 0;
+		i += 9;
+	}
+
 	if (animationFrame == 0) {
 
 		if (m_currentAnimationMode == ANIMATE_ONE_TIME) {

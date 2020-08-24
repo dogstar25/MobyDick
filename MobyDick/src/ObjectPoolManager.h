@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include <memory>
+#include <optional>
 
 class GameObject;
 
@@ -14,7 +15,7 @@ public:
 	static ObjectPoolManager& instance();
 	void init();
 
-	std::shared_ptr<GameObject> getParticle(std::string);
+	std::optional<std::shared_ptr<GameObject>> getPooledObject(std::string);
 
 	//Accessor Functions
 	const std::unordered_map <std::string, std::vector<std::shared_ptr<GameObject>>>& objectPool() {

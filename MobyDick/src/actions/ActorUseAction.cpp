@@ -1,9 +1,7 @@
 #include "ActorUseAction.h"
 
-#include <memory>
 
 #include "../components/InventoryComponent.h"
-#include "../components/ActionComponent.h"
 #include "../GameObject.h"
 
 ActorUseAction::ActorUseAction()

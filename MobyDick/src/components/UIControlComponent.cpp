@@ -1,8 +1,6 @@
 #include "UIControlComponent.h"
 
-#include <iostream>
 
-#include "../EnumMaps.h"
 #include "../SceneManager.h"
 
 

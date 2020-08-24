@@ -13,6 +13,7 @@
                 "absolutePositioning": false
             },
             "animationComponent": {
+                "defaultState": "ANIMATION_IDLE",
                 "animations": [
                     {
                         "state": "ANIMATION_IDLE",
@@ -35,6 +36,7 @@
                 "absolutePositioning": false
             },
             "animationComponent": {
+                "defaultState": "ANIMATION_IDLE",
                 "animations": [
                     {
                         "state": "ANIMATION_IDLE",
@@ -533,6 +535,97 @@
                     }
                 ]
             }
+        },
+        {
+            "id": "BULLET1",
+            "idTag": "IdTag::PLAYER_BULLET",
+            "traitTags": [],
+            "description": "Bullet 1",
+            "transformComponent": {
+                "size": {
+                    "width": 6,
+                    "height": 3
+                }
+            },
+            "animationComponent": {
+                "defaultState": "ANIMATION_ACTIVE",
+                "animations": [
+                    {
+                        "state": "ANIMATION_ACTIVE",
+                        "textureId": "TX_BULLET1",
+                        "speed": 0.02,
+                        "frames": 4
+                    }
+                ]
+            },
+            "vitalityComponent": {
+                "speed": 50,
+                "lifetime": 1.0,
+                "lifetimeAlphaFade": true
+            },
+            "poolComponent": {
+                "poolId": "BULLET1_POOL"
+            },
+            "physicsComponent": {
+                "type": "B2_DYNAMIC",
+                "collisionShape": "B2_CIRCLE",
+                "collisionRadius": 0.16,
+                "friction": 0.0,
+                "density": 0.1,
+                "restitution": 0.3,
+                "linearDamping": 0.0,
+                "angularDamping": 0.0,
+                "collisionCategory": "CollisionCat::PROJECTILE"
+            }
+        },
+        {
+            "id": "DEFLECT1",
+            "idTag": "IdTag::DEFLECT_EFFECT",
+            "traitTags": [],
+            "description": "Deflect 1",
+            "transformComponent": {
+                "size": {
+                    "width": 64,
+                    "height": 64
+                }
+            },
+            "animationComponent": {
+                "animations": [
+                    {
+                        "state": "ACTIVE",
+                        "textureId": "TX_DEFLECT1_64",
+                        "speed": 0.01,
+                        "frames": 4
+                    }
+                ]
+            },
+            "physicsComponent": {
+                "type": "B2_DYNAMIC",
+                "collisionShape": "B2_CIRCLE",
+                "collisionRadius": 0.16,
+                "friction": 0.0,
+                "density": 0.1,
+                "restitution": 0.3,
+                "linearDamping": 0.0,
+                "angularDamping": 12.0,
+                "collisionCategory": "CollisionCat::PARTICLE"
+            }
+        },
+
+        {
+            "id": "PARTICLE_ONETIME_EMITTER",
+            "idTag": "IdTag::GENERAL",
+            "traitTags": [],
+            "description": "Particle Emitter",
+            "transformComponent": {
+                "size": {
+                    "width": 6,
+                    "height": 3
+                }
+            },
+            "particleComponent": {
+            }
         }
+
     ]
 }

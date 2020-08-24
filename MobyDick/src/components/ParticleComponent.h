@@ -4,9 +4,13 @@
 #include <string>
 #include <memory>
 #include <chrono>
+#include <vector>
+
 #include <json/json.h>
 
 #include "Component.h"
+#include "../ParticleEmission.h"
+#include "../config_data/ParticleEffect.h"
 
 class GameObject;
 
@@ -17,37 +21,20 @@ public:
 	~ParticleComponent();
 
 	void update() override;
-	void reset();
-
-	bool isActive() {
-		return m_isActive;
-	}
-	void setActive(bool active) {
-		m_isActive = active;
-	}
-	bool isAvailable() {
-		return m_isAvailable;
-	}
-	void setAvailable(bool available) {
-		m_isAvailable = available;
-	}
-
-	std::chrono::duration<float, std::milli> m_lifetime;
-	std::chrono::duration<float, std::milli> m_lifetimeRemaining;
-	std::chrono::steady_clock::time_point m_time_snapshot;
-
-	bool
-		m_isLifetimeAlphaFade,
-		m_hasInfiniteLifetime;
+	void setType(int type) { m_type = type; }
+	void addParticleEffect(ParticleEffect particleEffect);
 
 private:
-	bool m_isAvailable;
-	bool m_isActive;
-	std::string m_poolId;
-
+	int m_type;
+	std::vector<ParticleEffect> m_particleEffects;
 
 
 };
+
+
+
+
+
 
 #endif
 

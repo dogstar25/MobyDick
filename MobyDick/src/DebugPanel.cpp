@@ -4,9 +4,7 @@
 #include "DynamicTextManager.h"
 #include "GameObjectManager.h"
 #include "GameConfig.h"
-#include "TextObject.h"
 #include "Level.h"
-#include "Game.h"
 
 
 DebugPanel& DebugPanel::instance()
@@ -18,8 +16,8 @@ DebugPanel& DebugPanel::instance()
 DebugPanel::DebugPanel()
 {
 
-	m_location.x = GameConfig::instance().debugPanelLocation().x;
-	m_location.y = GameConfig::instance().debugPanelLocation().y;
+	m_location.x = (float)GameConfig::instance().debugPanelLocation().x;
+	m_location.y = (float)GameConfig::instance().debugPanelLocation().y;
 
 	m_itemCount = 0;
 

@@ -2,9 +2,7 @@
 
 #include <iostream>
 
-#include "Globals.h"
-#include "GameObject.h"
-#include "contact_events/ContactEvent.h"
+#include "game.h"
 
 
 ContactListener::ContactListener()
@@ -82,12 +80,26 @@ void ContactListener::handleContact(GameObject* contact1, GameObject* contact2, 
 
 	//std::cout << "Class is " << collisionActionClass << "\n";
 
+	/////////////////////////
+	// Player Wall Contact
+	////////////////////////
 	if ((category1 == IdTag::PLAYER && category2 == IdTag::WALL) ||
 		(category2 == IdTag::PLAYER && category1 == IdTag::WALL)) {
 
 		player_wall(contact1, contact2, contactPoint);
 
 	}
+
+	/////////////////////////
+	// Player Bullet -  Wall Contact
+	////////////////////////
+	if ((category1 == IdTag::PLAYER_BULLET && category2 == IdTag::WALL) ||
+		(category2 == IdTag::PLAYER_BULLET && category1 == IdTag::WALL)) {
+
+		bullet_wall(contact1, contact2, contactPoint);
+
+	}
+
 }
 
 void ContactListener::player_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
@@ -114,7 +126,7 @@ void ContactListener::bullet_wall(GameObject* contact1, GameObject* contact2, b2
 	GameObject* bullet;
 	GameObject* wall;
 
-	if (contact1->idTag() == IdTag::FRIENDLY_BULLET) {
+	if (contact1->idTag() == IdTag::PLAYER_BULLET) {
 		bullet = contact1;
 		wall = contact2;
 	}
@@ -123,8 +135,19 @@ void ContactListener::bullet_wall(GameObject* contact1, GameObject* contact2, b2
 		wall = contact1;
 	}
 
-	std::cout << "bullet_wall called\n";
+	//Build a One-Time particle emitter object
+	auto gameObject = Game::instance().addGameObject("PARTICLE_ONETIME_EMITTER", LAYER_MAIN, -1, -1);
+	auto& particleComponent = gameObject->getComponent<ParticleComponent>();
+	particleComponent->addParticleEffect(ParticleEffects::ricochet);
+	particleComponent->setType(ParticleEmitterType::ONETIME);
 
+	//Convert from box2d to gameWorld coordinates
+	contactPoint.x *= GameConfig::instance().scaleFactor();
+	contactPoint.y *= GameConfig::instance().scaleFactor();
+	gameObject->setPosition(contactPoint.x, contactPoint.y);
+
+	//Set flag for removal
+	bullet->setRemoveFromWorld(true);
 
 }
 

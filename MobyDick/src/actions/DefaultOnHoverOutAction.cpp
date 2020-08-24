@@ -1,8 +1,6 @@
 #include "DefaultOnHoverOutAction.h"
 
-#include <iostream>
 
-#include "../components//RenderComponent.h"
 #include "../GameObject.h"
 
 DefaultOnHoverOutAction::DefaultOnHoverOutAction()

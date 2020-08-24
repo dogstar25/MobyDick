@@ -1,14 +1,9 @@
 #include "GameObject.h"
 
-#include <iostream>
 
 #include "GameObjectManager.h"
-#include "components/TransformComponent.h"
 #include "components/InventoryComponent.h"
 
-#include "Level.h"
-#include "Scene.h"
-#include "game.h"
 #include "Camera.h"
 #include "EnumMaps.h"
 
@@ -109,6 +104,12 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 		addComponent(std::make_shared<WeaponComponent>(definitionJSON));
 	}
 
+	//Pool Component
+	if (definitionJSON.isMember("poolComponent"))
+	{
+		addComponent(std::make_shared<PoolComponent>(definitionJSON));
+	}
+
 }
 
 //void GameObject::addComponent(int componentId, std::shared_ptr<Component> component)
@@ -122,17 +123,19 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 void GameObject::_setDependecyReferences()
 {
-	//Copy all of this game objects components to each of individual components so that each component has a reference 
-	// to the other components
-	for (auto component : m_components)
-	{
-		component.second->setActive(true);
-	}
 
 	//SetRenderComponent dependencies
 	getComponent<RenderComponent>()->setDependencyReferences(this);
 
 }
+
+void GameObject::setPosition(float x, float y)
+{
+
+	getComponent<TransformComponent>()->setPosition(x, y);
+
+}
+
 
 void GameObject::setPosition(b2Vec2 position, float angle)
 {
@@ -163,16 +166,11 @@ void GameObject::update()
 
 void GameObject::render()
 {
-	SDL_Rect* textureSourceRect=NULL;
-	SDL_FRect destRect;
-	SDL_Texture* texture=NULL;
-
 
 	//Render yourself
 	getComponent<RenderComponent>()->render();
 		
 	//Render your children
-
 	if (getComponent<ChildrenComponent>())
 	{
 		getComponent<ChildrenComponent>()->renderChildren();
@@ -218,9 +216,13 @@ void GameObject::render()
 
 void GameObject::reset()
 {
-
-	getComponent<ParticleComponent>()->reset();
-	getComponent<PhysicsComponent>()->setOffGrid();
+	if (hasComponent<PoolComponent>()) {
+		getComponent<PoolComponent>()->reset();
+	}
+	if (hasComponent<PhysicsComponent>()) {
+		getComponent<PhysicsComponent>()->setOffGrid();
+	}
+	
 
 }
 

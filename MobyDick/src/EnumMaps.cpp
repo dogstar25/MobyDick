@@ -111,6 +111,12 @@ EnumMap::EnumMap()
 
 	//Global Screen Position
 	m_enumMap["WindowPosition::CENTER"] = WindowPosition::CENTER;
+
+	//Particle Emitter types
+	m_enumMap["ParticleEmitterType::ONETIME"] = ParticleEmitterType::ONETIME;
+	m_enumMap["ParticleEmitterType::CONTINUOUS"] = ParticleEmitterType::CONTINUOUS;
+
+
 }
 
 EnumMap::~EnumMap()

@@ -123,12 +123,6 @@
     <ClCompile Include="src\ObjectPoolManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ParticleEmission.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ParticleMachine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\components\InventoryComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -199,6 +193,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\actions\PistolFireAction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\components\PoolComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -314,12 +311,6 @@
     <ClInclude Include="src\ObjectPoolManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ParticleEmission.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ParticleMachine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\components\InventoryComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -396,6 +387,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\actions\PistolFireAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\PoolComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\config_data\ParticleEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -511,7 +508,6 @@
   <ItemGroup>
     <None Include="assets\config\gameScenes.json" />
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />
-    <None Include="assets\gameObjectDefinitions\components.json" />
     <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
     <None Include="assets\gameObjectDefinitions\objectPools.json" />
     <None Include="assets\gameObjectDefinitions\particleObjects.json" />

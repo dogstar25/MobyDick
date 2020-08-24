@@ -96,7 +96,7 @@
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <VcpkgCurrentInstalledDir>$(VcpkgRoot)\installed\$(VcpkgTriplet)\</VcpkgCurrentInstalledDir>
     <VcpkgEnableManifest>false</VcpkgEnableManifest>
-    <VcpkgUseStatic>false</VcpkgUseStatic>
+    <VcpkgUseStatic>true</VcpkgUseStatic>
     <VcpkgAutoLink>true</VcpkgAutoLink>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -133,7 +133,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <SDLCheck>true</SDLCheck>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Full</Optimization>
+      <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>
@@ -162,9 +162,11 @@
     <ClCompile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <SDLCheck>true</SDLCheck>
-      <WarningLevel>Level1</WarningLevel>
-      <Optimization>Full</Optimization>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>
@@ -188,6 +190,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\components\PoolComponent.cpp" />
     <ClCompile Include="src\actions\PistolFireAction.cpp" />
     <ClCompile Include="src\CollisionManager.cpp" />
     <ClCompile Include="src\actions\DefaultMoveAction.cpp" />
@@ -218,8 +221,6 @@
     <ClCompile Include="src\components\PlayerControlComponent.cpp" />
     <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\ObjectPoolManager.cpp" />
-    <ClCompile Include="src\ParticleEmission.cpp" />
-    <ClCompile Include="src\ParticleMachine.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\components\AnimationComponent.cpp" />
     <ClCompile Include="src\components\AttachmentsComponent.cpp" />
@@ -252,6 +253,7 @@
     <ClCompile Include="src\actions\UseAction.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\components\PoolComponent.h" />
     <ClInclude Include="src\actions\PistolFireAction.h" />
     <ClInclude Include="src\CollisionManager.h" />
     <ClInclude Include="src\actions\DefaultMoveAction.h" />
@@ -265,6 +267,7 @@
     <ClInclude Include="src\actions\RotateAction.h" />
     <ClInclude Include="src\actions\ItemUsageAction.h" />
     <ClInclude Include="src\config_data\GameDefinitions.h" />
+    <ClInclude Include="src\config_data\ParticleEffect.h" />
     <ClInclude Include="src\config_data\scenes.h" />
     <ClInclude Include="src\ContactFilter.h" />
     <ClInclude Include="src\ContactListener.h" />
@@ -283,8 +286,6 @@
     <ClInclude Include="src\components\PlayerControlComponent.h" />
     <ClInclude Include="src\Level.h" />
     <ClInclude Include="src\ObjectPoolManager.h" />
-    <ClInclude Include="src\ParticleEmission.h" />
-    <ClInclude Include="src\ParticleMachine.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\components\AnimationComponent.h" />
     <ClInclude Include="src\components\AttachmentsComponent.h" />
@@ -363,7 +364,6 @@
     <None Include="assets\config\gameScenes.json" />
     <None Include="assets\gameConfig.json" />
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />
-    <None Include="assets\gameObjectDefinitions\components.json" />
     <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
     <None Include="assets\gameObjectDefinitions\objectPools.json" />
     <None Include="assets\gameObjectDefinitions\particleObjects.json" />

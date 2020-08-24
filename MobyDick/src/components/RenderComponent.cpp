@@ -1,19 +1,9 @@
 #include "RenderComponent.h"
 
-#include <json/json.h>
 
-#include "../Renderer.h"
+
 #include "../Camera.h"
-#include "../GameObjectManager.h"
-#include "../GameObject.h"
-#include "../Globals.h"
-#include "../GameConfig.h"
-#include "../TextureManager.h"
 #include "../game.h"
-
-#include "AnimationComponent.h"
-#include "TransformComponent.h"
-#include "PhysicsComponent.h"
 
 
 RenderComponent::RenderComponent()
@@ -46,6 +36,9 @@ RenderComponent::RenderComponent(Json::Value definitionJSON)
 		m_outlineThickness = itrRender["outline"]["thickness"].asInt();
 		m_outLineColor =  util::JsonToColor(itrRender["outline"]["color"]);
 	}
+	else {
+		m_renderOutline = false;
+	}
 
 	//Get Texture
 	m_texture = TextureManager::instance().getTexture(itrRender["textureId"].asString());
@@ -71,7 +64,7 @@ an x, y position that is the top left corner of the object (for SDL render funct
 */
 SDL_FRect RenderComponent::getRenderDestRect()
 {
-	SDL_FRect destRect, currentPositionRect;
+	SDL_FRect destRect;
 
 	//Get its current position. Should be center of object
 	destRect = m_transformComponent->getPositionRect();
@@ -137,49 +130,65 @@ SDL_Surface* RenderComponent::getRenderSurface()
 
 }
 
-void RenderComponent::outlineObject(float lineSize, SDL_Color color)
+void RenderComponent::outlineObject(SDL_Color color)
 {
 
-	std::vector<SDL_FPoint> points;
 	SDL_FRect gameObjectDrawRect = getRenderDestRect();
-	float saveScaleX, saveScaleY;
-	SDL_FPoint point;
 
-	////Adjust for camera
-	if (m_transformComponent->absolutePositioning() == false)
-	{
-		gameObjectDrawRect.x -= Camera::instance().frame().x;
-		gameObjectDrawRect.y -= Camera::instance().frame().y;
-	}
+	//Set render scale to match linesize passed in
+	/*SDL_RenderGetScale(Renderer::instance().SDLRenderer(), &saveScaleX, &saveScaleY);
+	SDL_RenderSetScale(Renderer::instance().SDLRenderer(), lineSize, lineSize);*/
 
-	//topleft
-	point.x = gameObjectDrawRect.x / lineSize;
-	point.y = gameObjectDrawRect.y / lineSize;
-	points.push_back(point);
+	SDL_SetRenderDrawColor(Renderer::instance().SDLRenderer(), color.r, color.g, color.b, 255);
+	SDL_RenderDrawRectF(Renderer::instance().SDLRenderer(), &gameObjectDrawRect);
 
-	//topright
-	point.x = (gameObjectDrawRect.x + gameObjectDrawRect.w) / lineSize;
-	point.y = gameObjectDrawRect.y / lineSize;
-	points.push_back(point);
+	//Rest Scale to whatever is was before
+	//SDL_RenderSetScale(Renderer::instance().SDLRenderer(), saveScaleX, saveScaleY);
 
-	//bottomright
-	point.x = (gameObjectDrawRect.x + gameObjectDrawRect.w) / lineSize;
-	point.y = (gameObjectDrawRect.y + gameObjectDrawRect.h) / lineSize;
-	points.push_back(point);
 
-	//bottomleft
-	point.x = gameObjectDrawRect.x / lineSize;
-	point.y = (gameObjectDrawRect.y + gameObjectDrawRect.h) / lineSize;
-	points.push_back(point);
 
-	//add the topleft as last point to complete the shape
-	point.x = gameObjectDrawRect.x / lineSize;
-	point.y = gameObjectDrawRect.y / lineSize;
-	points.push_back(point);
 
-	Renderer::instance().outlineObject(points, lineSize, color);
 
-	points.clear();
+	//std::vector<SDL_FPoint> points;
+	//SDL_FRect gameObjectDrawRect = getRenderDestRect();
+	//float saveScaleX, saveScaleY;
+	//SDL_FPoint point;
+
+	//////Adjust for camera
+	//if (m_transformComponent->absolutePositioning() == false)
+	//{
+	//	gameObjectDrawRect.x -= Camera::instance().frame().x;
+	//	gameObjectDrawRect.y -= Camera::instance().frame().y;
+	//}
+
+	////topleft
+	//point.x = gameObjectDrawRect.x / lineSize;
+	//point.y = gameObjectDrawRect.y / lineSize;
+	//points.push_back(point);
+
+	////topright
+	//point.x = (gameObjectDrawRect.x + gameObjectDrawRect.w) / lineSize;
+	//point.y = gameObjectDrawRect.y / lineSize;
+	//points.push_back(point);
+
+	////bottomright
+	//point.x = (gameObjectDrawRect.x + gameObjectDrawRect.w) / lineSize;
+	//point.y = (gameObjectDrawRect.y + gameObjectDrawRect.h) / lineSize;
+	//points.push_back(point);
+
+	////bottomleft
+	//point.x = gameObjectDrawRect.x / lineSize;
+	//point.y = (gameObjectDrawRect.y + gameObjectDrawRect.h) / lineSize;
+	//points.push_back(point);
+
+	////add the topleft as last point to complete the shape
+	//point.x = gameObjectDrawRect.x / lineSize;
+	//point.y = gameObjectDrawRect.y / lineSize;
+	//points.push_back(point);
+
+	//Renderer::instance().outlineObject(points, lineSize, color);
+
+	//points.clear();
 
 }
 
@@ -207,8 +216,8 @@ void RenderComponent::render()
 	If this object is within the viewable are or if its absolute positioned then render it
 	*/
 	if (SDL_HasIntersection(&gameObjectPosRect, &cameraRect) || 
-		m_transformComponent->absolutePositioning() == true)
-	{
+		m_transformComponent->absolutePositioning() == true) {
+
 		const SDL_FRect destRect = getRenderDestRect();
 		SDL_Rect* textureSourceRect = getRenderTextureRect();
 		SDL_Texture* texture = getRenderTexture();
@@ -229,6 +238,18 @@ void RenderComponent::render()
 			SDL_SetTextureColorMod(texture, m_color.r, m_color.g, m_color.b);
 		}
 		
+
+		//if (parent()->idTag() == IdTag::SMOKE_PARTICLE) {
+			/*std::cout << "Render " << parent()->id();
+			std::cout << "\tTexture " << texture;
+			std::cout << "\ttextureSourceRect " << textureSourceRect;
+			std::cout << "\trect width" << destRect.w;
+			std::cout << "\n";*/
+		//	std::cout << "textureSourceRect Dest " << textureSourceRect << "\n";
+
+
+		//}
+
 		//Render the texture
 		SDL_RenderCopyExF(
 			Renderer::instance().SDLRenderer(),
@@ -242,12 +263,12 @@ void RenderComponent::render()
 		//Outline the gameObject if defined to 
 		if (m_displayScheme.has_value() && m_displayScheme->outlined == true) {
 
-			outlineObject(m_displayScheme->outlineWidth, m_displayScheme->outlineColor);
+			outlineObject(m_displayScheme->outlineColor);
 		}
 		else {
 
 			if (m_renderOutline == true) {
-				outlineObject(m_outlineThickness, m_outLineColor);
+				outlineObject(m_outLineColor);
 			}
 		}
 	}
@@ -262,9 +283,9 @@ void RenderComponent::setDependencyReferences(GameObject* gameObject)
 
 }
 
-void RenderComponent::applyDisplayScheme(const uint8_t displayScheme)
+void RenderComponent::applyDisplayScheme(DisplayScheme displayScheme)
 {
-	m_displayScheme = Renderer::instance().getDisplayScheme(displayScheme);
+	m_displayScheme = displayScheme;
 }
 
 void RenderComponent::removeDisplayScheme()

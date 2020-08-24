@@ -1,10 +1,5 @@
 #include "TransformComponent.h"
-#include "../GameObjectDefinition.h"
-#include "../GameObjectManager.h"
-#include "../GameObject.h"
-#include "../GameConfig.h"
 #include "../Game.h"
-#include "../DebugPanel.h"
 
 
 TransformComponent::TransformComponent()

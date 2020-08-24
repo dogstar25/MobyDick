@@ -1,7 +1,5 @@
 #include "GameConfig.h"
 
-#include <json/json.h>
-#include "Globals.h"
 #include "game.h"
 
 #include <fstream>

@@ -31,12 +31,6 @@ public:
 	~Component();
 	virtual void update();
 
-	void setActive(bool active) {
-		m_active = active;
-	}
-	bool isActive() {
-		return m_active;
-	}
 	void setParent(GameObject* gameObject) {
 
 		m_parentGameObject = gameObject;
@@ -49,7 +43,6 @@ public:
 	std::string m_gameObjectId;
 
 protected:
-	bool m_active;
 	GameObject* m_parentGameObject;
 
 

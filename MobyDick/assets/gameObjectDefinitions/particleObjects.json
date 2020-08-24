@@ -11,7 +11,13 @@
                     "height": 32
                 }
             },
-            "particleComponent": {
+            "poolComponent": {
+                "poolId": "SMOKE1_POOL"
+            },
+            "vitalityComponent": {
+                "speed": 50,
+                "lifetime": 3.25,
+                "lifetimeAlphaFade": false
             },
             "renderComponent": {
                 "textureId": "TX_SMOKE_PARTICLE_2"
@@ -27,81 +33,6 @@
                 "angularDamping": 0.0,
                 "collisionCategory": "CollisionCat::PARTICLE"
             }
-        },
-        {
-            "id": "BULLET1",
-            "idTag": "IdTag::PLAYER_BULLET",
-            "traitTags": [],
-            "description": "Bullet 1",
-            "transformComponent": {
-                "size": {
-                    "width": 6,
-                    "height": 3
-                }
-            },
-            "animationComponent": {
-                "animations": [
-                    {
-                        "state": "ANIMATION_ACTIVE",
-                        "textureId": "TX_BULLET1",
-                        "speed": 0.02,
-                        "frames": 4
-                    }
-                ]
-            },
-            "particleComponent": {
-            },
-            "vitalityComponent": {
-                "speed": 30
-            },
-            "renderComponent": {
-                "textureId": "TX_WEAPON1_FIRE"
-            },
-            "physicsComponent": {
-                "type": "B2_DYNAMIC",
-                "collisionShape": "B2_CIRCLE",
-                "collisionRadius": 0.16,
-                "friction": 0.0,
-                "density": 0.1,
-                "restitution": 0.3,
-                "linearDamping": 0.0,
-                "angularDamping": 0.0,
-                "collisionCategory": "CollisionCat::PROJECTILE"
-            }
-        },
-        {
-            "id": "DEFLECT1",
-            "idTag": "IdTag::DEFLECT_EFFECT",
-            "traitTags": [],
-            "description": "Deflect 1",
-            "transformComponent": {
-                "size": {
-                    "width": 64,
-                    "height": 64
-                }
-            },
-            "animationComponent": {
-                "animations": [
-                    {
-                        "state": "ACTIVE",
-                        "textureId": "TX_DEFLECT1_64",
-                        "speed": 0.01,
-                        "frames": 4
-                    }
-                ]
-            },
-            "physicsComponent": {
-                "type": "B2_DYNAMIC",
-                "collisionShape": "B2_CIRCLE",
-                "collisionRadius": 0.16,
-                "friction": 0.0,
-                "density": 0.1,
-                "restitution": 0.3,
-                "linearDamping": 0.0,
-                "angularDamping": 12.0,
-                "collisionCategory": "CollisionCat::PARTICLE"
-            }
         }
-
     ]
 }

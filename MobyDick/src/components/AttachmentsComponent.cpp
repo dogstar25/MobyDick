@@ -1,6 +1,5 @@
 #include "AttachmentsComponent.h"
 
-#include "../GameObjectManager.h"
 
 
 

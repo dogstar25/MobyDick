@@ -1,10 +1,6 @@
 #include "PistolFireAction.h"
 
-#include <box2d/box2d.h>
 
-#include "../components/WeaponComponent.h"
-#include "../components/TransformComponent.h"
-#include "../components/PhysicsComponent.h"
 #include "../GameObject.h"
 #include "../GameConfig.h"
 #include "../SoundManager.h"

@@ -1,14 +1,8 @@
 #include "TextComponent.h"
 
-#include "json/json.h"
 
-#include "TransformComponent.h"
-#include "RenderComponent.h"
-#include "../GameObjectManager.h"
-#include "../Renderer.h"
 #include "../DynamicTextManager.h"
 #include "../GameConfig.h"
-#include "../texture.h"
 #include "../GameObject.h"
 
 TextComponent::TextComponent()
@@ -74,7 +68,7 @@ void TextComponent::update()
 		if (renderComponent->texture())
 		{
 			renderComponent->setTexture(TextureManager::instance().getTexture(textureId));
-			transformComponent->setSize(renderComponent->texture()->surface->w, renderComponent->texture()->surface->h);
+			transformComponent->setSize((float)renderComponent->texture()->surface->w, (float)renderComponent->texture()->surface->h);
 		}
 
 	}
@@ -116,7 +110,7 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 	//TTF_CloseFont(m_fontObject);
 
 	//Set the size of the textObject now that its texture has been generated
-	transformComponent->setSize(tempSurface->w, tempSurface->h);
+	transformComponent->setSize((float)tempSurface->w, (float)tempSurface->h);
 	transformComponent->setPosition(
 		transformComponent->originalPosition().x + tempSurface->w/2,
 		transformComponent->originalPosition().y + tempSurface->h/2);
@@ -137,7 +131,6 @@ std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
 
 	TextItem* newText;
 	std::shared_ptr<Texture> texture;
-	SDL_Surface* surface;
 
 	newText = DynamicTextManager::instance().getTextItem(m_gameObjectId);
 

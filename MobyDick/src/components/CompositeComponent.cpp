@@ -1,6 +1,5 @@
 #include "CompositeComponent.h"
 
-#include "../GameObjectManager.h"
 
 
 CompositeComponent::CompositeComponent()

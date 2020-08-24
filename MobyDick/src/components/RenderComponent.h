@@ -31,9 +31,9 @@ public:
 	void setColor(int red, int green, int blue, int alpha);
 	void setTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
 
-	void outlineObject(float lineSize, SDL_Color color);
+	void outlineObject(SDL_Color color);
 	void setDependencyReferences(GameObject* gameObject);
-	void applyDisplayScheme(const uint8_t);
+	void applyDisplayScheme(DisplayScheme);
 	void removeDisplayScheme();
 
 	SDL_Rect* getRenderTextureRect();

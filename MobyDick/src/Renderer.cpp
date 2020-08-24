@@ -20,14 +20,9 @@ Renderer& Renderer::instance()
 
 void Renderer::init(SDL_Window* window)
 {
-	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
+	//SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 	m_SDLRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawColor(m_SDLRenderer, 0, 0, 0, 0);
-
-	//Load various Game Object Display Schemes
-	_loadDisplaySchemes();
-
-
 
 }
 
@@ -131,20 +126,3 @@ void Renderer::outlineObject(std::vector<SDL_FPoint> points, float lineSize, SDL
 	SDL_RenderSetScale(m_SDLRenderer, saveScaleX, saveScaleY);
 
 }
-
-void Renderer::_loadDisplaySchemes()
-{
-
-	DisplayScheme displayScheme;
-
-	//
-	//Default Hover Scheme
-	//
-	displayScheme.outlined = true;
-	displayScheme.outlineColor = { 0,0,255,255 };
-	displayScheme.outlineWidth = 2;
-	m_displaySchemes.insert(std::make_pair(DEFAULT_HOVER_SCHEME, displayScheme));
-
-
-}
-

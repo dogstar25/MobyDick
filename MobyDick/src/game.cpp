@@ -1,28 +1,12 @@
 #include "Game.h"
 
-#include "config_data/scenes.h"
-#include <string>
-#include <gsl/gsl>
-#include "Level.h"
-#include "TextureManager.h"
 #include "GameObjectManager.h"
-#include "SceneManager.h"
 #include "SoundManager.h"
-#include "Renderer.h"
-#include "DynamicTextManager.h"
-#include "ParticleMachine.h"
-#include "GameConfig.h"
 #include "Camera.h"
 #include "Clock.h"
-#include "ObjectPoolManager.h"
-#include "DebugPanel.h"
-#include "components/ActionComponent.h"
 #include "ContactFilter.h"
 #include "ContactListener.h"
-#include "Globals.h"
 
-#include "config_data/scenes.h"
-#include "config_data/GameDefinitions.h"
 
 
 using namespace std::chrono_literals;
@@ -86,9 +70,6 @@ bool Game::init()
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
 
-		//Initialize the camera
-		Camera::instance().init();
-
 		//Init font library
 		TTF_Init();
 
@@ -150,14 +131,13 @@ bool Game::init()
 		//Load the First level
 		//Level::instance().load("level1");
 
-		//Initilaize Camera size and
-		Camera::instance().init();
 
 	}
 
 	//Load a first scene
 	Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
 	scene.applyCurrentControlMode();
+	//scene.addGameObject("BULLET1", LAYER_MAIN, 2, 2, 0);
 
 	//Load the player and some other objects
 	auto playerObject = scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
@@ -166,7 +146,7 @@ bool Game::init()
 
 	
 	scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);
-	scene.addGameObject("SWORDLADY", LAYER_MAIN, 10, 1);
+	//scene.addGameObject("SWORDLADY", LAYER_MAIN, 10, 1);
 
 
 
@@ -231,6 +211,14 @@ void Game::addGameObject(std::shared_ptr<GameObject>gameObject, int layer)
 
 }
 
+GameObject* Game::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow)
+{
+	//Add the gameObject to the currently active scene using back()
+	auto gameObject = SceneManager::instance().scenes().back().addGameObject(gameObjectId, layer, xMapPos, yMapPos, angle, cameraFollow);
+
+	return gameObject;
+
+}
 
 
 

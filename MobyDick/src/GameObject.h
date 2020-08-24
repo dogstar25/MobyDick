@@ -27,12 +27,13 @@
 #include "components/VitalityComponent.h"
 #include "components/WeaponComponent.h"
 #include "components/UIControlComponent.h"
+#include "components/PoolComponent.h"
 
 //#include "Scene.h"
 
 class Scene;
 
-class GameObject : public std::enable_shared_from_this<GameObject>
+class GameObject
 {
 public:
 	
@@ -47,11 +48,21 @@ public:
 	virtual void update();
 	virtual void render();
 
-	void setRemoveFromWorld(bool removeFromWorld) { 
-		m_removeFromWorld = removeFromWorld; 
-	}
-
+	void setRemoveFromWorld(bool removeFromWorld) { m_removeFromWorld = removeFromWorld; }
 	void setPosition(b2Vec2 position, float angle);
+	void setPosition(float x, float y);
+	void init(bool cameraFollow=false);
+
+	//Accessor Functions
+	auto removeFromWorld() { return m_removeFromWorld; }
+	std::string id() { return m_id;	}
+	int idTag() { return m_idTag; }
+	auto const& gameObjectDefinition() { return m_gameObjectDefinition;	}
+	auto& components() { return m_components; }
+
+	void reset();
+	void addInventoryItem(GameObject* gameObject);
+	void _setDependecyReferences();
 
 	template <typename componentType>
 	inline void addComponent(std::shared_ptr<componentType> component)
@@ -62,8 +73,8 @@ public:
 	template <typename componentType>
 	inline std::shared_ptr<componentType> getComponent()
 	{
-	
-		std::type_index index (typeid(componentType));
+
+		std::type_index index(typeid(componentType));
 		if (m_components.count(std::type_index(typeid(componentType))) != 0)
 		{
 			return std::static_pointer_cast<componentType>(m_components[index]);
@@ -77,30 +88,6 @@ public:
 	template <typename componentType> bool hasComponent() {
 		return(m_components.count(std::type_index(typeid(componentType))) != 0);
 	}
-
-	void init(bool cameraFollow=false);
-
-	//Accessor Functions
-	auto removeFromWorld() { 
-		return m_removeFromWorld; 
-	}
-	std::string id() {
-		return m_id;
-	}
-	int idTag() {
-		return m_idTag;
-	}
-
-	auto const& gameObjectDefinition(){
-		return m_gameObjectDefinition;
-	}
-	auto& components() {
-		return m_components;
-	}
-
-	void reset();
-	void addInventoryItem(GameObject* gameObject);
-	void _setDependecyReferences();
 
 private:
 	

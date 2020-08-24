@@ -91,6 +91,12 @@ namespace IdTagLabels {
 
 }
 
+namespace ParticleEmitterType {
+
+	inline constexpr int ONETIME = 0;
+	inline constexpr int CONTINUOUS = 1;
+}
+
 //Components
 inline constexpr int ACTION_COMPONENT = 1;
 inline constexpr int ANIMATION_COMPONENT = 2;
@@ -168,6 +174,7 @@ namespace util
 	const int generateRandomNumber(int min, int max);
 	const float generateRandomNumber(float min, float max);
 	const SDL_Color generateRandomColor();
+	const SDL_Color generateRandomColor(SDL_Color beginRange, SDL_Color endRange);
 	const float radiansToDegrees(float angleInRadians);
 	const float degreesToRadians(float angleInDegrees);
 	const std::string floatToString(float x, int decDigits);

@@ -5,12 +5,13 @@
 #include <bitset>
 #include <optional>
 
+#pragma warning(push,0)
 #include <box2d/box2d.h>
 #include <json/json.h>
+#pragma warning(pop)
 
 #include "Globals.h"
 #include "GameObject.h"
-#include "ParticleMachine.h"
 
 
 struct SceneAction
@@ -37,14 +38,11 @@ public:
 	void addGameObject(std::shared_ptr<GameObject> gameObject, int layer);
 	void addKeyAction(SDL_Keycode, SceneAction);
 	void applyCurrentControlMode();
-	SDL_Point calcWindowPosition(int globalPosition);
+	SDL_FPoint calcWindowPosition(int globalPosition);
 
 
 	std::string id() {
 		return m_id;
-	}
-	ParticleMachine& particleMachine() {
-		return m_particleMachine;
 	}
 	int parentSceneIndex() {
 		return m_parentSceneIndex;
@@ -73,7 +71,6 @@ private:
 	SceneState m_state;
 	int m_inputControlMode;
 	std::bitset<8> m_sceneTags;
-	ParticleMachine m_particleMachine {this};
 	std::map<SDL_Keycode, SceneAction> m_sceneKeyActions;
 
 	int m_parentSceneIndex;

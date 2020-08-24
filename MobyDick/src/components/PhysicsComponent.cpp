@@ -1,20 +1,8 @@
 #include "PhysicsComponent.h"
 
-#include <memory>
 
-#include "TransformComponent.h"
-#include "../GameObjectManager.h"
-#include "../Globals.h"
-#include "../GameObject.h"
 #include "../EnumMaps.h"
-#include "../GameConfig.h"
 #include "../Game.h"
-#include "../CollisionManager.h"
-
-PhysicsComponent::PhysicsComponent()
-{
-
-}
 
 PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust)
 {
@@ -182,15 +170,15 @@ void PhysicsComponent::applyMovement(float velocity, int direction, int strafeDi
 	//Calc direction XY
 	//float dx = cos(this->physicsBody->GetAngle()) * velocity * this->direction; // X-component.
 	//float dy = sin(this->physicsBody->GetAngle()) * velocity * this->direction; // Y-component.
-	float dx = cos(1.5708) * velocity * direction; // X-component.
-	float dy = sin(1.5708) * velocity * direction; // Y-component.
+	float dx = (float)cos(1.5708) * velocity * direction; // X-component.
+	float dy = (float)sin(1.5708) * velocity * direction; // Y-component.
 
 	//calc strafe xy and add direction and strafe vectors
 	//1.5708 is 90 degrees
 	//float sx = cos(this->physicsBody->GetAngle() + 1.5708) * velocity * this->strafe; // X-component.
 	//float sy = sin(this->physicsBody->GetAngle() + 1.5708) * velocity * this->strafe; // Y-component.
-	float sx = cos((1.5708) + 1.5708) * velocity * strafeDirection; // X-component.
-	float sy = sin((1.5708) + 1.5708) * velocity * strafeDirection; // Y-component.
+	float sx = (float)cos((1.5708) + 1.5708) * velocity * strafeDirection; // X-component.
+	float sy = (float)sin((1.5708) + 1.5708) * velocity * strafeDirection; // Y-component.
 
 	//Create the vector for forward/backward  direction
 	b2Vec2 directionVector = b2Vec2(dx, dy);

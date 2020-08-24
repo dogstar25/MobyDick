@@ -13,7 +13,7 @@ class GameObject;
 struct WeaponLevelDetail {
 
 	int level;
-	int force;
+	float force;
 	int levelUpTarget;
 	SDL_Color color;
 	std::string bulletPoolId;

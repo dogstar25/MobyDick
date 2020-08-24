@@ -1,12 +1,7 @@
 #include "DefaultMoveAction.h"
 
-#include <iostream>
-#include <memory>
 
 #include "../GameObject.h"
-#include "../components/PhysicsComponent.h"
-#include "../components/AnimationComponent.h"
-#include "../components/VitalityComponent.h"
 
 
 DefaultMoveAction::DefaultMoveAction() :

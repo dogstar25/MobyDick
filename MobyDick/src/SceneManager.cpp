@@ -1,10 +1,7 @@
 #include "SceneManager.h"
 
 #include <fstream>
-#include <iostream>
 
-#include "game.h"
-#include "Renderer.h"
 #include "Clock.h"
 #include "DynamicTextManager.h"
 
@@ -96,7 +93,7 @@ void SceneManager::run()
 
 std::optional<SceneAction> SceneManager::pollEvents()
 {
-	int keyCode, scanCode, keyCount, keyStateCount;
+	int keyCode, keyStateCount;
 	SDL_Event event;
 	//PlayerInputEvent* playerInputEvent = nullptr;
 	const Uint8* keyStates = nullptr;

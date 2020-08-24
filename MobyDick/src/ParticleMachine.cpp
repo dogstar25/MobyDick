@@ -1,11 +1,7 @@
 #include "ParticleMachine.h"
 
 
-#include "ObjectPoolManager.h"
 #include "Game.h"
-#include "GameConfig.h"
-#include "Globals.h"
-#include "Scene.h"
 
 
 
@@ -105,16 +101,16 @@ void ParticleMachine::emit(
 	{
 
 		//Get the particle object from the pre-populated particle pool
-		std::shared_ptr<GameObject> particle = ObjectPoolManager::instance().getParticle(poolId);
+		std::optional<std::shared_ptr<GameObject>> particle = ObjectPoolManager::instance().getPooledObject(poolId);
 
 		//If the returned particle is null, then the pool has run out, so do nothing
-		if (particle != NULL)
+		if (particle)
 		{
 
-			const auto& physicsComponent = particle->getComponent<PhysicsComponent>();
-			const auto& renderComponent = particle->getComponent<RenderComponent>();
-			const auto& particleComponent = particle->getComponent<ParticleComponent>();
-			const auto& transformComponent = particle->getComponent<TransformComponent>();
+			const auto& physicsComponent = particle.value()->getComponent<PhysicsComponent>();
+			const auto& renderComponent = particle.value()->getComponent<RenderComponent>();
+			const auto& vitalityComponent = particle.value()->getComponent<VitalityComponent>();
+			const auto& transformComponent = particle.value()->getComponent<TransformComponent>();
 
 			//Generate a random force
 			int force = 0;
@@ -128,7 +124,7 @@ void ParticleMachine::emit(
 			}
 
 			//Set lifetime alpha fade flag
-			particleComponent->m_isLifetimeAlphaFade = alphaFade;
+			vitalityComponent->setIsLifetimeAlphaFade(alphaFade);
 
 			//Set the color of the particle. Randomize the color values if they are different
 			SDL_Color color = { 255,255,255,255 };
@@ -164,7 +160,7 @@ void ParticleMachine::emit(
 
 			//Set the particles lifetime in miliseconds. If a zero is passed in, then it will remain the value 
 			//when it was built freom the pool definition
-			particleComponent->m_time_snapshot = std::chrono::steady_clock::now();
+			vitalityComponent->setTimeSnapshot(std::chrono::steady_clock::now());
 			float particleLifetime = 0;
 			if (lifetimeMin != 0 && lifetimeMax != 0)
 			{
@@ -177,12 +173,13 @@ void ParticleMachine::emit(
 					particleLifetime = lifetimeMax;
 				}
 
-				particleComponent->m_lifetime = particleComponent->m_lifetimeRemaining = std::chrono::duration<float>(particleLifetime);
-				particleComponent->m_hasInfiniteLifetime = false;
+				vitalityComponent->setLifetime(std::chrono::duration<float>(particleLifetime));
+				vitalityComponent->setLifetimeRemaining(std::chrono::duration<float>(particleLifetime));
+				vitalityComponent->setHasInfiniteLifetime(false);
 			}
 			else
 			{
-				particleComponent->m_hasInfiniteLifetime = true;
+				vitalityComponent->setHasInfiniteLifetime(true);
 			}
 
 
@@ -218,7 +215,7 @@ void ParticleMachine::emit(
 			physicsComponent->setLinearVelocity(velocityVector);
 
 			//Add the particle to the game world
-			m_parentScene->addGameObject(particle, LAYER_MAIN);
+			m_parentScene->addGameObject(particle.value(), LAYER_MAIN);
 		}
 
 	}

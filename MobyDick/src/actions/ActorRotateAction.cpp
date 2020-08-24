@@ -1,10 +1,7 @@
 #include "ActorRotateAction.h"
 
-#include <iostream>
 
 #include "../GameObject.h"
-#include "../components/PhysicsComponent.h"
-#include "../components/AnimationComponent.h"
 
 
 

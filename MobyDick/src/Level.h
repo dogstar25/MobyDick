@@ -22,7 +22,7 @@ public:
 
 	std::string m_id; //probably same as the textureId since the map is represented by a texture
 	int m_width, m_height; // in tile count
-	float m_tileWidth, m_tileHeight;
+	int m_tileWidth, m_tileHeight;
 	SDL_Rect m_levelBounds;
 
 	std::vector< std::vector <LevelObject> > levelObjects;

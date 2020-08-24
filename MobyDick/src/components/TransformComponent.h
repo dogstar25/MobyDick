@@ -25,24 +25,12 @@ public:
 	void setSize(float xSize, float ySize);
 	void setAngle(float angle);
 
-	b2Vec2 size() {
-		return m_size;
-	}
-	b2Vec2 position() {
-		return m_position;
-	}
-	b2Vec2 originalPosition() {
-		return m_originalPosition;
-	}
-	float angle() {
-		return m_angle;
-	}
-	bool absolutePositioning() {
-		return m_absolutePositioning;
-	}
-	bool centeredPositioning() {
-		return m_centeredPositioning;
-	}
+	b2Vec2 size() { return m_size; }
+	b2Vec2 position() {	return m_position; }
+	b2Vec2 originalPosition() {	return m_originalPosition; }
+	float angle() {	return m_angle;	}
+	bool absolutePositioning() { return m_absolutePositioning; }
+	bool centeredPositioning() { return m_centeredPositioning; }
 
 	SDL_FRect  getPositionRect();
 	SDL_FPoint getCenterPosition();

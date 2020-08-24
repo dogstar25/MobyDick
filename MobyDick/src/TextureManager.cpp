@@ -98,13 +98,11 @@ bool TextureManager::loadTextures()
 
 	//Get and store config values
 	std::string filename, id;
-	int size;
 	bool retainSurface = false;
 
 	SDL_Surface* surface;
 	SDL_Texture* sdlTexture;
 	Texture* textureObject;
-	TTF_Font* fontObject;
 
 	//Loop through every texture defined in the config file, create a texture object
 	//and store it in the main texture map

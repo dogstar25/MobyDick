@@ -1,12 +1,6 @@
 #include "WeaponComponent.h"
 
-#include "../GameObjectManager.h"
-#include "../ObjectPoolManager.h"
-#include "../SoundManager.h"
-#include "../GameObject.h"
-#include "../Scene.h"
 #include "../game.h"
-#include "../Globals.h"
 
 WeaponComponent::WeaponComponent()
 {
@@ -30,7 +24,7 @@ WeaponComponent::WeaponComponent(Json::Value definitionJSON)
 
 		weaponLevelDetail.level = itrWeaponLevel["level"].asInt();
 		weaponLevelDetail.levelUpTarget = itrWeaponLevel["levelUpTarget"].asInt();
-		weaponLevelDetail.force = itrWeaponLevel["force"].asInt();
+		weaponLevelDetail.force = itrWeaponLevel["force"].asFloat();
 		weaponLevelDetail.color.r = itrWeaponLevel["color"]["red"].asUInt();
 		weaponLevelDetail.color.g = itrWeaponLevel["color"]["red"].asUInt();
 		weaponLevelDetail.color.b = itrWeaponLevel["color"]["red"].asUInt();
@@ -59,17 +53,16 @@ void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 		m_weaponLevelDetails.at(m_currentLevel).bulletPoolId;
 	
 	//Get a free bullet
-	std::shared_ptr<GameObject> bullet = ObjectPoolManager::instance().getParticle(bulletPoolId);
+	std::optional<std::shared_ptr<GameObject>> bullet = ObjectPoolManager::instance().getPooledObject(bulletPoolId);
 
-	//Get references to the bullets components
-	auto& vitalityComponent = bullet->getComponent<VitalityComponent>();
-	auto& physicsComponent = bullet->getComponent<PhysicsComponent>();
-	auto& renderComponent = bullet->getComponent<RenderComponent>();
-
-	if (bullet != NULL) {
+	if(bullet.has_value()){
+		//Get references to the bullets components
+		auto& vitalityComponent = bullet.value()->getComponent<VitalityComponent>();
+		auto& physicsComponent = bullet.value()->getComponent<PhysicsComponent>();
+		auto& renderComponent = bullet.value()->getComponent<RenderComponent>();
 
 		SDL_Color color = m_weaponLevelDetails.at(m_currentLevel).color;
-		int force = m_weaponLevelDetails.at(m_currentLevel).force;
+		float force = m_weaponLevelDetails.at(m_currentLevel).force;
 
 		//Calculate the origin of the bullet
 		float dx = origin.x + cos(angle);
@@ -99,7 +92,7 @@ void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 		renderComponent->setColor(color);
 
 		//Add the bullet object to the main gameObject collection
-		Game::instance().addGameObject(bullet, LAYER_MAIN);
+		Game::instance().addGameObject(bullet.value(), LAYER_MAIN);
 	}
 
 }

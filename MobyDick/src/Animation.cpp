@@ -1,14 +1,9 @@
 #include "Animation.h"
 
-#include <iostream>
 
 #include "EnumMaps.h"
 #include "TextureManager.h"
 
-
-Animation::Animation()
-{
-}
 
 Animation::Animation(Json::Value animationDetailsJSON, Json::Value transformDetailsJSON)
 {
@@ -30,19 +25,14 @@ Animation::Animation(Json::Value animationDetailsJSON, Json::Value transformDeta
 	//First get width of textture
 	SDL_QueryTexture(m_texture, NULL, NULL, &width, &height);
 
-	//calculate frameSize
-	//if (gameObjectDefinition->isPhysicsObject == true)
-	//{
-	//	m_frameSize.x = gameObjectDefinition->xSize * GameConfig::instance().scaleFactor();
-	//	m_frameSize.y = gameObjectDefinition->ySize * GameConfig::instance().scaleFactor();
-	//}
 	m_frameSize.x = transformDetailsJSON["size"]["width"].asFloat();
 	m_frameSize.y = transformDetailsJSON["size"]["height"].asFloat();
 
 	//Calculate nnumber of rows and columns - remember to convert the gameObject size to pixels first
 	int rows, columns;
-	columns = width / m_frameSize.x;
-	rows = height / m_frameSize.y;
+	columns = (int)(width / m_frameSize.x);
+	rows = (int)(height / m_frameSize.y);
+
 	//	//Calculate top left corner of each animation frame
 	SDL_FPoint point;
 	int frameCount = 0;
@@ -96,11 +86,11 @@ int Animation::animate()
 		//build the rectangle that points to the current animation frame
 		std::shared_ptr<SDL_Rect> rect = std::make_shared<SDL_Rect>();
 
-		rect->x = m_animationFramePositions[m_currentAnimFrame].x;
-		rect->y = m_animationFramePositions[m_currentAnimFrame].y;
+		rect->x = (int)m_animationFramePositions[m_currentAnimFrame].x;
+		rect->y = (int)m_animationFramePositions[m_currentAnimFrame].y;
 
-		rect->w = m_frameSize.x;
-		rect->h = m_frameSize.y;
+		rect->w = (int)m_frameSize.x;
+		rect->h = (int)m_frameSize.y;
 
 		m_currentTextureAnimationSrcRect = rect;
 

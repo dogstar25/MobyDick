@@ -1,8 +1,6 @@
 #include "ContactFilter.h"
 
-#include <assert.h>
 
-#include "Globals.h"
 #include "GameObject.h"
 
 ContactFilter::ContactFilter()

@@ -1,13 +1,9 @@
 #include "ActionComponent.h"
 
-#include <assert.h>
 
-#include "../GameObject.h"
 #include "../actions/ActionMaps.h"
 #include "../EnumMaps.h"
 
-#include "../actions/MoveAction.h"
-#include "../actions/ActorMoveAction.h"
 
 ActionComponent::ActionComponent(Json::Value definitionJSON)
 {

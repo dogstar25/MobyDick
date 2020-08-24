@@ -20,7 +20,7 @@ public:
 	float mouseSensitivity() {
 		return m_mouseSensitivity;
 	}
-	SDL_FPoint debugPanelLocation() {
+	SDL_Point debugPanelLocation() {
 		return m_debugPanelLocation;
 	}
 	int debugPanelFontSize() {
@@ -79,7 +79,7 @@ private:
 		m_windowFullscreen,
 		m_debugPanel,
 		m_b2DebugDrawMode;
-	SDL_FPoint 
+	SDL_Point 
 		m_debugPanelLocation;
 	int
 		m_windowWidth,

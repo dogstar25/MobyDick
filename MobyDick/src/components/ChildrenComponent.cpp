@@ -1,7 +1,5 @@
 #include "ChildrenComponent.h"
 #include "../GameObject.h"
-#include "../GameObjectManager.h"
-#include "../GameConfig.h"
 
 ChildrenComponent::ChildrenComponent()
 {
@@ -21,7 +19,7 @@ ChildrenComponent::ChildrenComponent(Json::Value definitionJSON)
 		std::string childObjectId = itrChild["gameObjectId"].asString();
 		int locationSlot = itrChild["locationSlot"].asInt()-1;
 
-		m_childObjects[locationSlot].emplace_back(std::make_shared<GameObject>(childObjectId, 5.f, 5.f, 0))->init();
+		m_childObjects[locationSlot].emplace_back(std::make_shared<GameObject>(childObjectId, -1.0F, -1.0F, 0.F))->init();
 
 	}
 }
@@ -44,7 +42,7 @@ void ChildrenComponent::update()
 	{
 		locationSlot++;
 		int childNumber = 0;
-		int childCount = childLocations.size();
+		int childCount = (int)childLocations.size();
 	
 		for (auto& childObject : childLocations)
 		{
