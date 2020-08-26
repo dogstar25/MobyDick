@@ -33,8 +33,8 @@ public:
 
 	void outlineObject(SDL_Color color);
 	void setDependencyReferences(GameObject* gameObject);
-	void applyDisplayScheme(DisplayScheme);
-	void removeDisplayScheme();
+	void applyDisplayOverlay(displayOverlay);
+	void removeDisplayOverlay();
 
 	SDL_Rect* getRenderTextureRect();
 	SDL_Texture* getRenderTexture();
@@ -49,12 +49,8 @@ public:
 	}
 
 	//Accessors
-	SDL_Color color() {
-		return m_color;
-	}
-	std::shared_ptr<Texture> texture() {
-		return m_texture;
-	}
+	SDL_Color color() {	return m_color;	}
+	std::shared_ptr<Texture> texture() { return m_texture; }
 	
 
 
@@ -74,7 +70,7 @@ private:
 	std::string
 		m_textureId;
 
-	std::optional<DisplayScheme> m_displayScheme;
+	std::optional<displayOverlay> m_displayOverlay;
 
 	AnimationComponent* m_animationComponent;
 	TransformComponent* m_transformComponent;

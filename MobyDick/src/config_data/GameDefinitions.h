@@ -3,7 +3,9 @@
 #include <array>
 #include <vector>
 #include <bitset>
+#pragma warning(push,0)
 #include <box2d/box2d.h>
+#pragma warning(pop)
 
 #include "../actions/Action.h"
 #include "../actions/ActorMoveAction.h"
@@ -13,36 +15,32 @@
 
 using namespace std;
 
-
-
-
-namespace todd
-{
-	/*
-	** COMMON STRUCTS
-	*/
+/*
+** COMMON STRUCTS
+*/
+namespace GameObjectDefinitionStructures {
 	struct Size
 	{
-		int width;
-		int height;
+		int width{ 0 };
+		int height{ 0 };
 	};
 
 	struct Vec2
 	{
-		int x;
-		int y;
+		int x{ 0 };
+		int y{ 0 };
 	};
 
 	struct Vec2_f
 	{
-		float x;
-		float y;
+		float x{ 0.0 };
+		float y{ 0.0 };
 	};
 
 	/*
 	*	TRANSFORM COMPONENT
 	*/
-	struct TransformComponent
+	struct Transform_Component
 	{
 		Size size;
 		bool absolutePositioning;
@@ -53,11 +51,11 @@ namespace todd
 	*/
 	struct ActionItem
 	{
-		int		actionId;
-		Action* action;
+		int		actionId{ 0 };
+		Action* action{ nullptr };
 	};
 
-	struct ActionComponent
+	struct Action_Component
 	{
 		vector<ActionItem>	actions;
 	};
@@ -67,13 +65,13 @@ namespace todd
 	*/
 	struct Animation
 	{
-		int		state;
-		string	textureId;
-		float	speed;
-		int		frames;
+		int		state{ 0 };
+		string	textureId{ "" };
+		float	speed{ 0.0 };
+		int		frames{ 0 };
 	};
 
-	struct AnimationComponent
+	struct Animation_Component
 	{
 		vector<Animation> animations;
 	};
@@ -82,7 +80,7 @@ namespace todd
 		PHYSICS COMPONENT
 	*/
 
-	struct PysicsComponent
+	struct Pysics_Component
 	{
 		int				b2BodyType;
 		int				b2Shape;
@@ -96,86 +94,35 @@ namespace todd
 		Vec2_f			anchorPoint;
 	};
 
-	struct GameObjectDefinition
-	{
-
-		string			id;
-		//bitset<32>		identityTags;
-
-		TransformComponent	transformComponent;
-		AnimationComponent	animationComponent;
-		ActionComponent		actionComponent;
-		PysicsComponent		physicsComponent;
-
-	};
-
-	/*vector<GameObjectDefinition> testit =
-	{
-		{
-			.id = "GINA_64",
-			.transformComponent = {.size = {.width = 64, .height = 64}, .absolutePositioning = false },
-			.animationComponent = {
-				.animations = {
-					{.state = ANIMATION_IDLE, .textureId = "TX_GINA_64_IDLE", .speed = 0.10, .frames = 1 },
-					{.state = ANIMATION_RUN,  .textureId = "TX_GINA_64_RUN",  .speed = 0.10, .frames = 4 }
-				}
-			},
-			.actionComponent = {
-				.actions = {
-					 {.actionId = ACTION_MOVE,   .action = new ActorMoveAction() },
-					 {.actionId = ACTION_ROTATE, .action = new ActorRotateAction() },
-					 {.actionId = ACTION_USE,    .action = new ActorUseAction() }
-				}
-			},
-			.physicsComponent = {
-				.b2BodyType = b2_dynamicBody,
-				.b2Shape = b2Shape::e_circle,
-				.radius = 1,
-				.friction = 1,
-				.restitution = 1,
-				.density = 1,
-				.linearDamping = 1,
-				.angularDamping = 1,
-				.collisionCategory = COLLISION_PLAYER,
-				.anchorPoint = {.x = 1, .y = 1}
-				}
-		}
-	};*/
-
-
-	inline void test() {
-		GameObjectDefinition test2;
-		
-		
-		/////////////////////////////////
-		//GINA_64
-		////////////////////////////////
-		test2.id = "GINA_64";
-		//Transform Component
-		test2.transformComponent.size = { 64,64 };
-		test2.transformComponent.absolutePositioning = false;
-		//Animation Component
-		test2.animationComponent.animations.emplace_back(Animation() = { ANIMATION_IDLE,"TX_GINA_64_IDLE", 0.10, 1});
-		test2.animationComponent.animations.emplace_back(Animation() = { ANIMATION_RUN,"TX_GINA_64_RUN", 0.10, 4 });
-		//Action Component
-		test2.actionComponent.actions.emplace_back(ActionItem() = { ACTION_MOVE, new ActorMoveAction() });
-		test2.actionComponent.actions.emplace_back(ActionItem() = { ACTION_ROTATE, new ActorRotateAction() });
-		test2.actionComponent.actions.emplace_back(ActionItem() = { ACTION_USE, new ActorUseAction() });
-		//Physics Component
-		test2.physicsComponent = { 
-			.b2BodyType = b2_dynamicBody, 
-			.b2Shape = b2Shape::e_circle, 
-			.radius = 0.64, 
-			.friction = 0, 
-			.restitution = 0, 
-			.density = 50.5, 
-			.linearDamping = 0.2, 
-			.angularDamping = 2.0,  
-			.collisionCategory = IdTag::PLAYER,
-			.anchorPoint = {.8, 0} };
-	}
-
 }
+
+using namespace GameObjectDefinitionStructures;
+
+struct GameObjectDef
+{
+
+
+	string			id;
+	//bitset<32>		identityTags;
+
+	Transform_Component	transformComponent;
+	Animation_Component	animationComponent;
+	Action_Component	actionComponent;
+	Pysics_Component	physicsComponent;
+
+};
+
+struct GameDefs {
+
+	static GameDefs& instance();
+	GameDefs();
+
+	GameObjectDef gina_64;
+	GameObjectDef swordlady;
+
+
+};
+
 
 
 

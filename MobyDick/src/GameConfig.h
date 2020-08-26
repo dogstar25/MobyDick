@@ -2,7 +2,11 @@
 #define GAME_CONFIG_H
 
 #include <SDL2/SDL.h>
+
+#pragma warning(push,0)
 #include <box2d/box2d.h>
+#pragma warning(pop)
+
 
 #include <string>
 

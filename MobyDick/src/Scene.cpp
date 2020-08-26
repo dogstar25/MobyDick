@@ -158,15 +158,19 @@ void Scene::update() {
 				gameObjects.erase(gameObjects.begin() + i);
 			}
 		}
+
+		//gameObjects.shrink_to_fit();
+
 	}
 
+
 	//Update each gameObject in all layers
-	for (auto& gameObjectLayer : m_gameObjects)
+	for (auto& gameObjects : m_gameObjects)
 	{
-		for (auto& gameObject : gameObjectLayer)
+		for (int i = 0; i < gameObjects.size(); i++)
 		{
-			assert(gameObject != nullptr && "GameObject is null");
-			gameObject->update();
+			//assert(gameObject != nullptr && "GameObject is null");
+			gameObjects[i]->update();
 		}
 	}
 

@@ -2,7 +2,9 @@
 #include <string>
 #include <array>
 #include <vector>
+#pragma warning(push,0)
 #include <box2d/box2d.h>
+#pragma warning(pop)
 
 #include "../Globals.h"
 

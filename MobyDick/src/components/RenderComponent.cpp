@@ -135,60 +135,8 @@ void RenderComponent::outlineObject(SDL_Color color)
 
 	SDL_FRect gameObjectDrawRect = getRenderDestRect();
 
-	//Set render scale to match linesize passed in
-	/*SDL_RenderGetScale(Renderer::instance().SDLRenderer(), &saveScaleX, &saveScaleY);
-	SDL_RenderSetScale(Renderer::instance().SDLRenderer(), lineSize, lineSize);*/
-
 	SDL_SetRenderDrawColor(Renderer::instance().SDLRenderer(), color.r, color.g, color.b, 255);
 	SDL_RenderDrawRectF(Renderer::instance().SDLRenderer(), &gameObjectDrawRect);
-
-	//Rest Scale to whatever is was before
-	//SDL_RenderSetScale(Renderer::instance().SDLRenderer(), saveScaleX, saveScaleY);
-
-
-
-
-
-	//std::vector<SDL_FPoint> points;
-	//SDL_FRect gameObjectDrawRect = getRenderDestRect();
-	//float saveScaleX, saveScaleY;
-	//SDL_FPoint point;
-
-	//////Adjust for camera
-	//if (m_transformComponent->absolutePositioning() == false)
-	//{
-	//	gameObjectDrawRect.x -= Camera::instance().frame().x;
-	//	gameObjectDrawRect.y -= Camera::instance().frame().y;
-	//}
-
-	////topleft
-	//point.x = gameObjectDrawRect.x / lineSize;
-	//point.y = gameObjectDrawRect.y / lineSize;
-	//points.push_back(point);
-
-	////topright
-	//point.x = (gameObjectDrawRect.x + gameObjectDrawRect.w) / lineSize;
-	//point.y = gameObjectDrawRect.y / lineSize;
-	//points.push_back(point);
-
-	////bottomright
-	//point.x = (gameObjectDrawRect.x + gameObjectDrawRect.w) / lineSize;
-	//point.y = (gameObjectDrawRect.y + gameObjectDrawRect.h) / lineSize;
-	//points.push_back(point);
-
-	////bottomleft
-	//point.x = gameObjectDrawRect.x / lineSize;
-	//point.y = (gameObjectDrawRect.y + gameObjectDrawRect.h) / lineSize;
-	//points.push_back(point);
-
-	////add the topleft as last point to complete the shape
-	//point.x = gameObjectDrawRect.x / lineSize;
-	//point.y = gameObjectDrawRect.y / lineSize;
-	//points.push_back(point);
-
-	//Renderer::instance().outlineObject(points, lineSize, color);
-
-	//points.clear();
 
 }
 
@@ -223,14 +171,14 @@ void RenderComponent::render()
 		SDL_Texture* texture = getRenderTexture();
 		float angle = m_transformComponent->angle();
 
-		//Set the color. Use the DisplayScene values if there is one
-		if (m_displayScheme.has_value() && m_displayScheme->color.has_value()) {
+		//Set the color. Use the displayOverlay values if there is one
+		if (m_displayOverlay.has_value() && m_displayOverlay->color.has_value()) {
 
-			SDL_SetTextureAlphaMod(texture, m_displayScheme->color->a);
+			SDL_SetTextureAlphaMod(texture, m_displayOverlay->color->a);
 			SDL_SetTextureColorMod(texture,
-				m_displayScheme->color->r,
-				m_displayScheme->color->g,
-				m_displayScheme->color->b);
+				m_displayOverlay->color->r,
+				m_displayOverlay->color->g,
+				m_displayOverlay->color->b);
 		}
 		else
 		{
@@ -238,17 +186,7 @@ void RenderComponent::render()
 			SDL_SetTextureColorMod(texture, m_color.r, m_color.g, m_color.b);
 		}
 		
-
-		//if (parent()->idTag() == IdTag::SMOKE_PARTICLE) {
-			/*std::cout << "Render " << parent()->id();
-			std::cout << "\tTexture " << texture;
-			std::cout << "\ttextureSourceRect " << textureSourceRect;
-			std::cout << "\trect width" << destRect.w;
-			std::cout << "\n";*/
-		//	std::cout << "textureSourceRect Dest " << textureSourceRect << "\n";
-
-
-		//}
+		SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD);
 
 		//Render the texture
 		SDL_RenderCopyExF(
@@ -261,9 +199,9 @@ void RenderComponent::render()
 			SDL_FLIP_NONE);
 
 		//Outline the gameObject if defined to 
-		if (m_displayScheme.has_value() && m_displayScheme->outlined == true) {
+		if (m_displayOverlay.has_value() && m_displayOverlay->outlined == true) {
 
-			outlineObject(m_displayScheme->outlineColor);
+			outlineObject(m_displayOverlay->outlineColor);
 		}
 		else {
 
@@ -283,14 +221,14 @@ void RenderComponent::setDependencyReferences(GameObject* gameObject)
 
 }
 
-void RenderComponent::applyDisplayScheme(DisplayScheme displayScheme)
+void RenderComponent::applyDisplayOverlay(displayOverlay displayOverlay)
 {
-	m_displayScheme = displayScheme;
+	m_displayOverlay = displayOverlay;
 }
 
-void RenderComponent::removeDisplayScheme()
+void RenderComponent::removeDisplayOverlay()
 {
-	m_displayScheme.reset();
+	m_displayOverlay.reset();
 }
 
 //void RenderComponent::render(SDL_FRect* destRect, SDL_Color color)

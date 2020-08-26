@@ -28,14 +28,6 @@ public:
 
 	void update();
 
-	std::shared_ptr<MoveAction> buildMoveAction(int direction, int strafe);
-	std::shared_ptr<RotateAction> buildRotateAction(float angularVelocity);
-	std::shared_ptr<Action> buildUseAction();
-	std::shared_ptr<Action> buildInteractAction();
-	std::shared_ptr<Action> buildOnHoverAction();
-	std::shared_ptr<Action> buildOnHoverOutAction();
-	std::shared_ptr<Action> buildOnClickAction();
-
 	void performMoveAction(int direction, int strafe);
 	void performRotateAction(float angularVelocity);
 	void performUseAction();
@@ -45,15 +37,8 @@ public:
 	void performOnHoverOutAction();
 	void performOnClickAction();
 
-	//Try different approach
-	//std::shared_ptr<Action> m_moveAction;
-
-	std::vector<std::shared_ptr<Action>>m_actions;
-
-
 private:
-	
-
+	std::vector<std::shared_ptr<Action>>m_actions;
 
 };
 

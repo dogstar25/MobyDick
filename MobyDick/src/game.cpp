@@ -6,6 +6,7 @@
 #include "Clock.h"
 #include "ContactFilter.h"
 #include "ContactListener.h"
+#include "config_data/GameDefinitions.h"
 
 
 
@@ -148,6 +149,7 @@ bool Game::init()
 	scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);
 	//scene.addGameObject("SWORDLADY", LAYER_MAIN, 10, 1);
 
+	auto test = GameDefs::instance().gina_64;
 
 
 	return true;

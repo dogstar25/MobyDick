@@ -2,9 +2,11 @@
 #define WEAPON_COMPONENT_H
 
 #include<string>
+#pragma warning(push,0)
 #include <box2d/box2d.h>
-#include <SDL2/SDL.h>
 #include <json/json.h>
+#pragma warning(pop)
+#include <SDL2/SDL.h>
 
 #include "Component.h"
 
@@ -25,7 +27,6 @@ class WeaponComponent : public Component
 public:
 	WeaponComponent();
 	WeaponComponent(Json::Value definitionJSON);
-	WeaponComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust);
 	~WeaponComponent();
 
 	void update();

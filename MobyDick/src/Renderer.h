@@ -6,10 +6,14 @@
 #include <optional>
 
 #include <SDL2/SDL.h>
+
+#pragma warning(push,0)
 #include <box2d/box2d.h>
+#pragma warning(pop)
 
 
-struct DisplayScheme
+
+struct displayOverlay
 {
 	std::optional<SDL_Color> color;
 	bool outlined;
@@ -17,18 +21,18 @@ struct DisplayScheme
 	int outlineWidth;
 };
 
-namespace DisplaySchemes {
+namespace displayOverlays {
 
-	static const DisplayScheme outline{
+	static const displayOverlay outline{
 
-		.color = (std::in_place, SDL_Color{255,255,255,255} ),
+		.color = std::nullopt,
 		.outlined = true,
 		.outlineColor = {0,255,0,255},
 		.outlineWidth = {1}
 	};
 
 	/*
-	....Add more DisplaySchemes here
+	....Add more displayOverlays here
 	*/
 }
 

@@ -10,10 +10,10 @@
 
 class TransformComponent;
 
-class AnimationComponent :  public Component
+class AnimationComponent : public Component
 {
 public:
-	AnimationComponent();
+	AnimationComponent() {};
 	AnimationComponent(Json::Value definitionJSON);
 	~AnimationComponent();
 
@@ -22,23 +22,16 @@ public:
 	SDL_Texture* getCurrentAnimationTexture();
 	void animate(int animationState, int animationMode);
 
-	void setCurrentAnimationState(int animationState) { 
-		m_currentAnimationState = animationState; 
-	}
+	void setCurrentAnimationState(int animationState) { m_currentAnimationState = animationState; }
+	int currentAnimationState() { return m_currentAnimationState; }
 
-	//Accessors
-	int currentAnimationState() {
-		return m_currentAnimationState;
-	}
-	std::map<int, std::shared_ptr<Animation>>& animations() {
-		return m_animations;
-	}
+	std::map<int, std::shared_ptr<Animation>>& animations() { return m_animations; }
 
 private:
 
-	int m_currentAnimationState;
-	int m_currentAnimationMode;
-	int m_defaultAnimationState;
+	int m_currentAnimationState{ 0 };
+	int m_currentAnimationMode{ ANIMATE_ONE_TIME };
+	int m_defaultAnimationState{ 0 };
 
 	std::map<int, std::shared_ptr<Animation>> m_animations;
 

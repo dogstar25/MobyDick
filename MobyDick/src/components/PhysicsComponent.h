@@ -1,7 +1,9 @@
 #ifndef PHYSICS_COMPONENT_H
 #define PHYSICS_COMPONENT_H
 
+#pragma warning(push,0)
 #include <box2d/box2d.h>
+#pragma warning(pop)
 
 #include "Component.h"
 

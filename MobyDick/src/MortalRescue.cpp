@@ -1,6 +1,8 @@
 #include "Game.h"
 #include <iostream>
+#include "config_data/GameDefinitions.h"
 
+//extern GameDefs gameDefs;
 
 int main(int argc, char* args[])
 {

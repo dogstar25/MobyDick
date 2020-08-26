@@ -5,11 +5,6 @@
 #include "../GameObject.h"
 
 
-
-AnimationComponent::AnimationComponent()
-{
-}
-
 AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 {
 

@@ -15,25 +15,14 @@ public:
 	~InventoryComponent();
 
 	size_t addItem(GameObject* gameObject);
+	std::vector<GameObject*> items() { return m_items; }
+	int activeItem() {	return m_activeItem; }
 
-	std::vector<GameObject*> items() {
-		return m_items;
-	}
-
-	int activeItem() {
-		return m_activeItem;
-	}
-
-	GameObject* getActiveItem() {
-
-		assert(m_activeItem < m_items.size() && "activeItem is out of range of current items");
-
-		return m_items[m_activeItem];
-	}
+	GameObject* getActiveItem();
 
 private:
 
-	int m_activeItem;
+	int m_activeItem{ 0 };
 	std::vector<GameObject*> m_items;
 
 

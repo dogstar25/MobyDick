@@ -1,6 +1,8 @@
 #include "EnumMaps.h"
 
-#include "box2d/box2d.h"
+#pragma warning(push,0)
+#include <box2d/box2d.h>
+#pragma warning(pop)
 
 EnumMap& EnumMap::instance()
 {

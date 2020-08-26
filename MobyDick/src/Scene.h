@@ -16,7 +16,7 @@
 
 struct SceneAction
 {
-	int actionCode;
+	int actionCode{ 0 };
 	std::string sceneId;
 };
 

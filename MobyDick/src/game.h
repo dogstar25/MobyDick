@@ -1,7 +1,12 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <Box2D/Box2D.h>
+
+#pragma warning(push,0)
+#include <box2d/box2d.h>
+#include <json/json.h>
+#pragma warning(pop)
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_mixer.h>

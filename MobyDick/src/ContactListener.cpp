@@ -139,7 +139,8 @@ void ContactListener::bullet_wall(GameObject* contact1, GameObject* contact2, b2
 	auto gameObject = Game::instance().addGameObject("PARTICLE_ONETIME_EMITTER", LAYER_MAIN, -1, -1);
 	auto& particleComponent = gameObject->getComponent<ParticleComponent>();
 	particleComponent->addParticleEffect(ParticleEffects::ricochet);
-	particleComponent->setType(ParticleEmitterType::ONETIME);
+	particleComponent->setType(ParticleEmitterType::CONTINUOUS);
+	particleComponent->setEmissionInterval(std::chrono::duration<float>(0.2));
 
 	//Convert from box2d to gameWorld coordinates
 	contactPoint.x *= GameConfig::instance().scaleFactor();

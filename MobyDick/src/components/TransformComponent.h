@@ -1,9 +1,12 @@
 #ifndef TRANSFORM_COMPONENT_H
 #define TRANSFORM_COMPONENT_H
 
-#include "box2d/box2d.h"
 #include <SDL2/SDL.h>
+
+#pragma warning(push,0)
+#include <box2d/box2d.h>
 #include <json/json.h>
+#pragma warning(pop)
 
 #include "Component.h"
 

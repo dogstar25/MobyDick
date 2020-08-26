@@ -203,6 +203,7 @@
     <ClCompile Include="src\actions\MoveAction.cpp" />
     <ClCompile Include="src\actions\RotateAction.cpp" />
     <ClCompile Include="src\actions\ItemUsageAction.cpp" />
+    <ClCompile Include="src\config_data\GameObjectDefinitions.cpp" />
     <ClCompile Include="src\ContactFilter.cpp" />
     <ClCompile Include="src\ContactListener.cpp" />
     <ClCompile Include="src\MortalRescue.cpp" />

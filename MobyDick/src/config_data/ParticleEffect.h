@@ -2,7 +2,10 @@
 
 #include <string>
 
+#pragma warning(push,0)
 #include <box2d/box2d.h>
+#pragma warning(pop)
+
 #include <SDL2/SDL.h>
 
 
@@ -34,18 +37,18 @@ namespace ParticleEffects {
 		.poolId = "SMOKE1_POOL",
 		.originMin = {0,0},
 		.originMax = {0,0},
-		.forceMin = 5,
-		.forceMax = 5,
-		.lifetimeMin = 2.0F,
-		.lifetimeMax = 2.0F,
-		.alphaFade = false,
+		.forceMin = 1,
+		.forceMax = 4,
+		.lifetimeMin = 0.5F,
+		.lifetimeMax = 6.0F,
+		.alphaFade = true,
 		.angleMin = 0,
-		.angleMax = 360,
-		.particleSizeMin = 10.28F,
-		.particleSizeMax = 20.50F,
+		.angleMax = 180,
+		.particleSizeMin = 1.28F,
+		.particleSizeMax = 15.50F,
 		.colorRangeBegin = {0,0,0,255},
 		.colorRangeEnd = {255,255,255,255},
-		.particleSpawnCountMin = 5,
-		.particleSpawnCountMax = 25
+		.particleSpawnCountMin = 1,
+		.particleSpawnCountMax = 21
 	};
 }

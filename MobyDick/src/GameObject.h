@@ -10,7 +10,9 @@
 #include <unordered_map>
 #include <typeindex>
 
-#include <Box2D/Box2D.h>
+#pragma warning(push,0)
+#include <box2d/box2d.h>
+#pragma warning(pop)
 
 #include "GameObjectDefinition.h"
 #include "components/TransformComponent.h"

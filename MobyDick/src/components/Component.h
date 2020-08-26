@@ -31,19 +31,13 @@ public:
 	~Component();
 	virtual void update();
 
-	void setParent(GameObject* gameObject) {
+	void setParent(GameObject* gameObject) { m_parentGameObject = gameObject; }
+	GameObject* parent() { return m_parentGameObject; }
 
-		m_parentGameObject = gameObject;
-	}
-	GameObject* parent() {
-
-		return m_parentGameObject;
-	}
-
-	std::string m_gameObjectId;
+	std::string m_gameObjectId{ "" };
 
 protected:
-	GameObject* m_parentGameObject;
+	GameObject* m_parentGameObject{ nullptr };
 
 
 };

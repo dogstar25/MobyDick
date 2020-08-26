@@ -16,7 +16,7 @@ DefaultOnHoverAction::~DefaultOnHoverAction()
 void DefaultOnHoverAction::perform(GameObject* gameObject)
 {
 	const auto& renderComponent = gameObject->getComponent<RenderComponent>();
-	renderComponent->applyDisplayScheme(DisplaySchemes::outline);
+	renderComponent->applyDisplayOverlay(displayOverlays::outline);
 
 
 }

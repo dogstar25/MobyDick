@@ -8,7 +8,6 @@ ParticleComponent::ParticleComponent(Json::Value definitionJSON )
 {
 	Json::Value particleComponentJSON = definitionJSON["particleComponent"];
 
-
 }
 
 ParticleComponent::~ParticleComponent()
@@ -16,8 +15,25 @@ ParticleComponent::~ParticleComponent()
 
 }
 
+void ParticleComponent::setEmissionInterval(std::chrono::duration<float> emissionInterval)
+{
+	m_emissionInterval = emissionInterval;
+}
+
+
 void ParticleComponent::update()
 {
+
+	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
+	std::chrono::duration<double> time_diff = now_time - m_timeSnapshot;
+
+	//Only emit particles at the given time interval
+	if (time_diff < m_emissionInterval) {
+		return;
+	}
+	else{
+		m_timeSnapshot = now_time;
+	}
 
 	for (auto& effect : m_particleEffects) {
 
@@ -33,6 +49,8 @@ void ParticleComponent::update()
 
 			//Get the particle object from the pre-populated particle pool
 			std::optional<std::shared_ptr<GameObject>> particle = ObjectPoolManager::instance().getPooledObject(effect.poolId);
+			//auto& particle = std::make_shared<GameObject>("PARTICLE_SMOKE_1", -50.0f, -50.0f, 0.0f);
+			//particle->init(false);
 
 			//If the returned particle is null, then the pool has run out, so do nothing
 			if (particle)

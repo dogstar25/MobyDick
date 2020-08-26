@@ -47,6 +47,7 @@ PhysicsComponent::~PhysicsComponent()
 {
 
 }
+
 void PhysicsComponent::setTransform(b2Vec2 positionVector, float angle)
 {
 	m_physicsBody->SetTransform(positionVector, angle);
