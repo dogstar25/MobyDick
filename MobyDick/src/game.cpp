@@ -131,8 +131,6 @@ bool Game::init()
 
 		//Load the First level
 		//Level::instance().load("level1");
-
-
 	}
 
 	//Load a first scene
@@ -221,8 +219,6 @@ GameObject* Game::addGameObject(std::string gameObjectId, int layer, float xMapP
 	return gameObject;
 
 }
-
-
 
 
 
