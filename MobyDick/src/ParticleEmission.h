@@ -43,11 +43,11 @@ public:
 		forceMin,
 		forceMax,
 		particleCountMin,
-		particleCountMax;
+		particleCountMax,
+		angleMin,
+		angleMax;
 
 	float
-		angleMin,
-		angleMax,
 		//originX,
 		//originY,
 		lifetimeMin,

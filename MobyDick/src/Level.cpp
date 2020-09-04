@@ -3,12 +3,7 @@
 #include <iostream>
 #include <fstream>
 
-#include <json/json.h>
 
-#include "Globals.h"
-#include "TextureManager.h"
-#include "WorldObject.h"
-#include "GameObjectManager.h"
 #include "Game.h"
 
 
@@ -95,6 +90,9 @@ void Level::_loadDefinition(std::string levelId)
 		m_levelBounds.w = m_width * m_tileWidth;
 		m_levelBounds.h = m_height * m_tileHeight;
 
+		//Initialize World bounds
+		Game::instance().setWorldParams(m_levelBounds, m_tileWidth, m_tileHeight);
+
 		LevelObject* locationDefinition = NULL;
 		std::string locationId;
 		for (auto itr : root["locationObjects"])
@@ -113,12 +111,9 @@ void Level::_loadDefinition(std::string levelId)
 	}
 }
 
-void Level::load(std::string levelId)
+void Level::load(std::string levelId, Scene* scene)
 {
 
-	SDL_Texture* levelImage;
-	SDL_PixelFormat* fmt;
-	SDL_Color* color;
 	SDL_Surface* surface;
 
 	//Load the Level definition
@@ -161,7 +156,7 @@ void Level::load(std::string levelId)
 
 	//Build all of the objects that make up this level and store them
 	//In the main gameObject collection
-	_buildLevelObjects();
+	_buildLevelObjects(scene);
 }
 
 LevelObject* Level::_determineTile(int x, int y, SDL_Surface* surface)
@@ -308,22 +303,17 @@ LevelObject* Level::_determineTile(int x, int y, SDL_Surface* surface)
 
 }
 
-void Level::_buildLevelObjects()
+void Level::_buildLevelObjects(Scene* scene)
 {
 	LevelObject* levelObject;
-	WorldObject* worldObject;
 
-	for (int y = 0; y < m_height; y++)
-	{
-		for (int x = 0; x < m_width; x++)
-		{
+	for (int y = 0; y < m_height; y++) {
+		for (int x = 0; x < m_width; x++) {
 
-			if (levelObjects[x][y].gameObjectId.empty() == false)
-			{
+			if (levelObjects[x][y].gameObjectId.empty() == false) {
 				levelObject = &levelObjects[x][y];
 
-				worldObject = GameObjectManager::instance().buildGameObject <WorldObject>(levelObject->gameObjectId, x, y, levelObject->angleAdjustment);
-				Game::instance().addGameObject(worldObject, GameOjectLayer::MAIN);
+				scene->addGameObject( levelObject->gameObjectId, LAYER_MAIN, (float)x, (float)y, (float)levelObject->angleAdjustment);
 
 			}
 

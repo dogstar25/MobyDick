@@ -10,10 +10,10 @@ public:
 	~EnumMap();
 
 	static EnumMap& instance();
-	size_t toEnum(std::string name);
+	const int toEnum(std::string name);
 
 private:
-	std::map<std::string, size_t> m_enumMap;
+	std::map<std::string, int> m_enumMap;
 
 };
 

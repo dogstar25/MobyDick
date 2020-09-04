@@ -8,6 +8,8 @@
 
 #include "Waypoint.h"
 
+class Scene;
+
 struct LevelObject
 {
 	std::string gameObjectId;
@@ -20,8 +22,8 @@ public:
 
 	std::string m_id; //probably same as the textureId since the map is represented by a texture
 	int m_width, m_height; // in tile count
-	float m_tileWidth, m_tileHeight;
-	SDL_FRect m_levelBounds;
+	int m_tileWidth, m_tileHeight;
+	SDL_Rect m_levelBounds;
 
 	std::vector< std::vector <LevelObject> > levelObjects;
 
@@ -30,15 +32,11 @@ public:
 	void addLevelObject(int xIndex, int yIndex, LevelObject levelObject);
 	void setLevelObjectArraySize(int width, int height);
 
-	void load(std::string levelId);
+	void load(std::string levelId, Scene* scene);
 
 	//Accessor Functions
-	std::string description() {
-		return m_description;
-	}
-	const std::vector<Waypoint>& waypoints() {
-		return m_waypoints;
-	}
+	std::string description() {	return m_description; }
+	const std::vector<Waypoint>& waypoints() { return m_waypoints; }
 
 private:
 	std::string m_description;
@@ -49,7 +47,7 @@ private:
 
 	LevelObject* _determineTile(int, int, SDL_Surface*);
 	void _loadDefinition(std::string levelId);
-	void _buildLevelObjects();
+	void _buildLevelObjects(Scene* scene);
 
 };
 

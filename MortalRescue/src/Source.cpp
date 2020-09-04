@@ -1,5 +1,4 @@
 #include "Game.h"
-
 #include <iostream>
 
 
@@ -24,7 +23,6 @@ int main(int argc, char* args[])
 			break;
 		}
 	}
-
 
 	return 0;
 }

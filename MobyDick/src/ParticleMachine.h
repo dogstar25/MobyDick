@@ -6,11 +6,14 @@
 
 #include "ParticleEmission.h"
 
+class Scene;
+
 class ParticleMachine
 {
 public:
-	static ParticleMachine& instance();
-	
+	ParticleMachine(Scene* scene);
+	~ParticleMachine();
+
 	void update();
 	
 	void runParticleEmissions();
@@ -42,10 +45,10 @@ public:
 	);
 
 private:
-	ParticleMachine();
-	~ParticleMachine();
 
 	std::vector <ParticleEmission*> m_particleEmissions;
+	//Reference pointer to parent Scene
+	Scene* m_parentScene; //memory owned by SceneManager
 
 
 

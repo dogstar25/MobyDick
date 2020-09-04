@@ -40,7 +40,7 @@ void WeaponObject::fire(const b2Vec2 &origin, const float &angle, const float &f
 		float dx = origin.x + cos(angle);
 		float dy = origin.y + sin(angle);
 
-		//Calculate offset values of bullet spawning origin adding an offset for the fireing object
+		//Calculate offset values of bullet spawning origin adding an offset for the firing object
 		float xAdj = cos(angle) * (fireOffset);
 		float yAdj = sin(angle) * (fireOffset);
 

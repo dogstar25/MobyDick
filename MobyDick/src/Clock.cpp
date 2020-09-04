@@ -49,7 +49,7 @@ void Clock::calcFps()
 	//Every 100 frames calculate how much time ellapsed, to calculate the FPS average
 	if (m_current_frame_cnt >= 100)
 	{
-		m_fps = m_current_frame_cnt / m_fps_time_accum.count();
+		m_fps = (int)(m_current_frame_cnt / m_fps_time_accum.count());
 		m_fps_time_accum = 0ns;
 		m_current_frame_cnt = 0;
 	}

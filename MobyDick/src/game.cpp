@@ -1,26 +1,14 @@
 #include "Game.h"
 
-#include "GameObject.h"
-#include "PlayerObject.h"
-#include "TextObject.h"
-#include "ParticleObject.h"
-#include "CompositeObject.h"
-#include "Level.h"
-#include "TextureManager.h"
 #include "GameObjectManager.h"
 #include "SoundManager.h"
-#include "DynamicTextManager.h"
-#include "ParticleMachine.h"
-#include "GameConfig.h"
 #include "Camera.h"
-#include "WeaponObject.h"
-#include "GUIEvent.h"
 #include "Clock.h"
-#include "ObjectPoolManager.h"
+#include "ContactFilter.h"
+#include "ContactListener.h"
+#include "config_data/GameDefinitions.h"
 
 
-//temp
-#include "ComponentDefinitions.h"
 
 using namespace std::chrono_literals;
 
@@ -39,18 +27,17 @@ Game::~Game()
 	//Delete SDL stuff
 	SDL_DestroyWindow(m_window);
 	SDL_Quit();
-	TTF_Quit();
+	
 
-	for (int x = 0; x < constants::MAX_GAMEOBJECT_LAYERS; x++)
+	for (int x = 0; x < MAX_GAMEOBJECT_LAYERS; x++)
 	{
-		m_gameCollections[x].gameObjects().clear();
-		m_gameCollections[x].particleObjects().clear();
+		m_gameObjects[x].clear();
 	}
 
-	delete m_player;
-
-	//Delete box2d world - should delete all bodies and fixtures within
+	////Delete box2d world - should delete all bodies and fixtures within
 	delete m_physicsWorld;
+
+	TTF_Quit();
 
 
 }
@@ -58,11 +45,9 @@ Game::~Game()
 Game::Game()
 {
 
-	m_physicsWorld = nullptr;
+	//m_physicsWorld = nullptr;
 
 	m_window = nullptr;
-
-	m_player = nullptr;
 
 }
 
@@ -72,19 +57,19 @@ Initialize Game
 bool Game::init()
 {
 
-	m_gameState = GameState::PLAY;
+	//string it = todd::testit[0].id;
+	//SceneConfigData::scenes;
 
+	//std::string test = todd::testit[0].id;
+
+	m_gameState = GameState::PLAY;
 
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
 	
-
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
-
-		//Initialize the camera
-		//Camera::instance().init();
 
 		//Init font library
 		TTF_Init();
@@ -108,24 +93,29 @@ bool Game::init()
 			windowFlags);
 
 		//Initialize the texture manager
+		Renderer::instance().init(m_window);
+
+		//Initialize the texture manager
 		TextureManager::instance().init(m_window);
 
 		//Initialize the sound manager
 		SoundManager::instance().initSound();
-		SoundManager::instance().playMusic("MUSIC_AMBIENCE_1", -1);
+		//SoundManager::instance().playMusic("MUSIC_AMBIENCE_1", -1);
 
 		// Construct a physics world object, which will hold and simulate the physics objects.
 		m_physicsWorld = new b2World(GameConfig::instance().gravity());
 		m_physicsWorld->SetAutoClearForces(true);
-		//Add a collision contact listener
-		m_physicsWorld->SetContactListener(&m_gameObjectContactListner);
+
+		//Add a collision contact listener and filter for box2d callbacks
+		m_physicsWorld->SetContactListener(&ContactListener::instance());
+		m_physicsWorld->SetContactFilter(&ContactFilter::instance());
 
 		//Debug Mode
-		if (GameConfig::instance().b2DebugDrawMode() == true)
+		/*if (GameConfig::instance().b2DebugDrawMode() == true)
 		{
 			DebugDraw::instance().SetFlags(DebugDraw::e_shapeBit);
 			m_physicsWorld->SetDebugDraw(&DebugDraw::instance());
-		}
+		}*/
 
 		//Initilaze the Game Object Manager
 		GameObjectManager::instance().init();
@@ -133,69 +123,32 @@ bool Game::init()
 		//Initilaze the Particle Pool Manager
 		ObjectPoolManager::instance().init();
 
-		//Set the mouse mode
-		SDL_ShowCursor(false);
-		SDL_SetRelativeMouseMode(SDL_TRUE);
+		//Initilaize the SceneManager
+		SceneManager::instance().init();
 
 		//Initialize the clock object
 		Clock::instance().init();
 
 		//Load the First level
-		Level::instance().load("level1");
-
-		//Initilaize Camera size and
-		Camera::instance().init();
-		
+		//Level::instance().load("level1");
 	}
 
-	//Allocate the array of vectors for all game objects
-	//this->gameObjects = vector<unique_ptr<GameObject>>[this->MAX_LAYERS];
+	//Load a first scene
+	Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
+	scene.applyCurrentControlMode();
+	//scene.addGameObject("BULLET1", LAYER_MAIN, 2, 2, 0);
+
+	//Load the player and some other objects
+	auto playerObject = scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
+	auto weaponObject = scene.addGameObject("PISTOL", LAYER_MAIN, 8, 8, 0, true);
+	playerObject->addInventoryItem(weaponObject);
 
 	
-	GameObject* gameObject = NULL;
-	PlayerObject* playerObject = NULL;
-	WorldObject* worldObject = NULL;
-	TextObject* textObject = NULL;
-	CompositeObject* compositeObject = NULL;
+	scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);
+	//scene.addGameObject("SWORDLADY", LAYER_MAIN, 10, 1);
 
-	//Create the main player object
-	m_player = GameObjectManager::instance().buildGameObject <PlayerObject>("GINA_64", 4, 4, 0);
-	m_player->addWeapon("WEAPON1");
+	auto test = GameDefs::instance().gina_64;
 
-	//set camera to center on player object
-	//
-	//TODO:Can we remove this?
-	//
-	Camera::instance().setFramePosition(
-		(m_player->physicsBody()->GetPosition().x * GameConfig::instance().scaleFactor()) -
-		(Camera::instance().frame().w / 2),
-		(m_player->physicsBody()->GetPosition().y * GameConfig::instance().scaleFactor()) -
-		(Camera::instance().frame().h / 2));
-
-	//CREATE A TEST TEXT ITEM          
-	textObject = GameObjectManager::instance().buildGameObject <TextObject>("FPS_LABEL", 0, 0, 0);
-	this->addGameObject(textObject, GameOjectLayer::TEXT);
-
-	//CREATE A DYNAMIC TEST TEXT ITEM
-	textObject = GameObjectManager::instance().buildGameObject <TextObject>("FPS_VALUE", 0, 1, 0);
-	this->addGameObject(textObject, GameOjectLayer::TEXT);
-	
-	gameObject = GameObjectManager::instance().buildGameObject <GameObject>("SWORDLADY", 1, 1, 0);
-	this->addGameObject(gameObject, GameOjectLayer::MAIN);
-
-	//gameObject = gameObjectManager.buildGameObject <GameObject>("ROCK128", 13, 13, 0);
-	//this->addGameObject(gameObject, this->MAIN);
-
-	compositeObject = GameObjectManager::instance().buildGameObject <CompositeObject>("DRONE", 11, 11, 0);
-	this->addGameObject(compositeObject, GameOjectLayer::MAIN);
-
-//	worldObject = GameObjectManager::instance().buildGameObject <WorldObject>("CHAINTEST", 3, 3, 0);
-//	this->addGameObject(worldObject, GameOjectLayer::MAIN);
-
-	//gameObject = GameObjectManager::instance().buildGameObject <GameObject>("PARTICLE_SMOKE_GLOW", 4, 4, 45);
-	//this->addGameObject(gameObject, GameOjectLayer::MAIN);
-
-	
 
 	return true;
 }
@@ -207,227 +160,66 @@ Main Play Loop
 void Game::play()
 {
 
-
-	//Capture the amount of time that has passed since last loop and accumulate time for both
-	//the FPS calculation and the game loop timer
-	Clock::instance().update();
-
-	_handleEvents();
-
-	//Only update and render if we have passed the 60 fps time passage
-	if (Clock::instance().hasMetGameLoopSpeed())
+	while (m_gameState != GameState::QUIT)
 	{
-		//Handle updating objects positions and physics
-		_update();
 
-		//render everything
-		_render();
+		std::optional<SceneAction> action = SceneManager::instance().pollEvents();
 
-		//Increment frame counter and calculate FPS and reset the gameloop timer
-		Clock::instance().calcFps();
-
-		DynamicTextManager::instance().updateText("FPS_VALUE", std::to_string(Clock::instance().fps()));
-
-	}
-
-}
-
-
-
-void Game::renderCollection(const std::array<GameObjectCollection, constants::MAX_GAMEOBJECT_LAYERS>& gameObjectCollection)
-{
-
-	//Render all of the game objects
-	for (auto collection : gameObjectCollection)
-	{
-		for (auto& gameObject : collection.gameObjects())
-		{
-			gameObject->render();
-		}
-
-		for (auto& particleObject : collection.particleObjects())
-		{
-			particleObject->render();
-		}
-	}
-}
-
-
-void Game::addGameObject(GameObject* gameObject, int layer)
-{
-
-	//this->gameObjects[layer].push_back(make_unique<GameObject>(*gameObject));
-	m_gameCollections[layer].gameObjects().push_back(gameObject);
-
-}
-
-void Game::addGameObject(WorldObject* gameObject, int layer)
-{
-
-	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	m_gameCollections[layer].gameObjects().push_back(gameObject);
-
-}
-
-void Game::addGameObject(ParticleObject* gameObject, int layer)
-{
-	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	gameObject->time_snapshot = std::chrono::steady_clock::now();
-	m_gameCollections[layer].particleObjects().push_back(gameObject);
-}
-
-void Game::addGameObject(TextObject* gameObject, int layer)
-{
-	//this->gameObjects.push_back(unique_ptr<WorldObject>(gameObject));
-	m_gameCollections[layer].gameObjects().push_back(gameObject);
-}
-
-void Game::addGameObject(CompositeObject* gameObject, int layer)
-{
-
-	m_gameCollections[layer].gameObjects().push_back(gameObject);
-}
-
-void Game::addGameObject(WeaponObject* gameObject, int layer)
-{
-
-	m_gameCollections[layer].gameObjects().push_back(gameObject);
-}
-
-
-void Game::_update() {
-
-
-	//Specifiaclly handle input and stuff for the one player gameObject
-	m_player->update();
-
-	//Update the camera frame to point to the new player position
-	//
-	//TODO:Instead of this, give the camera an object/position to follow
-	//and the camera will follow on its own
-	//
-	Camera::instance().setFramePosition(
-		(m_player->physicsBody()->GetPosition().x * GameConfig::instance().scaleFactor()) -
-		(Camera::instance().frame().w / 2),
-		(m_player->physicsBody()->GetPosition().y * GameConfig::instance().scaleFactor()) -
-		(Camera::instance().frame().h / 2));
-
-	// spin through list of particle tasks to execute, like exposions and emitters
-	ParticleMachine::instance().update();
-
-	//Update all of the other non player related update chores for each game object
-	// Game objects are stored in layers
-	for (auto& gameObjectCollection : m_gameCollections)
-	{
-		//Update normal game objects
-		for (auto& gameObject : gameObjectCollection.gameObjects())
-		{
-			gameObject->update();
-		}
-
-		//Update particle game objects
-		ParticleObject* particleObject = NULL;
-		ParticleObject* particleObjectRemoved = NULL;
-
-		for (int x = 0; x < gameObjectCollection.particleObjects().size(); x++)
-		{
-
-			//If particle is expired, reset it and remove from teh game world list
-			//The pointer and objectitself will remain in the pool
-
-			particleObject = gameObjectCollection.particleObjects()[x];
-
-			if (particleObject->removeFromWorld() == true)
-			{
-				particleObjectRemoved = particleObject;
-				ObjectPoolManager::instance().reset(particleObject);
-				std::swap(gameObjectCollection.particleObjects()[x],
-					gameObjectCollection.particleObjects()[gameObjectCollection.particleObjects().size() - 1]);
-				gameObjectCollection.particleObjects().resize(gameObjectCollection.particleObjects().size() - 1);
+		if (action.has_value()) {
+			if (action->actionCode == SCENE_ACTION_QUIT) {
+				m_gameState = GameState::QUIT;
 			}
-			else
-			{
-				particleObject->update();
+			else if (action->actionCode == SCENE_ACTION_EXIT) {
+				SceneManager::instance().popScene();
+			}
+			else if (action->actionCode == SCENE_ACTION_ADD) {
+				SceneManager::instance().pushScene(action->sceneId);
+			}
+			else if (action->actionCode == SCENE_ACTION_REPLACE) {
+				SceneManager::instance().popScene();
+				SceneManager::instance().pushScene(action->sceneId);
 			}
 
+			//Apply the mouse control mode based on what the new "top" scene wants
+			SceneManager::instance().scenes().back().applyCurrentControlMode();
 		}
 
-		//resize the particle vector in case items were removed
-		gameObjectCollection.particleObjects().shrink_to_fit();
-
+		SceneManager::instance().run();
 	}
-
-	//Step the box2d physics world
-	m_physicsWorld->Step(GameConfig::instance().timeStep(),
-		GameConfig::instance().velocityIterations(),
-		GameConfig::instance().positionIterations());
 
 }
 
-
-
-void Game::_render() {
-
-	//Clear the graphics display
-	TextureManager::instance().clear();
-
-	//render the player
-	m_player->render();
-
-	//Render all of the game objects in thew world
-	renderCollection(m_gameCollections);
-
-	//DebugDraw
-	if (GameConfig::instance().b2DebugDrawMode() == true)
-	{
-		m_physicsWorld->DrawDebugData();
-	}
-
-	//Push all drawn things to the graphics display
-	TextureManager::instance().present();
-
-}
-
-void Game::_handleEvents() 
+void Game::setInputControlMode(int inputControlMode)
 {
-	SDL_Event event;
-	SDL_Event events[100];
+	if (inputControlMode == CONTROL_MODE_PLAY) {
 
-	/*
-	We only want to handle "State Related" events.
-	Ignore all user input events
-	*/
-
-	/*
-	Set main quite game state which gets captured by highest level game loop
-	*/
-	if (SDL_HasEvent(SDL_QUIT)) {
-		m_gameState = QUIT;
+		SDL_ShowCursor(false);
+		SDL_SetRelativeMouseMode(SDL_TRUE);
 	}
-
-	if (int eventCount = SDL_PeepEvents(events, 100, SDL_GETEVENT, SDL_USEREVENT, SDL_USEREVENT)) {
-
-		for (auto i = 0; i < eventCount; i++)
-		{
-
-			event = events[i];
-
-			std::string* actionCode = static_cast<std::string*>(event.user.data1);
-			if (actionCode != NULL && actionCode->empty() == false)
-			{
-				if (actionCode->compare("GUI_PAUSE_PANEL") == 0)
-				{
-					std::unique_ptr<GUIEvent> guiEvent = std::make_unique<GUIEvent>("GUIPausePanel");
-					guiEvent->run();
-					delete event.user.data1;
-
-				}
-			}
-
-		}
+	else if(inputControlMode == CONTROL_MODE_SELECT) {
+		SDL_ShowCursor(true);
+		SDL_SetRelativeMouseMode(SDL_FALSE);
 
 	}
 }
+
+void Game::addGameObject(std::shared_ptr<GameObject>gameObject, int layer)
+{
+	//Add the gameObject to the currently active scene using back()
+	SceneManager::instance().scenes().back().addGameObject(gameObject, layer);
+
+
+}
+
+GameObject* Game::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow)
+{
+	//Add the gameObject to the currently active scene using back()
+	auto gameObject = SceneManager::instance().scenes().back().addGameObject(gameObjectId, layer, xMapPos, yMapPos, angle, cameraFollow);
+
+	return gameObject;
+
+}
+
 
 
 

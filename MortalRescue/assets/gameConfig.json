@@ -8,7 +8,7 @@
   "sound": {
     "numberOfChannels": 32
   },
-  "mouseSensitivity": 7.2, //higher the mmore sensitive
+  "mouseSensitivity": 0.5, //higher the mmore sensitive
   "gameLoopStep": 16, //in miliseconds
   "dynamicTextRefreshDelay":  0.1, //need a tiny delay to prevent millions of text texture regenerations
   "physics": {
@@ -24,9 +24,9 @@
   },
   "debugPanel": {
     "show": true,
-    "xPos": 1,
-    "yPos": 3,
-    "fontSize": 16
+    "xPos": 2,
+    "yPos": 2,
+    "fontSize": 12
   }
 }
   

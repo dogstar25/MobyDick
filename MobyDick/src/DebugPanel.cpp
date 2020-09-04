@@ -4,9 +4,7 @@
 #include "DynamicTextManager.h"
 #include "GameObjectManager.h"
 #include "GameConfig.h"
-#include "TextObject.h"
 #include "Level.h"
-#include "Game.h"
 
 
 DebugPanel& DebugPanel::instance()
@@ -18,8 +16,8 @@ DebugPanel& DebugPanel::instance()
 DebugPanel::DebugPanel()
 {
 
-	m_location.x = GameConfig::instance().debugPanelLocation().x;
-	m_location.y = GameConfig::instance().debugPanelLocation().y;
+	m_location.x = (float)GameConfig::instance().debugPanelLocation().x;
+	m_location.y = (float)GameConfig::instance().debugPanelLocation().y;
 
 	m_itemCount = 0;
 
@@ -42,10 +40,7 @@ void DebugPanel::addItem(std::string id, std::string value)
 
 	if (GameConfig::instance().debugPanel() == true) {
 
-		float yPos, xPos;
-
-		//Get the base definition for debug text items
-		GameObjectDefinition* definition = GameObjectManager::instance().gameObjectDefinitions["DEBUG_ITEM"];;
+		float yPos, xPos, fontSize;
 
 		//Prefix DEBUG to the id
 		std::string newId = "DEBUG_" + id;
@@ -58,14 +53,22 @@ void DebugPanel::addItem(std::string id, std::string value)
 
 		if (alreadyExists == false)
 		{
+			if (GameObjectManager::instance().hasDefinition("DEBUG_ITEM"))
+			{
+				Json::Value definitionJSON = GameObjectManager::instance().getDefinition("DEBUG_ITEM")->definitionJSON();
+				fontSize = definitionJSON["textComponent"]["fontSize"].asFloat();
+			}
+			else
+			{
+				fontSize = 12;
+			}
+			
 
 			//Calculate the position of the debug text item
 			xPos = m_location.x;
-			//yPos = this->location.y + this->itemCount * (.5);
-			yPos = m_location.y + m_itemCount * ((float)definition->textDetails.size / (float)Level::instance().m_tileHeight);
+			yPos = m_location.y + m_itemCount * (fontSize / (float)Level::instance().m_tileHeight);
 
-			TextObject* textObject = GameObjectManager::instance().buildGameObject <TextObject>(newId, xPos, yPos, 0);
-			Game::instance().addGameObject(textObject, GameOjectLayer::DEBUG);
+			//Game::instance().addGameObject(newId, GameObjectLayer::DEBUG, xPos, yPos, 0);
 
 			m_itemCount++;
 		}

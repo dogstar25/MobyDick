@@ -1,6 +1,6 @@
 #include "GameConfig.h"
 
-#include <json/json.h>
+#include "game.h"
 
 #include <fstream>
 
@@ -24,7 +24,7 @@ bool GameConfig::init(std::string configFile)
 
 	m_gameTitle = root["gameTitle"].asString();
 	m_gameLoopStep = root["gameLoopStep"].asInt();
-	m_gravity.Set(root["physics"]["gravity"]["x"].asInt(), 
+	m_gravity.Set(root["physics"]["gravity"]["x"].asFloat(),
 		root["physics"]["gravity"]["y"].asFloat());
 	m_timeStep = root["physics"]["timeStep"].asFloat();
 	m_velocityIterations = root["physics"]["velocityIterations"].asInt();
@@ -43,6 +43,10 @@ bool GameConfig::init(std::string configFile)
 	m_windowWidth = root["window"]["width"].asInt();
 	m_windowHeight = root["window"]["height"].asInt();
 	m_windowFullscreen = root["window"]["fullscreen"].asBool();
+
+	//Global World sizes
+	SDL_Rect bounds = { m_windowWidth, m_windowHeight };
+	Game::instance().setWorldParams(bounds, 32, 32);
 
 	return true;
 }

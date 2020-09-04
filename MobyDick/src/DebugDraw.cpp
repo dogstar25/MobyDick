@@ -1,7 +1,6 @@
 #include "DebugDraw.h"
 
 
-#include "TextureManager.h"
 #include "GameConfig.h"
 #include "Camera.h"
 
@@ -52,7 +51,8 @@ void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, cons
 	//Add the first point to the end to complete closed shape
 	points[vertexCount] = firstPoint;
 
-	TextureManager::instance().drawPoints(points);
+	SDL_Color sdlColor = { 255,255,255,255 };
+	Renderer::instance().drawPoints(points, sdlColor);
 
 	delete[] points;
 }
@@ -76,7 +76,7 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2
 	newCenter.x -= Camera::instance().frame().x;
 	newCenter.y -= Camera::instance().frame().y;
 
-	int  sides = (2 * b2_pi) * radius / 2;
+	int  sides = (int)((2 * b2_pi) * radius / 2);
 
 	float d_a = (2 * b2_pi) / sides,
 		angle = d_a;
@@ -93,7 +93,8 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2
 		end = end + newCenter;
 		angle += d_a;
 		
-		TextureManager::instance().drawLine(start, end);
+		SDL_Color sdlColor = { 255,255,255,255 };
+		Renderer::instance().drawLine(start, end, sdlColor);
 	}
 
 
@@ -101,23 +102,21 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2
 
 void DebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 {
-	TextureManager::instance().drawLine(p1, p2);
+	SDL_Color sdlColor = { 255,255,255,255 };
+	Renderer::instance().drawLine(p1, p2, sdlColor);
 
 }
 
 void DebugDraw::DrawTransform(const b2Transform& xf)
 {
-	bool a;
 }
 
 void DebugDraw::DrawPoint(const b2Vec2& p, float size, const b2Color& color)
 {
-	bool a;
 }
 
 void DebugDraw::DrawString(int x, int y, const char *string, ...)
 {
-	bool a;
 }
 
 void DebugDraw::DrawAABB(b2AABB* aabb, const b2Color& c)

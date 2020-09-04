@@ -1,0 +1,192 @@
+{
+    "gameObjects": [
+        {
+            "id": "WALL1_OPEN",
+            "idTag": "IdTag::WALL",
+            "description": "WALL1_OPEN",
+            "transformComponent": {
+                "size": {
+                    "width": 32,
+                    "height": 32
+                },
+                "absolutePositioning": false
+
+            },
+            "renderComponent": {
+                "textureId": "TX_WALL1_OPEN",
+                "color": {
+                    "red": 0,
+                    "green": 206,
+                    "blue": 209,
+                    "alpha": 255,
+                    "random": false
+                }
+
+            },
+            "physicsComponent": {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.3
+                // "collisionCategory": "CollisionCat::WALL"
+            }
+
+        },
+        {
+            "id": "WALL1_COLUMN",
+            "idTag": "IdTag::WALL",
+            "description": "WALL1_COLUMN",
+            "transformComponent": {
+                "size": {
+                    "width": 32,
+                    "height": 32
+                },
+                "absolutePositioning": false
+
+            },
+            "renderComponent": {
+                "textureId": "TX_WALL1_COLUMN",
+                "color": {
+                    "red": 0,
+                    "green": 206,
+                    "blue": 209,
+                    "alpha": 255,
+                    "random": false
+                }
+
+            },
+            "physicsComponent": {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.3,
+                "collisionCategory": "CollisionCat::WALL"
+            }
+
+        },
+        {
+            "id": "WALL1_CORNER",
+            "idTag": "IdTag::WALL",
+            "description": "WALL1_CORNER",
+            "transformComponent": {
+                "size": {
+                    "width": 32,
+                    "height": 32
+                },
+                "absolutePositioning": false
+
+            },
+            "renderComponent": {
+                "textureId": "TX_WALL1_CORNER",
+                "color": {
+                    "red": 0,
+                    "green": 255,
+                    "blue": 255,
+                    "alpha": 255,
+                    "random": false
+                }
+
+            },
+            "physicsComponent": {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.3,
+                "collisionCategory": "CollisionCat::WALL"
+            }
+
+        },
+        {
+            "id": "WALL1_END",
+            "idTag": "IdTag::WALL",
+            "description": "WALL1_END",
+            "transformComponent": {
+                "size": {
+                    "width": 32,
+                    "height": 32
+                },
+                "absolutePositioning": false
+
+            },
+            "renderComponent": {
+                "textureId": "TX_WALL1_END",
+                "color": {
+                    "red": 38,
+                    "green": 195,
+                    "blue": 15,
+                    "alpha": 255,
+                    "random": false
+                }
+
+            },
+            "physicsComponent": {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.3,
+                "collisionCategory": "CollisionCat::WALL"
+            }
+
+        },
+        {
+            "id": "WALL1_HALL",
+            "idTag": "IdTag::WALL",
+            "description": "WALL1_HALL",
+            "transformComponent": {
+                "size": {
+                    "width": 32,
+                    "height": 32
+                },
+                "absolutePositioning": false
+
+            },
+            "renderComponent": {
+                "textureId": "TX_WALL1_HALL",
+                "color": {
+                    "red": 175,
+                    "green": 238,
+                    "blue": 238,
+                    "alpha": 255,
+                    "random": false
+                }
+
+            },
+            "physicsComponent": {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.3,
+                "collisionCategory": "CollisionCat::WALL"
+            }
+
+        },
+
+        {
+            "id": "WALL1_WALL",
+            "idTag": "IdTag::WALL",
+            "description": "WALL1_WALL",
+            "transformComponent": {
+                "size": {
+                    "width": 32,
+                    "height": 32
+                },
+                "absolutePositioning": false
+
+            },
+            "renderComponent": {
+                "textureId": "TX_WALL1_WALL",
+                "color": {
+                    "red": 38,
+                    "green": 195,
+                    "blue": 15,
+                    "alpha": 255,
+                    "random": false
+                }
+
+            },
+            "physicsComponent": {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.3,
+                "collisionCategory": "CollisionCat::WALL"
+            }
+
+        }
+
+    ]
+}
