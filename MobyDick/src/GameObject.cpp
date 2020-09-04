@@ -252,3 +252,9 @@ void GameObject::init(bool cameraFollow)
 	}
 
 }
+
+
+void GameObject::setIsPooledAvailable(int isPooledAvailable)
+{
+	m_isPooledAvailable = isPooledAvailable;
+}

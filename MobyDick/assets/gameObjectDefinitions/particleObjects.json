@@ -20,7 +20,8 @@
                 "lifetimeAlphaFade": false
             },
             "renderComponent": {
-                "textureId": "TX_SMOKE_PARTICLE_2"
+                "textureId": "TX_SMOKE_PARTICLE_2",
+                "textureBlendMode": "SDL_BLENDMODE_ADD"
             },
             "physicsComponent": {
                 "type": "B2_DYNAMIC",

@@ -41,12 +41,8 @@ public:
 	SDL_Surface* getRenderSurface();
 	
 
-	void setColor(SDL_Color color) {
-		m_color = color;
-	}
-	void setColorAlpha(int alpha) {
-		m_color.a = alpha;
-	}
+	void setColor(SDL_Color color) { m_color = color; }
+	void setColorAlpha(int alpha) {	m_color.a = alpha; }
 
 	//Accessors
 	SDL_Color color() {	return m_color;	}
@@ -56,24 +52,20 @@ public:
 
 private:
 
-	std::shared_ptr<Texture> m_texture;
-	SDL_Color
-		m_color,
-		m_outLineColor;
-	float
-		m_xRenderAdjustment,
-		m_yRenderAdjustment;
-	int
-		m_outlineThickness;
-	bool
-		m_renderOutline;
-	std::string
-		m_textureId;
+	std::shared_ptr<Texture>    m_texture;
+	SDL_Color                   m_color;
+	SDL_Color                   m_outLineColor;
+	float                       m_xRenderAdjustment;
+	float                       m_yRenderAdjustment;
+	int                         m_outlineThickness;
+	bool                        m_renderOutline;
+	std::string	                m_textureId;
+	SDL_BlendMode				m_textureBlendMode;
 
 	std::optional<displayOverlay> m_displayOverlay;
 
-	AnimationComponent* m_animationComponent;
-	TransformComponent* m_transformComponent;
+	AnimationComponent*           m_animationComponent;
+	TransformComponent*           m_transformComponent;
 
 };
 

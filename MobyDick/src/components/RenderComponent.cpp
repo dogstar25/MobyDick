@@ -1,7 +1,7 @@
 #include "RenderComponent.h"
 
 
-
+#include "../EnumMaps.h"
 #include "../Camera.h"
 #include "../game.h"
 
@@ -30,6 +30,14 @@ RenderComponent::RenderComponent(Json::Value definitionJSON)
 	m_textureId = itrRender["textureId"].asString();
 	m_xRenderAdjustment = itrRender["xRenderAdjustment"].asFloat();
 	m_yRenderAdjustment = itrRender["yRenderAdjustment"].asFloat();
+
+	if (itrRender.isMember("textureBlendMode")) {
+		m_textureBlendMode = static_cast<SDL_BlendMode>(EnumMap::instance().toEnum(itrRender["textureBlendMode"].asString()));
+	}
+	else {
+		m_textureBlendMode = SDL_BLENDMODE_BLEND;
+	}
+	
 
 	if (itrRender.isMember("outline")) {
 		m_renderOutline = true;
@@ -186,7 +194,7 @@ void RenderComponent::render()
 			SDL_SetTextureColorMod(texture, m_color.r, m_color.g, m_color.b);
 		}
 		
-		SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD);
+		SDL_SetTextureBlendMode(texture, m_textureBlendMode);
 
 		//Render the texture
 		SDL_RenderCopyExF(

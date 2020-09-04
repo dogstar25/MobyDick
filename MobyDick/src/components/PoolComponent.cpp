@@ -1,4 +1,5 @@
 #include "PoolComponent.h"
+#include "../GameObject.h"
 
 
 PoolComponent::PoolComponent(Json::Value definitionJSON)
@@ -25,6 +26,7 @@ void PoolComponent::reset()
 {
 	m_isActive = false;
 	m_isAvailable = true;
+	parent()->setIsPooledAvailable( true);
 
 
 }

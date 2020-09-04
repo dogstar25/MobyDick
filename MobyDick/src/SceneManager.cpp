@@ -73,10 +73,6 @@ void SceneManager::run()
 		//Render All scenes
 		Renderer::instance().clear();
 
-		//SDL_SetRenderDrawColor(Renderer::instance().SDLRenderer(), 255, 255, 100, 255);
-		//for (int i = 0; i < 5000; i++)
-		//	SDL_RenderDrawPoint(Renderer::instance().SDLRenderer(), util::generateRandomNumber(0, 1000), util::generateRandomNumber(0, 1000));
-
 		for (auto& scene : m_scenes) {
 			scene.render();
 		}

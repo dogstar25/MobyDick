@@ -35,12 +35,8 @@ public:
 	void load(std::string levelId, Scene* scene);
 
 	//Accessor Functions
-	std::string description() {
-		return m_description;
-	}
-	const std::vector<Waypoint>& waypoints() {
-		return m_waypoints;
-	}
+	std::string description() {	return m_description; }
+	const std::vector<Waypoint>& waypoints() { return m_waypoints; }
 
 private:
 	std::string m_description;

@@ -118,6 +118,10 @@ EnumMap::EnumMap()
 	m_enumMap["ParticleEmitterType::ONETIME"] = ParticleEmitterType::ONETIME;
 	m_enumMap["ParticleEmitterType::CONTINUOUS"] = ParticleEmitterType::CONTINUOUS;
 
+	//Texure Blend Modes
+	m_enumMap["SDL_BLENDMODE_BLEND"] = SDL_BLENDMODE_BLEND;
+	m_enumMap["SDL_BLENDMODE_ADD"] = SDL_BLENDMODE_ADD;
+	
 
 }
 

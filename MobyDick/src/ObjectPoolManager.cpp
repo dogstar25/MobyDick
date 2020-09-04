@@ -71,16 +71,16 @@ std::optional<std::shared_ptr<GameObject>> ObjectPoolManager::getPooledObject(st
 	for (auto& pooledObject : m_objectPool[poolId])
 	{
 		//convenience reference to outside component(s)
-		const auto& poolComponent = pooledObject->getComponent<PoolComponent>();
+		//const auto& poolComponent = pooledObject->getComponent<PoolComponent>();
 
-		if (poolComponent->isAvailable() == true)
+		if (pooledObject->isPooledAvailable() == true)
 		{
 			const auto& vitalityComponent = pooledObject->getComponent<VitalityComponent>();
 			const auto& physicsComponent = pooledObject->getComponent<PhysicsComponent>();
 
 			pooledObject->setRemoveFromWorld(false);
 
-			poolComponent->setAvailable(false);
+			pooledObject->setIsPooledAvailable(false);
 			physicsComponent->setPhysicsBodyActive(true);
 			vitalityComponent->setTimeSnapshot(std::chrono::steady_clock::now());
 			vitalityComponent->setLifetimeRemaining(vitalityComponent->lifetime());
