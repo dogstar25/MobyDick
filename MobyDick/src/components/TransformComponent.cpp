@@ -6,7 +6,8 @@ TransformComponent::TransformComponent()
 {
 }
 
-TransformComponent::TransformComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust)
+TransformComponent::TransformComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust) 
+	:Component(), sf::Transformable()
 {
 		Json::Value transformComponentJSON = definitionJSON["transformComponent"];
 

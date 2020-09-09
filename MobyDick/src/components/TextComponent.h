@@ -6,6 +6,7 @@
 #include "Component.h"
 #include "../TextureManager.h"
 #include <SDL2/SDL.h>
+#include <SFML/Graphics.hpp>
 
 class TransformComponent;
 class RenderComponent;
@@ -44,7 +45,7 @@ private:
 	std::string m_debugId{ "" };
 
 	//test
-	TTF_Font* m_fontObject;
+	sf::Font m_fontObject;
 
 };
 

@@ -14,6 +14,7 @@ GameObject::~GameObject()
 }
 
 GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust)
+	: sf::Sprite()
 {
 
 	Json::Value definitionJSON;
@@ -132,23 +133,22 @@ void GameObject::_setDependecyReferences()
 void GameObject::setPosition(float x, float y)
 {
 
-	getComponent<TransformComponent>()->setPosition(x, y);
+	sf::Sprite::setPosition(x, y);
 
 }
 
 
-void GameObject::setPosition(b2Vec2 position, float angle)
+void GameObject::setPosition(sf::Vector2f position, float angle)
 {
+
+	sf::Sprite::setPosition(position);
+
 	//-1 means dont apply the angle
 	if (angle != -1)
 	{
-		getComponent<TransformComponent>()->setPosition(position, angle);
+		sf::Sprite::setRotation(angle);
 	}
-	else
-	{
-		getComponent<TransformComponent>()->setPosition(position);
-	}
-
+	
 }
 
 
@@ -163,13 +163,14 @@ void GameObject::update()
 }
 
 
-
-
 void GameObject::render()
 {
 
 	//Render yourself
 	getComponent<RenderComponent>()->render();
+
+	//Render the particle component if this is a particle emitter object
+	getComponent<ParticleComponent>()->render();
 		
 	//Render your children
 	if (getComponent<ChildrenComponent>())

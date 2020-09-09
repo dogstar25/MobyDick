@@ -1,4 +1,5 @@
 #include "QuitGameAction.h"
+#include "../SceneManager.h"
 
 
 #include "../Scene.h"
@@ -16,14 +17,8 @@ QuitGameAction::~QuitGameAction()
 void QuitGameAction::perform(GameObject* gameObject)
 {
 
-	SDL_Event event;
+	SceneAction sceneAction = { SCENE_ACTION_QUIT ,"" };
+	SceneManager::instance().setDirectSceneAction(sceneAction);
 
-	SceneAction* sceneAction = new SceneAction();
-	sceneAction->actionCode = SCENE_ACTION_QUIT;
-	sceneAction->sceneId = "";
-
-	event.type = SDL_USEREVENT;
-	event.user.data1 = sceneAction;
-	SDL_PushEvent(&event);
 
 }

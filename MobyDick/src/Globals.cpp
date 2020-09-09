@@ -3,6 +3,7 @@
 #include <random>
 
 #include <box2d/b2_math.h>
+#include <SFML/Graphics.hpp>
 
 
 
@@ -42,14 +43,14 @@ namespace util
 		return (float)dist(mt);
 	}
 
-	const SDL_Color generateRandomColor()
+	const sf::Color generateRandomColor()
 	{
 		Uint8 red, green, blue;
 
 		red = generateRandomNumber(0, 255);
 		green = generateRandomNumber(0, 255);
 		blue = generateRandomNumber(0, 255);
-		SDL_Color color;
+		sf::Color color;
 		color.a = 255;
 		color.r = red;
 		color.g = green;
@@ -59,14 +60,14 @@ namespace util
 
 	}
 
-	const SDL_Color generateRandomColor(SDL_Color beginRange, SDL_Color endRange)
+	const sf::Color generateRandomColor(sf::Color beginRange, sf::Color endRange)
 	{
 		Uint8 red, green, blue;
 
 		red = generateRandomNumber(beginRange.r, endRange.r);
 		green = generateRandomNumber(beginRange.g, endRange.g);
 		blue = generateRandomNumber(beginRange.b, endRange.b);
-		SDL_Color color = {red, green, blue, 255};
+		sf::Color color = {red, green, blue, 255};
 
 		return color;
 
@@ -95,9 +96,9 @@ namespace util
 		return ss.str();
 	}
 
-	const SDL_Color JsonToColor(Json::Value JsonColor) {
+	const sf::Color JsonToColor(Json::Value JsonColor) {
 
-		SDL_Color color;
+		sf::Color color;
 		color.r = JsonColor["red"].asInt();
 		color.b= JsonColor["blue"].asInt();
 		color.g = JsonColor["green"].asInt();

@@ -7,7 +7,9 @@
 #include "ContactFilter.h"
 #include "ContactListener.h"
 #include "config_data/GameDefinitions.h"
-
+#include "Renderer_GL.h"
+#include "Renderer_SF.h"
+#include <SFML/Window.hpp>
 
 
 using namespace std::chrono_literals;
@@ -37,7 +39,6 @@ Game::~Game()
 	////Delete box2d world - should delete all bodies and fixtures within
 	delete m_physicsWorld;
 
-	TTF_Quit();
 
 
 }
@@ -71,8 +72,12 @@ bool Game::init()
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
 
-		//Init font library
-		TTF_Init();
+		//Initialize some pre-windowd creation openGl stuff
+		SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 5);
+		SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+		SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
 		//Create the game window
 		uint16 windowFlags = 0 | SDL_WINDOW_OPENGL;
@@ -85,6 +90,7 @@ bool Game::init()
 		{
 			windowFlags = windowFlags | SDL_WINDOW_RESIZABLE;
 		}
+
 		m_window = SDL_CreateWindow(GameConfig::instance().gameTitle().c_str(),
 			SDL_WINDOWPOS_CENTERED,
 			SDL_WINDOWPOS_CENTERED,
@@ -92,11 +98,18 @@ bool Game::init()
 			GameConfig::instance().windowHeight(),
 			windowFlags);
 
-		//Initialize the texture manager
+
+
+
+		//Initialize the renderer
 		Renderer::instance().init(m_window);
+		Renderer_SF::instance().init();
+
+		//Renderer_GL::instance().init(m_window);
+		//Renderer_GL::instance().openGLSetup(m_window);
 
 		//Initialize the texture manager
-		TextureManager::instance().init(m_window);
+		TextureManager::instance().init();
 
 		//Initialize the sound manager
 		SoundManager::instance().initSound();
@@ -136,15 +149,15 @@ bool Game::init()
 	//Load a first scene
 	Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
 	scene.applyCurrentControlMode();
-	//scene.addGameObject("BULLET1", LAYER_MAIN, 2, 2, 0);
+	scene.addGameObject("BOWMAN", LAYER_MAIN, 2, 2, 0);
 
 	//Load the player and some other objects
-	auto playerObject = scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
+	/*auto playerObject = scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
 	auto weaponObject = scene.addGameObject("PISTOL", LAYER_MAIN, 8, 8, 0, true);
 	playerObject->addInventoryItem(weaponObject);
 
 	
-	scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);
+	scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);*/
 	//scene.addGameObject("SWORDLADY", LAYER_MAIN, 10, 1);
 
 	auto test = GameDefs::instance().gina_64;
@@ -159,6 +172,7 @@ Main Play Loop
 */
 void Game::play()
 {
+
 
 	while (m_gameState != GameState::QUIT)
 	{

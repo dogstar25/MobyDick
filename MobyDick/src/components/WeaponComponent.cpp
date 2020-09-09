@@ -47,7 +47,7 @@ void WeaponComponent::update()
 
 }
 
-void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
+void WeaponComponent::fire(const sf::Vector2f& origin, const float& angle)
 {
 	std::string bulletPoolId =
 		m_weaponLevelDetails.at(m_currentLevel).bulletPoolId;
@@ -61,7 +61,7 @@ void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 		auto& physicsComponent = bullet.value()->getComponent<PhysicsComponent>();
 		auto& renderComponent = bullet.value()->getComponent<RenderComponent>();
 
-		SDL_Color color = m_weaponLevelDetails.at(m_currentLevel).color;
+		sf::Color color = m_weaponLevelDetails.at(m_currentLevel).color;
 		float force = m_weaponLevelDetails.at(m_currentLevel).force;
 
 		//Calculate the origin of the bullet
@@ -89,7 +89,7 @@ void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 		physicsComponent->setLinearVelocity(velocityVector);
 		physicsComponent->setBullet(true);
 
-		renderComponent->setColor(color);
+		parent()->setColor(color);
 
 		//Add the bullet object to the main gameObject collection
 		Game::instance().addGameObject(bullet.value(), LAYER_MAIN);

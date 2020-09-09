@@ -17,7 +17,7 @@ Animation::Animation(Json::Value animationDetailsJSON, Json::Value transformDeta
 	//Get texture
 	std::string textureId = animationDetailsJSON["textureId"].asString();
 
-	m_texture = TextureManager::instance().getTexture(textureId)->sdlTexture;
+	//m_texture = TextureManager::instance().getTexture(textureId)->sdlTexture;
 	m_currentTextureAnimationSrcRect = nullptr;
 
 	//Calculate how many columns and rows this animation texture has

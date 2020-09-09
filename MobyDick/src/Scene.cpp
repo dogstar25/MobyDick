@@ -249,9 +249,9 @@ void Scene::addGameObject(std::shared_ptr<GameObject> gameObject, int layer)
 
 }
 
-void Scene::addKeyAction(SDL_Keycode keyCode, SceneAction sceneAction)
+void Scene::addKeyAction(int key, SceneAction sceneAction)
 {
-	m_sceneKeyActions.emplace(keyCode, sceneAction);
+	m_sceneKeyActions.emplace(key, sceneAction);
 }
 
 void Scene::clearEvents()

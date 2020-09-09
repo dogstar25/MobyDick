@@ -2,11 +2,11 @@
 #define TRANSFORM_COMPONENT_H
 
 #include <SDL2/SDL.h>
+#include <SFML/Graphics.hpp>
 
-#pragma warning(push,0)
 #include <box2d/box2d.h>
 #include <json/json.h>
-#pragma warning(pop)
+
 
 #include "Component.h"
 
@@ -20,11 +20,7 @@ public:
 
 	void update() override;
 
-	void setPosition(b2Vec2 position);
-	void setPosition(float xPosition, float yPosition);
-	void setPosition(b2Vec2 position, float angle);
-	void setPosition(float xPosition, float yPosition, float angle);
-	void setSize(b2Vec2 size);
+	void setSize(sf::Vector2f size);
 	void setSize(float xSize, float ySize);
 	void setAngle(float angle);
 
@@ -39,10 +35,7 @@ public:
 	SDL_FPoint getCenterPosition();
 
 private:
-	float
-		m_angle;
 	b2Vec2
-		m_position,
 		m_size,
 		m_originalPosition;
 	bool

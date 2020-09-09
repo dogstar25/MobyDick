@@ -2,10 +2,8 @@
 #define GAME_H
 
 
-#pragma warning(push,0)
 #include <box2d/box2d.h>
 #include <json/json.h>
-#pragma warning(pop)
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -23,6 +21,8 @@
 #include "GameObjectCollection.h"
 #include "GameConfig.h"
 #include "SceneManager.h"
+
+#include <SFML/Window.hpp>
 
 
 
@@ -72,6 +72,7 @@ public:
 	SDL_Window* window() {
 		return m_window;
 	}
+
 	GameState gameState(){
 		return m_gameState;
 	}
@@ -92,6 +93,7 @@ private:
 	void _handleEvents();
 
 	b2World* m_physicsWorld;
+
 	SDL_Window* m_window;
 	GameState m_gameState;
 	SDL_Rect m_WorldBounds;

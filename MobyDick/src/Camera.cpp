@@ -23,8 +23,8 @@ void Camera::update()
 
 		auto& followObjectTransformComponent = m_followMe.value()->getComponent<TransformComponent>();
 		setFramePosition(
-			followObjectTransformComponent->position().x -	(m_frame.w / 2),
-			followObjectTransformComponent->position().y - (m_frame.h / 2)
+			m_followMe.value()->getPosition().x -	(m_frame.w / 2),
+			m_followMe.value()->getPosition().y - (m_frame.h / 2)
 		);
 	}
 

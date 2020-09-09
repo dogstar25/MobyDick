@@ -6,13 +6,9 @@
 #include <memory>
 #include <vector>
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_ttf.h>
+#include <SFML/Graphics.hpp>
 
-#pragma warning(push,0)
 #include <box2d/box2d.h>
-#pragma warning(pop)
 
 #include "texture.h"
 
@@ -27,18 +23,18 @@ public:
 	This is a singleton class using a local staic variable returned as a reference
 	*/
 	static TextureManager& instance();
-	bool init(SDL_Window*);
-	std::shared_ptr<Texture> getTexture(std::string id);
-	std::string getFont(std::string id);
+	bool init();
+	std::shared_ptr<sf::Texture> getTexture(std::string id);
+	sf::Font getFont(std::string id);
 	bool hasTexture(std::string textureId);
-	void addOrReplaceTexture(std::string textureId, std::shared_ptr<Texture> texture);
+	void addOrReplaceTexture(std::string textureId, std::shared_ptr<sf::Texture> texture);
 
 private:
 	TextureManager();
 	~TextureManager();
 
-	std::map<std::string, std::shared_ptr<Texture>> m_textureMap;
-	std::map<std::string, std::string> m_fontMap;
+	std::map<std::string, std::shared_ptr<sf::Texture>> m_textureMap;
+	std::map<std::string, sf::Font> m_fontMap;
 	bool loadTextures();
 
 

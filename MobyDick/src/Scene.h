@@ -5,11 +5,9 @@
 #include <bitset>
 #include <optional>
 
-#pragma warning(push,0)
 #include <box2d/box2d.h>
 #include <json/json.h>
-#pragma warning(pop)
-
+#include <SFML/Window.hpp>
 #include "Globals.h"
 #include "GameObject.h"
 
@@ -36,7 +34,7 @@ public:
 	GameObject* addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle=0., bool cameraFollow=false);
 	void addGameObject(GameObject* gameObject, int layer);
 	void addGameObject(std::shared_ptr<GameObject> gameObject, int layer);
-	void addKeyAction(SDL_Keycode, SceneAction);
+	void addKeyAction(int, SceneAction);
 	void applyCurrentControlMode();
 	SDL_FPoint calcWindowPosition(int globalPosition);
 
@@ -57,9 +55,9 @@ public:
 	}
 	void setInputControlMode(int inputControlMode);
 
-	std::optional<SceneAction> getkeycodeAction(SDL_Keycode keycode) {
-		if (m_sceneKeyActions.find(keycode) != m_sceneKeyActions.end()) {
-			return m_sceneKeyActions.at(keycode);
+	std::optional<SceneAction> getkeycodeAction(sf::Event::KeyEvent key) {
+		if (m_sceneKeyActions.find(key.code) != m_sceneKeyActions.end()) {
+			return m_sceneKeyActions.at(key.code);
 		}
 		else {
 			return std::nullopt;
@@ -71,7 +69,7 @@ private:
 	SceneState m_state;
 	int m_inputControlMode;
 	std::bitset<8> m_sceneTags;
-	std::map<SDL_Keycode, SceneAction> m_sceneKeyActions;
+	std::map<int , SceneAction> m_sceneKeyActions;
 
 	int m_parentSceneIndex;
 	std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> m_gameObjects;

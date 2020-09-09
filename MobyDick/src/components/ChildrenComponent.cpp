@@ -46,20 +46,21 @@ void ChildrenComponent::update()
 	
 		for (auto& childObject : childLocations)
 		{
-			const auto& childTransformComponent = childObject->getComponent<TransformComponent>();
+			//const auto& childTransformComponent = childObject->getComponent<TransformComponent>();
 
 			childNumber++;
 	
 			//Calculate child position
-			SDL_FPoint parentPosition = transformComponent->getCenterPosition();
-			float parentAngle = transformComponent->angle();
-			b2Vec2 newChildPosition = 
-				_calcChildPosition(childTransformComponent->size(), locationSlot, childNumber, childCount, parentPosition, parentAngle);
+			//SDL_FPoint parentPosition = transformComponent->getCenterPosition();
+			sf::Vector2f parentPosition = parent()->getPosition();
+			float parentAngle = parent()->getRotation();
+			sf::Vector2f newChildPosition =
+				_calcChildPosition(parent()->size(), locationSlot, childNumber, childCount, parentPosition, parentAngle);
 	
 			// Should this child match the angle of the parent
 			if (m_childPositionRelative == true)
 			{
-				childObject->setPosition(newChildPosition, transformComponent->angle());
+				childObject->setPosition(newChildPosition, parent()->getRotation());
 	
 			}
 			else
@@ -93,12 +94,12 @@ void ChildrenComponent::renderChildren()
 //
 
 
-b2Vec2 ChildrenComponent::_calcChildPosition(
-	b2Vec2 childSize,
+sf::Vector2f ChildrenComponent::_calcChildPosition(
+	sf::Vector2f childSize,
 	int locationSlot,
 	int childNumber,
 	int childCount,
-	SDL_FPoint parentPosition,
+	sf::Vector2f parentPosition,
 	float parentAngle)
 {
 	//SDL_FRect childSize = { child->size().x, child->size().y };
@@ -151,14 +152,14 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 
 	}
 
-	SDL_FPoint childPosition{ x, y };
+	sf::Vector2f childPosition{ x, y };
 
 	//Adjust the position if there are multiple children in the same position
 	if (childCount > 1)
 	{
 		float oddEvenadjustValue = 0;
 		int stepCount = 0;
-		b2Vec2 firstChildPosition = {};
+		sf::Vector2f firstChildPosition = {};
 
 		//calculate vertical step adjustment depending on even or odd
 		if (childCount % 2 == 0)
@@ -192,7 +193,7 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 
 	if (m_childPositionRelative == true)
 	{
-		b2Vec2 adjustment{};
+		sf::Vector2f adjustment{};
 
 		adjustment = this->_matchParentRotation(childPosition, parentPosition, parentAngle);
 
@@ -203,14 +204,14 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 
 	//Need to convert to a b2vec2
 	//ToDo: come up with our own vec2, etc class
-	b2Vec2 b2Vec2ChildPosition = { childPosition.x, childPosition.y };
+	sf::Vector2f b2Vec2ChildPosition = { childPosition.x, childPosition.y };
 	return b2Vec2ChildPosition;
 
 }
 
-b2Vec2 ChildrenComponent::_matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float parentAngle)
+sf::Vector2f ChildrenComponent::_matchParentRotation(sf::Vector2f childPosition, sf::Vector2f parentPosition, float parentAngle)
 {
-	b2Vec2 adjustment;
+	sf::Vector2f adjustment;
 
 	//calculate radius of circle defined by parent and initial child position
 	//This is the hypotenus
@@ -224,7 +225,7 @@ b2Vec2 ChildrenComponent::_matchParentRotation(SDL_FPoint childPosition, SDL_FPo
 
 	//add parent angle
 	float newAngle = childAngle + util::degreesToRadians(parentAngle);
-	b2Vec2 newChildPosition{};
+	sf::Vector2f newChildPosition{};
 	newChildPosition.x = (radius * cos(newAngle));
 	newChildPosition.y = (radius * sin(newAngle));
 

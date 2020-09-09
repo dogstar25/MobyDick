@@ -2,10 +2,9 @@
 #define WEAPON_COMPONENT_H
 
 #include<string>
-#pragma warning(push,0)
 #include <box2d/box2d.h>
 #include <json/json.h>
-#pragma warning(pop)
+#include <SFML/Graphics.hpp>
 #include <SDL2/SDL.h>
 
 #include "Component.h"
@@ -17,7 +16,7 @@ struct WeaponLevelDetail {
 	int level;
 	float force;
 	int levelUpTarget;
-	SDL_Color color;
+	sf::Color color;
 	std::string bulletPoolId;
 };
 
@@ -30,7 +29,7 @@ public:
 	~WeaponComponent();
 
 	void update();
-	void fire(const b2Vec2& origin, const float& angle);
+	void fire(const sf::Vector2f& origin, const float& angle);
 	bool checkLevelUp(const int& pieceCount);
 	void levelUp();
 

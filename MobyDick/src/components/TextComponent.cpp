@@ -32,8 +32,8 @@ TextComponent::TextComponent(std::string gameObjectId, Json::Value definitionJSO
 	}
 
 	//test
-	std::string fontFile = TextureManager::instance().getFont(m_fontId);
-	m_fontObject = TTF_OpenFont(fontFile.c_str(), m_fontSize);
+	/*std::string fontFile = TextureManager::instance().getFont(m_fontId);
+	m_fontObject = TTF_OpenFont(fontFile.c_str(), m_fontSize);*/
 
 
 }
@@ -51,123 +51,123 @@ void TextComponent::construct()
 
 TextComponent::~TextComponent()
 {
-	TTF_CloseFont(m_fontObject);
+	//TTF_CloseFont(m_fontObject);
 }
 
 void TextComponent::update()
 {
-	//convenience reference to outside component(s)
-	const auto& renderComponent = parent()->getComponent<RenderComponent>();
-	const auto& transformComponent = parent()->getComponent<TransformComponent>();
-
-	std::string textureId = "TX_" + m_gameObjectId;
-
-	if (TextureManager::instance().hasTexture(textureId))
-	{
-		//If we have already set the texture, dont have to do it again
-		if (renderComponent->texture())
-		{
-			renderComponent->setTexture(TextureManager::instance().getTexture(textureId));
-			transformComponent->setSize((float)renderComponent->texture()->surface->w, (float)renderComponent->texture()->surface->h);
-		}
-
-	}
-	else
-	{
-		renderComponent->setTexture(generateTextTexture());
-	}
-
-	if (m_isDynamic == true)
-	{
-		renderComponent->setTexture(updateDynamicTextTexture());
-	}
-
-
-}
-
-std::shared_ptr<Texture> TextComponent::generateTextTexture()
-{
-	//convenience reference to outside component(s)
-	const auto& renderComponent = parent()->getComponent<RenderComponent>();
-	const auto& transformComponent = parent()->getComponent<TransformComponent>();
-
-	std::shared_ptr<Texture> texture = std::make_shared<Texture>();;
-
-	/*
-	TextObjects have their textures generated here, not in the TextureManager.init().
-	Generate the texture and add it to the TextureManager so that it can be shared with
-	other objects if needed.
-	*/
-	SDL_Surface* tempSurface;
-
-	std::string fontFile = TextureManager::instance().getFont(m_fontId);
-
-	//FIXME:Add a vector of TTF_Font* fontObject's with maybe 6 different font sizes. OPen them in the contructor
-	//and leave them open for regenerating text textures. Then close them in the deconstructor.
-	//This should save loads of time
-	//m_fontObject = TTF_OpenFont(fontFile.c_str(), m_fontSize);
-	tempSurface = TTF_RenderText_Blended(m_fontObject, m_textValue.c_str(), renderComponent->color());
-	//TTF_CloseFont(m_fontObject);
-
-	//Set the size of the textObject now that its texture has been generated
-	transformComponent->setSize((float)tempSurface->w, (float)tempSurface->h);
-	transformComponent->setPosition(
-		transformComponent->originalPosition().x + tempSurface->w/2,
-		transformComponent->originalPosition().y + tempSurface->h/2);
-
-	texture->sdlTexture = Renderer::instance().createTextureFromSurface(tempSurface);
-	texture->surface = tempSurface;
-
-	//Add it to the textureManager but first free any texture that may already be there in case this is
-	//being generated for a dynamic text object
-	TextureManager::instance().addOrReplaceTexture(m_textureId, texture);
-
-	return 	texture;
-
-}
-
-std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
-{
-
-	TextItem* newText;
-	std::shared_ptr<Texture> texture;
-
-	newText = DynamicTextManager::instance().getTextItem(m_gameObjectId);
-
-	//check the clock and see if enough time as gone by
-	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
-	std::chrono::duration<double> time_diff = now_time - newText->time_snapshot;
-
-	//use a timer to slow down the re-generating of dynamic text because its time consuming
-	if (newText->hasChanged == true && time_diff.count() > GameConfig::instance().dynamicTextRefreshDelay())
-	{
-		//update the timestamp
-		newText->time_snapshot = now_time;
-
-		//Build new texture
-		m_textValue = newText->textValue;
-		texture = generateTextTexture();
-		newText->hasChanged = false;
-
-	/*	m_refTransformComponent->setPosition(
-			(m_refTransformComponent->size().x / 2),
-			(m_refTransformComponent->size().y / 2)
-		);*/
-
-
-	}
-	else
-	{
-
-		texture = TextureManager::instance().getTexture(m_textureId);
-
-		//TODO:set a flag at game object level so that the TextureManager::render(TextObject* gameObject) doesnt have to 
-		// do SDL_QueryTexture
-	}
-
-	return texture;
-
-}
+//	//convenience reference to outside component(s)
+//	const auto& renderComponent = parent()->getComponent<RenderComponent>();
+//	const auto& transformComponent = parent()->getComponent<TransformComponent>();
+//
+//	std::string textureId = "TX_" + m_gameObjectId;
+//
+//	if (TextureManager::instance().hasTexture(textureId))
+//	{
+//		//If we have already set the texture, dont have to do it again
+//		if (renderComponent->texture())
+//		{
+//			renderComponent->setTexture(TextureManager::instance().getTexture(textureId));
+//			transformComponent->setSize((float)renderComponent->texture()->surface->w, (float)renderComponent->texture()->surface->h);
+//		}
+//
+//	}
+//	else
+//	{
+//		renderComponent->setTexture(generateTextTexture());
+//	}
+//
+//	if (m_isDynamic == true)
+//	{
+//		renderComponent->setTexture(updateDynamicTextTexture());
+//	}
+//
+//
+//}
+//
+//std::shared_ptr<Texture> TextComponent::generateTextTexture()
+//{
+//	//convenience reference to outside component(s)
+//	const auto& renderComponent = parent()->getComponent<RenderComponent>();
+//	const auto& transformComponent = parent()->getComponent<TransformComponent>();
+//
+//	std::shared_ptr<Texture> texture = std::make_shared<Texture>();;
+//
+//	/*
+//	TextObjects have their textures generated here, not in the TextureManager.init().
+//	Generate the texture and add it to the TextureManager so that it can be shared with
+//	other objects if needed.
+//	*/
+//	SDL_Surface* tempSurface;
+//
+//	std::string fontFile = TextureManager::instance().getFont(m_fontId);
+//
+//	//FIXME:Add a vector of TTF_Font* fontObject's with maybe 6 different font sizes. OPen them in the contructor
+//	//and leave them open for regenerating text textures. Then close them in the deconstructor.
+//	//This should save loads of time
+//	//m_fontObject = TTF_OpenFont(fontFile.c_str(), m_fontSize);
+//	tempSurface = TTF_RenderText_Blended(m_fontObject, m_textValue.c_str(), renderComponent->color());
+//	//TTF_CloseFont(m_fontObject);
+//
+//	//Set the size of the textObject now that its texture has been generated
+//	transformComponent->setSize((float)tempSurface->w, (float)tempSurface->h);
+//	transformComponent->setPosition(
+//		transformComponent->originalPosition().x + tempSurface->w/2,
+//		transformComponent->originalPosition().y + tempSurface->h/2);
+//
+//	texture->sdlTexture = Renderer::instance().createTextureFromSurface(tempSurface);
+//	texture->surface = tempSurface;
+//
+//	//Add it to the textureManager but first free any texture that may already be there in case this is
+//	//being generated for a dynamic text object
+//	TextureManager::instance().addOrReplaceTexture(m_textureId, texture);
+//
+//	return 	texture;
+//
+//}
+//
+//std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
+//{
+//
+//	TextItem* newText;
+//	std::shared_ptr<Texture> texture;
+//
+//	newText = DynamicTextManager::instance().getTextItem(m_gameObjectId);
+//
+//	//check the clock and see if enough time as gone by
+//	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
+//	std::chrono::duration<double> time_diff = now_time - newText->time_snapshot;
+//
+//	//use a timer to slow down the re-generating of dynamic text because its time consuming
+//	if (newText->hasChanged == true && time_diff.count() > GameConfig::instance().dynamicTextRefreshDelay())
+//	{
+//		//update the timestamp
+//		newText->time_snapshot = now_time;
+//
+//		//Build new texture
+//		m_textValue = newText->textValue;
+//		texture = generateTextTexture();
+//		newText->hasChanged = false;
+//
+//	/*	m_refTransformComponent->setPosition(
+//			(m_refTransformComponent->size().x / 2),
+//			(m_refTransformComponent->size().y / 2)
+//		);*/
+//
+//
+//	}
+//	else
+//	{
+//
+//		texture = TextureManager::instance().getTexture(m_textureId);
+//
+//		//TODO:set a flag at game object level so that the TextureManager::render(TextObject* gameObject) doesnt have to 
+//		// do SDL_QueryTexture
+//	}
+//
+//	return texture;
+//
+//}
 
 
 

@@ -190,6 +190,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\components\RenderComponent.cpp" />
+    <ClCompile Include="src\Renderer_GL.cpp" />
     <ClCompile Include="src\components\PoolComponent.cpp" />
     <ClCompile Include="src\actions\PistolFireAction.cpp" />
     <ClCompile Include="src\CollisionManager.cpp" />
@@ -207,6 +209,7 @@
     <ClCompile Include="src\ContactFilter.cpp" />
     <ClCompile Include="src\ContactListener.cpp" />
     <ClCompile Include="src\MortalRescue.cpp" />
+    <ClCompile Include="src\Renderer_SF.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\actions\NoAction.cpp" />
@@ -229,12 +232,10 @@
     <ClCompile Include="src\components\CompositeComponent.cpp" />
     <ClCompile Include="src\components\ParticleComponent.cpp" />
     <ClCompile Include="src\components\PhysicsComponent.cpp" />
-    <ClCompile Include="src\components\RenderComponent.cpp" />
     <ClCompile Include="src\components\Component.cpp" />
     <ClCompile Include="src\Animation.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Clock.cpp" />
-    <ClCompile Include="src\components\TransformComponent.cpp" />
     <ClCompile Include="src\components\WeaponComponent.cpp" />
     <ClCompile Include="src\DebugDraw.cpp" />
     <ClCompile Include="src\EnumMaps.cpp" />
@@ -254,6 +255,8 @@
     <ClCompile Include="src\actions\UseAction.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\components\RenderComponent.h" />
+    <ClInclude Include="src\Renderer_GL.h" />
     <ClInclude Include="src\components\PoolComponent.h" />
     <ClInclude Include="src\actions\PistolFireAction.h" />
     <ClInclude Include="src\CollisionManager.h" />
@@ -272,6 +275,7 @@
     <ClInclude Include="src\config_data\scenes.h" />
     <ClInclude Include="src\ContactFilter.h" />
     <ClInclude Include="src\ContactListener.h" />
+    <ClInclude Include="src\Renderer_SF.h" />
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\actions\NoAction.h" />
@@ -294,14 +298,12 @@
     <ClInclude Include="src\components\CompositeComponent.h" />
     <ClInclude Include="src\components\ParticleComponent.h" />
     <ClInclude Include="src\components\PhysicsComponent.h" />
-    <ClInclude Include="src\components\RenderComponent.h" />
     <ClInclude Include="src\components\Component.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="src\Animation.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Clock.h" />
-    <ClInclude Include="src\components\TransformComponent.h" />
     <ClInclude Include="src\components\WeaponComponent.h" />
     <ClInclude Include="src\DebugDraw.h" />
     <ClInclude Include="src\EnumMaps.h" />

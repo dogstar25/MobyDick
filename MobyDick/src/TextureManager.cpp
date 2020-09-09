@@ -15,20 +15,8 @@ TextureManager::TextureManager()
 TextureManager::~TextureManager()
 {
 
-	for (auto&& textureItem : m_textureMap) {
-
-		if (textureItem.second != NULL) {
-
-			if (textureItem.second->surface != NULL) {
-				SDL_FreeSurface(textureItem.second->surface);
-			}
-			SDL_DestroyTexture(textureItem.second->sdlTexture);
-
-		}
-	}
-
 	m_textureMap.clear();
-	std::map<std::string, std::shared_ptr<Texture>>().swap(m_textureMap);
+	std::map<std::string, std::shared_ptr<sf::Texture>>().swap(m_textureMap);
 
 }
 
@@ -40,7 +28,7 @@ TextureManager& TextureManager::instance()
 
 }
 
-bool TextureManager::init(SDL_Window* window)
+bool TextureManager::init()
 {
 
 	loadTextures();
@@ -63,22 +51,19 @@ bool TextureManager::hasTexture(std::string textureId)
 
 }
 
-void TextureManager::addOrReplaceTexture(std::string textureId, std::shared_ptr<Texture> texture)
+void TextureManager::addOrReplaceTexture(std::string textureId, std::shared_ptr<sf::Texture> texture)
 {
-	std::shared_ptr<Texture> tempTexture;
+	std::shared_ptr<sf::Texture> tempTexture;
 
 	if (hasTexture(textureId) == false)
 	{
 		m_textureMap.emplace(textureId, texture);
+
 	}
 	else
 	{
-		tempTexture = getTexture(textureId);
-
-		SDL_FreeSurface(tempTexture->surface);
-		if (tempTexture->sdlTexture != NULL) {
-			SDL_DestroyTexture(tempTexture->sdlTexture);
-		}
+		//tempTexture = getTexture(textureId);
+		//delete tempTexture;
 
 		//Use [] for the replacing of an item already there
 		m_textureMap[textureId] = texture;
@@ -98,38 +83,18 @@ bool TextureManager::loadTextures()
 
 	//Get and store config values
 	std::string filename, id;
-	bool retainSurface = false;
-
-	SDL_Surface* surface;
-	SDL_Texture* sdlTexture;
-	Texture* textureObject;
+	sf::Texture texture;
 
 	//Loop through every texture defined in the config file, create a texture object
 	//and store it in the main texture map
 	for(auto itr : root["textures"])
 	{
-		//textureObject = new Texture();
-		textureObject = new Texture();
-
 		id = itr["id"].asString();
 		filename = itr["filename"].asString();
-		retainSurface = itr["retainSurface"].asBool();
 
-		surface = IMG_Load(filename.c_str());
+		texture.loadFromFile(filename);
 
-		sdlTexture = SDL_CreateTextureFromSurface(Renderer::instance().SDLRenderer(), surface);
-		textureObject->sdlTexture = sdlTexture;
-		if (retainSurface == true)
-		{
-			textureObject->surface = surface;
-			
-		}
-		else
-		{
-			SDL_FreeSurface(surface);
-		}
-
-		m_textureMap.emplace(id, std::make_shared<Texture>(*textureObject));
+		m_textureMap.emplace(id, std::make_shared<sf::Texture>(texture));
 
 	}
 
@@ -138,36 +103,39 @@ bool TextureManager::loadTextures()
 		{
 			id = itr["id"].asString();
 			filename = itr["filename"].asString();
-			m_fontMap.emplace(id, filename);
+
+			sf::Font font; 
+			font.loadFromFile(filename);
+			m_fontMap.emplace(id, font);
 
 		}
 
 	return true;
 }
 
-std::string TextureManager::getFont(std::string id)
+sf::Font TextureManager::getFont(std::string id)
 {
-	std::string fontFile;
+	sf::Font font;
 
 	auto iter = m_fontMap.find(id);
 
 	if (iter != m_fontMap.end())
 	{
 		//fontFile = m_fontMap[id];
-		fontFile = iter->second;
+		font = iter->second;
 	}
 	else //default
 	{
-		fontFile = m_fontMap["FONT_ARIAL_REG"];
+		font = m_fontMap["FONT_ARIAL_REG"];
 	}
 
-	return fontFile;
+	return font;
 }
 
 
-std::shared_ptr<Texture> TextureManager::getTexture(std::string id)
+std::shared_ptr<sf::Texture> TextureManager::getTexture(std::string id)
 {
-	std::shared_ptr<Texture> textureObject;
+	std::shared_ptr<sf::Texture> textureObject;
 
 	auto iter = m_textureMap.find(id);
 

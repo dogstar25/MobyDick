@@ -20,6 +20,13 @@ void ParticleComponent::setEmissionInterval(std::chrono::duration<float> emissio
 	m_emissionInterval = emissionInterval;
 }
 
+void ParticleComponent::render()
+{
+	//sf::Vertex
+	//add code here to use the sf::vertexarray to draw all particles at once
+
+
+}
 
 void ParticleComponent::update()
 {
@@ -42,7 +49,7 @@ void ParticleComponent::update()
 		//that is between min and max , otherwise just use the max
 		auto particleCount = util::generateRandomNumber(effect.particleSpawnCountMin, effect.particleSpawnCountMax);
 
-		auto parentTransformComponent = parent()->getComponent<TransformComponent>();
+		//auto parentTransformComponent = parent()->getComponent<TransformComponent>();
 
 		for (int i = 0; i < particleCount; i++)
 		{
@@ -67,13 +74,13 @@ void ParticleComponent::update()
 				vitalityComponent->setIsLifetimeAlphaFade(effect.alphaFade);
 
 				//Set the color of the particle. Randomize the color values if they are different
-				SDL_Color color = util::generateRandomColor(effect.colorRangeBegin, effect.colorRangeEnd);
-				renderComponent->setColor(color);
+				sf::Color color = util::generateRandomColor(effect.colorRangeBegin, effect.colorRangeEnd);
+				parent()->setColor(color);
 
 				//Size
 				auto particleSize = util::generateRandomNumber(effect.particleSizeMin, effect.particleSizeMax);
 //				std::cout << "Size " << particleSize << "\n";
-				transformComponent->setSize(particleSize, particleSize);
+				parent()->setSize(particleSize, particleSize);
 
 				//Set the particles lifetime in miliseconds.
 				vitalityComponent->setTimeSnapshot(std::chrono::steady_clock::now());
@@ -92,11 +99,11 @@ void ParticleComponent::update()
 				//Calculate velocity vector
 				auto velocityX = cos(particleAngle) * force;
 				auto velocityY = sin(particleAngle) * force;
-				auto velocityVector = b2Vec2(velocityX, velocityY);
+				auto velocityVector = sf::Vector2f(velocityX, velocityY);
 
 				//Position - If zero was passed in then use the location of the gameObject
 				//that this ParticlrComponent belongs to
-				b2Vec2 positionVector = {};
+				sf::Vector2f positionVector = {};
 				if (effect.originMin.Length() > 0 || effect.originMax.Length() > 0) {
 
 					positionVector.x = util::generateRandomNumber(effect.originMin.x, effect.originMax.x);
@@ -105,15 +112,19 @@ void ParticleComponent::update()
 				}
 				else {
 
-					positionVector = parentTransformComponent->position();
+					positionVector = parent()->getPosition();
 				}
 
 				positionVector.x /= GameConfig::instance().scaleFactor();
 				positionVector.y /= GameConfig::instance().scaleFactor();
 
 				physicsComponent->setPhysicsBodyActive(true);
-				physicsComponent->setTransform(positionVector, particleAngle);
-				physicsComponent->setLinearVelocity(velocityVector);
+
+				b2Vec2 b2Position = { positionVector.x, positionVector.y };
+				physicsComponent->setTransform(b2Position, particleAngle);
+
+				b2Vec2 b2Velocity = { velocityVector.x, velocityVector.y };
+				physicsComponent->setLinearVelocity(b2Velocity);
 
 				//Add the particle to the game world
 				Game::instance().addGameObject(particle.value(), LAYER_MAIN);

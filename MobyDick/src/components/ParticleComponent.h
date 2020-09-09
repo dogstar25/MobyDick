@@ -22,6 +22,7 @@ public:
 	~ParticleComponent();
 
 	void update() override;
+	void render();
 	void setType(int type) { m_type = type; }
 	void setEmissionInterval(std::chrono::duration<float>);
 	void addParticleEffect(ParticleEffect particleEffect);

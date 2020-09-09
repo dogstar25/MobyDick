@@ -5,6 +5,11 @@
 #include "Clock.h"
 #include "DynamicTextManager.h"
 
+#include "Renderer_GL.h"
+#include "Renderer_SF.h"
+#include "game.h"
+
+
 
 SceneManager::SceneManager()
 {
@@ -90,30 +95,37 @@ void SceneManager::run()
 std::optional<SceneAction> SceneManager::pollEvents()
 {
 	int keyCode, keyStateCount;
-	SDL_Event event;
+	sf::Event::KeyEvent key;
+	sf::Event event;
 	//PlayerInputEvent* playerInputEvent = nullptr;
 	const Uint8* keyStates = nullptr;
 	std::optional<SceneAction> sceneAction;
 
-	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+	//Handle direct scene action that could have been set from somewhere outside of the pollevents
+	if (m_directSceneAction) {
 
-	//Handle special events and everything else should be player control
-	//input related so staore it for later
-	while (SDL_PollEvent(&event) && sceneAction.has_value() == false)
+		sceneAction = m_directSceneAction;
+		m_directSceneAction = std::nullopt;
+		return sceneAction;
+	}
+
+	//If there was no direct scene action, then poll standard window events and either translate
+	//them to an actionScene or assume they are for player input and store them for later
+	while (Renderer_SF::instance().window().pollEvent(event) && sceneAction.has_value() == false)
 	{
 		switch (event.type)
 		{
-			case SDL_KEYUP:
-			case SDL_KEYDOWN:
+			case sf::Event::KeyPressed:
+			case sf::Event::KeyReleased:
 			{
-				keyCode = event.key.keysym.sym;
+				key = event.key;
 
 				/*
 				Translate the keycode to whatever action it is tied to in this scene
 				Only interested in KEYDOWN for sceneActions
 				*/
-				if (event.type == SDL_KEYDOWN) {
-					sceneAction = getSceneKeyAction(keyCode);
+				if (event.type == sf::Event::KeyPressed) {
+					sceneAction = getSceneKeyAction(key);
 				}
 
 				/*
@@ -124,27 +136,12 @@ std::optional<SceneAction> SceneManager::pollEvents()
 					//std::cout << "\033[1;31m Store Key\033[0m" << keyCode << "\n";
 					PlayerInputEvent& playerInputEvent = m_PlayerInputEvents.emplace_back();
 					playerInputEvent.event = event;
-
-					//Get the keyboard state array and copy it to our save spot - memcpy!!!
-					keyStates = SDL_GetKeyboardState(&keyStateCount);
-					memcpy_s(playerInputEvent.keyStates,
-						SDL_NUM_SCANCODES * sizeof(unsigned char),
-						keyStates,
-						keyStateCount * sizeof(unsigned char));
 				}
 
 				break;
 			}
-			case SDL_USEREVENT:
-			{
-				//std::optional<SceneActionCode*> actionCode = (SceneActionCode*)event.user.data1;
-				sceneAction = *(static_cast<std::optional<SceneAction>*>(event.user.data1));
-				delete event.user.data1;
-				break;
-			}
-			case SDL_MOUSEBUTTONUP:
-			//case SDL_MOUSEMOTION:
-			case SDL_MOUSEBUTTONDOWN:
+			case sf::Event::MouseButtonPressed:
+			case sf::Event::MouseButtonReleased:
 			{
 				PlayerInputEvent& playerInputEvent = m_PlayerInputEvents.emplace_back();
 				playerInputEvent.event = event;
@@ -154,9 +151,7 @@ std::optional<SceneAction> SceneManager::pollEvents()
 			default:
 				break;
 
-
 		}
-
 
 	}
 
@@ -165,9 +160,9 @@ std::optional<SceneAction> SceneManager::pollEvents()
 
 }
 
-std::optional<SceneAction> SceneManager::getSceneKeyAction(SDL_Keycode keycode)
+std::optional<SceneAction> SceneManager::getSceneKeyAction(sf::Event::KeyEvent key)
 {
-	return m_scenes.back().getkeycodeAction(keycode);
+	return m_scenes.back().getkeycodeAction(key);
 }
 
 void SceneManager::popScene()

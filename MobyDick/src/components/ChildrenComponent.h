@@ -4,6 +4,7 @@
 #include <array>
 #include <vector>
 #include <SDL2/SDL.h>
+#include <SFML/Graphics.hpp>
 
 #include <box2d/box2d.h>
 #include <json/json.h>
@@ -35,9 +36,9 @@ private:
 
 	std::array<std::vector<std::shared_ptr<GameObject>>, CHILD_POSITIONS> m_childObjects;
 
-	b2Vec2 _matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float); //Move to Transform? Child objects can have a reference to their parent
-	b2Vec2 _calcChildPosition(b2Vec2 childSize,
-		int locationSlot, int childNumber, int childCount, SDL_FPoint parentPositionRec, float parentAngle);
+	sf::Vector2f _matchParentRotation(sf::Vector2f childPosition, sf::Vector2f parentPosition, float); //Move to Transform? Child objects can have a reference to their parent
+	sf::Vector2f _calcChildPosition(sf::Vector2f childSize,
+		int locationSlot, int childNumber, int childCount, sf::Vector2f parentPositionRec, float parentAngle);
 
 
 };

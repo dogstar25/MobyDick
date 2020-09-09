@@ -3,19 +3,19 @@
 
 #include <string>
 #include <map>
-
+#include <SFML/Graphics.hpp>
 #include <json/json.h>
 #include <SDL2/SDL.h>
 
 /*
 Overloaded operators used throught the game
 */
-static bool operator ==(SDL_Color a, SDL_Color b)
+static bool operator ==(sf::Color a, sf::Color b)
 {
 	return (a.r == b.r) && (a.g == b.g) && (a.b == b.b);
 }
 
-static bool operator !=(SDL_Color a, SDL_Color b)
+static bool operator !=(sf::Color a, sf::Color b)
 {
 	return (a.r != b.r) || (a.g != b.g) || (a.b != b.b);
 }
@@ -173,12 +173,12 @@ namespace util
 {
 	const int generateRandomNumber(int min, int max);
 	const float generateRandomNumber(float min, float max);
-	const SDL_Color generateRandomColor();
-	const SDL_Color generateRandomColor(SDL_Color beginRange, SDL_Color endRange);
+	const sf::Color generateRandomColor();
+	const sf::Color generateRandomColor(sf::Color beginRange, sf::Color endRange);
 	const float radiansToDegrees(float angleInRadians);
 	const float degreesToRadians(float angleInDegrees);
 	const std::string floatToString(float x, int decDigits);
-	const SDL_Color JsonToColor(Json::Value JsonColor);
+	const sf::Color JsonToColor(Json::Value JsonColor);
 
 };
 

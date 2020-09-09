@@ -10,12 +10,11 @@
 #include <unordered_map>
 #include <typeindex>
 
-#pragma warning(push,0)
 #include <box2d/box2d.h>
-#pragma warning(pop)
+#include <SFML/Graphics.hpp>
 
 #include "GameObjectDefinition.h"
-#include "components/TransformComponent.h"
+//#include "components/TransformComponent.h"
 #include "components/ActionComponent.h"
 #include "components/AnimationComponent.h"
 #include "components/AttachmentsComponent.h"
@@ -35,7 +34,7 @@
 
 class Scene;
 
-class GameObject
+class GameObject : public sf::Drawable
 {
 public:
 	
@@ -51,7 +50,7 @@ public:
 	virtual void render();
 
 	void setRemoveFromWorld(bool removeFromWorld) { m_removeFromWorld = removeFromWorld; }
-	void setPosition(b2Vec2 position, float angle);
+	void setPosition(sf::Vector2f position, float angle);
 	void setPosition(float x, float y);
 	void init(bool cameraFollow=false);
 
@@ -63,6 +62,16 @@ public:
 	auto& components() { return m_components; }
 	auto isPooledAvailable() { return m_isPooledAvailable; }
 	void setIsPooledAvailable(int isPooledAvailable);
+	bool absolutePositioning() {
+		return m_absolutePositioning;
+	}
+	sf::Vector2f size() {
+		return m_size;
+	}
+
+	sf::Vector2f setSize(float width, float height) {
+		m_size = {width, height};
+	}
 
 	void reset();
 	void addInventoryItem(GameObject* gameObject);
@@ -98,9 +107,14 @@ private:
 	int m_idTag{ 0 };
 	bool m_removeFromWorld{ false };
 
+	//Transform Variables
+	sf::Vector2f	m_size;
+	sf::Vector2f	m_originalPosition;
+	bool			m_absolutePositioning;
+	bool			m_centeredPositioning;
+
 	//Special values that need to be outside of components for speed
 	bool m_isPooledAvailable{ true };
-	
 
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 

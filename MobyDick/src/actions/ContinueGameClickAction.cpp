@@ -1,5 +1,5 @@
 #include "ContinueGameClickAction.h"
-
+#include "../SceneManager.h"
 
 #include "../Scene.h"
 
@@ -16,14 +16,7 @@ ContinueGameClickAction::~ContinueGameClickAction()
 void ContinueGameClickAction::perform(GameObject* gameObject)
 {
 
-	SDL_Event event;
-
-	SceneAction* sceneAction = new SceneAction();
-	sceneAction->actionCode = SCENE_ACTION_EXIT;
-	sceneAction->sceneId = "";
-
-	event.type = SDL_USEREVENT;
-	event.user.data1 = sceneAction;
-	SDL_PushEvent(&event);
+	SceneAction sceneAction = { SCENE_ACTION_EXIT ,"" };
+	SceneManager::instance().setDirectSceneAction(sceneAction);
 
 }

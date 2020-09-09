@@ -1,8 +1,7 @@
 #include "EnumMaps.h"
 
-#pragma warning(push,0)
 #include <box2d/box2d.h>
-#pragma warning(pop)
+#include <SFML/Window.hpp>
 
 EnumMap& EnumMap::instance()
 {
@@ -90,7 +89,7 @@ EnumMap::EnumMap()
 	m_enumMap["ACTION_ON_CLICK"] = ACTION_ON_CLICK;
 
 	//Keys
-	m_enumMap["SDLK_ESCAPE"] = SDLK_ESCAPE;
+	m_enumMap["sf::Keyboard::Escape"] = sf::Keyboard::Escape;
 
 	//Scene Action Codes
 	m_enumMap["SCENE_ACTION_QUIT"] = SCENE_ACTION_QUIT;
