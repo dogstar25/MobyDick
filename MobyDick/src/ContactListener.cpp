@@ -136,8 +136,15 @@ void ContactListener::bullet_wall(GameObject* contact1, GameObject* contact2, b2
 	}
 
 	//Build a One-Time particle emitter object
-	auto gameObject = Game::instance().addGameObject("PARTICLE_ONETIME_EMITTER", LAYER_MAIN, -1, -1);
-	auto& particleComponent = gameObject->getComponent<ParticleComponent>();
+	//auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
+	//auto& particleXComponent = particleEmitterObject->getComponent<ParticleXComponent>();
+	//particleXComponent->addParticleEffect(ParticleEffects::ricochet);
+	//particleXComponent->setType(ParticleEmitterType::CONTINUOUS);
+	//particleXComponent->setEmissionInterval(std::chrono::duration<float>(0.2));
+
+
+	auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
+	auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>();
 	particleComponent->addParticleEffect(ParticleEffects::ricochet);
 	particleComponent->setType(ParticleEmitterType::CONTINUOUS);
 	particleComponent->setEmissionInterval(std::chrono::duration<float>(0.2));
@@ -145,9 +152,9 @@ void ContactListener::bullet_wall(GameObject* contact1, GameObject* contact2, b2
 	//Convert from box2d to gameWorld coordinates
 	contactPoint.x *= GameConfig::instance().scaleFactor();
 	contactPoint.y *= GameConfig::instance().scaleFactor();
-	gameObject->setPosition(contactPoint.x, contactPoint.y);
+	particleEmitterObject->setPosition(contactPoint.x, contactPoint.y);
 
-	//Set flag for removal
+	//Set flag for removal for the Bullet
 	bullet->setRemoveFromWorld(true);
 
 }

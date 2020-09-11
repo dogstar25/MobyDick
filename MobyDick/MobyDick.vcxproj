@@ -190,6 +190,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\components\ParticleComponent.cpp" />
     <ClCompile Include="src\components\PoolComponent.cpp" />
     <ClCompile Include="src\actions\PistolFireAction.cpp" />
     <ClCompile Include="src\CollisionManager.cpp" />
@@ -227,7 +228,7 @@
     <ClCompile Include="src\components\AttachmentsComponent.cpp" />
     <ClCompile Include="src\components\ChildrenComponent.cpp" />
     <ClCompile Include="src\components\CompositeComponent.cpp" />
-    <ClCompile Include="src\components\ParticleComponent.cpp" />
+    <ClCompile Include="src\components\ParticleXComponent.cpp" />
     <ClCompile Include="src\components\PhysicsComponent.cpp" />
     <ClCompile Include="src\components\RenderComponent.cpp" />
     <ClCompile Include="src\components\Component.cpp" />
@@ -254,6 +255,7 @@
     <ClCompile Include="src\actions\UseAction.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\components\ParticleComponent.h" />
     <ClInclude Include="src\components\PoolComponent.h" />
     <ClInclude Include="src\actions\PistolFireAction.h" />
     <ClInclude Include="src\CollisionManager.h" />
@@ -292,7 +294,7 @@
     <ClInclude Include="src\components\AttachmentsComponent.h" />
     <ClInclude Include="src\components\ChildrenComponent.h" />
     <ClInclude Include="src\components\CompositeComponent.h" />
-    <ClInclude Include="src\components\ParticleComponent.h" />
+    <ClInclude Include="src\components\ParticleXComponent.h" />
     <ClInclude Include="src\components\PhysicsComponent.h" />
     <ClInclude Include="src\components\RenderComponent.h" />
     <ClInclude Include="src\components\Component.h" />

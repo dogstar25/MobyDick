@@ -116,8 +116,8 @@ inline constexpr int INVENTORY_COMPONENT = 14;
 //Animation States
 inline constexpr int ANIMATION_IDLE = 0;
 inline constexpr int ANIMATION_RUN = 1;
-inline constexpr int ANIMATION_ACTIVE = 3;
-inline constexpr int ANIMATION_ACTION = 4;
+inline constexpr int ANIMATION_ACTIVE = 2;
+inline constexpr int ANIMATION_ACTION = 3;
 
 //Animation Modes
 inline constexpr int ANIMATE_ONE_TIME = 0;

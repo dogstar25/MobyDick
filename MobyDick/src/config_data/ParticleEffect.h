@@ -2,11 +2,11 @@
 
 #include <string>
 
-#pragma warning(push,0)
-#include <box2d/box2d.h>
-#pragma warning(pop)
+#include "../GameConfig.h"
 
+#include <box2d/box2d.h>
 #include <SDL2/SDL.h>
+
 
 
 /*
@@ -38,17 +38,17 @@ namespace ParticleEffects {
 		.originMin = {0,0},
 		.originMax = {0,0},
 		.forceMin = 1,
-		.forceMax = 4,
+		.forceMax = 6,
 		.lifetimeMin = 0.5F,
-		.lifetimeMax = 6.0F,
+		.lifetimeMax = 115.0F,
 		.alphaFade = true,
 		.angleMin = 0,
-		.angleMax = 180,
+		.angleMax = 15,
 		.particleSizeMin = 1.28F,
-		.particleSizeMax = 15.50F,
+		.particleSizeMax = 25.50F,
 		.colorRangeBegin = {0,0,0,255},
 		.colorRangeEnd = {255,255,255,255},
 		.particleSpawnCountMin = 1,
-		.particleSpawnCountMax = 21
+		.particleSpawnCountMax = 250
 	};
 }

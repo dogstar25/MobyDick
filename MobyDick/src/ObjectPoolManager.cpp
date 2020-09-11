@@ -92,10 +92,19 @@ std::optional<std::shared_ptr<GameObject>> ObjectPoolManager::getPooledObject(st
 
 }
 
+SDL_Texture* ObjectPoolManager::getPoolObjectTexture(std::string poolId)
+{
+
+	auto& gameObject = m_objectPool[poolId].at(0);
+	auto texture = gameObject->getComponent<RenderComponent>()->texture()->sdlTexture;
+
+	return texture;
+}
+
 //void ObjectPoolManager::reset(std::shared_ptr<GameObject> particle)
 //{
 //	auto& particleComponent =
-//		std::static_pointer_cast<ParticleComponent>(particle->components()[PARTICLE_COMPONENT]);
+//		std::static_pointer_cast<ParticleXComponent>(particle->components()[PARTICLE_COMPONENT]);
 //
 //	particle->setRemoveFromWorld(false);
 //	particleComponent->reset();

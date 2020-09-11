@@ -2,11 +2,20 @@
 
 
 #include "../game.h"
+#include "../GameConfig.h"
+#include "../Camera.h"
 
 
 ParticleComponent::ParticleComponent(Json::Value definitionJSON )
 {
 	Json::Value particleComponentJSON = definitionJSON["particleComponent"];
+
+
+	for (int i = 0; i < 10000; i++) {
+
+		m_particles.emplace_back(Particle());
+
+	}
 
 }
 
@@ -14,6 +23,41 @@ ParticleComponent::~ParticleComponent()
 {
 
 }
+
+void ParticleComponent::render()
+{
+
+	for (auto& particle : m_particles) {
+
+		if (particle.isActive == true) {
+			SDL_FRect destRect =
+			{ particle.position.x,
+				particle.position.y,
+				particle.size,
+				particle.size
+			};
+
+			//Adjust destination for camera position
+			destRect.x -= Camera::instance().frame().x;
+			destRect.y -= Camera::instance().frame().y;
+
+			SDL_SetTextureColorMod(particle.texture, particle.color.r, particle.color.g, particle.color.b);
+			SDL_SetTextureAlphaMod(particle.texture, particle.color.a);
+			SDL_SetTextureBlendMode(particle.texture, SDL_BLENDMODE_ADD);
+
+			SDL_RenderCopyExF(
+				Renderer::instance().SDLRenderer(),
+				particle.texture,
+				nullptr,
+				&destRect,
+				0,
+				NULL,
+				SDL_FLIP_NONE);
+		}
+	}
+
+}
+
 
 void ParticleComponent::setEmissionInterval(std::chrono::duration<float> emissionInterval)
 {
@@ -23,20 +67,57 @@ void ParticleComponent::setEmissionInterval(std::chrono::duration<float> emissio
 
 void ParticleComponent::update()
 {
+	bool activeParticleFound = false;
 
+	//First update the position,lifetime,etc of all active particles
+	for (auto& particle : m_particles) {
+
+		if (particle.isActive == true) {
+
+			activeParticleFound = true;
+
+			std::chrono::steady_clock::time_point nowTime = std::chrono::steady_clock::now();
+			auto timeDiff = nowTime - particle.timeSnapshot;
+			particle.lifetimeRemaining -= timeDiff;
+			if (particle.lifetimeRemaining.count() <= 0) {
+
+				particle.isAvailable = true;
+				particle.isActive = false;
+
+			}
+
+			//particle.position.x += particle.velocity.x * .1666 ;
+			//particle.position.y += particle.velocity.y * .1666;
+			auto milliSeconds = std::chrono::duration_cast<std::chrono::milliseconds>(timeDiff);
+			float test = milliSeconds.count();
+			particle.position.x += particle.velocity.x * (milliSeconds.count() *.001);
+			particle.position.y += particle.velocity.y * (milliSeconds.count() * .001);
+
+		}
+
+		//add alpha fade
+		Uint8 alpha = 255;
+		alpha = int(255 * (particle.lifetimeRemaining.count() / particle.lifetime.count()));
+		particle.color.a = alpha;
+
+	}
+
+	//Only emit particles at the given time interval
 	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
 	std::chrono::duration<double> time_diff = now_time - m_timeSnapshot;
 
-	//Only emit particles at the given time interval
 	if (time_diff < m_emissionInterval) {
 		return;
 	}
-	else{
+	else {
 		m_timeSnapshot = now_time;
 	}
 
+	//Now emit more particles
 	for (auto& effect : m_particleEffects) {
 
+		//Get the texture by retrieving the effects pooled object and grabbing its texture
+		SDL_Texture* texture = ObjectPoolManager::instance().getPoolObjectTexture(effect.poolId);
 
 		//If the particle count min and max are different, then generate a random count
 		//that is between min and max , otherwise just use the max
@@ -47,52 +128,39 @@ void ParticleComponent::update()
 		for (int i = 0; i < particleCount; i++)
 		{
 
-			//Get the particle object from the pre-populated particle pool
-			std::optional<std::shared_ptr<GameObject>> particle = ObjectPoolManager::instance().getPooledObject(effect.poolId);
-			//auto& particle = std::make_shared<GameObject>("PARTICLE_SMOKE_1", -50.0f, -50.0f, 0.0f);
-			//particle->init(false);
+			auto& particle = getAvailableParticle();
 
-			//If the returned particle is null, then the pool has run out, so do nothing
-			if (particle)
-			{
-				const auto& physicsComponent = particle.value()->getComponent<PhysicsComponent>();
-				const auto& renderComponent = particle.value()->getComponent<RenderComponent>();
-				const auto& vitalityComponent = particle.value()->getComponent<VitalityComponent>();
-				const auto& transformComponent = particle.value()->getComponent<TransformComponent>();
+			if (particle) {
 
-				//Force
-				auto force = util::generateRandomNumber(effect.forceMin, effect.forceMax);
+				particle.value()->isAvailable = false;
+				particle.value()->isActive = true;
 
-				//Lifetime alpha fade
-				vitalityComponent->setIsLifetimeAlphaFade(effect.alphaFade);
+				//Set the texture
+				particle.value()->texture = texture;
 
 				//Set the color of the particle. Randomize the color values if they are different
-				SDL_Color color = util::generateRandomColor(effect.colorRangeBegin, effect.colorRangeEnd);
-				renderComponent->setColor(color);
+				particle.value()->color = util::generateRandomColor(effect.colorRangeBegin, effect.colorRangeEnd);
 
 				//Size
-				auto particleSize = util::generateRandomNumber(effect.particleSizeMin, effect.particleSizeMax);
-//				std::cout << "Size " << particleSize << "\n";
-				transformComponent->setSize(particleSize, particleSize);
+				particle.value()->size = util::generateRandomNumber(effect.particleSizeMin, effect.particleSizeMax);
 
 				//Set the particles lifetime in miliseconds.
-				vitalityComponent->setTimeSnapshot(std::chrono::steady_clock::now());
-				float particleLifetime = 0;
-				particleLifetime = util::generateRandomNumber(effect.lifetimeMin, effect.lifetimeMax);
-				vitalityComponent->setLifetime(std::chrono::duration<float>(particleLifetime));
-				vitalityComponent->setLifetimeRemaining(std::chrono::duration<float>(particleLifetime));
-				vitalityComponent->setHasInfiniteLifetime(false);
+				//std::chrono::steady_clock::time_point nowTime = std::chrono::steady_clock::now();
+				auto particleLifetime = util::generateRandomNumber(effect.lifetimeMin, effect.lifetimeMax);
+				particle.value()->timeSnapshot = now_time;
+				particle.value()->lifetime = (std::chrono::duration<float>(particleLifetime));
+				particle.value()->lifetimeRemaining = (std::chrono::duration<float>(particleLifetime));
 
 				//Calculate the emit angle/direction that the particle will travel in
 				auto angleRange = effect.angleMax - effect.angleMin;
-				auto particleAngle = ((float)i / (float)particleCount) * angleRange;
-				particleAngle += effect.angleMin;
-				particleAngle = util::degreesToRadians(particleAngle);
+				auto emitAngle = ((float)i / (float)particleCount) * angleRange;
+				emitAngle += effect.angleMin;
+				emitAngle = util::degreesToRadians(emitAngle);
 
 				//Calculate velocity vector
-				auto velocityX = cos(particleAngle) * force;
-				auto velocityY = sin(particleAngle) * force;
-				auto velocityVector = b2Vec2(velocityX, velocityY);
+				auto force = util::generateRandomNumber(effect.forceMin, effect.forceMax);
+				particle.value()->velocity.x = cos(emitAngle) * force;
+				particle.value()->velocity.y = sin(emitAngle) * force;
 
 				//Position - If zero was passed in then use the location of the gameObject
 				//that this ParticlrComponent belongs to
@@ -108,23 +176,21 @@ void ParticleComponent::update()
 					positionVector = parentTransformComponent->position();
 				}
 
-				positionVector.x /= GameConfig::instance().scaleFactor();
-				positionVector.y /= GameConfig::instance().scaleFactor();
+				//positionVector.x /= GameConfig::instance().scaleFactor();
+				//positionVector.y /= GameConfig::instance().scaleFactor();
 
-				physicsComponent->setPhysicsBodyActive(true);
-				physicsComponent->setTransform(positionVector, particleAngle);
-				physicsComponent->setLinearVelocity(velocityVector);
-
-				//Add the particle to the game world
-				Game::instance().addGameObject(particle.value(), LAYER_MAIN);
+				particle.value()->position.x = positionVector.x;
+				particle.value()->position.y = positionVector.y;
 
 			}
+
 		}
 
 	}
 
-	//If this is a one-time emission, then mark this emitter object to be removed
-	if (m_type == ParticleEmitterType::ONETIME) {
+	//If this is a one-time emission and all particles that were emitted are now inactive, 
+	// then mark this emitter object to be removed
+	if (m_type == ParticleEmitterType::ONETIME && activeParticleFound == false) {
 		parent()->setRemoveFromWorld(true);
 	}
 
@@ -136,6 +202,23 @@ void ParticleComponent::addParticleEffect(ParticleEffect particleEffect)
 	
 	m_particleEffects.push_back(particleEffect); 
 
+}
+
+std::optional<Particle*> ParticleComponent::getAvailableParticle()
+{
+	std::optional<Particle*> availableParticle = std::nullopt;
+
+	for (auto& particle : m_particles) {
+
+		if (particle.isAvailable) {
+
+			availableParticle = &particle;
+			break;
+		}
+
+	}
+
+	return availableParticle;
 }
 
 

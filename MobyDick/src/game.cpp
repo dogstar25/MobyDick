@@ -150,6 +150,16 @@ bool Game::init()
 	auto test = GameDefs::instance().gina_64;
 
 
+	/*for (int x = 0; x < 10000; x++) {
+
+		int xpos = util::generateRandomNumber(1, 32);
+		int ypos = util::generateRandomNumber(1, 32);
+		int angle = util::generateRandomNumber(1, 360);
+		scene.addGameObject("BOWMAN", LAYER_MAIN, xpos, ypos, angle, false);
+	}*/
+
+
+
 	return true;
 }
 

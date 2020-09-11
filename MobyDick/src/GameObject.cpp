@@ -80,7 +80,13 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 		addComponent(std::make_shared<ActionComponent>(definitionJSON));
 	}
 
-	//Particle Component
+	//Particle X Component
+	if (definitionJSON.isMember("particleXComponent"))
+	{
+		addComponent(std::make_shared<ParticleXComponent>(definitionJSON));
+	}
+
+	//Simple Particle Component
 	if (definitionJSON.isMember("particleComponent"))
 	{
 		addComponent(std::make_shared<ParticleComponent>(definitionJSON));
@@ -172,10 +178,19 @@ void GameObject::render()
 	getComponent<RenderComponent>()->render();
 		
 	//Render your children
-	if (getComponent<ChildrenComponent>())
-	{
+	if (getComponent<ChildrenComponent>()){
+
 		getComponent<ChildrenComponent>()->renderChildren();
 	}
+
+	//If you have an arcade particle emitter then render those particles
+	if (getComponent<ParticleComponent>()) {
+
+		getComponent<ParticleComponent>()->render();
+
+	}
+
+
 
 }
 
