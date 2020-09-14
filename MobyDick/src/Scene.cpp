@@ -242,10 +242,15 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMap
 //
 //}
 
-void Scene::addGameObject(std::shared_ptr<GameObject> gameObject, int layer)
+/*
+Emplace the new gameObject into the collection and also return a reference ptr to the newly created object as well
+*/
+GameObject* Scene::addGameObject(std::shared_ptr<GameObject> gameObject, int layer)
 {
 
-	this->m_gameObjects[layer].push_back(gameObject);
+	auto& gameObjectRef = this->m_gameObjects[layer].emplace_back(gameObject);
+
+	return gameObjectRef.get();
 
 }
 

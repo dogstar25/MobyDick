@@ -393,4 +393,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties assets_4gameObjectDefinitions_4commonObjects_1json__JsonSchema="gina" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

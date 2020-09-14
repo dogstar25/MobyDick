@@ -8,6 +8,20 @@ ParticleXComponent::ParticleXComponent(Json::Value definitionJSON )
 {
 	Json::Value particleComponentJSON = definitionJSON["particleXComponent"];
 
+
+	////Add any effects that may be pre-built into the particle emitter
+	//for (Json::Value itrEffect : particleComponentJSON["effects"])
+	//{
+
+	//	addParticleEffect(itrEffect);
+
+	//}
+	//for(auto effect : particleComponentJSON)
+
+	//particleXComponent->addParticleEffect(ParticleEffects::ricochet);
+	//particleXComponent->setType(ParticleEmitterType::CONTINUOUS);
+	//particleXComponent->setEmissionInterval(std::chrono::duration<float>(0.002));
+
 }
 
 ParticleXComponent::~ParticleXComponent()

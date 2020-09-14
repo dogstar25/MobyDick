@@ -116,6 +116,12 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 		addComponent(std::make_shared<PoolComponent>(definitionJSON));
 	}
 
+	//Composite Component
+	if (definitionJSON.isMember("compositeComponent"))
+	{
+		addComponent(std::make_shared<CompositeComponent>(definitionJSON));
+	}
+
 }
 
 //void GameObject::addComponent(int componentId, std::shared_ptr<Component> component)
@@ -145,7 +151,7 @@ void GameObject::setPosition(float x, float y)
 
 void GameObject::setPosition(b2Vec2 position, float angle)
 {
-	//-1 means dont apply the angle
+	//-1 means don't apply the angle
 	if (angle != -1)
 	{
 		getComponent<TransformComponent>()->setPosition(position, angle);
@@ -187,9 +193,13 @@ void GameObject::render()
 	if (getComponent<ParticleComponent>()) {
 
 		getComponent<ParticleComponent>()->render();
-
 	}
 
+	//If you have a composite component, then render the composite pieces
+	if (getComponent<CompositeComponent>()) {
+
+		getComponent<CompositeComponent>()->render();
+	}
 
 
 }

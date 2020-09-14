@@ -30,6 +30,7 @@ EnumMap::EnumMap()
 	m_enumMap["IdTag::DRONE_BRAIN"] = IdTag::DRONE_BRAIN;
 	m_enumMap["IdTag::DRONE_SHIELD"] = IdTag::DRONE_SHIELD;
 	m_enumMap["IdTag::DRONE_WEAPON"] = IdTag::DRONE_WEAPON;
+	m_enumMap["IdTag::DRONE_FRAME"] = IdTag::DRONE_FRAME;
 	m_enumMap["IdTag::ENEMY_BULLET"] = IdTag::ENEMY_BULLET;
 	m_enumMap["IdTag::FRIENDLY_BULLET"] = IdTag::FRIENDLY_BULLET;
 	m_enumMap["IdTag::GUI"] = IdTag::GUI;

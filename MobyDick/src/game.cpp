@@ -140,12 +140,14 @@ bool Game::init()
 
 	//Load the player and some other objects
 	auto playerObject = scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
-	auto weaponObject = scene.addGameObject("PISTOL", LAYER_MAIN, 8, 8, 0, true);
+	GameObject* weaponObject = scene.addGameObject("PISTOL", LAYER_MAIN, 8, 8, 0, false);
+
+
 	playerObject->addInventoryItem(weaponObject);
 
 	
 	scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);
-	//scene.addGameObject("SWORDLADY", LAYER_MAIN, 10, 1);
+	scene.addGameObject("DRONE", LAYER_MAIN, 2, 2);
 
 	auto test = GameDefs::instance().gina_64;
 
@@ -213,10 +215,12 @@ void Game::setInputControlMode(int inputControlMode)
 	}
 }
 
-void Game::addGameObject(std::shared_ptr<GameObject>gameObject, int layer)
+GameObject* Game::addGameObject(std::shared_ptr<GameObject>gameObject, int layer)
 {
 	//Add the gameObject to the currently active scene using back()
-	SceneManager::instance().scenes().back().addGameObject(gameObject, layer);
+	auto gameObjectRef = SceneManager::instance().scenes().back().addGameObject(gameObject, layer);
+
+	return gameObjectRef;
 
 
 }

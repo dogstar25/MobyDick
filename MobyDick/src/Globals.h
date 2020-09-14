@@ -74,7 +74,7 @@ namespace IdTagLabels {
 	//Non-stationary
 	inline constexpr auto DRONE_BRAIN = "DroneBrain";
 	inline constexpr auto DRONE_FRAME = "DroneFrame";
-	inline constexpr auto DRONE_SHIELD = "DroneSHield";
+	inline constexpr auto DRONE_SHIELD = "DroneShield";
 	inline constexpr auto DRONE_WEAPON = "DroneWeapon";
 	inline constexpr auto ENEMY_BULLET = "EnemyBullet";
 	inline constexpr auto FRIENDLY_BULLET = "FriendlyBullet";

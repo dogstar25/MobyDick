@@ -233,11 +233,11 @@ void PhysicsComponent::attachItem(GameObject* inventoryObject)
 	};
 	weldJointDef.localAnchorA = worldObjectAnchorPoint;
 
-	b2Vec2 weaponsAnchorPoint = {
+	b2Vec2 inventoryObjectAnchorPoint = {
 		inventoryObjectPhysicsComponent->m_objectAnchorPoint.x,
 		inventoryObjectPhysicsComponent->m_objectAnchorPoint.y
 	};
-	weldJointDef.localAnchorB = weaponsAnchorPoint;
+	weldJointDef.localAnchorB = inventoryObjectAnchorPoint;
 	(b2WeldJointDef*)Game::instance().physicsWorld()->CreateJoint(&weldJointDef);
 
 }
