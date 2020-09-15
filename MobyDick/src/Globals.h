@@ -6,6 +6,7 @@
 
 #include <json/json.h>
 #include <SDL2/SDL.h>
+#include <box2d/box2d.h>
 
 /*
 Overloaded operators used throught the game
@@ -179,6 +180,8 @@ namespace util
 	const float degreesToRadians(float angleInDegrees);
 	const std::string floatToString(float x, int decDigits);
 	const SDL_Color JsonToColor(Json::Value JsonColor);
+
+	b2Vec2 matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float);
 
 };
 

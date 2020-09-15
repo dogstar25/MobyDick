@@ -244,7 +244,7 @@ void CompositeComponent::_updatePiecePosition(GameObjectPiece& piece)
 	//Both the parent and piece position needs to be their center
 	SDL_FPoint piecePos = { piecePositionRect.x += pieceWidth /2, piecePositionRect.y += pieceHeight /2 };
 	SDL_FPoint parentPos = { parentCenterPosition.x , parentCenterPosition.y };
-	adjustment = _matchParentRotation(piecePos, parentPos, parentTransformComponent->angle());
+	adjustment = util::matchParentRotation(piecePos, parentPos, parentTransformComponent->angle());
 	piecePositionRect.x += adjustment.x;
 	piecePositionRect.y += adjustment.y;
 
@@ -283,33 +283,4 @@ void CompositeComponent::_levelUp(GameObjectPiece& piece)
 	}
 
 
-}
-
-b2Vec2 CompositeComponent::_matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float parentAngle)
-{
-	b2Vec2 adjustment;
-
-	//calculate radius of circle defined by parent and initial child position
-	//This is the hypotenuse
-	float radius = 0;
-	radius = sqrt(powf((childPosition.x - parentPosition.x), 2) + powf((childPosition.y - parentPosition.y), 2));
-
-	//calculate the angle of where child is at
-	float y = childPosition.y - parentPosition.y;
-	float x = childPosition.x - parentPosition.x;
-	float childAngle = atan2(childPosition.y - parentPosition.y, childPosition.x - parentPosition.x);
-
-	//add parent angle
-	float newAngle = childAngle + util::degreesToRadians(parentAngle);
-	b2Vec2 newChildPosition{};
-	newChildPosition.x = (radius * cos(newAngle));
-	newChildPosition.y = (radius * sin(newAngle));
-
-	newChildPosition.x += parentPosition.x;
-	newChildPosition.y += parentPosition.y;
-
-	adjustment.x = newChildPosition.x - childPosition.x;
-	adjustment.y = newChildPosition.y - childPosition.y;
-
-	return adjustment;
 }
