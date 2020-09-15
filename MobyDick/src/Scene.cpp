@@ -220,8 +220,8 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMap
 {
 
 	/*
-	Create a new unique_ptr of gameobject, emplace in the vector, and then call init on the new gameObject
-	We have to call init after construction in order to set the pointer refrences correctly.i.e all components will store a raw
+	Create a new unique_ptr of game object, emplace in the vector, and then call init on the new gameObject
+	We have to call init after construction in order to set the pointer references correctly.i.e all components will store a raw
 	pointer to gameObject and all gameObjects will store a raw pointer to the scene.
 	*/
 

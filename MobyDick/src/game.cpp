@@ -117,13 +117,13 @@ bool Game::init()
 			m_physicsWorld->SetDebugDraw(&DebugDraw::instance());
 		}*/
 
-		//Initilaze the Game Object Manager
+		//Initialize the Game Object Manager
 		GameObjectManager::instance().init();
 
-		//Initilaze the Particle Pool Manager
+		//Initialize the Particle Pool Manager
 		ObjectPoolManager::instance().init();
 
-		//Initilaize the SceneManager
+		//Initialize the SceneManager
 		SceneManager::instance().init();
 
 		//Initialize the clock object
@@ -141,13 +141,18 @@ bool Game::init()
 	//Load the player and some other objects
 	auto playerObject = scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
 	GameObject* weaponObject = scene.addGameObject("PISTOL", LAYER_MAIN, 8, 8, 0, false);
-
-
 	playerObject->addInventoryItem(weaponObject);
 
-	
 	scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);
-	scene.addGameObject("DRONE", LAYER_MAIN, 2, 2);
+
+	//Enemy Drone
+	auto drone = scene.addGameObject("DRONE", LAYER_MAIN, 2, 2);
+	auto& droneCompositeComp = drone->getComponent<CompositeComponent>();
+	if (drone->getComponent<CompositeComponent>()->physicsWeldPiecesOn() == true) {
+		droneCompositeComp->weldOnPieces();
+	}
+
+	
 
 	auto test = GameDefs::instance().gina_64;
 

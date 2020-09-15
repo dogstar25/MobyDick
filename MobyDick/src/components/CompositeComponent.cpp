@@ -1,5 +1,9 @@
 #include "CompositeComponent.h"
+
+#include <memory>
+
 #include "../game.h"
+#include "../GameObject.h"
 
 
 
@@ -9,6 +13,8 @@ CompositeComponent::CompositeComponent(Json::Value definitionJSON)
 
 
 	Json::Value bluePrintJSON = compositeComponentJSON["blueprint"];
+
+	m_physicsWeldPiecesOn = compositeComponentJSON["physicsWeldPiecesOn"].asBool();
 
 	m_blueprint.textureId = bluePrintJSON["texture"].asString();
 
@@ -58,6 +64,36 @@ void CompositeComponent::render()
 		{
 			pieceObject.pieceObject->render();
 		}
+	}
+
+}
+
+void CompositeComponent::weldOnPieces()
+{
+
+	for (auto& piece : m_pieces) {
+
+		auto& piecePhysicsComponent =  piece.pieceObject->getComponent<PhysicsComponent>();
+		auto& parentPhysicsComponent = parent()->getComponent<PhysicsComponent>();
+		auto& pieceTransformComponent = piece.pieceObject->getComponent<TransformComponent>();
+		auto& parentTransformComponent = parent()->getComponent<TransformComponent>();
+		auto pieceSize = pieceTransformComponent->size();
+		auto parentSize = parentTransformComponent->size();
+
+		//calculate the center offset 
+		b2Vec2 center = { 
+			parentTransformComponent->size().x / 2 / GameConfig::instance().scaleFactor(), 
+			parentTransformComponent->size().y / 2 / GameConfig::instance().scaleFactor() 
+		};
+
+		//calculate the base parent location to weld this piece on
+		auto x = (piece.parentPositionOffset.x  - parentSize.x/2 + (pieceSize.x / 2)) / GameConfig::instance().scaleFactor();
+		auto y = (piece.parentPositionOffset.y  - parentSize.y/2 + (pieceSize.y / 2)) / GameConfig::instance().scaleFactor();
+
+		b2Vec2 weldLocation = { x,y };
+		
+		parentPhysicsComponent->attachItem(piece.pieceObject.get(), weldLocation);
+
 	}
 
 }
@@ -118,32 +154,13 @@ void CompositeComponent::_buildPiece(CompositeLegendItem legendItem, int xPos, i
 	/*
 	Build the game objects off screen. They will be placed in expect location during update loop
 	*/
-	auto pieceObject = Game::instance().addGameObject(legendItem.gameObjectId, LAYER_MAIN, -5, -5);
-	//m_childObjects[locationSlot].emplace_back(std::make_shared<GameObject>(childObjectId, -1.0F, -1.0F, 0.F))->init();
+	auto& pieceObject = std::make_shared<GameObject>(legendItem.gameObjectId, LAYER_MAIN, -5, -5);
+	pieceObject->init();
 
 	auto& pieceVitalityComponent = pieceObject->getComponent<VitalityComponent>();
 
 	pieceVitalityComponent->setDurability(m_levels[0].durability);
 	piece.pieceObject = pieceObject;
-
-	/*
-	
-	Uswe PhysicsComponent::attachItem to attach armor piece
-	
-	*/
-
-	//auto& parentPhysicsComponent = parent()->getComponent<PhysicsComponent>()
-	//parent()->getComponent<PhysicsComponent>()->attachItem(pieceObject);
-
-
-
-	/*
-	
-	end try
-	
-	*/
-
-
 
 	//calculate the X,Y offset position in relating to the base object
 	auto& pieceTransformComponent = pieceObject->getComponent<TransformComponent>();
@@ -176,8 +193,11 @@ void CompositeComponent::_updatePieces()
 		//transform position based on the physicsComponent
 		pieceObject.pieceObject->update();
 
-		//Update the position of the piece
-		_updatePiecePosition(pieceObject);
+		//Update the position of the piece for composites where pieces are not
+		//welded on
+		if (m_physicsWeldPiecesOn == false) {
+			_updatePiecePosition(pieceObject);
+		}
 
 
 	}

@@ -30,6 +30,7 @@
             },
             "compositeComponent": {
                 "levelUpSpeed": 1800,
+                "physicsWeldPiecesOn":  false,
                 "blueprint": {
                     "texture": "TX_DRONE1_BLUEPRINT",
                     "legend": [
@@ -145,7 +146,7 @@
                 "yRenderAdjustment": 1
             },
             "physicsComponent": {
-                "type": "B2_KINEMATIC",
+                "type": "B2_DYNAMIC",
                 "collisionShape": "B2_BOX",
                 "friction": 1.0,
                 "restitution": 0.0,
@@ -178,7 +179,7 @@
                 "yRenderAdjustment": 1
             },
             "physicsComponent": {
-                "type": "B2_KINEMATIC",
+                "type": "B2_DYNAMIC",
                 "collisionShape": "B2_BOX",
                 "friction": 1.0,
                 "restitution": 0.0,
@@ -211,7 +212,7 @@
                 "yRenderAdjustment": 1
             },
             "physicsComponent": {
-                "type": "B2_KINEMATIC",
+                "type": "B2_DYNAMIC",
                 "collisionShape": "B2_BOX",
                 "friction": 1.0,
                 "restitution": 0.0,
@@ -244,7 +245,7 @@
                 "yRenderAdjustment": 1
             },
             "physicsComponent": {
-                "type": "B2_KINEMATIC",
+                "type": "B2_DYNAMIC",
                 "collisionShape": "B2_BOX",
                 "friction": 1.0,
                 "restitution": 0.0,
@@ -277,7 +278,7 @@
                 "yRenderAdjustment": 1
             },
             "physicsComponent": {
-                "type": "B2_KINEMATIC",
+                "type": "B2_DYNAMIC",
                 "collisionShape": "B2_BOX",
                 "friction": 1.0,
                 "restitution": 0.0,

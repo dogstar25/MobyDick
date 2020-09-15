@@ -18,7 +18,7 @@ struct GameObjectPiece
 	b2Vec2 parentPositionOffset;
 	short currentlevel;
 	std::chrono::steady_clock::time_point time_snapshot;
-	GameObject* pieceObject;
+	std::shared_ptr<GameObject> pieceObject;
 
 };
 
@@ -51,11 +51,15 @@ public:
 
 	void update() override;
 	void render();
-
+	void weldOnPieces();
+	bool physicsWeldPiecesOn() {
+		return m_physicsWeldPiecesOn;
+	}
 
 private:
 	short m_maxlevel;
 	float m_levelUpSpeed;
+	bool m_physicsWeldPiecesOn;
 	std::vector<CompositeLevel> m_levels;
 	CompositeBlueprint m_blueprint;
 

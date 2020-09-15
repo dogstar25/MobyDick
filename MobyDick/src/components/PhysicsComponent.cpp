@@ -216,28 +216,36 @@ void PhysicsComponent::setOffGrid()
 	m_physicsBody->SetActive(false);
 }
 
-void PhysicsComponent::attachItem(GameObject* inventoryObject)
+void PhysicsComponent::attachItem(GameObject* attachObject, std::optional<b2Vec2> attachLocation)
 {
 	//Get physics component of the inventory object
-	const auto& inventoryObjectPhysicsComponent = inventoryObject->getComponent<PhysicsComponent>();
+	const auto& attachObjectPhysicsComponent = attachObject->getComponent<PhysicsComponent>();
 
 	b2WeldJointDef weldJointDef;
 	weldJointDef.referenceAngle;
 	weldJointDef.bodyA = m_physicsBody;
-	weldJointDef.bodyB = inventoryObjectPhysicsComponent->m_physicsBody;
+	weldJointDef.bodyB = attachObjectPhysicsComponent->m_physicsBody;
 	weldJointDef.collideConnected = false;
 
-	b2Vec2 worldObjectAnchorPoint = {
-		m_objectAnchorPoint.x,
-		m_objectAnchorPoint.y
-	};
-	weldJointDef.localAnchorA = worldObjectAnchorPoint;
+	//If an attach point was passed in then use it , otherwise use the anchor point defined for the object
+	b2Vec2 anchorPoint = { 0,0 };
+	if (attachLocation) {
+		anchorPoint = attachLocation.value();
+	}
+	else {
+		anchorPoint = {
+			m_objectAnchorPoint.x,
+			m_objectAnchorPoint.y
+		};
 
-	b2Vec2 inventoryObjectAnchorPoint = {
-		inventoryObjectPhysicsComponent->m_objectAnchorPoint.x,
-		inventoryObjectPhysicsComponent->m_objectAnchorPoint.y
+	}
+	weldJointDef.localAnchorA = anchorPoint;
+
+	b2Vec2 attachObjectAnchorPoint = {
+		attachObjectPhysicsComponent->m_objectAnchorPoint.x,
+		attachObjectPhysicsComponent->m_objectAnchorPoint.y
 	};
-	weldJointDef.localAnchorB = inventoryObjectAnchorPoint;
+	weldJointDef.localAnchorB = attachObjectAnchorPoint;
 	(b2WeldJointDef*)Game::instance().physicsWorld()->CreateJoint(&weldJointDef);
 
 }

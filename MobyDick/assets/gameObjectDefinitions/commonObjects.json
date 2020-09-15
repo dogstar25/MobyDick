@@ -73,12 +73,13 @@
             },
             "childrenComponent": {
                 "childPadding": 0,
-                "childPositionRelative": true,
+                "childPositionRelative": false,
                 "childObjects": [
                     {
                         "gameObjectId": "PLAYER_LABEL",
                         "locationSlot": 1
                     }
+
                 ]
             },
             "playerControlComponent": {

@@ -255,7 +255,7 @@ void GameObject::reset()
 void GameObject::addInventoryItem( GameObject* gameObject)
 {
 	size_t itemCount = getComponent<InventoryComponent>()->addItem(gameObject);
-	//If this is the only iventory item, then attach it to the player of whatever object this is
+	//If this is the only inventory item, then attach it to the player of whatever object this is
 	if (itemCount == 1)
 	{
 		getComponent<PhysicsComponent>()->attachItem(gameObject);

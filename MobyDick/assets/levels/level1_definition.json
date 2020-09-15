@@ -1,6 +1,6 @@
 {
     "id": "LEVEL1",
-    "blueprint": "TX_LEVEL_TEST2",
+    "blueprint": "TX_LEVEL1_BLUEPRINT",
     "description": "Level 1",
     "dimensions": {
         "levelWidth": 128,
