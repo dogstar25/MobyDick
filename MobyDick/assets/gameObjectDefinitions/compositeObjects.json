@@ -30,7 +30,7 @@
             },
             "compositeComponent": {
                 "levelUpSpeed": 1800,
-                "physicsWeldPiecesOn":  false,
+                "physicsWeldPiecesOn": false,
                 "blueprint": {
                     "texture": "TX_DRONE1_BLUEPRINT",
                     "legend": [

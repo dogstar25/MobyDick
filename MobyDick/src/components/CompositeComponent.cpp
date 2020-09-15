@@ -188,21 +188,16 @@ void CompositeComponent::_updatePieces()
 		//Update the state of the piece
 		_updatePieceState(pieceObject);
 
-		//The piece object itself is a gameObject that should have its update called
-		//IMPORTANT - this has to be before the _updatePiecePosition because this changes the 
-		//transform position based on the physicsComponent
-		pieceObject.pieceObject->update();
-
 		//Update the position of the piece for composites where pieces are not
 		//welded on
 		if (m_physicsWeldPiecesOn == false) {
 			_updatePiecePosition(pieceObject);
 		}
 
+		//The piece object itself is a gameObject that should have its update called
+		pieceObject.pieceObject->update();
 
 	}
-
-
 
 }
 
@@ -244,10 +239,8 @@ void CompositeComponent::_updatePiecePosition(GameObjectPiece& piece)
 	b2Vec2 adjustment{ 0,0 };
 
 	auto& pieceTransformComponent = piece.pieceObject->getComponent<TransformComponent>();
+	auto& piecePhysicsComponent = piece.pieceObject->getComponent<PhysicsComponent>();
 	auto& parentTransformComponent = parent()->getComponent<TransformComponent>();
-
-	auto pieceWidth = pieceTransformComponent->size().x;
-	auto pieceHeight = pieceTransformComponent->size().y;
 
 	//calculate the X,Y offset position in relating to the base object
 	SDL_FRect parentPositionRect = parentTransformComponent->getPositionRect();
@@ -262,16 +255,26 @@ void CompositeComponent::_updatePiecePosition(GameObjectPiece& piece)
 
 	//Adjust the piece position based on the base objects rotation/angle
 	//Both the parent and piece position needs to be their center
-	SDL_FPoint piecePos = { piecePositionRect.x += pieceWidth /2, piecePositionRect.y += pieceHeight /2 };
+	SDL_FPoint piecePos = { piecePositionRect.x += piecePositionRect.w /2, piecePositionRect.y += piecePositionRect.h /2 };
 	SDL_FPoint parentPos = { parentCenterPosition.x , parentCenterPosition.y };
 	adjustment = util::matchParentRotation(piecePos, parentPos, parentTransformComponent->angle());
 	piecePositionRect.x += adjustment.x;
 	piecePositionRect.y += adjustment.y;
 
+	//Adjust for box2d scale size
+	piecePositionRect.x /= GameConfig::instance().scaleFactor();
+	piecePositionRect.y /= GameConfig::instance().scaleFactor();
+
+	//Convert the angle to radians
+	auto parentRadianAngle = util::degreesToRadians(parentTransformComponent->angle());
+
 	//Create a vec position object to pass to setPosition
 	piecePosition.x = piecePositionRect.x;
 	piecePosition.y = piecePositionRect.y;
-	piece.pieceObject->setPosition(piecePosition, parentTransformComponent->angle());
+
+	piecePhysicsComponent->setTransform(piecePosition, parentRadianAngle);
+
+	//piece.pieceObject->setPosition(piecePosition, parentTransformComponent->angle());
 
 }
 
