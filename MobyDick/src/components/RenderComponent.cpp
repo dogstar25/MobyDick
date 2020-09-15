@@ -224,8 +224,11 @@ void RenderComponent::render()
 void RenderComponent::setDependencyReferences(GameObject* gameObject)
 {
 
-	m_animationComponent = gameObject->getComponent<AnimationComponent>().get();
-	m_transformComponent = gameObject->getComponent<TransformComponent>().get();
+	auto animationComponent = gameObject->getComponent<AnimationComponent>();
+	m_animationComponent = animationComponent.get();
+
+	auto transformComponent = gameObject->getComponent<TransformComponent>();
+	m_transformComponent = transformComponent.get();
 
 }
 

@@ -15,6 +15,7 @@ VitalityComponent::VitalityComponent(Json::Value definitionJSON)
 	Json::Value vitalityComponentJSON = definitionJSON["vitalityComponent"];
 
 	m_speed = vitalityComponentJSON["speed"].asFloat();
+	m_durability = vitalityComponentJSON["durability"].asFloat();
 	m_lifetime = std::chrono::duration<float>(vitalityComponentJSON["lifetime"].asFloat());
 	if (m_lifetime <= std::chrono::duration<float>(0)) {
 		m_hasInfiniteLifetime = true;

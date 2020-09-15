@@ -37,6 +37,7 @@ public:
 
 	SDL_FRect  getPositionRect();
 	SDL_FPoint getCenterPosition();
+	b2Vec2 matchParentRotation(SDL_FPoint parentPosition, float);
 
 private:
 	float

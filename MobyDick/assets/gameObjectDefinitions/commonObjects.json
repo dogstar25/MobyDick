@@ -79,6 +79,7 @@
                         "gameObjectId": "PLAYER_LABEL",
                         "locationSlot": 1
                     }
+
                 ]
             },
             "playerControlComponent": {
@@ -129,16 +130,6 @@
             },
             "vitalityComponent": {
                 "speed": 30.0
-            },
-            "physicsComponent": {
-                "type": "B2_DYNAMIC",
-                "collisionShape": "B2_BOX",
-                "friction": 0.00,
-                "density": 10.5,
-                "linearDamping": 20.0,
-                "restitution": 0.0,
-                "angularDamping": 10.0,
-                "collisionCategory": "CollisionCat::COMMON"
             }
         },
         {
@@ -169,6 +160,23 @@
                 "dynamic": true,
                 "font": "FONT_ARIAL_REG",
                 "fontSize": 16
+            },
+            "renderComponent": {
+                "color": {
+                    "red": 0,
+                    "green": 255,
+                    "blue": 0,
+                    "alpha": 255
+                },
+                "outline": {
+                    "thickness": 1,
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
+                }
             }
         },
         {
@@ -611,9 +619,23 @@
                 "collisionCategory": "CollisionCat::PARTICLE"
             }
         },
-
         {
-            "id": "PARTICLE_ONETIME_EMITTER",
+            "id": "PARTICLE_X_EMITTER",
+            "idTag": "IdTag::GENERAL",
+            "traitTags": [],
+            "description": "Particle Emitter",
+            "transformComponent": {
+                "size": {
+                    "width": 6,
+                    "height": 3
+                }
+            },
+            "particleXComponent": {
+
+            }
+        },
+        {
+            "id": "PARTICLE_EMITTER",
             "idTag": "IdTag::GENERAL",
             "traitTags": [],
             "description": "Particle Emitter",

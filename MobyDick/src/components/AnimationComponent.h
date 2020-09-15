@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <memory>
 #include <json/json.h>
 
 #include "Component.h"
@@ -35,6 +36,8 @@ private:
 
 	std::map<int, std::shared_ptr<Animation>> m_animations;
 
+	//new
+	std::array<std::shared_ptr<Animation>, 5> m_animations2;
 };
 
 #endif

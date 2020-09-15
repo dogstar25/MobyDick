@@ -1,9 +1,9 @@
 #ifndef PHYSICS_COMPONENT_H
 #define PHYSICS_COMPONENT_H
 
-#pragma warning(push,0)
+#include <optional>
+
 #include <box2d/box2d.h>
-#pragma warning(pop)
 
 #include "Component.h"
 
@@ -26,8 +26,9 @@ public:
 	void setPhysicsBodyActive(bool  active);
 	void setFixedRotation(bool fixedRotation);
 	void setBullet(bool isBullet);
+	
 
-	void attachItem(GameObject* inventoryObject);
+	void attachItem(GameObject* inventoryObject, std::optional<b2Vec2> attachLocation = std::nullopt );
 
 	//Accessor functions
 	b2Vec2 objectAnchorPoint() { return m_objectAnchorPoint; }

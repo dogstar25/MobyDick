@@ -46,15 +46,15 @@ void ChildrenComponent::update()
 	
 		for (auto& childObject : childLocations)
 		{
-			const auto& childTransformComponent = childObject->getComponent<TransformComponent>();
+			const auto childTransformComponent = childObject->getComponent<TransformComponent>();
 
 			childNumber++;
 	
 			//Calculate child position
-			SDL_FPoint parentPosition = transformComponent->getCenterPosition();
+			SDL_FPoint parentCenterPosition = transformComponent->getCenterPosition();
 			float parentAngle = transformComponent->angle();
 			b2Vec2 newChildPosition = 
-				_calcChildPosition(childTransformComponent->size(), locationSlot, childNumber, childCount, parentPosition, parentAngle);
+				_calcChildPosition(childTransformComponent->size(), locationSlot, childNumber, childCount, parentCenterPosition, parentAngle);
 	
 			// Should this child match the angle of the parent
 			if (m_childPositionRelative == true)
@@ -90,7 +90,6 @@ void ChildrenComponent::renderChildren()
 	}
 
 }
-//
 
 
 b2Vec2 ChildrenComponent::_calcChildPosition(
@@ -98,60 +97,56 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 	int locationSlot,
 	int childNumber,
 	int childCount,
-	SDL_FPoint parentPosition,
+	SDL_FPoint parentCenterPosition,
 	float parentAngle)
 {
 	//SDL_FRect childSize = { child->size().x, child->size().y };
 	//SDL_FPoint childPosition{};
 	float x=0, y=0, xAdj = 0, yAdj = 0;
 
-	//Parent position is center of parent
-	//SDL_FRect parentPositionRect = parentPositionRec;
-//	SDL_FRect parentPositionRect = m_gameObject->transformComponent()->getPositionRect();
-
-	//Different calcs for the different 9 possible positions
-	//Calculate topleft corner of child
+	//Different calculations for the different 9 possible positions
+	//Calculate top left corner of child
 	switch (locationSlot) {
 	case 1:
-		x = parentPosition.x - (childSize.x);
-		y = parentPosition.y - (childSize.y);
+		x = parentCenterPosition.x - (childSize.x);
+		y = parentCenterPosition.y - (childSize.y);
 		break;
 	case 2:
-		x = parentPosition.x;
-		y = parentPosition.y - (childSize.y);
+		x = parentCenterPosition.x;
+		y = parentCenterPosition.y - (childSize.y);
 		break;
 	case 3:
-		x = parentPosition.x + childSize.x;
-		y = parentPosition.y - (childSize.y);
+		x = parentCenterPosition.x + childSize.x;
+		y = parentCenterPosition.y - (childSize.y);
 		break;
 	case 4:
-		x = parentPosition.x - (childSize.x);
-		y = parentPosition.y;
+		x = parentCenterPosition.x - (childSize.x);
+		y = parentCenterPosition.y;
 		break;
 	case 5:
-		x = parentPosition.x;
-		y = parentPosition.y;
+		x = parentCenterPosition.x;
+		y = parentCenterPosition.y;
 		break;
 	case 6:
-		x = parentPosition.x + childSize.x;
-		y = parentPosition.y;
+		x = parentCenterPosition.x + childSize.x;
+		y = parentCenterPosition.y;
 		break;
 	case 7:
-		x = parentPosition.x - (childSize.x);
-		y = parentPosition.y + childSize.y;
+		x = parentCenterPosition.x - (childSize.x);
+		y = parentCenterPosition.y + childSize.y;
 		break;
 	case 8:
-		x = parentPosition.x;
-		y = parentPosition.y + childSize.y;
+		x = parentCenterPosition.x;
+		y = parentCenterPosition.y + childSize.y;
 		break;
 	case 9:
-		x = parentPosition.x + childSize.x;
-		y = parentPosition.y + childSize.y;
+		x = parentCenterPosition.x + childSize.x;
+		y = parentCenterPosition.y + childSize.y;
 		break;
 
 	}
 
-	SDL_FPoint childPosition{ x, y };
+	SDL_FPoint childCenterPosition{ x, y };
 
 	//Adjust the position if there are multiple children in the same position
 	if (childCount > 1)
@@ -176,16 +171,16 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 
 		//Calculate 1st child object position based on the previous childPosition calculated
 		//values based on location slot
-		firstChildPosition.x = childPosition.x;
+		firstChildPosition.x = childCenterPosition.x;
 		firstChildPosition.y = 
-			childPosition.y -
+			childCenterPosition.y -
 			oddEvenadjustValue -
 			((childSize.y + m_childPadding) * stepCount);
 
 		//Calculate our current child object position using the stepSize and the
 		//position of the first child position
-		childPosition.x = firstChildPosition.x;
-		childPosition.y =
+		childCenterPosition.x = firstChildPosition.x;
+		childCenterPosition.y =
 			firstChildPosition.y + ((childSize.y + m_childPadding) * childNumber);
 
 	}
@@ -194,46 +189,14 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 	{
 		b2Vec2 adjustment{};
 
-		adjustment = this->_matchParentRotation(childPosition, parentPosition, parentAngle);
+		adjustment = util::matchParentRotation(childCenterPosition, parentCenterPosition, parentAngle);
 
-		childPosition.x += adjustment.x;
-		childPosition.y += adjustment.y;
+		childCenterPosition.x += adjustment.x;
+		childCenterPosition.y += adjustment.y;
 
 	}
 
-	//Need to convert to a b2vec2
-	//ToDo: come up with our own vec2, etc class
-	b2Vec2 b2Vec2ChildPosition = { childPosition.x, childPosition.y };
+	b2Vec2 b2Vec2ChildPosition = { childCenterPosition.x, childCenterPosition.y };
 	return b2Vec2ChildPosition;
 
 }
-
-b2Vec2 ChildrenComponent::_matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float parentAngle)
-{
-	b2Vec2 adjustment;
-
-	//calculate radius of circle defined by parent and initial child position
-	//This is the hypotenus
-	float radius = 0;
-	radius = sqrt(powf((childPosition.x - parentPosition.x), 2) + powf((childPosition.y - parentPosition.y), 2));
-
-	//calculate the angle of where child is at
-	float y = childPosition.y - parentPosition.y;
-	float x = childPosition.x - parentPosition.x;
-	float childAngle = atan2(childPosition.y - parentPosition.y, childPosition.x - parentPosition.x);
-
-	//add parent angle
-	float newAngle = childAngle + util::degreesToRadians(parentAngle);
-	b2Vec2 newChildPosition{};
-	newChildPosition.x = (radius * cos(newAngle));
-	newChildPosition.y = (radius * sin(newAngle));
-
-	newChildPosition.x += parentPosition.x;
-	newChildPosition.y += parentPosition.y;
-
-	adjustment.x = newChildPosition.x - childPosition.x;
-	adjustment.y = newChildPosition.y - childPosition.y;
-
-	return adjustment;
-}
-

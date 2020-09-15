@@ -35,7 +35,7 @@ public:
 	void clearEvents();
 	GameObject* addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle=0., bool cameraFollow=false);
 	void addGameObject(GameObject* gameObject, int layer);
-	void addGameObject(std::shared_ptr<GameObject> gameObject, int layer);
+	GameObject* addGameObject(std::shared_ptr<GameObject> gameObject, int layer);
 	void addKeyAction(SDL_Keycode, SceneAction);
 	void applyCurrentControlMode();
 	SDL_FPoint calcWindowPosition(int globalPosition);

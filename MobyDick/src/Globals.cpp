@@ -107,6 +107,34 @@ namespace util
 
 	}
 
+	b2Vec2 matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float parentAngle)
+	{
+		b2Vec2 adjustment;
+
+		//calculate radius of circle defined by parent and initial child position
+		//This is the hypotenuse
+		float radius = 0;
+		radius = sqrt(powf((childPosition.x - parentPosition.x), 2) + powf((childPosition.y - parentPosition.y), 2));
+
+		//calculate the angle of where child is at
+		float y = childPosition.y - parentPosition.y;
+		float x = childPosition.x - parentPosition.x;
+		float childAngle = atan2(childPosition.y - parentPosition.y, childPosition.x - parentPosition.x);
+
+		//add parent angle
+		float newAngle = childAngle + util::degreesToRadians(parentAngle);
+		b2Vec2 newCenterPosition{};
+		newCenterPosition.x = (radius * cos(newAngle));
+		newCenterPosition.y = (radius * sin(newAngle));
+
+		newCenterPosition.x += parentPosition.x;
+		newCenterPosition.y += parentPosition.y;
+
+		adjustment.x = newCenterPosition.x - childPosition.x;
+		adjustment.y = newCenterPosition.y - childPosition.y;
+
+		return adjustment;
+	}
 }
 
 

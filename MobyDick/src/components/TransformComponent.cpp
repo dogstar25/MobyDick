@@ -113,3 +113,4 @@ void TransformComponent::setAngle(float angle)
 {
 	m_angle = angle;
 }
+

@@ -20,6 +20,13 @@ public:
 	void setForce(float force) { m_force = force; }
 	float speed() {	return m_speed; }
 
+	void setDurability(float durability) {
+		m_durability = durability;
+	}
+	float durability() {
+		return m_durability;
+	}
+
 	std::chrono::duration<float, std::milli> lifetime() { return m_lifetime; }
 	void setLifetime(std::chrono::duration<float, std::milli> lifetime) { m_lifetime = lifetime; }
 

@@ -7,6 +7,8 @@
 #include <memory>
 #include <optional>
 
+#include <SDL2/SDL.h>
+
 class GameObject;
 
 class ObjectPoolManager
@@ -16,6 +18,7 @@ public:
 	void init();
 
 	std::optional<std::shared_ptr<GameObject>> getPooledObject(std::string);
+	SDL_Texture* getPoolObjectTexture(std::string);
 
 	//Accessor Functions
 	const std::unordered_map <std::string, std::vector<std::shared_ptr<GameObject>>>& objectPool() {

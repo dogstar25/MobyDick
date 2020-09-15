@@ -6,6 +6,7 @@
 
 #include <json/json.h>
 #include <SDL2/SDL.h>
+#include <box2d/box2d.h>
 
 /*
 Overloaded operators used throught the game
@@ -74,7 +75,7 @@ namespace IdTagLabels {
 	//Non-stationary
 	inline constexpr auto DRONE_BRAIN = "DroneBrain";
 	inline constexpr auto DRONE_FRAME = "DroneFrame";
-	inline constexpr auto DRONE_SHIELD = "DroneSHield";
+	inline constexpr auto DRONE_SHIELD = "DroneShield";
 	inline constexpr auto DRONE_WEAPON = "DroneWeapon";
 	inline constexpr auto ENEMY_BULLET = "EnemyBullet";
 	inline constexpr auto FRIENDLY_BULLET = "FriendlyBullet";
@@ -116,8 +117,8 @@ inline constexpr int INVENTORY_COMPONENT = 14;
 //Animation States
 inline constexpr int ANIMATION_IDLE = 0;
 inline constexpr int ANIMATION_RUN = 1;
-inline constexpr int ANIMATION_ACTIVE = 3;
-inline constexpr int ANIMATION_ACTION = 4;
+inline constexpr int ANIMATION_ACTIVE = 2;
+inline constexpr int ANIMATION_ACTION = 3;
 
 //Animation Modes
 inline constexpr int ANIMATE_ONE_TIME = 0;
@@ -179,6 +180,8 @@ namespace util
 	const float degreesToRadians(float angleInDegrees);
 	const std::string floatToString(float x, int decDigits);
 	const SDL_Color JsonToColor(Json::Value JsonColor);
+
+	b2Vec2 matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float);
 
 };
 

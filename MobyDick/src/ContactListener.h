@@ -5,9 +5,7 @@
 #include <vector>
 #include <array>
 
-#pragma warning(push,0)
 #include <box2d/box2d.h>
-#pragma warning(pop)
 
 class GameObject;
 

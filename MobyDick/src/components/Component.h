@@ -13,7 +13,7 @@ class ActionComponent;
 class AttachmentsComponent;
 class ChildrenComponent;
 class CompositeComponent;
-class ParticleComponent;
+class ParticleXComponent;
 class PhysicsComponent;
 class RenderComponent;
 class TextComponent;

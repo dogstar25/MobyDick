@@ -80,7 +80,13 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 		addComponent(std::make_shared<ActionComponent>(definitionJSON));
 	}
 
-	//Particle Component
+	//Particle X Component
+	if (definitionJSON.isMember("particleXComponent"))
+	{
+		addComponent(std::make_shared<ParticleXComponent>(definitionJSON));
+	}
+
+	//Simple Particle Component
 	if (definitionJSON.isMember("particleComponent"))
 	{
 		addComponent(std::make_shared<ParticleComponent>(definitionJSON));
@@ -108,6 +114,12 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("poolComponent"))
 	{
 		addComponent(std::make_shared<PoolComponent>(definitionJSON));
+	}
+
+	//Composite Component
+	if (definitionJSON.isMember("compositeComponent"))
+	{
+		addComponent(std::make_shared<CompositeComponent>(definitionJSON));
 	}
 
 }
@@ -139,7 +151,7 @@ void GameObject::setPosition(float x, float y)
 
 void GameObject::setPosition(b2Vec2 position, float angle)
 {
-	//-1 means dont apply the angle
+	//-1 means don't apply the angle
 	if (angle != -1)
 	{
 		getComponent<TransformComponent>()->setPosition(position, angle);
@@ -172,10 +184,23 @@ void GameObject::render()
 	getComponent<RenderComponent>()->render();
 		
 	//Render your children
-	if (getComponent<ChildrenComponent>())
-	{
+	if (getComponent<ChildrenComponent>()){
+
 		getComponent<ChildrenComponent>()->renderChildren();
 	}
+
+	//If you have an arcade particle emitter then render those particles
+	if (getComponent<ParticleComponent>()) {
+
+		getComponent<ParticleComponent>()->render();
+	}
+
+	//If you have a composite component, then render the composite pieces
+	if (getComponent<CompositeComponent>()) {
+
+		getComponent<CompositeComponent>()->render();
+	}
+
 
 }
 
@@ -230,7 +255,7 @@ void GameObject::reset()
 void GameObject::addInventoryItem( GameObject* gameObject)
 {
 	size_t itemCount = getComponent<InventoryComponent>()->addItem(gameObject);
-	//If this is the only iventory item, then attach it to the player of whatever object this is
+	//If this is the only inventory item, then attach it to the player of whatever object this is
 	if (itemCount == 1)
 	{
 		getComponent<PhysicsComponent>()->attachItem(gameObject);

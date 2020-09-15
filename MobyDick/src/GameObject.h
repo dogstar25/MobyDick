@@ -21,6 +21,7 @@
 #include "components/AttachmentsComponent.h"
 #include "components/ChildrenComponent.h"
 #include "components/CompositeComponent.h"
+#include "components/ParticleXComponent.h"
 #include "components/ParticleComponent.h"
 #include "components/PhysicsComponent.h"
 #include "components/PlayerControlComponent.h"
