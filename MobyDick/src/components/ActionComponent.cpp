@@ -19,9 +19,7 @@ ActionComponent::ActionComponent(Json::Value definitionJSON)
 		//Get the Enum that represents the Game Objects action as an int
 		int actionId = EnumMap::instance().toEnum(itrAction["actionId"].asString());
 
-
 		m_actions[actionId] = ActionMaps::instance().getAction(actionCode);
-
 
 	}
 

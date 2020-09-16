@@ -11,6 +11,7 @@
 #include "TransformComponent.h"
 #include "AnimationComponent.h"
 #include "../Renderer.h"
+#include "../GameObject.h"
 
 class AnimationComponent;
 class PhysicsComponent;
@@ -32,7 +33,7 @@ public:
 	void setTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
 
 	void outlineObject(SDL_Color color);
-	void setDependencyReferences(GameObject* gameObject);
+	//void setDependencyReferences(GameObject* gameObject);
 	void applyDisplayOverlay(displayOverlay);
 	void removeDisplayOverlay();
 
@@ -64,8 +65,8 @@ private:
 
 	std::optional<displayOverlay> m_displayOverlay;
 
-	AnimationComponent*           m_animationComponent;
-	TransformComponent*           m_transformComponent;
+	/*AnimationComponent*           m_animationComponent;
+	TransformComponent*           m_transformComponent;*/
 
 };
 

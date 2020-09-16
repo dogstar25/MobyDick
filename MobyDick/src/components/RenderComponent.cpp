@@ -74,14 +74,16 @@ SDL_FRect RenderComponent::getRenderDestRect()
 {
 	SDL_FRect destRect;
 
+	const auto& transformComponent = parent()->transformComponent.value();
+
 	//Get its current position. Should be center of object
-	destRect = m_transformComponent->getPositionRect();
+	destRect = transformComponent->getPositionRect();
 
 	destRect.w += m_xRenderAdjustment;
 	destRect.h += m_yRenderAdjustment;
 
 	//Adjust position based on current camera position - offset
-	if (m_transformComponent->absolutePositioning() == false)
+	if (transformComponent->absolutePositioning() == false)
 	{
 		destRect.x -= Camera::instance().frame().x;
 		destRect.y -= Camera::instance().frame().y;
@@ -100,9 +102,8 @@ SDL_Rect* RenderComponent::getRenderTextureRect()
 
 	SDL_Rect* textureSrcRect=nullptr;
 
-	if (m_animationComponent)
-	{
-		textureSrcRect = m_animationComponent->getCurrentAnimationTextureRect();
+	if (parent()->animationComponent) {
+		textureSrcRect = parent()->animationComponent.value()->getCurrentAnimationTextureRect();
 	}
 
 	return textureSrcRect;
@@ -118,9 +119,9 @@ SDL_Texture* RenderComponent::getRenderTexture()
 
 	SDL_Texture* texture = nullptr;
 
-	if (m_animationComponent)
+	if (parent()->animationComponent)
 	{
-		texture = m_animationComponent->getCurrentAnimationTexture();
+		texture = parent()->animationComponent.value()->getCurrentAnimationTexture();
 	}
 	else 
 	{
@@ -161,7 +162,9 @@ void RenderComponent::render()
 {
 	//Check if this object is in the viewable area of the world
 	//Add a tiles width to the camera to buffer it some
-	const SDL_FRect positionRect = m_transformComponent->getPositionRect();
+	const auto& transformComponent = parent()->transformComponent.value();
+
+	const SDL_FRect positionRect = transformComponent->getPositionRect();
 	SDL_Rect gameObjectPosRect={ (int)positionRect.x, (int)positionRect.y, (int)positionRect.w, (int)positionRect.h };
 	SDL_Rect cameraRect = { (int)Camera::instance().frame().x,
 		(int)Camera::instance().frame().y,
@@ -172,12 +175,12 @@ void RenderComponent::render()
 	If this object is within the viewable are or if its absolute positioned then render it
 	*/
 	if (SDL_HasIntersection(&gameObjectPosRect, &cameraRect) || 
-		m_transformComponent->absolutePositioning() == true) {
+		transformComponent->absolutePositioning() == true) {
 
 		const SDL_FRect destRect = getRenderDestRect();
 		SDL_Rect* textureSourceRect = getRenderTextureRect();
 		SDL_Texture* texture = getRenderTexture();
-		float angle = m_transformComponent->angle();
+		float angle = transformComponent->angle();
 
 		//Set the color. Use the displayOverlay values if there is one
 		if (m_displayOverlay.has_value() && m_displayOverlay->color.has_value()) {
@@ -221,16 +224,18 @@ void RenderComponent::render()
 
 }
 
-void RenderComponent::setDependencyReferences(GameObject* gameObject)
-{
-
-	auto animationComponent = gameObject->getComponent<AnimationComponent>();
-	m_animationComponent = animationComponent.get();
-
-	auto transformComponent = gameObject->getComponent<TransformComponent>();
-	m_transformComponent = transformComponent.get();
-
-}
+//void RenderComponent::setDependencyReferences(GameObject* gameObject)
+//{
+//
+//	if (gameObject->animationComponent) {
+//		const auto& animationComponent = gameObject->animationComponent.value();
+//		m_animationComponent = animationComponent.get();
+//	}
+//
+//	auto transformComponent = gameObject->transformComponent.value();
+//	m_transformComponent = transformComponent.get();
+//
+//}
 
 void RenderComponent::applyDisplayOverlay(displayOverlay displayOverlay)
 {

@@ -16,7 +16,7 @@ public:
 	void setFramePosition(float, float);
 	void update();
 	
-	SDL_FRect frame() {	return m_frame; }
+	SDL_FRect& frame() { return m_frame; }
 	void setFollowMe(GameObject* gameObject) { m_followMe = gameObject;	}
 
 private:

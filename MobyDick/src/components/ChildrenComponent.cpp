@@ -34,7 +34,7 @@ ChildrenComponent::~ChildrenComponent()
 
 void ChildrenComponent::update()
 {
-	const auto& transformComponent = parent()->getComponent<TransformComponent>();
+	const auto& transformComponent = parent()->transformComponent.value();
 
 	short locationSlot = 0;
 	
@@ -46,7 +46,7 @@ void ChildrenComponent::update()
 	
 		for (auto& childObject : childLocations)
 		{
-			const auto childTransformComponent = childObject->getComponent<TransformComponent>();
+			const auto childTransformComponent = childObject->transformComponent.value();
 
 			childNumber++;
 	

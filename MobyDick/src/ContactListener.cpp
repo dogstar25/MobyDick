@@ -144,7 +144,7 @@ void ContactListener::bullet_wall(GameObject* contact1, GameObject* contact2, b2
 
 
 	auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
-	auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>();
+	auto& particleComponent = particleEmitterObject->particleComponent.value();
 	particleComponent->addParticleEffect(ParticleEffects::ricochet);
 	particleComponent->setType(ParticleEmitterType::ONETIME);
 	particleComponent->setEmissionInterval(std::chrono::duration<float>(0.2));

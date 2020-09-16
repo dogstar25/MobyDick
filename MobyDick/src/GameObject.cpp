@@ -35,91 +35,91 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	m_removeFromWorld = false;
 
 	//Always build a render and transform component
-	addComponent(std::make_shared<RenderComponent>(definitionJSON));
-	addComponent(std::make_shared<TransformComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust));
+	this->renderComponent = std::make_shared<RenderComponent>(definitionJSON);
+	this->transformComponent = std::make_shared<TransformComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
 
 	//Animation Component
 	if (definitionJSON.isMember("animationComponent"))
 	{
-		addComponent(std::make_shared<AnimationComponent>(definitionJSON));
+		this->animationComponent = std::make_shared<AnimationComponent>(definitionJSON);
 	}
 
 	//Physics Component
 	if (definitionJSON.isMember("physicsComponent") && definitionJSON.isMember("transformComponent"))
 	{
-		addComponent(std::make_shared<PhysicsComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust));
+		this->physicsComponent = std::make_shared<PhysicsComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
 	}
 
 	//Vitality Component
 	if (definitionJSON.isMember("vitalityComponent"))
 	{
-		addComponent(std::make_shared<VitalityComponent>(definitionJSON));
+		this->vitalityComponent = std::make_shared<VitalityComponent>(definitionJSON);
 	}
 
 	//Player control Component
 	if (definitionJSON.isMember("playerControlComponent"))
 	{
-		addComponent(std::make_shared<PlayerControlComponent>(definitionJSON));
+		this->playerControlComponent = std::make_shared<PlayerControlComponent>(definitionJSON);
 	}
 
 	//Text Component
 	if (definitionJSON.isMember("textComponent"))
 	{
-		addComponent(std::make_shared<TextComponent>(gameObjectId, definitionJSON));
+		this->textComponent = std::make_shared<TextComponent>(gameObjectId, definitionJSON);
 	}
 
 	//Children Component
 	if (definitionJSON.isMember("childrenComponent"))
 	{
-		addComponent(std::make_shared<ChildrenComponent>(definitionJSON));
+		this->childrenComponent = std::make_shared<ChildrenComponent>(definitionJSON);
 	}
 
 	//Action Component
 	if (definitionJSON.isMember("actionComponent"))
 	{
-		addComponent(std::make_shared<ActionComponent>(definitionJSON));
+		this->actionComponent = std::make_shared<ActionComponent>(definitionJSON);
 	}
 
 	//Particle X Component
 	if (definitionJSON.isMember("particleXComponent"))
 	{
-		addComponent(std::make_shared<ParticleXComponent>(definitionJSON));
+		this->particleXComponent = std::make_shared<ParticleXComponent>(definitionJSON);
 	}
 
 	//Simple Particle Component
 	if (definitionJSON.isMember("particleComponent"))
 	{
-		addComponent(std::make_shared<ParticleComponent>(definitionJSON));
+		this->particleComponent = std::make_shared<ParticleComponent>(definitionJSON);
 	}
 
 	//Inventory Component
 	if (definitionJSON.isMember("inventoryComponent"))
 	{
-		addComponent(std::make_shared<InventoryComponent>());
+		this->inventoryComponent = std::make_shared<InventoryComponent>();
 	}
 
 	//UIControl Component
 	if (definitionJSON.isMember("UIControlComponent"))
 	{
-		addComponent(std::make_shared<UIControlComponent>(definitionJSON));
+		this->uicontrolComponent = std::make_shared<UIControlComponent>(definitionJSON);
 	}
 
 	//Weapon Component
 	if (definitionJSON.isMember("weaponComponent"))
 	{
-		addComponent(std::make_shared<WeaponComponent>(definitionJSON));
+		this->weaponComponent = std::make_shared<WeaponComponent>(definitionJSON);
 	}
 
 	//Pool Component
 	if (definitionJSON.isMember("poolComponent"))
 	{
-		addComponent(std::make_shared<PoolComponent>(definitionJSON));
+		this->poolComponent = std::make_shared<PoolComponent>(definitionJSON);
 	}
 
 	//Composite Component
 	if (definitionJSON.isMember("compositeComponent"))
 	{
-		addComponent(std::make_shared<CompositeComponent>(definitionJSON));
+		this->compositeComponent = std::make_shared<CompositeComponent>(definitionJSON);
 	}
 
 }
@@ -137,14 +137,87 @@ void GameObject::_setDependecyReferences()
 {
 
 	//SetRenderComponent dependencies
-	getComponent<RenderComponent>()->setDependencyReferences(this);
+	//renderComponent.value()->setDependencyReferences(this);
+
+}
+
+void GameObject::addComponent(const std::shared_ptr<Component> component, ComponentTypes componentType)
+{
+
+		m_components_new[(std::size_t)componentType]=component;
+
+}
+
+std::shared_ptr<Component> GameObject::getComponent(ComponentTypes componentType)
+{
+	std::shared_ptr<Component> component = nullptr;
+
+	switch (componentType) {
+
+		case ComponentTypes::ACTION_COMPONENT: {
+			component =  std::static_pointer_cast<ActionComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		case ComponentTypes::ANIMATION_COMPONENT: {
+			component = std::static_pointer_cast<AnimationComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		case ComponentTypes::ATTACHMENTS_COMPONENT: {
+			component = std::static_pointer_cast<AttachmentsComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		case ComponentTypes::CHILDREN_COMPONENT: {
+			component = std::static_pointer_cast<ChildrenComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		case ComponentTypes::COMPOSITE_COMPONENT: {
+			component = std::static_pointer_cast<CompositeComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		case ComponentTypes::INVENTORY_COMPONENT: {
+			component = std::static_pointer_cast<InventoryComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		case ComponentTypes::PARTICLE_COMPONENT: {
+			component = std::static_pointer_cast<ParticleComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		case ComponentTypes::PARTICLE_X_COMPONENT: {
+			component = std::static_pointer_cast<ParticleXComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		case ComponentTypes::PHYSICS_COMPONENT: {
+			component = std::static_pointer_cast<PhysicsComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		case ComponentTypes::PLAYERCONTROL_COMPONENT: {
+			component = std::static_pointer_cast<PlayerControlComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		case ComponentTypes::POOL_COMPONENT: {
+			component = std::static_pointer_cast<PoolComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		case ComponentTypes::RENDER_COMPONENT: {
+			component = std::static_pointer_cast<RenderComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		case ComponentTypes::TEXT_COMPONENT: {
+			component = std::static_pointer_cast<TextComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		case ComponentTypes::TRANSFORM_COMPONENT: {
+			component = std::static_pointer_cast<TransformComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		case ComponentTypes::UICONTROL_COMPONENT: {
+			component = std::static_pointer_cast<UIControlComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		case ComponentTypes::VITALITY_COMPONENT: {
+			component = std::static_pointer_cast<VitalityComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		case ComponentTypes::WEAPON_COMPONENT: {
+			component = std::static_pointer_cast<WeaponComponent>(m_components_new[(std::size_t)componentType]);
+		}
+		default:
+			assert(false && "Component type is not valid");
+
+	}
+
+	return component;
 
 }
 
 void GameObject::setPosition(float x, float y)
 {
 
-	getComponent<TransformComponent>()->setPosition(x, y);
+	transformComponent.value()->setPosition(x, y);
 
 }
 
@@ -154,11 +227,11 @@ void GameObject::setPosition(b2Vec2 position, float angle)
 	//-1 means don't apply the angle
 	if (angle != -1)
 	{
-		getComponent<TransformComponent>()->setPosition(position, angle);
+		transformComponent.value()->setPosition(position, angle);
 	}
 	else
 	{
-		getComponent<TransformComponent>()->setPosition(position);
+		transformComponent.value()->setPosition(position);
 	}
 
 }
@@ -167,9 +240,63 @@ void GameObject::setPosition(b2Vec2 position, float angle)
 void GameObject::update()
 {
 
-	for (auto& component : m_components)
+	/*for (auto& component : m_components_new)
 	{
-		component.second->update();
+		if (component) {
+			component->update();
+		}
+	}*/
+
+	if (actionComponent) {
+		actionComponent.value()->update();
+	}
+	if (animationComponent) {
+		animationComponent.value()->update();
+	}
+	if (attachmentsComponent) {
+		attachmentsComponent.value()->update();
+	}
+	if (childrenComponent) {
+		childrenComponent.value()->update();
+	}
+	if (compositeComponent) {
+		compositeComponent.value()->update();
+	}
+	if (inventoryComponent) {
+		inventoryComponent.value()->update();
+	}
+	if (particleComponent) {
+		particleComponent.value()->update();
+	}
+	if (particleXComponent) {
+		particleXComponent.value()->update();
+	}
+	if (playerControlComponent) {
+		playerControlComponent.value()->update();
+	}
+	if (physicsComponent) {
+		physicsComponent.value()->update();
+	}
+	if (poolComponent) {
+		poolComponent.value()->update();
+	}
+	if (renderComponent) {
+		renderComponent.value()->update();
+	}
+	if (textComponent) {
+		textComponent.value()->update();
+	}
+	if (transformComponent) {
+		transformComponent.value()->update();
+	}
+	if (uicontrolComponent) {
+		uicontrolComponent.value()->update();
+	}
+	if (vitalityComponent) {
+		vitalityComponent.value()->update();
+	}
+	if (weaponComponent) {
+		weaponComponent.value()->update();
 	}
 
 }
@@ -181,24 +308,24 @@ void GameObject::render()
 {
 
 	//Render yourself
-	getComponent<RenderComponent>()->render();
+	renderComponent.value()->render();
 		
 	//Render your children
-	if (getComponent<ChildrenComponent>()){
+	if (childrenComponent){
 
-		getComponent<ChildrenComponent>()->renderChildren();
+		childrenComponent.value()->renderChildren();
 	}
 
-	//If you have an arcade particle emitter then render those particles
-	if (getComponent<ParticleComponent>()) {
+	//If you have an non-physics particle emitter then render those particles
+	if (particleComponent) {
 
-		getComponent<ParticleComponent>()->render();
+		particleComponent.value()->render();
 	}
 
 	//If you have a composite component, then render the composite pieces
-	if (getComponent<CompositeComponent>()) {
+	if (compositeComponent) {
 
-		getComponent<CompositeComponent>()->render();
+		compositeComponent.value()->render();
 	}
 
 
@@ -242,33 +369,85 @@ void GameObject::render()
 
 void GameObject::reset()
 {
-	if (hasComponent<PoolComponent>()) {
-		getComponent<PoolComponent>()->reset();
+	if (poolComponent) {
+		poolComponent.value()->reset();
 	}
-	if (hasComponent<PhysicsComponent>()) {
-		getComponent<PhysicsComponent>()->setOffGrid();
+	if (physicsComponent) {
+		physicsComponent.value()->setOffGrid();
 	}
-	
-
 }
 
 void GameObject::addInventoryItem( GameObject* gameObject)
 {
-	size_t itemCount = getComponent<InventoryComponent>()->addItem(gameObject);
+	size_t itemCount = inventoryComponent.value()->addItem(gameObject);
 	//If this is the only inventory item, then attach it to the player of whatever object this is
 	if (itemCount == 1)
 	{
-		getComponent<PhysicsComponent>()->attachItem(gameObject);
+		physicsComponent.value()->attachItem(gameObject);
 	}
 
 }
 
 void GameObject::init(bool cameraFollow)
 {
-	for (auto& component : m_components){
+	/*for (auto& component : m_components_new){
 
-		component.second->setParent(this);
+		if (component) {
+			component->setParent(this);
+		}
 
+	}*/
+
+	if (actionComponent) {
+		actionComponent.value()->setParent(this);
+	}
+	if (animationComponent) {
+		animationComponent.value()->setParent(this);
+	}
+	if (attachmentsComponent) {
+		attachmentsComponent.value()->setParent(this);
+	}
+	if (childrenComponent) {
+		childrenComponent.value()->setParent(this);
+	}
+	if (compositeComponent) {
+		compositeComponent.value()->setParent(this);
+	}
+	if (inventoryComponent) {
+		inventoryComponent.value()->setParent(this);
+	}
+	if (particleComponent) {
+		particleComponent.value()->setParent(this);
+	}
+	if (particleXComponent) {
+		particleXComponent.value()->setParent(this);
+	}
+	if (playerControlComponent) {
+		playerControlComponent.value()->setParent(this);
+	}
+	if (physicsComponent) {
+		physicsComponent.value()->setParent(this);
+	}
+	if (poolComponent) {
+		poolComponent.value()->setParent(this);
+	}
+	if (renderComponent) {
+		renderComponent.value()->setParent(this);
+	}
+	if (textComponent) {
+		textComponent.value()->setParent(this);
+	}
+	if (transformComponent) {
+		transformComponent.value()->setParent(this);
+	}
+	if (uicontrolComponent) {
+		uicontrolComponent.value()->setParent(this);
+	}
+	if (vitalityComponent) {
+		vitalityComponent.value()->setParent(this);
+	}
+	if (weaponComponent) {
+		weaponComponent.value()->setParent(this);
 	}
 
 	_setDependecyReferences();

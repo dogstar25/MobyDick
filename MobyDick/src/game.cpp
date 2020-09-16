@@ -147,8 +147,8 @@ bool Game::init()
 
 	//Enemy Drone
 	auto drone = scene.addGameObject("DRONE", LAYER_MAIN, 2, 2);
-	auto& droneCompositeComp = drone->getComponent<CompositeComponent>();
-	if (drone->getComponent<CompositeComponent>()->physicsWeldPiecesOn() == true) {
+	auto& droneCompositeComp = drone->compositeComponent.value();
+	if (drone->compositeComponent.value()->physicsWeldPiecesOn() == true) {
 		droneCompositeComp->weldOnPieces();
 	}
 

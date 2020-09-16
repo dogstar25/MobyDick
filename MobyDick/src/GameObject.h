@@ -7,13 +7,14 @@
 #include <vector>
 #include <json/json.h>
 #include <map>
+#include <array>
 #include <unordered_map>
 #include <typeindex>
+#include <optional>
 
-#pragma warning(push,0)
 #include <box2d/box2d.h>
-#pragma warning(pop)
 
+#include "Globals.h"
 #include "GameObjectDefinition.h"
 #include "components/TransformComponent.h"
 #include "components/ActionComponent.h"
@@ -21,6 +22,7 @@
 #include "components/AttachmentsComponent.h"
 #include "components/ChildrenComponent.h"
 #include "components/CompositeComponent.h"
+#include "components/InventoryComponent.h"
 #include "components/ParticleXComponent.h"
 #include "components/ParticleComponent.h"
 #include "components/PhysicsComponent.h"
@@ -56,12 +58,15 @@ public:
 	void setPosition(float x, float y);
 	void init(bool cameraFollow=false);
 
+	void addComponent(const std::shared_ptr<Component>, ComponentTypes);
+	std::shared_ptr<Component> getComponent(ComponentTypes);
+
 	//Accessor Functions
 	auto removeFromWorld() { return m_removeFromWorld; }
 	std::string id() { return m_id;	}
 	int idTag() { return m_idTag; }
 	auto const& gameObjectDefinition() { return m_gameObjectDefinition;	}
-	auto& components() { return m_components; }
+	//auto& components() { return m_components; }
 	auto isPooledAvailable() { return m_isPooledAvailable; }
 	void setIsPooledAvailable(int isPooledAvailable);
 
@@ -69,30 +74,24 @@ public:
 	void addInventoryItem(GameObject* gameObject);
 	void _setDependecyReferences();
 
-	template <typename componentType>
-	inline void addComponent(std::shared_ptr<componentType> component)
-	{
-		m_components[std::type_index(typeid (*component))] = component;
-	}
-
-	template <typename componentType>
-	inline std::shared_ptr<componentType> getComponent()
-	{
-
-		std::type_index index(typeid(componentType));
-		if (m_components.count(std::type_index(typeid(componentType))) != 0)
-		{
-			return std::static_pointer_cast<componentType>(m_components[index]);
-		}
-		else
-		{
-			return nullptr;
-		}
-	}
-
-	template <typename componentType> bool hasComponent() {
-		return(m_components.count(std::type_index(typeid(componentType))) != 0);
-	}
+	//Components - All public
+	std::optional< std::shared_ptr<ActionComponent>> actionComponent;
+	std::optional< std::shared_ptr<AnimationComponent>> animationComponent;
+	std::optional< std::shared_ptr<AttachmentsComponent>> attachmentsComponent;
+	std::optional< std::shared_ptr<ChildrenComponent>> childrenComponent;
+	std::optional< std::shared_ptr<CompositeComponent>> compositeComponent;
+	std::optional< std::shared_ptr<InventoryComponent>> inventoryComponent;
+	std::optional< std::shared_ptr<ParticleComponent>> particleComponent;
+	std::optional< std::shared_ptr<ParticleXComponent>> particleXComponent;
+	std::optional< std::shared_ptr<PlayerControlComponent>> playerControlComponent;
+	std::optional< std::shared_ptr<PhysicsComponent>> physicsComponent;
+	std::optional< std::shared_ptr<PoolComponent>> poolComponent;
+	std::optional< std::shared_ptr<RenderComponent>> renderComponent;
+	std::optional< std::shared_ptr<TextComponent>> textComponent;
+	std::optional< std::shared_ptr<TransformComponent>> transformComponent;
+	std::optional< std::shared_ptr<UIControlComponent>> uicontrolComponent;
+	std::optional< std::shared_ptr<VitalityComponent>> vitalityComponent;
+	std::optional< std::shared_ptr<WeaponComponent>> weaponComponent;
 
 private:
 	
@@ -106,7 +105,10 @@ private:
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 
 	//Components
-	std::map<std::type_index, std::shared_ptr<Component>>m_components;
+	//std::map<std::type_index, std::shared_ptr<Component>>m_components;
+
+
+	std::array<std::shared_ptr<Component>, MAX_COMPONENTS>m_components_new;
 
 };
 

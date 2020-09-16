@@ -123,7 +123,7 @@ void ParticleComponent::update()
 		//that is between min and max , otherwise just use the max
 		auto particleCount = util::generateRandomNumber(effect.particleSpawnCountMin, effect.particleSpawnCountMax);
 
-		auto parentTransformComponent = parent()->getComponent<TransformComponent>();
+		auto parentTransformComponent = parent()->transformComponent.value();
 
 		for (int i = 0; i < particleCount; i++)
 		{

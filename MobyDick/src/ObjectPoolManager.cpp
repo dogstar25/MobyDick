@@ -75,8 +75,8 @@ std::optional<std::shared_ptr<GameObject>> ObjectPoolManager::getPooledObject(st
 
 		if (pooledObject->isPooledAvailable() == true)
 		{
-			const auto& vitalityComponent = pooledObject->getComponent<VitalityComponent>();
-			const auto& physicsComponent = pooledObject->getComponent<PhysicsComponent>();
+			const auto& vitalityComponent = pooledObject->vitalityComponent.value();
+			const auto& physicsComponent = pooledObject->physicsComponent.value();
 
 			pooledObject->setRemoveFromWorld(false);
 
@@ -95,8 +95,8 @@ std::optional<std::shared_ptr<GameObject>> ObjectPoolManager::getPooledObject(st
 SDL_Texture* ObjectPoolManager::getPoolObjectTexture(std::string poolId)
 {
 
-	auto& gameObject = m_objectPool[poolId].at(0);
-	auto texture = gameObject->getComponent<RenderComponent>()->texture()->sdlTexture;
+	const auto& gameObject = m_objectPool[poolId].at(0);
+	const auto texture = gameObject->renderComponent.value()->texture()->sdlTexture;
 
 	return texture;
 }

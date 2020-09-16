@@ -57,8 +57,8 @@ TextComponent::~TextComponent()
 void TextComponent::update()
 {
 	//convenience reference to outside component(s)
-	const auto& renderComponent = parent()->getComponent<RenderComponent>();
-	const auto& transformComponent = parent()->getComponent<TransformComponent>();
+	const auto& renderComponent = parent()->renderComponent.value();
+	const auto& transformComponent = parent()->transformComponent.value();
 
 	std::string textureId = "TX_" + m_gameObjectId;
 
@@ -88,8 +88,8 @@ void TextComponent::update()
 std::shared_ptr<Texture> TextComponent::generateTextTexture()
 {
 	//convenience reference to outside component(s)
-	const auto& renderComponent = parent()->getComponent<RenderComponent>();
-	const auto& transformComponent = parent()->getComponent<TransformComponent>();
+	const auto& renderComponent = parent()->renderComponent.value();
+	const auto& transformComponent = parent()->transformComponent.value();
 
 	std::shared_ptr<Texture> texture = std::make_shared<Texture>();;
 

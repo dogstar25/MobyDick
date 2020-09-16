@@ -26,7 +26,7 @@ DefaultRotateAction::~DefaultRotateAction()
 
 void DefaultRotateAction::perform(GameObject* gameObject)
 {
-	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>();
+	const auto& physicsComponent = gameObject->physicsComponent.value();
 
 	physicsComponent->applyRotation(m_angularVelocity);
 

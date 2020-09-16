@@ -57,9 +57,9 @@ void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 
 	if(bullet.has_value()){
 		//Get references to the bullets components
-		auto& vitalityComponent = bullet.value()->getComponent<VitalityComponent>();
-		auto& physicsComponent = bullet.value()->getComponent<PhysicsComponent>();
-		auto& renderComponent = bullet.value()->getComponent<RenderComponent>();
+		auto& vitalityComponent = bullet.value()->vitalityComponent.value();
+		auto& physicsComponent = bullet.value()->physicsComponent.value();
+		auto& renderComponent = bullet.value()->renderComponent.value();
 
 		SDL_Color color = m_weaponLevelDetails.at(m_currentLevel).color;
 		float force = m_weaponLevelDetails.at(m_currentLevel).force;

@@ -15,7 +15,7 @@ DefaultOnHoverOutAction::~DefaultOnHoverOutAction()
 
 void DefaultOnHoverOutAction::perform(GameObject* gameObject)
 {
-	const auto& renderComponent = gameObject->getComponent<RenderComponent>();
+	const auto& renderComponent = gameObject->renderComponent.value();
 
 	renderComponent->removeDisplayOverlay();
 

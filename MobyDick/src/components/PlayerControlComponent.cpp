@@ -56,7 +56,7 @@ void PlayerControlComponent::update()
 void PlayerControlComponent::handleActions()
 {
 	//convenience reference to outside component(s)
-	const auto& actionComponent = parent()->getComponent<ActionComponent>();
+	const auto& actionComponent = parent()->actionComponent.value();
 
 	const Uint8* keyStates = nullptr;
 
@@ -95,7 +95,7 @@ void PlayerControlComponent::handleMovement()
 	int direction = 0, strafe = 0;
 
 	//convenience reference to outside component(s)
-	const auto& actionComponent = parent()->getComponent<ActionComponent>();
+	const auto& actionComponent = parent()->actionComponent.value();
 
 	//Handle Keyboard related movement
 	const uint8_t* currentKeyStates = SDL_GetKeyboardState(NULL);

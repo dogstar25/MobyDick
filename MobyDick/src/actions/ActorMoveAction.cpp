@@ -23,14 +23,12 @@ ActorMoveAction::~ActorMoveAction()
 
 void ActorMoveAction::perform(GameObject* gameObject)
 {
-	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>();
-	const auto& animationComponent = gameObject->getComponent<AnimationComponent>();
-	const auto& vitalityComponent = gameObject->getComponent<VitalityComponent>();
-
-	physicsComponent->applyMovement(vitalityComponent->speed(), m_direction, m_strafe);
+	if (gameObject->physicsComponent) {
+		gameObject->physicsComponent.value()->applyMovement(gameObject->vitalityComponent.value()->speed(), m_direction, m_strafe);
+	}
 
 
-	if (animationComponent)
+	if (gameObject->animationComponent)
 	{
 
 		//std::cout << "\033[1;32mMoving\033[0m" << "\n";
@@ -43,7 +41,7 @@ void ActorMoveAction::perform(GameObject* gameObject)
 		//else
 		{
 			//animationComponent->setCurrentAnimationState(ANIMATION_RUN);
-			animationComponent->animate(ANIMATION_RUN, ANIMATE_ONE_TIME);
+			gameObject->animationComponent.value()->animate(ANIMATION_RUN, ANIMATE_ONE_TIME);
 		}
 	}
 
