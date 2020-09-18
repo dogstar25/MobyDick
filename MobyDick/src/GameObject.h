@@ -108,7 +108,7 @@ private:
 	//std::map<std::type_index, std::shared_ptr<Component>>m_components;
 
 
-	std::array<std::shared_ptr<Component>, MAX_COMPONENTS>m_components_new;
+	//std::array<std::shared_ptr<Component>, MAX_COMPONENTS>m_components_new;
 
 };
 

@@ -80,9 +80,9 @@ void ContactListener::handleContact(GameObject* contact1, GameObject* contact2, 
 
 	//std::cout << "Class is " << collisionActionClass << "\n";
 
-	/////////////////////////
+	//////////////////////////////////////////////////////////////////////
 	// Player Wall Contact
-	////////////////////////
+	//////////////////////////////////////////////////////////////////////
 	if ((category1 == IdTag::PLAYER && category2 == IdTag::WALL) ||
 		(category2 == IdTag::PLAYER && category1 == IdTag::WALL)) {
 
@@ -90,13 +90,23 @@ void ContactListener::handleContact(GameObject* contact1, GameObject* contact2, 
 
 	}
 
-	/////////////////////////
+	///////////////////////////////////////////////////////////////////////
 	// Player Bullet -  Wall Contact
-	////////////////////////
+	///////////////////////////////////////////////////////////////////////
 	if ((category1 == IdTag::PLAYER_BULLET && category2 == IdTag::WALL) ||
 		(category2 == IdTag::PLAYER_BULLET && category1 == IdTag::WALL)) {
 
 		bullet_wall(contact1, contact2, contactPoint);
+
+	}
+
+	//////////////////////////////////////////////////////////////////////
+	// Player Bullet -  DRONE SHIELD
+	//////////////////////////////////////////////////////////////////////
+	if ((category1 == IdTag::PLAYER_BULLET && category2 == IdTag::DRONE_SHIELD) ||
+		(category2 == IdTag::PLAYER_BULLET && category1 == IdTag::DRONE_SHIELD)) {
+
+		playerBullet_droneShield(contact1, contact2, contactPoint);
 
 	}
 
@@ -157,6 +167,26 @@ void ContactListener::bullet_wall(GameObject* contact1, GameObject* contact2, b2
 	//Set flag for removal for the Bullet
 	bullet->setRemoveFromWorld(true);
 
+}
+
+void ContactListener::playerBullet_droneShield(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+{
+	GameObject* bullet;
+	GameObject* shield;
+
+	if (contact1->idTag() == IdTag::PLAYER_BULLET) {
+		bullet = contact1;
+		shield = contact2;
+	}
+	else {
+		bullet = contact2;
+		shield = contact1;
+	}
+
+	if (shield->testStrength(bullet->vitalityComponent.value()->force())) {
+				shield->setRemoveFromWorld(true);
+				bulletPieceExplode(bullet,piece,contactPoint);
+			}
 }
 
 //void ContactListener::playerBitPiece(PlayerObject* player, WorldObject* piece, b2Vec2 contactPoint)

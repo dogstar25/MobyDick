@@ -32,6 +32,7 @@ public:
 private:
 	std::array<std::string, 32> m_ObjectCategoryLabels;
 	
+	void playerBullet_droneShield(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
 };
 
 #endif

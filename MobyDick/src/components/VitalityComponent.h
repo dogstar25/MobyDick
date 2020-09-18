@@ -18,14 +18,13 @@ public:
 	void updateFiniteLifetime();
 
 	void setForce(float force) { m_force = force; }
+	float force() { return m_force; }
+
+	void setSpeed(float speed) { m_speed = speed; }
 	float speed() {	return m_speed; }
 
-	void setDurability(float durability) {
-		m_durability = durability;
-	}
-	float durability() {
-		return m_durability;
-	}
+	void setDurability(float durability) {	m_durability = durability; }
+	float durability() { return m_durability; }
 
 	std::chrono::duration<float, std::milli> lifetime() { return m_lifetime; }
 	void setLifetime(std::chrono::duration<float, std::milli> lifetime) { m_lifetime = lifetime; }

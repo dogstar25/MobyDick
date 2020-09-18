@@ -144,7 +144,7 @@ void GameObject::_setDependecyReferences()
 void GameObject::addComponent(const std::shared_ptr<Component> component, ComponentTypes componentType)
 {
 
-		m_components_new[(std::size_t)componentType]=component;
+		//m_components_new[(std::size_t)componentType]=component;
 
 }
 
@@ -152,7 +152,7 @@ std::shared_ptr<Component> GameObject::getComponent(ComponentTypes componentType
 {
 	std::shared_ptr<Component> component = nullptr;
 
-	switch (componentType) {
+	/*switch (componentType) {
 
 		case ComponentTypes::ACTION_COMPONENT: {
 			component =  std::static_pointer_cast<ActionComponent>(m_components_new[(std::size_t)componentType]);
@@ -208,7 +208,7 @@ std::shared_ptr<Component> GameObject::getComponent(ComponentTypes componentType
 		default:
 			assert(false && "Component type is not valid");
 
-	}
+	}*/
 
 	return component;
 
