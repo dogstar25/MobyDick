@@ -52,9 +52,8 @@ public:
 	void update() override;
 	void render();
 	void weldOnPieces();
-	bool physicsWeldPiecesOn() {
-		return m_physicsWeldPiecesOn;
-	}
+	bool physicsWeldPiecesOn() { return m_physicsWeldPiecesOn; }
+	void setDependencyReferences(GameObject* gameObject);
 
 private:
 	short m_maxlevel;

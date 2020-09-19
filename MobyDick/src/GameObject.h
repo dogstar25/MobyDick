@@ -106,7 +106,7 @@ private:
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 
 	//Components
-	std::map<std::type_index, std::shared_ptr<Component>>m_components;
+	std::unordered_map<std::type_index, std::shared_ptr<Component>>m_components;
 
 };
 

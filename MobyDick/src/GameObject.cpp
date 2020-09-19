@@ -137,7 +137,16 @@ void GameObject::_setDependecyReferences()
 {
 
 	//SetRenderComponent dependencies
-	getComponent<RenderComponent>()->setDependencyReferences(this);
+	if (hasComponent<ChildrenComponent>()) {
+		getComponent<ChildrenComponent>()->setDependencyReferences(this);
+	}
+	if (hasComponent<CompositeComponent>()) {
+		getComponent<CompositeComponent>()->setDependencyReferences(this);
+	}
+
+	if (hasComponent <RenderComponent>()) {
+		getComponent<RenderComponent>()->setDependencyReferences(this);
+	}
 
 }
 
