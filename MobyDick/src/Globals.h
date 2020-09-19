@@ -99,20 +99,28 @@ namespace ParticleEmitterType {
 }
 
 //Components
-inline constexpr int ACTION_COMPONENT = 1;
-inline constexpr int ANIMATION_COMPONENT = 2;
-inline constexpr int ATTACHMENTS_COMPONENT = 3;
-inline constexpr int CHILDREN_COMPONENT = 4;
-inline constexpr int COMPOSITE_COMPONENT = 5;
-inline constexpr int TRANSFORM_COMPONENT = 6;
-inline constexpr int PARTICLE_COMPONENT = 7;
-inline constexpr int PHYSICS_COMPONENT = 8;
-inline constexpr int RENDER_COMPONENT = 9;
-inline constexpr int TEXT_COMPONENT = 10;
-inline constexpr int VITALITY_COMPONENT = 11;
-inline constexpr int WEAPON_COMPONENT = 12;
-inline constexpr int PLAYERCONTROL_COMPONENT = 13;
-inline constexpr int INVENTORY_COMPONENT = 14;
+enum class ComponentTypes {
+
+	ACTION_COMPONENT = 0,
+	ANIMATION_COMPONENT,
+	ATTACHMENTS_COMPONENT,
+	CHILDREN_COMPONENT,
+	COMPOSITE_COMPONENT,
+	INVENTORY_COMPONENT,
+	PARTICLE_COMPONENT,
+	PARTICLE_X_COMPONENT,
+	PHYSICS_COMPONENT,
+	PLAYERCONTROL_COMPONENT,
+	POOL_COMPONENT,
+	RENDER_COMPONENT,
+	TEXT_COMPONENT,
+	TRANSFORM_COMPONENT,
+	UICONTROL_COMPONENT,
+	VITALITY_COMPONENT,
+	WEAPON_COMPONENT,
+
+	COUNT
+};
 
 //Animation States
 inline constexpr int ANIMATION_IDLE = 0;

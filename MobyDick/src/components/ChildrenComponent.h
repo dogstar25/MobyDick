@@ -25,7 +25,6 @@ public:
 
 	void update() override;
 	void renderChildren(); //move to render component?
-	void setDependencyReferences(GameObject* gameObject);
 
 	const auto& childObjects() { return m_childObjects; }
 
@@ -40,8 +39,6 @@ private:
 	b2Vec2 _calcChildPosition(b2Vec2 childSize,
 		int locationSlot, int childNumber, int childCount, SDL_FPoint parentPositionRec, float parentAngle);
 	
-	TransformComponent* m_transform;
-
 
 };
 

@@ -29,7 +29,7 @@ SoundManager& SoundManager::instance()
 void SoundManager::initSound()
 {
 	Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 512);
-
+	
 	loadSounds();
 	allocateChannels();
 
@@ -75,14 +75,13 @@ void SoundManager::loadSounds()
 
 void SoundManager::playSound(std::string id )
 {
-	
+	Mix_Volume(1, 64);
 	int channelPlayedOn = Mix_PlayChannel(-1, m_sfxChunks[id], 0);
 
 }
 
 void SoundManager::playMusic(std::string id, int loopTimes)
 {
-
 	Mix_PlayMusic(m_sfxMusic[id], loopTimes);
 
 }

@@ -25,8 +25,8 @@ ActorRotateAction::~ActorRotateAction()
 
 void ActorRotateAction::perform(GameObject* gameObject)
 {
-	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>();
-	const auto& animationComponent = gameObject->getComponent<AnimationComponent>();
+	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	const auto& animationComponent = gameObject->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 
 	physicsComponent->applyRotation(m_angularVelocity);
 

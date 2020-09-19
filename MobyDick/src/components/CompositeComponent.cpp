@@ -73,10 +73,10 @@ void CompositeComponent::weldOnPieces()
 
 	for (auto& piece : m_pieces) {
 
-		auto& piecePhysicsComponent =  piece.pieceObject->getComponent<PhysicsComponent>();
-		auto& parentPhysicsComponent = parent()->getComponent<PhysicsComponent>();
-		auto& pieceTransformComponent = piece.pieceObject->getComponent<TransformComponent>();
-		auto& parentTransformComponent = parent()->getComponent<TransformComponent>();
+		auto& piecePhysicsComponent =  piece.pieceObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+		auto& parentPhysicsComponent = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+		auto& pieceTransformComponent = piece.pieceObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+		auto& parentTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 		auto pieceSize = pieceTransformComponent->size();
 		auto parentSize = parentTransformComponent->size();
 
@@ -154,13 +154,13 @@ void CompositeComponent::_buildPiece(CompositeLegendItem legendItem, int xPos, i
 	auto& pieceObject = std::make_shared<GameObject>(legendItem.gameObjectId, LAYER_MAIN, -5, -5);
 	pieceObject->init();
 
-	auto& pieceVitalityComponent = pieceObject->getComponent<VitalityComponent>();
+	auto& pieceVitalityComponent = pieceObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
 	pieceVitalityComponent->setDurability(m_levels[0].durability);
 	piece.pieceObject = pieceObject;
 
 	//calculate the X,Y offset position in relating to the base object
-	auto& pieceTransformComponent = pieceObject->getComponent<TransformComponent>();
+	auto& pieceTransformComponent = pieceObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	xOffset = xPos * pieceTransformComponent->size().x;
 	yOffset = yPos * pieceTransformComponent->size().y;
 
@@ -168,7 +168,7 @@ void CompositeComponent::_buildPiece(CompositeLegendItem legendItem, int xPos, i
 	piece.parentPositionOffset.y = yOffset;
 
 	//Temp color setting
-	auto& pieceRenderComponent = pieceObject->getComponent<RenderComponent>();
+	auto& pieceRenderComponent = pieceObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 
 	//Initialize color and strength to level 1
 	pieceRenderComponent->setColor(m_levels[0].color);
@@ -206,7 +206,7 @@ void CompositeComponent::_updatePieceState(GameObjectPiece& piece)
 	//Should this object be removed?
 	if (piece.pieceObject->removeFromWorld() == true)
 	{
-		auto& piecePhysicsComponent = piece.pieceObject->getComponent<PhysicsComponent>();
+		auto& piecePhysicsComponent = piece.pieceObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 		piecePhysicsComponent->setPhysicsBodyActive(false);
 		piece.isDestroyed = true;
 		piece.time_snapshot = now_time;
@@ -235,9 +235,9 @@ void CompositeComponent::_updatePiecePosition(GameObjectPiece& piece)
 	b2Vec2 piecePosition{ 0,0 };
 	b2Vec2 adjustment{ 0,0 };
 
-	auto& pieceTransformComponent = piece.pieceObject->getComponent<TransformComponent>();
-	auto& piecePhysicsComponent = piece.pieceObject->getComponent<PhysicsComponent>();
-	auto& parentTransformComponent = parent()->getComponent<TransformComponent>();
+	auto& pieceTransformComponent = piece.pieceObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	auto& piecePhysicsComponent = piece.pieceObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	auto& parentTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 	//calculate the X,Y offset position in relating to the base object
 	SDL_FRect parentPositionRect = parentTransformComponent->getPositionRect();
@@ -287,9 +287,9 @@ void CompositeComponent::_levelUp(GameObjectPiece& piece)
 
 		if (level.levelNum == nextLevel)
 		{
-			auto& vitalityComponent = piece.pieceObject->getComponent<VitalityComponent>();
-			auto& physicsComponent = piece.pieceObject->getComponent<PhysicsComponent>();
-			auto& renderComponent = piece.pieceObject->getComponent<RenderComponent>();
+			auto& vitalityComponent = piece.pieceObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+			auto& physicsComponent = piece.pieceObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+			auto& renderComponent = piece.pieceObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 
 			piece.currentlevel = level.levelNum;
 			//			piece.isDestroyed = false;

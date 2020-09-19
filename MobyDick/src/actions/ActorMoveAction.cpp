@@ -1,5 +1,8 @@
 #include "ActorMoveAction.h"
 
+#include <iostream>
+
+#include "../Globals.h"
 #include "../GameObject.h"
 
 
@@ -23,9 +26,9 @@ ActorMoveAction::~ActorMoveAction()
 
 void ActorMoveAction::perform(GameObject* gameObject)
 {
-	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>();
-	const auto& animationComponent = gameObject->getComponent<AnimationComponent>();
-	const auto& vitalityComponent = gameObject->getComponent<VitalityComponent>();
+	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	const auto& animationComponent = gameObject->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
+	const auto& vitalityComponent = gameObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
 	physicsComponent->applyMovement(vitalityComponent->speed(), m_direction, m_strafe);
 
@@ -33,7 +36,7 @@ void ActorMoveAction::perform(GameObject* gameObject)
 	if (animationComponent)
 	{
 
-		//std::cout << "\033[1;32mMoving\033[0m" << "\n";
+		std::cout << "\033[1;32mMoving\033[0m" << "\n";
 
 		if (m_direction != 0 || m_strafe != 0)
 		//{

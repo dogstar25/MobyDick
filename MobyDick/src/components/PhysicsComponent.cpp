@@ -80,7 +80,7 @@ void PhysicsComponent::update()
 	convertedPosition.x = m_physicsBody->GetPosition().x * GameConfig::instance().scaleFactor();
 	convertedPosition.y = m_physicsBody->GetPosition().y * GameConfig::instance().scaleFactor();
 
-	parent()->getComponent<TransformComponent>()->setPosition(convertedPosition, convertedAngle);
+	parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT)->setPosition(convertedPosition, convertedAngle);
 }
 
 b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::Value transformComponentJSON)
@@ -219,7 +219,7 @@ void PhysicsComponent::setOffGrid()
 void PhysicsComponent::attachItem(GameObject* attachObject, std::optional<b2Vec2> attachLocation)
 {
 	//Get physics component of the inventory object
-	const auto& attachObjectPhysicsComponent = attachObject->getComponent<PhysicsComponent>();
+	const auto& attachObjectPhysicsComponent = attachObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 
 	b2WeldJointDef weldJointDef;
 	weldJointDef.referenceAngle;

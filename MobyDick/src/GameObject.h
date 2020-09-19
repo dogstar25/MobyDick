@@ -70,19 +70,18 @@ public:
 	void _setDependecyReferences();
 
 	template <typename componentType>
-	inline void addComponent(std::shared_ptr<componentType> component)
+	inline void addComponent(std::shared_ptr<componentType> component, ComponentTypes componentTypeIndex)
 	{
-		m_components[std::type_index(typeid (*component))] = component;
+		m_components[(int)componentTypeIndex] = component;
 	}
 
 	template <typename componentType>
-	inline std::shared_ptr<componentType> getComponent()
+	inline std::shared_ptr<componentType> getComponent(ComponentTypes componentTypeIndex)
 	{
 
-		std::type_index index(typeid(componentType));
-		if (m_components.count(std::type_index(typeid(componentType))) != 0)
+		if (hasComponent(componentTypeIndex))
 		{
-			return std::static_pointer_cast<componentType>(m_components.at(index));
+			return std::static_pointer_cast<componentType>(m_components.at((int)componentTypeIndex));
 		}
 		else
 		{
@@ -90,8 +89,14 @@ public:
 		}
 	}
 
-	template <typename componentType> bool hasComponent() {
-		return(m_components.count(std::type_index(typeid(componentType))) != 0);
+	bool hasComponent(ComponentTypes componentTypeIndex) {
+
+		if (!m_components[(int)componentTypeIndex]) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 private:
@@ -106,7 +111,8 @@ private:
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 
 	//Components
-	std::unordered_map<std::type_index, std::shared_ptr<Component>>m_components;
+	//std::unordered_map<std::type_index, std::shared_ptr<Component>>m_components;
+	std::array<std::shared_ptr<Component>, (int)ComponentTypes::COUNT+1>m_components;
 
 };
 

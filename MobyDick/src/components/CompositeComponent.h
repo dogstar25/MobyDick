@@ -53,12 +53,12 @@ public:
 	void render();
 	void weldOnPieces();
 	bool physicsWeldPiecesOn() { return m_physicsWeldPiecesOn; }
-	void setDependencyReferences(GameObject* gameObject);
 
 private:
 	short m_maxlevel;
 	float m_levelUpSpeed;
 	bool m_physicsWeldPiecesOn;
+	
 	std::vector<CompositeLevel> m_levels;
 	CompositeBlueprint m_blueprint;
 

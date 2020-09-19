@@ -65,7 +65,7 @@ void VitalityComponent::updateFiniteLifetime()
 		if (m_isLifetimeAlphaFade)
 		{
 			//Todo:move this to the render component and have it check the lifetime to adjust its alpha
-			parent()->getComponent<RenderComponent>()->setColorAlpha(int(255 * (m_lifetimeRemaining / m_lifetime)));
+			parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT)->setColorAlpha(int(255 * (m_lifetimeRemaining / m_lifetime)));
 		}
 
 

@@ -19,7 +19,6 @@ public:
 
 private:
 
-	//ObjectPoolManager& objectPoolManager; // make this a static reference that only this compoennt can access
 	bool m_isAvailable;
 	bool m_isActive;
 	std::string m_poolId;

@@ -56,7 +56,7 @@ void ParticleXComponent::update()
 		//that is between min and max , otherwise just use the max
 		auto particleCount = util::generateRandomNumber(effect.particleSpawnCountMin, effect.particleSpawnCountMax);
 
-		auto parentTransformComponent = parent()->getComponent<TransformComponent>();
+		auto parentTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 		for (int i = 0; i < particleCount; i++)
 		{
@@ -69,10 +69,10 @@ void ParticleXComponent::update()
 			//If the returned particle is null, then the pool has run out, so do nothing
 			if (particle)
 			{
-				const auto& physicsComponent = particle.value()->getComponent<PhysicsComponent>();
-				const auto& renderComponent = particle.value()->getComponent<RenderComponent>();
-				const auto& vitalityComponent = particle.value()->getComponent<VitalityComponent>();
-				const auto& transformComponent = particle.value()->getComponent<TransformComponent>();
+				const auto& physicsComponent = particle.value()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+				const auto& renderComponent = particle.value()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
+				const auto& vitalityComponent = particle.value()->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+				const auto& transformComponent = particle.value()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 				//Force
 				auto force = util::generateRandomNumber(effect.forceMin, effect.forceMax);

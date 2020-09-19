@@ -45,20 +45,21 @@ void ChildrenComponent::update()
 	
 		for (auto& childObject : childLocations)
 		{
-			const auto childTransformComponent = childObject->getComponent<TransformComponent>();
+			const auto& transformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+			const auto& childTransformComponent = childObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 			childNumber++;
 	
 			//Calculate child position
-			SDL_FPoint parentCenterPosition = m_transform->getCenterPosition();
-			float parentAngle = m_transform->angle();
+			SDL_FPoint parentCenterPosition = transformComponent->getCenterPosition();
+			float parentAngle = transformComponent->angle();
 			b2Vec2 newChildPosition = 
 				_calcChildPosition(childTransformComponent->size(), locationSlot, childNumber, childCount, parentCenterPosition, parentAngle);
 	
 			// Should this child match the angle of the parent
 			if (m_childPositionRelative == true)
 			{
-				childObject->setPosition(newChildPosition, m_transform->angle());
+				childObject->setPosition(newChildPosition, transformComponent->angle());
 	
 			}
 			else
@@ -200,10 +201,4 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 
 }
 
-void ChildrenComponent::setDependencyReferences(GameObject* gameObject)
-{
 
-	auto& transformComponent = gameObject->getComponent<TransformComponent>();
-	m_transform = transformComponent.get();	
-
-}
