@@ -82,7 +82,7 @@ public:
 		std::type_index index(typeid(componentType));
 		if (m_components.count(std::type_index(typeid(componentType))) != 0)
 		{
-			return std::static_pointer_cast<componentType>(m_components[index]);
+			return std::static_pointer_cast<componentType>(m_components.at(index));
 		}
 		else
 		{

@@ -31,7 +31,7 @@ CompositeComponent::CompositeComponent(Json::Value definitionJSON)
 
 		auto& levelItem = m_levels.emplace_back();
 		levelItem.levelNum = itrlevel["level"].asInt();
-		levelItem.durability - itrlevel["durability"].asInt();
+		levelItem.durability = itrlevel["durability"].asInt();
 
 		levelItem.color = util::JsonToColor(itrlevel["color"]);
 
@@ -101,10 +101,7 @@ void CompositeComponent::weldOnPieces()
 void CompositeComponent::_buildComposite()
 {
 
-	SDL_Texture* blueprintTexure;
 	SDL_Surface* blueprintSurface;
-	SDL_PixelFormat* fmt;
-	SDL_Color* color;
 	std::string blueprintTexureId;
 	Uint8 red, green, blue, alpha;
 
