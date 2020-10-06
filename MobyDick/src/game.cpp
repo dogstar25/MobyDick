@@ -147,12 +147,21 @@ bool Game::init()
 
 	//Enemy Drone
 	auto drone = scene.addGameObject("DRONE", LAYER_MAIN, 2, 2);
-	auto& droneCompositeComp = drone->getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
-	if (drone->getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT)->physicsWeldPiecesOn() == true) {
-		droneCompositeComp->weldOnPieces();
+	auto& droneCompositeComponent = drone->getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
+	if (droneCompositeComponent->physicsWeldPiecesOn() == true) {
+		droneCompositeComponent->weldOnPieces();
 	}
 
-	
+	//auto deflectObj = scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);
+	/*auto& deflect = ObjectPoolManager::instance().getPooledObject("DEFLECT1_POOL");
+	deflect.value()->setPosition(125, 125);
+	scene.addGameObject(deflect.value(), 1);*/
+
+	auto deflectObject = scene.addGameObject("DEFLECT1", LAYER_MAIN, 9, 9, 0, false);
+	//auto swordladyObject = scene.addGameObject("SWORDLADY", LAYER_MAIN, 9, 9, 0, false);
+
+
+
 
 	auto test = GameDefs::instance().gina_64;
 
@@ -233,7 +242,8 @@ GameObject* Game::addGameObject(std::shared_ptr<GameObject>gameObject, int layer
 GameObject* Game::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow)
 {
 	//Add the gameObject to the currently active scene using back()
-	auto gameObject = SceneManager::instance().scenes().back().addGameObject(gameObjectId, layer, xMapPos, yMapPos, angle, cameraFollow);
+	auto& currentScene = SceneManager::instance().scenes().back();
+	auto gameObject = currentScene.addGameObject(gameObjectId, layer, xMapPos, yMapPos, angle, cameraFollow);
 
 	return gameObject;
 

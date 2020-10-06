@@ -36,7 +36,7 @@ void ActorMoveAction::perform(GameObject* gameObject)
 	if (animationComponent)
 	{
 
-		std::cout << "\033[1;32mMoving\033[0m" << "\n";
+		//std::cout << "\033[1;32mMoving\033[0m" << "\n";
 
 		if (m_direction != 0 || m_strafe != 0)
 		//{

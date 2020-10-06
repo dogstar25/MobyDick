@@ -26,7 +26,7 @@ public:
 	void setCurrentAnimationState(int animationState) { m_currentAnimationState = animationState; }
 	int currentAnimationState() { return m_currentAnimationState; }
 
-	std::map<int, std::shared_ptr<Animation>>& animations() { return m_animations; }
+	std::array<std::shared_ptr<Animation>, 5>& animations() { return m_animations; }
 
 private:
 
@@ -34,10 +34,7 @@ private:
 	int m_currentAnimationMode{ ANIMATE_ONE_TIME };
 	int m_defaultAnimationState{ 0 };
 
-	std::map<int, std::shared_ptr<Animation>> m_animations;
-
-	//new
-	std::array<std::shared_ptr<Animation>, 5> m_animations2;
+	std::array<std::shared_ptr<Animation>, 5> m_animations;
 };
 
 #endif

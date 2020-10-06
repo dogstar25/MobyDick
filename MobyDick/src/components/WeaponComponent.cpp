@@ -76,7 +76,7 @@ void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 		dy += yAdj;
 
 		//Bullet Strength
-		vitalityComponent->setForce(force);
+		vitalityComponent->setAttackPower(force);
 
 		b2Vec2 positionVector = b2Vec2(dx, dy);
 

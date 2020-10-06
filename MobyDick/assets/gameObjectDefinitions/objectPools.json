@@ -11,7 +11,14 @@
         "gameObjectId": "BULLET1",
         "lifetime": 1.25,
         "maxItems": 10
+    },
+    {
+        "id": "DEFLECT1_POOL",
+        "gameObjectId": "DEFLECT1",
+        "lifetime": 1.25,
+        "maxItems": 10
     }
+
 
 
   ]

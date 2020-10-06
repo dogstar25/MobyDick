@@ -43,6 +43,10 @@ public:
 	GameObject();
 	~GameObject();
 
+	//Need to define default move constructors because we have an explicit deconstructor defined
+	GameObject(GameObject&&) = default;
+	GameObject& operator=(GameObject&&) = default;
+
 
 	std::string m_id;
 
@@ -55,6 +59,7 @@ public:
 	void setPosition(b2Vec2 position, float angle);
 	void setPosition(float x, float y);
 	void init(bool cameraFollow=false);
+	void setPhysicsActive(bool active);
 
 	//Accessor Functions
 	auto removeFromWorld() { return m_removeFromWorld; }

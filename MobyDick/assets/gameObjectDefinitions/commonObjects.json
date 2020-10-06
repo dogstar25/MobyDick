@@ -582,8 +582,7 @@
                 "density": 0.1,
                 "restitution": 0.3,
                 "linearDamping": 0.0,
-                "angularDamping": 0.0,
-                "collisionCategory": "CollisionCat::PROJECTILE"
+                "angularDamping": 0.0
             }
         },
         {
@@ -595,12 +594,19 @@
                 "size": {
                     "width": 64,
                     "height": 64
-                }
+                },
+                "absolutePositioning": false
+            },
+            "vitalityComponent": {
+                "speed": 5,
+                "lifetime": 10.0,
+                "lifetimeAlphaFade": true
             },
             "animationComponent": {
+                "defaultState": "ANIMATION_IDLE",
                 "animations": [
                     {
-                        "state": "ACTIVE",
+                        "state": "ANIMATION_IDLE",
                         "textureId": "TX_DEFLECT1_64",
                         "speed": 0.01,
                         "frames": 4
@@ -615,8 +621,7 @@
                 "density": 0.1,
                 "restitution": 0.3,
                 "linearDamping": 0.0,
-                "angularDamping": 12.0,
-                "collisionCategory": "CollisionCat::PARTICLE"
+                "angularDamping": 12.0
             }
         },
         {

@@ -63,8 +63,6 @@ void ParticleXComponent::update()
 
 			//Get the particle object from the pre-populated particle pool
 			std::optional<std::shared_ptr<GameObject>> particle = ObjectPoolManager::instance().getPooledObject(effect.poolId);
-			//auto& particle = std::make_shared<GameObject>("PARTICLE_SMOKE_1", -50.0f, -50.0f, 0.0f);
-			//particle->init(false);
 
 			//If the returned particle is null, then the pool has run out, so do nothing
 			if (particle)
@@ -86,16 +84,15 @@ void ParticleXComponent::update()
 
 				//Size
 				auto particleSize = util::generateRandomNumber(effect.particleSizeMin, effect.particleSizeMax);
-//				std::cout << "Size " << particleSize << "\n";
 				transformComponent->setSize(particleSize, particleSize);
 
 				//Set the particles lifetime in miliseconds.
-				vitalityComponent->setTimeSnapshot(std::chrono::steady_clock::now());
+				vitalityComponent->setLifeTimeSnapshot(std::chrono::steady_clock::now());
 				float particleLifetime = 0;
 				particleLifetime = util::generateRandomNumber(effect.lifetimeMin, effect.lifetimeMax);
 				vitalityComponent->setLifetime(std::chrono::duration<float>(particleLifetime));
 				vitalityComponent->setLifetimeRemaining(std::chrono::duration<float>(particleLifetime));
-				vitalityComponent->setHasInfiniteLifetime(false);
+				vitalityComponent->setHasFiniteLifetime(true);
 
 				//Calculate the emit angle/direction that the particle will travel in
 				auto angleRange = effect.angleMax - effect.angleMin;

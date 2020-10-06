@@ -4,6 +4,7 @@
 #include "GameObjectManager.h"
 #include "components/InventoryComponent.h"
 
+#include "Globals.h"
 #include "Camera.h"
 #include "EnumMaps.h"
 
@@ -267,8 +268,14 @@ void GameObject::addInventoryItem( GameObject* gameObject)
 
 }
 
+/*
+Execute certain initialization that needs to happen AFTER all components have been constructed and
+the GameObject has been emplace/constructed into the collection
+*/
 void GameObject::init(bool cameraFollow)
 {
+
+	//Set the root gameObject as the parent for each component
 	for (auto& component : m_components){
 		if (component) {
 			component->setParent(this);
@@ -276,14 +283,27 @@ void GameObject::init(bool cameraFollow)
 
 	}
 
-	_setDependecyReferences();
-
+	//If we specified that the camera follow this gameobject then tell the camera
 	if (cameraFollow) {
 		Camera::instance().setFollowMe(this);
 	}
 
+
+
+
+
 }
 
+
+void GameObject::setPhysicsActive(bool active)
+{
+
+	auto& physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	if (physicsComponent) {
+		physicsComponent->setPhysicsBodyActive(active);
+	}
+
+}
 
 void GameObject::setIsPooledAvailable(int isPooledAvailable)
 {

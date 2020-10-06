@@ -89,7 +89,6 @@ void ParticleComponent::update()
 			//particle.position.x += particle.velocity.x * .1666 ;
 			//particle.position.y += particle.velocity.y * .1666;
 			auto milliSeconds = std::chrono::duration_cast<std::chrono::milliseconds>(timeDiff);
-			float test = milliSeconds.count();
 			particle.position.x += particle.velocity.x * float(milliSeconds.count() *.001);
 			particle.position.y += particle.velocity.y * float(milliSeconds.count() * .001);
 

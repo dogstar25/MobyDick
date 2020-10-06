@@ -40,15 +40,34 @@ namespace ParticleEffects {
 		.forceMin = 1,
 		.forceMax = 6,
 		.lifetimeMin = 0.5F,
-		.lifetimeMax = 115.0F,
+		.lifetimeMax = 5.0F,
 		.alphaFade = true,
 		.angleMin = 0,
-		.angleMax = 15,
+		.angleMax = 360,
 		.particleSizeMin = 1.28F,
-		.particleSizeMax = 25.50F,
+		.particleSizeMax = 5.50F,
 		.colorRangeBegin = {0,0,0,255},
 		.colorRangeEnd = {255,255,255,255},
 		.particleSpawnCountMin = 1,
-		.particleSpawnCountMax = 250
+		.particleSpawnCountMax = 12
+	};
+
+	static const ParticleEffect deflect = {
+			.poolId = "DEFLECT1_POOL",
+			.originMin = {0,0},
+			.originMax = {0,0},
+			.forceMin = 1,
+			.forceMax = 6,
+			.lifetimeMin = 0.5F,
+			.lifetimeMax = 5.0F,
+			.alphaFade = true,
+			.angleMin = 0,
+			.angleMax = 360,
+			.particleSizeMin = 1.28F,
+			.particleSizeMax = 5.50F,
+			.colorRangeBegin = {0,0,0,255},
+			.colorRangeEnd = {255,255,255,255},
+			.particleSpawnCountMin = 1,
+			.particleSpawnCountMax = 12
 	};
 }

@@ -1,0 +1,20 @@
+{
+	"id": "LEVEL_TEST",
+	"blueprint": "TX_LEVEL_TEST_BLUEPRINT",
+	"description": "Level Test",
+	"dimensions": {
+		"levelWidth": 128,
+		"levelHeight": 64,
+		"tileWidth": 32,
+		"tileHeight": 32
+	},
+	"tileSize": 32,
+	"locationObjects": [
+		{
+			"id": "LOC_0030_0011",
+			"gameObjectId": "WAYPOINT"
+		}
+
+
+	]
+}

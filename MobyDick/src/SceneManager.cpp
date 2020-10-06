@@ -60,7 +60,7 @@ void SceneManager::run()
 	Clock::instance().update();
 
 	//Only update and render if we have passed the 60 fps time passage
-	//if (Clock::instance().hasMetGameLoopSpeed())
+	if (Clock::instance().hasMetGameLoopSpeed())
 	{
 
 		//Update only the scenes that are not paused

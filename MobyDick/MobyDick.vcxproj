@@ -331,8 +331,7 @@
   <ItemGroup>
     <Image Include="assets\blueprints\drone1_blueprint.png" />
     <Image Include="assets\blueprints\drone1_test.png" />
-    <Image Include="assets\blueprints\level1.png" />
-    <Image Include="assets\blueprints\level_test.png" />
+    <Image Include="assets\levels\level_test_blueprint.png" />
     <Image Include="assets\bowman1.png" />
     <Image Include="assets\bullet1.png" />
     <Image Include="assets\deflect1.png" />
@@ -372,6 +371,7 @@
     <None Include="assets\gameObjectDefinitions\particleObjects.json" />
     <None Include="assets\levels\level1_definition.json" />
     <None Include="assets\levels\level1_Objects.json" />
+    <None Include="assets\levels\level_test_definition.json" />
     <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\textureAssets.json" />
     <None Include="vcpkg.json_old" />
