@@ -55,37 +55,40 @@ void PlayerControlComponent::update()
 
 void PlayerControlComponent::handleActions()
 {
-	//convenience reference to outside component(s)
-	const auto& actionComponent = parent()->getComponent<ActionComponent>();
 
-	const Uint8* keyStates = nullptr;
+	if (SceneManager::instance().playerInputEvents().empty() == false) {
+		//convenience reference to outside component(s)
+		const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 
-	for (auto& inputEvent : SceneManager::instance().playerInputEvents())
-	{
-		keyStates = inputEvent.keyStates;
+		const Uint8* keyStates = nullptr;
 
-		switch (inputEvent.event.type)
+		for (auto& inputEvent : SceneManager::instance().playerInputEvents())
 		{
-			//case SDL_KEYUP:
-		case SDL_KEYDOWN:
-			if (keyStates[SDL_SCANCODE_G])
+			keyStates = inputEvent.keyStates;
+
+			switch (inputEvent.event.type)
 			{
-				//actionMap["DROP_WEAPON"]->perform();
-				std::cout << "Dropped Weapon" << "\n";
-			}
-			break;
-		case SDL_MOUSEBUTTONDOWN:
-			//Execute USE
-			if (m_controls.test(INPUT_CONTROL_USE))
-			{
-				actionComponent->performUseAction();
+				//case SDL_KEYUP:
+				case SDL_KEYDOWN:
+					if (keyStates[SDL_SCANCODE_G])
+					{
+						//actionMap["DROP_WEAPON"]->perform();
+						std::cout << "Dropped Weapon" << "\n";
+					}
+					break;
+				case SDL_MOUSEBUTTONDOWN:
+					//Execute USE
+					if (m_controls.test(INPUT_CONTROL_USE))
+					{
+						actionComponent->performUseAction();
+					}
+
+					break;
+				default:
+					break;
 			}
 
-			break;
-		default:
-			break;
 		}
-
 	}
 }
 
@@ -95,7 +98,7 @@ void PlayerControlComponent::handleMovement()
 	int direction = 0, strafe = 0;
 
 	//convenience reference to outside component(s)
-	const auto& actionComponent = parent()->getComponent<ActionComponent>();
+	const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 
 	//Handle Keyboard related movement
 	const uint8_t* currentKeyStates = SDL_GetKeyboardState(NULL);

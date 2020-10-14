@@ -14,25 +14,14 @@
 struct GameObjectPiece
 {
 
-	bool isDestroyed;
-	b2Vec2 parentPositionOffset;
-	short currentlevel;
-	std::chrono::steady_clock::time_point time_snapshot;
+	b2Vec2 parentPositionOffset = { 0,0 };
 	std::shared_ptr<GameObject> pieceObject;
 
 };
 
-
-struct CompositeLevel
-{
-	short levelNum;
-	short durability;
-	SDL_Color color;
-};
-
 struct CompositeLegendItem
 {
-	SDL_Color color;
+	SDL_Color color = {0,0,0,0};
 	std::string gameObjectId;
 };
 
@@ -52,15 +41,11 @@ public:
 	void update() override;
 	void render();
 	void weldOnPieces();
-	bool physicsWeldPiecesOn() {
-		return m_physicsWeldPiecesOn;
-	}
+	bool physicsWeldPiecesOn() { return m_physicsWeldPiecesOn; }
 
 private:
-	short m_maxlevel;
-	float m_levelUpSpeed;
 	bool m_physicsWeldPiecesOn;
-	std::vector<CompositeLevel> m_levels;
+	
 	CompositeBlueprint m_blueprint;
 
 	void _buildPiece(CompositeLegendItem, int, int);
@@ -68,8 +53,6 @@ private:
 	void _buildComposite();
 	void _updatePieceState(GameObjectPiece& piece);
 	void _updatePiecePosition(GameObjectPiece& piece);
-	void _levelUp(GameObjectPiece& piece);
-	b2Vec2 _matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float parentAngle);
 
 	std::vector<GameObjectPiece>m_pieces;
 

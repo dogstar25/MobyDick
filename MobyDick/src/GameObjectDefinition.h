@@ -30,8 +30,7 @@ public:
 
 private:
 
-	std::string
-		m_id;
+	std::string	m_id;
 	Json::Value m_definitionJSON;
 
 

@@ -34,7 +34,6 @@ ChildrenComponent::~ChildrenComponent()
 
 void ChildrenComponent::update()
 {
-	const auto& transformComponent = parent()->getComponent<TransformComponent>();
 
 	short locationSlot = 0;
 	
@@ -46,7 +45,8 @@ void ChildrenComponent::update()
 	
 		for (auto& childObject : childLocations)
 		{
-			const auto childTransformComponent = childObject->getComponent<TransformComponent>();
+			const auto& transformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+			const auto& childTransformComponent = childObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 			childNumber++;
 	
@@ -200,3 +200,5 @@ b2Vec2 ChildrenComponent::_calcChildPosition(
 	return b2Vec2ChildPosition;
 
 }
+
+

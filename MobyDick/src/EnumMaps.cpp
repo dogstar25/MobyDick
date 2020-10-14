@@ -1,8 +1,6 @@
 #include "EnumMaps.h"
 
-#pragma warning(push,0)
 #include <box2d/box2d.h>
-#pragma warning(pop)
 
 EnumMap& EnumMap::instance()
 {
@@ -59,7 +57,7 @@ EnumMap::EnumMap()
 	m_enumMap["ANIMATION_ACTION"] = ANIMATION_ACTION;
 
 	//Component Types
-	m_enumMap["TRANSFORM_COMPONENT"] = TRANSFORM_COMPONENT;
+	/*m_enumMap["TRANSFORM_COMPONENT"] = TRANSFORM_COMPONENT;
 	m_enumMap["ANIMATION_COMPONENT"] = ANIMATION_COMPONENT;
 	m_enumMap["CHILDREN_COMPONENT"] = CHILDREN_COMPONENT;
 	m_enumMap["RENDER_COMPONENT"] = RENDER_COMPONENT;
@@ -71,7 +69,7 @@ EnumMap::EnumMap()
 	m_enumMap["PARTICLE_COMPONENT"] = PARTICLE_COMPONENT;
 	m_enumMap["ATTACHMENTS_COMPONENT"] = ATTACHMENTS_COMPONENT;
 	m_enumMap["PLAYERCONTROL_COMPONENT"] = PLAYERCONTROL_COMPONENT;
-	m_enumMap["INVENTORY_COMPONENT"] = INVENTORY_COMPONENT;
+	m_enumMap["INVENTORY_COMPONENT"] = INVENTORY_COMPONENT;*/
 
 	//Player Control
 	m_enumMap["INPUT_CONTROL_MOVEMENT"] = INPUT_CONTROL_MOVEMENT;
@@ -118,6 +116,10 @@ EnumMap::EnumMap()
 	//Particle Emitter types
 	m_enumMap["ParticleEmitterType::ONETIME"] = ParticleEmitterType::ONETIME;
 	m_enumMap["ParticleEmitterType::CONTINUOUS"] = ParticleEmitterType::CONTINUOUS;
+
+	////Particle Effects
+	//m_enumMap["ParticleEffects::ricochet"] = ParticleEffects::ricochet;
+	//m_enumMap["ParticleEffects::scrap"] = ParticleEffects::scrap;
 
 	//Texure Blend Modes
 	m_enumMap["SDL_BLENDMODE_BLEND"] = SDL_BLENDMODE_BLEND;

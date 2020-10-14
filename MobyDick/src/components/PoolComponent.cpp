@@ -26,7 +26,7 @@ void PoolComponent::reset()
 {
 	m_isActive = false;
 	m_isAvailable = true;
-	parent()->setIsPooledAvailable( true);
+	//parent()->setIsPooledAvailable( true);
 
 
 }

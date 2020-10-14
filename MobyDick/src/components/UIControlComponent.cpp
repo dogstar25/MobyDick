@@ -30,8 +30,8 @@ UIControlComponent::UIControlComponent(Json::Value definitionJSON)
 void UIControlComponent::update()
 {
 	//convenience reference to outside component(s)
-	const auto& actionComponent = parent()->getComponent<ActionComponent>();
-	const auto& transformComponent = parent()->getComponent<TransformComponent>();
+	const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+	const auto& transformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 	const Uint8* keyStates = nullptr;
 	int mouseX;

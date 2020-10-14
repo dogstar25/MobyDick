@@ -43,6 +43,10 @@ public:
 	GameObject();
 	~GameObject();
 
+	//Need to define default move constructors because we have an explicit deconstructor defined
+	GameObject(GameObject&&) = default;
+	GameObject& operator=(GameObject&&) = default;
+
 
 	std::string m_id;
 
@@ -55,6 +59,7 @@ public:
 	void setPosition(b2Vec2 position, float angle);
 	void setPosition(float x, float y);
 	void init(bool cameraFollow=false);
+	void setPhysicsActive(bool active);
 
 	//Accessor Functions
 	auto removeFromWorld() { return m_removeFromWorld; }
@@ -62,27 +67,26 @@ public:
 	int idTag() { return m_idTag; }
 	auto const& gameObjectDefinition() { return m_gameObjectDefinition;	}
 	auto& components() { return m_components; }
-	auto isPooledAvailable() { return m_isPooledAvailable; }
-	void setIsPooledAvailable(int isPooledAvailable);
+	/*auto isPooledAvailable() { return m_isPooledAvailable; }
+	void setIsPooledAvailable(int isPooledAvailable);*/
 
 	void reset();
 	void addInventoryItem(GameObject* gameObject);
 	void _setDependecyReferences();
 
 	template <typename componentType>
-	inline void addComponent(std::shared_ptr<componentType> component)
+	inline void addComponent(std::shared_ptr<componentType> component, ComponentTypes componentTypeIndex)
 	{
-		m_components[std::type_index(typeid (*component))] = component;
+		m_components[(int)componentTypeIndex] = component;
 	}
 
 	template <typename componentType>
-	inline std::shared_ptr<componentType> getComponent()
+	inline std::shared_ptr<componentType> getComponent(ComponentTypes componentTypeIndex)
 	{
 
-		std::type_index index(typeid(componentType));
-		if (m_components.count(std::type_index(typeid(componentType))) != 0)
+		if (hasComponent(componentTypeIndex))
 		{
-			return std::static_pointer_cast<componentType>(m_components[index]);
+			return std::static_pointer_cast<componentType>(m_components.at((int)componentTypeIndex));
 		}
 		else
 		{
@@ -90,8 +94,14 @@ public:
 		}
 	}
 
-	template <typename componentType> bool hasComponent() {
-		return(m_components.count(std::type_index(typeid(componentType))) != 0);
+	bool hasComponent(ComponentTypes componentTypeIndex) {
+
+		if (!m_components[(int)componentTypeIndex]) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 private:
@@ -100,13 +110,14 @@ private:
 	bool m_removeFromWorld{ false };
 
 	//Special values that need to be outside of components for speed
-	bool m_isPooledAvailable{ true };
+	//bool m_isPooledAvailable{ true };
 	
 
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 
 	//Components
-	std::map<std::type_index, std::shared_ptr<Component>>m_components;
+	//std::unordered_map<std::type_index, std::shared_ptr<Component>>m_components;
+	std::array<std::shared_ptr<Component>, static_cast<int>(ComponentTypes::COUNT)+1>m_components;
 
 };
 

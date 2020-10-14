@@ -64,8 +64,8 @@ private:
 
 	std::optional<displayOverlay> m_displayOverlay;
 
-	AnimationComponent*           m_animationComponent;
-	TransformComponent*           m_transformComponent;
+	/*AnimationComponent*           m_animationComponent;
+	TransformComponent*           m_transformComponent;*/
 
 };
 

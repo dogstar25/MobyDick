@@ -1,5 +1,7 @@
 #include "ParticleXComponent.h"
 
+#include <iostream>
+
 
 #include "../game.h"
 
@@ -56,23 +58,21 @@ void ParticleXComponent::update()
 		//that is between min and max , otherwise just use the max
 		auto particleCount = util::generateRandomNumber(effect.particleSpawnCountMin, effect.particleSpawnCountMax);
 
-		auto parentTransformComponent = parent()->getComponent<TransformComponent>();
+		auto parentTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 		for (int i = 0; i < particleCount; i++)
 		{
 
 			//Get the particle object from the pre-populated particle pool
 			std::optional<std::shared_ptr<GameObject>> particle = ObjectPoolManager::instance().getPooledObject(effect.poolId);
-			//auto& particle = std::make_shared<GameObject>("PARTICLE_SMOKE_1", -50.0f, -50.0f, 0.0f);
-			//particle->init(false);
 
 			//If the returned particle is null, then the pool has run out, so do nothing
 			if (particle)
 			{
-				const auto& physicsComponent = particle.value()->getComponent<PhysicsComponent>();
-				const auto& renderComponent = particle.value()->getComponent<RenderComponent>();
-				const auto& vitalityComponent = particle.value()->getComponent<VitalityComponent>();
-				const auto& transformComponent = particle.value()->getComponent<TransformComponent>();
+				const auto& physicsComponent = particle.value()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+				const auto& renderComponent = particle.value()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
+				const auto& vitalityComponent = particle.value()->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+				const auto& transformComponent = particle.value()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 				//Force
 				auto force = util::generateRandomNumber(effect.forceMin, effect.forceMax);
@@ -86,16 +86,20 @@ void ParticleXComponent::update()
 
 				//Size
 				auto particleSize = util::generateRandomNumber(effect.particleSizeMin, effect.particleSizeMax);
-//				std::cout << "Size " << particleSize << "\n";
 				transformComponent->setSize(particleSize, particleSize);
 
-				//Set the particles lifetime in miliseconds.
-				vitalityComponent->setTimeSnapshot(std::chrono::steady_clock::now());
-				float particleLifetime = 0;
-				particleLifetime = util::generateRandomNumber(effect.lifetimeMin, effect.lifetimeMax);
-				vitalityComponent->setLifetime(std::chrono::duration<float>(particleLifetime));
-				vitalityComponent->setLifetimeRemaining(std::chrono::duration<float>(particleLifetime));
-				vitalityComponent->setHasInfiniteLifetime(false);
+				//Set the particles lifetime in miliseconds. If zero lifetime then it has infinite lifetime
+				float particleLifetime = util::generateRandomNumber(effect.lifetimeMin, effect.lifetimeMax);
+				if (particleLifetime == 0) {
+					vitalityComponent->setHasFiniteLifetime(false);
+				}
+				else {
+					vitalityComponent->setLifeTimeSnapshot(std::chrono::steady_clock::now());
+
+					vitalityComponent->setLifetime(std::chrono::duration<float>(particleLifetime));
+					vitalityComponent->setLifetimeRemaining(std::chrono::duration<float>(particleLifetime));
+					vitalityComponent->setHasFiniteLifetime(true);
+				}
 
 				//Calculate the emit angle/direction that the particle will travel in
 				auto angleRange = effect.angleMax - effect.angleMin;
@@ -132,6 +136,9 @@ void ParticleXComponent::update()
 				//Add the particle to the game world
 				Game::instance().addGameObject(particle.value(), LAYER_MAIN);
 
+			}
+			else {
+				std::cout << "No Particle available\n";
 			}
 		}
 

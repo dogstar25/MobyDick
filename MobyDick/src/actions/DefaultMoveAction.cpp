@@ -23,8 +23,8 @@ DefaultMoveAction::~DefaultMoveAction()
 
 void DefaultMoveAction::perform(GameObject* gameObject)
 {
-	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>();
-	const auto& vitalityComponent = gameObject->getComponent<VitalityComponent>();
+	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	const auto& vitalityComponent = gameObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
 	physicsComponent->applyMovement(vitalityComponent->speed(), m_direction, m_strafe);
 

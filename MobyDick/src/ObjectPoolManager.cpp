@@ -71,18 +71,18 @@ std::optional<std::shared_ptr<GameObject>> ObjectPoolManager::getPooledObject(st
 	for (auto& pooledObject : m_objectPool[poolId])
 	{
 		//convenience reference to outside component(s)
-		//const auto& poolComponent = pooledObject->getComponent<PoolComponent>();
+		const auto& poolComponent = pooledObject->getComponent<PoolComponent>(ComponentTypes::POOL_COMPONENT);
 
-		if (pooledObject->isPooledAvailable() == true)
+		if (poolComponent->isAvailable() == true)
 		{
-			const auto& vitalityComponent = pooledObject->getComponent<VitalityComponent>();
-			const auto& physicsComponent = pooledObject->getComponent<PhysicsComponent>();
+			const auto& vitalityComponent = pooledObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+			const auto& physicsComponent = pooledObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 
 			pooledObject->setRemoveFromWorld(false);
 
-			pooledObject->setIsPooledAvailable(false);
+			poolComponent->setAvailable(false);
 			physicsComponent->setPhysicsBodyActive(true);
-			vitalityComponent->setTimeSnapshot(std::chrono::steady_clock::now());
+			vitalityComponent->setLifeTimeSnapshot(std::chrono::steady_clock::now());
 			vitalityComponent->setLifetimeRemaining(vitalityComponent->lifetime());
 			return pooledObject;
 		}
@@ -96,7 +96,7 @@ SDL_Texture* ObjectPoolManager::getPoolObjectTexture(std::string poolId)
 {
 
 	auto& gameObject = m_objectPool[poolId].at(0);
-	auto texture = gameObject->getComponent<RenderComponent>()->texture()->sdlTexture;
+	auto texture = gameObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT)->texture()->sdlTexture;
 
 	return texture;
 }

@@ -27,16 +27,6 @@ CompositeComponent::CompositeComponent(Json::Value definitionJSON)
 
 	}
 
-	for (Json::Value itrlevel : compositeComponentJSON["levels"]) {
-
-		auto& levelItem = m_levels.emplace_back();
-		levelItem.levelNum = itrlevel["level"].asInt();
-		levelItem.durability - itrlevel["durability"].asInt();
-
-		levelItem.color = util::JsonToColor(itrlevel["color"]);
-
-	}
-
 	_buildComposite();
 
 }
@@ -58,11 +48,13 @@ void CompositeComponent::update()
 void CompositeComponent::render()
 {
 
-	for (GameObjectPiece pieceObject : m_pieces)
+	for (auto& piece : m_pieces)
 	{
-		if (pieceObject.isDestroyed == false)
+		auto& vitals = piece.pieceObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+
+		if (vitals->isBroken() == false && vitals->isDestroyed() == false)
 		{
-			pieceObject.pieceObject->render();
+			piece.pieceObject->render();
 		}
 	}
 
@@ -73,10 +65,10 @@ void CompositeComponent::weldOnPieces()
 
 	for (auto& piece : m_pieces) {
 
-		auto& piecePhysicsComponent =  piece.pieceObject->getComponent<PhysicsComponent>();
-		auto& parentPhysicsComponent = parent()->getComponent<PhysicsComponent>();
-		auto& pieceTransformComponent = piece.pieceObject->getComponent<TransformComponent>();
-		auto& parentTransformComponent = parent()->getComponent<TransformComponent>();
+		auto& piecePhysicsComponent =  piece.pieceObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+		auto& parentPhysicsComponent = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+		auto& pieceTransformComponent = piece.pieceObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+		auto& parentTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 		auto pieceSize = pieceTransformComponent->size();
 		auto parentSize = parentTransformComponent->size();
 
@@ -101,10 +93,7 @@ void CompositeComponent::weldOnPieces()
 void CompositeComponent::_buildComposite()
 {
 
-	SDL_Texture* blueprintTexure;
 	SDL_Surface* blueprintSurface;
-	SDL_PixelFormat* fmt;
-	SDL_Color* color;
 	std::string blueprintTexureId;
 	Uint8 red, green, blue, alpha;
 
@@ -116,13 +105,13 @@ void CompositeComponent::_buildComposite()
 	SDL_LockSurface(blueprintSurface);
 
 	//Loop through entire image, top to bottom, left to right and build the pieces
-	for (int y = 0; y < blueprintSurface->h; y++)
+	for (auto y = 0; y < blueprintSurface->h; y++)
 	{
-		for (int x = 0; x < blueprintSurface->w; x++)
+		for (auto x = 0; x < blueprintSurface->w; x++)
 		{
 
 			//get the pixel at this location
-			Uint8* currentPixel = (Uint8*)blueprintSurface->pixels + y * blueprintSurface->pitch + x * bpp;
+			Uint8* currentPixel = (Uint8*)blueprintSurface->pixels + (uint64_t)y * (uint64_t)blueprintSurface->pitch + (uint64_t)x * (uint64_t)bpp;
 
 			//Parse the pixel info into a color
 			SDL_GetRGBA(*(Uint32*)currentPixel, blueprintSurface->format, &red, &green, &blue, &alpha);
@@ -147,34 +136,21 @@ void CompositeComponent::_buildPiece(CompositeLegendItem legendItem, int xPos, i
 {
 	float xOffset, yOffset;
 	GameObjectPiece piece = {};
-	piece.currentlevel = 1;
-	piece.isDestroyed = false;
-	piece.time_snapshot = std::chrono::steady_clock::now();
 
 	/*
 	Build the game objects off screen. They will be placed in expect location during update loop
 	*/
-	auto& pieceObject = std::make_shared<GameObject>(legendItem.gameObjectId, LAYER_MAIN, -5, -5);
+	auto& pieceObject = std::make_shared<GameObject>(legendItem.gameObjectId, -5.f, -5.f, 0.f);
 	pieceObject->init();
-
-	auto& pieceVitalityComponent = pieceObject->getComponent<VitalityComponent>();
-
-	pieceVitalityComponent->setDurability(m_levels[0].durability);
 	piece.pieceObject = pieceObject;
 
 	//calculate the X,Y offset position in relating to the base object
-	auto& pieceTransformComponent = pieceObject->getComponent<TransformComponent>();
+	auto& pieceTransformComponent = pieceObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	xOffset = xPos * pieceTransformComponent->size().x;
 	yOffset = yPos * pieceTransformComponent->size().y;
 
 	piece.parentPositionOffset.x = xOffset;
 	piece.parentPositionOffset.y = yOffset;
-
-	//Temp color setting
-	auto& pieceRenderComponent = pieceObject->getComponent<RenderComponent>();
-
-	//Initialize color and strength to level 1
-	pieceRenderComponent->setColor(m_levels[0].color);
 
 	m_pieces.push_back(piece);
 
@@ -203,31 +179,31 @@ void CompositeComponent::_updatePieces()
 
 void CompositeComponent::_updatePieceState(GameObjectPiece& piece)
 {
-	//Get now time
-	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
+	////Get now time
+	//std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
 
-	//Should this object be removed?
-	if (piece.pieceObject->removeFromWorld() == true)
-	{
-		auto& piecePhysicsComponent = piece.pieceObject->getComponent<PhysicsComponent>();
-		piecePhysicsComponent->setPhysicsBodyActive(false);
-		piece.isDestroyed = true;
-		piece.time_snapshot = now_time;
-		piece.pieceObject->setRemoveFromWorld(false);
-	}
+	////Should this object be removed?
+	//if (piece.pieceObject->removeFromWorld() == true)
+	//{
+	//	auto& piecePhysicsComponent = piece.pieceObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	//	piecePhysicsComponent->setPhysicsBodyActive(false);
+	//	piece.isDestroyed = true;
+	//	piece.time_snapshot = now_time;
+	//	piece.pieceObject->setRemoveFromWorld(false);
+	//}
 
-	//Has enough time gone by to regenerate the next armor level
-	if (piece.isDestroyed == true)
-	{
-		std::chrono::duration<double, std::milli> timeDiffMilliSeconds = now_time - piece.time_snapshot;
-		if (timeDiffMilliSeconds.count() >= m_levelUpSpeed)
-		{
+	////Has enough time gone by to regenerate the next armor level
+	//if (piece.isDestroyed == true)
+	//{
+	//	std::chrono::duration<double, std::milli> timeDiffMilliSeconds = now_time - piece.time_snapshot;
+	//	if (timeDiffMilliSeconds.count() >= m_levelUpSpeed)
+	//	{
 
-			//Level up the piece object
-			_levelUp(piece);
-		}
+	//		//Level up the piece object
+	//		_levelUp(piece);
+	//	}
 
-	}
+	//}
 
 
 }
@@ -238,9 +214,9 @@ void CompositeComponent::_updatePiecePosition(GameObjectPiece& piece)
 	b2Vec2 piecePosition{ 0,0 };
 	b2Vec2 adjustment{ 0,0 };
 
-	auto& pieceTransformComponent = piece.pieceObject->getComponent<TransformComponent>();
-	auto& piecePhysicsComponent = piece.pieceObject->getComponent<PhysicsComponent>();
-	auto& parentTransformComponent = parent()->getComponent<TransformComponent>();
+	auto& pieceTransformComponent = piece.pieceObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	auto& piecePhysicsComponent = piece.pieceObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	auto& parentTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 	//calculate the X,Y offset position in relating to the base object
 	SDL_FRect parentPositionRect = parentTransformComponent->getPositionRect();
@@ -275,35 +251,5 @@ void CompositeComponent::_updatePiecePosition(GameObjectPiece& piece)
 	piecePhysicsComponent->setTransform(piecePosition, parentRadianAngle);
 
 	//piece.pieceObject->setPosition(piecePosition, parentTransformComponent->angle());
-
-}
-
-
-void CompositeComponent::_levelUp(GameObjectPiece& piece)
-{
-	int nextLevel = piece.currentlevel + 1;
-
-	for (CompositeLevel level : m_levels)
-	{
-
-		piece.isDestroyed = false;
-
-		if (level.levelNum == nextLevel)
-		{
-			auto& vitalityComponent = piece.pieceObject->getComponent<VitalityComponent>();
-			auto& physicsComponent = piece.pieceObject->getComponent<PhysicsComponent>();
-			auto& renderComponent = piece.pieceObject->getComponent<RenderComponent>();
-
-			piece.currentlevel = level.levelNum;
-			//			piece.isDestroyed = false;
-
-			renderComponent->setColor(level.color);
-			vitalityComponent->setDurability(level.durability);
-			physicsComponent->setPhysicsBodyActive(true);
-
-		}
-
-	}
-
 
 }
