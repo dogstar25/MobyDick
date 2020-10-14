@@ -67,8 +67,8 @@ public:
 	int idTag() { return m_idTag; }
 	auto const& gameObjectDefinition() { return m_gameObjectDefinition;	}
 	auto& components() { return m_components; }
-	auto isPooledAvailable() { return m_isPooledAvailable; }
-	void setIsPooledAvailable(int isPooledAvailable);
+	/*auto isPooledAvailable() { return m_isPooledAvailable; }
+	void setIsPooledAvailable(int isPooledAvailable);*/
 
 	void reset();
 	void addInventoryItem(GameObject* gameObject);
@@ -110,14 +110,14 @@ private:
 	bool m_removeFromWorld{ false };
 
 	//Special values that need to be outside of components for speed
-	bool m_isPooledAvailable{ true };
+	//bool m_isPooledAvailable{ true };
 	
 
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 
 	//Components
 	//std::unordered_map<std::type_index, std::shared_ptr<Component>>m_components;
-	std::array<std::shared_ptr<Component>, (int)ComponentTypes::COUNT+1>m_components;
+	std::array<std::shared_ptr<Component>, static_cast<int>(ComponentTypes::COUNT)+1>m_components;
 
 };
 

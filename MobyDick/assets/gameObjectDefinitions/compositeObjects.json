@@ -451,36 +451,6 @@
                     "y": 0.0
                 }
             }
-        },
-        {
-            "id": "SCRAP_PIECE",
-            "idTag": "IdTag::DRONE_SHIELD",
-            "traitTags": [],
-            "transformComponent": {
-                "size": {
-                    "width": 4,
-                    "height": 4
-                },
-                "absolutePositioning": false
-            },
-            "renderComponent": {
-                "textureId": "TX_PIECE_ANGLE1_8",
-                "xRenderAdjustment": 0,
-                "yRenderAdjustment": 0
-            },
-            "physicsComponent": {
-                "type": "B2_KINEMATIC",
-                "collisionShape": "B2_BOX",
-                "friction": 0.0,
-                "restitution": 1.5,
-                "density": 0.1,
-                "linearDamping": 5.0,
-                "angularDamping": 5.0,
-                "anchorPoint": {
-                    "x": 0.0,
-                    "y": 0.0
-                }
-            }
         }
     ]
 

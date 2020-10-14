@@ -2,6 +2,7 @@
 #define ENUM_MAPS_H
 
 #include "Globals.h"
+#include "./config_data/ParticleEffect.h"
 
 class EnumMap {
 

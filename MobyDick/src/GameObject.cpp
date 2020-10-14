@@ -304,8 +304,3 @@ void GameObject::setPhysicsActive(bool active)
 	}
 
 }
-
-void GameObject::setIsPooledAvailable(int isPooledAvailable)
-{
-	m_isPooledAvailable = isPooledAvailable;
-}

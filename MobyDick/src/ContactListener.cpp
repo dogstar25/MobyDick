@@ -90,9 +90,9 @@ void ContactListener::handleContact(GameObject* contact1, GameObject* contact2, 
 
 	}
 
-	/////////////////////////
+	////////////////////////////////////
 	// Player Bullet -  Wall Contact
-	////////////////////////
+	//////////////////////////////////
 	if ((category1 == IdTag::PLAYER_BULLET && category2 == IdTag::WALL) ||
 		(category2 == IdTag::PLAYER_BULLET && category1 == IdTag::WALL)) {
 
@@ -100,9 +100,9 @@ void ContactListener::handleContact(GameObject* contact1, GameObject* contact2, 
 
 	}
 
-	/////////////////////////
-	// Player Bullet -  Wall Contact
-	////////////////////////
+	///////////////////////////////////
+	// Player Bullet -  Drone Shield
+	///////////////////////////////////
 	if ((category1 == IdTag::PLAYER_BULLET && category2 == IdTag::DRONE_SHIELD) ||
 		(category2 == IdTag::PLAYER_BULLET && category1 == IdTag::DRONE_SHIELD)) {
 
@@ -150,7 +150,7 @@ void ContactListener::bullet_wall(GameObject* contact1, GameObject* contact2, b2
 	auto& particleXComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
 	particleXComponent->addParticleEffect(ParticleEffects::ricochet);
 	particleXComponent->setType(ParticleEmitterType::ONETIME);
-	particleXComponent->setEmissionInterval(std::chrono::duration<float>(0.2));
+	//particleXComponent->setEmissionInterval(std::chrono::duration<float>(0.2));
 
 
 	/*auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
@@ -184,7 +184,7 @@ void ContactListener::playerBullet_droneShield(GameObject* contact1, GameObject*
 	}
 
 
-	auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
+	auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_BACKGROUND, -1, -1);
 	auto& particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
 	particleComponent->setType(ParticleEmitterType::ONETIME);
 
@@ -204,6 +204,7 @@ void ContactListener::playerBullet_droneShield(GameObject* contact1, GameObject*
 
 		shieldVitality->setIsBroken(true);
 		particleComponent->addParticleEffect(ParticleEffects::ricochet);
+		particleComponent->addParticleEffect(ParticleEffects::scrap);
 
 	}
 	else {
@@ -212,7 +213,6 @@ void ContactListener::playerBullet_droneShield(GameObject* contact1, GameObject*
 	}
 
 
-	//Generate some scrap pieces
 
 
 

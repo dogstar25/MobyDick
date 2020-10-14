@@ -1,5 +1,7 @@
 #include "ParticleXComponent.h"
 
+#include <iostream>
+
 
 #include "../game.h"
 
@@ -86,13 +88,18 @@ void ParticleXComponent::update()
 				auto particleSize = util::generateRandomNumber(effect.particleSizeMin, effect.particleSizeMax);
 				transformComponent->setSize(particleSize, particleSize);
 
-				//Set the particles lifetime in miliseconds.
-				vitalityComponent->setLifeTimeSnapshot(std::chrono::steady_clock::now());
-				float particleLifetime = 0;
-				particleLifetime = util::generateRandomNumber(effect.lifetimeMin, effect.lifetimeMax);
-				vitalityComponent->setLifetime(std::chrono::duration<float>(particleLifetime));
-				vitalityComponent->setLifetimeRemaining(std::chrono::duration<float>(particleLifetime));
-				vitalityComponent->setHasFiniteLifetime(true);
+				//Set the particles lifetime in miliseconds. If zero lifetime then it has infinite lifetime
+				float particleLifetime = util::generateRandomNumber(effect.lifetimeMin, effect.lifetimeMax);
+				if (particleLifetime == 0) {
+					vitalityComponent->setHasFiniteLifetime(false);
+				}
+				else {
+					vitalityComponent->setLifeTimeSnapshot(std::chrono::steady_clock::now());
+
+					vitalityComponent->setLifetime(std::chrono::duration<float>(particleLifetime));
+					vitalityComponent->setLifetimeRemaining(std::chrono::duration<float>(particleLifetime));
+					vitalityComponent->setHasFiniteLifetime(true);
+				}
 
 				//Calculate the emit angle/direction that the particle will travel in
 				auto angleRange = effect.angleMax - effect.angleMin;
@@ -129,6 +136,9 @@ void ParticleXComponent::update()
 				//Add the particle to the game world
 				Game::instance().addGameObject(particle.value(), LAYER_MAIN);
 
+			}
+			else {
+				std::cout << "No Particle available\n";
 			}
 		}
 

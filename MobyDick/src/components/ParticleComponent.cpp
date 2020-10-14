@@ -1,5 +1,6 @@
 #include "ParticleComponent.h"
 
+#include <iostream>
 
 #include "../game.h"
 #include "../GameConfig.h"
@@ -69,6 +70,17 @@ void ParticleComponent::update()
 {
 	bool activeParticleFound = false;
 
+	//Get the amount of time passed since last update
+	//This particle component relies on velocity based on time passed since it is not a physics object
+	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
+	std::chrono::duration<float> time_diff = now_time - m_timeSnapshot;
+	m_timeSnapshot = now_time;
+
+	/*static std::chrono::steady_clock::time_point timeShot;
+	std::chrono::steady_clock::time_point nowTime = std::chrono::steady_clock::now();
+	std::chrono::duration<float> timeDiff = nowTime - timeShot;
+	timeShot = nowTime;*/
+
 	//First update the position,lifetime,etc of all active particles
 	for (auto& particle : m_particles) {
 
@@ -86,11 +98,10 @@ void ParticleComponent::update()
 
 			}
 
-			//particle.position.x += particle.velocity.x * .1666 ;
-			//particle.position.y += particle.velocity.y * .1666;
-			auto milliSeconds = std::chrono::duration_cast<std::chrono::milliseconds>(timeDiff);
-			particle.position.x += particle.velocity.x * float(milliSeconds.count() *.001);
-			particle.position.y += particle.velocity.y * float(milliSeconds.count() * .001);
+			/*particle.position.x += particle.velocity.x * .01666 ;
+			particle.position.y += particle.velocity.y * .01666;*/
+			particle.position.x += particle.velocity.x * time_diff.count();
+			particle.position.y += particle.velocity.y * time_diff.count();
 
 		}
 
@@ -102,15 +113,17 @@ void ParticleComponent::update()
 	}
 
 	//Only emit particles at the given time interval
-	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
-	std::chrono::duration<double> time_diff = now_time - m_timeSnapshot;
+	//std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
+	std::chrono::duration<double> emissionTimeDiff = now_time - m_EmissiontimeSnapshot;
+	m_timeSnapshot = now_time;
 
-	if (time_diff < m_emissionInterval) {
+	if (emissionTimeDiff < m_emissionInterval) {
 		return;
 	}
 	else {
-		m_timeSnapshot = now_time;
+		m_EmissiontimeSnapshot = now_time;
 	}
+
 
 	//Now emit more particles
 	for (auto& effect : m_particleEffects) {

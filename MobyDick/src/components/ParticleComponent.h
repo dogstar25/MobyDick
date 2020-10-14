@@ -53,6 +53,7 @@ private:
 	std::vector<ParticleEffect> m_particleEffects;
 	std::chrono::duration<float, std::milli> m_emissionInterval{ std::chrono::duration<float>(0.f) };
 	std::chrono::steady_clock::time_point m_timeSnapshot{ std::chrono::steady_clock::now() };
+	std::chrono::steady_clock::time_point m_EmissiontimeSnapshot{ std::chrono::steady_clock::now() };
 	std::vector<Particle> m_particles;
 
 

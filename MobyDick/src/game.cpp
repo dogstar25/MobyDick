@@ -157,13 +157,26 @@ bool Game::init()
 	deflect.value()->setPosition(125, 125);
 	scene.addGameObject(deflect.value(), 1);*/
 
-	auto deflectObject = scene.addGameObject("DEFLECT1", LAYER_MAIN, 9, 9, 0, false);
-	//auto swordladyObject = scene.addGameObject("SWORDLADY", LAYER_MAIN, 9, 9, 0, false);
+
+
+	auto particleXEmitterObject = Game::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, 9, 9);
+	auto& particleXComponent = particleXEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+	particleXComponent->addParticleEffect(ParticleEffects::ricochet);
+	particleXComponent->setType(ParticleEmitterType::CONTINUOUS);
+	particleXComponent->setEmissionInterval(std::chrono::duration<float>(.5));
+
+
+	auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, 15, 15);
+	auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
+	particleComponent->addParticleEffect(ParticleEffects::ricochet);
+	particleComponent->setType(ParticleEmitterType::CONTINUOUS);
+	particleComponent->setEmissionInterval(std::chrono::duration<float>(.5));
 
 
 
+	#define gina_64 = GameDefs::instance().gina_64;
 
-	auto test = GameDefs::instance().gina_64;
+	
 
 
 	/*for (int x = 0; x < 10000; x++) {

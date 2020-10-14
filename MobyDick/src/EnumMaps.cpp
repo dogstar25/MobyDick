@@ -1,8 +1,6 @@
 #include "EnumMaps.h"
 
-#pragma warning(push,0)
 #include <box2d/box2d.h>
-#pragma warning(pop)
 
 EnumMap& EnumMap::instance()
 {
@@ -118,6 +116,10 @@ EnumMap::EnumMap()
 	//Particle Emitter types
 	m_enumMap["ParticleEmitterType::ONETIME"] = ParticleEmitterType::ONETIME;
 	m_enumMap["ParticleEmitterType::CONTINUOUS"] = ParticleEmitterType::CONTINUOUS;
+
+	////Particle Effects
+	//m_enumMap["ParticleEffects::ricochet"] = ParticleEffects::ricochet;
+	//m_enumMap["ParticleEffects::scrap"] = ParticleEffects::scrap;
 
 	//Texure Blend Modes
 	m_enumMap["SDL_BLENDMODE_BLEND"] = SDL_BLENDMODE_BLEND;
