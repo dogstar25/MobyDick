@@ -25,6 +25,7 @@ static bool operator !=(SDL_Color a, SDL_Color b)
 inline constexpr int MAX_GAMEOBJECT_LAYERS = 3;
 inline constexpr int CHILD_POSITIONS = 9;
 inline constexpr int MAX_VITALITY_LEVELS = 5;
+inline constexpr int MAX_ANIMATION_STATES = 5;
 
 //Mouse State
 inline constexpr int MOUSE_NONE = 0;

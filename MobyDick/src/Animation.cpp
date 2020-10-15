@@ -1,8 +1,17 @@
 #include "Animation.h"
 
+#include <iostream>
 
 #include "EnumMaps.h"
 #include "TextureManager.h"
+
+
+Animation::Animation()
+{
+
+	std::cout << "Animation() called\n";
+
+}
 
 
 Animation::Animation(Json::Value animationDetailsJSON, Json::Value transformDetailsJSON)
