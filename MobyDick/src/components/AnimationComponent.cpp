@@ -94,7 +94,10 @@ SDL_Texture* AnimationComponent::getCurrentAnimationTexture()
 
 }
 
-
+void AnimationComponent::setDefaultAnimationState(int defaultAnimationState)
+{
+	m_defaultAnimationState = defaultAnimationState;
+}
 
 
 

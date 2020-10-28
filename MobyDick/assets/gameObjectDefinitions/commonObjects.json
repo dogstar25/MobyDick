@@ -67,7 +67,15 @@
                     "y": 0.0
                 }
             },
-            "inventoryComponent": {},
+            "inventoryComponent": {
+                "items": [
+                    {
+                        "gameObjectId": "PISTOL",
+                        "attach": true,
+                        "weapon": true
+                    }
+                ]
+            },
             "vitalityComponent": {
                 "speed": 7.5
             },
@@ -592,8 +600,8 @@
             "description": "Particle Emitter",
             "transformComponent": {
                 "size": {
-                    "width": 0,
-                    "height": 0
+                    "width": 4,
+                    "height": 4
                 }
             },
             "particleXComponent": {
@@ -612,8 +620,8 @@
             "description": "Particle Emitter",
             "transformComponent": {
                 "size": {
-                    "width": 6,
-                    "height": 3
+                    "width": 4,
+                    "height": 4
                 }
             },
             "particleComponent": {

@@ -25,6 +25,8 @@ public:
 
 	void setCurrentAnimationState(int animationState) { m_currentAnimationState = animationState; }
 	int currentAnimationState() { return m_currentAnimationState; }
+	int defaultAnimationState() { return m_defaultAnimationState; }
+	void setDefaultAnimationState(int defaultAnimationState);
 
 	std::array<Animation, MAX_ANIMATION_STATES>& animations() { return m_animations; }
 

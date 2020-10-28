@@ -96,7 +96,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Inventory Component
 	if (definitionJSON.isMember("inventoryComponent"))
 	{
-		addComponent(std::make_shared<InventoryComponent>(), ComponentTypes::INVENTORY_COMPONENT);
+		addComponent(std::make_shared<InventoryComponent>(definitionJSON), ComponentTypes::INVENTORY_COMPONENT);
 	}
 
 	//UIControl Component
@@ -194,6 +194,12 @@ void GameObject::render()
 		getComponent<ChildrenComponent>(ComponentTypes::CHILDREN_COMPONENT)->renderChildren();
 	}
 
+	//Render your attached inventory items
+	if (hasComponent(ComponentTypes::INVENTORY_COMPONENT)) {
+
+		getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT)->render();
+	}
+
 	//If you have an arcade particle emitter then render those particles
 	if (hasComponent(ComponentTypes::PARTICLE_COMPONENT)) {
 
@@ -276,7 +282,7 @@ void GameObject::init(bool cameraFollow)
 {
 
 	//Set the root gameObject as the parent for each component
-	for (auto& component : m_components){
+	for (auto& component : m_components) {
 		if (component) {
 			component->setParent(this);
 		}
@@ -288,12 +294,24 @@ void GameObject::init(bool cameraFollow)
 		Camera::instance().setFollowMe(this);
 	}
 
+	//NEW - execute special code for certain extra complicated gameObjects that need to execute after main construction
+	if (id() == "DRONE") {
 
+		//Weld Oncomposite pieces
+		auto& droneCompositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
+		if (droneCompositeComponent->physicsWeldPiecesOn() == true) {
+			droneCompositeComponent->weldOnPieces();
+		}
 
+	}
+	else if (id() == "GINA_64") {
+
+		auto& playerInventoryComponent = getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT);
+		playerInventoryComponent->weldOnAttachments();
+	}
 
 
 }
-
 
 void GameObject::setPhysicsActive(bool active)
 {

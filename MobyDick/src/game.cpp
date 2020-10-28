@@ -136,27 +136,11 @@ bool Game::init()
 	//Load a first scene
 	Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
 	scene.applyCurrentControlMode();
-	//scene.addGameObject("BULLET1", LAYER_MAIN, 2, 2, 0);
 
 	//Load the player and some other objects
-	auto playerObject = scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
-	GameObject* weaponObject = scene.addGameObject("PISTOL", LAYER_MAIN, 8, 8, 0, false);
-	playerObject->addInventoryItem(weaponObject);
-
+	scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
 	scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);
-
-	//Enemy Drone
-	auto drone = scene.addGameObject("DRONE", LAYER_MAIN, 2, 2);
-	auto& droneCompositeComponent = drone->getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
-	if (droneCompositeComponent->physicsWeldPiecesOn() == true) {
-		droneCompositeComponent->weldOnPieces();
-	}
-
-	//auto deflectObj = scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);
-	/*auto& deflect = ObjectPoolManager::instance().getPooledObject("DEFLECT1_POOL");
-	deflect.value()->setPosition(125, 125);
-	scene.addGameObject(deflect.value(), 1);*/
-
+	scene.addGameObject("DRONE", LAYER_MAIN, 2, 2);
 
 
 	auto particleXEmitterObject = Game::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, 9, 9);
