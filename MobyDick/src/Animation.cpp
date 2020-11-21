@@ -9,8 +9,6 @@
 Animation::Animation()
 {
 
-	std::cout << "Animation() called\n";
-
 }
 
 

@@ -100,6 +100,14 @@ namespace ParticleEmitterType {
 	inline constexpr int CONTINUOUS = 1;
 }
 
+//Level Location Item Types
+namespace LevelLocItemType {
+
+	inline constexpr int GAMEOBJECT = 0;
+	inline constexpr int WAYPOINT = 1;
+
+}
+
 //Components
 enum class ComponentTypes {
 

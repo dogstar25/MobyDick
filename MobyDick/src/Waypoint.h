@@ -12,6 +12,7 @@ class Waypoint
 
 public:
 	std::string id;
+	int order;
 	b2Vec2 point;
 	
 

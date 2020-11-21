@@ -60,6 +60,7 @@ void ContactListener::BeginContact(b2Contact* contact) {
 
 void ContactListener::EndContact(b2Contact* contact)
 {
+	
 
 }
 
@@ -201,7 +202,7 @@ void ContactListener::playerBullet_droneShield(GameObject* contact1, GameObject*
 	if (shieldHolds == false) {
 
 		shieldVitality->setIsBroken(true);
-		particleComponent->addParticleEffect(ParticleEffects::ricochet);
+		particleComponent->addParticleEffect(ParticleEffects::ricochetX);
 		particleComponent->addParticleEffect(ParticleEffects::scrap);
 
 	}

@@ -135,9 +135,6 @@
             },
             "renderComponent": {
                 "textureId": "TX_BOWMAN1"
-            },
-            "vitalityComponent": {
-                "speed": 30.0
             }
         },
         {
@@ -605,12 +602,6 @@
                 }
             },
             "particleXComponent": {
-                "type": "ParticleEmitterType::ONETIME",
-                "effects": [
-                    "ParticleEffects::ricochet",
-                    "ParticleEffects::scrap"
-                ]
-
             }
         },
         {
@@ -625,7 +616,25 @@
                 }
             },
             "particleComponent": {
-
+            }
+        },
+        {
+            "id": "PARTICLE_EMITTER_SPARK",
+            "idTag": "IdTag::GENERAL",
+            "traitTags": [],
+            "description": "Particle Emitter",
+            "transformComponent": {
+                "size": {
+                    "width": 4,
+                    "height": 4
+                }
+            },
+            "particleXComponent": {
+                "type": "ParticleEmitterType::CONTINUOUS",
+                "emissionInterval": 0.2,
+                "effects": [
+                    "ParticleEffects::spark"
+                ]
             }
         }
 

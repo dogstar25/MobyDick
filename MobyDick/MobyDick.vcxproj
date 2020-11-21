@@ -248,7 +248,6 @@
     <ClCompile Include="src\SoundManager.cpp" />
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
-    <ClCompile Include="src\Waypoint.cpp" />
     <ClCompile Include="src\components\TextComponent.cpp" />
     <ClCompile Include="src\components\VitalityComponent.cpp" />
     <ClCompile Include="src\components\UIControlComponent.cpp" />
@@ -316,7 +315,6 @@
     <ClInclude Include="src\SoundManager.h" />
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\TextureManager.h" />
-    <ClInclude Include="src\Waypoint.h" />
     <ClInclude Include="src\components\TextComponent.h" />
     <ClInclude Include="src\components\VitalityComponent.h" />
     <ClInclude Include="src\components\UIControlComponent.h" />

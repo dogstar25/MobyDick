@@ -8,13 +8,13 @@
 #include "Component.h"
 #include "../GameObject.h"
 
-struct inventoryItem 
+struct InventoryItem 
 {
-	bool attached;
-	bool isWeapon;
+	bool attached{ false };
+	bool isWeapon{ false };
 	std::shared_ptr<GameObject> gameObject;
 
-	inventoryItem(bool attached, bool weapon, std::shared_ptr<GameObject> gameObject) :
+	InventoryItem(bool attached, bool weapon, std::shared_ptr<GameObject> gameObject) :
 		attached(attached),
 		isWeapon(weapon),
 		gameObject(gameObject) {}
@@ -28,7 +28,7 @@ public:
 	~InventoryComponent();
 
 	size_t addItem(GameObject* gameObject);
-	std::vector<inventoryItem> items() { return m_items; }
+	std::vector<InventoryItem> items() { return m_items; }
 	int activeItem() {	return m_activeItem; }
 
 	GameObject* getActiveItem();
@@ -39,7 +39,7 @@ public:
 private:
 
 	int m_activeItem{ 0 };
-	std::vector<inventoryItem> m_items;
+	std::vector<InventoryItem> m_items;
 
 
 

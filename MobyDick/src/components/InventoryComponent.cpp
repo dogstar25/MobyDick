@@ -21,9 +21,7 @@ InventoryComponent::InventoryComponent(Json::Value definitionJSON)
 		auto& gameObject = std::make_shared<GameObject>(gameObjectId, -1.0F, -1.0F, 0.F);
 		gameObject->init();
 
-		inventoryItem inventoryItem = { true,true,std::move(gameObject) };
-
-		//m_items.emplace_back(true,true,std::move(gameObject));
+		InventoryItem inventoryItem = { true,true,std::move(gameObject) };
 		m_items.emplace_back(inventoryItem);
 
 	}

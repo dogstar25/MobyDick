@@ -12,7 +12,7 @@ ParticleComponent::ParticleComponent(Json::Value definitionJSON )
 	Json::Value particleComponentJSON = definitionJSON["particleComponent"];
 
 
-	for (int i = 0; i < 10000; i++) {
+	for (int i = 0; i < 300; i++) {
 
 		m_particles.emplace_back(Particle());
 
@@ -169,8 +169,17 @@ void ParticleComponent::update()
 					particle.value()->lifetimeRemaining = (std::chrono::duration<float>(particleLifetime));
 
 					//Calculate the emit angle/direction that the particle will travel in
-					auto angleRange = effect.angleMax - effect.angleMin;
-					auto emitAngle = ((float)i / (float)particleCount) * angleRange;
+					//If this is a onetime emission, make each particles angle symetric with the whole
+					//otherwise, make each one random, but still within the angle range
+					float emitAngle = 0;
+					if (m_type == ParticleEmitterType::ONETIME) {
+						auto angleRange = effect.angleMax - effect.angleMin;
+						emitAngle = ((float)i / (float)particleCount) * angleRange;
+					}
+					else {
+						emitAngle = util::generateRandomNumber(effect.angleMin, effect.angleMax);
+					}
+
 					emitAngle += effect.angleMin;
 					emitAngle = util::degreesToRadians(emitAngle);
 

@@ -20,7 +20,6 @@
 //#include "GameObjectContactListener.h"
 //#include "DebugDraw.h"
 //#include "DebugPanel.h"
-#include "GameObjectCollection.h"
 #include "GameConfig.h"
 #include "SceneManager.h"
 

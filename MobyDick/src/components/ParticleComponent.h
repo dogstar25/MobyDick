@@ -11,7 +11,6 @@
 
 #include "Component.h"
 #include "../Globals.h"
-#include "../ParticleEmission.h"
 #include "../config_data/ParticleEffect.h"
 
 class GameObject;

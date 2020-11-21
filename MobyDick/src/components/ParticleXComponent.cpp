@@ -1,8 +1,9 @@
 #include "ParticleXComponent.h"
 
 #include <iostream>
+#include <chrono>
 
-
+#include "../EnumMaps.h"
 #include "../game.h"
 
 
@@ -10,20 +11,33 @@ ParticleXComponent::ParticleXComponent(Json::Value definitionJSON )
 {
 	Json::Value particleComponentJSON = definitionJSON["particleXComponent"];
 
+	if (particleComponentJSON.isMember("type")) {
+		m_type = EnumMap::instance().toEnum(particleComponentJSON["type"].asString());
+	}
 
-	////Add any effects that may be pre-built into the particle emitter
-	//for (Json::Value itrEffect : particleComponentJSON["effects"])
-	//{
+	auto emissionInterval = particleComponentJSON["emissionInterval"].asFloat();
+	m_emissionInterval = (std::chrono::duration<float>(emissionInterval));
 
-	//	addParticleEffect(itrEffect);
+	//Add any effects that may be pre-built into the particle emitter
+	for (Json::Value itrEffect : particleComponentJSON["effects"])
+	{
 
-	//}
-	//for(auto effect : particleComponentJSON)
+		auto effect = itrEffect.asString();
 
-	//particleXComponent->addParticleEffect(ParticleEffects::ricochet);
-	//particleXComponent->setType(ParticleEmitterType::CONTINUOUS);
-	//particleXComponent->setEmissionInterval(std::chrono::duration<float>(0.002));
-
+		if (effect == "ParticleEffects::ricochet") {
+			addParticleEffect(ParticleEffects::ricochet);
+		}
+		else if (effect == "ParticleEffects::deflect") {
+			addParticleEffect(ParticleEffects::deflect);
+		}
+		else if (effect == "ParticleEffects::scrap") {
+			addParticleEffect(ParticleEffects::scrap);
+		}
+		else if (effect == "ParticleEffects::spark") {
+			addParticleEffect(ParticleEffects::spark);
+		}
+	
+	}
 }
 
 ParticleXComponent::~ParticleXComponent()
@@ -102,8 +116,17 @@ void ParticleXComponent::update()
 				}
 
 				//Calculate the emit angle/direction that the particle will travel in
-				auto angleRange = effect.angleMax - effect.angleMin;
-				auto particleAngle = ((float)i / (float)particleCount) * angleRange;
+				//If this is a onetime emission, make each particles angle symetric with the whole
+				//otherwise, make each one random, but still within the angle range
+				float particleAngle = 0;
+				if (m_type == ParticleEmitterType::ONETIME) {
+					auto angleRange = effect.angleMax - effect.angleMin;
+					particleAngle = ((float)i / (float)particleCount) * angleRange;
+				}
+				else {
+					particleAngle = util::generateRandomNumber(effect.angleMin, effect.angleMax);
+				}
+				
 				particleAngle += effect.angleMin;
 				particleAngle = util::degreesToRadians(particleAngle);
 
