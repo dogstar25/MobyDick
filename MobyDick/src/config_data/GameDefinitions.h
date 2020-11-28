@@ -3,10 +3,11 @@
 #include <array>
 #include <vector>
 #include <bitset>
-#pragma warning(push,0)
-#include <box2d/box2d.h>
-#pragma warning(pop)
+#include <unordered_map>
 
+#include <box2d/box2d.h>
+
+#include "../GameObject.h"
 #include "../actions/Action.h"
 #include "../actions/ActorMoveAction.h"
 #include "../actions/ActorRotateAction.h"
@@ -63,7 +64,7 @@ namespace GameObjectDefinitionStructures {
 	/*
 		ANIMATION COMPONENT
 	*/
-	struct Animation
+	struct Anim
 	{
 		int		state{ 0 };
 		string	textureId{ "" };
@@ -73,7 +74,7 @@ namespace GameObjectDefinitionStructures {
 
 	struct Animation_Component
 	{
-		vector<Animation> animations;
+		vector<Anim> animations;
 	};
 
 	/*
@@ -121,8 +122,20 @@ struct GameDefs {
 	GameObjectDef swordlady;
 
 
+
+
 };
 
+struct ProtoObjects {
+
+	static ProtoObjects& instance();
+	ProtoObjects();
+
+	std::unordered_map<std::string, GameObject> protoObjects;
+
+
+
+};
 
 
 

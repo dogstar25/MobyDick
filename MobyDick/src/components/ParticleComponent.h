@@ -11,7 +11,6 @@
 
 #include "Component.h"
 #include "../Globals.h"
-#include "../ParticleEmission.h"
 #include "../config_data/ParticleEffect.h"
 
 class GameObject;
@@ -50,6 +49,7 @@ public:
 private:
 
 	int m_type{ParticleEmitterType::ONETIME};
+	bool m_oneTimeEmitted{ false };
 	std::vector<ParticleEffect> m_particleEffects;
 	std::chrono::duration<float, std::milli> m_emissionInterval{ std::chrono::duration<float>(0.f) };
 	std::chrono::steady_clock::time_point m_timeSnapshot{ std::chrono::steady_clock::now() };

@@ -124,7 +124,11 @@ EnumMap::EnumMap()
 	//Texure Blend Modes
 	m_enumMap["SDL_BLENDMODE_BLEND"] = SDL_BLENDMODE_BLEND;
 	m_enumMap["SDL_BLENDMODE_ADD"] = SDL_BLENDMODE_ADD;
-	
+
+	//Level Location Item Types
+	m_enumMap["LevelLocItemType::GAMEOBJECT"] = LevelLocItemType::GAMEOBJECT;
+	m_enumMap["LevelLocItemType::WAYPOINT"] = LevelLocItemType::WAYPOINT;
+
 
 }
 
@@ -136,6 +140,13 @@ EnumMap::~EnumMap()
 const int EnumMap::toEnum(std::string name)
 {
 	assert(m_enumMap.find(name) != m_enumMap.end() && "Constant Name wasnt found in EnumMap");
+
+	//
+	//
+	// return an optional
+	//
+
+
 
 	return m_enumMap[name];
 }

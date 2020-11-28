@@ -19,6 +19,7 @@
 #include "components/ActionComponent.h"
 #include "components/AnimationComponent.h"
 #include "components/AttachmentsComponent.h"
+#include "components/BrainComponent.h"
 #include "components/ChildrenComponent.h"
 #include "components/CompositeComponent.h"
 #include "components/ParticleXComponent.h"
@@ -40,7 +41,7 @@ class GameObject
 {
 public:
 	
-	GameObject();
+	GameObject() {}
 	~GameObject();
 
 	//Need to define default move constructors because we have an explicit deconstructor defined
@@ -75,9 +76,10 @@ public:
 	void _setDependecyReferences();
 
 	template <typename componentType>
-	inline void addComponent(std::shared_ptr<componentType> component, ComponentTypes componentTypeIndex)
+	inline std::shared_ptr<componentType> addComponent(std::shared_ptr<componentType> component, ComponentTypes componentTypeIndex)
 	{
-		m_components[(int)componentTypeIndex] = component;
+		m_components[(int)componentTypeIndex] = std::move(component);
+		return std::static_pointer_cast<componentType>(m_components.at((int)componentTypeIndex));
 	}
 
 	template <typename componentType>

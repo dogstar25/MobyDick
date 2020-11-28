@@ -27,6 +27,7 @@ public:
 	void setSize(b2Vec2 size);
 	void setSize(float xSize, float ySize);
 	void setAngle(float angle);
+	void setAbsolutePositioning(bool absolutePositioning);
 
 	b2Vec2 size() { return m_size; }
 	b2Vec2 position() {	return m_position; }
@@ -48,7 +49,7 @@ private:
 		m_originalPosition;
 	bool
 		m_absolutePositioning,
-		m_centeredPositioning;;
+		m_centeredPositioning;
 
 
 };

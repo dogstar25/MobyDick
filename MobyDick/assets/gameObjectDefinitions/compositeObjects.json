@@ -3,7 +3,8 @@
         {
             "id": "DRONE",
             "idTag": "IdTag::DRONE_FRAME",
-            "traitTags": [],
+            "traitTags": [
+            ],
             "transformComponent": {
                 "size": {
                     "width": 128,
@@ -27,6 +28,8 @@
                     "x": 0.0,
                     "y": 0.0
                 }
+            },
+            "brainComponent": {
             },
             "compositeComponent": {
                 "physicsWeldPiecesOn": true,
@@ -85,7 +88,8 @@
         {
             "id": "FULL_PIECE",
             "idTag": "IdTag::DRONE_SHIELD",
-            "traitTags": [],
+            "traitTags": [
+            ],
             "transformComponent": {
                 "size": {
                     "width": 8,
@@ -159,7 +163,8 @@
         {
             "id": "ANGLE1_PIECE",
             "idTag": "IdTag::DRONE_SHIELD",
-            "traitTags": [],
+            "traitTags": [
+            ],
             "transformComponent": {
                 "size": {
                     "width": 8,
@@ -233,7 +238,8 @@
         {
             "id": "ANGLE2_PIECE",
             "idTag": "IdTag::DRONE_SHIELD",
-            "traitTags": [],
+            "traitTags": [
+            ],
             "transformComponent": {
                 "size": {
                     "width": 8,
@@ -307,7 +313,8 @@
         {
             "id": "ANGLE3_PIECE",
             "idTag": "IdTag::DRONE_SHIELD",
-            "traitTags": [],
+            "traitTags": [
+            ],
             "transformComponent": {
                 "size": {
                     "width": 8,
@@ -381,7 +388,8 @@
         {
             "id": "ANGLE4_PIECE",
             "idTag": "IdTag::DRONE_SHIELD",
-            "traitTags": [],
+            "traitTags": [
+            ],
             "transformComponent": {
                 "size": {
                     "width": 8,
@@ -453,5 +461,4 @@
             }
         }
     ]
-
 }

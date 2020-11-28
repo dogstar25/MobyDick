@@ -9,8 +9,19 @@
 
 class TransformComponent;
 
+
+struct Data {
+
+
+
+};
+
+
 class PhysicsComponent : public Component
 {
+
+
+
 
 public:
 	PhysicsComponent() {};

@@ -1,8 +1,15 @@
 #include "Animation.h"
 
+#include <iostream>
 
 #include "EnumMaps.h"
 #include "TextureManager.h"
+
+
+Animation::Animation()
+{
+
+}
 
 
 Animation::Animation(Json::Value animationDetailsJSON, Json::Value transformDetailsJSON)

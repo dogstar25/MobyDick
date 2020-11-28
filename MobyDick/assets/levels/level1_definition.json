@@ -9,12 +9,22 @@
         "tileHeight": 32
     },
     "tileSize": 32,
+
     "locationObjects": [
         {
             "id": "LOC_0030_0011",
-            "gameObjectId": "WAYPOINT"
+            "type": "LevelLocItemType::GAMEOBJECT",
+            "gameObjectId": "SWORDLADY"
+        },
+        {
+            "id": "LOC_0007_0005",
+            "type": "LevelLocItemType::GAMEOBJECT",
+            "gameObjectId": "SWORDLADY"
+        },
+        {
+            "id": "LOC_0030_0011",
+            "type": "LevelLocItemType::WAYPOINT",
+            "waypoint": 1
         }
-
-
     ]
 }

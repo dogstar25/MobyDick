@@ -77,7 +77,7 @@ SDL_FRect RenderComponent::getRenderDestRect()
 {
 	SDL_FRect destRect;
 
-	auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	const auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 	//Get its current position. Should be center of object
 	//destRect = m_transformComponent->getPositionRect();
@@ -105,7 +105,7 @@ SDL_Rect* RenderComponent::getRenderTextureRect()
 {
 
 	SDL_Rect* textureSrcRect=nullptr;
-	auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
+	const auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 
 	if (animationComponent)
 	{
@@ -124,7 +124,7 @@ SDL_Texture* RenderComponent::getRenderTexture()
 {
 
 	SDL_Texture* texture = nullptr;
-	auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
+	const auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 
 
 	if (animationComponent)
@@ -169,7 +169,7 @@ void RenderComponent::setColor(int red, int green, int blue, int alpha)
 void RenderComponent::render()
 {
 
-	auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	const auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 	//Check if this object is in the viewable area of the world
 	//Add a tiles width to the camera to buffer it some

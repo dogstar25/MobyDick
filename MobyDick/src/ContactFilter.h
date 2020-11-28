@@ -16,7 +16,7 @@ public:
 	ContactFilter();
 	~ContactFilter();
 
-	static ContactFilter& ContactFilter::instance();
+	static ContactFilter& instance();
 	bool ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB) override;
 
 private:

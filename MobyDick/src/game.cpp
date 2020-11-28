@@ -110,6 +110,22 @@ bool Game::init()
 		m_physicsWorld->SetContactListener(&ContactListener::instance());
 		m_physicsWorld->SetContactFilter(&ContactFilter::instance());
 
+		/*
+		m_physicsWorld->RayCast(&RayCastListener, x, x, x);
+
+		RayCastListener will derive from b2RayCastCallback
+		b2RayCastCallback has a virtual function called ReportFixture that we will override
+		and have it examine each fixture that it returns, comparing them until we find the one that 
+		is closest. We can ignore ones that can be seen through
+
+		Add this Raycast call to the BrainComponents update function
+
+		
+		*/
+
+
+
+
 		//Debug Mode
 		/*if (GameConfig::instance().b2DebugDrawMode() == true)
 		{
@@ -136,41 +152,27 @@ bool Game::init()
 	//Load a first scene
 	Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
 	scene.applyCurrentControlMode();
-	//scene.addGameObject("BULLET1", LAYER_MAIN, 2, 2, 0);
 
 	//Load the player and some other objects
-	auto playerObject = scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
-	GameObject* weaponObject = scene.addGameObject("PISTOL", LAYER_MAIN, 8, 8, 0, false);
-	playerObject->addInventoryItem(weaponObject);
-
+	scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
 	scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);
-
-	//Enemy Drone
-	auto drone = scene.addGameObject("DRONE", LAYER_MAIN, 2, 2);
-	auto& droneCompositeComponent = drone->getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
-	if (droneCompositeComponent->physicsWeldPiecesOn() == true) {
-		droneCompositeComponent->weldOnPieces();
-	}
-
-	//auto deflectObj = scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);
-	/*auto& deflect = ObjectPoolManager::instance().getPooledObject("DEFLECT1_POOL");
-	deflect.value()->setPosition(125, 125);
-	scene.addGameObject(deflect.value(), 1);*/
+	scene.addGameObject("DRONE", LAYER_MAIN, 2, 2);
 
 
+	auto particleXEmitterObject = Game::instance().addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MAIN, 9, 9);
 
-	auto particleXEmitterObject = Game::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, 9, 9);
-	auto& particleXComponent = particleXEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
-	particleXComponent->addParticleEffect(ParticleEffects::ricochet);
-	particleXComponent->setType(ParticleEmitterType::CONTINUOUS);
-	particleXComponent->setEmissionInterval(std::chrono::duration<float>(.5));
+	//auto particleXEmitterObject = Game::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, 9, 9);
+	//auto& particleXComponent = particleXEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+	//particleXComponent->addParticleEffect(ParticleEffects::spark);
+	//particleXComponent->setType(ParticleEmitterType::CONTINUOUS);
+	//particleXComponent->setEmissionInterval(std::chrono::duration<float>(.1));
 
 
-	auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, 15, 15);
-	auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
-	particleComponent->addParticleEffect(ParticleEffects::ricochet);
-	particleComponent->setType(ParticleEmitterType::CONTINUOUS);
-	particleComponent->setEmissionInterval(std::chrono::duration<float>(.5));
+	//auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, 15, 15);
+	//auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
+	//particleComponent->addParticleEffect(ParticleEffects::ricochet);
+	//particleComponent->setType(ParticleEmitterType::CONTINUOUS);
+	//particleComponent->setEmissionInterval(std::chrono::duration<float>(.5));
 
 
 
@@ -205,6 +207,7 @@ void Game::play()
 		std::optional<SceneAction> action = SceneManager::instance().pollEvents();
 
 		if (action.has_value()) {
+
 			if (action->actionCode == SCENE_ACTION_QUIT) {
 				m_gameState = GameState::QUIT;
 			}
@@ -219,7 +222,7 @@ void Game::play()
 				SceneManager::instance().pushScene(action->sceneId);
 			}
 
-			//Apply the mouse control mode based on what the new "top" scene wants
+			//Apply the mouse control mode based on what the new "current" scene wants
 			SceneManager::instance().scenes().back().applyCurrentControlMode();
 		}
 

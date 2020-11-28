@@ -114,3 +114,8 @@ void TransformComponent::setAngle(float angle)
 	m_angle = angle;
 }
 
+void TransformComponent::setAbsolutePositioning(bool absolutePositioning)
+{
+	m_absolutePositioning = absolutePositioning;
+}
+

@@ -46,7 +46,7 @@ private:
 	//Array of all x,y coordinates of the top left corner of each animation frame in the texture
 	std::vector<SDL_FPoint> m_animationFramePositions;
 
-	SDL_Texture* m_texture;
+	SDL_Texture* m_texture{nullptr};
 
 };
 

@@ -12,7 +12,7 @@ ParticleComponent::ParticleComponent(Json::Value definitionJSON )
 	Json::Value particleComponentJSON = definitionJSON["particleComponent"];
 
 
-	for (int i = 0; i < 10000; i++) {
+	for (int i = 0; i < 300; i++) {
 
 		m_particles.emplace_back(Particle());
 
@@ -31,6 +31,7 @@ void ParticleComponent::render()
 	for (auto& particle : m_particles) {
 
 		if (particle.isActive == true) {
+
 			SDL_FRect destRect =
 			{ particle.position.x,
 				particle.position.y,
@@ -126,78 +127,93 @@ void ParticleComponent::update()
 
 
 	//Now emit more particles
-	for (auto& effect : m_particleEffects) {
+	if (m_type == ParticleEmitterType::CONTINUOUS || (m_type == ParticleEmitterType::ONETIME && m_oneTimeEmitted == false )) {
 
-		//Get the texture by retrieving the effects pooled object and grabbing its texture
-		SDL_Texture* texture = ObjectPoolManager::instance().getPoolObjectTexture(effect.poolId);
+		for (auto& effect : m_particleEffects) {
 
-		//If the particle count min and max are different, then generate a random count
-		//that is between min and max , otherwise just use the max
-		auto particleCount = util::generateRandomNumber(effect.particleSpawnCountMin, effect.particleSpawnCountMax);
+			//Get the texture by retrieving the effects pooled object and grabbing its texture
+			SDL_Texture* texture = ObjectPoolManager::instance().getPoolObjectTexture(effect.poolId);
 
-		auto parentTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+			//If the particle count min and max are different, then generate a random count
+			//that is between min and max , otherwise just use the max
+			auto particleCount = util::generateRandomNumber(effect.particleSpawnCountMin, effect.particleSpawnCountMax);
 
-		for (int i = 0; i < particleCount; i++)
-		{
+			auto parentTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
-			auto& particle = getAvailableParticle();
+			for (int i = 0; i < particleCount; i++)
+			{
 
-			if (particle) {
+				const auto& particle = getAvailableParticle();
 
-				particle.value()->isAvailable = false;
-				particle.value()->isActive = true;
+				if (particle) {
 
-				//Set the texture
-				particle.value()->texture = texture;
+					m_oneTimeEmitted = true;
+					activeParticleFound = true;
 
-				//Set the color of the particle. Randomize the color values if they are different
-				particle.value()->color = util::generateRandomColor(effect.colorRangeBegin, effect.colorRangeEnd);
+					particle.value()->isAvailable = false;
+					particle.value()->isActive = true;
 
-				//Size
-				particle.value()->size = util::generateRandomNumber(effect.particleSizeMin, effect.particleSizeMax);
+					//Set the texture
+					particle.value()->texture = texture;
 
-				//Set the particles lifetime in miliseconds.
-				//std::chrono::steady_clock::time_point nowTime = std::chrono::steady_clock::now();
-				auto particleLifetime = util::generateRandomNumber(effect.lifetimeMin, effect.lifetimeMax);
-				particle.value()->timeSnapshot = now_time;
-				particle.value()->lifetime = (std::chrono::duration<float>(particleLifetime));
-				particle.value()->lifetimeRemaining = (std::chrono::duration<float>(particleLifetime));
+					//Set the color of the particle. Randomize the color values if they are different
+					particle.value()->color = util::generateRandomColor(effect.colorRangeBegin, effect.colorRangeEnd);
 
-				//Calculate the emit angle/direction that the particle will travel in
-				auto angleRange = effect.angleMax - effect.angleMin;
-				auto emitAngle = ((float)i / (float)particleCount) * angleRange;
-				emitAngle += effect.angleMin;
-				emitAngle = util::degreesToRadians(emitAngle);
+					//Size
+					particle.value()->size = util::generateRandomNumber(effect.particleSizeMin, effect.particleSizeMax);
 
-				//Calculate velocity vector
-				auto force = util::generateRandomNumber(effect.forceMin, effect.forceMax);
-				particle.value()->velocity.x = cos(emitAngle) * force;
-				particle.value()->velocity.y = sin(emitAngle) * force;
+					//Set the particles lifetime in miliseconds.
+					//std::chrono::steady_clock::time_point nowTime = std::chrono::steady_clock::now();
+					auto particleLifetime = util::generateRandomNumber(effect.lifetimeMin, effect.lifetimeMax);
+					particle.value()->timeSnapshot = now_time;
+					particle.value()->lifetime = (std::chrono::duration<float>(particleLifetime));
+					particle.value()->lifetimeRemaining = (std::chrono::duration<float>(particleLifetime));
 
-				//Position - If zero was passed in then use the location of the gameObject
-				//that this ParticlrComponent belongs to
-				b2Vec2 positionVector = {};
-				if (effect.originMin.Length() > 0 || effect.originMax.Length() > 0) {
+					//Calculate the emit angle/direction that the particle will travel in
+					//If this is a onetime emission, make each particles angle symetric with the whole
+					//otherwise, make each one random, but still within the angle range
+					float emitAngle = 0;
+					if (m_type == ParticleEmitterType::ONETIME) {
+						auto angleRange = effect.angleMax - effect.angleMin;
+						emitAngle = ((float)i / (float)particleCount) * angleRange;
+					}
+					else {
+						emitAngle = util::generateRandomNumber(effect.angleMin, effect.angleMax);
+					}
 
-					positionVector.x = util::generateRandomNumber(effect.originMin.x, effect.originMax.x);
-					positionVector.y = util::generateRandomNumber(effect.originMin.y, effect.originMax.y);
+					emitAngle += effect.angleMin;
+					emitAngle = util::degreesToRadians(emitAngle);
+
+					//Calculate velocity vector
+					auto force = util::generateRandomNumber(effect.forceMin, effect.forceMax);
+					particle.value()->velocity.x = cos(emitAngle) * force;
+					particle.value()->velocity.y = sin(emitAngle) * force;
+
+					//Position - If zero was passed in then use the location of the gameObject
+					//that this ParticlrComponent belongs to
+					b2Vec2 positionVector = {};
+					if (effect.originMin.Length() > 0 || effect.originMax.Length() > 0) {
+
+						positionVector.x = util::generateRandomNumber(effect.originMin.x, effect.originMax.x);
+						positionVector.y = util::generateRandomNumber(effect.originMin.y, effect.originMax.y);
+
+					}
+					else {
+
+						positionVector = parentTransformComponent->position();
+					}
+
+					//positionVector.x /= GameConfig::instance().scaleFactor();
+					//positionVector.y /= GameConfig::instance().scaleFactor();
+
+					particle.value()->position.x = positionVector.x;
+					particle.value()->position.y = positionVector.y;
 
 				}
-				else {
-
-					positionVector = parentTransformComponent->position();
-				}
-
-				//positionVector.x /= GameConfig::instance().scaleFactor();
-				//positionVector.y /= GameConfig::instance().scaleFactor();
-
-				particle.value()->position.x = positionVector.x;
-				particle.value()->position.y = positionVector.y;
 
 			}
 
 		}
-
 	}
 
 	//If this is a one-time emission and all particles that were emitted are now inactive, 

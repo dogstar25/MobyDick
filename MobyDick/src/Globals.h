@@ -25,6 +25,7 @@ static bool operator !=(SDL_Color a, SDL_Color b)
 inline constexpr int MAX_GAMEOBJECT_LAYERS = 3;
 inline constexpr int CHILD_POSITIONS = 9;
 inline constexpr int MAX_VITALITY_LEVELS = 5;
+inline constexpr int MAX_ANIMATION_STATES = 5;
 
 //Mouse State
 inline constexpr int MOUSE_NONE = 0;
@@ -99,12 +100,21 @@ namespace ParticleEmitterType {
 	inline constexpr int CONTINUOUS = 1;
 }
 
+//Level Location Item Types
+namespace LevelLocItemType {
+
+	inline constexpr int GAMEOBJECT = 0;
+	inline constexpr int WAYPOINT = 1;
+
+}
+
 //Components
 enum class ComponentTypes {
 
 	ACTION_COMPONENT = 0,
 	ANIMATION_COMPONENT,
 	ATTACHMENTS_COMPONENT,
+	BRAIN_COMPONENT,
 	CHILDREN_COMPONENT,
 	COMPOSITE_COMPONENT,
 	INVENTORY_COMPONENT,

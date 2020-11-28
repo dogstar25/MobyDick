@@ -33,7 +33,7 @@ AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 			m_currentAnimationState = state;
 		}
 
-		m_animations[state] = std::make_shared<Animation>(animItr, transformComponentJSON);
+		m_animations[state] = { Animation(animItr, transformComponentJSON) };
 
 	}
 }
@@ -50,7 +50,8 @@ void AnimationComponent::update()
 {
 
 	//std::cout << "Animating state " << m_currentAnimationState << "\n";
-	auto animationFrame = m_animations[m_currentAnimationState]->animate();
+	auto animationFrame = m_animations[m_currentAnimationState].animate();
+	//m_animations[m_currentAnimationState].animate();
 
 	//If this animation has completed and it was a one-time animate, then reset the current
 	//animation to the default, and put it in continuous mode (probably IDLE)
@@ -77,7 +78,7 @@ SDL_Rect* AnimationComponent::getCurrentAnimationTextureRect()
 {
 	//assert(m_animations.find(m_currentAnimationState) != m_animations.end() && "Animation State not found in animations collection");
 
-	const auto& animationTextureRect = m_animations[m_currentAnimationState]->getCurrentTextureAnimationSrcRect();
+	const auto& animationTextureRect = m_animations[m_currentAnimationState].getCurrentTextureAnimationSrcRect();
 	return animationTextureRect.get();
 
 }
@@ -87,13 +88,16 @@ SDL_Texture* AnimationComponent::getCurrentAnimationTexture()
 	SDL_Texture* texture = nullptr;
 
 	//assert(m_animations.find(m_currentAnimationState) != m_animations.end() && "Animation State not found in animations collection");
-	texture = m_animations.at(m_currentAnimationState)->getTexture();
+	texture = m_animations.at(m_currentAnimationState).getTexture();
 
 	return texture;
 
 }
 
-
+void AnimationComponent::setDefaultAnimationState(int defaultAnimationState)
+{
+	m_defaultAnimationState = defaultAnimationState;
+}
 
 
 
