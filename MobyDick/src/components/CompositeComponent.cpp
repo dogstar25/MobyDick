@@ -50,7 +50,7 @@ void CompositeComponent::render()
 
 	for (auto& piece : m_pieces)
 	{
-		auto& vitals = piece.pieceObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+		const auto& vitals = piece.pieceObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
 		if (vitals->isBroken() == false && vitals->isDestroyed() == false)
 		{
@@ -65,10 +65,10 @@ void CompositeComponent::weldOnPieces()
 
 	for (auto& piece : m_pieces) {
 
-		auto& piecePhysicsComponent =  piece.pieceObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
-		auto& parentPhysicsComponent = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
-		auto& pieceTransformComponent = piece.pieceObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-		auto& parentTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+		const auto& piecePhysicsComponent =  piece.pieceObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+		const auto& parentPhysicsComponent = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+		const auto& pieceTransformComponent = piece.pieceObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+		const auto& parentTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 		auto pieceSize = pieceTransformComponent->size();
 		auto parentSize = parentTransformComponent->size();
 
@@ -140,12 +140,12 @@ void CompositeComponent::_buildPiece(CompositeLegendItem legendItem, int xPos, i
 	/*
 	Build the game objects off screen. They will be placed in expect location during update loop
 	*/
-	auto& pieceObject = std::make_shared<GameObject>(legendItem.gameObjectId, -5.f, -5.f, 0.f);
+	const auto& pieceObject = std::make_shared<GameObject>(legendItem.gameObjectId, -5.f, -5.f, 0.f);
 	pieceObject->init();
 	piece.pieceObject = pieceObject;
 
 	//calculate the X,Y offset position in relating to the base object
-	auto& pieceTransformComponent = pieceObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	const auto& pieceTransformComponent = pieceObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	xOffset = xPos * pieceTransformComponent->size().x;
 	yOffset = yPos * pieceTransformComponent->size().y;
 
@@ -214,9 +214,9 @@ void CompositeComponent::_updatePiecePosition(GameObjectPiece& piece)
 	b2Vec2 piecePosition{ 0,0 };
 	b2Vec2 adjustment{ 0,0 };
 
-	auto& pieceTransformComponent = piece.pieceObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-	auto& piecePhysicsComponent = piece.pieceObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
-	auto& parentTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	const auto& pieceTransformComponent = piece.pieceObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	const auto& piecePhysicsComponent = piece.pieceObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	const auto& parentTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 	//calculate the X,Y offset position in relating to the base object
 	SDL_FRect parentPositionRect = parentTransformComponent->getPositionRect();

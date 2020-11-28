@@ -123,6 +123,12 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 		addComponent(std::make_shared<CompositeComponent>(definitionJSON), ComponentTypes::COMPOSITE_COMPONENT);
 	}
 
+	//Brain Component
+	if (definitionJSON.isMember("brainComponent"))
+	{
+		addComponent(std::make_shared<BrainComponent>(definitionJSON), ComponentTypes::BRAIN_COMPONENT);
+	}
+
 }
 
 //void GameObject::addComponent(int componentId, std::shared_ptr<Component> component)
@@ -298,7 +304,7 @@ void GameObject::init(bool cameraFollow)
 	if (id() == "DRONE") {
 
 		//Weld Oncomposite pieces
-		auto& droneCompositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
+		const auto& droneCompositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
 		if (droneCompositeComponent->physicsWeldPiecesOn() == true) {
 			droneCompositeComponent->weldOnPieces();
 		}
@@ -306,7 +312,7 @@ void GameObject::init(bool cameraFollow)
 	}
 	else if (id() == "GINA_64") {
 
-		auto& playerInventoryComponent = getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT);
+		const auto& playerInventoryComponent = getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT);
 		playerInventoryComponent->weldOnAttachments();
 	}
 
@@ -316,7 +322,7 @@ void GameObject::init(bool cameraFollow)
 void GameObject::setPhysicsActive(bool active)
 {
 
-	auto& physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	const auto& physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 	if (physicsComponent) {
 		physicsComponent->setPhysicsBodyActive(active);
 	}

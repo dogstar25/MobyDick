@@ -85,7 +85,7 @@ void VitalityComponent::_levelUp()
 		m_resistance = level.resistance;
 		
 		//Update the color based on the new level
-		auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
+		const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 		renderComponent->setColor(level.color);
 	}
 

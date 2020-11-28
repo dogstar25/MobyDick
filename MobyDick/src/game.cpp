@@ -207,6 +207,7 @@ void Game::play()
 		std::optional<SceneAction> action = SceneManager::instance().pollEvents();
 
 		if (action.has_value()) {
+
 			if (action->actionCode == SCENE_ACTION_QUIT) {
 				m_gameState = GameState::QUIT;
 			}

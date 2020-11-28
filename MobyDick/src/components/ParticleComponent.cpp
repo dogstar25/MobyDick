@@ -31,6 +31,7 @@ void ParticleComponent::render()
 	for (auto& particle : m_particles) {
 
 		if (particle.isActive == true) {
+
 			SDL_FRect destRect =
 			{ particle.position.x,
 				particle.position.y,
@@ -142,7 +143,7 @@ void ParticleComponent::update()
 			for (int i = 0; i < particleCount; i++)
 			{
 
-				auto& particle = getAvailableParticle();
+				const auto& particle = getAvailableParticle();
 
 				if (particle) {
 

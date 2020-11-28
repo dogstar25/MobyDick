@@ -49,7 +49,7 @@ private:
 		m_originalPosition;
 	bool
 		m_absolutePositioning,
-		m_centeredPositioning;;
+		m_centeredPositioning;
 
 
 };

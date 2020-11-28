@@ -148,7 +148,7 @@ void ContactListener::bullet_wall(GameObject* contact1, GameObject* contact2, b2
 
 	//Build a One-Time particle emitter object
 	auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
-	auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
+	const auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
 	particleComponent->addParticleEffect(ParticleEffects::ricochet);
 	particleComponent->setType(ParticleEmitterType::ONETIME);
 
@@ -184,7 +184,7 @@ void ContactListener::playerBullet_droneShield(GameObject* contact1, GameObject*
 
 
 	auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_BACKGROUND, -1, -1);
-	auto& particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
 	particleComponent->setType(ParticleEmitterType::ONETIME);
 
 	//Convert from box2d to gameWorld coordinates
@@ -196,8 +196,8 @@ void ContactListener::playerBullet_droneShield(GameObject* contact1, GameObject*
 	bullet->setRemoveFromWorld(true);
 
 	//Test if the bullet is strong enought to destroy the shield piece
-	auto& bulletVitality = bullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
-	auto& shieldVitality = shield->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	auto bulletVitality = bullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	auto shieldVitality = shield->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 	auto shieldHolds = shieldVitality->testResistance(bulletVitality->attackPower());
 	if (shieldHolds == false) {
 
