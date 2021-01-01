@@ -41,6 +41,7 @@
             "id": "SCENE_PAUSE_MENU",
             "inputControlMode": "CONTROL_MODE_SELECT",
             "maxObjects": 24,
+            //"firstLevel": "pauseMenu", 
             "tags": [
                 "SCENETAG_MENU"
             ],

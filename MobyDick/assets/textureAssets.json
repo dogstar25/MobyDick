@@ -163,8 +163,13 @@
             "id": "TX_WEAPON1_FIRE",
             "description": "Weapon 1 Fire",
             "filename": "assets/weapon1_FIRE.png"
+        },
+        {
+            "id": "TX_PAUSE_PANEL_BLUEPRINT",
+            "description": "Pause Panel Bluprint",
+            "filename": "assets/levels/pauseMenu_blueprint.png",
+            "retainSurface": true
         }
-
 
     ],
   "fonts": [

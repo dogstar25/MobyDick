@@ -23,7 +23,7 @@ struct displayOverlay
 
 namespace displayOverlays {
 
-	static const displayOverlay outline{
+	static const displayOverlay outline_GREEN1{
 
 		.color = std::nullopt,
 		.outlined = true,

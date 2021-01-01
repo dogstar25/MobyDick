@@ -18,7 +18,7 @@
 #include "Globals.h"
 #include "GameObject.h"
 //#include "GameObjectContactListener.h"
-//#include "DebugDraw.h"
+#include "DebugDraw.h"
 //#include "DebugPanel.h"
 #include "GameConfig.h"
 #include "SceneManager.h"

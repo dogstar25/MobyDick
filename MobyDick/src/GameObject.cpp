@@ -29,10 +29,11 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 		definitionJSON = GameObjectManager::instance().getDefinition("DEBUG_ITEM")->definitionJSON();
 	}
 
-	//Category and Id
+	//Category Id and Object Type
 	m_id = gameObjectId;
 	m_idTag = EnumMap::instance().toEnum(definitionJSON["idTag"].asString());
-	
+	m_gameObjectType = EnumMap::instance().toEnum(definitionJSON["type"].asString());
+
 	m_removeFromWorld = false;
 
 	//Always build a render and transform component
@@ -301,6 +302,8 @@ void GameObject::init(bool cameraFollow)
 	}
 
 	//NEW - execute special code for certain extra complicated gameObjects that need to execute after main construction
+	// UPDATE_TODD!!!! - can these special things be put into the "update" function to first detect that certain things are not fully initialized
+	// and therefore do this "post-creation" initialization?
 	if (id() == "DRONE") {
 
 		//Weld Oncomposite pieces
@@ -315,6 +318,24 @@ void GameObject::init(bool cameraFollow)
 		const auto& playerInventoryComponent = getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT);
 		playerInventoryComponent->weldOnAttachments();
 	}
+
+
+}
+
+/*
+The postInit function allows gameobjects to initilaizes components that require that ALL gameObjects be built first.
+ex. The brainComponent needs all navigation related gameObjects to be built first 
+*/
+void GameObject::postInit( const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> &gameObjectCollection)
+{
+
+	//GameObjects with a BrainComponent needs interdependent initilaization
+	if (hasComponent(ComponentTypes::BRAIN_COMPONENT)) {
+
+		const auto& brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+		brainComponent->postInit(gameObjectCollection);
+	}
+
 
 
 }

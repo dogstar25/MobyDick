@@ -80,8 +80,8 @@ void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 
 		b2Vec2 positionVector = b2Vec2(dx, dy);
 
-		dx = cos(angle) * vitalityComponent->speed(); // make speed configurable
-		dy = sin(angle) * vitalityComponent->speed(); // Y-component.
+		dx = cos(angle) * vitalityComponent->speed();
+		dy = sin(angle) * vitalityComponent->speed();
 		b2Vec2 velocityVector = b2Vec2(dx, dy);
 
 		physicsComponent->setFixedRotation(true);

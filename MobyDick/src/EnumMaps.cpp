@@ -129,6 +129,11 @@ EnumMap::EnumMap()
 	m_enumMap["LevelLocItemType::GAMEOBJECT"] = LevelLocItemType::GAMEOBJECT;
 	m_enumMap["LevelLocItemType::WAYPOINT"] = LevelLocItemType::WAYPOINT;
 
+	//GameObject Types
+	m_enumMap["GameObjectType::SPRITE"] = GameObjectType::SPRITE;
+	m_enumMap["GameObjectType::LINE"] = GameObjectType::LINE;
+	m_enumMap["GameObjectType::POINT"] = GameObjectType::POINT;
+	m_enumMap["GameObjectType::RECTANGLE"] = GameObjectType::RECTANGLE;
 
 }
 

@@ -171,52 +171,30 @@ void RenderComponent::render()
 
 	const auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
-	//Check if this object is in the viewable area of the world
-	//Add a tiles width to the camera to buffer it some
-	const SDL_FRect positionRect = transform->getPositionRect();
-	SDL_Rect gameObjectPosRect={ (int)positionRect.x, (int)positionRect.y, (int)positionRect.w, (int)positionRect.h };
-	SDL_Rect cameraRect = { (int)Camera::instance().frame().x,
-		(int)Camera::instance().frame().y,
-		(int)Camera::instance().frame().w+ Game::instance().worldTileWidth(),
-		(int)Camera::instance().frame().h+ Game::instance().worldTileHeight() };
+	if (parent()->m_gameObjectType == GameObjectType::LINE) {
 
-	/*
-	If this object is within the viewable are or if its absolute positioned then render it
-	*/
-	if (SDL_HasIntersection(&gameObjectPosRect, &cameraRect) || 
-		transform->absolutePositioning() == true) {
+		b2Vec2 start = transform->lineStart();
+		b2Vec2 end = transform->lineEnd();
 
-		const SDL_FRect destRect = getRenderDestRect();
-		SDL_Rect* textureSourceRect = getRenderTextureRect();
-		SDL_Texture* texture = getRenderTexture();
-		float angle = transform->angle();
-
-		//Set the color. Use the displayOverlay values if there is one
-		if (m_displayOverlay.has_value() && m_displayOverlay->color.has_value()) {
-
-			SDL_SetTextureAlphaMod(texture, m_displayOverlay->color->a);
-			SDL_SetTextureColorMod(texture,
-				m_displayOverlay->color->r,
-				m_displayOverlay->color->g,
-				m_displayOverlay->color->b);
-		}
-		else
+		if (transform->absolutePositioning() == false)
 		{
-			SDL_SetTextureAlphaMod(texture, m_color.a);
-			SDL_SetTextureColorMod(texture, m_color.r, m_color.g, m_color.b);
-		}
-		
-		SDL_SetTextureBlendMode(texture, m_textureBlendMode);
+			start.x -= Camera::instance().frame().x;
+			start.y -= Camera::instance().frame().y;
+			end.x -= Camera::instance().frame().x;
+			end.y -= Camera::instance().frame().y;
 
-		//Render the texture
-		SDL_RenderCopyExF(
-			Renderer::instance().SDLRenderer(),
-			texture,
-			textureSourceRect,
-			&destRect,
-			angle,
-			NULL,
-			SDL_FLIP_NONE);
+		}
+
+		SDL_SetRenderDrawColor(Renderer::instance().SDLRenderer(), m_color.r, m_color.g, m_color.b, m_color.a);
+		SDL_RenderDrawLine(Renderer::instance().SDLRenderer(), static_cast<int>(start.x), static_cast<int>(start.y), static_cast<int>(end.x), static_cast<int>(end.y));
+
+	}
+	else if (parent()->m_gameObjectType == GameObjectType::RECTANGLE) {
+
+		SDL_FRect retangle = { getRenderDestRect() };
+
+		SDL_SetRenderDrawColor(Renderer::instance().SDLRenderer(), m_color.r, m_color.g, m_color.b, m_color.a);
+		SDL_RenderFillRectF(Renderer::instance().SDLRenderer(), &retangle);
 
 		//Outline the gameObject if defined to 
 		if (m_displayOverlay.has_value() && m_displayOverlay->outlined == true) {
@@ -227,6 +205,70 @@ void RenderComponent::render()
 
 			if (m_renderOutline == true) {
 				outlineObject(m_outLineColor);
+			}
+		}
+
+
+	}
+	else if (parent()->m_gameObjectType == GameObjectType::SPRITE) {
+		
+		//Check if this object is in the viewable area of the world
+		//Add a tiles width to the camera to buffer it some
+		const SDL_FRect positionRect = transform->getPositionRect();
+		SDL_Rect gameObjectPosRect = { (int)positionRect.x, (int)positionRect.y, (int)positionRect.w, (int)positionRect.h };
+		SDL_Rect cameraRect = { (int)Camera::instance().frame().x,
+			(int)Camera::instance().frame().y,
+			(int)Camera::instance().frame().w + Game::instance().worldTileWidth(),
+			(int)Camera::instance().frame().h + Game::instance().worldTileHeight() };
+
+		/*
+		If this object is within the viewable are or if its absolute positioned then render it
+		*/
+		if (SDL_HasIntersection(&gameObjectPosRect, &cameraRect) ||
+			transform->absolutePositioning() == true) {
+
+			const SDL_FRect destRect = getRenderDestRect();
+			SDL_Rect* textureSourceRect = getRenderTextureRect();
+			SDL_Texture* texture = getRenderTexture();
+			float angle = transform->angle();
+
+			//Set the color. Use the displayOverlay values if there is one
+			if (m_displayOverlay.has_value() && m_displayOverlay->color.has_value()) {
+
+				SDL_SetTextureAlphaMod(texture, m_displayOverlay->color->a);
+				SDL_SetTextureColorMod(texture,
+					m_displayOverlay->color->r,
+					m_displayOverlay->color->g,
+					m_displayOverlay->color->b);
+			}
+			else
+			{
+				SDL_SetTextureAlphaMod(texture, m_color.a);
+				SDL_SetTextureColorMod(texture, m_color.r, m_color.g, m_color.b);
+			}
+
+			SDL_SetTextureBlendMode(texture, m_textureBlendMode);
+
+			//Render the texture
+			SDL_RenderCopyExF(
+				Renderer::instance().SDLRenderer(),
+				texture,
+				textureSourceRect,
+				&destRect,
+				angle,
+				NULL,
+				SDL_FLIP_NONE);
+
+			//Outline the gameObject if defined to 
+			if (m_displayOverlay.has_value() && m_displayOverlay->outlined == true) {
+
+				outlineObject(m_displayOverlay->outlineColor);
+			}
+			else {
+
+				if (m_renderOutline == true) {
+					outlineObject(m_outLineColor);
+				}
 			}
 		}
 	}

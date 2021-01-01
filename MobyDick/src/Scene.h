@@ -5,11 +5,8 @@
 #include <bitset>
 #include <optional>
 
-#pragma warning(push,0)
 #include <box2d/box2d.h>
 #include <json/json.h>
-#pragma warning(pop)
-
 #include "Globals.h"
 #include "GameObject.h"
 
@@ -39,6 +36,7 @@ public:
 	void addKeyAction(SDL_Keycode, SceneAction);
 	void applyCurrentControlMode();
 	SDL_FPoint calcWindowPosition(int globalPosition);
+	
 
 
 	std::string id() {
@@ -75,6 +73,8 @@ private:
 
 	int m_parentSceneIndex;
 	std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> m_gameObjects;
+
+	void _processGameObjectInterdependecies();
 
 
 

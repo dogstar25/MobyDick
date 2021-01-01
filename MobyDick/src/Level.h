@@ -9,15 +9,17 @@
 #include <json/json.h>
 #include <map>
 
+#include "Globals.h"
+
 
 class Scene;
 
 struct LevelObject
 {
-	std::string gameObjectId{""};
-	int type{ 1 };
-	int angleAdjustment{ 0 };
-	int waypoint{ 0 };
+	std::string gameObjectId {};
+	int type{ LevelLocItemType::GAMEOBJECT };
+	int angleAdjustment {};
+	int waypoint {};
 };
 
 struct Waypoint
@@ -67,7 +69,7 @@ private:
 
 	std::optional<LevelObject> _determineTile(int x, int y, SDL_Surface* bluePrintSurface);
 	LevelObject _determineWallObject(int x, int y, SDL_Surface* bluePrintSurface);
-	LevelObject _determineLocationObject(int x, int y, SDL_Surface* bluePrintSurface);
+	std::optional<LevelObject> _determineLocationObject(int x, int y, SDL_Surface* bluePrintSurface);
 	void _loadDefinition(std::string levelId);
 	void _buildLevelObjects(Scene* scene);
 

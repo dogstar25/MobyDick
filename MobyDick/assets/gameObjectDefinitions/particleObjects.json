@@ -2,6 +2,7 @@
     "gameObjects": [
         {
             "id": "PARTICLE_SMOKE_1",
+            "type": "GameObjectType::SPRITE",
             "idTag": "IdTag::SMOKE_PARTICLE",
             "traitTags": [],
             "description": "Smoke Particle 1",
@@ -36,6 +37,7 @@
         },
         {
             "id": "DEFLECT1",
+            "type": "GameObjectType::SPRITE",
             "idTag": "IdTag::DEFLECT_EFFECT",
             "traitTags": [],
             "description": "Deflect 1",
@@ -78,6 +80,7 @@
         },
         {
             "id": "SCRAP_PIECE",
+            "type": "GameObjectType::SPRITE",
             "idTag": "IdTag::SHIELD_SCRAP",
             "traitTags": [],
             "transformComponent": {

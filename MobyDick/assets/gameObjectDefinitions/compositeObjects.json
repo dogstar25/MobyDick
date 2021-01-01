@@ -2,6 +2,7 @@
     "gameObjects": [
         {
             "id": "DRONE",
+            "type": "GameObjectType::SPRITE",
             "idTag": "IdTag::DRONE_FRAME",
             "traitTags": [
             ],
@@ -30,6 +31,17 @@
                 }
             },
             "brainComponent": {
+            },
+            "actionComponent": {
+                "actions": [
+                    {
+                        "actionId": "ACTION_MOVE",
+                        "actionClass": "ActorMove"
+                    }
+                ]
+            },
+            "vitalityComponent": {
+                "speed": 7.5
             },
             "compositeComponent": {
                 "physicsWeldPiecesOn": true,
@@ -87,6 +99,7 @@
         },
         {
             "id": "FULL_PIECE",
+            "type": "GameObjectType::SPRITE",
             "idTag": "IdTag::DRONE_SHIELD",
             "traitTags": [
             ],
@@ -162,6 +175,7 @@
         },
         {
             "id": "ANGLE1_PIECE",
+            "type": "GameObjectType::SPRITE",
             "idTag": "IdTag::DRONE_SHIELD",
             "traitTags": [
             ],
@@ -237,6 +251,7 @@
         },
         {
             "id": "ANGLE2_PIECE",
+            "type": "GameObjectType::SPRITE",
             "idTag": "IdTag::DRONE_SHIELD",
             "traitTags": [
             ],
@@ -312,6 +327,7 @@
         },
         {
             "id": "ANGLE3_PIECE",
+            "type": "GameObjectType::SPRITE",
             "idTag": "IdTag::DRONE_SHIELD",
             "traitTags": [
             ],
@@ -387,6 +403,7 @@
         },
         {
             "id": "ANGLE4_PIECE",
+            "type": "GameObjectType::SPRITE",
             "idTag": "IdTag::DRONE_SHIELD",
             "traitTags": [
             ],

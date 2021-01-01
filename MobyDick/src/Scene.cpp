@@ -75,6 +75,8 @@ Scene::Scene(std::string sceneId)
 		addKeyAction(keyCode, sceneAction);
 	}
 
+	//Run GameObject code that requires ALL gameObjects to be created first, for interdependency logic
+	//processGameObjectInterdependecies();
 
 
 }
@@ -92,27 +94,6 @@ Scene::~Scene()
 	//delete m_physicsWorld;
 
 	
-
-}
-
-void Scene::init(size_t mouseMode, std::string levelId, SDL_Keycode exitKey, size_t maxObjects)
-{
-
-	for (auto& gameLayer : m_gameObjects)
-	{
-		gameLayer.reserve(maxObjects);
-	}
-
-	//Load the First level
-	if (levelId.empty() == false)
-	{
-		Level::instance().load(levelId, this);
-	}
-
-	m_state = SceneState::RUN;
-
-	/*m_physicsWorld = new b2World(GameConfig::instance().gravity());
-	m_physicsWorld->SetAutoClearForces(true);*/
 
 }
 
@@ -203,13 +184,12 @@ void Scene::render() {
 		}
 	}
 
-	//std::cout << "rendered " << i << "\n";
-
+	
 	//DebugDraw
-	//if (GameConfig::instance().b2DebugDrawMode() == true)
-	//{
-	//	m_physicsWorld->DrawDebugData();
-	//}
+	if (GameConfig::instance().b2DebugDrawMode() == true)
+	{
+		Game::instance().physicsWorld()->DrawDebugData();
+	}
 
 	////Push all drawn things to the graphics display
 	//Renderer::instance().present();
@@ -295,5 +275,22 @@ SDL_FPoint Scene::calcWindowPosition(int globalPosition)
 	}
 
 	return globalPoint;
+
+}
+
+void Scene::_processGameObjectInterdependecies()
+{
+
+	for (auto& layer : m_gameObjects) {
+
+		for (auto& gameObject : layer) {
+
+			gameObject->postInit(m_gameObjects);
+
+		}
+
+	}
+
+
 
 }

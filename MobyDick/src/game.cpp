@@ -127,11 +127,11 @@ bool Game::init()
 
 
 		//Debug Mode
-		/*if (GameConfig::instance().b2DebugDrawMode() == true)
+		if (GameConfig::instance().b2DebugDrawMode() == true)
 		{
 			DebugDraw::instance().SetFlags(DebugDraw::e_shapeBit);
 			m_physicsWorld->SetDebugDraw(&DebugDraw::instance());
-		}*/
+		}
 
 		//Initialize the Game Object Manager
 		GameObjectManager::instance().init();

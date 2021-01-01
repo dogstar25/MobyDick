@@ -36,18 +36,11 @@ void ActorMoveAction::perform(GameObject* gameObject)
 	if (animationComponent)
 	{
 
-		//std::cout << "\033[1;32mMoving\033[0m" << "\n";
-
 		if (m_direction != 0 || m_strafe != 0)
-		//{
-		//	//animationComponent->setCurrentAnimationState(ANIMATION_IDLE);
-		//	animationComponent->animate(ANIMATION_IDLE, ANIMATE_ONE_TIME);
-		//}
-		//else
 		{
-			//animationComponent->setCurrentAnimationState(ANIMATION_RUN);
 			animationComponent->animate(ANIMATION_RUN, ANIMATE_ONE_TIME);
 		}
+
 	}
 
 }

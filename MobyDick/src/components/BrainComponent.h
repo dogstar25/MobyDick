@@ -2,6 +2,7 @@
 #include "Component.h"
 #include "../GameObject.h"
 #include "../RayCastCallBack.h"
+#include "../Level.h"
 
 #include <json/json.h>
 
@@ -14,11 +15,23 @@ public:
     ~BrainComponent();
 
     void update() override;
+    void postInit(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection);
 
 
 private:
 
+    int m_currentState{ BrainState::PATROL };
     RayCastCallBack m_b2RayCastCallback;
+    std::vector<Waypoint> m_waypoints;
+
+    void _updateSightInput();
+    void _updateSensorInput();
+        
+    void _doPatrol();
+    void _doAlert();
+    void _doPursue();
+    void _doEngage();
+
 
 };
 
