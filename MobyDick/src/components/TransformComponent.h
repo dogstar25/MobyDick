@@ -27,6 +27,7 @@ public:
 	void setSize(b2Vec2 size);
 	void setSize(float xSize, float ySize);
 	void setAngle(float angle);
+	void setLine(b2Vec2 start, b2Vec2 end);
 	void setAbsolutePositioning(bool absolutePositioning);
 
 	b2Vec2 size() { return m_size; }
@@ -35,10 +36,11 @@ public:
 	float angle() {	return m_angle;	}
 	bool absolutePositioning() { return m_absolutePositioning; }
 	bool centeredPositioning() { return m_centeredPositioning; }
+	b2Vec2 lineStart() { return m_lineStart; }
+	b2Vec2 lineEnd() { return m_lineEnd; }
 
 	SDL_FRect  getPositionRect();
 	SDL_FPoint getCenterPosition();
-	b2Vec2 matchParentRotation(SDL_FPoint parentPosition, float);
 
 private:
 	float
@@ -51,6 +53,13 @@ private:
 		m_absolutePositioning,
 		m_centeredPositioning;
 
+	//Primitive Point
+	b2Vec2 m_point;
+
+	//Primitive Line
+	b2Vec2
+		m_lineStart,
+		m_lineEnd;
 
 };
 

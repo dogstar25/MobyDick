@@ -32,9 +32,9 @@ public:
 
 private:
 
-	int m_currentAnimationState{ 0 };
-	int m_currentAnimationMode{ ANIMATE_ONE_TIME };
-	int m_defaultAnimationState{ 0 };
+	int m_currentAnimationState {};
+	int m_currentAnimationMode { ANIMATE_ONE_TIME };
+	int m_defaultAnimationState {};
 
 	std::array<Animation, MAX_ANIMATION_STATES> m_animations;
 };

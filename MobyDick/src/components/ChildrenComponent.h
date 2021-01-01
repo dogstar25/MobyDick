@@ -29,9 +29,9 @@ public:
 	const auto& childObjects() { return m_childObjects; }
 
 private:
-	int	  m_childCount{ 0 };
-	float m_childPadding{ 0 };
-	bool  m_childPositionRelative{ false };
+	int	  m_childCount {};
+	float m_childPadding {};
+	bool  m_childPositionRelative {};
 
 	std::array<std::vector<std::shared_ptr<GameObject>>, CHILD_POSITIONS> m_childObjects;
 

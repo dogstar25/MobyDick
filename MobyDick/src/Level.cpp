@@ -167,17 +167,13 @@ void Level::load(std::string levelId, Scene* scene)
 
 			//Is this a waypoint or a gameObject
 			if (levelObject.has_value()) {
-				if (levelObject.value().gameObjectId.empty()) {
-
+				if (levelObject.value().type == LevelLocItemType::WAYPOINT) {
 					m_waypoints.emplace_back(Waypoint(levelObject.value().waypoint, b2Vec2((float)x, (float)y)));
 				}
-				else
-				{
+				else if (levelObject.value().type == LevelLocItemType::GAMEOBJECT) {
 					m_levelObjects[x][y] = levelObject.value();
 				}
 			}
-			
-
 		}
 	}
 
@@ -186,13 +182,17 @@ void Level::load(std::string levelId, Scene* scene)
 	//Build all of the objects that make up this level and store them
 	//In the main gameObject collection
 	_buildLevelObjects(scene);
+
+	//Clear the level objects collection now that all gameObjects are built
+	m_levelObjects.clear();
+
 }
 
 std::optional<LevelObject> Level::_determineTile(int x, int y, SDL_Surface* surface)
 {
 	int bpp = surface->format->BytesPerPixel;
 	Uint8 red, green, blue, alpha;
-	std::optional<LevelObject> levelObject = std::nullopt;
+	std::optional<LevelObject> levelObject{ std::nullopt };
 	Uint8* pixel = NULL;
 	SDL_Color leftColor, rightColor, topColor, bottomColor;
 	unsigned int borderWalls = 0;
@@ -213,22 +213,19 @@ std::optional<LevelObject> Level::_determineTile(int x, int y, SDL_Surface* surf
 	else if (currentPixelcolor != WHITE) {
 		levelObject = _determineLocationObject(x, y, surface);
 	}
-	else {
-		int todd = 1;
-	}
 
 	return levelObject;
 
 }
 
-LevelObject Level::_determineLocationObject(int x, int y, SDL_Surface* bluePrintSurface)
+std::optional<LevelObject> Level::_determineLocationObject(int x, int y, SDL_Surface* bluePrintSurface)
 {
 
 	std::stringstream levellocationObjectId;
 	levellocationObjectId << "LOC" << "_" << std::setw(4) << std::setfill('0') << x << "_";
 	levellocationObjectId << std::setw(4) << std::setfill('0') << y;
 	std::string levelObjectId = levellocationObjectId.str();
-	LevelObject levelObject;
+	std::optional<LevelObject> levelObject{ };
 
 	//This location should have a location item defined for it 
 	for (Json::Value locationItemJSON : m_locationList) {
@@ -236,34 +233,38 @@ LevelObject Level::_determineLocationObject(int x, int y, SDL_Surface* bluePrint
 		std::string id = locationItemJSON["id"].asString();
 		if (levelObjectId == id) {
 			int locationItemType = EnumMap::instance().toEnum(locationItemJSON["type"].asString());
-			levelObject.type = locationItemType;
+
+			levelObject = LevelObject();
+			levelObject->type = locationItemType;
 
 			if (locationItemType == LevelLocItemType::GAMEOBJECT) {
-				levelObject.gameObjectId = locationItemJSON["gameObjectId"].asString();
+				levelObject->gameObjectId = locationItemJSON["gameObjectId"].asString();
 			}
 			else if (locationItemType == LevelLocItemType::WAYPOINT) {
-				levelObject.waypoint = locationItemJSON["waypoint"].asInt();
+				levelObject->waypoint = locationItemJSON["waypoint"].asInt();
 			}
-			else {
-				levelObject.type = LevelLocItemType::GAMEOBJECT;
-				levelObject.gameObjectId = "BOWMAN";
-			}
+
+			break;
 		}
 	}
 
-	return LevelObject();
+	if (levelObject.has_value() == false) {
+		std::cout << "WARNING: Blueprint LevelObject found at " << x << " " << y << " " << " found with no definition.\n";
+	}
+	
+	return levelObject;
 }
 
 
 LevelObject Level::_determineWallObject(int x, int y, SDL_Surface* bluePrintSurface)
 {
 
-	int bpp = bluePrintSurface->format->BytesPerPixel;
+	int bpp{ bluePrintSurface->format->BytesPerPixel };
 	Uint8 red, green, blue, alpha;
-	LevelObject levelObject;
-	Uint8* pixel = NULL;
+	LevelObject levelObject{};
+	Uint8* pixel = { NULL };
 	SDL_Color leftColor = { 255,255,255 }, rightColor = { 255,255,255 }, topColor = { 255,255,255 }, bottomColor = { 255,255,255 };
-	unsigned int borderWalls = 0;
+	unsigned int borderWalls{ 0 };
 
 	if (x != 0) {
 		pixel = (Uint8*)bluePrintSurface->pixels + y * bluePrintSurface->pitch + (x - 1) * bpp;
@@ -388,8 +389,18 @@ void Level::_buildLevelObjects(Scene* scene)
 		for (int x = 0; x < m_width; x++) {
 
 			if (m_levelObjects[x][y].gameObjectId.empty() == false) {
-				levelObject = &m_levelObjects[x][y];
 
+				/*
+				* HOW : brainComponent GameObjects needs to knwo about all GameObjects that are NAV gameObjects.
+				* EVERYBODY: Needs to know about Level things like NAV GameObjects - EVERYBODY needs to be able to reference the BLUEPRINT to see WTF to do as far as building itself.
+				* 
+				* 
+				* SOLUTION_TODD: !!!!! -- maybe???
+				During the brainComponent::update, if its navigation collection is not initialized, then request the navigation gameObjects from the scene and store them
+				* 
+				*/
+
+				levelObject = &m_levelObjects[x][y];
 				scene->addGameObject( levelObject->gameObjectId, LAYER_MAIN, (float)x, (float)y, (float)levelObject->angleAdjustment);
 
 			}

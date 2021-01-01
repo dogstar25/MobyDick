@@ -22,7 +22,12 @@
             "gameObjectId": "SWORDLADY"
         },
         {
-            "id": "LOC_0030_0011",
+            "id": "LOC_0020_0027",
+            "type": "LevelLocItemType::GAMEOBJECT",
+            "gameObjectId": "SWORDLADY"
+        },
+        {
+            "id": "LOC_0020_0016",
             "type": "LevelLocItemType::WAYPOINT",
             "waypoint": 1
         }

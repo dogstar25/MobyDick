@@ -67,6 +67,25 @@ namespace IdTag {
 
 }
 
+namespace GameObjectType {
+
+	inline constexpr auto SPRITE = 0;
+	inline constexpr auto LINE = 1;
+	inline constexpr auto POINT = 2;
+	inline constexpr auto RECTANGLE = 3;
+
+}
+
+namespace BrainState {
+
+	inline constexpr auto PATROL = 0;
+	inline constexpr auto ALERT = 1;
+	inline constexpr auto PURSUE = 2;
+	inline constexpr auto ENGAGE = 3;
+	inline constexpr auto FLEE = 4;
+
+}
+
 namespace IdTagLabels {
 
 	//General

@@ -114,6 +114,12 @@ void TransformComponent::setAngle(float angle)
 	m_angle = angle;
 }
 
+void TransformComponent::setLine(b2Vec2 start, b2Vec2 end)
+{
+	m_lineStart = start;
+	m_lineEnd = end;
+}
+
 void TransformComponent::setAbsolutePositioning(bool absolutePositioning)
 {
 	m_absolutePositioning = absolutePositioning;

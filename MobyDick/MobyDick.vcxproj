@@ -350,6 +350,7 @@
     <Image Include="assets\pieceFull_8.png" />
     <Image Include="assets\pistolLady128_Run.png" />
     <Image Include="assets\pistolLady64_Run.png" />
+    <Image Include="assets\levels\pauseMenu_blueprint.png" />
     <Image Include="assets\spaceship1.png" />
     <Image Include="assets\square_128.png" />
     <Image Include="assets\swordLady64_Idle.png" />
@@ -374,6 +375,7 @@
     <None Include="assets\levels\level1_definition.json" />
     <None Include="assets\levels\level1_Objects.json" />
     <None Include="assets\levels\level_test_definition.json" />
+    <None Include="assets\levels\pauseMenu_definition.json" />
     <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\textureAssets.json" />
     <None Include="vcpkg.json_old" />

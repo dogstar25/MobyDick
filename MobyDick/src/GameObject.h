@@ -9,10 +9,9 @@
 #include <map>
 #include <unordered_map>
 #include <typeindex>
+#include <array>
 
-#pragma warning(push,0)
 #include <box2d/box2d.h>
-#pragma warning(pop)
 
 #include "GameObjectDefinition.h"
 #include "components/TransformComponent.h"
@@ -50,6 +49,7 @@ public:
 
 
 	std::string m_id;
+	int m_gameObjectType{ GameObjectType::SPRITE };
 
 	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust);
 
@@ -60,6 +60,7 @@ public:
 	void setPosition(b2Vec2 position, float angle);
 	void setPosition(float x, float y);
 	void init(bool cameraFollow=false);
+	void postInit(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> &gameObjectCollection);
 	void setPhysicsActive(bool active);
 
 	//Accessor Functions
