@@ -15,14 +15,13 @@ public:
     ~BrainComponent();
 
     void update() override;
-    void postInit(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection);
 
 
 private:
 
     int m_currentState{ BrainState::PATROL };
     RayCastCallBack m_b2RayCastCallback;
-    std::vector<Waypoint> m_waypoints;
+    //std::vector<Waypoint> m_waypoints;
 
     void _updateSightInput();
     void _updateSensorInput();

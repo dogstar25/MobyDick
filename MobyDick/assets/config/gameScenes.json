@@ -48,7 +48,7 @@
             "gameObjects": [
                 {
                     "gameObjectId": "GUI_PAUSE_PANEL",
-                    "layer": "LAYER_TEXT",
+                    "layer": "LAYER_MAIN",
                     "location": {
                         "windowPosition": "WindowPosition::CENTER"
                     }

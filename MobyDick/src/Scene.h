@@ -37,7 +37,10 @@ public:
 	void applyCurrentControlMode();
 	SDL_FPoint calcWindowPosition(int globalPosition);
 	
-
+	
+	const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjects() {
+		return m_gameObjects;
+	}
 
 	std::string id() {
 		return m_id;

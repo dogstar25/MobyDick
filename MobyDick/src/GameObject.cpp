@@ -2,6 +2,9 @@
 
 
 #include "GameObjectManager.h"
+#include "game.h"
+#include "SceneManager.h"
+#include "Scene.h"
 #include "components/InventoryComponent.h"
 
 #include "Globals.h"
@@ -128,6 +131,12 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("brainComponent"))
 	{
 		addComponent(std::make_shared<BrainComponent>(definitionJSON), ComponentTypes::BRAIN_COMPONENT);
+	}
+
+	//Navigation Component
+	if (definitionJSON.isMember("navigationComponent"))
+	{
+		addComponent(std::make_shared<NavigationComponent>(definitionJSON), ComponentTypes::NAVIGATION_COMPONENT);
 	}
 
 }
@@ -322,24 +331,6 @@ void GameObject::init(bool cameraFollow)
 
 }
 
-/*
-The postInit function allows gameobjects to initilaizes components that require that ALL gameObjects be built first.
-ex. The brainComponent needs all navigation related gameObjects to be built first 
-*/
-void GameObject::postInit( const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> &gameObjectCollection)
-{
-
-	//GameObjects with a BrainComponent needs interdependent initilaization
-	if (hasComponent(ComponentTypes::BRAIN_COMPONENT)) {
-
-		const auto& brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
-		brainComponent->postInit(gameObjectCollection);
-	}
-
-
-
-}
-
 void GameObject::setPhysicsActive(bool active)
 {
 
@@ -347,5 +338,58 @@ void GameObject::setPhysicsActive(bool active)
 	if (physicsComponent) {
 		physicsComponent->setPhysicsBodyActive(active);
 	}
+
+}
+
+/*
+The postInit function allows gameobjects to initilaizes components that require that ALL gameObjects be built first.
+ex. The brainComponent needs all navigation related gameObjects to be built first
+*/
+void GameObject::postInit(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection)
+{
+
+	//GameObjects with a NavigationComponent needs to build a navigation array based on the location of 
+	//other navigation objects
+	if (hasComponent(ComponentTypes::NAVIGATION_COMPONENT)) {
+		postInitNavigation(gameObjectCollection);
+	}
+
+
+
+
+}
+
+void GameObject::postInitNavigation(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection)
+{
+
+	const auto& navComponent = getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
+
+	//For this GameObject, find all other navigation gameobjects that have been created, 
+	// and initilaize the navigation data required
+	for (auto& gameObject : gameObjectCollection[LAYER_ABSTRACT])
+	{
+
+		if (gameObject->hasComponent(ComponentTypes::NAVIGATION_COMPONENT)) {
+
+			//Ignore the gameObject that IS this particular gameObject
+			if (this != gameObject.get()) {
+
+
+				//Game::instance().physicsWorld()->RayCast(&m_b2RayCastCallback, position, newPosition);
+				//SceneManager::instance().scenes().back()
+
+
+			}
+
+
+
+		}
+
+
+
+	}
+
+
+
 
 }

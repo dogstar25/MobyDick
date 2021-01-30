@@ -99,7 +99,7 @@ bool Game::init()
 		TextureManager::instance().init(m_window);
 
 		//Initialize the sound manager
-		SoundManager::instance().initSound();
+		//SoundManager::instance().initSound();
 		//SoundManager::instance().playMusic("MUSIC_AMBIENCE_1", -1);
 
 		// Construct a physics world object, which will hold and simulate the physics objects.
@@ -154,10 +154,10 @@ bool Game::init()
 	scene.applyCurrentControlMode();
 
 	//Load the player and some other objects
-	scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
-	scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);
+	//scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
+	scene.addGameObject("FPS_VALUE", LAYER_MENU, 1, 1);
 	scene.addGameObject("DRONE", LAYER_MAIN, 2, 2);
-
+	scene.addGameObject("DRONE", LAYER_MAIN, 2, 2);
 
 	auto particleXEmitterObject = Game::instance().addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MAIN, 9, 9);
 

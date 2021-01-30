@@ -76,7 +76,7 @@ Scene::Scene(std::string sceneId)
 	}
 
 	//Run GameObject code that requires ALL gameObjects to be created first, for interdependency logic
-	//processGameObjectInterdependecies();
+	_processGameObjectInterdependecies();
 
 
 }
@@ -277,6 +277,7 @@ SDL_FPoint Scene::calcWindowPosition(int globalPosition)
 	return globalPoint;
 
 }
+
 
 void Scene::_processGameObjectInterdependecies()
 {

@@ -183,7 +183,7 @@ void ContactListener::playerBullet_droneShield(GameObject* contact1, GameObject*
 	}
 
 
-	auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_BACKGROUND, -1, -1);
+	auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_BACKGROUND_1, -1, -1);
 	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
 	particleComponent->setType(ParticleEmitterType::ONETIME);
 

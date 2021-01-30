@@ -9,6 +9,7 @@
 #include <json/json.h>
 #include <map>
 
+#include "GameObject.h"
 #include "Globals.h"
 
 
@@ -17,19 +18,8 @@ class Scene;
 struct LevelObject
 {
 	std::string gameObjectId {};
-	int type{ LevelLocItemType::GAMEOBJECT };
 	int angleAdjustment {};
 	int waypoint {};
-};
-
-struct Waypoint
-{
-	int order;
-	b2Vec2 point;
-
-	Waypoint(int order, b2Vec2 position) :
-		order(order),
-		point(position) {};
 };
 
 class Level
@@ -44,7 +34,6 @@ public:
 	
 
 	static Level& instance();
-	void addWaypoint(Waypoint waypoint);
 	void addLevelObject(int xIndex, int yIndex, LevelObject levelObject);
 	void setLevelObjectArraySize(int width, int height);
 
@@ -52,7 +41,7 @@ public:
 
 	//Accessor Functions
 	std::string description() {	return m_description; }
-	const std::vector<Waypoint>& waypoints() { return m_waypoints; }
+	//const std::vector<Waypoint>& waypoints() { return m_waypoints; }
 
 private:
 
@@ -63,9 +52,9 @@ private:
 	std::string m_blueprint;
 	Json::Value m_locationList;
 
-	std::vector<Waypoint> m_waypoints;
-	std::vector< std::vector <LevelObject> > m_levelObjects;
-//	std::map<std::string, LevelObject*> m_locationObjects;
+	//std::vector<Waypoint> m_waypoints;
+	std::vector< std::vector <LevelObject>> m_levelObjects;
+	//std::vector< NavigationObject> m_NavigationObjects;
 
 	std::optional<LevelObject> _determineTile(int x, int y, SDL_Surface* bluePrintSurface);
 	LevelObject _determineWallObject(int x, int y, SDL_Surface* bluePrintSurface);

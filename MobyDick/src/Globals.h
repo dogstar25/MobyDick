@@ -22,7 +22,6 @@ static bool operator !=(SDL_Color a, SDL_Color b)
 }
 
 
-inline constexpr int MAX_GAMEOBJECT_LAYERS = 3;
 inline constexpr int CHILD_POSITIONS = 9;
 inline constexpr int MAX_VITALITY_LEVELS = 5;
 inline constexpr int MAX_ANIMATION_STATES = 5;
@@ -69,20 +68,22 @@ namespace IdTag {
 
 namespace GameObjectType {
 
-	inline constexpr auto SPRITE = 0;
-	inline constexpr auto LINE = 1;
-	inline constexpr auto POINT = 2;
-	inline constexpr auto RECTANGLE = 3;
+	inline constexpr auto ABSTRACT = 0; // SOMETHING LIKE A NAVIGATION POINT THAT DOES NOT DISPLAY
+	inline constexpr auto SPRITE = 1;
+	inline constexpr auto LINE = 2;
+	inline constexpr auto POINT = 3;
+	inline constexpr auto RECTANGLE = 4;
 
 }
 
 namespace BrainState {
 
-	inline constexpr auto PATROL = 0;
-	inline constexpr auto ALERT = 1;
-	inline constexpr auto PURSUE = 2;
-	inline constexpr auto ENGAGE = 3;
-	inline constexpr auto FLEE = 4;
+	inline constexpr auto IDLE	 = 0;
+	inline constexpr auto PATROL = 1;
+	inline constexpr auto ALERT	 = 2;
+	inline constexpr auto PURSUE = 3;
+	inline constexpr auto ENGAGE = 4;
+	inline constexpr auto FLEE	 = 5;
 
 }
 
@@ -119,14 +120,6 @@ namespace ParticleEmitterType {
 	inline constexpr int CONTINUOUS = 1;
 }
 
-//Level Location Item Types
-namespace LevelLocItemType {
-
-	inline constexpr int GAMEOBJECT = 0;
-	inline constexpr int WAYPOINT = 1;
-
-}
-
 //Components
 enum class ComponentTypes {
 
@@ -138,6 +131,7 @@ enum class ComponentTypes {
 	COMPOSITE_COMPONENT,
 	INVENTORY_COMPONENT,
 	PARTICLE_COMPONENT,
+	NAVIGATION_COMPONENT,
 	PARTICLE_X_COMPONENT,
 	PHYSICS_COMPONENT,
 	PLAYERCONTROL_COMPONENT,
@@ -195,9 +189,14 @@ inline constexpr int SCENE_ACTION_EXIT = 3;
 inline constexpr int SCENETAG_MENU = 1;
 
 //Game Layers
-inline constexpr int LAYER_BACKGROUND = 0;
-inline constexpr int LAYER_MAIN = 1;
-inline constexpr int LAYER_TEXT = 2;
+inline constexpr int MAX_GAMEOBJECT_LAYERS = 7;
+inline constexpr int LAYER_BACKGROUND_1 = 0;
+inline constexpr int LAYER_BACKGROUND_2 = 1;
+inline constexpr int LAYER_MAIN = 2;
+inline constexpr int LAYER_FOREGROUND_1 = 3;
+inline constexpr int LAYER_FOREGROUND_2 = 4;
+inline constexpr int LAYER_MENU = 5;
+inline constexpr int LAYER_ABSTRACT = 6;
 
 //Game Object Display Modes
 inline constexpr int MAX_GAMEOBJECT_DISPLAY_UI_MODES = 3;

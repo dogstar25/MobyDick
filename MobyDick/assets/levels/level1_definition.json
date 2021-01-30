@@ -12,24 +12,43 @@
 
     "locationObjects": [
         {
-            "id": "LOC_0030_0011",
-            "type": "LevelLocItemType::GAMEOBJECT",
-            "gameObjectId": "SWORDLADY"
+            "id": "LOC_0007_0005",
+            "gameObjectId": "GINA_64",
+            "layer": ""
         },
         {
-            "id": "LOC_0007_0005",
-            "type": "LevelLocItemType::GAMEOBJECT",
-            "gameObjectId": "SWORDLADY"
+            "id": "LOC_0017_0003",
+            "gameObjectId": "GINA_64"
         },
         {
             "id": "LOC_0020_0027",
-            "type": "LevelLocItemType::GAMEOBJECT",
             "gameObjectId": "SWORDLADY"
         },
         {
             "id": "LOC_0020_0016",
-            "type": "LevelLocItemType::WAYPOINT",
-            "waypoint": 1
+            "gameObjectId": "NAVIGATION_POINT"
+        },
+        {
+            "id": "LOC_0005_0027",
+            "gameObjectId": "NAVIGATION_POINT"
+        },
+        {
+            "id": "LOC_0020_0027",
+            "gameObjectId": "NAVIGATION_POINT"
+        },
+        {
+            "id": "LOC_0050_0027",
+            "gameObjectId": "NAVIGATION_POINT"
+        },
+        {
+            "id": "LOC_0075_0027",
+            "gameObjectId": "NAVIGATION_POINT"
+        },
+        {
+            "id": "LOC_0062_0013",
+            "gameObjectId": "NAVIGATION_POINT"
         }
+
+
     ]
 }

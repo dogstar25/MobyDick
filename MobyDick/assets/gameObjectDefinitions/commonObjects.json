@@ -675,9 +675,9 @@
         {
             "id": "NAVIGATION_POINT",
             "type": "GameObjectType::ABSTRACT",
-            "idTag": "IdTag::INTANGIBLE",
+            "idTag": "IdTag::GENERAL",
             "traitTags": [],
-            "description": "XXX",
+            "description": "Navigation Object",
             "transformComponent": {
             },
             "navigationComponent": {

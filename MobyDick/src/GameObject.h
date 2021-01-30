@@ -5,6 +5,7 @@
 #include <SDL2/SDL.h>
 #include <string>
 #include <vector>
+#include <iostream>
 #include <json/json.h>
 #include <map>
 #include <unordered_map>
@@ -21,6 +22,7 @@
 #include "components/BrainComponent.h"
 #include "components/ChildrenComponent.h"
 #include "components/CompositeComponent.h"
+#include "components/NavigationComponent.h"
 #include "components/ParticleXComponent.h"
 #include "components/ParticleComponent.h"
 #include "components/PhysicsComponent.h"
@@ -39,14 +41,13 @@ class Scene;
 class GameObject
 {
 public:
-	
+
 	GameObject() {}
 	~GameObject();
 
 	//Need to define default move constructors because we have an explicit deconstructor defined
-	GameObject(GameObject&&) = default;
-	GameObject& operator=(GameObject&&) = default;
-
+//	GameObject(GameObject&&) = default;
+	//GameObject& operator=(GameObject&&) = default;
 
 	std::string m_id;
 	int m_gameObjectType{ GameObjectType::SPRITE };
@@ -59,15 +60,16 @@ public:
 	void setRemoveFromWorld(bool removeFromWorld) { m_removeFromWorld = removeFromWorld; }
 	void setPosition(b2Vec2 position, float angle);
 	void setPosition(float x, float y);
-	void init(bool cameraFollow=false);
-	void postInit(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> &gameObjectCollection);
+	void init(bool cameraFollow = false);
+	void postInit(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection);
+	void postInitNavigation(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection);
 	void setPhysicsActive(bool active);
 
 	//Accessor Functions
 	auto removeFromWorld() { return m_removeFromWorld; }
-	std::string id() { return m_id;	}
+	std::string id() { return m_id; }
 	int idTag() { return m_idTag; }
-	auto const& gameObjectDefinition() { return m_gameObjectDefinition;	}
+	auto const& gameObjectDefinition() { return m_gameObjectDefinition; }
 	auto& components() { return m_components; }
 	/*auto isPooledAvailable() { return m_isPooledAvailable; }
 	void setIsPooledAvailable(int isPooledAvailable);*/
@@ -107,6 +109,28 @@ public:
 		}
 	}
 
+	bool operator==(GameObject &gameObject2) {
+
+		std::cout << "Match/n";
+
+		std::shared_ptr<TransformComponent> transformThis = this->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+		std::shared_ptr<TransformComponent> transform2 = gameObject2.getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+
+		if (this->m_id == gameObject2.m_id) {
+
+			if (transformThis->position() == transform2->position()) {
+				return true;
+				std::cout << "Match/n";
+			}
+
+		}
+
+		std::cout << "No match/n";
+		return false;
+
+	}
+
+
 private:
 	
 	int m_idTag{ 0 };
@@ -121,6 +145,7 @@ private:
 	//Components
 	//std::unordered_map<std::type_index, std::shared_ptr<Component>>m_components;
 	std::array<std::shared_ptr<Component>, static_cast<int>(ComponentTypes::COUNT)+1>m_components;
+
 
 };
 

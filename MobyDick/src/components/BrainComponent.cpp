@@ -15,9 +15,7 @@ BrainComponent::BrainComponent(Json::Value definitionJSON)
 	Json::Value brainComponentJSON = definitionJSON["brainComponent"];
 
 
-	//Get the waypoints
-	m_waypoints = Level::instance().waypoints();
-
+	
 
 
 
@@ -27,12 +25,6 @@ BrainComponent::~BrainComponent()
 {
 
 }
-
-void BrainComponent::postInit(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection)
-{
-
-}
-
 
 void BrainComponent::update()
 {
@@ -100,6 +92,14 @@ void BrainComponent::_updateSensorInput()
 void BrainComponent::_doPatrol()
 {
 
+	/*
+	
+	
+	Get a reference to the navigation array from the level and determine next destination
+	
+	
+	
+	*/
 	auto transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 	b2Vec2 position = { transform->getCenterPosition().x / 25, transform->getCenterPosition().y / 25 };

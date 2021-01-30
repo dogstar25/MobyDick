@@ -51,14 +51,6 @@ Level& Level::instance()
 	return singletonInstance;
 }
 
-void Level::addWaypoint(Waypoint wayPoint)
-{
-
-	m_waypoints.push_back(wayPoint);
-
-
-}
-
 void Level::addLevelObject(int xIndex, int yIndex, LevelObject levelObject)
 {
 
@@ -167,12 +159,7 @@ void Level::load(std::string levelId, Scene* scene)
 
 			//Is this a waypoint or a gameObject
 			if (levelObject.has_value()) {
-				if (levelObject.value().type == LevelLocItemType::WAYPOINT) {
-					m_waypoints.emplace_back(Waypoint(levelObject.value().waypoint, b2Vec2((float)x, (float)y)));
-				}
-				else if (levelObject.value().type == LevelLocItemType::GAMEOBJECT) {
-					m_levelObjects[x][y] = levelObject.value();
-				}
+				m_levelObjects[x][y] = levelObject.value();
 			}
 		}
 	}
@@ -232,19 +219,9 @@ std::optional<LevelObject> Level::_determineLocationObject(int x, int y, SDL_Sur
 
 		std::string id = locationItemJSON["id"].asString();
 		if (levelObjectId == id) {
-			int locationItemType = EnumMap::instance().toEnum(locationItemJSON["type"].asString());
 
 			levelObject = LevelObject();
-			levelObject->type = locationItemType;
-
-			if (locationItemType == LevelLocItemType::GAMEOBJECT) {
-				levelObject->gameObjectId = locationItemJSON["gameObjectId"].asString();
-			}
-			else if (locationItemType == LevelLocItemType::WAYPOINT) {
-				levelObject->waypoint = locationItemJSON["waypoint"].asInt();
-			}
-
-			break;
+			levelObject->gameObjectId = locationItemJSON["gameObjectId"].asString();
 		}
 	}
 
@@ -390,16 +367,6 @@ void Level::_buildLevelObjects(Scene* scene)
 
 			if (m_levelObjects[x][y].gameObjectId.empty() == false) {
 
-				/*
-				* HOW : brainComponent GameObjects needs to knwo about all GameObjects that are NAV gameObjects.
-				* EVERYBODY: Needs to know about Level things like NAV GameObjects - EVERYBODY needs to be able to reference the BLUEPRINT to see WTF to do as far as building itself.
-				* 
-				* 
-				* SOLUTION_TODD: !!!!! -- maybe???
-				During the brainComponent::update, if its navigation collection is not initialized, then request the navigation gameObjects from the scene and store them
-				* 
-				*/
-
 				levelObject = &m_levelObjects[x][y];
 				scene->addGameObject( levelObject->gameObjectId, LAYER_MAIN, (float)x, (float)y, (float)levelObject->angleAdjustment);
 
@@ -408,3 +375,4 @@ void Level::_buildLevelObjects(Scene* scene)
 		}
 	}
 }
+
