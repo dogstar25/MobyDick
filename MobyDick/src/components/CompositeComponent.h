@@ -10,6 +10,7 @@
 
 #include "Component.h"
 #include "../GameObject.h"
+#include "../Scene.h"
 
 struct GameObjectPiece
 {
@@ -35,7 +36,7 @@ class CompositeComponent : public Component
 {
 public:
 	CompositeComponent();
-	CompositeComponent(Json::Value definitionJSON);
+	CompositeComponent(Json::Value definitionJSON, Scene* parentScene);
 	~CompositeComponent();
 
 	void update() override;
@@ -48,9 +49,9 @@ private:
 	
 	CompositeBlueprint m_blueprint;
 
-	void _buildPiece(CompositeLegendItem, int, int);
+	void _buildPiece(CompositeLegendItem, int, int, Scene* parentScene);
 	void _updatePieces();
-	void _buildComposite();
+	void _buildComposite(Scene* parentScene);
 	void _updatePieceState(GameObjectPiece& piece);
 	void _updatePiecePosition(GameObjectPiece& piece);
 

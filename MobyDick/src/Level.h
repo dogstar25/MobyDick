@@ -18,8 +18,9 @@ class Scene;
 struct LevelObject
 {
 	std::string gameObjectId {};
+	int layer{ LAYER_MAIN };
 	int angleAdjustment {};
-	int waypoint {};
+	bool cameraFollow{ false };
 };
 
 class Level
@@ -30,8 +31,6 @@ public:
 	int m_width, m_height; // in tile count
 	int m_tileWidth, m_tileHeight;
 	SDL_Rect m_levelBounds;
-
-	
 
 	static Level& instance();
 	void addLevelObject(int xIndex, int yIndex, LevelObject levelObject);
@@ -52,9 +51,7 @@ private:
 	std::string m_blueprint;
 	Json::Value m_locationList;
 
-	//std::vector<Waypoint> m_waypoints;
 	std::vector< std::vector <LevelObject>> m_levelObjects;
-	//std::vector< NavigationObject> m_NavigationObjects;
 
 	std::optional<LevelObject> _determineTile(int x, int y, SDL_Surface* bluePrintSurface);
 	LevelObject _determineWallObject(int x, int y, SDL_Surface* bluePrintSurface);

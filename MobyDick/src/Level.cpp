@@ -157,7 +157,7 @@ void Level::load(std::string levelId, Scene* scene)
 			//determine what tile to build for current x,y location
 			auto levelObject = _determineTile(x, y, surface);
 
-			//Is this a waypoint or a gameObject
+			//If a valid gameObject was found at this location then store its Id
 			if (levelObject.has_value()) {
 				m_levelObjects[x][y] = levelObject.value();
 			}
@@ -222,6 +222,11 @@ std::optional<LevelObject> Level::_determineLocationObject(int x, int y, SDL_Sur
 
 			levelObject = LevelObject();
 			levelObject->gameObjectId = locationItemJSON["gameObjectId"].asString();
+			if (locationItemJSON.isMember("layer")) {
+				levelObject->layer = EnumMap::instance().toEnum(locationItemJSON["layer"].asString());
+			}
+			levelObject->cameraFollow = locationItemJSON["cameraFollow"].asBool();
+			break;
 		}
 	}
 
@@ -368,7 +373,8 @@ void Level::_buildLevelObjects(Scene* scene)
 			if (m_levelObjects[x][y].gameObjectId.empty() == false) {
 
 				levelObject = &m_levelObjects[x][y];
-				scene->addGameObject( levelObject->gameObjectId, LAYER_MAIN, (float)x, (float)y, (float)levelObject->angleAdjustment);
+				scene->addGameObject(levelObject->gameObjectId, levelObject->layer,
+					(float)x, (float)y, (float)levelObject->angleAdjustment, levelObject->cameraFollow);
 
 			}
 

@@ -14,11 +14,7 @@
         {
             "id": "LOC_0007_0005",
             "gameObjectId": "GINA_64",
-            "layer": ""
-        },
-        {
-            "id": "LOC_0017_0003",
-            "gameObjectId": "GINA_64"
+            "cameraFollow": true
         },
         {
             "id": "LOC_0020_0027",
@@ -26,29 +22,68 @@
         },
         {
             "id": "LOC_0020_0016",
-            "gameObjectId": "NAVIGATION_POINT"
+            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "layer": "LAYER_ABSTRACT"
         },
         {
             "id": "LOC_0005_0027",
-            "gameObjectId": "NAVIGATION_POINT"
+            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "layer": "LAYER_ABSTRACT"
         },
         {
             "id": "LOC_0020_0027",
-            "gameObjectId": "NAVIGATION_POINT"
+            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "layer": "LAYER_ABSTRACT"
         },
         {
             "id": "LOC_0050_0027",
-            "gameObjectId": "NAVIGATION_POINT"
+            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "layer": "LAYER_ABSTRACT"
         },
         {
             "id": "LOC_0075_0027",
-            "gameObjectId": "NAVIGATION_POINT"
+            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "layer": "LAYER_ABSTRACT"
+        },
+        {
+            "id": "LOC_0092_0027",
+            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "layer": "LAYER_ABSTRACT"
+        },
+        {
+            "id": "LOC_0124_0027",
+            "gameObjectId": "NAVIGATION_WAYPOINT",
+            "layer": "LAYER_ABSTRACT"
         },
         {
             "id": "LOC_0062_0013",
-            "gameObjectId": "NAVIGATION_POINT"
+            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "layer": "LAYER_ABSTRACT"
+        },
+        {
+            "id": "LOC_0055_0004",
+            "gameObjectId": "NAVIGATION_WAYPOINT",
+            "layer": "LAYER_ABSTRACT"
+        },
+        {
+            "id": "LOC_0080_0015",
+            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "layer": "LAYER_ABSTRACT"
+        },
+        {
+            "id": "LOC_0092_0015",
+            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "layer": "LAYER_ABSTRACT"
+        },
+        {
+            "id": "LOC_0111_0014",
+            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "layer": "LAYER_ABSTRACT"
+        },
+        {
+            "id": "LOC_0110_0003",
+            "gameObjectId": "NAVIGATION_WAYPOINT",
+            "layer": "LAYER_ABSTRACT"
         }
-
-
     ]
 }

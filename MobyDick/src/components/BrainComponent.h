@@ -20,7 +20,7 @@ public:
 private:
 
     int m_currentState{ BrainState::PATROL };
-    RayCastCallBack m_b2RayCastCallback;
+    //RayCastCallBack m_b2RayCastCallback;
     //std::vector<Waypoint> m_waypoints;
 
     void _updateSightInput();

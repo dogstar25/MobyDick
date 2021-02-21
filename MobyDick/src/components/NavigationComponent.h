@@ -4,6 +4,8 @@
 
 #include <json/json.h>
 
+#include <memory>
+
 class NavigationComponent : public Component
 {
 
@@ -14,14 +16,17 @@ public:
 
 	void update() override;
 
-	bool isWaypoint() { return m_isWaypoint; }
-	void setIsWaypoint(bool isWaypoint) { m_isWaypoint = isWaypoint; }
+	void postInit();
+
+	int type() { return m_type; }
+	void setType(int type) { m_type = type; }
+	std::vector < std::weak_ptr<GameObject>> accessibleNavObjects() { return m_accessibleNavObjects; }
 
 private:
 
-	bool m_isWaypoint{};
+	int m_type{};
 
-	std::vector<GameObject*>m_accessibleNavObjects;
+	std::vector<std::weak_ptr<GameObject>>m_accessibleNavObjects;
 
 };
 

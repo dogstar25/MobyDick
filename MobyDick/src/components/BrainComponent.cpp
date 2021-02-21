@@ -53,7 +53,7 @@ void BrainComponent::_updateSightInput()
 	//lineTransform->setLine(begin, end);
 
 
-	Game::instance().physicsWorld()->RayCast(&m_b2RayCastCallback, position, newPosition);
+	//Game::instance().physicsWorld()->RayCast(&m_b2RayCastCallback, position, newPosition);
 
 
 }
@@ -72,7 +72,7 @@ void BrainComponent::_updateSensorInput()
 		float angle = util::degreesToRadians(rayCount * sensorIncrement);
 		b2Vec2 direction{ transform->angle() + cos(angle) * 10, transform->angle() + sin(angle) * 10 };
 
-		auto lineObject = Game::instance().addGameObject("PRIMITIVE_LINE", LAYER_MAIN, -1, -1);
+		auto lineObject = parent()->parentScene()->addGameObject("PRIMITIVE_LINE", LAYER_MAIN, -1, -1);
 		auto lineTransform = lineObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 		//convert back to world coordinates to draw

@@ -682,7 +682,47 @@
             },
             "navigationComponent": {
             }
-        }
+        },
+        {
+            "id": "NAVIGATION_TRANSIT_POINT",
+            "type": "GameObjectType::ABSTRACT",
+            "idTag": "IdTag::SMOKE_PARTICLE",
+            "traitTags": [],
+            "description": "Navigation Object",
+            "physicsComponent": {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX"
+            },
+            "transformComponent": {
+                "size": {
+                    "width": 16,
+                    "height": 16
+                }
+            },
+            "navigationComponent": {
+                "type": "NavigationObjectType::TRANSIT_POINT"
 
+            }
+        },
+        {
+            "id": "NAVIGATION_WAYPOINT",
+            "type": "GameObjectType::ABSTRACT",
+            "idTag": "IdTag::SMOKE_PARTICLE",
+            "traitTags": [],
+            "description": "Navigation Object",
+            "physicsComponent": {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX"
+            },
+            "transformComponent": {
+                "size": {
+                    "width": 16,
+                    "height": 16
+                }
+            },
+            "navigationComponent": {
+                "type": "NavigationObjectType::WAYPOINT"
+            }
+        }
     ]
 }

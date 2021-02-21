@@ -7,7 +7,7 @@
 
 
 
-CompositeComponent::CompositeComponent(Json::Value definitionJSON)
+CompositeComponent::CompositeComponent(Json::Value definitionJSON, Scene* parentScene)
 {
 	Json::Value compositeComponentJSON = definitionJSON["compositeComponent"];
 
@@ -27,7 +27,7 @@ CompositeComponent::CompositeComponent(Json::Value definitionJSON)
 
 	}
 
-	_buildComposite();
+	_buildComposite(parentScene);
 
 }
 
@@ -90,7 +90,7 @@ void CompositeComponent::weldOnPieces()
 
 }
 
-void CompositeComponent::_buildComposite()
+void CompositeComponent::_buildComposite(Scene* parentScene)
 {
 
 	SDL_Surface* blueprintSurface;
@@ -122,7 +122,7 @@ void CompositeComponent::_buildComposite()
 			{
 				if (currentPixelcolor == legendItem.color == true)
 				{
-					_buildPiece(legendItem, x, y);
+					_buildPiece(legendItem, x, y, parentScene);
 				}
 			}
 
@@ -132,7 +132,7 @@ void CompositeComponent::_buildComposite()
 	SDL_UnlockSurface(blueprintSurface);
 }
 
-void CompositeComponent::_buildPiece(CompositeLegendItem legendItem, int xPos, int yPos)
+void CompositeComponent::_buildPiece(CompositeLegendItem legendItem, int xPos, int yPos, Scene* parentScene)
 {
 	float xOffset, yOffset;
 	GameObjectPiece piece = {};
@@ -140,7 +140,8 @@ void CompositeComponent::_buildPiece(CompositeLegendItem legendItem, int xPos, i
 	/*
 	Build the game objects off screen. They will be placed in expect location during update loop
 	*/
-	const auto& pieceObject = std::make_shared<GameObject>(legendItem.gameObjectId, -5.f, -5.f, 0.f);
+	//b2World* physicsWorld = SceneManager::instance().scenes().back().physicsWorld();
+	const auto& pieceObject = std::make_shared<GameObject>(legendItem.gameObjectId, -5.f, -5.f, 0.f, parentScene);
 	pieceObject->init();
 	piece.pieceObject = pieceObject;
 

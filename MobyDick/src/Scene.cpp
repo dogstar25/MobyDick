@@ -7,6 +7,11 @@
 #include "game.h"
 #include "EnumMaps.h"
 
+#include "ContactFilter.h"
+#include "ContactListener.h"
+#include "ObjectPoolManager.h"
+
+
 Scene::Scene(std::string sceneId)
 {
 
@@ -15,6 +20,33 @@ Scene::Scene(std::string sceneId)
 
 	m_id = sceneId;
 	m_state = SceneState::RUN;
+
+
+	//Physics
+	Json::Value physicsJSON = definitionJSON["physics"];
+	m_physicsConfig.gravity.Set(physicsJSON["gravity"]["x"].asFloat(), physicsJSON["gravity"]["y"].asFloat());
+	m_physicsConfig.timeStep = physicsJSON["timeStep"].asFloat();
+	m_physicsConfig.velocityIterations = physicsJSON["velocityIterations"].asInt();
+	m_physicsConfig.positionIterations = physicsJSON["positionIterations"].asInt();
+	m_physicsConfig.b2DebugDrawMode = physicsJSON["b2DebugDrawMode"].asBool();
+
+	//Build the box2d physics world
+	m_physicsWorld = new b2World(m_physicsConfig.gravity);
+	m_physicsWorld->SetAutoClearForces(true);
+
+	//Add a collision contact listener and filter for box2d callbacks
+	m_physicsWorld->SetContactListener(&ContactListener::instance());
+	m_physicsWorld->SetContactFilter(&ContactFilter::instance());
+
+	//Build ObjectPoolManager
+	m_objectPoolManager.init(definitionJSON, this);
+
+	//Debug Mode
+	if (m_physicsConfig.b2DebugDrawMode == true)
+	{
+		DebugDraw::instance().SetFlags(DebugDraw::e_shapeBit);
+		m_physicsWorld->SetDebugDraw(&DebugDraw::instance());
+	}
 
 	//Allocate the arrays for all of the gameObjects
 	auto maxObjects = definitionJSON["maxObjects"].asInt();
@@ -85,15 +117,13 @@ Scene::Scene(std::string sceneId)
 Scene::~Scene()
 {
 
-	/*for (int x = 0; x < MAX_GAMEOBJECT_LAYERS; x++)
+	for (int x = 0; x < MAX_GAMEOBJECT_LAYERS; x++)
 	{
 		m_gameObjects[x].clear();
-	}*/
+	}
 
 	//Delete box2d world - should delete all bodies and fixtures within
-	//delete m_physicsWorld;
-
-	
+	delete m_physicsWorld;
 
 }
 
@@ -161,7 +191,7 @@ void Scene::update() {
 	SceneManager::instance().playerInputEvents().clear();
 
 	//Update ALL physics object states
-	Game::instance().stepB2PhysicsWorld();
+	stepB2PhysicsWorld();
 
 }
 
@@ -173,22 +203,19 @@ void Scene::render() {
 	//Renderer::instance().clear();
 
 	//Render all of the game objects
-	int i = 0;
 	for (auto& gameLayer : m_gameObjects)
 	{
 		//Update normal game objects
 		for (auto& gameObject : gameLayer)
 		{
-			i++;
 			gameObject->render();
 		}
 	}
-
 	
 	//DebugDraw
-	if (GameConfig::instance().b2DebugDrawMode() == true)
+	if (m_physicsConfig.b2DebugDrawMode == true)
 	{
-		Game::instance().physicsWorld()->DrawDebugData();
+		m_physicsWorld->DrawDebugData();
 	}
 
 	////Push all drawn things to the graphics display
@@ -205,22 +232,12 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMap
 	pointer to gameObject and all gameObjects will store a raw pointer to the scene.
 	*/
 
-	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle));
+	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this));
 	gameObject->init(cameraFollow);
 
 	return gameObject.get();
 
-
-
-
 }
-
-//void Scene::addGameObject(GameObject* gameObject, int layer)
-//{
-//
-//	this->m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(*gameObject), this->m_physicsWorld)->init(this);
-//
-//}
 
 /*
 Emplace the new gameObject into the collection and also return a reference ptr to the newly created object as well
@@ -228,6 +245,7 @@ Emplace the new gameObject into the collection and also return a reference ptr t
 GameObject* Scene::addGameObject(std::shared_ptr<GameObject> gameObject, int layer)
 {
 
+	gameObject->setParentScene(this);
 	auto& gameObjectRef = this->m_gameObjects[layer].emplace_back(gameObject);
 
 	return gameObjectRef.get();

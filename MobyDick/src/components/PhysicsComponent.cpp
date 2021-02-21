@@ -4,7 +4,7 @@
 #include "../EnumMaps.h"
 #include "../Game.h"
 
-PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust)
+PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, Scene* parentScene, float xMapPos, float yMapPos, float angleAdjust)
 {
 	//Get reference to the animationComponent JSON config and transformComponent JSON config
 	Json::Value physicsComponentJSON = definitionJSON["physicsComponent"];
@@ -26,7 +26,7 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, float xMapPos, fl
 		physicsComponentJSON["anchorPoint"]["y"].asFloat());
 
 	//Build the physics body
-	m_physicsBody = _buildB2Body(physicsComponentJSON, transformComponentJSON);
+	m_physicsBody = _buildB2Body(physicsComponentJSON, transformComponentJSON, parentScene->physicsWorld());
 
 	//Calculate the spawn position
 	//Translate the pixel oriented position into box2d meter-oriented
@@ -68,10 +68,10 @@ void PhysicsComponent::setLinearVelocity(b2Vec2 velocityVector)
 void PhysicsComponent::update()
 {
 	//update the UserData - only once - cant do it in the constructor
-	if (m_physicsBody->GetUserData() == nullptr)
+	/*if (m_physicsBody->GetUserData() == nullptr)
 	{
 		m_physicsBody->SetUserData(parent());
-	}
+	}*/
 
 	//Transfer the physicsComponent coordinates to the transformComponent
 	b2Vec2 convertedPosition{ 0,0 };
@@ -83,7 +83,7 @@ void PhysicsComponent::update()
 	parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT)->setPosition(convertedPosition, convertedAngle);
 }
 
-b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::Value transformComponentJSON)
+b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::Value transformComponentJSON, b2World* physicsWorld)
 {
 	b2BodyDef bodyDef;
 
@@ -92,7 +92,7 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 	//Default the position to zero.
 	bodyDef.position.SetZero();
 	bodyDef.allowSleep = true;
-	b2Body* body = Game::instance().physicsWorld()->CreateBody(&bodyDef);
+	b2Body* body = physicsWorld->CreateBody(&bodyDef);
 	//b2Body* body = Game::instance().physicsWorld()->CreateBody(&bodyDef);
 
 	b2Shape* shape;
@@ -246,7 +246,7 @@ void PhysicsComponent::attachItem(GameObject* attachObject, std::optional<b2Vec2
 		attachObjectPhysicsComponent->m_objectAnchorPoint.y
 	};
 	weldJointDef.localAnchorB = attachObjectAnchorPoint;
-	(b2WeldJointDef*)Game::instance().physicsWorld()->CreateJoint(&weldJointDef);
+	(b2WeldJointDef*)parent()->parentScene()->physicsWorld()->CreateJoint(&weldJointDef);
 
 }
 

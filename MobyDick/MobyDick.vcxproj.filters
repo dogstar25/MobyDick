@@ -535,11 +535,11 @@
     <None Include="assets\levels\level1_definition.json" />
     <None Include="assets\levels\level1_Objects.json" />
     <None Include="assets\sound\soundAssets.json" />
-    <None Include="assets\gameConfig.json" />
     <None Include="assets\textureAssets.json" />
     <None Include="vcpkg.json_old" />
     <None Include="assets\levels\level_test_definition.json" />
     <None Include="assets\levels\pauseMenu_definition.json" />
+    <None Include="assets\config\gameConfig.json" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav">

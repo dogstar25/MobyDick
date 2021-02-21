@@ -369,7 +369,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\config\gameScenes.json" />
-    <None Include="assets\gameConfig.json" />
+    <None Include="assets\config\gameConfig.json" />
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />
     <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
     <None Include="assets\gameObjectDefinitions\objectPools.json" />

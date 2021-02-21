@@ -8,7 +8,6 @@
 
 SceneManager::SceneManager()
 {
-	m_currentSceneIndex = 0;
 }
 
 SceneManager::~SceneManager()
@@ -26,6 +25,9 @@ SceneManager& SceneManager::instance()
 
 void SceneManager::init()
 {
+	m_currentSceneIndex = 0;
+	m_scenes.reserve(MAX_SCENES);
+
 	load("gameScenes");
 }
 

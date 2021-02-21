@@ -53,7 +53,7 @@ void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 		m_weaponLevelDetails.at(m_currentLevel).bulletPoolId;
 	
 	//Get a free bullet
-	std::optional<std::shared_ptr<GameObject>> bullet = ObjectPoolManager::instance().getPooledObject(bulletPoolId);
+	std::optional<std::shared_ptr<GameObject>> bullet = parent()->parentScene()->objectPoolManager().getPooledObject(bulletPoolId);
 
 	if(bullet.has_value()){
 		//Get references to the bullets components
@@ -92,7 +92,7 @@ void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 		renderComponent->setColor(color);
 
 		//Add the bullet object to the main gameObject collection
-		Game::instance().addGameObject(bullet.value(), LAYER_MAIN);
+		parent()->parentScene()->addGameObject(bullet.value(), LAYER_MAIN);
 	}
 
 }

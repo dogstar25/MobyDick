@@ -1,11 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
 
-
-#pragma warning(push,0)
 #include <box2d/box2d.h>
 #include <json/json.h>
-#pragma warning(pop)
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -56,18 +53,13 @@ public:
 		m_WorldTileHeight = worldTileHeight;
 
 	}
-	void stepB2PhysicsWorld() {
-		m_physicsWorld->Step(GameConfig::instance().timeStep(),
-			GameConfig::instance().velocityIterations(),
-			GameConfig::instance().positionIterations());
-	}
 
 	void setInputControlMode(int inputControlMode);
 
-	//Accessor Functions
-	b2World* physicsWorld() {
-		return m_physicsWorld;
-	}
+	////Accessor Functions
+	//b2World* physicsWorld() {
+	//	return m_physicsWorld;
+	//}
 	SDL_Window* window() {
 		return m_window;
 	}
@@ -90,7 +82,7 @@ private:
 	void _update();
 	void _handleEvents();
 
-	b2World* m_physicsWorld;
+//	b2World* m_physicsWorld;
 	SDL_Window* m_window;
 	GameState m_gameState;
 	SDL_Rect m_WorldBounds;

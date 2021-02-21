@@ -46,13 +46,13 @@ public:
 	~GameObject();
 
 	//Need to define default move constructors because we have an explicit deconstructor defined
-//	GameObject(GameObject&&) = default;
-	//GameObject& operator=(GameObject&&) = default;
+	GameObject(GameObject&&) = default;
+	GameObject& operator=(GameObject&&) = default;
 
 	std::string m_id;
 	int m_gameObjectType{ GameObjectType::SPRITE };
 
-	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust);
+	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene);
 
 	virtual void update();
 	virtual void render();
@@ -64,6 +64,7 @@ public:
 	void postInit(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection);
 	void postInitNavigation(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection);
 	void setPhysicsActive(bool active);
+	void setParentScene( Scene* parentScene);
 
 	//Accessor Functions
 	auto removeFromWorld() { return m_removeFromWorld; }
@@ -71,6 +72,7 @@ public:
 	int idTag() { return m_idTag; }
 	auto const& gameObjectDefinition() { return m_gameObjectDefinition; }
 	auto& components() { return m_components; }
+	Scene* parentScene() { return m_parentScene; }
 	/*auto isPooledAvailable() { return m_isPooledAvailable; }
 	void setIsPooledAvailable(int isPooledAvailable);*/
 
@@ -135,10 +137,7 @@ private:
 	
 	int m_idTag{ 0 };
 	bool m_removeFromWorld{ false };
-
-	//Special values that need to be outside of components for speed
-	//bool m_isPooledAvailable{ true };
-	
+	Scene* m_parentScene{nullptr};
 
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 

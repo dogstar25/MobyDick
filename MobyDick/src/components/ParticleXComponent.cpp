@@ -78,7 +78,7 @@ void ParticleXComponent::update()
 		{
 
 			//Get the particle object from the pre-populated particle pool
-			std::optional<std::shared_ptr<GameObject>> particle = ObjectPoolManager::instance().getPooledObject(effect.poolId);
+			std::optional<std::shared_ptr<GameObject>> particle = parent()->parentScene()->objectPoolManager().getPooledObject(effect.poolId);
 
 			//If the returned particle is null, then the pool has run out, so do nothing
 			if (particle)
@@ -157,7 +157,8 @@ void ParticleXComponent::update()
 				physicsComponent->setLinearVelocity(velocityVector);
 
 				//Add the particle to the game world
-				Game::instance().addGameObject(particle.value(), LAYER_MAIN);
+				//Game::instance().addGameObject(particle.value(), LAYER_MAIN);
+				parent()->parentScene()->addGameObject(particle.value(), LAYER_MAIN);
 
 			}
 			else {

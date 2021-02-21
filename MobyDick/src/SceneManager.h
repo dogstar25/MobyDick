@@ -9,6 +9,8 @@
 #include "Scene.h"
 #include "Globals.h"
 
+inline constexpr int MAX_SCENES = 12;
+
 struct PlayerInputEvent
 {
 

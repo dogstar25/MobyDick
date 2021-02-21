@@ -50,50 +50,50 @@ SDL_Texture* Renderer::createTextureFromSurface(SDL_Surface* surface)
 	return sdlTexture;
 }
 
-void Renderer::drawPoly(b2Body* body)
-{
-
-
-	b2Fixture* fixture = body->GetFixtureList();
-	while (fixture != NULL)
-	{
-
-		b2Shape* s = fixture->GetShape();
-		b2PolygonShape* shape = (b2PolygonShape*)s;
-
-		SDL_FPoint* points = new SDL_FPoint[shape->m_count + 1];
-
-		b2Vec2 firstVector;
-		bool firstFound = false;
-		SDL_FPoint point;
-		// Build list of transformed vertices
-		for (int i = 0; i < shape->m_count; ++i) {
-
-			b2Vec2 vector = shape->m_vertices[i];
-			//If this is the first vector, then save it
-			if (firstFound == false) {
-				firstVector = vector;
-				firstFound = true;
-			}
-
-			point.x = vector.x * GameConfig::instance().scaleFactor();
-			point.y = vector.y * GameConfig::instance().scaleFactor();
-			points[i] = point;
-		}
-
-		//Add the first point to the end to complete closed shape
-		point.x = firstVector.x;
-		point.y = firstVector.y;
-		points[shape->m_count] = point;
-
-		SDL_RenderDrawLinesF(m_SDLRenderer, points, shape->m_count + 1);
-
-		delete[] points;
-
-		fixture = body->GetFixtureList()->GetNext();
-	}
-
-}
+//void Renderer::drawPoly(b2Body* body)
+//{
+//
+//
+//	b2Fixture* fixture = body->GetFixtureList();
+//	while (fixture != NULL)
+//	{
+//
+//		b2Shape* s = fixture->GetShape();
+//		b2PolygonShape* shape = (b2PolygonShape*)s;
+//
+//		SDL_FPoint* points = new SDL_FPoint[shape->m_count + 1];
+//
+//		b2Vec2 firstVector;
+//		bool firstFound = false;
+//		SDL_FPoint point;
+//		// Build list of transformed vertices
+//		for (int i = 0; i < shape->m_count; ++i) {
+//
+//			b2Vec2 vector = shape->m_vertices[i];
+//			//If this is the first vector, then save it
+//			if (firstFound == false) {
+//				firstVector = vector;
+//				firstFound = true;
+//			}
+//
+//			point.x = vector.x * GameConfig::instance().scaleFactor();
+//			point.y = vector.y * GameConfig::instance().scaleFactor();
+//			points[i] = point;
+//		}
+//
+//		//Add the first point to the end to complete closed shape
+//		point.x = firstVector.x;
+//		point.y = firstVector.y;
+//		points[shape->m_count] = point;
+//
+//		SDL_RenderDrawLinesF(m_SDLRenderer, points, shape->m_count + 1);
+//
+//		delete[] points;
+//
+//		fixture = body->GetFixtureList()->GetNext();
+//	}
+//
+//}
 
 void Renderer::drawPoints(SDL_FPoint* points, SDL_Color color)
 {

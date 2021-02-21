@@ -120,6 +120,12 @@ namespace ParticleEmitterType {
 	inline constexpr int CONTINUOUS = 1;
 }
 
+namespace NavigationObjectType {
+
+	inline constexpr int TRANSIT_POINT = 0;
+	inline constexpr int WAYPOINT = 1;
+}
+
 //Components
 enum class ComponentTypes {
 

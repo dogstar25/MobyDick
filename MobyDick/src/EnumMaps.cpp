@@ -121,6 +121,10 @@ EnumMap::EnumMap()
 	m_enumMap["ParticleEmitterType::ONETIME"] = ParticleEmitterType::ONETIME;
 	m_enumMap["ParticleEmitterType::CONTINUOUS"] = ParticleEmitterType::CONTINUOUS;
 
+	//Navigation Object types
+	m_enumMap["NavigationObjectType::TRANSIT_POINT"] = NavigationObjectType::TRANSIT_POINT;
+	m_enumMap["NavigationObjectType::WAYPOINT"] = NavigationObjectType::WAYPOINT;
+
 	////Particle Effects
 	//m_enumMap["ParticleEffects::ricochet"] = ParticleEffects::ricochet;
 	//m_enumMap["ParticleEffects::scrap"] = ParticleEffects::scrap;
