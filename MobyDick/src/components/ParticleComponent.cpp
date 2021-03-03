@@ -132,7 +132,7 @@ void ParticleComponent::update()
 		for (auto& effect : m_particleEffects) {
 
 			//Get the texture by retrieving the effects pooled object and grabbing its texture
-			SDL_Texture* texture = ObjectPoolManager::instance().getPoolObjectTexture(effect.poolId);
+			SDL_Texture* texture = parent()->parentScene()->objectPoolManager().getPoolObjectTexture(effect.poolId);
 
 			//If the particle count min and max are different, then generate a random count
 			//that is between min and max , otherwise just use the max

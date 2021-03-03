@@ -9,12 +9,24 @@
 #include <json/json.h>
 #include "Globals.h"
 #include "GameObject.h"
+#include "GameConfig.h"
 
+#include "ObjectPoolManager.h"
+//class ObjectPoolManager;
 
 struct SceneAction
 {
 	int actionCode{ 0 };
 	std::string sceneId;
+};
+
+struct PhysicsConfig
+{
+	b2Vec2 gravity{};
+	float timeStep{};
+	int velocityIterations{};
+	int positionIterations{};
+	bool b2DebugDrawMode{false};
 };
 
 class Scene
@@ -24,7 +36,6 @@ public:
 	Scene(std::string sceneId);
 	~Scene();
 
-	void init(size_t mouseMode, std::string levelId, SDL_Keycode exitKey, size_t maxObjects);
 	void run();
 	void render();
 	void update();
@@ -37,13 +48,27 @@ public:
 	void applyCurrentControlMode();
 	SDL_FPoint calcWindowPosition(int globalPosition);
 	
+	
+	void stepB2PhysicsWorld() {
+		m_physicsWorld->Step(m_physicsConfig.timeStep,
+			m_physicsConfig.velocityIterations,
+			m_physicsConfig.positionIterations);
+	}
 
+	const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjects() {
+		return m_gameObjects;
+	}
 
 	std::string id() {
 		return m_id;
 	}
 	int parentSceneIndex() {
 		return m_parentSceneIndex;
+	}
+
+	//Accessor Functions
+	b2World* physicsWorld() {
+		return m_physicsWorld;
 	}
 
 	void setState(SceneState state) {
@@ -53,6 +78,13 @@ public:
 	SceneState state() {
 		return m_state;
 	}
+
+	ObjectPoolManager& objectPoolManager() {
+		return m_objectPoolManager;
+	}
+
+	PhysicsConfig physicsConfig() { return m_physicsConfig; }
+
 	void setInputControlMode(int inputControlMode);
 
 	std::optional<SceneAction> getkeycodeAction(SDL_Keycode keycode) {
@@ -67,17 +99,18 @@ public:
 private:
 	std::string m_id;
 	SceneState m_state;
+	b2World* m_physicsWorld{ nullptr };
+	PhysicsConfig m_physicsConfig;
+
 	int m_inputControlMode;
 	std::bitset<8> m_sceneTags;
 	std::map<SDL_Keycode, SceneAction> m_sceneKeyActions;
+	ObjectPoolManager m_objectPoolManager;
 
 	int m_parentSceneIndex;
 	std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> m_gameObjects;
 
 	void _processGameObjectInterdependecies();
-
-
-
 
 };
 

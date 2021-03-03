@@ -58,6 +58,23 @@ void ActionComponent::performMoveAction(int direction, int strafe)
 	action->perform(m_parentGameObject);
 }
 
+void ActionComponent::performMoveAction(b2Vec2 trajectory)
+{
+	std::shared_ptr<MoveAction> action;
+
+	if (m_actions[ACTION_MOVE]) {
+
+		action = std::dynamic_pointer_cast<MoveAction>(m_actions[ACTION_MOVE]);
+		action->setTrajectory(trajectory);
+	}
+	else {
+		action = std::dynamic_pointer_cast<MoveAction>(ActionMaps::instance().getAction("DefaultMove"));
+	}
+
+	assert(action != nullptr && "Move Action is null!");
+	action->perform(m_parentGameObject);
+}
+
 void ActionComponent::performRotateAction(float angularVelocity)
 {
 	std::shared_ptr<RotateAction> action;

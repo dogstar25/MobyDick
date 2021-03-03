@@ -6,6 +6,12 @@ MoveAction::MoveAction(int direction, int strafe) : m_direction(direction), m_st
 
 }
 
+MoveAction::MoveAction(b2Vec2 trajectory) : m_trajectory(trajectory)
+{
+	m_direction = 0;
+	m_strafe = 0;
+}
+
 MoveAction::~MoveAction()
 {
 

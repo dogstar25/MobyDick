@@ -13,6 +13,7 @@
 
 
 class GameObject;
+class Scene;
 class TransformComponent;
 
 
@@ -20,7 +21,7 @@ class ChildrenComponent : public Component
 {
 public:
 	ChildrenComponent();
-	ChildrenComponent(Json::Value definitionJSON);
+	ChildrenComponent(Json::Value definitionJSON, Scene* scene);
 	~ChildrenComponent();
 
 	void update() override;

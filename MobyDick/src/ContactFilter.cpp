@@ -10,9 +10,12 @@ ContactFilter::ContactFilter()
 
 	m_collisionMasks.resize(IdTag::MAX_OBJECT_CATEGORIES);
 
-	//General - set all to collide
-	m_collisionMasks[GENERAL].reset();
-	m_collisionMasks[GENERAL].flip();
+	//General_solid - set all to collide
+	m_collisionMasks[GENERAL_SOLID].reset();
+	m_collisionMasks[GENERAL_SOLID].flip();
+
+	//General_free - set all to NOT collide
+	m_collisionMasks[GENERAL_FREE].reset();
 
 	//Intangible - set all to intangle
 	m_collisionMasks[DEFLECT_EFFECT].reset();
@@ -30,6 +33,7 @@ ContactFilter::ContactFilter()
 	m_collisionMasks[DRONE_FRAME].set(SHIELD_SCRAP);
 	m_collisionMasks[DRONE_FRAME].set(SURVIVOR);
 	m_collisionMasks[DRONE_FRAME].set(WALL);
+	m_collisionMasks[DRONE_FRAME].set(DRONE_FRAME);
 
 	//DRONE_SHIELD
 	m_collisionMasks[DRONE_SHIELD].reset();

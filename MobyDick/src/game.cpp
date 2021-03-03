@@ -35,7 +35,7 @@ Game::~Game()
 	}
 
 	////Delete box2d world - should delete all bodies and fixtures within
-	delete m_physicsWorld;
+	//delete m_physicsWorld;
 
 	TTF_Quit();
 
@@ -98,17 +98,27 @@ bool Game::init()
 		//Initialize the texture manager
 		TextureManager::instance().init(m_window);
 
+		//Initialize the SceneManager
+		SceneManager::instance().init();
+
+		//Initialize the Game Object Manager
+		GameObjectManager::instance().init();
+
+		//Load a first scene
+		Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
+		scene.applyCurrentControlMode();
+
 		//Initialize the sound manager
-		SoundManager::instance().initSound();
+		//SoundManager::instance().initSound();
 		//SoundManager::instance().playMusic("MUSIC_AMBIENCE_1", -1);
 
 		// Construct a physics world object, which will hold and simulate the physics objects.
-		m_physicsWorld = new b2World(GameConfig::instance().gravity());
-		m_physicsWorld->SetAutoClearForces(true);
+		//m_physicsWorld = new b2World(GameConfig::instance().gravity());
+		//m_physicsWorld->SetAutoClearForces(true);
 
-		//Add a collision contact listener and filter for box2d callbacks
-		m_physicsWorld->SetContactListener(&ContactListener::instance());
-		m_physicsWorld->SetContactFilter(&ContactFilter::instance());
+		////Add a collision contact listener and filter for box2d callbacks
+		//m_physicsWorld->SetContactListener(&ContactListener::instance());
+		//m_physicsWorld->SetContactFilter(&ContactFilter::instance());
 
 		/*
 		m_physicsWorld->RayCast(&RayCastListener, x, x, x);
@@ -123,41 +133,15 @@ bool Game::init()
 		
 		*/
 
-
-
-
-		//Debug Mode
-		if (GameConfig::instance().b2DebugDrawMode() == true)
-		{
-			DebugDraw::instance().SetFlags(DebugDraw::e_shapeBit);
-			m_physicsWorld->SetDebugDraw(&DebugDraw::instance());
-		}
-
-		//Initialize the Game Object Manager
-		GameObjectManager::instance().init();
-
-		//Initialize the Particle Pool Manager
-		ObjectPoolManager::instance().init();
-
-		//Initialize the SceneManager
-		SceneManager::instance().init();
-
 		//Initialize the clock object
 		Clock::instance().init();
 
-		//Load the First level
-		//Level::instance().load("level1");
+		scene.addGameObject("FPS_VALUE", LAYER_MENU, 1, 1);
+		//scene.addGameObject("DRONE", LAYER_MAIN, 2, 2);
 	}
 
-	//Load a first scene
-	Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
-	scene.applyCurrentControlMode();
-
 	//Load the player and some other objects
-	scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
-	scene.addGameObject("FPS_VALUE", LAYER_TEXT, 1, 1);
-	scene.addGameObject("DRONE", LAYER_MAIN, 2, 2);
-
+	//scene.addGameObject("GINA_64", LAYER_MAIN, 8, 8, 0, true);
 
 	auto particleXEmitterObject = Game::instance().addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MAIN, 9, 9);
 

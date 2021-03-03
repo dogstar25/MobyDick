@@ -42,21 +42,6 @@ public:
 	int gameLoopStep() {
 		return m_gameLoopStep;
 	}
-	b2Vec2 gravity() {
-		return m_gravity;
-	}
-	float timeStep() {
-		return m_timeStep;
-	}
-	int velocityIterations() {
-		return m_velocityIterations;
-	}
-	int positionIterations() {
-		return m_positionIterations;
-	}
-	bool b2DebugDrawMode() {
-		return m_b2DebugDrawMode;
-	}
 	int windowWidth() {
 		return m_windowWidth;
 	}
@@ -75,14 +60,11 @@ private:
 	~GameConfig();
 
 	float
-		m_scaleFactor,
 		m_mouseSensitivity,
-		m_timeStep,
 		m_dynamicTextRefreshDelay;
 	bool
 		m_windowFullscreen,
-		m_debugPanel,
-		m_b2DebugDrawMode;
+		m_debugPanel;
 	SDL_Point 
 		m_debugPanelLocation;
 	int
@@ -90,13 +72,10 @@ private:
 		m_windowHeight,
 		m_debugPanelFontSize,
 		m_soundChannels,
-		m_gameLoopStep,
-		m_velocityIterations,
-		m_positionIterations;
+		m_gameLoopStep;
 	std::string 
 		m_gameTitle;
-	b2Vec2 
-		m_gravity;
+	float m_scaleFactor{};
 
 
 };

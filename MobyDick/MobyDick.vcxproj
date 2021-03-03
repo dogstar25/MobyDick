@@ -190,6 +190,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\actions\DroneMoveAction.cpp" />
+    <ClCompile Include="src\components\NavigationComponent.cpp" />
     <ClCompile Include="src\RayCastCallBack.cpp" />
     <ClCompile Include="src\components\BrainComponent.cpp" />
     <ClCompile Include="src\components\ParticleComponent.cpp" />
@@ -256,6 +258,8 @@
     <ClCompile Include="src\actions\UseAction.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\actions\DroneMoveAction.h" />
+    <ClInclude Include="src\components\NavigationComponent.h" />
     <ClInclude Include="src\RayCastCallBack.h" />
     <ClInclude Include="src\components\BrainComponent.h" />
     <ClInclude Include="src\components\ParticleComponent.h" />
@@ -350,7 +354,6 @@
     <Image Include="assets\pieceFull_8.png" />
     <Image Include="assets\pistolLady128_Run.png" />
     <Image Include="assets\pistolLady64_Run.png" />
-    <Image Include="assets\levels\pauseMenu_blueprint.png" />
     <Image Include="assets\spaceship1.png" />
     <Image Include="assets\square_128.png" />
     <Image Include="assets\swordLady64_Idle.png" />
@@ -367,7 +370,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\config\gameScenes.json" />
-    <None Include="assets\gameConfig.json" />
+    <None Include="assets\config\gameConfig.json" />
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />
     <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
     <None Include="assets\gameObjectDefinitions\objectPools.json" />
@@ -375,7 +378,6 @@
     <None Include="assets\levels\level1_definition.json" />
     <None Include="assets\levels\level1_Objects.json" />
     <None Include="assets\levels\level_test_definition.json" />
-    <None Include="assets\levels\pauseMenu_definition.json" />
     <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\textureAssets.json" />
     <None Include="vcpkg.json_old" />

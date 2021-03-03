@@ -6,6 +6,7 @@
 #include <box2d/box2d.h>
 
 #include "Component.h"
+#include "../Scene.h"
 
 class TransformComponent;
 
@@ -25,11 +26,12 @@ class PhysicsComponent : public Component
 
 public:
 	PhysicsComponent() {};
-	PhysicsComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust);
+	PhysicsComponent(Json::Value definitionJSON, Scene* parentScene, float xMapPos, float yMapPos, float angleAdjust);
 	~PhysicsComponent();
 
 	void update() override;
 	void applyMovement(float velocity, int direction, int strafeDirection);
+	void applyMovement(float velocity, b2Vec2 trajectory);
 	void applyRotation(float angularVelocity);
 	void setOffGrid();
 	void setTransform(b2Vec2 positionVector, float angle);
@@ -39,16 +41,18 @@ public:
 	void setBullet(bool isBullet);
 	
 
-	void attachItem(GameObject* inventoryObject, std::optional<b2Vec2> attachLocation = std::nullopt );
+	void attachItem(GameObject* inventoryObject, std::optional<b2Vec2> attachLocation = std::nullopt);
 
 	//Accessor functions
 	b2Vec2 objectAnchorPoint() { return m_objectAnchorPoint; }
 	b2Vec2 position() { return m_physicsBody->GetPosition(); }
 	float angle() { return m_physicsBody->GetAngle(); }
+	b2Body* physicsBody() {	return m_physicsBody; }
+
 
 private:
 
-	b2Body* _buildB2Body(Json::Value physicsComponentJSON, Json::Value transformComponentJSON);
+	b2Body* _buildB2Body(Json::Value physicsComponentJSON, Json::Value transformComponentJSON, b2World* physicsWorld);
 	uint16 _setCollisionMask(Json::Value physicsComponentJSON);
 
 	b2Body* m_physicsBody{ nullptr };

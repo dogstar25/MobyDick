@@ -22,9 +22,12 @@ EnumMap::EnumMap()
 	m_enumMap["CONTROL_MODE_SELECT"] = CONTROL_MODE_SELECT;
 	m_enumMap["CONTROL_MODE_PLAY"] = CONTROL_MODE_PLAY;
 
-	m_enumMap["IdTag::GENERAL"] = IdTag::GENERAL;
+	//GameObject IdTags
+	m_enumMap["IdTag::GENERAL_SOLID"] = IdTag::GENERAL_SOLID;
+	m_enumMap["IdTag::GENERAL_FREE"] = IdTag::GENERAL_FREE;
 	m_enumMap["IdTag::DEFLECT_EFFECT"] = IdTag::DEFLECT_EFFECT;
 	m_enumMap["IdTag::SMOKE_PARTICLE"] = IdTag::SMOKE_PARTICLE;
+	m_enumMap["IdTag::NAVIGATION_POINT"] = IdTag::NAVIGATION_POINT;
 	m_enumMap["IdTag::DRONE_BRAIN"] = IdTag::DRONE_BRAIN;
 	m_enumMap["IdTag::DRONE_SHIELD"] = IdTag::DRONE_SHIELD;
 	m_enumMap["IdTag::DRONE_WEAPON"] = IdTag::DRONE_WEAPON;
@@ -101,9 +104,13 @@ EnumMap::EnumMap()
 	m_enumMap["SCENETAG_MENU"] = SCENETAG_MENU;
 	
 	//Game Layers
-	m_enumMap["LAYER_BACKGROUND"] = LAYER_BACKGROUND;
+	m_enumMap["LAYER_BACKGROUND_1"] = LAYER_BACKGROUND_1;
+	m_enumMap["LAYER_BACKGROUND_2"] = LAYER_BACKGROUND_2;
 	m_enumMap["LAYER_MAIN"] = LAYER_MAIN;
-	m_enumMap["LAYER_TEXT"] = LAYER_TEXT;
+	m_enumMap["LAYER_FOREGROUND_1"] = LAYER_FOREGROUND_1;
+	m_enumMap["LAYER_FOREGROUND_2"] = LAYER_FOREGROUND_2;
+	m_enumMap["LAYER_MENU"] = LAYER_MENU;
+	m_enumMap["LAYER_ABSTRACT"] = LAYER_ABSTRACT;
 
 	//Game Object Display Modes
 	m_enumMap["DISPLAY_UI_MODE_STANDARD"] = DISPLAY_UI_MODE_STANDARD;
@@ -117,6 +124,10 @@ EnumMap::EnumMap()
 	m_enumMap["ParticleEmitterType::ONETIME"] = ParticleEmitterType::ONETIME;
 	m_enumMap["ParticleEmitterType::CONTINUOUS"] = ParticleEmitterType::CONTINUOUS;
 
+	//Navigation Object types
+	m_enumMap["NavigationObjectType::TRANSIT_POINT"] = NavigationObjectType::TRANSIT_POINT;
+	m_enumMap["NavigationObjectType::WAYPOINT"] = NavigationObjectType::WAYPOINT;
+
 	////Particle Effects
 	//m_enumMap["ParticleEffects::ricochet"] = ParticleEffects::ricochet;
 	//m_enumMap["ParticleEffects::scrap"] = ParticleEffects::scrap;
@@ -125,11 +136,8 @@ EnumMap::EnumMap()
 	m_enumMap["SDL_BLENDMODE_BLEND"] = SDL_BLENDMODE_BLEND;
 	m_enumMap["SDL_BLENDMODE_ADD"] = SDL_BLENDMODE_ADD;
 
-	//Level Location Item Types
-	m_enumMap["LevelLocItemType::GAMEOBJECT"] = LevelLocItemType::GAMEOBJECT;
-	m_enumMap["LevelLocItemType::WAYPOINT"] = LevelLocItemType::WAYPOINT;
-
 	//GameObject Types
+	m_enumMap["GameObjectType::ABSTRACT"] = GameObjectType::ABSTRACT;
 	m_enumMap["GameObjectType::SPRITE"] = GameObjectType::SPRITE;
 	m_enumMap["GameObjectType::LINE"] = GameObjectType::LINE;
 	m_enumMap["GameObjectType::POINT"] = GameObjectType::POINT;

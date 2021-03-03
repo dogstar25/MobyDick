@@ -24,7 +24,7 @@ class InventoryComponent : public Component
 {
 public:
 	InventoryComponent();
-	InventoryComponent(Json::Value definitionJSON);
+	InventoryComponent(Json::Value definitionJSON, Scene* parentScene);
 	~InventoryComponent();
 
 	size_t addItem(GameObject* gameObject);

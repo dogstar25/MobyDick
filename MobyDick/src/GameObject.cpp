@@ -2,6 +2,9 @@
 
 
 #include "GameObjectManager.h"
+#include "game.h"
+#include "SceneManager.h"
+#include "Scene.h"
 #include "components/InventoryComponent.h"
 
 #include "Globals.h"
@@ -14,7 +17,7 @@ GameObject::~GameObject()
 
 }
 
-GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust)
+GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene)
 {
 
 	Json::Value definitionJSON;
@@ -33,8 +36,10 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	m_id = gameObjectId;
 	m_idTag = EnumMap::instance().toEnum(definitionJSON["idTag"].asString());
 	m_gameObjectType = EnumMap::instance().toEnum(definitionJSON["type"].asString());
-
 	m_removeFromWorld = false;
+
+	//Set the parent Scene
+	m_parentScene = parentScene;
 
 	//Always build a render and transform component
 	addComponent(std::make_shared<RenderComponent>(definitionJSON), ComponentTypes::RENDER_COMPONENT);
@@ -49,7 +54,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Physics Component
 	if (definitionJSON.isMember("physicsComponent") && definitionJSON.isMember("transformComponent"))
 	{
-		addComponent(std::make_shared<PhysicsComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust), ComponentTypes::PHYSICS_COMPONENT);
+		addComponent(std::make_shared<PhysicsComponent>(definitionJSON, parentScene, xMapPos, yMapPos, angleAdjust), ComponentTypes::PHYSICS_COMPONENT);
 	}
 
 	//Vitality Component
@@ -73,7 +78,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Children Component
 	if (definitionJSON.isMember("childrenComponent"))
 	{
-		addComponent(std::make_shared<ChildrenComponent>(definitionJSON), ComponentTypes::CHILDREN_COMPONENT);
+		addComponent(std::make_shared<ChildrenComponent>(definitionJSON, parentScene), ComponentTypes::CHILDREN_COMPONENT);
 	}
 
 	//Action Component
@@ -97,7 +102,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Inventory Component
 	if (definitionJSON.isMember("inventoryComponent"))
 	{
-		addComponent(std::make_shared<InventoryComponent>(definitionJSON), ComponentTypes::INVENTORY_COMPONENT);
+		addComponent(std::make_shared<InventoryComponent>(definitionJSON, parentScene), ComponentTypes::INVENTORY_COMPONENT);
 	}
 
 	//UIControl Component
@@ -121,13 +126,19 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Composite Component
 	if (definitionJSON.isMember("compositeComponent"))
 	{
-		addComponent(std::make_shared<CompositeComponent>(definitionJSON), ComponentTypes::COMPOSITE_COMPONENT);
+		addComponent(std::make_shared<CompositeComponent>(definitionJSON, parentScene), ComponentTypes::COMPOSITE_COMPONENT);
 	}
 
 	//Brain Component
 	if (definitionJSON.isMember("brainComponent"))
 	{
 		addComponent(std::make_shared<BrainComponent>(definitionJSON), ComponentTypes::BRAIN_COMPONENT);
+	}
+
+	//Navigation Component
+	if (definitionJSON.isMember("navigationComponent"))
+	{
+		addComponent(std::make_shared<NavigationComponent>(definitionJSON), ComponentTypes::NAVIGATION_COMPONENT);
 	}
 
 }
@@ -293,6 +304,12 @@ void GameObject::init(bool cameraFollow)
 		if (component) {
 			component->setParent(this);
 		}
+	}
+
+	//Set the Physics component gameObject UserData
+	if (hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
+		auto physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+		physicsComponent->physicsBody()->SetUserData(this);
 
 	}
 
@@ -322,24 +339,6 @@ void GameObject::init(bool cameraFollow)
 
 }
 
-/*
-The postInit function allows gameobjects to initilaizes components that require that ALL gameObjects be built first.
-ex. The brainComponent needs all navigation related gameObjects to be built first 
-*/
-void GameObject::postInit( const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> &gameObjectCollection)
-{
-
-	//GameObjects with a BrainComponent needs interdependent initilaization
-	if (hasComponent(ComponentTypes::BRAIN_COMPONENT)) {
-
-		const auto& brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
-		brainComponent->postInit(gameObjectCollection);
-	}
-
-
-
-}
-
 void GameObject::setPhysicsActive(bool active)
 {
 
@@ -347,5 +346,93 @@ void GameObject::setPhysicsActive(bool active)
 	if (physicsComponent) {
 		physicsComponent->setPhysicsBodyActive(active);
 	}
+
+}
+
+/*
+The postInit function allows gameobjects to initilaizes components that require that ALL gameObjects be built first.
+ex. The brainComponent needs all navigation related gameObjects to be built first
+*/
+void GameObject::postInit(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection)
+{
+
+	//GameObjects with a NavigationComponent needs to build a navigation array based on the location of 
+	//other navigation objects
+	if (hasComponent(ComponentTypes::NAVIGATION_COMPONENT)) {
+		const auto navigationComponent = getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
+		navigationComponent->postInit();
+	}
+
+	//The BrainComponent needs to gather and store all of the waypoint nav points and
+	//interim nav points for its navigating logic
+	if (hasComponent(ComponentTypes::BRAIN_COMPONENT)) {
+		const auto brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+		brainComponent->postInit();
+	}
+
+
+
+}
+
+void GameObject::postInitNavigation(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection)
+{
+
+	const auto& navComponent = getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
+	const auto& transformComponent = getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+
+	//For this GameObject, find all other navigation gameobjects that have been created, 
+	// and initilaize the navigation data required
+	for (auto& gameObject : gameObjectCollection[LAYER_ABSTRACT])
+	{
+
+		if (gameObject->hasComponent(ComponentTypes::NAVIGATION_COMPONENT)) {
+
+			//Ignore the gameObject that IS this particular gameObject
+			if (this != gameObject.get()) {
+
+				const auto& foundTransformComponent = gameObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+				//Game::instance().physicsWorld()->RayCast(&m_b2RayCastCallback, position, newPosition);
+				//SceneManager::instance().scenes().back()
+ 				b2Vec2 thisGameObjectPosition = { transformComponent->getCenterPosition().x / GameConfig::instance().scaleFactor(), 
+					transformComponent->getCenterPosition().y/ GameConfig::instance().scaleFactor() };
+				b2Vec2 foundGameObjectPosition = { foundTransformComponent->getCenterPosition().x/ GameConfig::instance().scaleFactor(), 
+					foundTransformComponent->getCenterPosition().y / GameConfig::instance().scaleFactor() };
+
+				RayCastCallBack::instance().reset();
+				m_parentScene->physicsWorld()->RayCast(&RayCastCallBack::instance(), thisGameObjectPosition, foundGameObjectPosition);
+
+				if (RayCastCallBack::instance().hasClearNavPath()) {
+
+					const auto& thisGameObjectNavComponent = this->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
+					thisGameObjectNavComponent->accessibleNavObjects().push_back(gameObject);
+
+				}
+
+
+			}
+
+
+
+		}
+
+
+
+	}
+
+
+
+
+}
+
+void GameObject::setParentScene(Scene* parentScene)
+{
+	m_parentScene = parentScene;
+}
+
+SDL_FPoint GameObject::getCenterPosition()
+{
+
+	const auto& transformComponent = getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	return(transformComponent->getCenterPosition());
 
 }

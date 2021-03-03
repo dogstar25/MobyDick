@@ -6,7 +6,7 @@ InventoryComponent::InventoryComponent()
 
 }
 
-InventoryComponent::InventoryComponent(Json::Value definitionJSON)
+InventoryComponent::InventoryComponent(Json::Value definitionJSON, Scene* parentScene)
 {
 
 	m_activeItem = 0;
@@ -18,7 +18,7 @@ InventoryComponent::InventoryComponent(Json::Value definitionJSON)
 		std::string gameObjectId = itrItem["gameObjectId"].asString();
 		bool attach = itrItem["attach"].asBool();
 		bool weapon = itrItem["weapon"].asBool();
-		const auto& gameObject = std::make_shared<GameObject>(gameObjectId, -1.0F, -1.0F, 0.F);
+		auto gameObject = std::make_shared<GameObject>(gameObjectId, -1.0F, -1.0F, 0.F, parentScene);
 		gameObject->init();
 
 		InventoryItem inventoryItem = { true,true,std::move(gameObject) };

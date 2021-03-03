@@ -1,6 +1,5 @@
 #pragma once
 #include "Component.h"
-#include "../ObjectPoolManager.h"
 
 class PoolComponent : public Component
 {

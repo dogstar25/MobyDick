@@ -1,5 +1,6 @@
 #include "ActionMaps.h"
 #include "ActorMoveAction.h"
+#include "DroneMoveAction.h"
 #include "ActorRotateAction.h"
 #include "ActorUseAction.h"
 #include "PistolFireAction.h"
@@ -27,6 +28,7 @@ ActionMaps::ActionMaps()
 	m_actionMap["DefaultHoverOut"] = std::make_shared<DefaultOnHoverOutAction>();
 
 	m_actionMap["ActorMove"] = std::make_shared<ActorMoveAction>();
+	m_actionMap["DroneMove"] = std::make_shared<DroneMoveAction>();
 	m_actionMap["ActorRotate"] = std::make_shared<ActorRotateAction>();
 	m_actionMap["ActorUse"] = std::make_shared<ActorUseAction>();
 

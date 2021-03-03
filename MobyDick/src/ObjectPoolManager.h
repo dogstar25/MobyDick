@@ -8,14 +8,18 @@
 #include <optional>
 
 #include <SDL2/SDL.h>
+#include <json/json.h>
 
 class GameObject;
+class Scene;
 
 class ObjectPoolManager
 {
 public:
-	static ObjectPoolManager& instance();
-	void init();
+
+	void init(Json::Value definitionJSON, Scene* parentScene);
+	ObjectPoolManager();
+	~ObjectPoolManager();
 
 	std::optional<std::shared_ptr<GameObject>> getPooledObject(std::string);
 	SDL_Texture* getPoolObjectTexture(std::string);
@@ -26,11 +30,8 @@ public:
 	}
 
 private:
-	ObjectPoolManager();
-	~ObjectPoolManager();
 
 	std::unordered_map <std::string, std::vector<std::shared_ptr<GameObject>>> m_objectPool;
-
 
 
 };

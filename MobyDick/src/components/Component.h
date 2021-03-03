@@ -30,6 +30,7 @@ public:
 	Component();
 	~Component();
 	virtual void update();
+	virtual void postInit() {};
 
 	void setParent(GameObject* gameObject) { m_parentGameObject = gameObject; }
 	GameObject* parent() { return m_parentGameObject; }

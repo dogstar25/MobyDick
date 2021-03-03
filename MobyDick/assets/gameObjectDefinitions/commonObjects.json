@@ -3,7 +3,7 @@
         {
             "id": "SWORDLADY",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GENERAL",
+            "idTag": "IdTag::GENERAL_SOLID",
             "traitTags": [],
             "description": "SwordLady",
             "transformComponent": {
@@ -64,7 +64,7 @@
                 "linearDamping": 0.2,
                 "angularDamping": 3.0,
                 //"collisionCategory": "CollisionCat::PLAYER",
-                "anchorPoint": {
+                "anchorPoint": { // starts from centered 0,0 position
                     "x": 0.8,
                     "y": 0.0
                 }
@@ -75,6 +75,22 @@
                         "gameObjectId": "PISTOL",
                         "attach": true,
                         "weapon": true
+                    }
+                ]
+            },
+            "attachmentComponent": {//needs to be implemented
+                "hookPoint": { //If this object attaches to another object, whats its connection point
+                    "x": 0,
+                    "y": 0
+                },
+                "attachments": [
+                    {
+                        "gameObjectId": "PISTOL",
+                        "attachToPoint": { // starts from centered 0,0 position
+                            "x": 0.8,
+                            "y": 0.0
+                        },
+                        "addToInventory": true
                     }
                 ]
             },
@@ -127,7 +143,7 @@
         {
             "id": "BOWMAN",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GENERAL",
+            "idTag": "IdTag::GENERAL_SOLID",
             "traitTags": [],
             "transformComponent": {
                 "size": {
@@ -143,7 +159,7 @@
         {
             "id": "PLAYER_LABEL",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GENERAL",
+            "idTag": "IdTag::GUI",
             "traitTags": [],
             "description": "Player Label",
             "transformComponent": {
@@ -159,7 +175,7 @@
         {
             "id": "FPS_VALUE",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GENERAL",
+            "idTag": "IdTag::GUI",
             "traitTags": [],
             "description": "FPS",
             "transformComponent": {
@@ -456,7 +472,7 @@
         {
             "id": "DEBUG_ITEM",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GENERAL",
+            "idTag": "IdTag::GUI",
             "traitTags": [],
             "description": "Debug Item",
             "transformComponent": {
@@ -608,7 +624,7 @@
         {
             "id": "PARTICLE_X_EMITTER",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GENERAL",
+            "idTag": "IdTag::GENERAL_FREE",
             "traitTags": [],
             "description": "Particle Emitter",
             "transformComponent": {
@@ -623,7 +639,7 @@
         {
             "id": "PARTICLE_EMITTER",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GENERAL",
+            "idTag": "IdTag::GENERAL_FREE",
             "traitTags": [],
             "description": "Particle Emitter",
             "transformComponent": {
@@ -638,7 +654,7 @@
         {
             "id": "PARTICLE_EMITTER_SPARK",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GENERAL",
+            "idTag": "IdTag::GENERAL_FREE",
             "traitTags": [],
             "description": "Particle Emitter",
             "transformComponent": {
@@ -658,7 +674,7 @@
         {
             "id": "PRIMITIVE_LINE",
             "type": "GameObjectType::LINE",
-            "idTag": "IdTag::GENERAL",
+            "idTag": "IdTag::GENERAL_FREE",
             "traitTags": [],
             "description": "Line",
             "transformComponent": {
@@ -673,16 +689,45 @@
             }
         },
         {
-            "id": "NAVIGATION_POINT",
+            "id": "NAVIGATION_TRANSIT_POINT",
             "type": "GameObjectType::ABSTRACT",
-            "idTag": "IdTag::INTANGIBLE",
+            "idTag": "IdTag::NAVIGATION_POINT",
             "traitTags": [],
-            "description": "XXX",
+            "description": "Navigation Object",
+            "physicsComponent": {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX"
+            },
             "transformComponent": {
+                "size": {
+                    "width": 16,
+                    "height": 16
+                }
             },
             "navigationComponent": {
+                "type": "NavigationObjectType::TRANSIT_POINT"
+
+            }
+        },
+        {
+            "id": "NAVIGATION_WAYPOINT",
+            "type": "GameObjectType::ABSTRACT",
+            "idTag": "IdTag::NAVIGATION_POINT",
+            "traitTags": [],
+            "description": "Navigation Object",
+            "physicsComponent": {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX"
+            },
+            "transformComponent": {
+                "size": {
+                    "width": 16,
+                    "height": 16
+                }
+            },
+            "navigationComponent": {
+                "type": "NavigationObjectType::WAYPOINT"
             }
         }
-
     ]
 }

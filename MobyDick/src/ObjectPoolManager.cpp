@@ -4,21 +4,17 @@
 
 
 #include "GameObject.h"
+#include "Scene.h"
 
 
-ObjectPoolManager& ObjectPoolManager::instance()
+void ObjectPoolManager::init(Json::Value definitionJSON,  Scene* parentScene)
 {
-	static ObjectPoolManager singletonInstance;
-	return singletonInstance;
-}
-
-void ObjectPoolManager::init()
-{
-
 	//Read file and stream it to a JSON object
 	Json::Value root;
 	std::ifstream ifs("assets/gameObjectDefinitions/objectPools.json");
 	ifs >> root;
+
+	Json::Value gameObjectPoolsJSON = definitionJSON["gameObjectPools"];
 
 	//Get and store config values
 	std::string gameObjectId, poolId;
@@ -26,7 +22,7 @@ void ObjectPoolManager::init()
 
 	//Loop through every texture defined in the config file, create a texture object
 	//and store it in the main texture map
-	for (auto itr : root["gameObjectPools"])
+	for (auto itr : gameObjectPoolsJSON)
 	{
 
 		poolId = itr["id"].asString();
@@ -38,21 +34,20 @@ void ObjectPoolManager::init()
 
 		for (int index = 0; index < maxItems; index++) {
 
-			auto& gameObject = m_objectPool[poolId].emplace_back(std::make_shared<GameObject>(gameObjectId, -50.0f, -50.0f, 0.0f));
+			auto& gameObject = m_objectPool[poolId].emplace_back(std::make_shared<GameObject>(gameObjectId, -50.0f, -50.0f, 0.0f, parentScene));
 			gameObject->init(false);
 
 		}
 
 	}
-
 }
-
 
 ObjectPoolManager::ObjectPoolManager()
 {
 
-}
 
+
+}
 
 ObjectPoolManager::~ObjectPoolManager()
 {

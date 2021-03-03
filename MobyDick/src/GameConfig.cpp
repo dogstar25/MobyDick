@@ -19,19 +19,11 @@ bool GameConfig::init(std::string configFile)
 {
 
 	Json::Value root;
-	std::ifstream ifs("assets/" + configFile + ".json");
+	std::ifstream ifs("assets/config/" + configFile + ".json");
 	ifs >> root;
 
 	m_gameTitle = root["gameTitle"].asString();
 	m_gameLoopStep = root["gameLoopStep"].asInt();
-	m_gravity.Set(root["physics"]["gravity"]["x"].asFloat(),
-		root["physics"]["gravity"]["y"].asFloat());
-	m_timeStep = root["physics"]["timeStep"].asFloat();
-	m_velocityIterations = root["physics"]["velocityIterations"].asInt();
-	m_positionIterations = root["physics"]["positionIterations"].asInt();
-	m_b2DebugDrawMode = root["physics"]["b2DebugDrawMode"].asBool();
-
-	m_scaleFactor = root["physics"]["box2dScale"].asFloat();
 	m_mouseSensitivity = root["mouseSensitivity"].asFloat();
 	m_dynamicTextRefreshDelay = root["dynamicTextRefreshDelay"].asFloat();
 	m_debugPanel = root["debugPanel"]["show"].asBool();
@@ -39,6 +31,7 @@ bool GameConfig::init(std::string configFile)
 	m_debugPanelLocation.y = root["debugPanel"]["yPos"].asInt();
 	m_debugPanelFontSize = root["debugPanel"]["fontSize"].asInt();
 	m_soundChannels = root["sound"]["numberOfChannels"].asInt();
+	m_scaleFactor = root["physics"]["box2dScale"].asFloat();
 
 	m_windowWidth = root["window"]["width"].asInt();
 	m_windowHeight = root["window"]["height"].asInt();

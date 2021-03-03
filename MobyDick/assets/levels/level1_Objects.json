@@ -16,9 +16,9 @@
             "renderComponent": {
                 "textureId": "TX_WALL1_OPEN",
                 "color": {
-                    "red": 0,
-                    "green": 206,
-                    "blue": 209,
+                    "red": 38,
+                    "green": 195,
+                    "blue": 15,
                     "alpha": 255,
                     "random": false
                 }
@@ -48,9 +48,9 @@
             "renderComponent": {
                 "textureId": "TX_WALL1_COLUMN",
                 "color": {
-                    "red": 0,
-                    "green": 206,
-                    "blue": 209,
+                    "red": 38,
+                    "green": 195,
+                    "blue": 15,
                     "alpha": 255,
                     "random": false
                 }
@@ -80,9 +80,9 @@
             "renderComponent": {
                 "textureId": "TX_WALL1_CORNER",
                 "color": {
-                    "red": 0,
-                    "green": 255,
-                    "blue": 255,
+                    "red": 38,
+                    "green": 195,
+                    "blue": 15,
                     "alpha": 255,
                     "random": false
                 }
@@ -144,9 +144,9 @@
             "renderComponent": {
                 "textureId": "TX_WALL1_HALL",
                 "color": {
-                    "red": 175,
-                    "green": 238,
-                    "blue": 238,
+                    "red": 38,
+                    "green": 195,
+                    "blue": 15,
                     "alpha": 255,
                     "random": false
                 }
