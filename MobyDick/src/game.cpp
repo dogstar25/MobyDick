@@ -137,7 +137,7 @@ bool Game::init()
 		Clock::instance().init();
 
 		scene.addGameObject("FPS_VALUE", LAYER_MENU, 1, 1);
-		scene.addGameObject("DRONE", LAYER_MAIN, 2, 2);
+		//scene.addGameObject("DRONE", LAYER_MAIN, 2, 2);
 	}
 
 	//Load the player and some other objects

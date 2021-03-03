@@ -15,8 +15,7 @@ public:
 	~NavigationComponent();
 
 	void update() override;
-
-	void postInit();
+	void postInit() override;
 
 	int type() { return m_type; }
 	void setType(int type) { m_type = type; }

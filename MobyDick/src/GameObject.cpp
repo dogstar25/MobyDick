@@ -363,6 +363,12 @@ void GameObject::postInit(const std::array <std::vector<std::shared_ptr<GameObje
 		navigationComponent->postInit();
 	}
 
+	//The BrainComponent needs to gather and store all of the waypoint nav points and
+	//interim nav points for its navigating logic
+	if (hasComponent(ComponentTypes::BRAIN_COMPONENT)) {
+		const auto brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+		brainComponent->postInit();
+	}
 
 
 
@@ -421,4 +427,12 @@ void GameObject::postInitNavigation(const std::array <std::vector<std::shared_pt
 void GameObject::setParentScene(Scene* parentScene)
 {
 	m_parentScene = parentScene;
+}
+
+SDL_FPoint GameObject::getCenterPosition()
+{
+
+	const auto& transformComponent = getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	return(transformComponent->getCenterPosition());
+
 }

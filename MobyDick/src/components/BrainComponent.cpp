@@ -4,6 +4,9 @@
 
 #include "../game.h"
 
+#include <math.h>
+#include <random>
+
 
 BrainComponent::BrainComponent()
 {
@@ -37,6 +40,31 @@ void BrainComponent::update()
 
 }
 
+void BrainComponent::postInit()
+{
+
+	//Get all NavPoints, including ones that are waypoints
+	for (const auto& gameObject : parent()->parentScene()->gameObjects()[LAYER_ABSTRACT]) {
+
+		if (gameObject->idTag() == IdTag::NAVIGATION_POINT) {
+
+			const auto& navComponent = gameObject->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
+
+			m_navPoints.push_back(gameObject);
+
+			if (navComponent->type() == NavigationObjectType::WAYPOINT) {
+				m_wayPoints.push_back(gameObject);
+			}
+
+		}
+	}
+
+	//Do an random sort of the waypoints order
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::shuffle(m_wayPoints.begin(), m_wayPoints.end(), std::default_random_engine(seed));
+
+}
+
 void BrainComponent::_updateSightInput()
 {
 
@@ -67,23 +95,23 @@ void BrainComponent::_updateSensorInput()
 
 	float sensorIncrement = 18;
 	//Create a sensor raycast in every direction full 360%
-	for (int rayCount = 0; rayCount <= sensorIncrement; rayCount++) {
+	//for (int rayCount = 0; rayCount <= sensorIncrement; rayCount++) {
 
-		float angle = util::degreesToRadians(rayCount * sensorIncrement);
-		b2Vec2 direction{ transform->angle() + cos(angle) * 10, transform->angle() + sin(angle) * 10 };
+	//	float angle = util::degreesToRadians(rayCount * sensorIncrement);
+	//	b2Vec2 direction{ transform->angle() + cos(angle) * 10, transform->angle() + sin(angle) * 10 };
 
-		auto lineObject = parent()->parentScene()->addGameObject("PRIMITIVE_LINE", LAYER_MAIN, -1, -1);
-		auto lineTransform = lineObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	//	auto lineObject = parent()->parentScene()->addGameObject("PRIMITIVE_LINE", LAYER_MAIN, -1, -1);
+	//	auto lineTransform = lineObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
-		//convert back to world coordinates to draw
-		/*centerPosition *= 25;
-		direction *= 25;*/
+	//	//convert back to world coordinates to draw
+	//	/*centerPosition *= 25;
+	//	direction *= 25;*/
 
-		b2Vec2 begin = { centerPosition.x * 25, centerPosition.y*25};
-		b2Vec2 end = { centerPosition.x * 25 + direction.x * 25, centerPosition.y * 25 + direction.y * 25 };
-		lineTransform->setLine(begin, end);
+	//	b2Vec2 begin = { centerPosition.x * 25, centerPosition.y*25};
+	//	b2Vec2 end = { centerPosition.x * 25 + direction.x * 25, centerPosition.y * 25 + direction.y * 25 };
+	//	lineTransform->setLine(begin, end);
 
-	}
+	//}
 
 
 
@@ -92,28 +120,27 @@ void BrainComponent::_updateSensorInput()
 void BrainComponent::_doPatrol()
 {
 
-	/*
-	
-	
-	Get a reference to the navigation array from the level and determine next destination
-	
-	
-	
-	*/
 	auto transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	// Get the closest waypoint to your current position
+	if(m_targetDestination.has_value() == false){
+		m_targetDestination = getClosestNavPoint(transform->getCenterPosition(), NavigationObjectType::WAYPOINT);
+	}
+	
+	navigate();
 
-	b2Vec2 position = { transform->getCenterPosition().x / 25, transform->getCenterPosition().y / 25 };
-	const b2Vec2 changePosition = b2Vec2(10, 10);
-	b2Vec2 newPosition = position + changePosition;
+	
+	//const b2Vec2 changePosition = b2Vec2(10, 10);
+	//b2Vec2 newPosition = currentPosition + changePosition;
 
-	/*auto& waypoint1 = m_waypoints[0];
-	b2Vec2 tragectory = waypoint1.point - position;*/
+	///*auto& waypoint1 = m_waypoints[0];
+	//b2Vec2 tragectory = waypoint1.point - position;*/
 
-	auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-	//action->performMoveAction(1, 1);
+	//auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+	////action->performMoveAction(1, 1);
 
 
 }
+
 
 void BrainComponent::_doAlert()
 {
@@ -126,3 +153,178 @@ void BrainComponent::_doPursue()
 void BrainComponent::_doEngage()
 {
 }
+
+std::weak_ptr<GameObject> BrainComponent::getClosestNavPoint(SDL_FPoint thisPosition, int navType)
+{
+
+	//For each navigation item, calculate the distance from the given position
+	float shortest{};
+	std::weak_ptr<GameObject> closestWayPoint{};
+
+	for (const auto& gameObject : parent()->parentScene()->gameObjects()[LAYER_ABSTRACT]) {
+
+		if(gameObject->idTag() == IdTag::NAVIGATION_POINT ) {
+
+			const auto& navComponent = gameObject->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
+			if (navComponent->type() == navType) {
+
+				const auto& transform = gameObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+				auto navPosition = transform->getCenterPosition();
+
+				//distance calculation
+				auto distance = std::powf((thisPosition.x - navPosition.x), 2) + std::powf((thisPosition.y - navPosition.y), 2);
+				distance = std::sqrtf(distance);
+
+				if (shortest == 0. || shortest > distance) {
+					shortest = distance;
+					closestWayPoint = gameObject;
+				}
+			}
+		}
+
+	}
+
+	return closestWayPoint;
+}
+
+void BrainComponent::navigate()
+{
+
+	//Have we reached the current target destination.
+	//If so, then get the next waypoint destination
+	const auto& targetDestination = m_targetDestination->lock();
+
+	if (calculateDistance(parent()->getCenterPosition(), targetDestination->getCenterPosition()) < DESTINATION_DISTANCE_TOLERANCE) {
+
+		m_targetDestination = getNextTargetDestination();
+
+		//Clear out the visited itermin nav points now that we've onto
+		//a new fresh target destination
+		m_tempVisitedNavPoints.clear();
+
+	}
+
+	//If we do not have an interim destination then we are off the nav path so get to the nearest one
+	if (m_interimDestination.has_value() == false) {
+		m_interimDestination = getClosestNavPoint(parent()->getCenterPosition(), NavigationObjectType::TRANSIT_POINT);
+	}
+
+	//If we have reached the interim destination then find the next possible interim destination that gets us
+	//closest to the target dstination
+	//Its possible that the interim destination that we find IS the actual target destination we're trying to get to
+	const auto& interimDestination = m_interimDestination->lock();
+	if (calculateDistance(parent()->getCenterPosition(), interimDestination->getCenterPosition()) < DESTINATION_DISTANCE_TOLERANCE) {
+
+		//Now that we have hit this interim nav point, add it to a list of visted nav points
+		//so that we can avoid these while trying to navigate to the ultimate target destination
+		m_tempVisitedNavPoints.push_back(interimDestination);
+
+		m_interimDestination = getNextinterimDestination();
+
+	}
+
+	//Execute the move actions to get us closer to the interim destination point
+	std::shared_ptr interim = m_interimDestination->lock();
+	const auto& interimNavComponent = interim->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	b2Vec2 trajectory{}; 
+	trajectory.x = interimNavComponent->getCenterPosition().x - parent()->getCenterPosition().x;
+	trajectory.y = interimNavComponent->getCenterPosition().y - parent()->getCenterPosition().y;
+
+	trajectory.Normalize();
+
+	auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+	action->performMoveAction(trajectory);
+
+
+
+}
+
+float BrainComponent::calculateDistance(SDL_FPoint location1, SDL_FPoint location2)
+{
+
+	auto distance = std::powf((location1.x - location2.x), 2) + std::powf((location1.y - location2.y), 2);
+	distance = std::sqrtf(distance);
+
+	return distance;
+}
+
+
+std::shared_ptr<GameObject> BrainComponent::getNextTargetDestination()
+{
+
+	const auto& currentTarget = m_targetDestination->lock();
+	const auto& currentNavComponent = currentTarget->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
+
+	//Get the next waypoint in the list
+	//If we have reached the end then randomly resort the waypoints and reset to zero
+	if (m_currentWaypointIndex == m_wayPoints.size() - 1) {
+
+		m_currentWaypointIndex = 0;
+		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+		std::shuffle(m_wayPoints.begin(), m_wayPoints.end(), std::default_random_engine(seed));
+
+	}
+	else {
+		m_currentWaypointIndex += 1;
+	}
+	
+	auto newDestination = m_wayPoints[m_currentWaypointIndex]->lock();
+	return newDestination;
+
+}
+
+/*
+Find the accessible iterim point that is the closest to the current target waypoint
+*/
+std::shared_ptr<GameObject> BrainComponent::getNextinterimDestination()
+{
+	std::shared_ptr<GameObject> foundNavGameObject;
+
+	const auto& target = m_targetDestination->lock();
+	const auto& targetTransformComponent = target->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+
+	const auto& currentInterim = m_interimDestination->lock();
+	const auto& interimNavComponent = currentInterim->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
+
+
+	float shortestDistance{999999999.0};
+	std::shared_ptr<GameObject>shortestDistanceObject{};
+	for (auto& navPoint : interimNavComponent->accessibleNavObjects()) { //are these in order of distance? I thin kso...
+
+		if (existsInAlreadyVistedNavList(navPoint) == false) {
+			const auto& navPointTemp = navPoint.lock();
+			const auto& navPointTransformComponent = navPointTemp->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+
+			//Calulate the distance from this accessible nav point and the target waypoint
+			float distance = calculateDistance(navPointTransformComponent->getCenterPosition(), targetTransformComponent->getCenterPosition());
+
+			if (shortestDistance > distance) {
+
+
+				shortestDistance = distance;
+				shortestDistanceObject = navPointTemp;
+
+			}
+		}
+	}
+
+
+	return shortestDistanceObject;
+
+
+}
+
+bool BrainComponent::existsInAlreadyVistedNavList(std::weak_ptr<GameObject> navPoint)
+{
+	bool found{false};
+
+	for (const auto vistedPoint : m_tempVisitedNavPoints) {
+
+		if (navPoint.lock() == vistedPoint.lock()) {
+			found = true;
+		}
+	}
+
+	return found;
+}
+

@@ -164,6 +164,16 @@ uint16 PhysicsComponent::_setCollisionMask(Json::Value physicsComponentJSON)
 }
 
 
+void PhysicsComponent::applyMovement(float velocity, b2Vec2 trajectory)
+{
+
+	trajectory.x *= velocity;
+	trajectory.y *= velocity;
+
+	m_physicsBody->SetLinearVelocity(trajectory);
+
+}
+
 void PhysicsComponent::applyMovement(float velocity, int direction, int strafeDirection)
 {
 

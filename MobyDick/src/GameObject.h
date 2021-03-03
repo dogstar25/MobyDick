@@ -60,6 +60,7 @@ public:
 	void setRemoveFromWorld(bool removeFromWorld) { m_removeFromWorld = removeFromWorld; }
 	void setPosition(b2Vec2 position, float angle);
 	void setPosition(float x, float y);
+	SDL_FPoint getCenterPosition();
 	void init(bool cameraFollow = false);
 	void postInit(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection);
 	void postInitNavigation(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection);

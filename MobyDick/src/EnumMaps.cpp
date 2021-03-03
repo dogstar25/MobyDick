@@ -22,9 +22,12 @@ EnumMap::EnumMap()
 	m_enumMap["CONTROL_MODE_SELECT"] = CONTROL_MODE_SELECT;
 	m_enumMap["CONTROL_MODE_PLAY"] = CONTROL_MODE_PLAY;
 
-	m_enumMap["IdTag::GENERAL"] = IdTag::GENERAL;
+	//GameObject IdTags
+	m_enumMap["IdTag::GENERAL_SOLID"] = IdTag::GENERAL_SOLID;
+	m_enumMap["IdTag::GENERAL_FREE"] = IdTag::GENERAL_FREE;
 	m_enumMap["IdTag::DEFLECT_EFFECT"] = IdTag::DEFLECT_EFFECT;
 	m_enumMap["IdTag::SMOKE_PARTICLE"] = IdTag::SMOKE_PARTICLE;
+	m_enumMap["IdTag::NAVIGATION_POINT"] = IdTag::NAVIGATION_POINT;
 	m_enumMap["IdTag::DRONE_BRAIN"] = IdTag::DRONE_BRAIN;
 	m_enumMap["IdTag::DRONE_SHIELD"] = IdTag::DRONE_SHIELD;
 	m_enumMap["IdTag::DRONE_WEAPON"] = IdTag::DRONE_WEAPON;

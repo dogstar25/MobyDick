@@ -8,6 +8,7 @@
 #include <optional>
 
 #include <json/json.h>
+#include <box2d/box2d.h>
 
 #include "../actions/Action.h"
 #include "../actions/MoveAction.h"
@@ -29,6 +30,7 @@ public:
 	void update();
 
 	void performMoveAction(int direction, int strafe);
+	void performMoveAction(b2Vec2 trajectory);
 	void performRotateAction(float angularVelocity);
 	void performUseAction();
 	void performUsageAction();

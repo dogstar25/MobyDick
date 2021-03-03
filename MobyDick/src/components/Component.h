@@ -30,7 +30,7 @@ public:
 	Component();
 	~Component();
 	virtual void update();
-	virtual void postInit(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>&) {};
+	virtual void postInit() {};
 
 	void setParent(GameObject* gameObject) { m_parentGameObject = gameObject; }
 	GameObject* parent() { return m_parentGameObject; }

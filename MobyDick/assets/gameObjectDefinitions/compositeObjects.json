@@ -20,10 +20,10 @@
                 "type": "B2_DYNAMIC",
                 "collisionShape": "B2_CIRCLE",
                 "collisionRadius": 2.56,
-                "friction": 1.0,
+                "friction": 0.0,
                 "restitution": 0.1,
                 "density": 500.5,
-                "linearDamping": 0.2,
+                "linearDamping": 0.0,
                 "angularDamping": 0.1,
                 "anchorPoint": {
                     "x": 0.0,
@@ -36,15 +36,19 @@
                 "actions": [
                     {
                         "actionId": "ACTION_MOVE",
-                        "actionClass": "ActorMove"
+                        "actionClass": "DroneMove"
+                    },
+                    {
+                        "actionId": "ACTION_ROTATE",
+                        "actionClass": "DefaultRotate"
                     }
                 ]
             },
             "vitalityComponent": {
-                "speed": 7.5
+                "speed": 20.0
             },
             "compositeComponent": {
-                "physicsWeldPiecesOn": true,
+                "physicsWeldPiecesOn": false,
                 "blueprint": {
                     "texture": "TX_DRONE1_BLUEPRINT",
                     "legend": [

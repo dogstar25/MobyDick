@@ -25,6 +25,7 @@ static bool operator !=(SDL_Color a, SDL_Color b)
 inline constexpr int CHILD_POSITIONS = 9;
 inline constexpr int MAX_VITALITY_LEVELS = 5;
 inline constexpr int MAX_ANIMATION_STATES = 5;
+inline constexpr int DESTINATION_DISTANCE_TOLERANCE = 50;
 
 //Mouse State
 inline constexpr int MOUSE_NONE = 0;
@@ -41,28 +42,30 @@ namespace IdTag {
 	inline constexpr int MAX_OBJECT_CATEGORIES = 32;
 
 	//General
-	inline constexpr int GENERAL = 0;
+	inline constexpr int GENERAL_SOLID = 0;
+	inline constexpr int GENERAL_FREE = 1;
 	//Intangible
-	inline constexpr int DEFLECT_EFFECT = 1;
-	inline constexpr int SMOKE_PARTICLE = 2;
+	inline constexpr int DEFLECT_EFFECT = 2;
+	inline constexpr int SMOKE_PARTICLE = 3;
+	inline constexpr int NAVIGATION_POINT = 4;
 	//Non-stationary
-	inline constexpr int DRONE_BRAIN = 3;
-	inline constexpr int DRONE_FRAME = 4;
-	inline constexpr int DRONE_SHIELD = 5;
-	inline constexpr int DRONE_WEAPON = 6;
-	inline constexpr int ENEMY_BULLET = 7;
-	inline constexpr int FRIENDLY_BULLET = 8;
-	inline constexpr int GUI = 9;
-	inline constexpr int HEAVY_PARTICLE = 10;
-	inline constexpr int LIGHT_PARTICLE = 11;
-	inline constexpr int PLAYER = 12;
-	inline constexpr int PLAYER_BULLET = 13;
-	inline constexpr int SHIELD_SCRAP = 14;
-	inline constexpr int SURVIVOR = 15;
+	inline constexpr int DRONE_BRAIN = 5;
+	inline constexpr int DRONE_FRAME = 6;
+	inline constexpr int DRONE_SHIELD = 7;
+	inline constexpr int DRONE_WEAPON = 8;
+	inline constexpr int ENEMY_BULLET = 9;
+	inline constexpr int FRIENDLY_BULLET = 10;
+	inline constexpr int GUI = 11;
+	inline constexpr int HEAVY_PARTICLE = 12;
+	inline constexpr int LIGHT_PARTICLE = 13;
+	inline constexpr int PLAYER = 14;
+	inline constexpr int PLAYER_BULLET = 15;
+	inline constexpr int SHIELD_SCRAP = 16;
+	inline constexpr int SURVIVOR = 17;
 	//Stationary
-	inline constexpr int MEDKIT = 16;
-	inline constexpr int WALL = 17;
-	inline constexpr int WEAPON_PICKUP = 18;
+	inline constexpr int MEDKIT = 18;
+	inline constexpr int WALL = 19;
+	inline constexpr int WEAPON_PICKUP = 20;
 
 }
 
@@ -84,33 +87,6 @@ namespace BrainState {
 	inline constexpr auto PURSUE = 3;
 	inline constexpr auto ENGAGE = 4;
 	inline constexpr auto FLEE	 = 5;
-
-}
-
-namespace IdTagLabels {
-
-	//General
-	inline constexpr auto GENERAL = "General";
-	//Intangible
-	inline constexpr auto DEFLECT_EFFECT = "DeflectEffect";
-	inline constexpr auto SMOKE_PARTICLE = "SmokeParticle";;
-	//Non-stationary
-	inline constexpr auto DRONE_BRAIN = "DroneBrain";
-	inline constexpr auto DRONE_FRAME = "DroneFrame";
-	inline constexpr auto DRONE_SHIELD = "DroneShield";
-	inline constexpr auto DRONE_WEAPON = "DroneWeapon";
-	inline constexpr auto ENEMY_BULLET = "EnemyBullet";
-	inline constexpr auto FRIENDLY_BULLET = "FriendlyBullet";
-	inline constexpr auto HEAVY_PARTICLE = "HeavyParticle";
-	inline constexpr auto LIGHT_PARTICLE = "LightParticle";
-	inline constexpr auto PLAYER = "Player";
-	inline constexpr auto PLAYER_BULLET = "PlayerBullet";
-	inline constexpr auto SHIELD_SCRAP = "ShieldScrap";
-	inline constexpr auto SURVIVOR = "Survivor";
-	//Stationary
-	inline constexpr auto MEDKIT = "Medkit";
-	inline constexpr auto WALL = "Wall";
-	inline constexpr auto WEAPON_PICKUP = "WeaponPickup";
 
 }
 

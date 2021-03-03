@@ -14,20 +14,35 @@
         {
             "id": "LOC_0007_0005",
             "gameObjectId": "GINA_64",
+            "cameraFollow": false
+        },
+        {
+            "id": "LOC_0016_0015",
+            "gameObjectId": "DRONE",
             "cameraFollow": true
         },
         {
-            "id": "LOC_0020_0027",
+            "id": "LOC_0058_0004",
+            "gameObjectId": "DRONE",
+            "cameraFollow": false
+        },
+        {
+            "id": "LOC_0092_0024",
+            "gameObjectId": "DRONE",
+            "cameraFollow": false
+        },
+        {
+            "id": "LOC_0002_0012",
             "gameObjectId": "SWORDLADY"
         },
         {
             "id": "LOC_0020_0016",
-            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "gameObjectId": "NAVIGATION_WAYPOINT",
             "layer": "LAYER_ABSTRACT"
         },
         {
             "id": "LOC_0005_0027",
-            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "gameObjectId": "NAVIGATION_WAYPOINT",
             "layer": "LAYER_ABSTRACT"
         },
         {
