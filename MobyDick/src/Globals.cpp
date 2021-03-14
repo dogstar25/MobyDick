@@ -135,6 +135,35 @@ namespace util
 
 		return adjustment;
 	}
+
+	float normalizeRadians(float angleInRadians)
+	{
+
+		while (angleInRadians < degreesToRadians(0)) {
+			angleInRadians += degreesToRadians(360);
+		}
+
+		while (angleInRadians > degreesToRadians(360)) {
+			angleInRadians -= degreesToRadians(360);
+		}
+
+		return angleInRadians;
+
+	}
+
+	float normalizeDegrees(float angleInDegrees)
+	{
+
+		while (angleInDegrees < -180) {
+			angleInDegrees += 360;
+		}
+
+		while (angleInDegrees > 180) {
+			angleInDegrees -= 360;
+		}
+
+		return angleInDegrees;
+	}
 }
 
 

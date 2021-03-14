@@ -39,6 +39,7 @@ public:
 	void setPhysicsBodyActive(bool  active);
 	void setFixedRotation(bool fixedRotation);
 	void setBullet(bool isBullet);
+	void setAngle(float angle);
 	
 
 	void attachItem(GameObject* inventoryObject, std::optional<b2Vec2> attachLocation = std::nullopt);

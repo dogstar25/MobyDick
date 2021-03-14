@@ -45,10 +45,11 @@
                 ]
             },
             "vitalityComponent": {
-                "speed": 20.0
+                "speed": 20.0,
+                "rotationSpeed": 20
             },
             "compositeComponent": {
-                "physicsWeldPiecesOn": false,
+                "physicsWeldPiecesOn": true,
                 "blueprint": {
                     "texture": "TX_DRONE1_BLUEPRINT",
                     "legend": [

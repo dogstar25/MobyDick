@@ -10,17 +10,17 @@
             "inputControlMode": "CONTROL_MODE_PLAY",
             "maxObjects": 5000,
             "firstLevel": "level1", //still need level managing implemented
-            "gameObjects": [
-                {
-                    "gameObjectId": "BOWMAN",
-                    "layer": "LAYER_MAIN",
-                    "location": {
-                        "x": 6,
-                        "y": 7
-                    }
+            //"gameObjects": [
+            //    {
+            //        "gameObjectId": "BOWMAN",
+            //        "layer": "LAYER_MAIN",
+            //        "location": {
+            //            "x": 6,
+            //            "y": 7
+            //        }
 
-                }
-            ],
+            //    }
+            //],
             "keyActions": [
                 {
                     "keyCode": "SDLK_ESCAPE",

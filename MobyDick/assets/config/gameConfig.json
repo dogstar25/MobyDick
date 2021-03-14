@@ -19,7 +19,7 @@
     "dynamicTextRefreshDelay": 0.1, //need a tiny delay to prevent millions of text texture regenerations
     "debugPanel": {
         "show": true,
-        "xPos": 2,
+        "xPos": 1,
         "yPos": 2,
         "fontSize": 12
     }

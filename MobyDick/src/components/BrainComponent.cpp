@@ -3,6 +3,7 @@
 #include <box2d/box2d.h>
 
 #include "../game.h"
+#include "../DebugPanel.h"
 
 #include <math.h>
 #include <random>
@@ -60,7 +61,7 @@ void BrainComponent::postInit()
 	}
 
 	//Do an random sort of the waypoints order
-	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+	unsigned seed = static_cast<unsigned>(std::chrono::system_clock::now().time_since_epoch().count());
 	std::shuffle(m_wayPoints.begin(), m_wayPoints.end(), std::default_random_engine(seed));
 
 }
@@ -126,18 +127,23 @@ void BrainComponent::_doPatrol()
 		m_targetDestination = getClosestNavPoint(transform->getCenterPosition(), NavigationObjectType::WAYPOINT);
 	}
 	
+	//Have we reached the current target destination.
+	//If so, then get the next waypoint destination
+	const auto& targetDestination = m_targetDestination->lock();
+
+	if (calculateDistance(parent()->getCenterPosition(), targetDestination->getCenterPosition()) < DESTINATION_DISTANCE_TOLERANCE) {
+
+		//ToDo:Pass in an enum to tell this function how to determine next distination
+		// for example, it could be the last know enemy location. Pass it in from navigate( targetType)
+		m_targetDestination = getNextTargetDestination();
+
+		//Clear out the visited itermin nav points now that we've onto
+		//a new fresh target destination
+		m_tempVisitedNavPoints.clear();
+
+	}
+
 	navigate();
-
-	
-	//const b2Vec2 changePosition = b2Vec2(10, 10);
-	//b2Vec2 newPosition = currentPosition + changePosition;
-
-	///*auto& waypoint1 = m_waypoints[0];
-	//b2Vec2 tragectory = waypoint1.point - position;*/
-
-	//auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-	////action->performMoveAction(1, 1);
-
 
 }
 
@@ -148,6 +154,9 @@ void BrainComponent::_doAlert()
 
 void BrainComponent::_doPursue()
 {
+
+	
+
 }
 
 void BrainComponent::_doEngage()
@@ -190,20 +199,6 @@ std::weak_ptr<GameObject> BrainComponent::getClosestNavPoint(SDL_FPoint thisPosi
 void BrainComponent::navigate()
 {
 
-	//Have we reached the current target destination.
-	//If so, then get the next waypoint destination
-	const auto& targetDestination = m_targetDestination->lock();
-
-	if (calculateDistance(parent()->getCenterPosition(), targetDestination->getCenterPosition()) < DESTINATION_DISTANCE_TOLERANCE) {
-
-		m_targetDestination = getNextTargetDestination();
-
-		//Clear out the visited itermin nav points now that we've onto
-		//a new fresh target destination
-		m_tempVisitedNavPoints.clear();
-
-	}
-
 	//If we do not have an interim destination then we are off the nav path so get to the nearest one
 	if (m_interimDestination.has_value() == false) {
 		m_interimDestination = getClosestNavPoint(parent()->getCenterPosition(), NavigationObjectType::TRANSIT_POINT);
@@ -222,7 +217,12 @@ void BrainComponent::navigate()
 		m_interimDestination = getNextinterimDestination();
 
 	}
+	
 
+	 
+	 
+	 
+	
 	//Execute the move actions to get us closer to the interim destination point
 	std::shared_ptr interim = m_interimDestination->lock();
 	const auto& interimNavComponent = interim->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
@@ -234,6 +234,11 @@ void BrainComponent::navigate()
 
 	auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 	action->performMoveAction(trajectory);
+
+	//Set the angle to point towards the next nav point using the trajectory we calculated above
+	_rotateTowards(trajectory);
+
+	
 
 
 
@@ -260,7 +265,7 @@ std::shared_ptr<GameObject> BrainComponent::getNextTargetDestination()
 	if (m_currentWaypointIndex == m_wayPoints.size() - 1) {
 
 		m_currentWaypointIndex = 0;
-		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+		unsigned seed = static_cast<unsigned>(std::chrono::system_clock::now().time_since_epoch().count());
 		std::shuffle(m_wayPoints.begin(), m_wayPoints.end(), std::default_random_engine(seed));
 
 	}
@@ -287,7 +292,7 @@ std::shared_ptr<GameObject> BrainComponent::getNextinterimDestination()
 	const auto& interimNavComponent = currentInterim->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
 
 
-	float shortestDistance{999999999.0};
+	std::optional<float> shortestDistance{};
 	std::shared_ptr<GameObject>shortestDistanceObject{};
 	for (auto& navPoint : interimNavComponent->accessibleNavObjects()) { //are these in order of distance? I thin kso...
 
@@ -298,8 +303,7 @@ std::shared_ptr<GameObject> BrainComponent::getNextinterimDestination()
 			//Calulate the distance from this accessible nav point and the target waypoint
 			float distance = calculateDistance(navPointTransformComponent->getCenterPosition(), targetTransformComponent->getCenterPosition());
 
-			if (shortestDistance > distance) {
-
+			if (shortestDistance.has_value() == false || shortestDistance.value() > distance) {
 
 				shortestDistance = distance;
 				shortestDistanceObject = navPointTemp;
@@ -326,5 +330,61 @@ bool BrainComponent::existsInAlreadyVistedNavList(std::weak_ptr<GameObject> navP
 	}
 
 	return found;
+}
+
+void BrainComponent::_rotateTowards(b2Vec2 targetPoint)
+{
+
+	auto physicsComponent = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	auto currentAngle = physicsComponent->angle();
+	DebugPanel::instance().addItem("Drone Angle Radians: ", currentAngle, 5);
+	DebugPanel::instance().addItem("Drone Angle Degrees: ", util::radiansToDegrees(currentAngle), 5);
+
+	if (m_targetAngle.has_value()) {
+		DebugPanel::instance().addItem("Target Angle: ", m_targetAngle.value(), 5);
+
+	}
+
+	auto angle = atan2(targetPoint.y, targetPoint.x);
+	angle = util::normalizeRadians(angle);
+	auto angleDegrees = util::radiansToDegrees(angle);
+	float rotationVelocity{ 0 };
+
+	DebugPanel::instance().addItem("Trajectory Angle Radians: ", angle, 5);
+	DebugPanel::instance().addItem("Trajectory Angle Degrees: ", angleDegrees, 5);
+
+	auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+	auto vitality = parent()->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+
+	if (m_targetAngle.has_value() == true) {
+
+
+		if ((m_targetAngle.value() - currentAngle) < 0.0) {
+			rotationVelocity = vitality->rotateSpeed() * -1;
+		}
+		else {
+			rotationVelocity = vitality->rotateSpeed();
+		}
+
+		auto difference = abs(m_targetAngle.value() - currentAngle);
+		DebugPanel::instance().addItem("Difference: ", difference, 5);
+
+		//Once the angle is very close then set the angle directly
+		if (difference < 0.5) {
+			parent()->setAngleInRadians(m_targetAngle.value());
+			m_targetAngle = angle;
+			action->performRotateAction(0);
+		}
+		else {
+			action->performRotateAction(rotationVelocity);
+		}
+	}
+	else {
+		m_targetAngle = angle;
+		action->performRotateAction(0);
+
+	}
+
+
 }
 

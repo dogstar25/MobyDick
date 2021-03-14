@@ -29,6 +29,7 @@ private:
     std::vector<std::optional<std::weak_ptr<GameObject>>> m_wayPoints;
     std::vector<std::optional<std::weak_ptr<GameObject>>> m_navPoints;
     std::vector<std::weak_ptr<GameObject>> m_tempVisitedNavPoints;
+    std::optional<float> m_targetAngle{};
 
     int m_currentWaypointIndex{0};
 
@@ -45,6 +46,7 @@ private:
     std::shared_ptr<GameObject> getNextTargetDestination();
     std::shared_ptr<GameObject> getNextinterimDestination();
     bool existsInAlreadyVistedNavList(std::weak_ptr<GameObject> navPoint);
+    void _rotateTowards(b2Vec2 targetPoint);
     
     void navigate();
 

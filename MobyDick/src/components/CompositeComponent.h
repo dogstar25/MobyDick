@@ -42,6 +42,7 @@ public:
 	void update() override;
 	void render();
 	void weldOnPieces();
+	void postInit();
 	bool physicsWeldPiecesOn() { return m_physicsWeldPiecesOn; }
 
 private:

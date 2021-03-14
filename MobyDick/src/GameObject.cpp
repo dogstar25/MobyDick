@@ -324,14 +324,16 @@ void GameObject::init(bool cameraFollow)
 	if (id() == "DRONE") {
 
 		//Weld Oncomposite pieces
-		const auto& droneCompositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
+		//Todo:Move to postInit for Composite Components
+	/*	const auto& droneCompositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
 		if (droneCompositeComponent->physicsWeldPiecesOn() == true) {
 			droneCompositeComponent->weldOnPieces();
-		}
+		}*/
 
 	}
 	else if (id() == "GINA_64") {
 
+		//ToDo:Move to postinit for Inventory/attachment components
 		const auto& playerInventoryComponent = getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT);
 		playerInventoryComponent->weldOnAttachments();
 	}
@@ -345,6 +347,30 @@ void GameObject::setPhysicsActive(bool active)
 	const auto& physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 	if (physicsComponent) {
 		physicsComponent->setPhysicsBodyActive(active);
+	}
+
+}
+
+void GameObject::setAngleInRadians(float angle)
+{
+
+	const auto& physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	if (physicsComponent) {
+
+		physicsComponent->setAngle(angle);
+	}
+
+}
+
+void GameObject::setAngleInDegrees(float angle)
+{
+
+	const auto& physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	if (physicsComponent) {
+
+		angle = util::degreesToRadians(angle);
+
+		physicsComponent->setAngle(angle);
 	}
 
 }
@@ -370,6 +396,11 @@ void GameObject::postInit(const std::array <std::vector<std::shared_ptr<GameObje
 		brainComponent->postInit();
 	}
 
+	//The CompositeComponent needs to weld on its component pieces it the weld flag is turned on
+	if (hasComponent(ComponentTypes::COMPOSITE_COMPONENT)) {
+		const auto compositeComponent = getComponent<BrainComponent>(ComponentTypes::COMPOSITE_COMPONENT);
+		compositeComponent->postInit();
+	}
 
 
 }
