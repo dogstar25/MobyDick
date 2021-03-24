@@ -685,7 +685,7 @@
                 "absolutePositioning": false
             },
             "vitalityComponent": {
-                "lifetime": 0.00001
+                "lifetime": 0.0001
             }
         },
         {

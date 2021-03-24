@@ -32,6 +32,7 @@ public:
 	void update() override;
 	void applyMovement(float velocity, int direction, int strafeDirection);
 	void applyMovement(float velocity, b2Vec2 trajectory);
+	void applyImpulse(float force, b2Vec2 trajectory);
 	void applyRotation(float angularVelocity);
 	void setOffGrid();
 	void setTransform(b2Vec2 positionVector, float angle);

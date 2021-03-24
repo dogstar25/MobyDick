@@ -125,12 +125,9 @@ public:
 
 			if (transformThis->position() == transform2->position()) {
 				return true;
-				std::cout << "Match/n";
 			}
 
 		}
-
-		std::cout << "No match/n";
 		return false;
 
 	}

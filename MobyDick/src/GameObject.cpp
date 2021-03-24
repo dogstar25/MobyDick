@@ -319,24 +319,18 @@ void GameObject::init(bool cameraFollow)
 	}
 
 	//NEW - execute special code for certain extra complicated gameObjects that need to execute after main construction
-	// UPDATE_TODD!!!! - can these special things be put into the "update" function to first detect that certain things are not fully initialized
-	// and therefore do this "post-creation" initialization?
-	if (id() == "DRONE") {
-
-		//Weld Oncomposite pieces
-		//Todo:Move to postInit for Composite Components
-	/*	const auto& droneCompositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
-		if (droneCompositeComponent->physicsWeldPiecesOn() == true) {
-			droneCompositeComponent->weldOnPieces();
-		}*/
-
-	}
-	else if (id() == "GINA_64") {
+	if (id() == "GINA_64") {
 
 		//ToDo:Move to postinit for Inventory/attachment components
 		const auto& playerInventoryComponent = getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT);
 		playerInventoryComponent->weldOnAttachments();
 	}
+
+	//Brain Componets are particularly complex and specialized to the particular GameObject.
+	//For this particular game, set all of the custom brainComponent classes here.
+	//_setBrains should be a vitual function that is overriden by the specific game using this engine
+	//Set All Special BrainComponents here
+	//_setBrains();
 
 
 }

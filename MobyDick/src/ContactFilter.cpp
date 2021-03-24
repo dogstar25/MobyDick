@@ -72,20 +72,35 @@ ContactFilter::ContactFilter()
 	m_collisionMasks[PLAYER].reset();
 	m_collisionMasks[PLAYER].set(SHIELD_SCRAP);
 	m_collisionMasks[PLAYER].set(SURVIVOR);
+	m_collisionMasks[PLAYER].set(DRONE_FRAME);
 	m_collisionMasks[PLAYER].set(WALL);
 
 	//PLAYER_BULLET
 	m_collisionMasks[PLAYER_BULLET].reset();
+	m_collisionMasks[PLAYER_BULLET].set(DRONE_SHIELD);
 	m_collisionMasks[PLAYER_BULLET].set(WALL);
 
 	//SHIELD_SCRAP
 	m_collisionMasks[SHIELD_SCRAP].reset();
+	m_collisionMasks[SHIELD_SCRAP].set(PLAYER);
+	m_collisionMasks[SHIELD_SCRAP].set(DRONE_FRAME);
 	m_collisionMasks[SHIELD_SCRAP].set(WALL);
 
 	//SURVIVOR
 	m_collisionMasks[SURVIVOR].reset();
 	m_collisionMasks[SURVIVOR].set(WALL);
 
+	//WALL
+	m_collisionMasks[WALL].reset();
+	m_collisionMasks[WALL].set(GENERAL_SOLID);
+	m_collisionMasks[WALL].set(DRONE_FRAME);
+	m_collisionMasks[WALL].set(FRIENDLY_BULLET);
+	m_collisionMasks[WALL].set(HEAVY_PARTICLE);
+	m_collisionMasks[WALL].set(PLAYER);
+	m_collisionMasks[WALL].set(PLAYER_BULLET);
+	m_collisionMasks[WALL].set(SHIELD_SCRAP);
+	m_collisionMasks[WALL].set(SURVIVOR);
+	m_collisionMasks[WALL].set(SURVIVOR);
 
 }
 
@@ -120,7 +135,8 @@ bool ContactFilter::ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB)
 	auto gameObjectAMask = m_collisionMasks[gameObjectA->idTag()];
 	auto gameObjectBMask = m_collisionMasks[gameObjectB->idTag()];
 
-	if (gameObjectAMask.test(gameObjectB->idTag()) ||
+	//ToDo:this OR should be an AND
+	if (gameObjectAMask.test(gameObjectB->idTag()) &&
 		gameObjectBMask.test(gameObjectA->idTag())) {
 		return true;
 	}

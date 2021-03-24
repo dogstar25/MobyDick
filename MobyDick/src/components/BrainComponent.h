@@ -19,6 +19,10 @@ public:
     void update() override;
     void postInit() override;
 
+    int sensorLength() { return m_sensorLength; }
+    int sensorOffset() { return m_sensorOffset; }
+    
+
 private:
 
     int m_currentState{ BrainState::PATROL };
@@ -30,8 +34,11 @@ private:
     std::vector<std::optional<std::weak_ptr<GameObject>>> m_navPoints;
     std::vector<std::weak_ptr<GameObject>> m_tempVisitedNavPoints;
     std::optional<float> m_targetAngle{};
+    std::vector<IntersectionItem> m_seenObjects;
 
     int m_currentWaypointIndex{0};
+    int m_sensorLength{};
+    int m_sensorOffset{};
 
     void _updateSightInput();
     void _updateSensorInput();
@@ -47,6 +54,7 @@ private:
     std::shared_ptr<GameObject> getNextinterimDestination();
     bool existsInAlreadyVistedNavList(std::weak_ptr<GameObject> navPoint);
     void _rotateTowards(b2Vec2 targetPoint);
+    void _applyAvoidanceMovement();
     
     void navigate();
 

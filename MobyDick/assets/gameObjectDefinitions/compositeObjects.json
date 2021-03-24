@@ -21,16 +21,19 @@
                 "collisionShape": "B2_CIRCLE",
                 "collisionRadius": 2.56,
                 "friction": 0.0,
-                "restitution": 0.1,
-                "density": 500.5,
+                "restitution": 0.0,
+                "density": 5000.5,
                 "linearDamping": 0.0,
-                "angularDamping": 0.1,
+                "angularDamping": 0.0,
                 "anchorPoint": {
                     "x": 0.0,
                     "y": 0.0
                 }
             },
             "brainComponent": {
+                "sensorLength": 100,
+                "sensorOffset": 75
+
             },
             "actionComponent": {
                 "actions": [
@@ -46,7 +49,7 @@
             },
             "vitalityComponent": {
                 "speed": 20.0,
-                "rotationSpeed": 20
+                "rotationSpeed": 30
             },
             "compositeComponent": {
                 "physicsWeldPiecesOn": true,

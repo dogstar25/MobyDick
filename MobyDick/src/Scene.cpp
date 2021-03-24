@@ -159,25 +159,32 @@ void Scene::update() {
 	Camera::instance().update();
 
 	// Remove all objects that should be removed in first pass
-	for (auto& gameObjects : m_gameObjects)
-	{
-		for (int i = 0; i < gameObjects.size(); i++)
-		{
-			if (gameObjects[i]->removeFromWorld())
-			{
-				gameObjects[i]->reset();//not every object is pooled so need a different spot to handle this
-				gameObjects.erase(gameObjects.begin() + i);
+	for (auto& gameObjects : m_gameObjects)	{
+		
+		auto it = gameObjects.begin();
+		while(it != gameObjects.end()){
+
+			if (it->get()->removeFromWorld() == true) {
+
+				if (it->get()->id() == "BULLET1") {
+					int todd = 1;
+				}
+				it->get()->reset();
+				it = gameObjects.erase(it);
+			}
+			else {
+				++it;
 			}
 		}
 
-		//gameObjects.shrink_to_fit();
+		gameObjects.shrink_to_fit();
 
 	}
-
 
 	//Update each gameObject in all layers
 	for (auto& gameObjects : m_gameObjects)
 	{
+
 		for (int i = 0; i < gameObjects.size(); i++)
 		{
 			//assert(gameObject != nullptr && "GameObject is null");

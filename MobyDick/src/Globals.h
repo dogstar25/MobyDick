@@ -201,6 +201,8 @@ namespace util
 	const SDL_Color JsonToColor(Json::Value JsonColor);
 	float normalizeRadians(float angleInRadians);
 	float normalizeDegrees(float angleInDegrees);
+	b2Vec2& toBox2dPoint(b2Vec2& point);
+	b2Vec2& toRenderPoint(b2Vec2& point);
 
 	b2Vec2 matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float);
 

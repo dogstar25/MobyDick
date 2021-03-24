@@ -4,6 +4,7 @@
 
 #include "../game.h"
 #include "../DebugPanel.h"
+#include "../RayCastCallBack.h"
 
 #include <math.h>
 #include <random>
@@ -18,9 +19,8 @@ BrainComponent::BrainComponent(Json::Value definitionJSON)
 
 	Json::Value brainComponentJSON = definitionJSON["brainComponent"];
 
-
-	
-
+	m_sensorLength = brainComponentJSON["sensorLength"].asInt();
+	m_sensorOffset = brainComponentJSON["sensorOffset"].asInt();
 
 
 }
@@ -33,7 +33,6 @@ BrainComponent::~BrainComponent()
 void BrainComponent::update()
 {
 
-	_updateSightInput();
 	_updateSensorInput();
 
 	_doPatrol();
@@ -92,29 +91,62 @@ void BrainComponent::_updateSensorInput()
 
 	auto transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
-	const b2Vec2 centerPosition = { transform->getCenterPosition().x / 25, transform->getCenterPosition().y / 25 };
+	b2Vec2 centerPosition = { transform->getCenterPosition().x , transform->getCenterPosition().y  };
 
-	float sensorIncrement = 18;
-	//Create a sensor raycast in every direction full 360%
-	//for (int rayCount = 0; rayCount <= sensorIncrement; rayCount++) {
+	float currentParentAngle = util::degreesToRadians(transform->angle());
 
-	//	float angle = util::degreesToRadians(rayCount * sensorIncrement);
-	//	b2Vec2 direction{ transform->angle() + cos(angle) * 10, transform->angle() + sin(angle) * 10 };
+	//Send out sensor rays across 180% of the front of the parent object
+	RayCastCallBack::instance().reset();
+	for (int i = 0; i <= 4;i++) {
 
-	//	auto lineObject = parent()->parentScene()->addGameObject("PRIMITIVE_LINE", LAYER_MAIN, -1, -1);
-	//	auto lineTransform = lineObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+		//right side
+		auto angleAdj = util::degreesToRadians(22.5 * i);
+		auto angle = util::normalizeRadians(currentParentAngle + angleAdj);
 
-	//	//convert back to world coordinates to draw
-	//	/*centerPosition *= 25;
-	//	direction *= 25;*/
+		b2Vec2 direction{ cos(angle) * (sensorLength()) , sin(angle) * (sensorLength()) };
+		b2Vec2 offset = { cos(angle) * (sensorOffset()) , sin(angle) * (sensorOffset()) };
 
-	//	b2Vec2 begin = { centerPosition.x * 25, centerPosition.y*25};
-	//	b2Vec2 end = { centerPosition.x * 25 + direction.x * 25, centerPosition.y * 25 + direction.y * 25 };
-	//	lineTransform->setLine(begin, end);
+		b2Vec2 begin = { centerPosition.x + offset.x, centerPosition.y + offset.y};
+		b2Vec2 end = { begin.x + direction.x, begin.y + direction.y };
 
-	//}
+		util::toBox2dPoint(begin);
+		util::toBox2dPoint(end);
 
+		parent()->parentScene()->physicsWorld()->RayCast(&RayCastCallBack::instance(), begin, end);
 
+		util::toRenderPoint(begin);
+		util::toRenderPoint(end);
+
+		auto lineObject = parent()->parentScene()->addGameObject("PRIMITIVE_LINE", LAYER_MAIN, -1, -1);
+		auto lineTransform = lineObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+		lineTransform->setLine(begin, end);
+
+		//left side
+		angleAdj = util::degreesToRadians(22.5 * i * -1) ;
+		angle = util::normalizeRadians(currentParentAngle + angleAdj);
+
+		offset = { cos(angle) * (75) , sin(angle) * (75) };
+		direction = { cos(angle) * (100) , sin(angle) * (100) };
+		begin = { centerPosition.x + offset.x, centerPosition.y + offset.y };
+		end = { begin.x + direction.x, begin.y + direction.y };
+
+		util::toBox2dPoint(begin);
+		util::toBox2dPoint(end);
+
+		parent()->parentScene()->physicsWorld()->RayCast(&RayCastCallBack::instance(), begin, end);
+
+		util::toRenderPoint(begin);
+		util::toRenderPoint(end);
+
+		lineObject = parent()->parentScene()->addGameObject("PRIMITIVE_LINE", LAYER_MAIN, -1, -1);
+		lineTransform = lineObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+		lineTransform->setLine(begin, end);
+
+	}
+
+	//Store all of the objects that were hit by our raycast calls
+	m_seenObjects = RayCastCallBack::instance().intersectionItems();
+	RayCastCallBack::instance().reset();
 
 }
 
@@ -218,11 +250,6 @@ void BrainComponent::navigate()
 
 	}
 	
-
-	 
-	 
-	 
-	
 	//Execute the move actions to get us closer to the interim destination point
 	std::shared_ptr interim = m_interimDestination->lock();
 	const auto& interimNavComponent = interim->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
@@ -235,13 +262,13 @@ void BrainComponent::navigate()
 	auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 	action->performMoveAction(trajectory);
 
+	//Possibly adjust movement with small impulse moves to avoid brushing obstacles
+	_applyAvoidanceMovement();
+
 	//Set the angle to point towards the next nav point using the trajectory we calculated above
 	_rotateTowards(trajectory);
 
 	
-
-
-
 }
 
 float BrainComponent::calculateDistance(SDL_FPoint location1, SDL_FPoint location2)
@@ -337,21 +364,11 @@ void BrainComponent::_rotateTowards(b2Vec2 targetPoint)
 
 	auto physicsComponent = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 	auto currentAngle = physicsComponent->angle();
-	DebugPanel::instance().addItem("Drone Angle Radians: ", currentAngle, 5);
-	DebugPanel::instance().addItem("Drone Angle Degrees: ", util::radiansToDegrees(currentAngle), 5);
-
-	if (m_targetAngle.has_value()) {
-		DebugPanel::instance().addItem("Target Angle: ", m_targetAngle.value(), 5);
-
-	}
 
 	auto angle = atan2(targetPoint.y, targetPoint.x);
 	angle = util::normalizeRadians(angle);
 	auto angleDegrees = util::radiansToDegrees(angle);
 	float rotationVelocity{ 0 };
-
-	DebugPanel::instance().addItem("Trajectory Angle Radians: ", angle, 5);
-	DebugPanel::instance().addItem("Trajectory Angle Degrees: ", angleDegrees, 5);
 
 	auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 	auto vitality = parent()->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
@@ -367,7 +384,6 @@ void BrainComponent::_rotateTowards(b2Vec2 targetPoint)
 		}
 
 		auto difference = abs(m_targetAngle.value() - currentAngle);
-		DebugPanel::instance().addItem("Difference: ", difference, 5);
 
 		//Once the angle is very close then set the angle directly
 		if (difference < 0.5) {
@@ -385,6 +401,55 @@ void BrainComponent::_rotateTowards(b2Vec2 targetPoint)
 
 	}
 
+
+}
+
+void BrainComponent::_applyAvoidanceMovement()
+{
+
+	const auto& physics = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+
+	//Check all sensor detected objects and see if any are close enough to prompt a movement adjustment
+	DebugPanel::instance().addItem("Distance Hit: ", "");
+	for (const auto& intersectionItem : m_seenObjects) {
+
+		
+		if (intersectionItem.fraction*25 < 5) {
+			
+			DebugPanel::instance().addItem("Seen Object Distance: ", intersectionItem.fraction * 25, 5);
+			DebugPanel::instance().addItem("Distance Hit: ", "HIT");
+
+			DebugPanel::instance().addItem("PULSE: ", "");
+			if (intersectionItem.gameObject->id().starts_with("WALL")) {
+				DebugPanel::instance().addItem("PULSE: ", "PULSE");
+				DebugPanel::instance().addItem("TrajectoryX: ", intersectionItem.normal.x, 1);
+				DebugPanel::instance().addItem("TrajectoryY: ", intersectionItem.normal.y, 1);
+				auto trajectory = intersectionItem.normal;
+				physics->applyImpulse(300000, trajectory);
+
+
+
+
+				const auto& transform = intersectionItem.gameObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+				b2Vec2 centerPosition = { transform->getCenterPosition().x , transform->getCenterPosition().y };
+
+				b2Vec2 begin = centerPosition;
+				b2Vec2 end = trajectory;
+
+				auto lineObject = parent()->parentScene()->addGameObject("PRIMITIVE_LINE", LAYER_MAIN, -1, -1);
+				auto lineTransform = lineObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+				lineTransform->setLine(begin, end);
+
+
+
+
+			}
+
+		}
+
+	}
+
+	
 
 }
 

@@ -164,6 +164,23 @@ namespace util
 
 		return angleInDegrees;
 	}
+
+	b2Vec2& toBox2dPoint(b2Vec2& point)
+	{
+		point.x /= 25;
+		point.y /= 25;
+
+		return point;
+	}
+
+	b2Vec2& toRenderPoint(b2Vec2& point)
+	{
+		point.x *= 25;
+		point.y *= 25;
+
+		return point;
+	}
+
 }
 
 

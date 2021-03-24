@@ -122,7 +122,6 @@ void VitalityComponent::_updateFiniteLifetime()
 			parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT)->setColorAlpha(int(255 * (m_lifetimeRemaining / m_lifetime)));
 		}
 
-
 	}
 
 }
