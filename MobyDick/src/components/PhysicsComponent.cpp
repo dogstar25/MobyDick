@@ -65,15 +65,28 @@ void PhysicsComponent::setLinearVelocity(b2Vec2 velocityVector)
 	m_physicsBody->SetLinearVelocity(velocityVector);
 }
 
+void PhysicsComponent::setAngle(float angle)
+{
+	auto normalizedAngle = util::normalizeRadians(angle);
+
+	b2Vec2 currentPosition = { m_physicsBody->GetPosition().x , m_physicsBody->GetPosition().y };
+	m_physicsBody->SetTransform(currentPosition, normalizedAngle);
+
+}
+
+
 void PhysicsComponent::update()
 {
-	//update the UserData - only once - cant do it in the constructor
-	/*if (m_physicsBody->GetUserData() == nullptr)
-	{
-		m_physicsBody->SetUserData(parent());
-	}*/
+	//We want to make sure that the angle stays in the range of 0 to 360 for various concerns throughtout the game
+	//Unfortunately, box2d's only function to set an angle value directly is the setTransform which also takes
+	// X and Y position, so we have to send setTransform the current X,Y position as well as the updated angle
+	// value as well
+	auto normalizedAngle = util::normalizeRadians(m_physicsBody->GetAngle());
+	b2Vec2 currentPosition = { m_physicsBody->GetPosition().x , m_physicsBody->GetPosition().y };
+	m_physicsBody->SetTransform(currentPosition, normalizedAngle);
 
 	//Transfer the physicsComponent coordinates to the transformComponent
+	//converting the angle to degrees
 	b2Vec2 convertedPosition{ 0,0 };
 	float convertedAngle = util::radiansToDegrees(m_physicsBody->GetAngle());
 
@@ -163,6 +176,17 @@ uint16 PhysicsComponent::_setCollisionMask(Json::Value physicsComponentJSON)
 
 }
 
+
+void PhysicsComponent::applyImpulse(float force, b2Vec2 trajectory)
+{
+
+	trajectory.x *= force;
+	trajectory.y *= force;
+
+	m_physicsBody->ApplyLinearImpulseToCenter(trajectory, true);
+	//m_physicsBody->ApplyForceToCenter(trajectory, true);
+
+}
 
 void PhysicsComponent::applyMovement(float velocity, b2Vec2 trajectory)
 {

@@ -319,22 +319,18 @@ void GameObject::init(bool cameraFollow)
 	}
 
 	//NEW - execute special code for certain extra complicated gameObjects that need to execute after main construction
-	// UPDATE_TODD!!!! - can these special things be put into the "update" function to first detect that certain things are not fully initialized
-	// and therefore do this "post-creation" initialization?
-	if (id() == "DRONE") {
+	if (id() == "GINA_64") {
 
-		//Weld Oncomposite pieces
-		const auto& droneCompositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
-		if (droneCompositeComponent->physicsWeldPiecesOn() == true) {
-			droneCompositeComponent->weldOnPieces();
-		}
-
-	}
-	else if (id() == "GINA_64") {
-
+		//ToDo:Move to postinit for Inventory/attachment components
 		const auto& playerInventoryComponent = getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT);
 		playerInventoryComponent->weldOnAttachments();
 	}
+
+	//Brain Componets are particularly complex and specialized to the particular GameObject.
+	//For this particular game, set all of the custom brainComponent classes here.
+	//_setBrains should be a vitual function that is overriden by the specific game using this engine
+	//Set All Special BrainComponents here
+	//_setBrains();
 
 
 }
@@ -345,6 +341,30 @@ void GameObject::setPhysicsActive(bool active)
 	const auto& physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 	if (physicsComponent) {
 		physicsComponent->setPhysicsBodyActive(active);
+	}
+
+}
+
+void GameObject::setAngleInRadians(float angle)
+{
+
+	const auto& physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	if (physicsComponent) {
+
+		physicsComponent->setAngle(angle);
+	}
+
+}
+
+void GameObject::setAngleInDegrees(float angle)
+{
+
+	const auto& physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	if (physicsComponent) {
+
+		angle = util::degreesToRadians(angle);
+
+		physicsComponent->setAngle(angle);
 	}
 
 }
@@ -370,6 +390,11 @@ void GameObject::postInit(const std::array <std::vector<std::shared_ptr<GameObje
 		brainComponent->postInit();
 	}
 
+	//The CompositeComponent needs to weld on its component pieces it the weld flag is turned on
+	if (hasComponent(ComponentTypes::COMPOSITE_COMPONENT)) {
+		const auto compositeComponent = getComponent<BrainComponent>(ComponentTypes::COMPOSITE_COMPONENT);
+		compositeComponent->postInit();
+	}
 
 
 }

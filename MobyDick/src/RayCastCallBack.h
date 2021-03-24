@@ -31,7 +31,7 @@ public:
 	
 	bool hasClearNavPath();
 	void reset();
-
+	const std::vector<IntersectionItem>& intersectionItems() { return m_intersectionItems; }
 private:
 
 	RayCastCallBack() {};

@@ -14,23 +14,23 @@
         {
             "id": "LOC_0007_0005",
             "gameObjectId": "GINA_64",
-            "cameraFollow": false
-        },
-        {
-            "id": "LOC_0016_0015",
-            "gameObjectId": "DRONE",
             "cameraFollow": true
         },
         {
-            "id": "LOC_0058_0004",
+            "id": "LOC_0016_0013",
             "gameObjectId": "DRONE",
             "cameraFollow": false
         },
-        {
-            "id": "LOC_0092_0024",
-            "gameObjectId": "DRONE",
-            "cameraFollow": false
-        },
+        //{
+        //    "id": "LOC_0058_0004",
+        //    "gameObjectId": "DRONE",
+        //    "cameraFollow": false
+        //},
+        //{
+        //    "id": "LOC_0092_0024",
+        //    "gameObjectId": "DRONE",
+        //    "cameraFollow": false
+        //},
         {
             "id": "LOC_0002_0012",
             "gameObjectId": "SWORDLADY"

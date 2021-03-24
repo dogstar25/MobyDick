@@ -160,7 +160,7 @@ bool Game::init()
 
 
 
-	#define gina_64 = GameDefs::instance().gina_64;
+	//#define gina_64 = GameDefs::instance().gina_64;
 
 	
 

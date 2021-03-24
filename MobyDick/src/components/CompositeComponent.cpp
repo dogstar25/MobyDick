@@ -45,6 +45,15 @@ void CompositeComponent::update()
 
 }
 
+void CompositeComponent::postInit()
+{
+
+	if (m_physicsWeldPiecesOn == true) {
+		weldOnPieces();
+	}
+
+}
+
 void CompositeComponent::render()
 {
 

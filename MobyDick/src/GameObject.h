@@ -66,6 +66,8 @@ public:
 	void postInitNavigation(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection);
 	void setPhysicsActive(bool active);
 	void setParentScene( Scene* parentScene);
+	void setAngleInDegrees(float angle);
+	void setAngleInRadians(float angle);
 
 	//Accessor Functions
 	auto removeFromWorld() { return m_removeFromWorld; }
@@ -123,12 +125,9 @@ public:
 
 			if (transformThis->position() == transform2->position()) {
 				return true;
-				std::cout << "Match/n";
 			}
 
 		}
-
-		std::cout << "No match/n";
 		return false;
 
 	}

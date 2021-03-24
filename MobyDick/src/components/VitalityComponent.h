@@ -37,6 +37,7 @@ public:
 	void setIsBroken(bool isBroken) { m_isBroken = isBroken; }
 	bool isDestroyed() { return m_isDestroyed; }
 	void setIsDestroyed(bool isDestroyed) { m_isDestroyed = isDestroyed; }
+	float rotateSpeed() { return m_rotationSpeed; }
 
 
 	std::chrono::duration<float, std::milli> lifetime() { return m_lifetime; }
@@ -56,6 +57,7 @@ public:
 
 private:
 	float m_speed{ 0 };
+	float m_rotationSpeed{};
 	float m_attackPower{ 0 };
 	float m_health{ 0 };
 	float m_resistance{ 0 };

@@ -135,6 +135,52 @@ namespace util
 
 		return adjustment;
 	}
+
+	float normalizeRadians(float angleInRadians)
+	{
+
+		while (angleInRadians < degreesToRadians(0)) {
+			angleInRadians += degreesToRadians(360);
+		}
+
+		while (angleInRadians > degreesToRadians(360)) {
+			angleInRadians -= degreesToRadians(360);
+		}
+
+		return angleInRadians;
+
+	}
+
+	float normalizeDegrees(float angleInDegrees)
+	{
+
+		while (angleInDegrees < -180) {
+			angleInDegrees += 360;
+		}
+
+		while (angleInDegrees > 180) {
+			angleInDegrees -= 360;
+		}
+
+		return angleInDegrees;
+	}
+
+	b2Vec2& toBox2dPoint(b2Vec2& point)
+	{
+		point.x /= 25;
+		point.y /= 25;
+
+		return point;
+	}
+
+	b2Vec2& toRenderPoint(b2Vec2& point)
+	{
+		point.x *= 25;
+		point.y *= 25;
+
+		return point;
+	}
+
 }
 
 

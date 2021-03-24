@@ -15,6 +15,7 @@ VitalityComponent::VitalityComponent(Json::Value definitionJSON)
 	Json::Value vitalityComponentJSON = definitionJSON["vitalityComponent"];
 
 	m_speed = vitalityComponentJSON["speed"].asFloat();
+	m_rotationSpeed = vitalityComponentJSON["rotationSpeed"].asFloat();
 	m_lifetime = std::chrono::duration<float>(vitalityComponentJSON["lifetime"].asFloat());
 	if (m_lifetime <= std::chrono::duration<float>(0)) {
 		m_hasFiniteLifetime = false;
@@ -120,7 +121,6 @@ void VitalityComponent::_updateFiniteLifetime()
 			//Todo:move this to the render component and have it check the lifetime to adjust its alpha
 			parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT)->setColorAlpha(int(255 * (m_lifetimeRemaining / m_lifetime)));
 		}
-
 
 	}
 
