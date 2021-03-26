@@ -133,7 +133,7 @@
     <Font Include="assets\arial.ttf" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Source.cpp">
+    <ClCompile Include="src\mortalRescue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
