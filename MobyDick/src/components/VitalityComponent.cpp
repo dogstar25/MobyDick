@@ -177,6 +177,7 @@ bool VitalityComponent::testResistance(float force)
 
 			m_isBroken = true;
 			m_regenTimeSnapshot = std::chrono::steady_clock::now();
+			parent()->reset();
 		}
 		return false;
 	}

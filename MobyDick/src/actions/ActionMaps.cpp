@@ -10,6 +10,7 @@
 #include "DefaultOnHoverOutAction.h"
 #include "DefaultMoveAction.h"
 #include "DefaultRotateAction.h"
+#include "LoadNextLevelAction.h"
 #include "NoAction.h"
 
 ActionMaps& ActionMaps::instance()
@@ -31,6 +32,8 @@ ActionMaps::ActionMaps()
 	m_actionMap["DroneMove"] = std::make_shared<DroneMoveAction>();
 	m_actionMap["ActorRotate"] = std::make_shared<ActorRotateAction>();
 	m_actionMap["ActorUse"] = std::make_shared<ActorUseAction>();
+	m_actionMap["LoadNextLevel"] = std::make_shared<LoadNextLevelAction>();
+	m_actionMap["Interact"] = std::make_shared<InteractAction>();
 
 	m_actionMap["PistolFire"] = std::make_shared<PistolFireAction>();
 
@@ -46,5 +49,12 @@ ActionMaps::ActionMaps()
 
 ActionMaps::~ActionMaps()
 {
+
+}
+
+void ActionMaps::addAction(std::string actionKey, std::shared_ptr<Action> action)
+{
+
+	m_actionMap[actionKey] = action;
 
 }

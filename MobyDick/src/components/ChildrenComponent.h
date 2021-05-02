@@ -10,6 +10,7 @@
 
 #include "Component.h"
 #include "../Globals.h"
+#include "../BaseConstants.h"
 
 
 class GameObject;

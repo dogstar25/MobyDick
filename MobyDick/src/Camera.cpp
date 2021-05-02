@@ -2,7 +2,7 @@
 
 
 #include "GameConfig.h"
-#include "Level.h"
+#include "LevelManager.h"
 
 
 Camera::~Camera()
@@ -35,17 +35,17 @@ void Camera::setFramePosition(float x, float y)
 	float xPos, yPos;
 
 	//If no level is loaded, then frame does not move
-	if (Level::instance().m_id.empty() == false)
+	if (LevelManager::instance().m_id.empty() == false)
 	{
 		//Check far left limit
-		if (x < Level::instance().m_levelBounds.x)
+		if (x < LevelManager::instance().m_levelBounds.x)
 		{
-			xPos = (float)Level::instance().m_levelBounds.x;
+			xPos = (float)LevelManager::instance().m_levelBounds.x;
 		}
 		//Check far right limit
-		else if (x > Level::instance().m_levelBounds.w - m_frame.w)
+		else if (x > LevelManager::instance().m_levelBounds.w - m_frame.w)
 		{
-			xPos = Level::instance().m_levelBounds.w - m_frame.w;
+			xPos = LevelManager::instance().m_levelBounds.w - m_frame.w;
 		}
 		else
 		{
@@ -53,14 +53,14 @@ void Camera::setFramePosition(float x, float y)
 		}
 
 		//Check far top limit
-		if (y < Level::instance().m_levelBounds.y)
+		if (y < LevelManager::instance().m_levelBounds.y)
 		{
-			yPos = (float)Level::instance().m_levelBounds.y;
+			yPos = (float)LevelManager::instance().m_levelBounds.y;
 		}
 		//Check far bottom limit
-		else if (y > Level::instance().m_levelBounds.h - m_frame.h)
+		else if (y > LevelManager::instance().m_levelBounds.h - m_frame.h)
 		{
-			yPos = Level::instance().m_levelBounds.h - m_frame.h;
+			yPos = LevelManager::instance().m_levelBounds.h - m_frame.h;
 		}
 		else
 		{

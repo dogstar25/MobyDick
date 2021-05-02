@@ -7,9 +7,18 @@ class InteractAction :
 
 public:
 
-    void perform(GameObject* gameObject) override;
+    InteractAction() {};
+    InteractAction(std::tuple<std::string, int, float> params) :
+        m_params(params) {}
 
-private:
+    void setParams(std::tuple<std::string, int, float> params) {
+        m_params = params;
+    }
+
+    void perform(GameObject* gameObject){};
+
+protected:
+    std::tuple<std::string, int, float> m_params;
 
 };
 

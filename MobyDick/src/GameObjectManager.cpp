@@ -27,10 +27,10 @@ GameObjectManager::~GameObjectManager()
 
 bool GameObjectManager::init()
 {
-	load("gameObjectDefinitions/commonObjects");
-	load("levels/level1_Objects");
-	load("gameObjectDefinitions/particleObjects");
-	load("gameObjectDefinitions/compositeObjects");
+	//load("gameObjectDefinitions/commonObjects");
+	//load("levels/level1_Objects");
+	//load("gameObjectDefinitions/particleObjects");
+	//load("gameObjectDefinitions/compositeObjects");
 
 	return true;
 }

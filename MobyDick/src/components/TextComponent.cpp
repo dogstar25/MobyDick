@@ -19,6 +19,7 @@ TextComponent::TextComponent(std::string gameObjectId, Json::Value definitionJSO
 	m_textureId = "TX_" + gameObjectId;
 	m_gameObjectId = gameObjectId;
 
+
 	Json::Value textComponentJSON = definitionJSON["textComponent"];
 	m_isDebugText = false;
 	m_isDynamic = textComponentJSON["dynamic"].asBool();

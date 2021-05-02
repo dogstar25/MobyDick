@@ -83,12 +83,19 @@ public:
 	void addInventoryItem(GameObject* gameObject);
 	void _setDependecyReferences();
 
-	template <typename componentType>
+	/*template <typename componentType>
 	inline std::shared_ptr<componentType> addComponent(std::shared_ptr<componentType> component, ComponentTypes componentTypeIndex)
 	{
 		m_components[(int)componentTypeIndex] = std::move(component);
 		return std::static_pointer_cast<componentType>(m_components.at((int)componentTypeIndex));
+	}*/
+
+	inline std::shared_ptr<Component> addComponent(std::shared_ptr<Component> component, ComponentTypes componentTypeIndex)
+	{
+		m_components[(int)componentTypeIndex] = std::move(component);
+		return m_components.at((int)componentTypeIndex);
 	}
+
 
 	template <typename componentType>
 	inline std::shared_ptr<componentType> getComponent(ComponentTypes componentTypeIndex)

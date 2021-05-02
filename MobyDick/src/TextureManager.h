@@ -27,11 +27,12 @@ public:
 	This is a singleton class using a local staic variable returned as a reference
 	*/
 	static TextureManager& instance();
-	bool init(SDL_Window*);
+	bool init();
 	std::shared_ptr<Texture> getTexture(std::string id);
 	std::string getFont(std::string id);
 	bool hasTexture(std::string textureId);
 	void addOrReplaceTexture(std::string textureId, std::shared_ptr<Texture> texture);
+	bool load(std::string texturesAssetsFile);
 
 private:
 	TextureManager();
@@ -39,7 +40,7 @@ private:
 
 	std::map<std::string, std::shared_ptr<Texture>> m_textureMap;
 	std::map<std::string, std::string> m_fontMap;
-	bool loadTextures();
+	
 
 
 	

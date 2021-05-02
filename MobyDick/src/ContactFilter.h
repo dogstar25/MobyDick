@@ -9,6 +9,7 @@
 #pragma warning(pop)
 
 #include "Globals.h"
+#include "BaseConstants.h"
 
 class ContactFilter : public b2ContactFilter
 {

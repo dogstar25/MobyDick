@@ -1,5 +1,4 @@
-#ifndef LEVEL_H
-#define LEVEL_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -11,6 +10,8 @@
 
 #include "GameObject.h"
 #include "Globals.h"
+#include "BaseConstants.h"
+#include "triggers/Trigger.h"
 
 
 class Scene;
@@ -23,20 +24,22 @@ struct LevelObject
 	bool cameraFollow{ false };
 };
 
-class Level
+class LevelManager
 {
 public:
+
+	static LevelManager& instance();
 
 	std::string m_id; //probably same as the textureId since the map is represented by a texture
 	int m_width, m_height; // in tile count
 	int m_tileWidth, m_tileHeight;
 	SDL_Rect m_levelBounds;
 
-	static Level& instance();
+	void update(Scene* scene);
+	void load(std::string levelId, Scene* scene);
+
 	void addLevelObject(int xIndex, int yIndex, LevelObject levelObject);
 	void setLevelObjectArraySize(int width, int height);
-
-	void load(std::string levelId, Scene* scene);
 
 	//Accessor Functions
 	std::string description() {	return m_description; }
@@ -44,12 +47,13 @@ public:
 
 private:
 
-	Level();
-	~Level();
+	LevelManager();
+	~LevelManager();
 
 	std::string m_description;
 	std::string m_blueprint;
 	Json::Value m_locationList;
+	std::vector<std::shared_ptr<Trigger>> m_levelTriggers;
 
 	std::vector< std::vector <LevelObject>> m_levelObjects;
 
@@ -61,5 +65,3 @@ private:
 
 };
 
-
-#endif

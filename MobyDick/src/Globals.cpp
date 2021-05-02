@@ -181,6 +181,23 @@ namespace util
 		return point;
 	}
 
+	b2JointDef* createJoint(b2JointType jointType)
+	{
+		b2JointDef* jointDef = nullptr;
+
+		if (jointType == b2JointType::e_weldJoint) {
+
+			jointDef = new b2WeldJointDef();
+		}
+		else if (jointType == b2JointType::e_motorJoint) {
+
+			jointDef = new b2MotorJointDef();
+		}
+
+		return jointDef;
+		
+	}
+
 }
 
 

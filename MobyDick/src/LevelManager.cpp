@@ -1,4 +1,7 @@
-#include "Level.h"
+#include "LevelManager.h"
+
+#include "triggers/Trigger.h"
+#include "triggers/TriggerMap.h"
 
 #include <iostream>
 #include <fstream>
@@ -35,37 +38,37 @@ static const unsigned char leftWall = 0b1110;
 static const unsigned char column = 0b0000;
 
 
-Level::Level()
+LevelManager::LevelManager()
 {
 
 }
 
-Level::~Level()
+LevelManager::~LevelManager()
 {
 
 }
 
-Level& Level::instance()
+LevelManager& LevelManager::instance()
 {
-	static Level singletonInstance;
+	static LevelManager singletonInstance;
 	return singletonInstance;
 }
 
-void Level::addLevelObject(int xIndex, int yIndex, LevelObject levelObject)
+void LevelManager::addLevelObject(int xIndex, int yIndex, LevelObject levelObject)
 {
 
 	m_levelObjects[xIndex][yIndex]=levelObject;
 
 }
 
-void Level::setLevelObjectArraySize(int width, int height)
+void LevelManager::setLevelObjectArraySize(int width, int height)
 {
 
 	m_levelObjects.resize(width, std::vector<LevelObject>(height));
 
 }
 
-void Level::_loadDefinition(std::string levelId)
+void LevelManager::_loadDefinition(std::string levelId)
 {
 	//Read file and stream it to a JSON object
 	std::string filename = "assets/levels/" + levelId + "_definition.json";
@@ -92,37 +95,40 @@ void Level::_loadDefinition(std::string levelId)
 	//Initialize World bounds
 	Game::instance().setWorldParams(m_levelBounds, m_tileWidth, m_tileHeight);
 
-	//Json::Value locationList2; 
-//	locationList2.copyPayload(root["locationObjects"]);
-
+	//Save all locationobject definitions
 	if (root.isMember("locationObjects")) {
 		m_locationList = root["locationObjects"];
 	}
 
+	//Get all trigger items
+	if (root.isMember("levelTriggers")) {
 
-		//LevelObject* locationDefinition = NULL;
-		//std::string locationId;
-		//for (auto itr : root["locationObjects"])
-		//{
-		//	locationDefinition = new LevelObject();
-		//	locationDefinition->gameObjectId = itr["gameObjectId"].asString();
-		//	locationId = itr["id"].asString();
-		//	m_locationObjects.emplace(locationId, locationDefinition);
+		for (Json::Value itrTrigger : root["levelTriggers"])
+		{
+			//Get the name of the class to be used as the action as a string
+			std::string triggerId = itrTrigger["triggerClass"].asString();
+			std::shared_ptr<Trigger> tempTrigger = TriggerMap::instance().getTrigger(triggerId);
+			m_levelTriggers.emplace_back(std::move(tempTrigger));
 
-		//}
+		}
 
-		//for (auto itr : root["waypoints"])
-		//{
-		//	auto waypoint = new Waypoint();
-		//	waypoint->order = itr["order"].asInt();
-		//	m_waypoints.emplace(locationId, waypoint);
+	}
 
-		//}
-
-	
 }
 
-void Level::load(std::string levelId, Scene* scene)
+void LevelManager::update(Scene* scene)
+{
+
+	for (const auto& trigger : m_levelTriggers) {
+
+		if (trigger->hasMetCriteria()) {
+			trigger->execute();
+		}
+	}
+
+}
+
+void LevelManager::load(std::string levelId, Scene* scene)
 {
 
 	SDL_Surface* surface;
@@ -175,7 +181,7 @@ void Level::load(std::string levelId, Scene* scene)
 
 }
 
-std::optional<LevelObject> Level::_determineTile(int x, int y, SDL_Surface* surface)
+std::optional<LevelObject> LevelManager::_determineTile(int x, int y, SDL_Surface* surface)
 {
 	int bpp = surface->format->BytesPerPixel;
 	Uint8 red, green, blue, alpha;
@@ -205,7 +211,7 @@ std::optional<LevelObject> Level::_determineTile(int x, int y, SDL_Surface* surf
 
 }
 
-std::optional<LevelObject> Level::_determineLocationObject(int x, int y, SDL_Surface* bluePrintSurface)
+std::optional<LevelObject> LevelManager::_determineLocationObject(int x, int y, SDL_Surface* bluePrintSurface)
 {
 
 	std::stringstream levellocationObjectId;
@@ -238,7 +244,7 @@ std::optional<LevelObject> Level::_determineLocationObject(int x, int y, SDL_Sur
 }
 
 
-LevelObject Level::_determineWallObject(int x, int y, SDL_Surface* bluePrintSurface)
+LevelObject LevelManager::_determineWallObject(int x, int y, SDL_Surface* bluePrintSurface)
 {
 
 	int bpp{ bluePrintSurface->format->BytesPerPixel };
@@ -363,7 +369,7 @@ LevelObject Level::_determineWallObject(int x, int y, SDL_Surface* bluePrintSurf
 }
 
 
-void Level::_buildLevelObjects(Scene* scene)
+void LevelManager::_buildLevelObjects(Scene* scene)
 {
 	LevelObject* levelObject;
 

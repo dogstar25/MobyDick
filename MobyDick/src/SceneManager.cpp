@@ -28,7 +28,7 @@ void SceneManager::init()
 	m_currentSceneIndex = 0;
 	m_scenes.reserve(MAX_SCENES);
 
-	load("gameScenes");
+	//load("gameScenes");
 }
 
 void SceneManager::load(std::string sceneDefinitionsFilename)
@@ -139,10 +139,27 @@ std::optional<SceneAction> SceneManager::pollEvents()
 			}
 			case SDL_USEREVENT:
 			{
+
+				int* type = static_cast<int*>(event.user.data1);
+				//if (type == SCENE_ACTION_TYPE) {
+				//	sceneAction = *(static_cast<std::optional<SceneAction>*>(event.user.data1));
+				//}
+				//else if (type == LEVEL_ACTION_TYPE) {
+
+				//	levelAction = *(static_cast<std::optional<LevelAction>*>(event.user.data1));
+				//}
 				//std::optional<SceneActionCode*> actionCode = (SceneActionCode*)event.user.data1;
 				sceneAction = *(static_cast<std::optional<SceneAction>*>(event.user.data1));
 				delete event.user.data1;
 				break;
+
+				//TODO:
+				//Check what the action code value in this void ptr is and if its a level action then
+				//put it in th levelManager
+				//Like player killed, level completed, etc - this , in turn, could trigger creation of a sceneAction
+
+
+
 			}
 			case SDL_MOUSEBUTTONUP:
 			case SDL_MOUSEMOTION:
@@ -163,7 +180,6 @@ std::optional<SceneAction> SceneManager::pollEvents()
 	}
 
 	return sceneAction;
-
 
 }
 
@@ -191,4 +207,22 @@ Scene& SceneManager::pushScene(std::string sceneId)
 	
 }
 
+GameObject* SceneManager::addGameObject(std::shared_ptr<GameObject>gameObject, int layer)
+{
+	//Add the gameObject to the currently active scene using back()
+	auto gameObjectRef = m_scenes.back().addGameObject(gameObject, layer);
+
+	return gameObjectRef;
+
+}
+
+GameObject* SceneManager::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow)
+{
+	//Add the gameObject to the currently active scene using back()
+	auto& currentScene = m_scenes.back();
+	auto gameObject = currentScene.addGameObject(gameObjectId, layer, xMapPos, yMapPos, angle, cameraFollow);
+
+	return gameObject;
+
+}
 

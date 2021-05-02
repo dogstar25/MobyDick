@@ -33,6 +33,7 @@ public:
 	void applyMovement(float velocity, int direction, int strafeDirection);
 	void applyMovement(float velocity, b2Vec2 trajectory);
 	void applyImpulse(float force, b2Vec2 trajectory);
+	void applyAngleImpulse(float force);
 	void applyRotation(float angularVelocity);
 	void setOffGrid();
 	void setTransform(b2Vec2 positionVector, float angle);
@@ -43,7 +44,7 @@ public:
 	void setAngle(float angle);
 	
 
-	void attachItem(GameObject* inventoryObject, std::optional<b2Vec2> attachLocation = std::nullopt);
+	void attachItem(GameObject* inventoryObject, b2JointType jointType, std::optional<b2Vec2> attachLocation = std::nullopt);
 
 	//Accessor functions
 	b2Vec2 objectAnchorPoint() { return m_objectAnchorPoint; }

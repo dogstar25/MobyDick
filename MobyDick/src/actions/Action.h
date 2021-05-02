@@ -9,6 +9,7 @@ public:
 
 	Action() {}
 	~Action();
+	virtual void perform() {};
 	virtual void perform(GameObject*) {};
 
 };

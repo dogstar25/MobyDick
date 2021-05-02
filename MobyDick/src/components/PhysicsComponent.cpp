@@ -198,43 +198,65 @@ void PhysicsComponent::applyMovement(float velocity, b2Vec2 trajectory)
 
 }
 
-void PhysicsComponent::applyMovement(float velocity, int direction, int strafeDirection)
+void PhysicsComponent::applyAngleImpulse(float force)
 {
 
-
-	//Calc direction XY
-	//float dx = cos(this->physicsBody->GetAngle()) * velocity * this->direction; // X-component.
-	//float dy = sin(this->physicsBody->GetAngle()) * velocity * this->direction; // Y-component.
-	float dx = (float)cos(1.5708) * velocity * direction; // X-component.
-	float dy = (float)sin(1.5708) * velocity * direction; // Y-component.
-
-	//calc strafe xy and add direction and strafe vectors
-	//1.5708 is 90 degrees
-	//float sx = cos(this->physicsBody->GetAngle() + 1.5708) * velocity * this->strafe; // X-component.
-	//float sy = sin(this->physicsBody->GetAngle() + 1.5708) * velocity * this->strafe; // Y-component.
-	float sx = (float)cos((1.5708) + 1.5708) * velocity * strafeDirection; // X-component.
-	float sy = (float)sin((1.5708) + 1.5708) * velocity * strafeDirection; // Y-component.
-
-	//Create the vector for forward/backward  direction
-	b2Vec2 directionVector = b2Vec2(dx, dy);
-
-	//Create the vector for strafe direction
-	b2Vec2 strafeVector = b2Vec2(sx, sy);
-
-	//Initialize new final movement vector
-	b2Vec2 vec2;
-	vec2.SetZero();
-
-	vec2 = (directionVector + strafeVector);
-
-	//this->physicsBody->SetTransform(vec3, this->physicsBody->GetAngle());
-	m_physicsBody->SetLinearVelocity(vec2);
-
-	//m_physicsBody->ApplyLinearImpulseToCenter(vec2, true);
-
+	m_physicsBody->ApplyAngularImpulse(force,false);
+	//m_physicsBody->ApplyForceToCenter(trajectory, true);
 
 }
 
+
+//void PhysicsComponent::applyMovement(float speed, int direction, int strafeDirection)
+//{
+//
+//
+//	//Calc direction XY
+//	//float dx = cos(this->physicsBody->GetAngle()) * velocity * this->direction; // X-component.
+//	//float dy = sin(this->physicsBody->GetAngle()) * velocity * this->direction; // Y-component.
+//	float dx = (float)cos(1.5708) * speed * direction; // X-component.
+//	float dy = (float)sin(1.5708) * speed * direction; // Y-component.
+//
+//	//calc strafe xy and add direction and strafe vectors
+//	//1.5708 is 90 degrees
+//	//float sx = cos(this->physicsBody->GetAngle() + 1.5708) * velocity * this->strafe; // X-component.
+//	//float sy = sin(this->physicsBody->GetAngle() + 1.5708) * velocity * this->strafe; // Y-component.
+//	float sx = (float)cos((1.5708) + 1.5708) * speed * strafeDirection; // X-component.
+//	float sy = (float)sin((1.5708) + 1.5708) * speed * strafeDirection; // Y-component.
+//
+//	//Create the vector for forward/backward  direction
+//	b2Vec2 directionVector = b2Vec2(dx, dy);
+//
+//	//Create the vector for strafe direction
+//	b2Vec2 strafeVector = b2Vec2(sx, sy);
+//
+//	//Initialize new final movement vector
+//	b2Vec2 vec2;
+//	vec2.SetZero();
+//
+//	vec2 = (directionVector + strafeVector);
+//
+//	//this->physicsBody->SetTransform(vec3, this->physicsBody->GetAngle());
+//	std::cout << "applyMovement " << vec2.x << " " << vec2.y << "\n";
+//	m_physicsBody->SetLinearVelocity(vec2);
+//
+//	//m_physicsBody->ApplyLinearImpulseToCenter(vec2, true);
+//
+//
+//}
+
+void PhysicsComponent::applyMovement(float speed, int direction, int strafeDirection)
+{
+
+	b2Vec2 trajectory = { (float)strafeDirection, (float)direction  };
+	trajectory.Normalize();
+
+	trajectory *= speed;
+
+	m_physicsBody->SetLinearVelocity(trajectory);
+
+
+}
 void PhysicsComponent::applyRotation(float angularVelocity)
 {
 	m_physicsBody->SetAngularVelocity(angularVelocity);
@@ -250,16 +272,14 @@ void PhysicsComponent::setOffGrid()
 	m_physicsBody->SetActive(false);
 }
 
-void PhysicsComponent::attachItem(GameObject* attachObject, std::optional<b2Vec2> attachLocation)
+void PhysicsComponent::attachItem(GameObject* attachObject, b2JointType jointType, std::optional<b2Vec2> attachLocation)
 {
-	//Get physics component of the inventory object
-	const auto& attachObjectPhysicsComponent = attachObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	b2JointDef* jointDef=nullptr;
+	b2WeldJointDef* weldJointDef;
+	b2RevoluteJointDef* revoluteJointDef;
 
-	b2WeldJointDef weldJointDef;
-	weldJointDef.referenceAngle;
-	weldJointDef.bodyA = m_physicsBody;
-	weldJointDef.bodyB = attachObjectPhysicsComponent->m_physicsBody;
-	weldJointDef.collideConnected = false;
+	//Get physics component of the attachment object
+	const auto& attachObjectPhysicsComponent = attachObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 
 	//If an attach point was passed in then use it , otherwise use the anchor point defined for the object
 	b2Vec2 anchorPoint = { 0,0 };
@@ -273,14 +293,35 @@ void PhysicsComponent::attachItem(GameObject* attachObject, std::optional<b2Vec2
 		};
 
 	}
-	weldJointDef.localAnchorA = anchorPoint;
 
+	//Get attachment anchor point
 	b2Vec2 attachObjectAnchorPoint = {
-		attachObjectPhysicsComponent->m_objectAnchorPoint.x,
-		attachObjectPhysicsComponent->m_objectAnchorPoint.y
+	attachObjectPhysicsComponent->m_objectAnchorPoint.x,
+	attachObjectPhysicsComponent->m_objectAnchorPoint.y
 	};
-	weldJointDef.localAnchorB = attachObjectAnchorPoint;
-	(b2WeldJointDef*)parent()->parentScene()->physicsWorld()->CreateJoint(&weldJointDef);
+
+	//Build specific joint
+	if (jointType == b2JointType::e_weldJoint) {
+		weldJointDef = new b2WeldJointDef();
+		weldJointDef->bodyA = m_physicsBody;
+		weldJointDef->bodyB = attachObjectPhysicsComponent->m_physicsBody;
+		weldJointDef->collideConnected = false;
+		weldJointDef->localAnchorA = anchorPoint;
+		weldJointDef->localAnchorB = attachObjectAnchorPoint;
+		jointDef = weldJointDef;
+	}
+	else if (jointType == b2JointType::e_revoluteJoint) {
+		revoluteJointDef = new b2RevoluteJointDef();
+		revoluteJointDef->bodyA = m_physicsBody;
+		revoluteJointDef->bodyB = attachObjectPhysicsComponent->m_physicsBody;
+		revoluteJointDef->collideConnected = false;
+		revoluteJointDef->localAnchorA = anchorPoint;
+		revoluteJointDef->localAnchorB = attachObjectAnchorPoint;
+
+		jointDef = revoluteJointDef;
+	}
+
+	parent()->parentScene()->physicsWorld()->CreateJoint(jointDef);
 
 }
 

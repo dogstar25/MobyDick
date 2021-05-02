@@ -1,0 +1,31 @@
+{
+    "gameObjects": [
+        {
+            "id": "LOADLEVEL_TRIGGER",
+            "type": "GameObjectType::ABSTRACT",
+            "idTag": "IdTag::GENERAL_FREE",
+            "traitTags": ["contact_trigger"],
+            "transformComponent": {
+                "size": {
+                    "width": 64,
+                    "height": 64
+                },
+                "absolutePositioning": false
+            },
+            "physicsComponent": {
+                "type": "B2_STATIC",
+                "collisionShape": "B2_BOX"
+            },
+            "actionComponent": {
+                "actions": [
+                    {
+                        "actionId": "ACTION_ON_TRIGGER",
+                        "actionClass": "LoadLevel",
+                        "param1": "2"
+                    }
+                ]
+            }
+        }
+
+    ]
+}

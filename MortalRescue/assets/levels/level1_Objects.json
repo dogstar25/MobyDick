@@ -2,6 +2,8 @@
     "gameObjects": [
         {
             "id": "WALL1_OPEN",
+            "type": "GameObjectType::SPRITE",
+            "idTag": "IdTag::WALL",
             "description": "WALL1_OPEN",
             "transformComponent": {
                 "size": {
@@ -14,9 +16,9 @@
             "renderComponent": {
                 "textureId": "TX_WALL1_OPEN",
                 "color": {
-                    "red": 0,
-                    "green": 206,
-                    "blue": 209,
+                    "red": 38,
+                    "green": 195,
+                    "blue": 15,
                     "alpha": 255,
                     "random": false
                 }
@@ -25,13 +27,15 @@
             "physicsComponent": {
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
-                "friction": 0.3,
-                "collisionCategory": "COLLISION_WALL"
+                "friction": 0.3
+                // "collisionCategory": "CollisionCat::WALL"
             }
 
         },
         {
             "id": "WALL1_COLUMN",
+            "type": "GameObjectType::SPRITE",
+            "idTag": "IdTag::WALL",
             "description": "WALL1_COLUMN",
             "transformComponent": {
                 "size": {
@@ -44,9 +48,9 @@
             "renderComponent": {
                 "textureId": "TX_WALL1_COLUMN",
                 "color": {
-                    "red": 0,
-                    "green": 206,
-                    "blue": 209,
+                    "red": 38,
+                    "green": 195,
+                    "blue": 15,
                     "alpha": 255,
                     "random": false
                 }
@@ -56,12 +60,14 @@
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3,
-                "collisionCategory": "COLLISION_WALL"
+                "collisionCategory": "CollisionCat::WALL"
             }
 
         },
         {
             "id": "WALL1_CORNER",
+            "type": "GameObjectType::SPRITE",
+            "idTag": "IdTag::WALL",
             "description": "WALL1_CORNER",
             "transformComponent": {
                 "size": {
@@ -74,9 +80,9 @@
             "renderComponent": {
                 "textureId": "TX_WALL1_CORNER",
                 "color": {
-                    "red": 0,
-                    "green": 255,
-                    "blue": 255,
+                    "red": 38,
+                    "green": 195,
+                    "blue": 15,
                     "alpha": 255,
                     "random": false
                 }
@@ -86,12 +92,14 @@
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3,
-                "collisionCategory": "COLLISION_WALL"
+                "collisionCategory": "CollisionCat::WALL"
             }
 
         },
         {
             "id": "WALL1_END",
+            "type": "GameObjectType::SPRITE",
+            "idTag": "IdTag::WALL",
             "description": "WALL1_END",
             "transformComponent": {
                 "size": {
@@ -116,12 +124,14 @@
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3,
-                "collisionCategory": "COLLISION_WALL"
+                "collisionCategory": "CollisionCat::WALL"
             }
 
         },
         {
             "id": "WALL1_HALL",
+            "type": "GameObjectType::SPRITE",
+            "idTag": "IdTag::WALL",
             "description": "WALL1_HALL",
             "transformComponent": {
                 "size": {
@@ -134,9 +144,9 @@
             "renderComponent": {
                 "textureId": "TX_WALL1_HALL",
                 "color": {
-                    "red": 175,
-                    "green": 238,
-                    "blue": 238,
+                    "red": 38,
+                    "green": 195,
+                    "blue": 15,
                     "alpha": 255,
                     "random": false
                 }
@@ -146,13 +156,15 @@
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3,
-                "collisionCategory": "COLLISION_WALL"
+                "collisionCategory": "CollisionCat::WALL"
             }
 
         },
 
         {
             "id": "WALL1_WALL",
+            "type": "GameObjectType::SPRITE",
+            "idTag": "IdTag::WALL",
             "description": "WALL1_WALL",
             "transformComponent": {
                 "size": {
@@ -177,7 +189,7 @@
                 "type": "B2_STATIC",
                 "collisionShape": "B2_BOX",
                 "friction": 0.3,
-                "collisionCategory": "COLLISION_WALL"
+                "collisionCategory": "CollisionCat::WALL"
             }
 
         }
