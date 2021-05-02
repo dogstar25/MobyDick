@@ -2,14 +2,16 @@
 
 #include <cassert>
 
-#include "Level.h"
+#include "LevelManager.h"
 #include "Camera.h"
-#include "game.h"
 #include "EnumMaps.h"
 
 #include "ContactFilter.h"
 #include "ContactListener.h"
 #include "ObjectPoolManager.h"
+#include "SceneManager.h"
+#include "DebugDraw.h"
+#include "game.h"
 
 
 Scene::Scene(std::string sceneId)
@@ -63,7 +65,7 @@ Scene::Scene(std::string sceneId)
 	auto levelId = definitionJSON["firstLevel"].asString();
 	if (levelId.empty() == false) {
 
-		Level::instance().load(levelId, this);
+		LevelManager::instance().load(levelId, this);
 	}
 
 	//Tags
@@ -166,9 +168,6 @@ void Scene::update() {
 
 			if (it->get()->removeFromWorld() == true) {
 
-				if (it->get()->id() == "BULLET1") {
-					int todd = 1;
-				}
 				it->get()->reset();
 				it = gameObjects.erase(it);
 			}
@@ -197,6 +196,9 @@ void Scene::update() {
 	//Clear all events
 	SceneManager::instance().playerInputEvents().clear();
 
+	//Level Manager update to handle level specific events
+	LevelManager::instance().update(this);
+
 	//Update ALL physics object states
 	stepB2PhysicsWorld();
 
@@ -205,9 +207,6 @@ void Scene::update() {
 
 
 void Scene::render() {
-
-	////Clear the graphics display
-	//Renderer::instance().clear();
 
 	//Render all of the game objects
 	for (auto& gameLayer : m_gameObjects)
@@ -224,9 +223,6 @@ void Scene::render() {
 	{
 		m_physicsWorld->DrawDebugData();
 	}
-
-	////Push all drawn things to the graphics display
-	//Renderer::instance().present();
 
 }
 
@@ -274,7 +270,15 @@ void Scene::clearEvents()
 void Scene::applyCurrentControlMode()
 {
 
-	Game::instance().setInputControlMode(m_inputControlMode);
+	if (m_inputControlMode == CONTROL_MODE_PLAY) {
+		SDL_ShowCursor(false);
+		SDL_SetRelativeMouseMode(SDL_TRUE);
+	}
+	else if (m_inputControlMode == CONTROL_MODE_SELECT) {
+		SDL_ShowCursor(true);
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+	}
+
 }
 
 void Scene::setInputControlMode(int inputControlMode)

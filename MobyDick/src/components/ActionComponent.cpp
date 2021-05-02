@@ -122,16 +122,17 @@ void ActionComponent::performUsageAction()
 	action->perform(m_parentGameObject);
 }
 
-void ActionComponent::performInteractAction()
+void ActionComponent::performInteractAction(std::tuple<std::string, int, float> params)
 {
-	std::shared_ptr<Action> action;
+	std::shared_ptr<InteractAction> action;
 
 	if (m_actions[ACTION_INTERACT]) {
 
-		action = m_actions[ACTION_INTERACT];
+		action = std::dynamic_pointer_cast<InteractAction>(m_actions[ACTION_INTERACT]);
+		action->setParams(params);
 	}
 	else {
-		action = ActionMaps::instance().getAction("NoAction");
+		action = std::dynamic_pointer_cast<InteractAction>(ActionMaps::instance().getAction("Interact"));
 	}
 
 	assert(action != nullptr && "Action is null!");
@@ -185,7 +186,21 @@ void ActionComponent::performOnClickAction()
 	action->perform(m_parentGameObject);
 }
 
+void ActionComponent::performTriggerAction()
+{
+	std::shared_ptr<Action> action;
 
+	if (m_actions[ACTION_ON_TRIGGER]) {
+
+		action = std::dynamic_pointer_cast<Action>(m_actions[ACTION_ON_TRIGGER]);
+	}
+	else {
+		action = std::dynamic_pointer_cast<Action>(ActionMaps::instance().getAction("NoAction"));
+	}
+
+	assert(action != nullptr && "Action is null!");
+	action->perform();
+}
 
 
 

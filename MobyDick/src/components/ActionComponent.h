@@ -16,7 +16,9 @@
 #include "../actions/InteractAction.h"
 #include "../actions/UseAction.h"
 #include "../actions/NoAction.h"
+#include "../actions/LoadNextLevelAction.h"
 #include "../Globals.h"
+#include "../BaseConstants.h"
 
 
 class GameObject;
@@ -34,10 +36,11 @@ public:
 	void performRotateAction(float angularVelocity);
 	void performUseAction();
 	void performUsageAction();
-	void performInteractAction();
+	void performInteractAction(std::tuple<std::string, int, float> params);
 	void performOnHoverAction();
 	void performOnHoverOutAction();
 	void performOnClickAction();
+	void performTriggerAction();
 
 private:
 	std::vector<std::shared_ptr<Action>>m_actions;

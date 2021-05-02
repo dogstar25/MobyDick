@@ -40,10 +40,10 @@ TextureManager& TextureManager::instance()
 
 }
 
-bool TextureManager::init(SDL_Window* window)
+bool TextureManager::init()
 {
 
-	loadTextures();
+	//load("textureAssets");
 
 	return true;
 }
@@ -87,17 +87,17 @@ void TextureManager::addOrReplaceTexture(std::string textureId, std::shared_ptr<
 }
 
 
-bool TextureManager::loadTextures()
+bool TextureManager::load(std::string texturesAssetsFile)
 {
 
 	//Read file and stream it to a JSON object
 	Json::Value root;
-	std::ifstream ifs("assets/textureAssets.json");
-	//ifstream ifs("assets/textureAssets_Test.json");
+	std::string texturefilename = "assets/" + texturesAssetsFile + ".json";
+	std::ifstream ifs(texturefilename);
 	ifs >> root;
 
 	//Get and store config values
-	std::string filename, id;
+	std::string  id, imageFilename;
 	bool retainSurface = false;
 
 	SDL_Surface* surface;
@@ -112,10 +112,10 @@ bool TextureManager::loadTextures()
 		textureObject = new Texture();
 
 		id = itr["id"].asString();
-		filename = itr["filename"].asString();
+		imageFilename = itr["filename"].asString();
 		retainSurface = itr["retainSurface"].asBool();
 
-		surface = IMG_Load(filename.c_str());
+		surface = IMG_Load(imageFilename.c_str());
 
 		sdlTexture = SDL_CreateTextureFromSurface(Renderer::instance().SDLRenderer(), surface);
 		textureObject->sdlTexture = sdlTexture;
@@ -137,8 +137,8 @@ bool TextureManager::loadTextures()
 		for (auto itr : root["fonts"])
 		{
 			id = itr["id"].asString();
-			filename = itr["filename"].asString();
-			m_fontMap.emplace(id, filename);
+			imageFilename = itr["filename"].asString();
+			m_fontMap.emplace(id, imageFilename);
 
 		}
 

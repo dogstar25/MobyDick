@@ -13,12 +13,12 @@
 #include <memory>
 
 #include "Globals.h"
+#include "BaseConstants.h"
 #include "GameObject.h"
-//#include "GameObjectContactListener.h"
 #include "DebugDraw.h"
-//#include "DebugPanel.h"
 #include "GameConfig.h"
 #include "SceneManager.h"
+#include "ComponentFactory.h"
 
 
 
@@ -28,7 +28,6 @@
 class Game {
 
 private:
-	//GameObjectContactListener m_gameObjectContactListner;
 
 public:
 
@@ -36,13 +35,9 @@ public:
 	~Game();
 
 	static Game& instance();
-	bool init();
-	void play();
-	static void renderGameObjects(const std::array <std::vector<GameObject>, MAX_GAMEOBJECT_LAYERS>&);
+	virtual bool init();
+	virtual void play();
 	
-	GameObject* addGameObject(std::shared_ptr<GameObject>gameObject, int layer);
-	GameObject* addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle = 0., bool cameraFollow = false);
-
 	void setGameState(GameState state) {
 		m_gameState = state;
 	}
@@ -51,15 +46,8 @@ public:
 		m_WorldBounds = bounds;
 		m_WorldTileWidth = worldTileWidth;
 		m_WorldTileHeight = worldTileHeight;
-
 	}
 
-	void setInputControlMode(int inputControlMode);
-
-	////Accessor Functions
-	//b2World* physicsWorld() {
-	//	return m_physicsWorld;
-	//}
 	SDL_Window* window() {
 		return m_window;
 	}
@@ -78,25 +66,15 @@ public:
 
 private:
 
-	void _render();
-	void _update();
-	void _handleEvents();
-
-//	b2World* m_physicsWorld;
 	SDL_Window* m_window;
 	GameState m_gameState;
 	SDL_Rect m_WorldBounds;
 	int m_WorldTileWidth;
 	int m_WorldTileHeight;
 
-	/*Fixed array of Layers
-	Each layer contains a vector of GameObjects
-	For deletions, things with heavy number of deletes like bullets and particles should all be at 
-	the end of the vector which shoudl make for acceptable erase performance
-	*/
-	std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> m_gameObjects;
-
-
+	void _addGameIdTags();
+	void _addGameActions();
+	void _addGameParticleEffects();
 };
 
 

@@ -10,7 +10,8 @@
 
 #include "Component.h"
 #include "../Globals.h"
-#include "../config_data/ParticleEffect.h"
+#include "../BaseConstants.h"
+#include "../particleEffects/BaseParticleEffects.h"
 
 class GameObject;
 

@@ -8,6 +8,7 @@
 #include <box2d/box2d.h>
 #include <json/json.h>
 #include "Globals.h"
+#include "BaseConstants.h"
 
 class GameObjectDefinition;
 

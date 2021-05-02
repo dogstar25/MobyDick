@@ -27,9 +27,6 @@
     <ClCompile Include="src\DebugDraw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\GameConfig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -102,7 +99,7 @@
     <ClCompile Include="src\DebugPanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Level.cpp">
+    <ClCompile Include="src\LevelManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\components\ActionComponent.cpp">
@@ -168,31 +165,16 @@
     <ClCompile Include="src\actions\QuitGameAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MortalRescue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\actions\DefaultMoveAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\actions\DefaultRotateAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\CollisionManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ContactListener.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ContactFilter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\actions\PistolFireAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\components\PoolComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\config_data\GameObjectDefinitions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\components\ParticleXComponent.cpp">
@@ -213,6 +195,21 @@
     <ClCompile Include="src\actions\DroneMoveAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\particleEffects\ParticleEffectsMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\actions\LoadNextLevelAction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\triggers\Trigger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\triggers\PlayerDeath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\triggers\TriggerMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation.h">
@@ -225,9 +222,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\DebugDraw.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameConfig.h">
@@ -305,7 +299,7 @@
     <ClInclude Include="src\DebugPanel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Level.h">
+    <ClInclude Include="src\LevelManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\components\ActionComponent.h">
@@ -332,9 +326,6 @@
     <ClInclude Include="src\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\config_data\scenes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\actions\ActorMoveAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -345,9 +336,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\actions\ItemUsageAction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\config_data\GameDefinitions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\actions\InteractAction.h">
@@ -386,9 +374,6 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\CollisionManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\ContactListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -401,7 +386,7 @@
     <ClInclude Include="src\components\PoolComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\config_data\ParticleEffect.h">
+    <ClInclude Include="src\particleEffects\BaseParticleEffects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\components\ParticleXComponent.h">
@@ -422,6 +407,30 @@
     <ClInclude Include="src\actions\DroneMoveAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ComponentFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BaseConstants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particleEffects\ParticleEffectsMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\actions\LoadNextLevelAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\triggers\Trigger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\triggers\PlayerDeath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\triggers\TriggerMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="ExtraLibs\SDL2main.lib" />
@@ -432,147 +441,11 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\blueprints\drone1_blueprint.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\blueprints\drone1_test.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\levels\level1_blueprint.png">
-      <Filter>Resource Files</Filter>
-    </Image>
+    <None Include="vcpkg.json_old" />
+  </ItemGroup>
+  <ItemGroup>
     <Image Include="assets\bowman1.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="assets\bullet1.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\deflect1.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\enemyFrame1_128.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\gina_Idle_64.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\gina_Run_64.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\particle1.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\particle2.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\pieceAngle1_8.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\pieceAngle2_8.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\pieceAngle3_8.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\pieceAngle4_8.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\pieceFull_8.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\pistolLady64_Run.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\pistolLady128_Run.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\spaceship1.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\square_128.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\swordLady64_Idle.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\tile1.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\wall1_column.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\wall1_corner.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\wall1_end.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\wall1_hall.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\wall1_open.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\wall1_wall.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\weapon1.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\weapon1_FIRE.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\weapon1_IDLE.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\levels\level_test_blueprint.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\config\gameScenes.json" />
-    <None Include="assets\gameObjectDefinitions\commonObjects.json" />
-    <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
-    <None Include="assets\gameObjectDefinitions\objectPools.json" />
-    <None Include="assets\gameObjectDefinitions\particleObjects.json" />
-    <None Include="assets\levels\level1_definition.json" />
-    <None Include="assets\levels\level1_Objects.json" />
-    <None Include="assets\sound\soundAssets.json" />
-    <None Include="assets\textureAssets.json" />
-    <None Include="vcpkg.json_old" />
-    <None Include="assets\levels\level_test_definition.json" />
-    <None Include="assets\config\gameConfig.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="assets\sound\ambience_deep_shining.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sound\impact_metal_shell_001.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sound\impact_metal_shell_002.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sound\impact_metal_shell_003.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sound\pick_up_001.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sound\pick_up_002.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sound\weapon_laser_002.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sound\weapon_laser_004.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="assets\sound\weapon1_fire1.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-  </ItemGroup>
-  <ItemGroup>
-    <Font Include="assets\arial.ttf" />
   </ItemGroup>
 </Project>

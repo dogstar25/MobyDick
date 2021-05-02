@@ -6,6 +6,7 @@
 #include <json/json.h>
 
 #include "../Globals.h"
+#include "../BaseConstants.h"
 
 class GameObject;
 class AnimationComponent;

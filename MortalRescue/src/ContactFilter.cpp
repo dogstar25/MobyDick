@@ -1,6 +1,6 @@
 #include "ContactFilter.h"
 
-
+#include "GameConstants.h"
 #include "GameObject.h"
 
 ContactFilter::ContactFilter()

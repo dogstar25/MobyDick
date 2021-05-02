@@ -4,6 +4,7 @@
 #include <chrono>
 
 #include "../EnumMaps.h"
+#include "../particleEffects/ParticleEffectsMap.h"
 #include "../game.h"
 
 
@@ -22,20 +23,10 @@ ParticleXComponent::ParticleXComponent(Json::Value definitionJSON )
 	for (Json::Value itrEffect : particleComponentJSON["effects"])
 	{
 
-		auto effect = itrEffect.asString();
+		auto effectId = itrEffect.asString();
 
-		if (effect == "ParticleEffects::ricochet") {
-			addParticleEffect(ParticleEffects::ricochet);
-		}
-		else if (effect == "ParticleEffects::deflect") {
-			addParticleEffect(ParticleEffects::deflect);
-		}
-		else if (effect == "ParticleEffects::scrap") {
-			addParticleEffect(ParticleEffects::scrap);
-		}
-		else if (effect == "ParticleEffects::spark") {
-			addParticleEffect(ParticleEffects::spark);
-		}
+		ParticleEffect effect = ParticleEffectsMap::instance().getParticleEffect(effectId);
+		addParticleEffect(effect);
 	
 	}
 }

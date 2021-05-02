@@ -1,24 +1,115 @@
 #include "ContactListener.h"
+#include "SceneManager.h"
 
 #include <iostream>
 
 #include "game.h"
+#include "GameConstants.h"
+#include "particleEffects/GameParticleEffects.h"
 
+
+void player_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+{
+	GameObject* player;
+	GameObject* wall;
+
+	if (contact1->idTag() == IdTag::PLAYER) {
+		player = contact1;
+		wall = contact2;
+	}
+	else {
+		player = contact2;
+		wall = contact1;
+	}
+
+	std::cout << "player_wall called\n";
+
+
+}
+
+void bullet_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+{
+	GameObject* bullet;
+	GameObject* wall;
+
+	if (contact1->idTag() == IdTag::PLAYER_BULLET) {
+		bullet = contact1;
+		wall = contact2;
+	}
+	else {
+		bullet = contact2;
+		wall = contact1;
+	}
+
+	//Build a One-Time particle emitter object
+	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
+	const auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+	particleComponent->addParticleEffect(ParticleEffects::ricochet);
+	particleComponent->setType(ParticleEmitterType::ONETIME);
+
+	/*auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
+	auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
+	particleComponent->addParticleEffect(ParticleEffects::ricochet);
+	particleComponent->setType(ParticleEmitterType::ONETIME);
+	particleComponent->setEmissionInterval(std::chrono::duration<float>(0.2));*/
+
+	//Convert from box2d to gameWorld coordinates
+	contactPoint.x *= GameConfig::instance().scaleFactor();
+	contactPoint.y *= GameConfig::instance().scaleFactor();
+	particleEmitterObject->setPosition(contactPoint.x, contactPoint.y);
+
+	//Set flag for removal for the Bullet
+	bullet->setRemoveFromWorld(true);
+
+}
+
+void playerBullet_droneShield(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+{
+	GameObject* bullet;
+	GameObject* shield;
+
+	if (contact1->idTag() == IdTag::PLAYER_BULLET) {
+		bullet = contact1;
+		shield = contact2;
+	}
+	else {
+		bullet = contact2;
+		shield = contact1;
+	}
+
+
+	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_BACKGROUND_1, -1, -1);
+	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+	particleComponent->setType(ParticleEmitterType::ONETIME);
+
+	//Convert from box2d to gameWorld coordinates
+	contactPoint.x *= GameConfig::instance().scaleFactor();
+	contactPoint.y *= GameConfig::instance().scaleFactor();
+	particleEmitterObject->setPosition(contactPoint.x, contactPoint.y);
+
+	//Set flag for removal for the Bullet
+	bullet->setRemoveFromWorld(true);
+
+	//Test if the bullet is strong enought to destroy the shield piece
+	auto bulletVitality = bullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	auto shieldVitality = shield->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	auto shieldHolds = shieldVitality->testResistance(bulletVitality->attackPower());
+	if (shieldHolds == false) {
+
+		shieldVitality->setIsBroken(true);
+		particleComponent->addParticleEffect(ParticleEffects::ricochetX);
+		particleComponent->addParticleEffect(ParticleEffects::scrap);
+
+	}
+	else {
+
+		particleComponent->addParticleEffect(ParticleEffects::deflect);
+	}
+
+}
 
 ContactListener::ContactListener()
 {
-
-	//m_ObjectCategoryLabels[IdTag::COLLECTABLE] = IdTag::COLLECTABLE;
-	//m_ObjectCategoryLabels[ObjectCategory::COMMON] = ObjectCategoryLabel::COMMON;
-	//m_ObjectCategoryLabels[ObjectCategory::ENEMY_BULLET] = ObjectCategoryLabel::ENEMY_BULLET;
-	//m_ObjectCategoryLabels[ObjectCategory::ENEMY_FRAME] = ObjectCategoryLabel::ENEMY_FRAME;
-	//m_ObjectCategoryLabels[ObjectCategory::ENEMY_UNIT] = ObjectCategoryLabel::ENEMY_UNIT;
-	//m_ObjectCategoryLabels[ObjectCategory::FRIENDLY_BULLET] = ObjectCategoryLabel::ENEMY_FRAME;
-	//m_ObjectCategoryLabels[ObjectCategory::FRIENDLY_UNIT] = ObjectCategoryLabel::FRIENDLY_UNIT;
-	//m_ObjectCategoryLabels[ObjectCategory::PLAYER] = ObjectCategoryLabel::PLAYER;
-	//m_ObjectCategoryLabels[ObjectCategory::SMOKE_PARTICLE] = ObjectCategoryLabel::SMOKE_PARTICLE;
-	//m_ObjectCategoryLabels[ObjectCategory::SOLID_PARTICLE] = ObjectCategoryLabel::SOLID_PARTICLE;
-	//m_ObjectCategoryLabels[ObjectCategory::WALL] = ObjectCategoryLabel::WALL;
 
 }
 
@@ -72,15 +163,6 @@ void ContactListener::handleContact(GameObject* contact1, GameObject* contact2, 
 	auto category2 = contact2->idTag();
 	std::string collisionActionClass = {};
 
-	//if (m_ObjectCategoryLabels[category1] < m_ObjectCategoryLabels[category2]) {
-	//	collisionActionClass = { m_ObjectCategoryLabels[category1] + "_" + m_ObjectCategoryLabels[category2] };
-	//}
-	//else {
-	//	collisionActionClass = { m_ObjectCategoryLabels[category2] + "_" + m_ObjectCategoryLabels[category1] };
-	//}
-
-	//std::cout << "Class is " << collisionActionClass << "\n";
-
 	/////////////////////////
 	// Player Wall Contact
 	////////////////////////
@@ -113,110 +195,9 @@ void ContactListener::handleContact(GameObject* contact1, GameObject* contact2, 
 
 }
 
-void ContactListener::player_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
-{
-	GameObject* player;
-	GameObject* wall;
-
-	if (contact1->idTag() == IdTag::PLAYER) {
-		player = contact1;
-		wall = contact2;
-	}
-	else {
-		player = contact2;
-		wall = contact1;
-	}
-
-	std::cout << "player_wall called\n";
-
-
-}
-
-void ContactListener::bullet_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
-{
-	GameObject* bullet;
-	GameObject* wall;
-
-	if (contact1->idTag() == IdTag::PLAYER_BULLET) {
-		bullet = contact1;
-		wall = contact2;
-	}
-	else {
-		bullet = contact2;
-		wall = contact1;
-	}
-
-	//Build a One-Time particle emitter object
-	auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
-	const auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
-	particleComponent->addParticleEffect(ParticleEffects::ricochet);
-	particleComponent->setType(ParticleEmitterType::ONETIME);
-
-	/*auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
-	auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
-	particleComponent->addParticleEffect(ParticleEffects::ricochet);
-	particleComponent->setType(ParticleEmitterType::ONETIME);
-	particleComponent->setEmissionInterval(std::chrono::duration<float>(0.2));*/
-
-	//Convert from box2d to gameWorld coordinates
-	contactPoint.x *= GameConfig::instance().scaleFactor();
-	contactPoint.y *= GameConfig::instance().scaleFactor();
-	particleEmitterObject->setPosition(contactPoint.x, contactPoint.y);
-
-	//Set flag for removal for the Bullet
-	bullet->setRemoveFromWorld(true);
-
-}
-
-void ContactListener::playerBullet_droneShield(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
-{
-	GameObject* bullet;
-	GameObject* shield;
-
-	if (contact1->idTag() == IdTag::PLAYER_BULLET) {
-		bullet = contact1;
-		shield = contact2;
-	}
-	else {
-		bullet = contact2;
-		shield = contact1;
-	}
-
-
-	auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_BACKGROUND_1, -1, -1);
-	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
-	particleComponent->setType(ParticleEmitterType::ONETIME);
-
-	//Convert from box2d to gameWorld coordinates
-	contactPoint.x *= GameConfig::instance().scaleFactor();
-	contactPoint.y *= GameConfig::instance().scaleFactor();
-	particleEmitterObject->setPosition(contactPoint.x, contactPoint.y);
-
-	//Set flag for removal for the Bullet
-	bullet->setRemoveFromWorld(true);
-
-	//Test if the bullet is strong enought to destroy the shield piece
-	auto bulletVitality = bullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
-	auto shieldVitality = shield->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
-	auto shieldHolds = shieldVitality->testResistance(bulletVitality->attackPower());
-	if (shieldHolds == false) {
-
-		shieldVitality->setIsBroken(true);
-		particleComponent->addParticleEffect(ParticleEffects::ricochetX);
-		particleComponent->addParticleEffect(ParticleEffects::scrap);
-
-	}
-	else {
-
-		particleComponent->addParticleEffect(ParticleEffects::deflect);
-	}
 
 
 
-
-
-
-}
 //void ContactListener::playerBitPiece(PlayerObject* player, WorldObject* piece, b2Vec2 contactPoint)
 //{
 //	//Set flag for bullet to be removed from world

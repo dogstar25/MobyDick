@@ -70,7 +70,7 @@
         },
         {
             "id": "SCENE_GAMEOVER",
-            "inputControlMode": "MOUSE_NAVIGATE",
+            "inputControlMode": "CONTROL_MODE_SELECT",
             "maxObjects": 500
         },
         {

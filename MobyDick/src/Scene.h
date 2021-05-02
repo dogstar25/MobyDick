@@ -8,6 +8,7 @@
 #include <box2d/box2d.h>
 #include <json/json.h>
 #include "Globals.h"
+#include "BaseConstants.h"
 #include "GameObject.h"
 #include "GameConfig.h"
 
@@ -39,15 +40,12 @@ public:
 	void run();
 	void render();
 	void update();
-	std::string pollEvents();
 	void clearEvents();
 	GameObject* addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle=0., bool cameraFollow=false);
-	void addGameObject(GameObject* gameObject, int layer);
 	GameObject* addGameObject(std::shared_ptr<GameObject> gameObject, int layer);
 	void addKeyAction(SDL_Keycode, SceneAction);
 	void applyCurrentControlMode();
 	SDL_FPoint calcWindowPosition(int globalPosition);
-	
 	
 	void stepB2PhysicsWorld() {
 		m_physicsWorld->Step(m_physicsConfig.timeStep,

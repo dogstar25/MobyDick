@@ -1,11 +1,13 @@
 #include "DebugPanel.h"
 
 #include "Globals.h"
+#include "BaseConstants.h"
 #include "game.h"
 #include "DynamicTextManager.h"
 #include "GameObjectManager.h"
 #include "GameConfig.h"
-#include "Level.h"
+#include "SceneManager.h"
+#include "LevelManager.h"
 
 
 DebugPanel& DebugPanel::instance()
@@ -67,9 +69,9 @@ void DebugPanel::addItem(std::string id, std::string value)
 
 			//Calculate the position of the debug text item
 			xPos = m_location.x;
-			yPos = m_location.y + m_itemCount * (fontSize / (float)Level::instance().m_tileHeight);
+			yPos = m_location.y + m_itemCount * (fontSize / (float)LevelManager::instance().m_tileHeight);
 
-			Game::instance().addGameObject(newId, LAYER_MENU, xPos, yPos, 0);
+			SceneManager::instance().addGameObject(newId, LAYER_MENU, xPos, yPos, 0);
 
 
 			m_itemCount++;

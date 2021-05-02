@@ -1,6 +1,7 @@
 #include "Renderer.h"
 
 #include "Globals.h"
+#include "BaseConstants.h"
 #include "GameConfig.h"
 #include <glad/glad.h>
 #include <glm/glm.hpp>

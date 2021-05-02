@@ -2,7 +2,8 @@
 #define ENUM_MAPS_H
 
 #include "Globals.h"
-#include "./config_data/ParticleEffect.h"
+#include "BaseConstants.h"
+#include "particleEffects/BaseParticleEffects.h"
 
 class EnumMap {
 
@@ -12,6 +13,10 @@ public:
 
 	static EnumMap& instance();
 	const int toEnum(std::string name);
+	void addEnumItem(std::string id, int enumValue) {
+
+		m_enumMap[id] = enumValue;
+	}
 
 private:
 	std::map<std::string, int> m_enumMap;

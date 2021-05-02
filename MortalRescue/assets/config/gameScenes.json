@@ -10,16 +10,13 @@
             "inputControlMode": "CONTROL_MODE_PLAY",
             "maxObjects": 5000,
             "firstLevel": "level1", //still need level managing implemented
-            "tags": [
-                "SCENETAG_MENU"
-            ],
             "gameObjects": [
                 {
-                    "gameObjectId": "BOWMAN",
+                    "gameObjectId": "DRONE_EYE",
                     "layer": "LAYER_MAIN",
                     "location": {
-                        "x": 4,
-                        "y": 4
+                        "x": 6,
+                        "y": 7
                     }
 
                 }
@@ -33,12 +30,62 @@
                     }
 
                 }
-            ]
+            ],
+            "gameObjectPools": [
+                {
+                    "id": "SMOKE1_POOL",
+                    "gameObjectId": "PARTICLE_SMOKE_1",
+                    "lifetime": 2.25,
+                    "maxItems": 1000
+                },
+                {
+                    "id": "BULLET1_POOL",
+                    "gameObjectId": "BULLET1",
+                    "lifetime": 1.25,
+                    "maxItems": 10
+                },
+                {
+                    "id": "DEFLECT1_POOL",
+                    "gameObjectId": "DEFLECT1",
+                    "lifetime": 1.25,
+                    "maxItems": 30
+                },
+                {
+                    "id": "SCRAP1_POOL",
+                    "gameObjectId": "SCRAP_PIECE",
+                    "lifetime": 0.0,
+                    "maxItems": 1000
+                }
+            ],
+            "physics": {
+                "gravity": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "b2DebugDrawMode": false,
+                "timeStep": 0.016, // 1/60 or 1/30
+                "velocityIterations": 6,
+                "positionIterations": 2
+            }
         },
         {
             "id": "SCENE_GAMEOVER",
-            "inputControlMode": "MOUSE_NAVIGATE",
+            "inputControlMode": "CONTROL_MODE_PLAY",
             "maxObjects": 500
+        },
+        {
+            "id": "SCENE_PLAYER_DEATH",
+            "inputControlMode": "CONTROL_MODE_SELECT",
+            "maxObjects": 5,
+            "gameObjects": [
+                {
+                    "gameObjectId": "GUI_PLAYERDEATH_PANEL",
+                    "layer": "LAYER_MAIN",
+                    "location": {
+                        "windowPosition": "WindowPosition::CENTER"
+                    }
+                }
+            ]
         },
         {
             "id": "SCENE_PAUSE_MENU",
@@ -50,10 +97,9 @@
             "gameObjects": [
                 {
                     "gameObjectId": "GUI_PAUSE_PANEL",
-                    "layer": "LAYER_TEXT",
+                    "layer": "LAYER_MAIN",
                     "location": {
-                        "x": 6,
-                        "y": 6
+                        "windowPosition": "WindowPosition::CENTER"
                     }
                 }
             ],

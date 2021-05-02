@@ -3,11 +3,14 @@
 
 #include "GameObjectManager.h"
 #include "game.h"
+
 #include "SceneManager.h"
 #include "Scene.h"
 #include "components/InventoryComponent.h"
+#include "ComponentFactory.h"
 
 #include "Globals.h"
+#include "BaseConstants.h"
 #include "Camera.h"
 #include "EnumMaps.h"
 
@@ -41,124 +44,151 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Set the parent Scene
 	m_parentScene = parentScene;
 
-	//Always build a render and transform component
-	addComponent(std::make_shared<RenderComponent>(definitionJSON), ComponentTypes::RENDER_COMPONENT);
-	addComponent(std::make_shared<TransformComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust), ComponentTypes::TRANSFORM_COMPONENT);
+	std::shared_ptr<Component> component{};
+
+	//Always build a render component
+	component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::RENDER_COMPONENT);
+	addComponent(component, ComponentTypes::RENDER_COMPONENT);
+
+	//Always build a transform component
+	component = ComponentFactory::instance().create(definitionJSON, xMapPos, yMapPos, angleAdjust, ComponentTypes::TRANSFORM_COMPONENT);
+	addComponent(component, ComponentTypes::TRANSFORM_COMPONENT);
 
 	//Animation Component
 	if (definitionJSON.isMember("animationComponent"))
 	{
-		addComponent(std::make_shared<AnimationComponent>(definitionJSON), ComponentTypes::ANIMATION_COMPONENT);
+		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::ANIMATION_COMPONENT);
+		addComponent(component, ComponentTypes::ANIMATION_COMPONENT);
+
 	}
 
 	//Physics Component
-	if (definitionJSON.isMember("physicsComponent") && definitionJSON.isMember("transformComponent"))
+	if (definitionJSON.isMember("physicsComponent"))
 	{
-		addComponent(std::make_shared<PhysicsComponent>(definitionJSON, parentScene, xMapPos, yMapPos, angleAdjust), ComponentTypes::PHYSICS_COMPONENT);
+
+		component = ComponentFactory::instance().create(definitionJSON, parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PHYSICS_COMPONENT);
+		addComponent(component, ComponentTypes::PHYSICS_COMPONENT);
+
 	}
 
 	//Vitality Component
 	if (definitionJSON.isMember("vitalityComponent"))
 	{
-		addComponent(std::make_shared<VitalityComponent>(definitionJSON), ComponentTypes::VITALITY_COMPONENT);
+		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::VITALITY_COMPONENT);
+		addComponent(component, ComponentTypes::VITALITY_COMPONENT);
+
 	}
 
 	//Player control Component
 	if (definitionJSON.isMember("playerControlComponent"))
 	{
-		addComponent(std::make_shared<PlayerControlComponent>(definitionJSON), ComponentTypes::PLAYERCONTROL_COMPONENT);
+		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::PLAYERCONTROL_COMPONENT);
+		addComponent(component, ComponentTypes::PLAYERCONTROL_COMPONENT);
+
 	}
 
 	//Text Component
 	if (definitionJSON.isMember("textComponent"))
 	{
-		addComponent(std::make_shared<TextComponent>(gameObjectId, definitionJSON), ComponentTypes::TEXT_COMPONENT);
+		component = ComponentFactory::instance().create(definitionJSON, gameObjectId, ComponentTypes::TEXT_COMPONENT);
+		addComponent(component, ComponentTypes::TEXT_COMPONENT);
+
 	}
 
 	//Children Component
 	if (definitionJSON.isMember("childrenComponent"))
 	{
-		addComponent(std::make_shared<ChildrenComponent>(definitionJSON, parentScene), ComponentTypes::CHILDREN_COMPONENT);
+		component = ComponentFactory::instance().create(definitionJSON, parentScene, ComponentTypes::CHILDREN_COMPONENT);
+		addComponent(component, ComponentTypes::CHILDREN_COMPONENT);
+
 	}
 
 	//Action Component
 	if (definitionJSON.isMember("actionComponent"))
 	{
-		addComponent(std::make_shared<ActionComponent>(definitionJSON), ComponentTypes::ACTION_COMPONENT);
+		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::ACTION_COMPONENT);
+		addComponent(component, ComponentTypes::ACTION_COMPONENT);
+
 	}
 
 	//Particle X Component
 	if (definitionJSON.isMember("particleXComponent"))
 	{
-		addComponent(std::make_shared<ParticleXComponent>(definitionJSON), ComponentTypes::PARTICLE_X_COMPONENT);
+		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::PARTICLE_X_COMPONENT);
+		addComponent(component, ComponentTypes::PARTICLE_X_COMPONENT);
+
 	}
 
 	//Simple Particle Component
 	if (definitionJSON.isMember("particleComponent"))
 	{
-		addComponent(std::make_shared<ParticleComponent>(definitionJSON), ComponentTypes::PARTICLE_COMPONENT);
+		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::PARTICLE_COMPONENT);
+		addComponent(component, ComponentTypes::PARTICLE_COMPONENT);
+
 	}
 
 	//Inventory Component
 	if (definitionJSON.isMember("inventoryComponent"))
 	{
-		addComponent(std::make_shared<InventoryComponent>(definitionJSON, parentScene), ComponentTypes::INVENTORY_COMPONENT);
+		component = ComponentFactory::instance().create(definitionJSON, parentScene, ComponentTypes::INVENTORY_COMPONENT);
+		addComponent(component, ComponentTypes::INVENTORY_COMPONENT);
+
 	}
 
 	//UIControl Component
 	if (definitionJSON.isMember("UIControlComponent"))
 	{
-		addComponent(std::make_shared<UIControlComponent>(definitionJSON), ComponentTypes::UICONTROL_COMPONENT);
+		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::UICONTROL_COMPONENT);
+		addComponent(component, ComponentTypes::UICONTROL_COMPONENT);
+
 	}
 
 	//Weapon Component
 	if (definitionJSON.isMember("weaponComponent"))
 	{
-		addComponent(std::make_shared<WeaponComponent>(definitionJSON), ComponentTypes::WEAPON_COMPONENT);
+		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::WEAPON_COMPONENT);
+		addComponent(component, ComponentTypes::WEAPON_COMPONENT);
+
 	}
 
 	//Pool Component
 	if (definitionJSON.isMember("poolComponent"))
 	{
-		addComponent(std::make_shared<PoolComponent>(definitionJSON), ComponentTypes::POOL_COMPONENT);
+		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::POOL_COMPONENT);
+		addComponent(component, ComponentTypes::POOL_COMPONENT);
+
 	}
 
 	//Composite Component
 	if (definitionJSON.isMember("compositeComponent"))
 	{
-		addComponent(std::make_shared<CompositeComponent>(definitionJSON, parentScene), ComponentTypes::COMPOSITE_COMPONENT);
+		component = ComponentFactory::instance().create(definitionJSON, parentScene, ComponentTypes::COMPOSITE_COMPONENT);
+		addComponent(component, ComponentTypes::COMPOSITE_COMPONENT);
+
 	}
 
 	//Brain Component
 	if (definitionJSON.isMember("brainComponent"))
 	{
-		addComponent(std::make_shared<BrainComponent>(definitionJSON), ComponentTypes::BRAIN_COMPONENT);
+		component = std::static_pointer_cast<BrainComponent>(ComponentFactory::instance().create(definitionJSON, ComponentTypes::BRAIN_COMPONENT));
+		addComponent(component, ComponentTypes::BRAIN_COMPONENT);
 	}
 
 	//Navigation Component
 	if (definitionJSON.isMember("navigationComponent"))
 	{
-		addComponent(std::make_shared<NavigationComponent>(definitionJSON), ComponentTypes::NAVIGATION_COMPONENT);
+		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::NAVIGATION_COMPONENT);
+		addComponent(component, ComponentTypes::NAVIGATION_COMPONENT);
+
 	}
 
-}
+	//Attachments Component
+	if (definitionJSON.isMember("attachmentsComponent"))
+	{
+		component = ComponentFactory::instance().create(definitionJSON, parentScene, ComponentTypes::ATTACHMENTS_COMPONENT);
+		addComponent(component, ComponentTypes::ATTACHMENTS_COMPONENT);
 
-//void GameObject::addComponent(int componentId, std::shared_ptr<Component> component)
-//{
-//
-//
-//
-//
-//}
-
-
-void GameObject::_setDependecyReferences()
-{
-
-	//SetRenderComponent dependencies
-	//if (hasComponent(ComponentTypes::RENDER_COMPONENT)) {
-	//	getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT)->setDependencyReferences(this);
-	//}
+	}
 
 }
 
@@ -168,7 +198,6 @@ void GameObject::setPosition(float x, float y)
 	getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT)->setPosition(x, y);
 
 }
-
 
 void GameObject::setPosition(b2Vec2 position, float angle)
 {
@@ -198,8 +227,6 @@ void GameObject::update()
 }
 
 
-
-
 void GameObject::render()
 {
 
@@ -213,9 +240,9 @@ void GameObject::render()
 	}
 
 	//Render your attached inventory items
-	if (hasComponent(ComponentTypes::INVENTORY_COMPONENT)) {
+	if (hasComponent(ComponentTypes::ATTACHMENTS_COMPONENT)) {
 
-		getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT)->render();
+		getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT)->render();
 	}
 
 	//If you have an arcade particle emitter then render those particles
@@ -231,43 +258,8 @@ void GameObject::render()
 	}
 
 
-}
 
-//bool GameObject::hasComponent(int componentId) {
-//
-//	auto iter = m_components.find(componentId);
-//
-//	if (iter != m_components.end())
-//	{
-//		if (iter->second && iter->second->isActive() == true)
-//		{
-//			return true;
-//		}
-//		else
-//		{
-//			return false;
-//		}
-//
-//	}
-//	else
-//	{
-//		return false;
-//	}
-//}
-//
-//std::shared_ptr<Component> GameObject::getRefComponent(int componentId)
-//{
-//
-//	if (hasComponent(componentId))
-//	{
-//		return m_components.at(componentId);
-//	}
-//	else
-//	{
-//		return std::shared_ptr<Component>();
-//	}
-//
-//}
+}
 
 void GameObject::reset()
 {
@@ -277,18 +269,17 @@ void GameObject::reset()
 	if (hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
 		getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT)->setOffGrid();
 	}
-	
 
 }
 
 void GameObject::addInventoryItem( GameObject* gameObject)
 {
-	size_t itemCount = getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT)->addItem(gameObject);
+	//size_t itemCount = getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT)->addItem(gameObject);
 	//If this is the only inventory item, then attach it to the player of whatever object this is
-	if (itemCount == 1)
+	/*if (itemCount == 1)
 	{
 		getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT)->attachItem(gameObject);
-	}
+	}*/
 
 }
 
@@ -319,20 +310,14 @@ void GameObject::init(bool cameraFollow)
 	}
 
 	//NEW - execute special code for certain extra complicated gameObjects that need to execute after main construction
-	if (id() == "GINA_64") {
+	//if (id() == "GINA_64") {
 
-		//ToDo:Move to postinit for Inventory/attachment components
-		const auto& playerInventoryComponent = getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT);
-		playerInventoryComponent->weldOnAttachments();
-	}
+	//	//ToDo:Move to postinit for Inventory/attachment components
+	//	const auto& playerInventoryComponent = getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT);
+	//	playerInventoryComponent->weldOnAttachments();
+	//}
 
-	//Brain Componets are particularly complex and specialized to the particular GameObject.
-	//For this particular game, set all of the custom brainComponent classes here.
-	//_setBrains should be a vitual function that is overriden by the specific game using this engine
-	//Set All Special BrainComponents here
-	//_setBrains();
-
-
+	
 }
 
 void GameObject::setPhysicsActive(bool active)
@@ -370,7 +355,7 @@ void GameObject::setAngleInDegrees(float angle)
 }
 
 /*
-The postInit function allows gameobjects to initilaizes components that require that ALL gameObjects be built first.
+The postInit function allows gameobjects to initilaize it's components that require ALL gameObjects to be built first.
 ex. The brainComponent needs all navigation related gameObjects to be built first
 */
 void GameObject::postInit(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection)
@@ -392,8 +377,15 @@ void GameObject::postInit(const std::array <std::vector<std::shared_ptr<GameObje
 
 	//The CompositeComponent needs to weld on its component pieces it the weld flag is turned on
 	if (hasComponent(ComponentTypes::COMPOSITE_COMPONENT)) {
-		const auto compositeComponent = getComponent<BrainComponent>(ComponentTypes::COMPOSITE_COMPONENT);
+		const auto compositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
 		compositeComponent->postInit();
+	}
+
+	//The Attachments component needs to weld on attachment objects as well as potentially add the 
+	// attchement object to the inventory component
+	if (hasComponent(ComponentTypes::ATTACHMENTS_COMPONENT)) {
+		const auto attachmentsComponent = getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
+		attachmentsComponent->postInit();
 	}
 
 
@@ -440,12 +432,7 @@ void GameObject::postInitNavigation(const std::array <std::vector<std::shared_pt
 
 		}
 
-
-
 	}
-
-
-
 
 }
 

@@ -21,10 +21,12 @@ public:
 
 	std::shared_ptr<Action> getAction(std::string actionKey) {
 
-		assert(m_actionMap.find(actionKey) != m_actionMap.end() && "ActionKey was not found in ActionMaps collection");
+		//assert(m_actionMap.find(actionKey) != m_actionMap.end() && "ActionKey was not found in ActionMaps collection");
 
 		return m_actionMap[actionKey];
 	}
+
+	void addAction(std::string actionKey, std::shared_ptr<Action> action);
 
 private:
 

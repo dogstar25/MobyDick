@@ -93,7 +93,7 @@ void CompositeComponent::weldOnPieces()
 
 		b2Vec2 weldLocation = { x,y };
 		
-		parentPhysicsComponent->attachItem(piece.pieceObject.get(), weldLocation);
+		parentPhysicsComponent->attachItem(piece.pieceObject.get(), b2JointType::e_weldJoint, weldLocation);
 
 	}
 
