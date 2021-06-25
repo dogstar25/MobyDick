@@ -3,8 +3,8 @@
         {
             "id": "LOADLEVEL_TRIGGER",
             "type": "GameObjectType::ABSTRACT",
-            "idTag": "IdTag::GENERAL_FREE",
-            "traitTags": ["contact_trigger"],
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": ["trigger"],
             "transformComponent": {
                 "size": {
                     "width": 64,

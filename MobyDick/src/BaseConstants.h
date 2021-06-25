@@ -16,35 +16,30 @@ inline constexpr int CONTROL_MODE_SELECT = 0;
 inline constexpr int CONTROL_MODE_PLAY = 1;
 
 //Game Object Id Tags
-//ToDo: create a IdTag namespace in the individual game as well and put the game specific idTags in that one. The namespaces shoudl combine
-namespace IdTag {
+//ToDo: create a CollisionTag namespace in the individual game as well and put the game specific collisionTags in that one. The namespaces shoudl combine
+namespace CollisionTag {
 	inline constexpr int MAX_OBJECT_CATEGORIES = 32;
 
 	//General
 	inline constexpr int GENERAL_SOLID = 0;
 	inline constexpr int GENERAL_FREE = 1;
-	//Intangible
-	//inline constexpr int DEFLECT_EFFECT = 2;
-	inline constexpr int SMOKE_PARTICLE = 3;
-	inline constexpr int NAVIGATION_POINT = 4;
-	////Non-stationary
-	//inline constexpr int DRONE_BRAIN = 5;
-	//inline constexpr int DRONE_FRAME = 6;
-	//inline constexpr int DRONE_SHIELD = 7;
-	//inline constexpr int DRONE_WEAPON = 8;
-	//inline constexpr int ENEMY_BULLET = 9;
-	//inline constexpr int FRIENDLY_BULLET = 10;
-	inline constexpr int GUI = 11;
-	inline constexpr int HEAVY_PARTICLE = 12;
-	inline constexpr int LIGHT_PARTICLE = 13;
-	inline constexpr int PLAYER = 14;
-	//inline constexpr int PLAYER_BULLET = 15;
-	//inline constexpr int SHIELD_SCRAP = 16;
-	//inline constexpr int SURVIVOR = 17;
-	////Stationary
-	//inline constexpr int MEDKIT = 18;
-	inline constexpr int WALL = 19;
-	//inline constexpr int WEAPON_PICKUP = 20;
+	inline constexpr int SMOKE_PARTICLE = 2;
+	inline constexpr int NAVIGATION_POINT = 3;
+	inline constexpr int HEAVY_PARTICLE = 4;
+	inline constexpr int LIGHT_PARTICLE = 5;
+	inline constexpr int PLAYER = 6;
+	inline constexpr int WALL = 7;
+
+}
+
+namespace TraitTag {
+
+	static const uint16_t player = 1;
+	static const uint16_t barrier = 2;
+	static const uint16_t collectable = 3;
+	static const uint16_t weapon = 4;
+	static const uint16_t gui = 5;
+	static const uint16_t navigation;
 
 }
 
@@ -77,8 +72,9 @@ namespace ParticleEmitterType {
 
 namespace NavigationObjectType {
 
-	inline constexpr int TRANSIT_POINT = 0;
-	inline constexpr int WAYPOINT = 1;
+	inline constexpr int UNSPECIFIED= 0;
+	inline constexpr int TRANSIT_POINT = 1;
+	inline constexpr int WAYPOINT = 2;
 }
 
 //Components

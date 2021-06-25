@@ -2,25 +2,13 @@
     "scenes": [
         {
             "id": "SCENE_INTRO",
-            "mouseMode": "MOUSE_MODE_NAVIGATE",
+            "inputControlMode": "CONTROL_MODE_SELECT",
             "maxObjects": 500
         },
         {
             "id": "SCENE_PLAY",
             "inputControlMode": "CONTROL_MODE_PLAY",
             "maxObjects": 5000,
-            "firstLevel": "level1", //still need level managing implemented
-            "gameObjects": [
-                {
-                    "gameObjectId": "DRONE_EYE",
-                    "layer": "LAYER_MAIN",
-                    "location": {
-                        "x": 6,
-                        "y": 7
-                    }
-
-                }
-            ],
             "keyActions": [
                 {
                     "keyCode": "SDLK_ESCAPE",
@@ -36,7 +24,7 @@
                     "id": "SMOKE1_POOL",
                     "gameObjectId": "PARTICLE_SMOKE_1",
                     "lifetime": 2.25,
-                    "maxItems": 1000
+                    "maxItems": 500
                 },
                 {
                     "id": "BULLET1_POOL",
@@ -54,7 +42,7 @@
                     "id": "SCRAP1_POOL",
                     "gameObjectId": "SCRAP_PIECE",
                     "lifetime": 0.0,
-                    "maxItems": 1000
+                    "maxItems": 500
                 }
             ],
             "physics": {
@@ -62,7 +50,7 @@
                     "x": 0.0,
                     "y": 0.0
                 },
-                "b2DebugDrawMode": false,
+                "b2DebugDrawMode": true,
                 "timeStep": 0.016, // 1/60 or 1/30
                 "velocityIterations": 6,
                 "positionIterations": 2
@@ -94,12 +82,38 @@
             "tags": [
                 "SCENETAG_MENU"
             ],
+            "gameObjectPools": [
+                {
+                    "id": "SMOKE1_POOL",
+                    "gameObjectId": "PARTICLE_SMOKE_1",
+                    "lifetime": 2.25,
+                    "maxItems": 25
+                }
+            ],
+            "physics": {
+                "gravity": {
+                    "x": 0.0,
+                    "y": 8.0
+                },
+                "b2DebugDrawMode": false,
+                "timeStep": 0.016, // 1/60 or 1/30
+                "velocityIterations": 6,
+                "positionIterations": 2
+            },
             "gameObjects": [
                 {
                     "gameObjectId": "GUI_PAUSE_PANEL",
                     "layer": "LAYER_MAIN",
                     "location": {
                         "windowPosition": "WindowPosition::CENTER"
+                    }
+                },
+                {
+                    "gameObjectId": "PARTICLE_EMITTER_SPARK",
+                    "layer": "LAYER_MAIN",
+                    "location": {
+                        "x": 10,
+                        "y": 10
                     }
                 }
             ],

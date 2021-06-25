@@ -132,13 +132,14 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <SDLCheck>true</SDLCheck>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>
@@ -171,6 +172,7 @@
       <SupportJustMyCode>true</SupportJustMyCode>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>
@@ -194,6 +196,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\triggers\LevelComplete.cpp" />
     <ClCompile Include="src\triggers\TriggerMap.cpp" />
     <ClCompile Include="src\triggers\PlayerDeath.cpp" />
     <ClCompile Include="src\actions\DroneMoveAction.cpp" />
@@ -259,8 +262,10 @@
     <ClCompile Include="src\actions\UseAction.cpp" />
     <ClCompile Include="src\actions\LoadNextLevelAction.cpp" />
     <ClCompile Include="src\triggers\Trigger.cpp" />
+    <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\triggers\LevelComplete.h" />
     <ClInclude Include="src\triggers\TriggerMap.h" />
     <ClInclude Include="src\triggers\PlayerDeath.h" />
     <ClInclude Include="src\ComponentFactory.h" />
@@ -334,6 +339,7 @@
     <ClInclude Include="src\actions\UseAction.h" />
     <ClInclude Include="src\actions\LoadNextLevelAction.h" />
     <ClInclude Include="src\triggers\Trigger.h" />
+    <ClInclude Include="Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="ExtraLibs\SDL2main.lib" />
@@ -343,9 +349,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json_old" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="assets\bowman1.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -11,6 +11,7 @@
 #include <unordered_map>
 #include <typeindex>
 #include <array>
+#include <bitset>
 
 #include <box2d/box2d.h>
 
@@ -63,25 +64,30 @@ public:
 	SDL_FPoint getCenterPosition();
 	void init(bool cameraFollow = false);
 	void postInit(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection);
-	void postInitNavigation(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection);
 	void setPhysicsActive(bool active);
 	void setParentScene( Scene* parentScene);
 	void setAngleInDegrees(float angle);
 	void setAngleInRadians(float angle);
+	bool hasTrait(int32_t trait) {
+		return m_traitTags.test(trait);
+	}
+	void addTrait(int32_t trait) {
+		m_traitTags.set(trait, true);
+	}
+	void removeTrait(int32_t trait) {
+		m_traitTags.set(trait, false);
+	}
 
 	//Accessor Functions
 	auto removeFromWorld() { return m_removeFromWorld; }
 	std::string id() { return m_id; }
-	int idTag() { return m_idTag; }
+	int collisionTag() { return m_collisionTag; }
 	auto const& gameObjectDefinition() { return m_gameObjectDefinition; }
 	auto& components() { return m_components; }
 	Scene* parentScene() { return m_parentScene; }
-	/*auto isPooledAvailable() { return m_isPooledAvailable; }
-	void setIsPooledAvailable(int isPooledAvailable);*/
 
 	void reset();
 	void addInventoryItem(GameObject* gameObject);
-	void _setDependecyReferences();
 
 	/*template <typename componentType>
 	inline std::shared_ptr<componentType> addComponent(std::shared_ptr<componentType> component, ComponentTypes componentTypeIndex)
@@ -142,9 +148,10 @@ public:
 
 private:
 	
-	int m_idTag{ 0 };
+	int m_collisionTag{ 0 };
 	bool m_removeFromWorld{ false };
 	Scene* m_parentScene{nullptr};
+	std::bitset<32> m_traitTags{};
 
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 

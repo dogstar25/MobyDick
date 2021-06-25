@@ -6,9 +6,9 @@
 ContactFilter::ContactFilter()
 {
 
-	using namespace IdTag;
+	using namespace CollisionTag;
 
-	m_collisionMasks.resize(IdTag::MAX_OBJECT_CATEGORIES);
+	m_collisionMasks.resize(CollisionTag::MAX_OBJECT_CATEGORIES);
 
 	//General_solid - set all to collide
 	m_collisionMasks[GENERAL_SOLID].reset();
@@ -132,12 +132,12 @@ bool ContactFilter::ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB)
 		return false;
 	}
 
-	auto gameObjectAMask = m_collisionMasks[gameObjectA->idTag()];
-	auto gameObjectBMask = m_collisionMasks[gameObjectB->idTag()];
+	auto gameObjectAMask = m_collisionMasks[gameObjectA->collisionTag()];
+	auto gameObjectBMask = m_collisionMasks[gameObjectB->collisionTag()];
 
 	//ToDo:this OR should be an AND
-	if (gameObjectAMask.test(gameObjectB->idTag()) &&
-		gameObjectBMask.test(gameObjectA->idTag())) {
+	if (gameObjectAMask.test(gameObjectB->collisionTag()) &&
+		gameObjectBMask.test(gameObjectA->collisionTag())) {
 		return true;
 	}
 	else {

@@ -167,16 +167,16 @@ namespace util
 
 	b2Vec2& toBox2dPoint(b2Vec2& point)
 	{
-		point.x /= 25;
-		point.y /= 25;
+		point.x /= (float)25;
+		point.y /= (float)25;
 
 		return point;
 	}
 
 	b2Vec2& toRenderPoint(b2Vec2& point)
 	{
-		point.x *= 25;
-		point.y *= 25;
+		point.x *= (float)25;
+		point.y *= (float)25;
 
 		return point;
 	}

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <optional>
+
 #include <json/json.h>
 
 #include "components\BrainComponent.h"
@@ -26,6 +28,11 @@ private:
 	std::shared_ptr<GameObject> getNextinterimDestination();
 
 	int m_currentWaypointIndex{ 0 };
+	SDL_FPoint m_targetLocation{0,0};
+
+	std::chrono::steady_clock::time_point engageStateTimeSnapshot{ std::chrono::steady_clock::now() };
+	//std::chrono::duration<float, std::milli> lifetime;
+
 
 	void _doPatrol();
 	void _doAlert();
@@ -36,6 +43,9 @@ private:
 	bool existsInAlreadyVistedNavList(std::weak_ptr<GameObject> navPoint);
 	void _rotateTowards(b2Vec2 targetPoint);
 	void _applyAvoidanceMovement();
+	int _determineState();
+
+	std::optional<SDL_FPoint> _detectPlayer();
 
 	void navigate();
 

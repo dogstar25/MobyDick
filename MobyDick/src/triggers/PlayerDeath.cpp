@@ -15,7 +15,7 @@ bool PlayerDeath::hasMetCriteria()
 		for (int i = 0; i < gameObjects.size(); i++)
 		{
 			//assert(gameObject != nullptr && "GameObject is null");
-			if (gameObjects[i]->id() == "GINA_64") {
+			if (gameObjects[i]->hasTrait(TraitTag::player)) {
 
 				const auto& transformComponent = gameObjects[i]->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 				if (transformComponent->getCenterPosition().x > 400) {
@@ -45,6 +45,7 @@ void PlayerDeath::execute()
 	event.type = SDL_USEREVENT;
 	event.user.data1 = sceneAction;
 	SDL_PushEvent(&event);
+
 
 
 

@@ -3,7 +3,7 @@
         {
             "id": "SWORDLADY",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GENERAL_SOLID",
+            "collisionTag": "CollisionTag::GENERAL_SOLID",
             "traitTags": [],
             "description": "SwordLady",
             "transformComponent": {
@@ -28,8 +28,8 @@
         {
             "id": "GINA_64",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::PLAYER",
-            "traitTags": [],
+            "collisionTag": "CollisionTag::PLAYER",
+            "traitTags": ["player"],
             "transformComponent": {
                 "size": {
                     "width": 64,
@@ -63,7 +63,6 @@
                 "density": 50.5,
                 "linearDamping": 0.2,
                 "angularDamping": 3.0,
-                //"collisionCategory": "CollisionCat::PLAYER",
                 "anchorPoint": { // starts from centered 0,0 position
                     "x": 0.8,
                     "y": 0.0
@@ -82,7 +81,7 @@
                 "attachments": [
                     {
                         "gameObjectId": "PISTOL",
-                        "attachLocation": { // starts from centered 0,0 position
+                        "attachLocation": { 
                             "x": 0.8,
                             "y": 0.0
                         },
@@ -140,7 +139,7 @@
         {
             "id": "BOWMAN",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GENERAL_SOLID",
+            "collisionTag": "CollisionTag::GENERAL_SOLID",
             "traitTags": [],
             "transformComponent": {
                 "size": {
@@ -156,8 +155,8 @@
         {
             "id": "PLAYER_LABEL",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GUI",
-            "traitTags": [],
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": ["gui"],
             "description": "Player Label",
             "transformComponent": {
                 "absolutePositioning": false
@@ -172,8 +171,8 @@
         {
             "id": "FPS_VALUE",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GUI",
-            "traitTags": [],
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": ["gui"],
             "description": "FPS",
             "transformComponent": {
                 "absolutePositioning": true
@@ -205,8 +204,8 @@
         {
             "id": "GUI_PAUSE_PANEL",
             "type": "GameObjectType::RECTANGLE",
-            "idTag": "IdTag::GUI",
-            "traitTags": [],
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": ["gui"],
             "transformComponent": {
                 "size": {
                     "width": 176,
@@ -254,8 +253,8 @@
         {
             "id": "CONTINUE_BUTTON",
             "type": "GameObjectType::RECTANGLE",
-            "idTag": "IdTag::GUI",
-            "traitTags": [],
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
             "transformComponent": {
                 "size": {
                     "width": 128,
@@ -316,8 +315,8 @@
         {
             "id": "QUIT_BUTTON",
             "type": "GameObjectType::RECTANGLE",
-            "idTag": "IdTag::GUI",
-            "traitTags": [],
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
             "transformComponent": {
                 "size": {
                     "width": 128,
@@ -377,8 +376,8 @@
         {
             "id": "SETTINGS_BUTTON",
             "type": "GameObjectType::RECTANGLE",
-            "idTag": "IdTag::GUI",
-            "traitTags": [],
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": ["gui"],
             "transformComponent": {
                 "size": {
                     "width": 128,
@@ -424,8 +423,8 @@
         {
             "id": "CONTINUE_LABEL",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GUI",
-            "traitTags": [],
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
             "transformComponent": {
                 "absolutePositioning": true
             },
@@ -439,8 +438,8 @@
         {
             "id": "QUIT_LABEL",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GUI",
-            "traitTags": [],
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
             "transformComponent": {
                 "absolutePositioning": true
             },
@@ -454,8 +453,8 @@
         {
             "id": "SETTINGS_LABEL",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GUI",
-            "traitTags": [],
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
             "transformComponent": {
                 "absolutePositioning": true
             },
@@ -469,8 +468,8 @@
         {
             "id": "PLAYERDEATH_LABEL",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GUI",
-            "traitTags": [],
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
             "transformComponent": {
                 "absolutePositioning": true
             },
@@ -484,8 +483,8 @@
         {
             "id": "DEBUG_ITEM",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GUI",
-            "traitTags": [],
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
             "description": "Debug Item",
             "transformComponent": {
                 "absolutePositioning": true
@@ -500,8 +499,8 @@
         {
             "id": "PISTOL",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::WEAPON_PICKUP",
-            "traitTags": [],
+            "collisionTag": "CollisionTag::WEAPON_PICKUP",
+            "traitTags": ["collectable","weapon"],
             "category": "ObjectCategory::COLLECTABLE",
             "description": "Weapon 1",
             "transformComponent": {
@@ -594,7 +593,7 @@
         {
             "id": "BULLET1",
             "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::PLAYER_BULLET",
+            "collisionTag": "CollisionTag::PLAYER_BULLET",
             "traitTags": [],
             "description": "Bullet 1",
             "transformComponent": {
@@ -635,8 +634,8 @@
         },
         {
             "id": "PARTICLE_X_EMITTER",
-            "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GENERAL_FREE",
+            "type": "GameObjectType::ABSTRACT",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [],
             "description": "Particle Emitter",
             "transformComponent": {
@@ -650,8 +649,8 @@
         },
         {
             "id": "PARTICLE_EMITTER",
-            "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GENERAL_FREE",
+            "type": "GameObjectType::ABSTRACT",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [],
             "description": "Particle Emitter",
             "transformComponent": {
@@ -665,8 +664,8 @@
         },
         {
             "id": "PARTICLE_EMITTER_SPARK",
-            "type": "GameObjectType::SPRITE",
-            "idTag": "IdTag::GENERAL_FREE",
+            "type": "GameObjectType::ABSTRACT",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [],
             "description": "Particle Emitter",
             "transformComponent": {
@@ -686,7 +685,7 @@
         {
             "id": "PRIMITIVE_LINE",
             "type": "GameObjectType::LINE",
-            "idTag": "IdTag::GENERAL_FREE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [],
             "description": "Line",
             "transformComponent": {
@@ -703,8 +702,8 @@
         {
             "id": "NAVIGATION_TRANSIT_POINT",
             "type": "GameObjectType::ABSTRACT",
-            "idTag": "IdTag::NAVIGATION_POINT",
-            "traitTags": [],
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": ["navigation"],
             "description": "Navigation Object",
             "physicsComponent": {
                 "type": "B2_STATIC",
@@ -724,8 +723,8 @@
         {
             "id": "NAVIGATION_WAYPOINT",
             "type": "GameObjectType::ABSTRACT",
-            "idTag": "IdTag::NAVIGATION_POINT",
-            "traitTags": [],
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": ["navigation"],
             "description": "Navigation Object",
             "physicsComponent": {
                 "type": "B2_STATIC",
@@ -744,8 +743,8 @@
         {
             "id": "GUI_PLAYERDEATH_PANEL",
             "type": "GameObjectType::RECTANGLE",
-            "idTag": "IdTag::GUI",
-            "traitTags": [],
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": ["gui"],
             "transformComponent": {
                 "size": {
                     "width": 256,

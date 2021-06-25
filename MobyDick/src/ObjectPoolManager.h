@@ -18,6 +18,7 @@ class ObjectPoolManager
 public:
 
 	void init(Json::Value definitionJSON, Scene* parentScene);
+	void clear();
 	ObjectPoolManager();
 	~ObjectPoolManager();
 

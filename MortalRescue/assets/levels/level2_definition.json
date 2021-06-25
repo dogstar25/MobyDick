@@ -1,0 +1,24 @@
+{
+    "id": "LEVEL2",
+    "blueprint": "TX_LEVEL2_BLUEPRINT",
+    "description": "Level 2",
+    "dimensions": {
+        "levelWidth": 34,
+        "levelHeight": 34,
+        "tileWidth": 32,
+        "tileHeight": 32
+    },
+    "tileSize": 32,
+    "locationObjects": [
+        {
+            "id": "LOC_0003_0003",
+            "gameObjectId": "GINA_64",
+            "cameraFollow": true
+        },
+        {
+            "id": "LOC_0014_0003",
+            "gameObjectId": "DRONE",
+            "cameraFollow": false
+        }
+    ]
+}

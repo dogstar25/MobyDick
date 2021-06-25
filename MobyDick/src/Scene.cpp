@@ -19,35 +19,16 @@ Scene::Scene(std::string sceneId)
 
 	//Get the scene definition
 	Json::Value definitionJSON = SceneManager::instance().getDefinition(sceneId);
-
 	m_id = sceneId;
+
+	//Start the scene in run mode
 	m_state = SceneState::RUN;
 
-
-	//Physics
-	Json::Value physicsJSON = definitionJSON["physics"];
-	m_physicsConfig.gravity.Set(physicsJSON["gravity"]["x"].asFloat(), physicsJSON["gravity"]["y"].asFloat());
-	m_physicsConfig.timeStep = physicsJSON["timeStep"].asFloat();
-	m_physicsConfig.velocityIterations = physicsJSON["velocityIterations"].asInt();
-	m_physicsConfig.positionIterations = physicsJSON["positionIterations"].asInt();
-	m_physicsConfig.b2DebugDrawMode = physicsJSON["b2DebugDrawMode"].asBool();
-
-	//Build the box2d physics world
-	m_physicsWorld = new b2World(m_physicsConfig.gravity);
-	m_physicsWorld->SetAutoClearForces(true);
-
-	//Add a collision contact listener and filter for box2d callbacks
-	m_physicsWorld->SetContactListener(&ContactListener::instance());
-	m_physicsWorld->SetContactFilter(&ContactFilter::instance());
-
-	//Build ObjectPoolManager
-	m_objectPoolManager.init(definitionJSON, this);
-
-	//Debug Mode
-	if (m_physicsConfig.b2DebugDrawMode == true)
-	{
-		DebugDraw::instance().SetFlags(DebugDraw::e_shapeBit);
-		m_physicsWorld->SetDebugDraw(&DebugDraw::instance());
+	//Physics if its needed for the scene
+	if (definitionJSON.isMember("physics")) {
+		m_hasPhysics = true;
+		Json::Value physicsJSON = definitionJSON["physics"];
+		_buildPhysicsWorld(physicsJSON);
 	}
 
 	//Allocate the arrays for all of the gameObjects
@@ -57,25 +38,15 @@ Scene::Scene(std::string sceneId)
 		gameLayer.reserve(maxObjects);
 	}
 
+	//Build ObjectPoolManager
+	m_objectPoolManager.init(definitionJSON, this);
+
 	//Set the mouse mode
 	auto inputControlMode = EnumMap::instance().toEnum(definitionJSON["inputControlMode"].asString());
 	m_inputControlMode = inputControlMode;
+	setInputControlMode(inputControlMode);
 
-	//Load the First level - ToDo: need level managing implemented somehow
-	auto levelId = definitionJSON["firstLevel"].asString();
-	if (levelId.empty() == false) {
-
-		LevelManager::instance().load(levelId, this);
-	}
-
-	//Tags
-	for (Json::Value itrTag : definitionJSON["tags"]) {
-
-		std::size_t tag = EnumMap::instance().toEnum(itrTag.asString());
-		m_sceneTags.set(tag);
-	}
-
-	//GameOBjects - ones that are not being handled in the level blueprint
+	//GameObjects that are defined at the scene level, not a level built scene
 	for (Json::Value gameObjectJSON : definitionJSON["gameObjects"]) {
 
 		auto id = gameObjectJSON["gameObjectId"].asString();
@@ -97,6 +68,13 @@ Scene::Scene(std::string sceneId)
 		}
 	}
 
+	//Tags
+	for (Json::Value itrTag : definitionJSON["tags"]) {
+
+		std::size_t tag = EnumMap::instance().toEnum(itrTag.asString());
+		m_sceneTags.set(tag);
+	}
+
 	//Keycode actions
 	for (Json::Value keyActionJSON : definitionJSON["keyActions"]) {
 
@@ -109,8 +87,12 @@ Scene::Scene(std::string sceneId)
 		addKeyAction(keyCode, sceneAction);
 	}
 
-	//Run GameObject code that requires ALL gameObjects to be created first, for interdependency logic
-	_processGameObjectInterdependecies();
+	//Debug Mode
+	if (m_hasPhysics && m_physicsConfig.b2DebugDrawMode == true)
+	{
+		DebugDraw::instance().SetFlags(DebugDraw::e_shapeBit);
+		m_physicsWorld->SetDebugDraw(&DebugDraw::instance());
+	}
 
 
 }
@@ -119,39 +101,94 @@ Scene::Scene(std::string sceneId)
 Scene::~Scene()
 {
 
+	clear();
+
+}
+
+
+void Scene::loadLevel(std::string levelId)
+{
+
+	Game::instance()._displayLoadingMsg();
+
+	reset();
+
+	//Build all of the gameObjects from the level definition
+	LevelManager::instance().load(levelId, this);
+
+	//Run GameObject code that requires ALL gameObjects to be created first, for interdependency logic
+	_processGameObjectInterdependecies();
+
+}
+
+void Scene::reset()
+{
+
+	clear();
+
+	//Rebuild everything
+	Game::instance()._displayLoadingMsg();
+
+	Json::Value sceneJSON = SceneManager::instance().getDefinition(m_id);
+
+	if (sceneJSON.isMember("physics")) {
+		m_hasPhysics = true;
+		Json::Value physicsJSON = sceneJSON["physics"];
+		_buildPhysicsWorld(physicsJSON);
+	}
+
+	m_objectPoolManager.init(sceneJSON, this);
+
+	//GameObjects that are defined at the scene level, not a level built scene
+	for (Json::Value gameObjectJSON : sceneJSON["gameObjects"]) {
+
+		auto id = gameObjectJSON["gameObjectId"].asString();
+
+		auto layer = EnumMap::instance().toEnum(gameObjectJSON["layer"].asString());
+
+		//Determine location
+		auto locationJSON = gameObjectJSON["location"];
+		if (locationJSON.isMember("windowPosition")) {
+
+			auto windowPosition = EnumMap::instance().toEnum(gameObjectJSON["location"]["windowPosition"].asString());
+			SDL_FPoint location = calcWindowPosition(windowPosition);
+			addGameObject(id, layer, location.x, location.y, 0);
+		}
+		else {
+			auto locationX = gameObjectJSON["location"]["x"].asFloat();
+			auto locationY = gameObjectJSON["location"]["y"].asFloat();
+			addGameObject(id, layer, locationX, locationY, 0);
+		}
+	}
+
+	//Debug Mode
+	if (m_hasPhysics && m_physicsConfig.b2DebugDrawMode == true)
+	{
+		DebugDraw::instance().SetFlags(DebugDraw::e_shapeBit);
+		m_physicsWorld->SetDebugDraw(&DebugDraw::instance());
+	}
+
+
+
+
+}
+
+void Scene::clear()
+{
+
+	//Clear everything
+	m_objectPoolManager.clear();
+
 	for (int x = 0; x < MAX_GAMEOBJECT_LAYERS; x++)
 	{
 		m_gameObjects[x].clear();
 	}
 
-	//Delete box2d world - should delete all bodies and fixtures within
-	delete m_physicsWorld;
+	LevelManager::instance().clearTriggers();
 
-}
-
-
-void Scene::run()
-{
-
-	////Capture the amount of time that has passed since last loop and accumulate time for both
-	////the FPS calculation and the game loop timer
-	//Clock::instance().update();
-
-	////Only update and render if we have passed the 60 fps time passage
-	//if (Clock::instance().hasMetGameLoopSpeed())
-	//{
-	//	//Handle updating objects positions and physics
-	//	if (m_state != SceneState::PAUSE) {
-	//		update();
-	//	}
-
-	//	//render everything
-	//	render();
-
-	//	//Increment frame counter and calculate FPS and reset the gameloop timer
-	//	Clock::instance().calcFps();
-
-	//}
+	if (m_hasPhysics) {
+		delete m_physicsWorld;
+	}
 
 }
 
@@ -200,7 +237,9 @@ void Scene::update() {
 	LevelManager::instance().update(this);
 
 	//Update ALL physics object states
-	stepB2PhysicsWorld();
+	if (hasPhysics()) {
+		stepB2PhysicsWorld();
+	}
 
 }
 
@@ -219,7 +258,7 @@ void Scene::render() {
 	}
 	
 	//DebugDraw
-	if (m_physicsConfig.b2DebugDrawMode == true)
+	if (m_hasPhysics && m_physicsConfig.b2DebugDrawMode == true)
 	{
 		m_physicsWorld->DrawDebugData();
 	}
@@ -267,25 +306,19 @@ void Scene::clearEvents()
 	//m_PlayerInputEvents.clear();
 }
 
-void Scene::applyCurrentControlMode()
-{
-
-	if (m_inputControlMode == CONTROL_MODE_PLAY) {
-		SDL_ShowCursor(false);
-		SDL_SetRelativeMouseMode(SDL_TRUE);
-	}
-	else if (m_inputControlMode == CONTROL_MODE_SELECT) {
-		SDL_ShowCursor(true);
-		SDL_SetRelativeMouseMode(SDL_FALSE);
-	}
-
-}
-
 void Scene::setInputControlMode(int inputControlMode)
 {
 
 	m_inputControlMode = inputControlMode;
-	applyCurrentControlMode();
+
+	if (inputControlMode == CONTROL_MODE_PLAY) {
+		SDL_ShowCursor(false);
+		SDL_SetRelativeMouseMode(SDL_TRUE);
+	}
+	else if (inputControlMode == CONTROL_MODE_SELECT) {
+		SDL_ShowCursor(true);
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+	}
 
 }
 
@@ -321,6 +354,23 @@ void Scene::_processGameObjectInterdependecies()
 
 	}
 
+}
 
+void Scene::_buildPhysicsWorld(Json::Value physicsJSON)
+{
+
+	m_physicsConfig.gravity.Set(physicsJSON["gravity"]["x"].asFloat(), physicsJSON["gravity"]["y"].asFloat());
+	m_physicsConfig.timeStep = physicsJSON["timeStep"].asFloat();
+	m_physicsConfig.velocityIterations = physicsJSON["velocityIterations"].asInt();
+	m_physicsConfig.positionIterations = physicsJSON["positionIterations"].asInt();
+	m_physicsConfig.b2DebugDrawMode = physicsJSON["b2DebugDrawMode"].asBool();
+
+	//Build the box2d physics world
+	m_physicsWorld = new b2World(m_physicsConfig.gravity);
+	m_physicsWorld->SetAutoClearForces(true);
+
+	//Add a collision contact listener and filter for box2d callbacks
+	m_physicsWorld->SetContactListener(&ContactListener::instance());
+	m_physicsWorld->SetContactFilter(&ContactFilter::instance());
 
 }

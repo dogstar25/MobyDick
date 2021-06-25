@@ -22,10 +22,9 @@ EnumMap::EnumMap()
 	m_enumMap["CONTROL_MODE_SELECT"] = CONTROL_MODE_SELECT;
 	m_enumMap["CONTROL_MODE_PLAY"] = CONTROL_MODE_PLAY;
 
-	//GameObject IdTags
-	m_enumMap["IdTag::GENERAL_SOLID"] = IdTag::GENERAL_SOLID;
-	m_enumMap["IdTag::GENERAL_FREE"] = IdTag::GENERAL_FREE;
-	m_enumMap["IdTag::GUI"] = IdTag::GUI;
+	//GameObject CollisionTags
+	m_enumMap["CollisionTag::GENERAL_SOLID"] = CollisionTag::GENERAL_SOLID;
+	m_enumMap["CollisionTag::GENERAL_FREE"] = CollisionTag::GENERAL_FREE;
 
 	//Box2d Related
 	m_enumMap["B2_STATIC"] = b2_staticBody;
@@ -95,6 +94,7 @@ EnumMap::EnumMap()
 	m_enumMap["ParticleEmitterType::CONTINUOUS"] = ParticleEmitterType::CONTINUOUS;
 
 	//Navigation Object types
+	m_enumMap["NavigationObjectType::UNSPECIFIED"] = NavigationObjectType::UNSPECIFIED;
 	m_enumMap["NavigationObjectType::TRANSIT_POINT"] = NavigationObjectType::TRANSIT_POINT;
 	m_enumMap["NavigationObjectType::WAYPOINT"] = NavigationObjectType::WAYPOINT;
 
@@ -109,6 +109,14 @@ EnumMap::EnumMap()
 	m_enumMap["GameObjectType::POINT"] = GameObjectType::POINT;
 	m_enumMap["GameObjectType::RECTANGLE"] = GameObjectType::RECTANGLE;
 
+	//GameObject Trait Tags
+	m_enumMap["player"] = TraitTag::player;
+	m_enumMap["barrier"] = TraitTag::barrier;
+	m_enumMap["collectable"] = TraitTag::collectable;
+	m_enumMap["weapon"] = TraitTag::weapon;
+	m_enumMap["gui"] = TraitTag::gui;
+	m_enumMap["navigation"] = TraitTag::navigation;
+
 }
 
 EnumMap::~EnumMap()
@@ -119,13 +127,6 @@ EnumMap::~EnumMap()
 const int EnumMap::toEnum(std::string name)
 {
 	assert(m_enumMap.find(name) != m_enumMap.end() && "Constant Name wasnt found in EnumMap");
-
-	//
-	//
-	// return an optional
-	//
-
-
 
 	return m_enumMap[name];
 }
