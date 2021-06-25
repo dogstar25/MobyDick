@@ -37,10 +37,14 @@ public:
 	Scene(std::string sceneId);
 	~Scene();
 
-	void run();
+	void loadLevel(std::string levelId);
+	void reset();
+	void clear();
 	void render();
 	void update();
 	void clearEvents();
+	
+
 	GameObject* addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle=0., bool cameraFollow=false);
 	GameObject* addGameObject(std::shared_ptr<GameObject> gameObject, int layer);
 	void addKeyAction(SDL_Keycode, SceneAction);
@@ -93,22 +97,31 @@ public:
 			return std::nullopt;
 		}
 	}
+
+	bool hasPhysics() {
+		return m_hasPhysics;
+	}
 	
 private:
+
 	std::string m_id;
+	int m_inputControlMode;
+	int m_parentSceneIndex;
+	bool m_hasPhysics{ false };
+
 	SceneState m_state;
 	b2World* m_physicsWorld{ nullptr };
 	PhysicsConfig m_physicsConfig;
-
-	int m_inputControlMode;
-	std::bitset<8> m_sceneTags;
-	std::map<SDL_Keycode, SceneAction> m_sceneKeyActions;
 	ObjectPoolManager m_objectPoolManager;
 
-	int m_parentSceneIndex;
 	std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> m_gameObjects;
+	std::bitset<8> m_sceneTags;
+	std::map<SDL_Keycode, SceneAction> m_sceneKeyActions;
+
+
 
 	void _processGameObjectInterdependecies();
+	void _buildPhysicsWorld(Json::Value physicsJSON);
 
 };
 

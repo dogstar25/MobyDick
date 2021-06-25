@@ -13,7 +13,7 @@ void player_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint
 	GameObject* player;
 	GameObject* wall;
 
-	if (contact1->idTag() == IdTag::PLAYER) {
+	if (contact1->collisionTag() == CollisionTag::PLAYER) {
 		player = contact1;
 		wall = contact2;
 	}
@@ -32,7 +32,7 @@ void bullet_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint
 	GameObject* bullet;
 	GameObject* wall;
 
-	if (contact1->idTag() == IdTag::PLAYER_BULLET) {
+	if (contact1->collisionTag() == CollisionTag::PLAYER_BULLET) {
 		bullet = contact1;
 		wall = contact2;
 	}
@@ -47,11 +47,13 @@ void bullet_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint
 	particleComponent->addParticleEffect(ParticleEffects::ricochet);
 	particleComponent->setType(ParticleEmitterType::ONETIME);
 
-	/*auto particleEmitterObject = Game::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
-	auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
-	particleComponent->addParticleEffect(ParticleEffects::ricochet);
-	particleComponent->setType(ParticleEmitterType::ONETIME);
-	particleComponent->setEmissionInterval(std::chrono::duration<float>(0.2));*/
+	// 
+	// 
+	//auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
+	//const auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
+	//particleComponent->addParticleEffect(ParticleEffects::ricochet);
+	//particleComponent->setType(ParticleEmitterType::CONTINUOUS);
+	//particleComponent->setEmissionInterval(std::chrono::duration<float>(0.02));
 
 	//Convert from box2d to gameWorld coordinates
 	contactPoint.x *= GameConfig::instance().scaleFactor();
@@ -68,7 +70,7 @@ void playerBullet_droneShield(GameObject* contact1, GameObject* contact2, b2Vec2
 	GameObject* bullet;
 	GameObject* shield;
 
-	if (contact1->idTag() == IdTag::PLAYER_BULLET) {
+	if (contact1->collisionTag() == CollisionTag::PLAYER_BULLET) {
 		bullet = contact1;
 		shield = contact2;
 	}
@@ -159,15 +161,15 @@ void ContactListener::EndContact(b2Contact* contact)
 
 void ContactListener::handleContact(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
 {
-	auto category1 = contact1->idTag();
-	auto category2 = contact2->idTag();
+	auto category1 = contact1->collisionTag();
+	auto category2 = contact2->collisionTag();
 	std::string collisionActionClass = {};
 
 	/////////////////////////
 	// Player Wall Contact
 	////////////////////////
-	if ((category1 == IdTag::PLAYER && category2 == IdTag::WALL) ||
-		(category2 == IdTag::PLAYER && category1 == IdTag::WALL)) {
+	if ((category1 == CollisionTag::PLAYER && category2 == CollisionTag::WALL) ||
+		(category2 == CollisionTag::PLAYER && category1 == CollisionTag::WALL)) {
 
 		player_wall(contact1, contact2, contactPoint);
 
@@ -176,8 +178,8 @@ void ContactListener::handleContact(GameObject* contact1, GameObject* contact2, 
 	////////////////////////////////////
 	// Player Bullet -  Wall Contact
 	//////////////////////////////////
-	if ((category1 == IdTag::PLAYER_BULLET && category2 == IdTag::WALL) ||
-		(category2 == IdTag::PLAYER_BULLET && category1 == IdTag::WALL)) {
+	if ((category1 == CollisionTag::PLAYER_BULLET && category2 == CollisionTag::WALL) ||
+		(category2 == CollisionTag::PLAYER_BULLET && category1 == CollisionTag::WALL)) {
 
 		bullet_wall(contact1, contact2, contactPoint);
 
@@ -186,8 +188,8 @@ void ContactListener::handleContact(GameObject* contact1, GameObject* contact2, 
 	///////////////////////////////////
 	// Player Bullet -  Drone Shield
 	///////////////////////////////////
-	if ((category1 == IdTag::PLAYER_BULLET && category2 == IdTag::DRONE_SHIELD) ||
-		(category2 == IdTag::PLAYER_BULLET && category1 == IdTag::DRONE_SHIELD)) {
+	if ((category1 == CollisionTag::PLAYER_BULLET && category2 == CollisionTag::DRONE_SHIELD) ||
+		(category2 == CollisionTag::PLAYER_BULLET && category1 == CollisionTag::DRONE_SHIELD)) {
 
 		playerBullet_droneShield(contact1, contact2, contactPoint);
 

@@ -2,17 +2,13 @@
 
 #include <fstream>
 
-
+#include "game.h"
 #include "GameObject.h"
 #include "Scene.h"
 
 
 void ObjectPoolManager::init(Json::Value definitionJSON,  Scene* parentScene)
 {
-	//Read file and stream it to a JSON object
-	Json::Value root;
-	std::ifstream ifs("assets/gameObjectDefinitions/objectPools.json");
-	ifs >> root;
 
 	Json::Value gameObjectPoolsJSON = definitionJSON["gameObjectPools"];
 
@@ -51,12 +47,7 @@ ObjectPoolManager::ObjectPoolManager()
 
 ObjectPoolManager::~ObjectPoolManager()
 {
-	for (auto particleMap : m_objectPool)
-	{
-		particleMap.second.clear();
-	}
-
-	this->m_objectPool.clear();
+	clear();
 	
 	
 }
@@ -95,6 +86,17 @@ SDL_Texture* ObjectPoolManager::getPoolObjectTexture(std::string poolId)
 
 	return texture;
 }
+
+void ObjectPoolManager::clear()
+{
+	for (auto particleMap : m_objectPool)
+	{
+		particleMap.second.clear();
+	}
+
+	this->m_objectPool.clear();
+}
+
 
 //void ObjectPoolManager::reset(std::shared_ptr<GameObject> particle)
 //{

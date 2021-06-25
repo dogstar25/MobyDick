@@ -128,6 +128,16 @@ void LevelManager::update(Scene* scene)
 
 }
 
+void LevelManager::clearTriggers()
+{
+
+	//Clear triggers
+	m_levelTriggers.clear();
+
+
+
+}
+
 void LevelManager::load(std::string levelId, Scene* scene)
 {
 
@@ -148,6 +158,8 @@ void LevelManager::load(std::string levelId, Scene* scene)
 		std::cout << "WARNING: Blueprint " << m_id << " width/height: " << surfaceWidth << "/" << surfaceHeight << " does not match defined width/height of: " 
 			<<	m_width << "/" << m_height << "\n";
 	}
+
+	Game::instance()._displayLoadingMsg();
 
 	SDL_LockSurface(surface);
 
@@ -171,6 +183,8 @@ void LevelManager::load(std::string levelId, Scene* scene)
 	}
 
 	SDL_UnlockSurface(surface);
+
+	Game::instance()._displayLoadingMsg();
 
 	//Build all of the objects that make up this level and store them
 	//In the main gameObject collection

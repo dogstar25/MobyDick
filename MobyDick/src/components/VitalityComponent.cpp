@@ -90,10 +90,6 @@ void VitalityComponent::_levelUp()
 		renderComponent->setColor(level.color);
 	}
 
-	
-
-
-
 }
 
 void VitalityComponent::_updateFiniteLifetime()
@@ -177,7 +173,7 @@ bool VitalityComponent::testResistance(float force)
 
 			m_isBroken = true;
 			m_regenTimeSnapshot = std::chrono::steady_clock::now();
-			parent()->reset();
+			//parent()->reset();
 		}
 		return false;
 	}

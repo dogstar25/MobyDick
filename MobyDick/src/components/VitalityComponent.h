@@ -31,6 +31,7 @@ public:
 	float attackPower() {	return m_attackPower;	}
 	void setAttackPower(float attackPower) { m_attackPower = attackPower; }
 	float speed() {	return m_speed; }
+	void setSpeed(float speed) { m_speed = speed; }
 	void setHealth(float health) { m_health = health; }
 	float health() { return m_health; }
 	bool isBroken() { return m_isBroken; }

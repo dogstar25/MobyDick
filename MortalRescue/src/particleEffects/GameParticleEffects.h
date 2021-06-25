@@ -83,8 +83,8 @@ namespace ParticleEffects {
 		.poolId = "SMOKE1_POOL",
 		.originMin = {0,0},
 		.originMax = {0,0},
-		.forceMin = 1,
-		.forceMax = 5,
+		.forceMin = 10,
+		.forceMax = 15,
 		.lifetimeMin = 0.5F,
 		.lifetimeMax = 1.0F,
 		.alphaFade = false,
@@ -94,7 +94,7 @@ namespace ParticleEffects {
 		.particleSizeMax = 5.F,
 		.colorRangeBegin = {255,0,0,255},
 		.colorRangeEnd = {255,0,0,255},
-		.particleSpawnCountMin = 1,
-		.particleSpawnCountMax = 3
+		.particleSpawnCountMin = 2,
+		.particleSpawnCountMax = 5
 	};
 }

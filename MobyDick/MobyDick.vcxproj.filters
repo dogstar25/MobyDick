@@ -210,6 +210,12 @@
     <ClCompile Include="src\triggers\TriggerMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\triggers\LevelComplete.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation.h">
@@ -431,6 +437,12 @@
     <ClInclude Include="src\triggers\TriggerMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\triggers\LevelComplete.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="ExtraLibs\SDL2main.lib" />
@@ -442,10 +454,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json_old" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="assets\bowman1.png">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
 </Project>

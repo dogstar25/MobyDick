@@ -9,17 +9,17 @@
         "tileHeight": 32
     },
     "tileSize": 32,
-    "levelTriggers": [
-        {
-            "description": "Player Death",
-            "triggerClass": "PlayerDeath" // triggerAction class will have a hasMet() and execute() function
-        }//,
-        //{
-        //    "description": "Level Complete",
-        //    "triggerClass": "LevelSuccessComplete"
-        //}
+    //"levelTriggers": [
+    ////    //{
+    ////    //    "description": "Player Death",
+    ////    //    "triggerClass": "PlayerDeath"
+    ////    //},
+    //    {
+    //        "description": "Level Complete",
+    //        "triggerClass": "LevelComplete"
+    //    }
 
-    ],
+    //],
     "locationObjects": [
         {
             "id": "LOC_0007_0005",

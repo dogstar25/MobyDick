@@ -37,9 +37,16 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 	//Category Id and Object Type
 	m_id = gameObjectId;
-	m_idTag = EnumMap::instance().toEnum(definitionJSON["idTag"].asString());
+	m_collisionTag = EnumMap::instance().toEnum(definitionJSON["collisionTag"].asString());
 	m_gameObjectType = EnumMap::instance().toEnum(definitionJSON["type"].asString());
 	m_removeFromWorld = false;
+
+	//Trait tags
+	for (Json::Value itrControls : definitionJSON["traitTags"])
+	{
+		uint32_t trait = EnumMap::instance().toEnum(itrControls.asString());
+		m_traitTags.set(trait);
+	}
 
 	//Set the parent Scene
 	m_parentScene = parentScene;
@@ -388,51 +395,6 @@ void GameObject::postInit(const std::array <std::vector<std::shared_ptr<GameObje
 		attachmentsComponent->postInit();
 	}
 
-
-}
-
-void GameObject::postInitNavigation(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection)
-{
-
-	const auto& navComponent = getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
-	const auto& transformComponent = getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-
-	//For this GameObject, find all other navigation gameobjects that have been created, 
-	// and initilaize the navigation data required
-	for (auto& gameObject : gameObjectCollection[LAYER_ABSTRACT])
-	{
-
-		if (gameObject->hasComponent(ComponentTypes::NAVIGATION_COMPONENT)) {
-
-			//Ignore the gameObject that IS this particular gameObject
-			if (this != gameObject.get()) {
-
-				const auto& foundTransformComponent = gameObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-				//Game::instance().physicsWorld()->RayCast(&m_b2RayCastCallback, position, newPosition);
-				//SceneManager::instance().scenes().back()
- 				b2Vec2 thisGameObjectPosition = { transformComponent->getCenterPosition().x / GameConfig::instance().scaleFactor(), 
-					transformComponent->getCenterPosition().y/ GameConfig::instance().scaleFactor() };
-				b2Vec2 foundGameObjectPosition = { foundTransformComponent->getCenterPosition().x/ GameConfig::instance().scaleFactor(), 
-					foundTransformComponent->getCenterPosition().y / GameConfig::instance().scaleFactor() };
-
-				RayCastCallBack::instance().reset();
-				m_parentScene->physicsWorld()->RayCast(&RayCastCallBack::instance(), thisGameObjectPosition, foundGameObjectPosition);
-
-				if (RayCastCallBack::instance().hasClearNavPath()) {
-
-					const auto& thisGameObjectNavComponent = this->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
-					thisGameObjectNavComponent->accessibleNavObjects().push_back(gameObject);
-
-				}
-
-
-			}
-
-
-
-		}
-
-	}
 
 }
 

@@ -17,22 +17,28 @@ public:
     ~BrainComponent();
 
     void update();
-        void postInit() override;
+    void postInit() override;
 
     int sensorLength() { return m_sensorLength; }
     int sensorOffset() { return m_sensorOffset; }
+    int sensorCount() { return m_sensorCount; }
 
+    std::vector<IntersectionItem> seenObjects() { return m_seenObjects; }
 
 protected:
 
     int m_currentState{ BrainState::PATROL };
+    
+    int m_sensorLength{};
+    int m_sensorOffset{};
+    int m_sensorCount{};
+    int m_currentSensorIteration{1};
 
     std::vector<IntersectionItem> m_seenObjects;
 
-    int m_sensorLength{};
-    int m_sensorOffset{};
 
     void _updateSensorInput();
+    
         
 
 

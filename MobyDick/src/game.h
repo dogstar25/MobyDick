@@ -37,6 +37,7 @@ public:
 	static Game& instance();
 	virtual bool init();
 	virtual void play();
+	void _displayLoadingMsg();
 	
 	void setGameState(GameState state) {
 		m_gameState = state;
@@ -72,9 +73,10 @@ private:
 	int m_WorldTileWidth;
 	int m_WorldTileHeight;
 
-	void _addGameIdTags();
+	void _addGameCollisionTags();
 	void _addGameActions();
 	void _addGameParticleEffects();
+	
 };
 
 

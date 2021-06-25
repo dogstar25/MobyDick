@@ -89,11 +89,11 @@
     <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <VcpkgUseStatic>false</VcpkgUseStatic>
+    <VcpkgUseStatic>true</VcpkgUseStatic>
     <VcpkgCurrentInstalledDir>$(VcpkgRoot)\installed\$(VcpkgTriplet)\</VcpkgCurrentInstalledDir>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <VcpkgUseStatic>false</VcpkgUseStatic>
+    <VcpkgUseStatic>true</VcpkgUseStatic>
     <VcpkgCurrentInstalledDir>$(VcpkgRoot)\installed\$(VcpkgTriplet)\</VcpkgCurrentInstalledDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -133,7 +133,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>
       </AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -195,6 +195,7 @@
     <Image Include="assets\gina_Idle_64.png" />
     <Image Include="assets\gina_Run_64.png" />
     <Image Include="assets\levels\level1_blueprint.png" />
+    <Image Include="assets\levels\level2_blueprint.png" />
     <Image Include="assets\levels\level_test_blueprint.png" />
     <Image Include="assets\particle1.png" />
     <Image Include="assets\particle2.png" />
@@ -224,11 +225,11 @@
     <None Include="assets\config\gameScenes.json" />
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />
     <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
-    <None Include="assets\gameObjectDefinitions\objectPools.json" />
+    <None Include="assets\gameObjectDefinitions\wallObjects.json" />
     <None Include="assets\gameObjectDefinitions\particleObjects.json" />
     <None Include="assets\gameObjectDefinitions\triggerObjects.json" />
     <None Include="assets\levels\level1_definition.json" />
-    <None Include="assets\levels\level1_Objects.json" />
+    <None Include="assets\levels\level2_definition.json" />
     <None Include="assets\levels\level_test_definition.json" />
     <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\textureAssets.json" />

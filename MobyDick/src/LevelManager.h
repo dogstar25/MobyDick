@@ -37,6 +37,7 @@ public:
 
 	void update(Scene* scene);
 	void load(std::string levelId, Scene* scene);
+	void clearTriggers();
 
 	void addLevelObject(int xIndex, int yIndex, LevelObject levelObject);
 	void setLevelObjectArraySize(int width, int height);

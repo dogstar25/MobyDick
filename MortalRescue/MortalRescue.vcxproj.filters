@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\mortalRescue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -34,6 +31,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ContactFilter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mortalRescue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -137,20 +137,23 @@
     <Image Include="assets\drone_eye.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\levels\level2_blueprint.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\config\gameConfig.json" />
     <None Include="assets\config\gameScenes.json" />
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />
     <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
-    <None Include="assets\gameObjectDefinitions\objectPools.json" />
     <None Include="assets\gameObjectDefinitions\particleObjects.json" />
     <None Include="assets\levels\level_test_definition.json" />
     <None Include="assets\levels\level1_definition.json" />
-    <None Include="assets\levels\level1_Objects.json" />
     <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\textureAssets.json" />
     <None Include="assets\gameObjectDefinitions\triggerObjects.json" />
+    <None Include="assets\levels\level2_definition.json" />
+    <None Include="assets\gameObjectDefinitions\wallObjects.json" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav">

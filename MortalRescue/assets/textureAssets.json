@@ -42,9 +42,9 @@
             "retainSurface": true
         },
         {
-            "id": "TX_LEVEL_TEST_BLUEPRINT",
-            "description": "Test Level Map",
-            "filename": "assets/levels/level_test_blueprint.png",
+            "id": "TX_LEVEL2_BLUEPRINT",
+            "description": "Level 2 Bluprint",
+            "filename": "assets/levels/level2_blueprint.png",
             "retainSurface": true
         },
         {

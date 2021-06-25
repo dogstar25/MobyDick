@@ -1,5 +1,6 @@
 #include "TriggerMap.h"
 #include "PlayerDeath.h"
+#include "LevelComplete.h"
 
 TriggerMap& TriggerMap::instance()
 {
@@ -11,6 +12,7 @@ TriggerMap& TriggerMap::instance()
 TriggerMap::TriggerMap()
 {
 	m_triggerMap["PlayerDeath"] = std::make_shared<PlayerDeath>();
+	m_triggerMap["LevelComplete"] = std::make_shared<LevelComplete>();
 }
 
 std::shared_ptr<Trigger> TriggerMap::getTrigger(std::string triggerId)

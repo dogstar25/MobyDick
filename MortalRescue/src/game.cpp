@@ -56,7 +56,7 @@ bool Game::init()
 	m_gameState = GameState::PLAY;
 
 	//Add Game Specific stuff
-	_addGameIdTags();
+	_addGameCollisionTags();
 	_addGameActions();
 	_addGameParticleEffects();
 
@@ -90,27 +90,31 @@ bool Game::init()
 		//Initialize the texture manager
 		Renderer::instance().init(m_window);
 
+		//Display basic loading message
+		_displayLoadingMsg();
+
 		//Initialize the texture manager
 		TextureManager::instance().init();
 		TextureManager::instance().load("textureAssets");
-
-		//LevelManger
-		//LevelManager::instance().init();
 
 		//Initialize the SceneManager
 		SceneManager::instance().init();
 		SceneManager::instance().load("gameScenes");
 
+		_displayLoadingMsg();
+
 		//Initialize the Game Object Manager
 		GameObjectManager::instance().init();
 		GameObjectManager::instance().load("gameObjectDefinitions/commonObjects");
-		GameObjectManager::instance().load("levels/level1_Objects");
+		GameObjectManager::instance().load("gameObjectDefinitions/wallObjects");
 		GameObjectManager::instance().load("gameObjectDefinitions/particleObjects");
 		GameObjectManager::instance().load("gameObjectDefinitions/compositeObjects");
 
 		//Load a first scene
 		Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
-		scene.applyCurrentControlMode();
+		scene.loadLevel("level1");
+
+		_displayLoadingMsg();
 
 		//Initialize the sound manager
 		SoundManager::instance().initSound();
@@ -158,7 +162,7 @@ void Game::play()
 			}
 
 			//Apply the mouse control mode based on what the new "current" scene wants
-			SceneManager::instance().scenes().back().applyCurrentControlMode();
+			//SceneManager::instance().scenes().back().applyCurrentControlMode();
 		}
 
 		SceneManager::instance().run();
@@ -184,28 +188,60 @@ void Game::_addGameParticleEffects()
 
 }
 
-void Game::_addGameIdTags()
+void Game::_addGameCollisionTags()
 {
 
 	//Add all game specific enum traslations needed
-	EnumMap::instance().addEnumItem("IdTag::DEFLECT_EFFECT", IdTag::DEFLECT_EFFECT);
-	EnumMap::instance().addEnumItem("IdTag::SMOKE_PARTICLE", IdTag::SMOKE_PARTICLE);
-	EnumMap::instance().addEnumItem("IdTag::NAVIGATION_POINT", IdTag::NAVIGATION_POINT);
-	EnumMap::instance().addEnumItem("IdTag::DRONE_BRAIN", IdTag::DRONE_BRAIN);
-	EnumMap::instance().addEnumItem("IdTag::DRONE_SHIELD", IdTag::DRONE_SHIELD);
-	EnumMap::instance().addEnumItem("IdTag::DRONE_WEAPON", IdTag::DRONE_WEAPON);
-	EnumMap::instance().addEnumItem("IdTag::DRONE_FRAME", IdTag::DRONE_FRAME);
-	EnumMap::instance().addEnumItem("IdTag::ENEMY_BULLET", IdTag::ENEMY_BULLET);
-	EnumMap::instance().addEnumItem("IdTag::FRIENDLY_BULLET", IdTag::FRIENDLY_BULLET);
-	EnumMap::instance().addEnumItem("IdTag::HEAVY_PARTICLE", IdTag::HEAVY_PARTICLE);
-	EnumMap::instance().addEnumItem("IdTag::LIGHT_PARTICLE", IdTag::LIGHT_PARTICLE);
-	EnumMap::instance().addEnumItem("IdTag::PLAYER", IdTag::PLAYER);;
-	EnumMap::instance().addEnumItem("IdTag::PLAYER_BULLET", IdTag::PLAYER_BULLET);
-	EnumMap::instance().addEnumItem("IdTag::SHIELD_SCRAP", IdTag::SHIELD_SCRAP);
-	EnumMap::instance().addEnumItem("IdTag::SURVIVOR", IdTag::SURVIVOR);
-	EnumMap::instance().addEnumItem("IdTag::MEDKIT", IdTag::MEDKIT);
-	EnumMap::instance().addEnumItem("IdTag::WALL", IdTag::WALL);
-	EnumMap::instance().addEnumItem("IdTag::WEAPON_PICKUP", IdTag::WEAPON_PICKUP);
+	EnumMap::instance().addEnumItem("CollisionTag::DEFLECT_EFFECT", CollisionTag::DEFLECT_EFFECT);
+	EnumMap::instance().addEnumItem("CollisionTag::SMOKE_PARTICLE", CollisionTag::SMOKE_PARTICLE);
+	EnumMap::instance().addEnumItem("CollisionTag::DRONE_BRAIN", CollisionTag::DRONE_BRAIN);
+	EnumMap::instance().addEnumItem("CollisionTag::DRONE_SHIELD", CollisionTag::DRONE_SHIELD);
+	EnumMap::instance().addEnumItem("CollisionTag::DRONE_WEAPON", CollisionTag::DRONE_WEAPON);
+	EnumMap::instance().addEnumItem("CollisionTag::DRONE_FRAME", CollisionTag::DRONE_FRAME);
+	EnumMap::instance().addEnumItem("CollisionTag::ENEMY_BULLET", CollisionTag::ENEMY_BULLET);
+	EnumMap::instance().addEnumItem("CollisionTag::FRIENDLY_BULLET", CollisionTag::FRIENDLY_BULLET);
+	EnumMap::instance().addEnumItem("CollisionTag::HEAVY_PARTICLE", CollisionTag::HEAVY_PARTICLE);
+	EnumMap::instance().addEnumItem("CollisionTag::LIGHT_PARTICLE", CollisionTag::LIGHT_PARTICLE);
+	EnumMap::instance().addEnumItem("CollisionTag::PLAYER", CollisionTag::PLAYER);;
+	EnumMap::instance().addEnumItem("CollisionTag::PLAYER_BULLET", CollisionTag::PLAYER_BULLET);
+	EnumMap::instance().addEnumItem("CollisionTag::SHIELD_SCRAP", CollisionTag::SHIELD_SCRAP);
+	EnumMap::instance().addEnumItem("CollisionTag::SURVIVOR", CollisionTag::SURVIVOR);
+	EnumMap::instance().addEnumItem("CollisionTag::MEDKIT", CollisionTag::MEDKIT);
+	EnumMap::instance().addEnumItem("CollisionTag::WALL", CollisionTag::WALL);
+	EnumMap::instance().addEnumItem("CollisionTag::WEAPON_PICKUP", CollisionTag::WEAPON_PICKUP);
+
+
+}
+
+void Game::_displayLoadingMsg()
+{
+	static int statusDots{};
+	std::string statusMsg{"Loading"};
+
+	statusDots++;
+	if (statusDots > 4) {
+		statusDots = 1;
+	}
+
+	for (int x = 0; x < statusDots;x++) {
+
+		statusMsg += ".";
+	}
+
+	//Assume nothing has been initialzed yet except for the renderer so build and render a text item in
+	//a very crude and manual way
+	Renderer::instance().clear();
+	TTF_Font* m_fontObject = TTF_OpenFont("assets/arial.ttf", 32);
+	SDL_Surface* tempSurface = TTF_RenderText_Blended(m_fontObject, statusMsg.c_str(), SDL_Color(255, 255, 255, 255));
+	SDL_Texture* sdlTexture = Renderer::instance().createTextureFromSurface(tempSurface);
+	TTF_CloseFont(m_fontObject);
+	SDL_Rect dest = {
+		GameConfig::instance().windowWidth() / 2 - 100,
+		GameConfig::instance().windowHeight() / 2 - 42,
+		tempSurface->w, tempSurface->h };
+	SDL_RenderCopy(Renderer::instance().SDLRenderer(), sdlTexture, nullptr, &dest);
+	Renderer::instance().present();
+	SDL_DestroyTexture(sdlTexture);
 
 
 }

@@ -34,11 +34,7 @@ bool RayCastCallBack::hasClearNavPath()
 
 	for (auto intersectionItem : m_intersectionItems) {
 
-		/*
-		* TODO:Instead of comparing the id, implement the idTags to include an "Obstruction" tag
-		* so that various objects would be considered obstructions and therefore not a clear path
-		*/
-		if (intersectionItem.gameObject->id().starts_with("WALL")) {
+		if (intersectionItem.gameObject->hasTrait(TraitTag::barrier)) {
 
 			obstructionFound = true;
 			break;
