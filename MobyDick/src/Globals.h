@@ -22,7 +22,6 @@ static bool operator !=(SDL_Color a, SDL_Color b)
 }
 
 
-
 namespace util
 {
 	const int generateRandomNumber(int min, int max);

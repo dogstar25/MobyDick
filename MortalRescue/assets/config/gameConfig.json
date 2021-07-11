@@ -12,11 +12,11 @@
         "maxScenes": 12
     },
     "mouseSensitivity": 0.5, //higher the mmore sensitive
-    "gameLoopStep": 16, //in miliseconds
+    "gameLoopStep": 0.016,
     "physics": {
         "box2dScale": 25
     },
-    "dynamicTextRefreshDelay": 0.1, //need a tiny delay to prevent millions of text texture regenerations
+    "dynamicTextRefreshDelay": 0.1, //need a tiny delay to prevent millions of dynamic text texture regenerations
     "debugPanel": {
         "show": true,
         "xPos": 1,

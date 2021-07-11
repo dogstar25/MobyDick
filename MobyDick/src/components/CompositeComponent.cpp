@@ -149,7 +149,6 @@ void CompositeComponent::_buildPiece(CompositeLegendItem legendItem, int xPos, i
 	/*
 	Build the game objects off screen. They will be placed in expect location during update loop
 	*/
-	//b2World* physicsWorld = SceneManager::instance().scenes().back().physicsWorld();
 	const auto& pieceObject = std::make_shared<GameObject>(legendItem.gameObjectId, -5.f, -5.f, 0.f, parentScene);
 	pieceObject->init();
 	piece.pieceObject = pieceObject;
@@ -171,9 +170,6 @@ void CompositeComponent::_updatePieces()
 	for (auto& pieceObject : m_pieces)
 	{
 
-		//Update the state of the piece
-		_updatePieceState(pieceObject);
-
 		//Update the position of the piece for composites where pieces are not
 		//welded on
 		if (m_physicsWeldPiecesOn == false) {
@@ -184,37 +180,6 @@ void CompositeComponent::_updatePieces()
 		pieceObject.pieceObject->update();
 
 	}
-
-}
-
-void CompositeComponent::_updatePieceState(GameObjectPiece& piece)
-{
-	////Get now time
-	//std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
-
-	////Should this object be removed?
-	//if (piece.pieceObject->removeFromWorld() == true)
-	//{
-	//	auto& piecePhysicsComponent = piece.pieceObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
-	//	piecePhysicsComponent->setPhysicsBodyActive(false);
-	//	piece.isDestroyed = true;
-	//	piece.time_snapshot = now_time;
-	//	piece.pieceObject->setRemoveFromWorld(false);
-	//}
-
-	////Has enough time gone by to regenerate the next armor level
-	//if (piece.isDestroyed == true)
-	//{
-	//	std::chrono::duration<double, std::milli> timeDiffMilliSeconds = now_time - piece.time_snapshot;
-	//	if (timeDiffMilliSeconds.count() >= m_levelUpSpeed)
-	//	{
-
-	//		//Level up the piece object
-	//		_levelUp(piece);
-	//	}
-
-	//}
-
 
 }
 

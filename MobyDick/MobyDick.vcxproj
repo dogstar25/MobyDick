@@ -196,6 +196,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\BrainAABBCallback.cpp" />
     <ClCompile Include="src\triggers\LevelComplete.cpp" />
     <ClCompile Include="src\triggers\TriggerMap.cpp" />
     <ClCompile Include="src\triggers\PlayerDeath.cpp" />
@@ -262,9 +263,10 @@
     <ClCompile Include="src\actions\UseAction.cpp" />
     <ClCompile Include="src\actions\LoadNextLevelAction.cpp" />
     <ClCompile Include="src\triggers\Trigger.cpp" />
-    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\BrainAABBCallback.h" />
     <ClInclude Include="src\triggers\LevelComplete.h" />
     <ClInclude Include="src\triggers\TriggerMap.h" />
     <ClInclude Include="src\triggers\PlayerDeath.h" />
@@ -339,7 +341,7 @@
     <ClInclude Include="src\actions\UseAction.h" />
     <ClInclude Include="src\actions\LoadNextLevelAction.h" />
     <ClInclude Include="src\triggers\Trigger.h" />
-    <ClInclude Include="Timer.h" />
+    <ClInclude Include="src\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="ExtraLibs\SDL2main.lib" />

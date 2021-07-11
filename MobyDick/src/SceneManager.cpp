@@ -4,11 +4,8 @@
 
 #include "Clock.h"
 #include "DynamicTextManager.h"
+#include "DebugPanel.h"
 
-
-SceneManager::SceneManager()
-{
-}
 
 SceneManager::~SceneManager()
 {
@@ -28,7 +25,9 @@ void SceneManager::init()
 	m_currentSceneIndex = 0;
 	m_scenes.reserve(MAX_SCENES);
 
-	//load("gameScenes");
+	float gameLoopStep = GameConfig::instance().gameLoopStep();
+	m_gameTimer = Timer(gameLoopStep);
+
 }
 
 void SceneManager::load(std::string sceneDefinitionsFilename)
@@ -56,35 +55,33 @@ void SceneManager::load(std::string sceneDefinitionsFilename)
 void SceneManager::run()
 {
 
-
-	//Capture the amount of time that has passed since last loop and accumulate time for both
-	//the FPS calculation and the game loop timer
-	Clock::instance().update();
-
 	//Only update and render if we have passed the 60 fps time passage
-	if (Clock::instance().hasMetGameLoopSpeed())
+	if (m_gameTimer.hasMetTargetDuration() == true)
 	{
+		//Calculate and display the FPS
+		m_frameCount++;
+		float fps = m_gameTimer.calculateFPS(m_frameCount);
+		if (fps > 0) {
+			DynamicTextManager::instance().updateText("FPS_VALUE", util::floatToString(fps, 2));
+		}
 
-		//Update only the scenes that are not paused
+		//Run update for every active scene
 		for (auto& scene : m_scenes) {
 			if (scene.state() == SceneState::RUN) {
 				scene.update();
 			}
 		}
 
-		//Render All scenes
+		//Clear the screen
 		Renderer::instance().clear();
 
+		//Render every scene, active or not
 		for (auto& scene : m_scenes) {
 			scene.render();
 		}
 
+		//Display all rendered objects
 		Renderer::instance().present();
-
-		//Increment frame counter and calculate FPS and reset the gameloop timer
-		Clock::instance().calcFps();
-
-		DynamicTextManager::instance().updateText("FPS_VALUE", std::to_string(Clock::instance().fps()));
 	}
 
 }

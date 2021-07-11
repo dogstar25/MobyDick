@@ -213,7 +213,10 @@
     <ClCompile Include="src\triggers\LevelComplete.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
+    <ClCompile Include="src\Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BrainAABBCallback.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -440,7 +443,10 @@
     <ClInclude Include="src\triggers\LevelComplete.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
+    <ClInclude Include="src\Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BrainAABBCallback.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

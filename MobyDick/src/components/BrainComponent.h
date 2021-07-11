@@ -1,7 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "../GameObject.h"
-#include "../RayCastCallBack.h"
+#include "../BrainAABBCallback.h"
 #include "../LevelManager.h"
 
 #include <json/json.h>
@@ -22,8 +22,10 @@ public:
     int sensorLength() { return m_sensorLength; }
     int sensorOffset() { return m_sensorOffset; }
     int sensorCount() { return m_sensorCount; }
+    int sightSensorSize() { return m_sightSensorSize; }
 
-    std::vector<IntersectionItem> seenObjects() { return m_seenObjects; }
+    std::vector<BrainAABBFoundObject> seenObjects() { return m_seenObjects; }
+    std::vector<BrainAABBFoundObject> detectedObjects() { return m_detectedObjects; }
 
 protected:
 
@@ -34,12 +36,13 @@ protected:
     int m_sensorCount{};
     int m_currentSensorIteration{1};
 
-    std::vector<IntersectionItem> m_seenObjects;
+    int m_sightSensorSize{};
 
+    std::vector<BrainAABBFoundObject> m_seenObjects;
+    std::vector<BrainAABBFoundObject> m_detectedObjects;
 
     void _updateSensorInput();
-    
-        
+    bool _hasLineOfSight( BrainAABBFoundObject& detectedObject);
 
 
 };

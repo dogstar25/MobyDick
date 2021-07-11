@@ -19,7 +19,7 @@
                     {
                         "state": "ANIMATION_IDLE",
                         "textureId": "TX_SWORDLADY1_IDLE",
-                        "speed": 0.01,
+                        "speed": 0.05,
                         "frames": 19
                     }
                 ]
@@ -43,13 +43,13 @@
                     {
                         "state": "ANIMATION_IDLE",
                         "textureId": "TX_GINA_64_IDLE",
-                        "speed": 0.10, //time in seconds for each frame. Lower the faster
+                        "speed": 0.1,
                         "frames": 1
                     },
                     {
                         "state": "ANIMATION_RUN",
                         "textureId": "TX_GINA_64_RUN",
-                        "speed": 0.06, //time in seconds for each frame. Lower the faster
+                        "speed": 0.06,
                         "frames": 4
                     }
                 ]
@@ -529,13 +529,13 @@
                     {
                         "state": "ANIMATION_IDLE",
                         "textureId": "TX_WEAPON1_IDLE",
-                        "speed": 0.5, //time in seconds for each frame. Lower the faster
+                        "speed": 0.5,
                         "frames": 3
                     },
                     {
                         "state": "ANIMATION_ACTION",
                         "textureId": "TX_WEAPON1_FIRE",
-                        "speed": 0.1, //time in seconds for each frame. Lower the faster
+                        "speed": 0.1,
                         "frames": 3
                     }
                 ]
@@ -645,6 +645,11 @@
                 }
             },
             "particleXComponent": {
+                "type": "ParticleEmitterType::ONETIME",
+                "effects": [
+                    "ricochet"
+                ]
+
             }
         },
         {
@@ -653,13 +658,15 @@
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [],
             "description": "Particle Emitter",
-            "transformComponent": {
-                "size": {
-                    "width": 4,
-                    "height": 4
-                }
-            },
             "particleComponent": {
+                "type": "ParticleEmitterType::CONTINUOUS",
+                "emissionInterval": 1.0,
+                "effects": [
+                    "ricochet",
+                    "spark",
+                    "scrap"
+                ]
+
             }
         },
         {
@@ -711,8 +718,8 @@
             },
             "transformComponent": {
                 "size": {
-                    "width": 16,
-                    "height": 16
+                    "width": 64,
+                    "height": 64
                 }
             },
             "navigationComponent": {
@@ -732,8 +739,8 @@
             },
             "transformComponent": {
                 "size": {
-                    "width": 16,
-                    "height": 16
+                    "width": 64,
+                    "height": 64
                 }
             },
             "navigationComponent": {

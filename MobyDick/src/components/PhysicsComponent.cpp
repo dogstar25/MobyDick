@@ -150,6 +150,7 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 	fixtureDef.density = m_density;
 	fixtureDef.friction = m_friction;
 	fixtureDef.restitution = m_restitution;
+	
 
 	//collision category
 	//fixtureDef.filter.categoryBits = m_collisionCategory;
@@ -161,6 +162,7 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 
 	body->SetLinearDamping(m_linearDamping);
 	body->SetAngularDamping(m_angularDamping);
+
 
 	//body->SetUserData(m_parentGameObject.get());
 	//this->box2dBodyCount++;
@@ -262,6 +264,11 @@ void PhysicsComponent::applyRotation(float angularVelocity)
 	m_physicsBody->SetAngularVelocity(angularVelocity);
 }
 
+void PhysicsComponent::applyTorque(float angularVelocity)
+{
+	m_physicsBody->ApplyTorque(angularVelocity, true);
+}
+
 void PhysicsComponent::setOffGrid()
 {
 	b2Vec2 velocityVector = b2Vec2(0, 0);
@@ -317,6 +324,11 @@ void PhysicsComponent::attachItem(GameObject* attachObject, b2JointType jointTyp
 		revoluteJointDef->collideConnected = false;
 		revoluteJointDef->localAnchorA = anchorPoint;
 		revoluteJointDef->localAnchorB = attachObjectAnchorPoint;
+		
+		//test
+		//revoluteJointDef->enableMotor = true;
+		//revoluteJointDef->motorSpeed = 30;
+		//revoluteJointDef->maxMotorTorque = 30000;
 
 		jointDef = revoluteJointDef;
 	}

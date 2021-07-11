@@ -13,6 +13,7 @@
 #include "../Globals.h"
 #include "../BaseConstants.h"
 #include "../particleEffects/BaseParticleEffects.h"
+#include "../Timer.h"
 
 class GameObject;
 
@@ -26,10 +27,9 @@ struct Particle
 	bool isActive{ false };
 	SDL_Texture* texture;
 	SDL_Color color{ 255,255,255,255 };
+	bool alphaFade{};
+	Timer lifetimeTimer{};
 
-	std::chrono::steady_clock::time_point timeSnapshot{ std::chrono::steady_clock::now() };
-	std::chrono::duration<float, std::milli> lifetime;
-	std::chrono::duration<float, std::milli> lifetimeRemaining;
 };
 
 
@@ -41,9 +41,7 @@ public:
 
 	void update() override;
 	void render();
-	void init();
 	void setType(int type) { m_type = type; }
-	void setEmissionInterval(std::chrono::duration<float>);
 	void addParticleEffect(ParticleEffect particleEffect);
 	std::optional<Particle*> getAvailableParticle();
 
@@ -53,9 +51,9 @@ private:
 	bool m_oneTimeEmitted{ false };
 	std::vector<ParticleEffect> m_particleEffects;
 	std::chrono::duration<float, std::milli> m_emissionInterval{ std::chrono::duration<float>(0.f) };
-	std::chrono::steady_clock::time_point m_timeSnapshot{ std::chrono::steady_clock::now() };
-	std::chrono::steady_clock::time_point m_EmissiontimeSnapshot{ std::chrono::steady_clock::now() };
 	std::vector<Particle> m_particles;
+
+	Timer m_emissionTimer{};
 
 
 

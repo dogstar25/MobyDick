@@ -5,6 +5,8 @@
 #include <json/json.h>
 #include "Component.h"
 #include "../TextureManager.h"
+#include "../Timer.h"
+
 #include <SDL2/SDL.h>
 
 class TransformComponent;
@@ -14,7 +16,7 @@ class RenderComponent;
 class TextComponent : public Component
 {
 public:
-	TextComponent();
+	TextComponent() = default;
 	TextComponent(std::string gameObjectId, Json::Value definitionJSON);
 	~TextComponent();
 
@@ -45,6 +47,8 @@ private:
 
 	//test
 	TTF_Font* m_fontObject;
+
+	Timer m_refreshTimer{};
 
 };
 

@@ -1,8 +1,10 @@
 #include "Globals.h"
 
 #include <random>
+#include <format>
 
 #include <box2d/b2_math.h>
+#include <iomanip>
 
 
 
@@ -88,11 +90,15 @@ namespace util
 
 	const std::string floatToString(float x, int decDigits)
 	{
-		std::stringstream ss;
-		ss << std::fixed;
-		ss.precision(decDigits); // set # places after decimal
-		ss << x;
-		return ss.str();
+		//std::stringstream ss;
+		//ss << std::fixed;
+		//ss.precision(decDigits); // set # places after decimal
+		//ss << x;
+		//return ss.str();
+
+		auto formattedValue = std::format("{:.{}f}", x, decDigits);
+		return formattedValue;
+
 	}
 
 	const SDL_Color JsonToColor(Json::Value JsonColor) {
@@ -197,6 +203,8 @@ namespace util
 		return jointDef;
 		
 	}
+
+	
 
 }
 

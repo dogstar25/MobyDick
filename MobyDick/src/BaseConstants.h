@@ -3,7 +3,8 @@
 inline constexpr int CHILD_POSITIONS = 9;
 inline constexpr int MAX_VITALITY_LEVELS = 5;
 inline constexpr int MAX_ANIMATION_STATES = 5;
-inline constexpr int DESTINATION_DISTANCE_TOLERANCE = 50;
+inline constexpr int DESTINATION_DISTANCE_TOLERANCE = 10;
+inline constexpr int PARTICLE_EMITTER_FORCE_ADJ = 50;
 
 //Mouse State
 inline constexpr int MOUSE_NONE = 0;
@@ -15,8 +16,7 @@ inline constexpr int MOUSE_CLICKED = 3;
 inline constexpr int CONTROL_MODE_SELECT = 0;
 inline constexpr int CONTROL_MODE_PLAY = 1;
 
-//Game Object Id Tags
-//ToDo: create a CollisionTag namespace in the individual game as well and put the game specific collisionTags in that one. The namespaces shoudl combine
+//Game Object Collision Tags
 namespace CollisionTag {
 	inline constexpr int MAX_OBJECT_CATEGORIES = 32;
 

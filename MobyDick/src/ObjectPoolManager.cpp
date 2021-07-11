@@ -68,8 +68,7 @@ std::optional<std::shared_ptr<GameObject>> ObjectPoolManager::getPooledObject(st
 
 			poolComponent->setAvailable(false);
 			physicsComponent->setPhysicsBodyActive(true);
-			vitalityComponent->setLifeTimeSnapshot(std::chrono::steady_clock::now());
-			vitalityComponent->setLifetimeRemaining(vitalityComponent->lifetime());
+			vitalityComponent->resetLifetime();
 			return pooledObject;
 		}
 	}

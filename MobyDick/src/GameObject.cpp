@@ -41,6 +41,9 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	m_gameObjectType = EnumMap::instance().toEnum(definitionJSON["type"].asString());
 	m_removeFromWorld = false;
 
+	//Build the unique name
+	m_name = _buildName(gameObjectId, xMapPos, yMapPos, parentScene);
+
 	//Trait tags
 	for (Json::Value itrControls : definitionJSON["traitTags"])
 	{
@@ -50,6 +53,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 	//Set the parent Scene
 	m_parentScene = parentScene;
+	parentScene->incrementGameObjectCount();
 
 	std::shared_ptr<Component> component{};
 
@@ -316,15 +320,6 @@ void GameObject::init(bool cameraFollow)
 		Camera::instance().setFollowMe(this);
 	}
 
-	//NEW - execute special code for certain extra complicated gameObjects that need to execute after main construction
-	//if (id() == "GINA_64") {
-
-	//	//ToDo:Move to postinit for Inventory/attachment components
-	//	const auto& playerInventoryComponent = getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT);
-	//	playerInventoryComponent->weldOnAttachments();
-	//}
-
-	
 }
 
 void GameObject::setPhysicsActive(bool active)
@@ -368,7 +363,7 @@ ex. The brainComponent needs all navigation related gameObjects to be built firs
 void GameObject::postInit(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection)
 {
 
-	//GameObjects with a NavigationComponent needs to build a navigation array based on the location of 
+	//GameObjects with a NavigationComponent need to build a navigation array based on the location of 
 	//other navigation objects
 	if (hasComponent(ComponentTypes::NAVIGATION_COMPONENT)) {
 		const auto navigationComponent = getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
@@ -382,14 +377,14 @@ void GameObject::postInit(const std::array <std::vector<std::shared_ptr<GameObje
 		brainComponent->postInit();
 	}
 
-	//The CompositeComponent needs to weld on its component pieces it the weld flag is turned on
+	//The CompositeComponent needs to weld on its composite pieces if the weld flag is turned on
 	if (hasComponent(ComponentTypes::COMPOSITE_COMPONENT)) {
 		const auto compositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
 		compositeComponent->postInit();
 	}
 
 	//The Attachments component needs to weld on attachment objects as well as potentially add the 
-	// attchement object to the inventory component
+	// attachement object to the inventory component
 	if (hasComponent(ComponentTypes::ATTACHMENTS_COMPONENT)) {
 		const auto attachmentsComponent = getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
 		attachmentsComponent->postInit();
@@ -408,5 +403,13 @@ SDL_FPoint GameObject::getCenterPosition()
 
 	const auto& transformComponent = getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	return(transformComponent->getCenterPosition());
+
+}
+
+std::string GameObject::_buildName(std::string id, float xMapPos, float yMapPos, Scene* parentScene)
+{
+	auto name = std::format("{}_{:.0f}_{:.0f}_{:05d}", id, xMapPos, yMapPos, parentScene->gameObjectCount());
+
+	return name;
 
 }

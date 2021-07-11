@@ -36,6 +36,9 @@
     <ClCompile Include="src\mortalRescue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\actions\DroneEyeRotateAction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\blueprints\drone1_blueprint.png">
@@ -198,6 +201,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\particleEffects\GameParticleEffects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\actions\DroneEyeRotateAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

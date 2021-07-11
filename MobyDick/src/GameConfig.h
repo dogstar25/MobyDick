@@ -39,7 +39,7 @@ public:
 	std::string gameTitle() {
 		return m_gameTitle;
 	}
-	int gameLoopStep() {
+	float gameLoopStep() {
 		return m_gameLoopStep;
 	}
 	int windowWidth() {
@@ -61,7 +61,8 @@ private:
 
 	float
 		m_mouseSensitivity,
-		m_dynamicTextRefreshDelay;
+		m_dynamicTextRefreshDelay,
+		m_gameLoopStep;
 	bool
 		m_windowFullscreen,
 		m_debugPanel;
@@ -71,8 +72,7 @@ private:
 		m_windowWidth,
 		m_windowHeight,
 		m_debugPanelFontSize,
-		m_soundChannels,
-		m_gameLoopStep;
+		m_soundChannels;
 	std::string 
 		m_gameTitle;
 	float m_scaleFactor{};

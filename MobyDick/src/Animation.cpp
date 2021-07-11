@@ -6,18 +6,14 @@
 #include "TextureManager.h"
 
 
-Animation::Animation()
-{
-
-}
-
-
 Animation::Animation(Json::Value animationDetailsJSON, Json::Value transformDetailsJSON)
 {
 
 	m_currentAnimFrame = 0;
 	m_state = EnumMap::instance().toEnum(animationDetailsJSON["state"].asString());
 	m_speed = animationDetailsJSON["speed"].asFloat();
+
+	m_timer = Timer(m_speed);
 
 	m_frameCount = animationDetailsJSON["frames"].asInt();
 
@@ -62,25 +58,14 @@ Animation::Animation(Json::Value animationDetailsJSON, Json::Value transformDeta
 }
 
 
-Animation::~Animation()
-{
 
-	//delete m_currentTextureAnimationSrcRect;
-	//delete m_texture;
-
-}
 
 int Animation::animate()
 {
 	//check the clock and see if enough time as gone by
-	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
-	std::chrono::duration<double> time_diff = now_time - m_timeSnapshot;
 
-	if (time_diff.count() >= m_speed)
+	if (m_timer.hasMetTargetDuration())
 	{
-		//std::cout << "Animating frame " << m_currentAnimFrame << "\n";
-
-		m_timeSnapshot = now_time;
 
 		//Increment animation frame counter and reset if it exceeds last one
 		this->m_currentAnimFrame += 1;

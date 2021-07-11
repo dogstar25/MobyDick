@@ -171,6 +171,7 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\actions\DroneEyeRotateAction.cpp" />
     <ClCompile Include="src\ContactFilter.cpp" />
     <ClCompile Include="src\ContactListener.cpp" />
     <ClCompile Include="src\actions\MyAction.cpp" />
@@ -249,6 +250,7 @@
     <Font Include="assets\arial.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\actions\DroneEyeRotateAction.h" />
     <ClInclude Include="src\actions\MyAction.h" />
     <ClInclude Include="src\components\DroneBrainComponent.h" />
     <ClInclude Include="src\GameConstants.h" />

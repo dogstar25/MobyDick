@@ -5,20 +5,12 @@
 #include "../GameConfig.h"
 #include "../GameObject.h"
 
-TextComponent::TextComponent()
-{
-
-}
-
-
-
 TextComponent::TextComponent(std::string gameObjectId, Json::Value definitionJSON)
 {
 
 	//gameObjectId can be dynamic because of the debug text so it must be passed in
 	m_textureId = "TX_" + gameObjectId;
 	m_gameObjectId = gameObjectId;
-
 
 	Json::Value textComponentJSON = definitionJSON["textComponent"];
 	m_isDebugText = false;
@@ -32,23 +24,18 @@ TextComponent::TextComponent(std::string gameObjectId, Json::Value definitionJSO
 		m_textValue = "Default Text";
 	}
 
-	//test
 	std::string fontFile = TextureManager::instance().getFont(m_fontId);
 	m_fontObject = TTF_OpenFont(fontFile.c_str(), m_fontSize);
 
+	m_refreshTimer = Timer(GameConfig::instance().dynamicTextRefreshDelay());
 
 }
-
-
-
 
 void TextComponent::construct()
 {
-
 	
 
 }
-
 
 TextComponent::~TextComponent()
 {
@@ -83,7 +70,6 @@ void TextComponent::update()
 		renderComponent->setTexture(updateDynamicTextTexture());
 	}
 
-
 }
 
 std::shared_ptr<Texture> TextComponent::generateTextTexture()
@@ -106,9 +92,7 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 	//FIXME:Add a vector of TTF_Font* fontObject's with maybe 6 different font sizes. OPen them in the contructor
 	//and leave them open for regenerating text textures. Then close them in the deconstructor.
 	//This should save loads of time
-	//m_fontObject = TTF_OpenFont(fontFile.c_str(), m_fontSize);
 	tempSurface = TTF_RenderText_Blended(m_fontObject, m_textValue.c_str(), renderComponent->color());
-	//TTF_CloseFont(m_fontObject);
 
 	//Set the size of the textObject now that its texture has been generated
 	transformComponent->setSize((float)tempSurface->w, (float)tempSurface->h);
@@ -135,26 +119,14 @@ std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
 
 	newText = DynamicTextManager::instance().getTextItem(m_gameObjectId);
 
-	//check the clock and see if enough time as gone by
-	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
-	std::chrono::duration<double> time_diff = now_time - newText->time_snapshot;
-
 	//use a timer to slow down the re-generating of dynamic text because its time consuming
-	if (newText->hasChanged == true && time_diff.count() > GameConfig::instance().dynamicTextRefreshDelay())
+	if (newText->hasChanged == true && m_refreshTimer.hasMetTargetDuration())
 	{
-		//update the timestamp
-		newText->time_snapshot = now_time;
 
 		//Build new texture
 		m_textValue = newText->textValue;
 		texture = generateTextTexture();
 		newText->hasChanged = false;
-
-	/*	m_refTransformComponent->setPosition(
-			(m_refTransformComponent->size().x / 2),
-			(m_refTransformComponent->size().y / 2)
-		);*/
-
 
 	}
 	else
