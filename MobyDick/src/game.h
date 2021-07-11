@@ -20,8 +20,6 @@
 #include "SceneManager.h"
 #include "ComponentFactory.h"
 
-
-
 /*
 	Main Game Class
 */
@@ -70,12 +68,14 @@ private:
 	SDL_Window* m_window;
 	GameState m_gameState;
 	SDL_Rect m_WorldBounds;
+	
 	int m_WorldTileWidth;
 	int m_WorldTileHeight;
 
 	void _addGameCollisionTags();
 	void _addGameActions();
 	void _addGameParticleEffects();
+
 	
 };
 

@@ -17,15 +17,10 @@ VitalityComponent::VitalityComponent(Json::Value definitionJSON)
 	m_speed = vitalityComponentJSON["speed"].asFloat();
 	m_rotationSpeed = vitalityComponentJSON["rotationSpeed"].asFloat();
 	m_lifetime = std::chrono::duration<float>(vitalityComponentJSON["lifetime"].asFloat());
-	if (m_lifetime <= std::chrono::duration<float>(0)) {
-		m_hasFiniteLifetime = false;
-	}
-	else {
-		m_hasFiniteLifetime = true;
-	}
+	
+	float lifetime = vitalityComponentJSON["lifetime"].asFloat();
+	m_lifetimeTimer = Timer(lifetime);
 
-	m_lifetimeRemaining = std::chrono::duration<float>(m_lifetime);
-	m_lifeTimeTimeSnapshot = std::chrono::steady_clock::now();
 	m_isLifetimeAlphaFade = vitalityComponentJSON["lifetimeAlphaFade"].asBool();
 
 	//Regeneration related
@@ -65,7 +60,7 @@ VitalityComponent::~VitalityComponent()
 void VitalityComponent::update()
 {
 
-	if (m_hasFiniteLifetime == true) {
+	if (m_lifetimeTimer.infiniteLifetime() == false) {
 		_updateFiniteLifetime();
 	}
 
@@ -95,12 +90,7 @@ void VitalityComponent::_levelUp()
 void VitalityComponent::_updateFiniteLifetime()
 {
 
-	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
-	std::chrono::duration<double, std::milli> timeDiffMilliSeconds = now_time - m_lifeTimeTimeSnapshot;
-
-	this->m_lifetimeRemaining -= timeDiffMilliSeconds;
-
-	if (this->m_lifetimeRemaining.count() <= 0)
+	if (m_lifetimeTimer.hasMetTargetDuration())
 	{
 
 		//Mark this object for removal so that the removal loop will delete it
@@ -109,13 +99,13 @@ void VitalityComponent::_updateFiniteLifetime()
 	}
 	else
 	{
-		m_lifeTimeTimeSnapshot = now_time;
 
 		//If this particle should fade over time, then adjust its alpha value
 		if (m_isLifetimeAlphaFade)
 		{
 			//Todo:move this to the render component and have it check the lifetime to adjust its alpha
-			parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT)->setColorAlpha(int(255 * (m_lifetimeRemaining / m_lifetime)));
+			parent()->getComponent<RenderComponent>(
+				ComponentTypes::RENDER_COMPONENT)->setColorAlpha(int(255 * (m_lifetimeTimer.percentTargetMet())));
 		}
 
 	}
@@ -130,11 +120,8 @@ void VitalityComponent::_updateRegeneration()
 		parent()->setPhysicsActive(false);
 	}
 	
-	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
-	std::chrono::duration<double, std::milli> timeDiffMilliSeconds = now_time - m_regenTimeSnapshot;
-
-	//If this piece is broken and we have met the regen time, then level up the piece
-	if (m_isBroken == true && timeDiffMilliSeconds.count() >= m_regenSpeed) {
+	//If this gameObject is considered broken and we have met the regen time, then level up the piece
+	if (m_isBroken == true && m_regenTimer.hasMetTargetDuration()) {
 
 		_levelUp();
 
@@ -154,7 +141,7 @@ void VitalityComponent::inflictDamage(float damage)
 		}
 		else {
 			m_isBroken = true;
-			m_regenTimeSnapshot = std::chrono::steady_clock::now();
+			m_regenTimer = Timer(m_regenSpeed);
 		}
 
 	}
@@ -172,8 +159,7 @@ bool VitalityComponent::testResistance(float force)
 		else {
 
 			m_isBroken = true;
-			m_regenTimeSnapshot = std::chrono::steady_clock::now();
-			//parent()->reset();
+			m_regenTimer = Timer(m_regenSpeed);
 		}
 		return false;
 	}
@@ -181,8 +167,18 @@ bool VitalityComponent::testResistance(float force)
 		return true;
 	}
 
+}
+
+void VitalityComponent::setLifetimeTimer(float lifetime)
+{
+
+	m_lifetimeTimer = Timer(lifetime);
 
 }
 
+void VitalityComponent::resetLifetime()
+{
 
+	m_lifetimeTimer.reset();
 
+}

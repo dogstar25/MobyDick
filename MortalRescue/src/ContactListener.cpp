@@ -43,9 +43,9 @@ void bullet_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint
 
 	//Build a One-Time particle emitter object
 	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
-	const auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
-	particleComponent->addParticleEffect(ParticleEffects::ricochet);
-	particleComponent->setType(ParticleEmitterType::ONETIME);
+	//const auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+	//particleComponent->addParticleEffect(ParticleEffects::ricochet);
+	//particleComponent->setType(ParticleEmitterType::ONETIME);
 
 	// 
 	// 
@@ -99,7 +99,7 @@ void playerBullet_droneShield(GameObject* contact1, GameObject* contact2, b2Vec2
 	if (shieldHolds == false) {
 
 		shieldVitality->setIsBroken(true);
-		particleComponent->addParticleEffect(ParticleEffects::ricochetX);
+		particleComponent->addParticleEffect(ParticleEffects::ricochet);
 		particleComponent->addParticleEffect(ParticleEffects::scrap);
 
 	}

@@ -5,6 +5,7 @@
 #include <array>
 
 #include "Component.h"
+#include "../Timer.h"
 
 class GameObject;
 
@@ -40,21 +41,12 @@ public:
 	void setIsDestroyed(bool isDestroyed) { m_isDestroyed = isDestroyed; }
 	float rotateSpeed() { return m_rotationSpeed; }
 
-
-	std::chrono::duration<float, std::milli> lifetime() { return m_lifetime; }
-	void setLifetime(std::chrono::duration<float, std::milli> lifetime) { m_lifetime = lifetime; }
-
-	std::chrono::duration<float, std::milli> lifetimeRemaining() { return m_lifetimeRemaining;  }
-	void setLifetimeRemaining(std::chrono::duration<float, std::milli> lifeRemaining) {  m_lifetimeRemaining = lifeRemaining; }
-
-	std::chrono::steady_clock::time_point timeSnapshot() { return m_lifeTimeTimeSnapshot; }
-	void setLifeTimeSnapshot(std::chrono::steady_clock::time_point timeSnapshot) { m_lifeTimeTimeSnapshot = timeSnapshot; }
-
-	bool hasFiniteLifetime() { return m_hasFiniteLifetime; }
-	void setHasFiniteLifetime(bool hasFiniteLifetime) {m_hasFiniteLifetime = hasFiniteLifetime; }
-
 	bool isLifetimeAlphaFade() { return m_isLifetimeAlphaFade; }
 	void setIsLifetimeAlphaFade(bool isLifetimeAlphaFade) { m_isLifetimeAlphaFade = isLifetimeAlphaFade; }
+
+	void setLifetimeTimer(float lifetime);
+	void resetLifetime();
+
 
 private:
 	float m_speed{ 0 };
@@ -70,15 +62,13 @@ private:
 	float	m_regenSpeed{ 0 };
 	int		m_currentLevel{ 0 };
 	int		m_maxLevels{ 0 };
-	std::chrono::steady_clock::time_point m_regenTimeSnapshot;
 	std::array<LevelDefinition, MAX_VITALITY_LEVELS> m_regenLevels = {};
 
-	//Temporary timed Lifetime
-	bool m_hasFiniteLifetime{ false };
 	bool m_isLifetimeAlphaFade{ true };
 	std::chrono::duration<float, std::milli> m_lifetime;
-	std::chrono::duration<float, std::milli> m_lifetimeRemaining;
-	std::chrono::steady_clock::time_point m_lifeTimeTimeSnapshot;
+
+	Timer m_lifetimeTimer{};
+	Timer m_regenTimer{};
 
 	void _levelUp();
 	void _updateFiniteLifetime();

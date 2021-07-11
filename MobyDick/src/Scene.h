@@ -101,10 +101,14 @@ public:
 	bool hasPhysics() {
 		return m_hasPhysics;
 	}
+
+	int gameObjectCount() { return m_gameObjectCount; }
+	void incrementGameObjectCount() { m_gameObjectCount += 1; }
 	
 private:
 
 	std::string m_id;
+	int m_gameObjectCount{};
 	int m_inputControlMode;
 	int m_parentSceneIndex;
 	bool m_hasPhysics{ false };

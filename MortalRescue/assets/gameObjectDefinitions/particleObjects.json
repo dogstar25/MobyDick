@@ -62,7 +62,7 @@
                     {
                         "state": "ANIMATION_IDLE",
                         "textureId": "TX_DEFLECT1_64",
-                        "speed": 0.01,
+                        "speed": 0.05,
                         "frames": 4
                     }
                 ]

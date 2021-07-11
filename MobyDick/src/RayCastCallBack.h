@@ -7,7 +7,7 @@
 
 class GameObject;
 
-struct IntersectionItem
+struct BrainRayCastFoundItem
 {
 	b2Fixture* fixture;
 	GameObject* gameObject;
@@ -16,9 +16,9 @@ struct IntersectionItem
 	float fraction;
 };
 
-struct less_than_key
+struct intersection_sort_compare
 {
-	inline bool operator() (const IntersectionItem& item1, const IntersectionItem& item2)
+	inline bool operator() (const BrainRayCastFoundItem& item1, const BrainRayCastFoundItem& item2)
 	{
 		return (item1.fraction < item2.fraction);
 	}
@@ -31,14 +31,14 @@ public:
 	
 	bool hasClearNavPath();
 	void reset();
-	const std::vector<IntersectionItem>& intersectionItems() { return m_intersectionItems; }
+	std::vector<BrainRayCastFoundItem>& intersectionItems() { return m_intersectionItems; }
 private:
 
 	RayCastCallBack() {};
 	float ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float fraction) override;
 	void sortIntersectionItems();
 
-	std::vector<IntersectionItem> m_intersectionItems;
+	std::vector<BrainRayCastFoundItem> m_intersectionItems;
 	
 
 

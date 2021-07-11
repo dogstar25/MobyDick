@@ -33,7 +33,7 @@ AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 			m_currentAnimationState = state;
 		}
 
-		m_animations[state] = { Animation(animItr, transformComponentJSON) };
+		m_animations[state] = Animation(animItr, transformComponentJSON);
 
 	}
 }

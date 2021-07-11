@@ -5,6 +5,10 @@
 #include "../game.h"
 #include "../GameConfig.h"
 #include "../Camera.h"
+#include "../DebugPanel.h"
+#include "../Clock.h"
+#include "../particleEffects/ParticleEffectsMap.h"
+#include "../EnumMaps.h"
 
 
 ParticleComponent::ParticleComponent(Json::Value definitionJSON )
@@ -16,6 +20,22 @@ ParticleComponent::ParticleComponent(Json::Value definitionJSON )
 
 		m_particles.emplace_back(Particle());
 
+	}
+
+	auto emissionInterval = particleComponentJSON["emissionInterval"].asFloat();
+	m_emissionTimer = Timer(emissionInterval);
+
+	//Add any effects that may be pre-built into the particle emitter
+	for (Json::Value itrEffect : particleComponentJSON["effects"])
+	{
+		auto effectId = itrEffect.asString();
+
+		ParticleEffect effect = ParticleEffectsMap::instance().getParticleEffect(effectId);
+		addParticleEffect(effect);
+	}
+
+	if (particleComponentJSON.isMember("type")) {
+		m_type = EnumMap::instance().toEnum(particleComponentJSON["type"].asString());
 	}
 
 }
@@ -61,26 +81,15 @@ void ParticleComponent::render()
 }
 
 
-void ParticleComponent::setEmissionInterval(std::chrono::duration<float> emissionInterval)
-{
-	m_emissionInterval = emissionInterval;
-}
+//void ParticleComponent::setEmissionInterval(std::chrono::duration<float> emissionInterval)
+//{
+//	m_emissionInterval = emissionInterval;
+//}
 
 
 void ParticleComponent::update()
 {
 	bool activeParticleFound = false;
-
-	//Get the amount of time passed since last update
-	//This particle component relies on velocity based on time passed since it is not a physics object
-	std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
-	std::chrono::duration<float> time_diff = now_time - m_timeSnapshot;
-	m_timeSnapshot = now_time;
-
-	/*static std::chrono::steady_clock::time_point timeShot;
-	std::chrono::steady_clock::time_point nowTime = std::chrono::steady_clock::now();
-	std::chrono::duration<float> timeDiff = nowTime - timeShot;
-	timeShot = nowTime;*/
 
 	//First update the position,lifetime,etc of all active particles
 	for (auto& particle : m_particles) {
@@ -89,45 +98,34 @@ void ParticleComponent::update()
 
 			activeParticleFound = true;
 
-			std::chrono::steady_clock::time_point nowTime = std::chrono::steady_clock::now();
-			auto timeDiff = nowTime - particle.timeSnapshot;
-			particle.lifetimeRemaining -= timeDiff;
-			if (particle.lifetimeRemaining.count() <= 0) {
+			if (particle.lifetimeTimer.hasMetTargetDuration()) {
 
 				particle.isAvailable = true;
 				particle.isActive = false;
-
+			}
+			else {
 			}
 
 			/*particle.position.x += particle.velocity.x * .01666 ;
 			particle.position.y += particle.velocity.y * .01666;*/
-			particle.position.x += particle.velocity.x * time_diff.count();
-			particle.position.y += particle.velocity.y * time_diff.count();
+			particle.position.x += particle.velocity.x * Clock::instance().timeElapsed().count();
+			particle.position.y += particle.velocity.y * Clock::instance().timeElapsed().count();
 
 		}
 
-		//add alpha fade
-		Uint8 alpha = 255;
-		alpha = int(255 * (particle.lifetimeRemaining.count() / particle.lifetime.count()));
-		particle.color.a = alpha;
+		if (particle.alphaFade == true) {
+			Uint8 alpha = int(255 * particle.lifetimeTimer.percentTargetMet());
+			particle.color.a = alpha;
+		}
 
 	}
 
-	//Only emit particles at the given time interval
-	//std::chrono::steady_clock::time_point now_time = std::chrono::steady_clock::now();
-	std::chrono::duration<double> emissionTimeDiff = now_time - m_EmissiontimeSnapshot;
-	m_timeSnapshot = now_time;
-
-	if (emissionTimeDiff < m_emissionInterval) {
-		return;
-	}
-	else {
-		m_EmissiontimeSnapshot = now_time;
-	}
-
-
-	//Now emit more particles
-	if (m_type == ParticleEmitterType::CONTINUOUS || (m_type == ParticleEmitterType::ONETIME && m_oneTimeEmitted == false )) {
+	//Now emit more particles IF,
+	//The emission interval timer has been met AND
+	//this is either a continuous emitter or a onetime emitter that hasnt fired yet
+	if (m_emissionTimer.hasMetTargetDuration() == true &&
+		(m_type == ParticleEmitterType::CONTINUOUS || 
+		(m_type == ParticleEmitterType::ONETIME && m_oneTimeEmitted == false ))) {
 
 		for (auto& effect : m_particleEffects) {
 
@@ -156,22 +154,22 @@ void ParticleComponent::update()
 					//Set the texture
 					particle.value()->texture = texture;
 
+					//Alpha Fade
+					particle.value()->alphaFade = effect.alphaFade;
+
 					//Set the color of the particle. Randomize the color values if they are different
 					particle.value()->color = util::generateRandomColor(effect.colorRangeBegin, effect.colorRangeEnd);
 
 					//Size
 					particle.value()->size = util::generateRandomNumber(effect.particleSizeMin, effect.particleSizeMax);
 
-					//Set the particles lifetime in miliseconds.
-					//std::chrono::steady_clock::time_point nowTime = std::chrono::steady_clock::now();
+					//Set the particles lifetime
 					auto particleLifetime = util::generateRandomNumber(effect.lifetimeMin, effect.lifetimeMax);
-					particle.value()->timeSnapshot = now_time;
-					particle.value()->lifetime = (std::chrono::duration<float>(particleLifetime));
-					particle.value()->lifetimeRemaining = (std::chrono::duration<float>(particleLifetime));
+					particle.value()->lifetimeTimer = Timer(particleLifetime);
 
 					//Calculate the emit angle/direction that the particle will travel in
-					//If this is a onetime emission, make each particles angle symetric with the whole
-					//otherwise, make each one random, but still within the angle range
+					//If this is a onetime emission, make each particle's angle symetric with the whole.
+					//Otherwise, make each one random, but still within the angle range
 					float emitAngle = 0;
 					if (m_type == ParticleEmitterType::ONETIME) {
 						auto angleRange = effect.angleMax - effect.angleMin;
@@ -186,8 +184,11 @@ void ParticleComponent::update()
 
 					//Calculate velocity vector
 					auto force = util::generateRandomNumber(effect.forceMin, effect.forceMax);
-					particle.value()->velocity.x = cos(emitAngle) * force;
-					particle.value()->velocity.y = sin(emitAngle) * force;
+
+					//Adjust force by a factor so that is closer matches what box2d does and we can use the same
+					//particle effect objects easier
+					particle.value()->velocity.x = cos(emitAngle) * (force * PARTICLE_EMITTER_FORCE_ADJ);
+					particle.value()->velocity.y = sin(emitAngle) * (force * PARTICLE_EMITTER_FORCE_ADJ);
 
 					//Position - If zero was passed in then use the location of the gameObject
 					//that this ParticlrComponent belongs to
@@ -202,9 +203,6 @@ void ParticleComponent::update()
 
 						positionVector = parentTransformComponent->position();
 					}
-
-					//positionVector.x /= GameConfig::instance().scaleFactor();
-					//positionVector.y /= GameConfig::instance().scaleFactor();
 
 					particle.value()->position.x = positionVector.x;
 					particle.value()->position.y = positionVector.y;

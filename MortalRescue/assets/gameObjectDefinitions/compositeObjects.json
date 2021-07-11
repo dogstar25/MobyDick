@@ -44,8 +44,13 @@
             },
             "brainComponent": {
                 "sensorLength": 550,
-                "sensorOffset": 75,
-                "sensorCount": 25
+                "sensorOffset": 0,
+                "sensorCount": 250,
+                "sightSensorSize": 25,
+                "detectableObjectTraits": [
+                    "player",
+                    "navigation"
+                ]
             },
             "actionComponent": {
                 "actions": [
@@ -133,7 +138,7 @@
                 "actions": [
                     {
                         "actionId": "ACTION_ROTATE",
-                        "actionClass": "DefaultRotate"
+                        "actionClass": "DroneEyeRotateAction"
                     }
                 ]
             },
@@ -143,16 +148,16 @@
                 "yRenderAdjustment": 0
             },
             "vitalityComponent": {
-                "speed": 50
+                "rotationSpeed": 3000
             },
             "physicsComponent": {
                 "type": "B2_DYNAMIC",
                 "collisionShape": "B2_BOX",
                 "friction": 1.0,
                 "restitution": 0.0,
-                "density": 50.0,
+                "density": 5.0,
                 "linearDamping": 0.0,
-                "angularDamping": 25.0,
+                "angularDamping": 10.0,
                 "anchorPoint": {
                     "x": 0.0,
                     "y": 1.56
@@ -175,7 +180,7 @@
             "vitalityComponent": {
                 "resistance": 0,
                 "regenerating": {
-                    "regenerateSpeed": 1800,
+                    "regenerateSpeed": 1.8,
                     "levels": [
                         {
                             "resistance": 1
@@ -183,8 +188,8 @@
                         {
                             "resistance": 2,
                             "color": {
-                                "red": 13,
-                                "green": 230,
+                                "red": 20,
+                                "green": 200,
                                 "blue": 237,
                                 "alpha": 255
                             }
@@ -251,7 +256,7 @@
             "vitalityComponent": {
                 "resistance": 0,
                 "regenerating": {
-                    "regenerateSpeed": 1800,
+                    "regenerateSpeed": 1.8,
                     "levels": [
                         {
                             "resistance": 1
@@ -259,8 +264,8 @@
                         {
                             "resistance": 2,
                             "color": {
-                                "red": 13,
-                                "green": 230,
+                                "red": 20,
+                                "green": 200,
                                 "blue": 237,
                                 "alpha": 255
                             }
@@ -327,7 +332,7 @@
             "vitalityComponent": {
                 "resistance": 0,
                 "regenerating": {
-                    "regenerateSpeed": 1800,
+                    "regenerateSpeed": 1.8,
                     "levels": [
                         {
                             "resistance": 1
@@ -335,8 +340,8 @@
                         {
                             "resistance": 2,
                             "color": {
-                                "red": 13,
-                                "green": 230,
+                                "red": 20,
+                                "green": 200,
                                 "blue": 237,
                                 "alpha": 255
                             }
@@ -403,7 +408,7 @@
             "vitalityComponent": {
                 "resistance": 0,
                 "regenerating": {
-                    "regenerateSpeed": 1800,
+                    "regenerateSpeed": 1.8,
                     "levels": [
                         {
                             "resistance": 1
@@ -411,8 +416,8 @@
                         {
                             "resistance": 2,
                             "color": {
-                                "red": 13,
-                                "green": 230,
+                                "red": 20,
+                                "green": 200,
                                 "blue": 237,
                                 "alpha": 255
                             }
@@ -479,7 +484,7 @@
             "vitalityComponent": {
                 "resistance": 0,
                 "regenerating": {
-                    "regenerateSpeed": 1800,
+                    "regenerateSpeed": 1.8,
                     "levels": [
                         {
                             "resistance": 1
@@ -487,8 +492,8 @@
                         {
                             "resistance": 2,
                             "color": {
-                                "red": 13,
-                                "green": 230,
+                                "red": 20,
+                                "green": 200,
                                 "blue": 237,
                                 "alpha": 255
                             }

@@ -26,7 +26,7 @@ void Clock::init()
 	m_current_frame_cnt = 0;
 	m_fps_time_accum = 0ns;
 	m_current_time_snapshot = std::chrono::steady_clock::now();
-	m_milisecsPerUpdate =	std::chrono::milliseconds(GameConfig::instance().gameLoopStep());
+	//m_milisecsPerUpdate =	std::chrono::milliseconds(GameConfig::instance().gameLoopStep());
 
 }
 void Clock::update()
@@ -73,4 +73,9 @@ bool Clock::hasMetGameLoopSpeed()
 	{
 		return false;
 	}
+}
+
+std::chrono::duration<float> Clock::timeElapsed()
+{
+	return m_gameloop_time_accum;
 }

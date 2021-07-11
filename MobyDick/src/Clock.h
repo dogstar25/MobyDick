@@ -13,6 +13,7 @@ public:
 	void update();
 	void calcFps();
 	bool hasMetGameLoopSpeed();
+	std::chrono::duration<float> timeElapsed();
 
 	int fps() {
 		return m_fps;

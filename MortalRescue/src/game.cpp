@@ -16,6 +16,7 @@
 #include "EnumMaps.h"
 
 #include "actions/MyAction.h"
+#include "actions/DroneEyeRotateAction.h"
 
 
 
@@ -52,6 +53,8 @@ Initialize Game
 */
 bool Game::init()
 {
+
+	std::cout << "Mortal Rescue Begins\n";
 
 	m_gameState = GameState::PLAY;
 
@@ -128,7 +131,20 @@ bool Game::init()
 	}
 
 	//test
-	auto particleXEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MAIN, 9, 9);
+	//auto particleXEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MAIN, 9, 9);
+	//auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, 9, 9);
+	//const auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
+	//particleComponent->addParticleEffect(ParticleEffects::ricochet);
+	//particleComponent->addParticleEffect(ParticleEffects::spark);
+	//particleComponent->setType(ParticleEmitterType::CONTINUOUS);
+	//particleComponent->setEmissionInterval(std::chrono::duration<float>(1));
+
+
+	auto particleXEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MAIN, 9, 15);
+	//const auto& particleXComponent = particleXEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+	//particleXComponent->addParticleEffect(ParticleEffects::ricochet);
+	//particleXComponent->setType(ParticleEmitterType::CONTINUOUS);
+
 
 	return true;
 }
@@ -139,14 +155,11 @@ Main Play Loop
 */
 void Game::play()
 {
-
-	while (m_gameState != GameState::QUIT)
-	{
+	while (m_gameState != GameState::QUIT) {
 
 		std::optional<SceneAction> action = SceneManager::instance().pollEvents();
 
 		if (action.has_value()) {
-
 			if (action->actionCode == SCENE_ACTION_QUIT) {
 				m_gameState = GameState::QUIT;
 			}
@@ -160,20 +173,19 @@ void Game::play()
 				SceneManager::instance().popScene();
 				SceneManager::instance().pushScene(action->sceneId);
 			}
-
-			//Apply the mouse control mode based on what the new "current" scene wants
-			//SceneManager::instance().scenes().back().applyCurrentControlMode();
 		}
 
 		SceneManager::instance().run();
 	}
-
 }
 
 void Game::_addGameActions()
 {
 
 	ActionMaps::instance().addAction("MyAction", std::make_shared<MyAction>());
+	ActionMaps::instance().addAction("DroneEyeRotateAction", std::make_shared<DroneEyeRotateAction>());
+
+	
 
 }
 
@@ -181,7 +193,6 @@ void Game::_addGameParticleEffects()
 {
 
 	ParticleEffectsMap::instance().addParticleEffect("ricochet", ParticleEffects::ricochet);
-	ParticleEffectsMap::instance().addParticleEffect("ricochetX", ParticleEffects::ricochetX);
 	ParticleEffectsMap::instance().addParticleEffect("deflect", ParticleEffects::deflect);
 	ParticleEffectsMap::instance().addParticleEffect("scrap", ParticleEffects::scrap);
 	ParticleEffectsMap::instance().addParticleEffect("spark", ParticleEffects::spark);

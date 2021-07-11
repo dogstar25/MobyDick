@@ -45,12 +45,14 @@ public:
 
 	GameObject() {}
 	~GameObject();
-
+	
 	//Need to define default move constructors because we have an explicit deconstructor defined
 	GameObject(GameObject&&) = default;
 	GameObject& operator=(GameObject&&) = default;
 
 	std::string m_id;
+	
+
 	int m_gameObjectType{ GameObjectType::SPRITE };
 
 	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene);
@@ -77,6 +79,7 @@ public:
 	void removeTrait(int32_t trait) {
 		m_traitTags.set(trait, false);
 	}
+	std::string name() { return m_name; }
 
 	//Accessor Functions
 	auto removeFromWorld() { return m_removeFromWorld; }
@@ -148,10 +151,12 @@ public:
 
 private:
 	
+	std::string m_name;
 	int m_collisionTag{ 0 };
 	bool m_removeFromWorld{ false };
 	Scene* m_parentScene{nullptr};
 	std::bitset<32> m_traitTags{};
+
 
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 
@@ -159,7 +164,7 @@ private:
 	//std::unordered_map<std::type_index, std::shared_ptr<Component>>m_components;
 	std::array<std::shared_ptr<Component>, static_cast<int>(ComponentTypes::COUNT)+1>m_components;
 
-
+	std::string _buildName(std::string id, float xMapPos, float yMapPos, Scene* parentScene);
 };
 
 #endif

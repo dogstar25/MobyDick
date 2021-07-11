@@ -9,6 +9,7 @@
 #include "Scene.h"
 #include "Globals.h"
 #include "BaseConstants.h"
+#include "Timer.h"
 
 inline constexpr int MAX_SCENES = 12;
 
@@ -24,7 +25,7 @@ class SceneManager
 {
 
 public:
-	SceneManager();
+	SceneManager() = default;
 	~SceneManager();
 
 	static SceneManager& instance();
@@ -60,19 +61,17 @@ public:
 	GameObject* addGameObject(std::shared_ptr<GameObject>gameObject, int layer);
 	GameObject* addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle = 0., bool cameraFollow = false);
 
-
-
 private:
 	
-	//std::stack<std::unique_ptr<Scene>> m_scenes;
 	std::vector<Scene> m_scenes;
 	std::map<SDL_Keycode, SceneAction> m_globalKeyActions;
 	std::vector<PlayerInputEvent> m_PlayerInputEvents;
 	//std::vector<LevelTriggerEvent> m_LevelTriggerEvents;
 	std::map<std::string, Json::Value>m_sceneDefinitions;
 
-	int m_currentSceneIndex;
-	
+	int m_currentSceneIndex{};
+	Timer m_gameTimer{};
+	int m_frameCount{};
 
 };
 

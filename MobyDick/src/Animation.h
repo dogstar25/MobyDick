@@ -9,6 +9,7 @@
 #include <json/json.h>
 #include "Globals.h"
 #include "BaseConstants.h"
+#include "Timer.h"
 
 class GameObjectDefinition;
 
@@ -17,11 +18,8 @@ class Animation
 
 public:
 
-	Animation();
+	Animation() = default;
 	Animation(Json::Value animationDetailsJSON, Json::Value transformComponentJSON);
-	Animation(GameObjectDefinition* gameObjectDefinition, std::string animationId, std::string textureId,
-		int totalFrames, float speed);
-	~Animation();
 
 	int animate();
 
@@ -39,15 +37,13 @@ private:
 
 	b2Vec2 	m_frameSize{ 0,0 };
 
-	std::chrono::steady_clock::time_point m_timeSnapshot{ std::chrono::duration<int>(0) };
-
 	//a rectangle pointing to the animation textture of the animation frame to be displayed
 	std::shared_ptr<SDL_Rect> m_currentTextureAnimationSrcRect;
 
 	//Array of all x,y coordinates of the top left corner of each animation frame in the texture
 	std::vector<SDL_FPoint> m_animationFramePositions;
-
 	SDL_Texture* m_texture{nullptr};
+	Timer m_timer;
 
 };
 

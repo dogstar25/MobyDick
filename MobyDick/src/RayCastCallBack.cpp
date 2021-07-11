@@ -14,14 +14,14 @@ RayCastCallBack& RayCastCallBack::instance()
 float RayCastCallBack::ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float fraction)
 {
 
-	IntersectionItem intersectionItem;
-	intersectionItem.fixture = fixture;
-	intersectionItem.gameObject = static_cast<GameObject*>(fixture->GetBody()->GetUserData());
-	intersectionItem.intersectPoint = point;
-	intersectionItem.normal = normal;
-	intersectionItem.fraction = fraction;
+	BrainRayCastFoundItem brainRayCastFoundItem;
+	brainRayCastFoundItem.fixture = fixture;
+	brainRayCastFoundItem.gameObject = static_cast<GameObject*>(fixture->GetBody()->GetUserData());
+	brainRayCastFoundItem.intersectPoint = point;
+	brainRayCastFoundItem.normal = normal;
+	brainRayCastFoundItem.fraction = fraction;
 
-	m_intersectionItems.push_back(intersectionItem);
+	m_intersectionItems.push_back(brainRayCastFoundItem);
 
 	return -1;
 }
@@ -53,6 +53,6 @@ void RayCastCallBack::reset()
 void RayCastCallBack::sortIntersectionItems()
 {
 
-	std::sort(m_intersectionItems.begin(), m_intersectionItems.end(), less_than_key());
+	std::sort(m_intersectionItems.begin(), m_intersectionItems.end(), intersection_sort_compare());
 
 }

@@ -24,12 +24,12 @@
         {
             "id": "LOC_0007_0005",
             "gameObjectId": "GINA_64",
-            "cameraFollow": true
+            "cameraFollow": false
         },
         {
             "id": "LOC_0016_0013",
             "gameObjectId": "DRONE",
-            "cameraFollow": false
+            "cameraFollow": true
         },
         //{
         //    "id": "LOC_0058_0004",
@@ -57,6 +57,16 @@
         },
         {
             "id": "LOC_0020_0027",
+            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "layer": "LAYER_ABSTRACT"
+        },
+        {
+            "id": "LOC_0036_0027",
+            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "layer": "LAYER_ABSTRACT"
+        },
+        {
+            "id": "LOC_0055_0027",
             "gameObjectId": "NAVIGATION_TRANSIT_POINT",
             "layer": "LAYER_ABSTRACT"
         },

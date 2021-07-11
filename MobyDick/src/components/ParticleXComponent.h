@@ -12,6 +12,7 @@
 #include "../Globals.h"
 #include "../BaseConstants.h"
 #include "../particleEffects/BaseParticleEffects.h"
+#include "../Timer.h"
 
 class GameObject;
 
@@ -29,11 +30,8 @@ public:
 private:
 	int m_type{ParticleEmitterType::ONETIME};
 	std::vector<ParticleEffect> m_particleEffects;
-
 	std::chrono::duration<float, std::milli> m_emissionInterval{ std::chrono::duration<float>(0.F) };
-	std::chrono::steady_clock::time_point m_timeSnapshot{ std::chrono::steady_clock::now() };
-
-
+	Timer m_emissionTimer{};
 
 };
 
