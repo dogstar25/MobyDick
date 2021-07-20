@@ -1,12 +1,15 @@
 #include "DroneBrainComponent.h"
 
-#include "DebugPanel.h"
-#include "GameObjectManager.h"
-#include <assert.h>
-
-#include "components/VitalityComponent.h"
 #include <math.h>
 #include <random>
+#include <assert.h>
+#include <format>
+
+#include "DebugPanel.h"
+#include "GameObjectManager.h"
+
+
+#include "components/VitalityComponent.h"
 
 
 DroneBrainComponent::DroneBrainComponent(Json::Value definitionJSON)
@@ -14,6 +17,7 @@ DroneBrainComponent::DroneBrainComponent(Json::Value definitionJSON)
 {
 
 	m_engageStateTimer = Timer(5);
+	m_eyeFireDelayTimer = Timer(.5);
 
 
 
@@ -173,12 +177,10 @@ void DroneBrainComponent::_doEngage()
 		m_interimDestination = nextInterimDestination.value();
 	}
 
-	DebugPanel::instance().addItem("TargetDest", m_targetDestination.value()->name());
-	DebugPanel::instance().addItem("InterimDest", m_interimDestination.value()->name());
+	//DebugPanel::instance().addItem("TargetDest", m_targetDestination.value()->name());
+	//DebugPanel::instance().addItem("InterimDest", m_interimDestination.value()->name());
 
-
-
-	//ToDo: point weapon at target location
+	//Point eye/weapon at target location
 	const auto& attachmentComponent = parent()->getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
 	const auto& eye = attachmentComponent->getAttachment("DRONE_EYE");
 	const auto& eyeGameObject = eye.value().gameObject;
@@ -186,7 +188,11 @@ void DroneBrainComponent::_doEngage()
 	b2Vec2 rotationCenter{ parent()->getCenterPosition().x, parent()->getCenterPosition().y };
 	_rotateTowards(targetLoc, rotationCenter, eyeGameObject.get());
 
-	//ToDo: fire weapon at target location
+	//Fire eye/weapon
+	if (m_eyeFireDelayTimer.hasMetTargetDuration()) {
+		auto action = eyeGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+		action->performUsageAction();
+	}
 
 	//Navigate towards target location, unless you are already there
 	navigateEngage();
@@ -226,13 +232,9 @@ GameObject* DroneBrainComponent::getClosestNavPoint(SDL_FPoint targetPosition, i
 
 		}
 			
-
-
 	}
 
 	if (!closestWayPoint) {
-
-
 
 		for (const auto& gameObject : parent()->parentScene()->gameObjects()[LAYER_ABSTRACT]) {
 
@@ -257,7 +259,6 @@ GameObject* DroneBrainComponent::getClosestNavPoint(SDL_FPoint targetPosition, i
 
 		}
 	}
-
 
 	assert(closestWayPoint != nullptr && "DroneBrain: No navpoint was found!");
 
@@ -307,8 +308,6 @@ void DroneBrainComponent::navigatePatrol()
 		_executeMove();
 	}
 	
-
-
 }
 
 void DroneBrainComponent::navigateEngage()
@@ -335,8 +334,6 @@ void DroneBrainComponent::navigateEngage()
 	else {
 		_executeMove();
 	}
-
-
 
 }
 
@@ -371,8 +368,6 @@ void DroneBrainComponent::_stopMovement()
 
 }
 
-
-
 float DroneBrainComponent::calculateDistance(SDL_FPoint location1, SDL_FPoint location2)
 {
 
@@ -381,7 +376,6 @@ float DroneBrainComponent::calculateDistance(SDL_FPoint location1, SDL_FPoint lo
 
 	return distance;
 }
-
 
 GameObject* DroneBrainComponent::getNextPatrolDestination()
 {
@@ -473,7 +467,6 @@ bool DroneBrainComponent::existsInAlreadyVistedNavList(GameObject* navPoint)
 void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCenter, GameObject* gameObject)
 {
 
-	//auto physicsComponent = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 	auto physicsComponent = gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 	auto currentAngle = physicsComponent->angle();
 
@@ -485,12 +478,9 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 		rotationCenter.x,
 		rotationCenter.y);
 
-	DebugPanel::instance().addItem("Drone Position", dronePosition);
-	DebugPanel::instance().addItem("Eye Position", eyePosition);
-
 	auto desiredAngle = atan2f(
-		targetPoint.x - rotationCenter.x,
-		-(targetPoint.y - rotationCenter.y));
+		(targetPoint.y - rotationCenter.y),
+		(targetPoint.x - rotationCenter.x));
 	desiredAngle = util::normalizeRadians(desiredAngle);
 
 	auto desiredAngleDegrees = util::radiansToDegrees(desiredAngle);
@@ -505,6 +495,10 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 	auto action = gameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 	auto vitality = gameObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
+
+	//TODO: save the last ABS of the difference and compare and adjust forward
+	//or back based on that to zero-in on target
+
 	if ((desiredAngle - currentAngle) < 0.0) {
 		rotationVelocity = vitality->rotateSpeed() * -1;
 	}
@@ -513,10 +507,10 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 	}
 
 	auto difference = abs(desiredAngle - currentAngle);
-	DebugPanel::instance().addItem("Angle Diff in Radians", desiredAngle - currentAngle, 2);
+	DebugPanel::instance().addItem("Angle Diff in Radians", difference, 2);
 
 	//Once the angle is very close then set the angle directly
-	if (difference < 0.05) {
+	if (difference < 0.1) {
 		action->performRotateAction(0);
 	}
 	else {

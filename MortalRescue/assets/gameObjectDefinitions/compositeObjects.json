@@ -130,8 +130,8 @@
             "description": "Drone Eye",
             "transformComponent": {
                 "size": {
-                    "width": 33,
-                    "height": 78
+                    "width": 78,
+                    "height": 33
                 }
             },
             "actionComponent": {
@@ -139,6 +139,10 @@
                     {
                         "actionId": "ACTION_ROTATE",
                         "actionClass": "DroneEyeRotateAction"
+                    },
+                    {
+                        "actionId": "ACTION_USAGE",
+                        "actionClass": "PistolFire"
                     }
                 ]
             },
@@ -159,9 +163,26 @@
                 "linearDamping": 0.0,
                 "angularDamping": 10.0,
                 "anchorPoint": {
-                    "x": 0.0,
-                    "y": 1.56
+                    "x": -1.56,
+                    "y": 0.0
                 }
+            },
+            "weaponComponent": {
+                "fireOffset": 1.0,
+                "weaponLevels": [
+                    {
+                        "level": 1,
+                        "force": 1,
+                        "levelUpTarget": 25,
+                        "color": {
+                            "red": 255,
+                            "green": 0,
+                            "blue": 0,
+                            "alpha": 255
+                        },
+                        "bulletPoolId": "BULLET1_POOL"
+                    }
+                ]
             }
         },
         {

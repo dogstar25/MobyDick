@@ -41,6 +41,8 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, Scene* parentScen
 	//FIXME:Need to pass in position info
 	m_physicsBody->SetTransform(*position, newAngle);
 
+	//m_physicsBody->SetMassData(const b2MassData * data);
+
 }
 
 PhysicsComponent::~PhysicsComponent()
@@ -137,8 +139,8 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 		//Divide by 2 because box2d needs center position
 		box.SetAsBox(
 			transformComponentJSON["size"]["width"].asFloat() / GameConfig::instance().scaleFactor() / 2,
-			transformComponentJSON["size"]["height"].asFloat() / GameConfig::instance().scaleFactor() / 2
-		);
+			transformComponentJSON["size"]["height"].asFloat() / GameConfig::instance().scaleFactor() / 2/*,
+			b2Vec2(m_objectAnchorPoint.x, m_objectAnchorPoint.y), 0*/	);
 		shape = &box;
 	}
 
@@ -306,6 +308,12 @@ void PhysicsComponent::attachItem(GameObject* attachObject, b2JointType jointTyp
 	attachObjectPhysicsComponent->m_objectAnchorPoint.x,
 	attachObjectPhysicsComponent->m_objectAnchorPoint.y
 	};
+
+
+	//test
+	//attachObjectAnchorPoint = attachObjectPhysicsComponent.get()->physicsBody()->GetLocalCenter();
+
+
 
 	//Build specific joint
 	if (jointType == b2JointType::e_weldJoint) {
