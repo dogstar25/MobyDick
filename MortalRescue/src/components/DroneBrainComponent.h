@@ -1,11 +1,10 @@
 #pragma once
+#include "components\BrainComponent.h"
 
 #include <iostream>
 #include <optional>
-
 #include <json/json.h>
 
-#include "components\BrainComponent.h"
 #include "Timer.h"
 
 class DroneBrainComponent : public BrainComponent
@@ -30,6 +29,7 @@ private:
 	int m_currentWaypointIndex{ 0 };
 	SDL_FPoint m_targetLocation{0,0};
 	Timer m_engageStateTimer{};
+	Timer m_eyeFireDelayTimer{};
 
 
 	void _doPatrol();

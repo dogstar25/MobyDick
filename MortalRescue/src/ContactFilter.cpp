@@ -135,7 +135,6 @@ bool ContactFilter::ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB)
 	auto gameObjectAMask = m_collisionMasks[gameObjectA->collisionTag()];
 	auto gameObjectBMask = m_collisionMasks[gameObjectB->collisionTag()];
 
-	//ToDo:this OR should be an AND
 	if (gameObjectAMask.test(gameObjectB->collisionTag()) &&
 		gameObjectBMask.test(gameObjectA->collisionTag())) {
 		return true;

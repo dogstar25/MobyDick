@@ -170,6 +170,7 @@ void RenderComponent::render()
 {
 
 	const auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	const auto& physics = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 
 	if (parent()->m_gameObjectType == GameObjectType::LINE) {
 
@@ -269,6 +270,13 @@ void RenderComponent::render()
 				if (m_renderOutline == true) {
 					outlineObject(m_outLineColor);
 				}
+			}
+
+			//Drawa a red circle on the bodies center
+			if(parent()->parentScene()->physicsConfig().b2DebugDrawMode == true &&
+			   parent()->hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
+				auto center = physics->physicsBody()->GetWorldCenter();
+				DebugDraw::instance().DrawCircle(center, .1, b2Color(255, 0, 0, 255));
 			}
 		}
 	}
