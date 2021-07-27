@@ -197,6 +197,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\BrainAABBCallback.cpp" />
+    <ClCompile Include="src\ComponentFactory.cpp" />
+    <ClCompile Include="src\ContactListener.cpp" />
+    <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\ContactFilter.cpp" />
     <ClCompile Include="src\triggers\LevelComplete.cpp" />
     <ClCompile Include="src\triggers\TriggerMap.cpp" />
     <ClCompile Include="src\triggers\PlayerDeath.cpp" />

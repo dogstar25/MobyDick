@@ -19,9 +19,9 @@ public:
 	std::shared_ptr<Component> create(
 		Json::Value definitionJSON, Scene* scene, float xMapPos, float yMapPos,	float angleAdjust, ComponentTypes componentType);
 
-private:
+protected:
 	//Create version that has ALL possible inputs
-	std::shared_ptr<Component> _create(
+	virtual std::shared_ptr<Component> _create(
 		Json::Value definitionJSON,
 		std::string textComponentGameObjectid,
 		Scene* scene,

@@ -1,0 +1,27 @@
+{
+    "textures": [
+        {
+            "id": "TX_DEFAULT",
+            "description": "Default",
+            "filename": "assets/default.png"
+        },
+        {
+            "id": "TX_STUBB",
+            "description": "Stubb",
+            "filename": "assets/mobydick_circle.png"
+        },
+        {
+            "id": "TX_SMOKE_PARTICLE_1",
+            "description": "Smoke particle",
+            "filename": "assets/particle1.png"
+        }
+    ],
+  "fonts": [
+    {
+      "id": "FONT_ARIAL_REG",
+      "description": "Arial Regular",
+      "filename": "assets/arial.ttf"
+    }
+  ]
+
+}

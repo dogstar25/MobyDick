@@ -13,7 +13,6 @@
                 }
             },
             "poolComponent": {
-                "poolId": "SMOKE1_POOL"
             },
             "vitalityComponent": {
                 "speed": 50,
@@ -49,7 +48,6 @@
                 "absolutePositioning": false
             },
             "poolComponent": {
-                "poolId": "DEFLECT1_POOL"
             },
             "vitalityComponent": {
                 "speed": 5,
@@ -91,7 +89,6 @@
                 "absolutePositioning": false
             },
             "poolComponent": {
-                "poolId": "SCRAP1_POOL"
             },
             "vitalityComponent": {
             },

@@ -4,6 +4,8 @@
 #include "../EnumMaps.h"
 #include "../Game.h"
 
+extern std::unique_ptr<Game> game;
+
 PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, Scene* parentScene, float xMapPos, float yMapPos, float angleAdjust)
 {
 	//Get reference to the animationComponent JSON config and transformComponent JSON config
@@ -20,8 +22,8 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, Scene* parentScen
 	m_restitution = physicsComponentJSON["restitution"].asFloat();
 	m_linearDamping = physicsComponentJSON["linearDamping"].asFloat();
 	m_angularDamping = physicsComponentJSON["angularDamping"].asFloat();
-	//m_collisionCategory = EnumMap::instance().toEnum(physicsComponentJSON["collisionCategory"].asString());
-	
+	m_gravityScale = physicsComponentJSON["gravityScale"].asFloat();
+
 	m_objectAnchorPoint.Set(physicsComponentJSON["anchorPoint"]["x"].asFloat(),
 		physicsComponentJSON["anchorPoint"]["y"].asFloat());
 
@@ -31,8 +33,8 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, Scene* parentScen
 	//Calculate the spawn position
 	//Translate the pixel oriented position into box2d meter-oriented
 	b2Vec2* position = new b2Vec2
-	(  (xMapPos * Game::instance().worldTileWidth() + (transformComponentJSON["size"]["width"].asFloat() / 2)) / GameConfig::instance().scaleFactor(),
-		(yMapPos * Game::instance().worldTileHeight() + (transformComponentJSON["size"]["height"].asFloat() / 2)) / GameConfig::instance().scaleFactor());
+	(  (xMapPos * game->worldTileWidth() + (transformComponentJSON["size"]["width"].asFloat() / 2)) / GameConfig::instance().scaleFactor(),
+		(yMapPos * game->worldTileHeight() + (transformComponentJSON["size"]["height"].asFloat() / 2)) / GameConfig::instance().scaleFactor());
 
 	//Calculate the spawn Angle
 	float newAngle = util::degreesToRadians(angleAdjust);
@@ -108,7 +110,6 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 	bodyDef.position.SetZero();
 	bodyDef.allowSleep = true;
 	b2Body* body = physicsWorld->CreateBody(&bodyDef);
-	//b2Body* body = Game::instance().physicsWorld()->CreateBody(&bodyDef);
 
 	b2Shape* shape;
 	b2PolygonShape box;
@@ -164,7 +165,7 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 
 	body->SetLinearDamping(m_linearDamping);
 	body->SetAngularDamping(m_angularDamping);
-
+	body->SetGravityScale(m_gravityScale);
 
 	//body->SetUserData(m_parentGameObject.get());
 	//this->box2dBodyCount++;

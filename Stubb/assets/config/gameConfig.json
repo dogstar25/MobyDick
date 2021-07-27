@@ -1,0 +1,27 @@
+{
+    "gameTitle": "Stubb",
+    "window": {
+        "width": 1280,
+        "height": 720,
+        "fullscreen": false
+    },
+    "sound": {
+        "numberOfChannels": 4
+    },
+    "scenes": {
+        "maxScenes": 2
+    },
+    "mouseSensitivity": 0.5, //higher the mmore sensitive
+    "gameLoopStep": 0.016,
+    "physics": {
+        "box2dScale": 25
+    },
+    "dynamicTextRefreshDelay": 0.1, //need a tiny delay to prevent millions of dynamic text texture regenerations
+    "debugPanel": {
+        "show": false,
+        "xPos": 1,
+        "yPos": 2,
+        "fontSize": 12
+    }
+}
+  

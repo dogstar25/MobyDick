@@ -15,22 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\game.cpp">
+    <ClCompile Include="src\MRGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\components\DroneBrainComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ComponentFactory.cpp">
+    <ClCompile Include="src\MRComponentFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\actions\MyAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ContactListener.cpp">
+    <ClCompile Include="src\MRContactListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ContactFilter.cpp">
+    <ClCompile Include="src\MRContactFilter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\mortalRescue.cpp">
@@ -204,6 +204,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\actions\DroneEyeRotateAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MRContactListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MRGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MRContactFilter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MRComponentFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,7 @@
 #include "TransformComponent.h"
 #include "../Game.h"
 
+extern std::unique_ptr<Game> game;
 
 TransformComponent::TransformComponent()
 {
@@ -22,15 +23,15 @@ TransformComponent::TransformComponent(Json::Value definitionJSON, float xMapPos
 		if (m_centeredPositioning == true) {
 
 			setPosition(
-				((xMapPos * Game::instance().worldTileWidth()) + objectWidth / 2) - (objectWidth  / 2),
-				((yMapPos * Game::instance().worldTileHeight()) + objectHeight / 2) - (objectHeight / 2)
+				((xMapPos * game->worldTileWidth()) + objectWidth / 2) - (objectWidth  / 2),
+				((yMapPos * game->worldTileHeight()) + objectHeight / 2) - (objectHeight / 2)
 			);
 		}
 		else {
 
 			setPosition(
-				(xMapPos * Game::instance().worldTileWidth()) + objectWidth / 2,
-				(yMapPos * Game::instance().worldTileHeight()) + objectHeight / 2
+				(xMapPos * game->worldTileWidth()) + objectWidth / 2,
+				(yMapPos * game->worldTileHeight()) + objectHeight / 2
 			);
 		}
 

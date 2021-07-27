@@ -1,12 +1,21 @@
+#include <memory>
+
 #include "Game.h"
+#include "MRGame.h"
+#include "MRContactListener.h"
+#include "MRContactFilter.h"
+#include "MRComponentFactory.h"
+
+std::unique_ptr<Game> game;
 
 int main(int argc, char* args[])
 {
-	Game::instance().init();
+	game = std::make_unique<MRGame>();
+	game->init(new MRContactListener(), new MRContactFilter(), new MRComponentFactory());
 
-	while (Game::instance().gameState() != GameState::QUIT)
+	while (game->gameState() != GameState::QUIT)
 	{
-		Game::instance().play();
+		game->play();
 	}
 
 	return 0;

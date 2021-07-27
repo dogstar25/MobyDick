@@ -19,21 +19,23 @@
 #include "GameConfig.h"
 #include "SceneManager.h"
 #include "ComponentFactory.h"
+#include "ContactListener.h"
+#include "ContactFilter.h"
+
 
 /*
 	Main Game Class
 */
 class Game {
 
-private:
-
 public:
 
-	Game();
+	Game() = default;
 	~Game();
 
-	static Game& instance();
 	virtual bool init();
+	virtual bool init(ContactListener*, ContactFilter*,	ComponentFactory* ) = 0;
+
 	virtual void play();
 	void _displayLoadingMsg();
 	
@@ -62,21 +64,32 @@ public:
 	int worldTileHeight() {
 		return m_WorldTileHeight;
 	}
+	ContactListener* contactListener() {
+		return m_contactListener;
+	}
+	ContactFilter* contactFilter() {
+		return m_contactFilter;
+	}
+	ComponentFactory* componentFactory() {
+		return m_componentFactory;
+	}
 
-private:
+protected:
 
-	SDL_Window* m_window;
-	GameState m_gameState;
-	SDL_Rect m_WorldBounds;
-	
-	int m_WorldTileWidth;
-	int m_WorldTileHeight;
+	SDL_Window* m_window{};
+	GameState m_gameState{};
+	SDL_Rect m_WorldBounds{};
+	ContactListener* m_contactListener{};
+	ContactFilter* m_contactFilter{};
+	ComponentFactory* m_componentFactory{};
 
-	void _addGameCollisionTags();
-	void _addGameActions();
-	void _addGameParticleEffects();
+	int m_WorldTileWidth{};
+	int m_WorldTileHeight{};
 
-	
+	virtual void _addGameCollisionTags() = 0;
+	virtual void _addGameActions() = 0;
+	virtual void _addGameParticleEffects() = 0;
+
 };
 
 

@@ -1,6 +1,7 @@
 #include "GameObjectManager.h"
 
 #include <fstream>
+#include <iostream>
 
 
 
@@ -75,13 +76,19 @@ std::shared_ptr<GameObjectDefinition> GameObjectManager::getDefinition(std::stri
 
 	if (m_gameObjectDefinitions.find(definitionId) == this->m_gameObjectDefinitions.end())
 	{
-		//FIXME: make it so that there at least 1  dummy definition in the map that it defaults to when nothign found
-		//shoudl never happen
-		return NULL;
+		if (m_gameObjectDefinitions.find("DEFAULT") == this->m_gameObjectDefinitions.end()) {
+			std::cout << "Missing DEFAULT gameObject. Configure a GameObject named DEFAULT\n";
+			return nullptr;
+		}
+		else {
+			definitionId = "DEFAULT";
+			return std::make_shared<GameObjectDefinition>(m_gameObjectDefinitions[definitionId]);
+		}
+		
 	}
 	else
 	{
-		return std::make_shared< GameObjectDefinition>(m_gameObjectDefinitions[definitionId]);
+		return std::make_shared<GameObjectDefinition>(m_gameObjectDefinitions[definitionId]);
 	}
 
 

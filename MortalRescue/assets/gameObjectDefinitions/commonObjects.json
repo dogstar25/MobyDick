@@ -618,7 +618,6 @@
                 "lifetimeAlphaFade": true
             },
             "poolComponent": {
-                "poolId": "BULLET1_POOL"
             },
             "physicsComponent": {
                 "type": "B2_DYNAMIC",

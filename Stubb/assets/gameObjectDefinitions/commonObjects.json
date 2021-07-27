@@ -1,0 +1,182 @@
+{
+    "gameObjects": [
+        {
+            "id": "STUBB",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_SOLID",
+            "traitTags": [],
+            "description": "Stubb",
+            "transformComponent": {
+                "size": {
+                    "width": 384,
+                    "height": 480
+                },
+                "absolutePositioning": true,
+                "centeredPositioning": true
+            },
+            "renderComponent": {
+                "textureId": "TX_STUBB"
+            }
+        },
+        {
+            "id": "DEFAULT",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_SOLID",
+            "traitTags": [],
+            "description": "Default",
+            "transformComponent": {
+                "size": {
+                    "width": 64,
+                    "height": 64
+                },
+                "absolutePositioning": false
+            },
+            "renderComponent": {
+                "textureId": "TX_DEFAULT"
+            }
+        },
+        {
+            "id": "PARTICLE_BUBBLE_1",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [],
+            "description": "Bubble Particle 1",
+            "transformComponent": {
+                "size": {
+                    "width": 32,
+                    "height": 32
+                }
+            },
+            "poolComponent": {
+            },
+            "vitalityComponent": {
+                "speed": 50,
+                "lifetime": 1.25,
+                "lifetimeAlphaFade": true
+            },
+            "renderComponent": {
+                "textureId": "TX_SMOKE_PARTICLE_1",
+                "textureBlendMode": "SDL_BLENDMODE_ADD"
+            },
+            "physicsComponent": {
+                "type": "B2_DYNAMIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.0,
+                "density": 0.0,
+                "linearDamping": 4.0,
+                "gravityScale": -0.5,
+                "angularDamping": 0.0
+            }
+        },
+        {
+            "id": "PARTICLE_SMOKE_1",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [],
+            "description": "Smoke Particle 1",
+            "transformComponent": {
+                "size": {
+                    "width": 32,
+                    "height": 32
+                }
+            },
+            "poolComponent": {
+            },
+            "vitalityComponent": {
+                "speed": 50,
+                "lifetime": 1.25,
+                "lifetimeAlphaFade": true
+            },
+            "renderComponent": {
+                "textureId": "TX_SMOKE_PARTICLE_1",
+                "textureBlendMode": "SDL_BLENDMODE_ADD"
+            },
+            "physicsComponent": {
+                "type": "B2_DYNAMIC",
+                "collisionShape": "B2_BOX",
+                "friction": 0.0,
+                "density": 0.0,
+                "linearDamping": 8.0,
+                "gravityScale": -0.4,
+                "angularDamping": 0.0
+            }
+        },
+        {
+            "id": "PARTICLE_BUBBLE_EMITTER",
+            "type": "GameObjectType::ABSTRACT",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [],
+            "description": "Particle Emitter",
+            "transformComponent": {
+                "size": {
+                    "width": 4,
+                    "height": 4
+                }
+            },
+            "particleXComponent": {
+                "type": "ParticleEmitterType::CONTINUOUS",
+                "emissionInterval": 2.0,
+                "effects": [
+                    "whaleBubble"
+                ]
+
+            }
+        },
+        {
+            "id": "PARTICLE_SHIPSMOKE_EMITTER",
+            "type": "GameObjectType::ABSTRACT",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [],
+            "description": "Particle Emitter",
+            "transformComponent": {
+                "size": {
+                    "width": 4,
+                    "height": 4
+                }
+            },
+            "particleXComponent": {
+                "type": "ParticleEmitterType::CONTINUOUS",
+                "emissionInterval": 0.2,
+                "effects": [
+                    "shipSmoke"
+                ]
+
+            }
+        },
+        {
+            "id": "FPS_VALUE",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "description": "FPS",
+            "transformComponent": {
+                "absolutePositioning": true
+            },
+            "textComponent": {
+                "value": "",
+                "dynamic": true,
+                "font": "FONT_ARIAL_REG",
+                "fontSize": 16
+            },
+            "renderComponent": {
+                "color": {
+                    "red": 0,
+                    "green": 255,
+                    "blue": 0,
+                    "alpha": 255
+                },
+                "outline": {
+                    "thickness": 1,
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
+                }
+            }
+        }
+
+
+    ]
+}

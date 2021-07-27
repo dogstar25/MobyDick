@@ -2,6 +2,13 @@
 
 namespace CollisionTag {
 	
+
+	inline constexpr int SMOKE_PARTICLE = 2;
+	inline constexpr int NAVIGATION_POINT = 3;
+	inline constexpr int HEAVY_PARTICLE = 4;
+	inline constexpr int LIGHT_PARTICLE = 5;
+	inline constexpr int PLAYER = 6;
+	inline constexpr int WALL = 7;
 	inline constexpr int DEFLECT_EFFECT = 11;
 	inline constexpr int DRONE_BRAIN = 12;
 	inline constexpr int DRONE_FRAME = 13;
