@@ -5,6 +5,7 @@
 #include "../Camera.h"
 #include "../game.h"
 
+extern std::unique_ptr<Game> game;
 
 RenderComponent::RenderComponent()
 {
@@ -50,9 +51,6 @@ RenderComponent::RenderComponent(Json::Value definitionJSON)
 
 	//Get Texture
 	m_texture = TextureManager::instance().getTexture(itrRender["textureId"].asString());
-
-	/*m_transformComponent = nullptr;
-	m_animationComponent = nullptr;*/
 
 }
 
@@ -219,8 +217,8 @@ void RenderComponent::render()
 		SDL_Rect gameObjectPosRect = { (int)positionRect.x, (int)positionRect.y, (int)positionRect.w, (int)positionRect.h };
 		SDL_Rect cameraRect = { (int)Camera::instance().frame().x,
 			(int)Camera::instance().frame().y,
-			(int)Camera::instance().frame().w + Game::instance().worldTileWidth(),
-			(int)Camera::instance().frame().h + Game::instance().worldTileHeight() };
+			(int)Camera::instance().frame().w + game->worldTileWidth(),
+			(int)Camera::instance().frame().h + game->worldTileHeight() };
 
 		/*
 		If this object is within the viewable are or if its absolute positioned then render it

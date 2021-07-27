@@ -67,6 +67,7 @@ private:
 	float m_linearDamping{ 0 };
 	float m_collisionRadius{ 0 };
 	float m_angularDamping{ 0 };
+	float m_gravityScale{ 0 };
 
 	uint16 m_collisionCategory{ 0 };
 	uint16 m_collisionShape{ 0 };

@@ -95,6 +95,8 @@ void VitalityComponent::_updateFiniteLifetime()
 
 		//Mark this object for removal so that the removal loop will delete it
 		parent()->setRemoveFromWorld(true);
+		//test
+		parent()->reset();
 
 	}
 	else

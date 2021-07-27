@@ -1,0 +1,19 @@
+{
+  "soundEffects": [
+   
+    {
+      "id": "SFX_BLIP",
+      "description": "Blip 1",
+      "filename": "blip_001.wav"
+
+    }
+  ],
+  "music": [
+    {
+      "id": "MUSIC_AMBIENCE_1",
+      "description": "Ambience Music 1",
+      "filename": "ambience_deep_shining.wav"
+    }
+  ]
+
+}

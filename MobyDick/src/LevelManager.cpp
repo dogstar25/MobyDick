@@ -11,6 +11,7 @@
 #include "EnumMaps.h"
 #include "Game.h"
 
+extern std::unique_ptr<Game> game;
 
 static const SDL_Color WHITE = { 255,255,255 };
 static const SDL_Color BLACK = { 0,0,0 };
@@ -93,7 +94,7 @@ void LevelManager::_loadDefinition(std::string levelId)
 	m_levelBounds.h = m_height * m_tileHeight;
 
 	//Initialize World bounds
-	Game::instance().setWorldParams(m_levelBounds, m_tileWidth, m_tileHeight);
+	game->setWorldParams(m_levelBounds, m_tileWidth, m_tileHeight);
 
 	//Save all locationobject definitions
 	if (root.isMember("locationObjects")) {
@@ -159,7 +160,7 @@ void LevelManager::load(std::string levelId, Scene* scene)
 			<<	m_width << "/" << m_height << "\n";
 	}
 
-	Game::instance()._displayLoadingMsg();
+	game->_displayLoadingMsg();
 
 	SDL_LockSurface(surface);
 
@@ -184,7 +185,7 @@ void LevelManager::load(std::string levelId, Scene* scene)
 
 	SDL_UnlockSurface(surface);
 
-	Game::instance()._displayLoadingMsg();
+	game->_displayLoadingMsg();
 
 	//Build all of the objects that make up this level and store them
 	//In the main gameObject collection

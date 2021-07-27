@@ -4,6 +4,8 @@
 
 #include <fstream>
 
+extern std::unique_ptr<Game> game;
+
 GameConfig::GameConfig()
 {
 
@@ -39,7 +41,7 @@ bool GameConfig::init(std::string configFile)
 
 	//Global World sizes
 	SDL_Rect bounds = { m_windowWidth, m_windowHeight };
-	Game::instance().setWorldParams(bounds, 32, 32);
+	game->setWorldParams(bounds, 32, 32);
 
 	return true;
 }

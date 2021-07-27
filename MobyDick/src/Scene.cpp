@@ -14,6 +14,8 @@
 #include "game.h"
 
 
+extern std::unique_ptr<Game> game;
+
 Scene::Scene(std::string sceneId)
 {
 
@@ -109,7 +111,7 @@ Scene::~Scene()
 void Scene::loadLevel(std::string levelId)
 {
 
-	Game::instance()._displayLoadingMsg();
+	game->_displayLoadingMsg();
 
 	reset();
 
@@ -127,7 +129,7 @@ void Scene::reset()
 	clear();
 
 	//Rebuild everything
-	Game::instance()._displayLoadingMsg();
+	game->_displayLoadingMsg();
 
 	Json::Value sceneJSON = SceneManager::instance().getDefinition(m_id);
 
@@ -328,8 +330,8 @@ SDL_FPoint Scene::calcWindowPosition(int globalPosition)
 
 	if (globalPosition == WindowPosition::CENTER) {
 
-		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / Game::instance().worldTileWidth() / 2);
-		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / Game::instance().worldTileHeight() / 2);
+		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() / 2);
+		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight() / 2);
 
 	}
 	else {
@@ -370,7 +372,7 @@ void Scene::_buildPhysicsWorld(Json::Value physicsJSON)
 	m_physicsWorld->SetAutoClearForces(true);
 
 	//Add a collision contact listener and filter for box2d callbacks
-	m_physicsWorld->SetContactListener(&ContactListener::instance());
-	m_physicsWorld->SetContactFilter(&ContactFilter::instance());
+	m_physicsWorld->SetContactFilter(game->contactFilter());
+	m_physicsWorld->SetContactListener(game->contactListener());
 
 }

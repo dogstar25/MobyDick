@@ -109,20 +109,18 @@ private:
 
 	std::string m_id;
 	int m_gameObjectCount{};
-	int m_inputControlMode;
-	int m_parentSceneIndex;
-	bool m_hasPhysics{ false };
+	int m_inputControlMode{};
+	int m_parentSceneIndex{};
+	bool m_hasPhysics{};
 
-	SceneState m_state;
-	b2World* m_physicsWorld{ nullptr };
-	PhysicsConfig m_physicsConfig;
-	ObjectPoolManager m_objectPoolManager;
+	SceneState m_state{};
+	b2World* m_physicsWorld{};
+	PhysicsConfig m_physicsConfig{};
+	ObjectPoolManager m_objectPoolManager{};
 
 	std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> m_gameObjects;
 	std::bitset<8> m_sceneTags;
 	std::map<SDL_Keycode, SceneAction> m_sceneKeyActions;
-
-
 
 	void _processGameObjectInterdependecies();
 	void _buildPhysicsWorld(Json::Value physicsJSON);

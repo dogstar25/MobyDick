@@ -16,15 +16,12 @@ void ObjectPoolManager::init(Json::Value definitionJSON,  Scene* parentScene)
 	std::string gameObjectId, poolId;
 	int maxItems;
 
-	//Loop through every texture defined in the config file, create a texture object
-	//and store it in the main texture map
 	for (auto itr : gameObjectPoolsJSON)
 	{
 
 		poolId = itr["id"].asString();
 		gameObjectId = itr["gameObjectId"].asString();
 		maxItems = itr["maxItems"].asInt();
-		//lifetime = itr["lifetime"].asFloat();
 
 		m_objectPool[poolId].reserve(maxItems);
 
@@ -32,6 +29,7 @@ void ObjectPoolManager::init(Json::Value definitionJSON,  Scene* parentScene)
 
 			auto& gameObject = m_objectPool[poolId].emplace_back(std::make_shared<GameObject>(gameObjectId, -50.0f, -50.0f, 0.0f, parentScene));
 			gameObject->init(false);
+			gameObject->reset();
 
 		}
 

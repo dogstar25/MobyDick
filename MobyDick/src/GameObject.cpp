@@ -14,6 +14,7 @@
 #include "Camera.h"
 #include "EnumMaps.h"
 
+extern std::unique_ptr<Game> game;
 
 GameObject::~GameObject()
 {
@@ -58,17 +59,17 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	std::shared_ptr<Component> component{};
 
 	//Always build a render component
-	component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::RENDER_COMPONENT);
+	component = game->componentFactory()->create(definitionJSON, ComponentTypes::RENDER_COMPONENT);
 	addComponent(component, ComponentTypes::RENDER_COMPONENT);
 
 	//Always build a transform component
-	component = ComponentFactory::instance().create(definitionJSON, xMapPos, yMapPos, angleAdjust, ComponentTypes::TRANSFORM_COMPONENT);
+	component = game->componentFactory()->create(definitionJSON, xMapPos, yMapPos, angleAdjust, ComponentTypes::TRANSFORM_COMPONENT);
 	addComponent(component, ComponentTypes::TRANSFORM_COMPONENT);
 
 	//Animation Component
 	if (definitionJSON.isMember("animationComponent"))
 	{
-		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::ANIMATION_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, ComponentTypes::ANIMATION_COMPONENT);
 		addComponent(component, ComponentTypes::ANIMATION_COMPONENT);
 
 	}
@@ -77,7 +78,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("physicsComponent"))
 	{
 
-		component = ComponentFactory::instance().create(definitionJSON, parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PHYSICS_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PHYSICS_COMPONENT);
 		addComponent(component, ComponentTypes::PHYSICS_COMPONENT);
 
 	}
@@ -85,7 +86,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Vitality Component
 	if (definitionJSON.isMember("vitalityComponent"))
 	{
-		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::VITALITY_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, ComponentTypes::VITALITY_COMPONENT);
 		addComponent(component, ComponentTypes::VITALITY_COMPONENT);
 
 	}
@@ -93,7 +94,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Player control Component
 	if (definitionJSON.isMember("playerControlComponent"))
 	{
-		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::PLAYERCONTROL_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, ComponentTypes::PLAYERCONTROL_COMPONENT);
 		addComponent(component, ComponentTypes::PLAYERCONTROL_COMPONENT);
 
 	}
@@ -101,7 +102,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Text Component
 	if (definitionJSON.isMember("textComponent"))
 	{
-		component = ComponentFactory::instance().create(definitionJSON, gameObjectId, ComponentTypes::TEXT_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, gameObjectId, ComponentTypes::TEXT_COMPONENT);
 		addComponent(component, ComponentTypes::TEXT_COMPONENT);
 
 	}
@@ -109,7 +110,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Children Component
 	if (definitionJSON.isMember("childrenComponent"))
 	{
-		component = ComponentFactory::instance().create(definitionJSON, parentScene, ComponentTypes::CHILDREN_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::CHILDREN_COMPONENT);
 		addComponent(component, ComponentTypes::CHILDREN_COMPONENT);
 
 	}
@@ -117,7 +118,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Action Component
 	if (definitionJSON.isMember("actionComponent"))
 	{
-		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::ACTION_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, ComponentTypes::ACTION_COMPONENT);
 		addComponent(component, ComponentTypes::ACTION_COMPONENT);
 
 	}
@@ -125,7 +126,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Particle X Component
 	if (definitionJSON.isMember("particleXComponent"))
 	{
-		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::PARTICLE_X_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, ComponentTypes::PARTICLE_X_COMPONENT);
 		addComponent(component, ComponentTypes::PARTICLE_X_COMPONENT);
 
 	}
@@ -133,7 +134,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Simple Particle Component
 	if (definitionJSON.isMember("particleComponent"))
 	{
-		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::PARTICLE_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, ComponentTypes::PARTICLE_COMPONENT);
 		addComponent(component, ComponentTypes::PARTICLE_COMPONENT);
 
 	}
@@ -141,7 +142,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Inventory Component
 	if (definitionJSON.isMember("inventoryComponent"))
 	{
-		component = ComponentFactory::instance().create(definitionJSON, parentScene, ComponentTypes::INVENTORY_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::INVENTORY_COMPONENT);
 		addComponent(component, ComponentTypes::INVENTORY_COMPONENT);
 
 	}
@@ -149,7 +150,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//UIControl Component
 	if (definitionJSON.isMember("UIControlComponent"))
 	{
-		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::UICONTROL_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, ComponentTypes::UICONTROL_COMPONENT);
 		addComponent(component, ComponentTypes::UICONTROL_COMPONENT);
 
 	}
@@ -157,7 +158,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Weapon Component
 	if (definitionJSON.isMember("weaponComponent"))
 	{
-		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::WEAPON_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, ComponentTypes::WEAPON_COMPONENT);
 		addComponent(component, ComponentTypes::WEAPON_COMPONENT);
 
 	}
@@ -165,7 +166,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Pool Component
 	if (definitionJSON.isMember("poolComponent"))
 	{
-		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::POOL_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, ComponentTypes::POOL_COMPONENT);
 		addComponent(component, ComponentTypes::POOL_COMPONENT);
 
 	}
@@ -173,7 +174,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Composite Component
 	if (definitionJSON.isMember("compositeComponent"))
 	{
-		component = ComponentFactory::instance().create(definitionJSON, parentScene, ComponentTypes::COMPOSITE_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::COMPOSITE_COMPONENT);
 		addComponent(component, ComponentTypes::COMPOSITE_COMPONENT);
 
 	}
@@ -181,24 +182,22 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Brain Component
 	if (definitionJSON.isMember("brainComponent"))
 	{
-		component = std::static_pointer_cast<BrainComponent>(ComponentFactory::instance().create(definitionJSON, ComponentTypes::BRAIN_COMPONENT));
+		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::BRAIN_COMPONENT);
 		addComponent(component, ComponentTypes::BRAIN_COMPONENT);
 	}
 
 	//Navigation Component
 	if (definitionJSON.isMember("navigationComponent"))
 	{
-		component = ComponentFactory::instance().create(definitionJSON, ComponentTypes::NAVIGATION_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, ComponentTypes::NAVIGATION_COMPONENT);
 		addComponent(component, ComponentTypes::NAVIGATION_COMPONENT);
-
 	}
 
 	//Attachments Component
 	if (definitionJSON.isMember("attachmentsComponent"))
 	{
-		component = ComponentFactory::instance().create(definitionJSON, parentScene, ComponentTypes::ATTACHMENTS_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::ATTACHMENTS_COMPONENT);
 		addComponent(component, ComponentTypes::ATTACHMENTS_COMPONENT);
-
 	}
 
 }

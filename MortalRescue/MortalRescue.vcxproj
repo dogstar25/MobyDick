@@ -172,12 +172,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\actions\DroneEyeRotateAction.cpp" />
-    <ClCompile Include="src\ContactFilter.cpp" />
-    <ClCompile Include="src\ContactListener.cpp" />
+    <ClCompile Include="src\MRContactFilter.cpp" />
+    <ClCompile Include="src\MRContactListener.cpp" />
     <ClCompile Include="src\actions\MyAction.cpp" />
-    <ClCompile Include="src\ComponentFactory.cpp" />
+    <ClCompile Include="src\MRComponentFactory.cpp" />
     <ClCompile Include="src\components\DroneBrainComponent.cpp" />
-    <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\MRGame.cpp" />
     <ClCompile Include="src\mortalRescue.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -252,7 +252,11 @@
   <ItemGroup>
     <ClInclude Include="src\actions\DroneEyeRotateAction.h" />
     <ClInclude Include="src\actions\MyAction.h" />
+    <ClInclude Include="src\MRComponentFactory.h" />
     <ClInclude Include="src\components\DroneBrainComponent.h" />
+    <ClInclude Include="src\MRContactFilter.h" />
+    <ClInclude Include="src\MRGame.h" />
+    <ClInclude Include="src\MRContactListener.h" />
     <ClInclude Include="src\GameConstants.h" />
     <ClInclude Include="src\particleEffects\GameParticleEffects.h" />
   </ItemGroup>

@@ -1,0 +1,64 @@
+{
+    "scenes": [
+        {
+            "id": "SCENE_PLAY",
+            "inputControlMode": "CONTROL_MODE_PLAY",
+            "maxObjects": 5000,
+            "keyActions": [
+                {
+                    "keyCode": "SDLK_ESCAPE",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_QUIT"
+                    }
+                }
+            ],
+            "gameObjectPools": [
+                {
+                    "id": "SMOKE1_POOL",
+                    "gameObjectId": "PARTICLE_SMOKE_1",
+                    "maxItems": 200
+                },
+                {
+                    "id": "BUBBLE1_POOL",
+                    "gameObjectId": "PARTICLE_BUBBLE_1",
+                    "maxItems": 100
+                }
+            ],
+            "physics": {
+                "gravity": {
+                    "x": 0.0,
+                    "y": 9.8
+                },
+                "b2DebugDrawMode": false,
+                "timeStep": 0.016, // 1/60 or 1/30
+                "velocityIterations": 6,
+                "positionIterations": 2
+            },
+            "gameObjects": [
+                {
+                    "gameObjectId": "STUBB",
+                    "layer": "LAYER_MAIN",
+                    "location": {
+                        "windowPosition": "WindowPosition::CENTER"
+                    }
+                },
+                {
+                    "gameObjectId": "PARTICLE_BUBBLE_EMITTER",
+                    "layer": "LAYER_MAIN",
+                    "location": {
+                        "x": 16.2,
+                        "y": 9.1
+                    }
+                },
+                {
+                    "gameObjectId": "PARTICLE_SHIPSMOKE_EMITTER",
+                    "layer": "LAYER_MAIN",
+                    "location": {
+                        "x": 20.5,
+                        "y": 7.5
+                    }
+                }
+            ]
+        }
+    ]
+}
