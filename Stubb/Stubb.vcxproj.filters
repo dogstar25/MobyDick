@@ -55,5 +55,14 @@
     <Image Include="assets\particle1.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\default.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\moby1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\mobydick_circle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
