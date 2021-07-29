@@ -182,6 +182,9 @@
     <Font Include="assets\arial.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\default.png" />
+    <Image Include="assets\moby1.png" />
+    <Image Include="assets\mobydick_circle.png" />
     <Image Include="assets\particle1.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
