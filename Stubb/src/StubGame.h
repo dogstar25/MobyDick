@@ -33,7 +33,6 @@ public:
 
 	bool init() override { return true; }
 	bool init(ContactListener*, ContactFilter*, ComponentFactory* ) override;
-	void play() override;
 
 private:
 

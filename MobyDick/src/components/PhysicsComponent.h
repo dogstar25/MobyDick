@@ -1,4 +1,4 @@
-#ifndef PHYSICS_COMPONENT_H
+	#ifndef PHYSICS_COMPONENT_H
 #define PHYSICS_COMPONENT_H
 
 #include <optional>
@@ -11,18 +11,8 @@
 class TransformComponent;
 
 
-struct Data {
-
-
-
-};
-
-
 class PhysicsComponent : public Component
 {
-
-
-
 
 public:
 	PhysicsComponent() {};
@@ -30,6 +20,8 @@ public:
 	~PhysicsComponent();
 
 	void update() override;
+	void postInit(GameObject*) override;
+
 	void applyMovement(float velocity, int direction, int strafeDirection);
 	void applyMovement(float velocity, b2Vec2 trajectory);
 	void applyImpulse(float force, b2Vec2 trajectory);

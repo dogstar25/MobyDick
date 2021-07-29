@@ -150,7 +150,6 @@ void CompositeComponent::_buildPiece(CompositeLegendItem legendItem, int xPos, i
 	Build the game objects off screen. They will be placed in expect location during update loop
 	*/
 	const auto& pieceObject = std::make_shared<GameObject>(legendItem.gameObjectId, -5.f, -5.f, 0.f, parentScene);
-	pieceObject->init();
 	piece.pieceObject = pieceObject;
 
 	//calculate the X,Y offset position in relating to the base object

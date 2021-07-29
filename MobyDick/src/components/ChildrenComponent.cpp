@@ -20,7 +20,7 @@ ChildrenComponent::ChildrenComponent(Json::Value definitionJSON, Scene* parentSc
 		std::string childObjectId = itrChild["gameObjectId"].asString();
 		int locationSlot = itrChild["locationSlot"].asInt()-1;
 
-		m_childObjects[locationSlot].emplace_back(std::make_shared<GameObject>(childObjectId, -1.0F, -1.0F, 0.F, parentScene))->init();
+		m_childObjects[locationSlot].emplace_back(std::make_shared<GameObject>(childObjectId, -1.0F, -1.0F, 0.F, parentScene));
 
 	}
 }
