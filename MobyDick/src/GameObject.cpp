@@ -21,7 +21,7 @@ GameObject::~GameObject()
 
 }
 
-GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene)
+GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, bool cameraFollow)
 {
 
 	Json::Value definitionJSON;
@@ -60,16 +60,19 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 	//Always build a render component
 	component = game->componentFactory()->create(definitionJSON, ComponentTypes::RENDER_COMPONENT);
+	component->setParent(this);
 	addComponent(component, ComponentTypes::RENDER_COMPONENT);
 
 	//Always build a transform component
 	component = game->componentFactory()->create(definitionJSON, xMapPos, yMapPos, angleAdjust, ComponentTypes::TRANSFORM_COMPONENT);
+	component->setParent(this);
 	addComponent(component, ComponentTypes::TRANSFORM_COMPONENT);
 
 	//Animation Component
 	if (definitionJSON.isMember("animationComponent"))
 	{
 		component = game->componentFactory()->create(definitionJSON, ComponentTypes::ANIMATION_COMPONENT);
+		component->setParent(this);
 		addComponent(component, ComponentTypes::ANIMATION_COMPONENT);
 
 	}
@@ -79,6 +82,8 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	{
 
 		component = game->componentFactory()->create(definitionJSON, parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PHYSICS_COMPONENT);
+		component->setParent(this);
+		std::static_pointer_cast<PhysicsComponent>(component)->physicsBody()->SetUserData(this);
 		addComponent(component, ComponentTypes::PHYSICS_COMPONENT);
 
 	}
@@ -87,6 +92,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("vitalityComponent"))
 	{
 		component = game->componentFactory()->create(definitionJSON, ComponentTypes::VITALITY_COMPONENT);
+		component->setParent(this);
 		addComponent(component, ComponentTypes::VITALITY_COMPONENT);
 
 	}
@@ -95,6 +101,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("playerControlComponent"))
 	{
 		component = game->componentFactory()->create(definitionJSON, ComponentTypes::PLAYERCONTROL_COMPONENT);
+		component->setParent(this);
 		addComponent(component, ComponentTypes::PLAYERCONTROL_COMPONENT);
 
 	}
@@ -103,6 +110,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("textComponent"))
 	{
 		component = game->componentFactory()->create(definitionJSON, gameObjectId, ComponentTypes::TEXT_COMPONENT);
+		component->setParent(this);
 		addComponent(component, ComponentTypes::TEXT_COMPONENT);
 
 	}
@@ -111,6 +119,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("childrenComponent"))
 	{
 		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::CHILDREN_COMPONENT);
+		component->setParent(this);
 		addComponent(component, ComponentTypes::CHILDREN_COMPONENT);
 
 	}
@@ -119,6 +128,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("actionComponent"))
 	{
 		component = game->componentFactory()->create(definitionJSON, ComponentTypes::ACTION_COMPONENT);
+		component->setParent(this);
 		addComponent(component, ComponentTypes::ACTION_COMPONENT);
 
 	}
@@ -127,6 +137,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("particleXComponent"))
 	{
 		component = game->componentFactory()->create(definitionJSON, ComponentTypes::PARTICLE_X_COMPONENT);
+		component->setParent(this);
 		addComponent(component, ComponentTypes::PARTICLE_X_COMPONENT);
 
 	}
@@ -135,6 +146,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("particleComponent"))
 	{
 		component = game->componentFactory()->create(definitionJSON, ComponentTypes::PARTICLE_COMPONENT);
+		component->setParent(this);
 		addComponent(component, ComponentTypes::PARTICLE_COMPONENT);
 
 	}
@@ -143,6 +155,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("inventoryComponent"))
 	{
 		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::INVENTORY_COMPONENT);
+		component->setParent(this);
 		addComponent(component, ComponentTypes::INVENTORY_COMPONENT);
 
 	}
@@ -151,6 +164,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("UIControlComponent"))
 	{
 		component = game->componentFactory()->create(definitionJSON, ComponentTypes::UICONTROL_COMPONENT);
+		component->setParent(this);
 		addComponent(component, ComponentTypes::UICONTROL_COMPONENT);
 
 	}
@@ -159,6 +173,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("weaponComponent"))
 	{
 		component = game->componentFactory()->create(definitionJSON, ComponentTypes::WEAPON_COMPONENT);
+		component->setParent(this);
 		addComponent(component, ComponentTypes::WEAPON_COMPONENT);
 
 	}
@@ -167,6 +182,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("poolComponent"))
 	{
 		component = game->componentFactory()->create(definitionJSON, ComponentTypes::POOL_COMPONENT);
+		component->setParent(this);
 		addComponent(component, ComponentTypes::POOL_COMPONENT);
 
 	}
@@ -175,6 +191,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("compositeComponent"))
 	{
 		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::COMPOSITE_COMPONENT);
+		component->setParent(this);
 		addComponent(component, ComponentTypes::COMPOSITE_COMPONENT);
 
 	}
@@ -183,6 +200,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("brainComponent"))
 	{
 		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::BRAIN_COMPONENT);
+		component->setParent(this);
 		addComponent(component, ComponentTypes::BRAIN_COMPONENT);
 	}
 
@@ -190,6 +208,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("navigationComponent"))
 	{
 		component = game->componentFactory()->create(definitionJSON, ComponentTypes::NAVIGATION_COMPONENT);
+		component->setParent(this);
 		addComponent(component, ComponentTypes::NAVIGATION_COMPONENT);
 	}
 
@@ -197,7 +216,13 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("attachmentsComponent"))
 	{
 		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::ATTACHMENTS_COMPONENT);
+		component->setParent(this);
 		addComponent(component, ComponentTypes::ATTACHMENTS_COMPONENT);
+	}
+
+	//Set the camera to follow this GameObject
+	if (cameraFollow) {
+		Camera::instance().setFollowMe(this);
 	}
 
 }
@@ -236,7 +261,6 @@ void GameObject::update()
 
 }
 
-
 void GameObject::render()
 {
 
@@ -267,8 +291,6 @@ void GameObject::render()
 		getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT)->render();
 	}
 
-
-
 }
 
 void GameObject::reset()
@@ -290,34 +312,6 @@ void GameObject::addInventoryItem( GameObject* gameObject)
 	{
 		getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT)->attachItem(gameObject);
 	}*/
-
-}
-
-/*
-Execute certain initialization that needs to happen AFTER all components have been constructed and
-the GameObject has been emplace/constructed into the collection
-*/
-void GameObject::init(bool cameraFollow)
-{
-
-	//Set the root gameObject as the parent for each component
-	for (auto& component : m_components) {
-		if (component) {
-			component->setParent(this);
-		}
-	}
-
-	//Set the Physics component gameObject UserData
-	if (hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
-		auto physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
-		physicsComponent->physicsBody()->SetUserData(this);
-
-	}
-
-	//If we specified that the camera follow this gameobject then tell the camera
-	if (cameraFollow) {
-		Camera::instance().setFollowMe(this);
-	}
 
 }
 
@@ -356,10 +350,10 @@ void GameObject::setAngleInDegrees(float angle)
 }
 
 /*
-The postInit function allows gameobjects to initilaize it's components that require ALL gameObjects to be built first.
+The postInit function allows for initialization that requires all objects to be 'already' instantiated 
 ex. The brainComponent needs all navigation related gameObjects to be built first
 */
-void GameObject::postInit(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection)
+void GameObject::postInit()
 {
 
 	//GameObjects with a NavigationComponent need to build a navigation array based on the location of 
@@ -388,7 +382,6 @@ void GameObject::postInit(const std::array <std::vector<std::shared_ptr<GameObje
 		const auto attachmentsComponent = getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
 		attachmentsComponent->postInit();
 	}
-
 
 }
 

@@ -55,7 +55,7 @@ public:
 
 	int m_gameObjectType{ GameObjectType::SPRITE };
 
-	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene);
+	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, bool cameraFollow=false);
 
 	virtual void update();
 	virtual void render();
@@ -64,8 +64,7 @@ public:
 	void setPosition(b2Vec2 position, float angle);
 	void setPosition(float x, float y);
 	SDL_FPoint getCenterPosition();
-	void init(bool cameraFollow = false);
-	void postInit(const std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS>& gameObjectCollection);
+	void postInit();
 	void setPhysicsActive(bool active);
 	void setParentScene( Scene* parentScene);
 	void setAngleInDegrees(float angle);

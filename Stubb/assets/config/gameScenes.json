@@ -52,7 +52,7 @@
                 },
                 {
                     "gameObjectId": "PARTICLE_SHIPSMOKE_EMITTER",
-                    "layer": "LAYER_MAIN",
+                    "layer": "LAYER_BACKGROUND_1",
                     "location": {
                         "x": 20.5,
                         "y": 7.5

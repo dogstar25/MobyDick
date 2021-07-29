@@ -137,35 +137,6 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 }
 
 
-/*
-Main Play Loop
-*/
-void MRGame::play()
-{
-	while (m_gameState != GameState::QUIT) {
-
-		std::optional<SceneAction> action = SceneManager::instance().pollEvents();
-
-		if (action.has_value()) {
-			if (action->actionCode == SCENE_ACTION_QUIT) {
-				m_gameState = GameState::QUIT;
-			}
-			else if (action->actionCode == SCENE_ACTION_EXIT) {
-				SceneManager::instance().popScene();
-			}
-			else if (action->actionCode == SCENE_ACTION_ADD) {
-				SceneManager::instance().pushScene(action->sceneId);
-			}
-			else if (action->actionCode == SCENE_ACTION_REPLACE) {
-				SceneManager::instance().popScene();
-				SceneManager::instance().pushScene(action->sceneId);
-			}
-		}
-
-		SceneManager::instance().run();
-	}
-}
-
 void MRGame::_addGameActions()
 {
 

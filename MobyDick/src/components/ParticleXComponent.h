@@ -32,6 +32,7 @@ private:
 	std::vector<ParticleEffect> m_particleEffects;
 	std::chrono::duration<float, std::milli> m_emissionInterval{ std::chrono::duration<float>(0.F) };
 	Timer m_emissionTimer{};
+	int m_emissionLayer{ LAYER_MAIN };
 
 };
 

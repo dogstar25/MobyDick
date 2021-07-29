@@ -35,9 +35,8 @@ public:
 
 	virtual bool init();
 	virtual bool init(ContactListener*, ContactFilter*,	ComponentFactory* ) = 0;
-
 	virtual void play();
-	void _displayLoadingMsg();
+	virtual void _displayLoadingMsg();
 	
 	void setGameState(GameState state) {
 		m_gameState = state;
@@ -89,6 +88,7 @@ protected:
 	virtual void _addGameCollisionTags() = 0;
 	virtual void _addGameActions() = 0;
 	virtual void _addGameParticleEffects() = 0;
+	
 
 };
 

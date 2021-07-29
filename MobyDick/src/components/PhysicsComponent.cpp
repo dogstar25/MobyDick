@@ -40,10 +40,7 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, Scene* parentScen
 	float newAngle = util::degreesToRadians(angleAdjust);
 
 	//Initial spawn position
-	//FIXME:Need to pass in position info
 	m_physicsBody->SetTransform(*position, newAngle);
-
-	//m_physicsBody->SetMassData(const b2MassData * data);
 
 }
 
@@ -52,10 +49,14 @@ PhysicsComponent::~PhysicsComponent()
 
 }
 
+void PhysicsComponent::postInit(GameObject* parentGameObject)
+{
+	m_physicsBody->SetUserData(parentGameObject);
+}
+
 void PhysicsComponent::setTransform(b2Vec2 positionVector, float angle)
 {
 	m_physicsBody->SetTransform(positionVector, angle);
-
 }
 
 void PhysicsComponent::setPhysicsBodyActive(bool  active)
@@ -154,7 +155,6 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 	fixtureDef.friction = m_friction;
 	fixtureDef.restitution = m_restitution;
 	
-
 	//collision category
 	//fixtureDef.filter.categoryBits = m_collisionCategory;
 	//uint16 mask = CollisionManager::instance().getCollisionMask(m_collisionCategory);

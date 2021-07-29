@@ -276,8 +276,8 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMap
 	pointer to gameObject and all gameObjects will store a raw pointer to the scene.
 	*/
 
-	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this));
-	gameObject->init(cameraFollow);
+	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this, cameraFollow));
+	//gameObject->init(cameraFollow);
 
 	return gameObject.get();
 
@@ -350,7 +350,7 @@ void Scene::_processGameObjectInterdependecies()
 
 		for (auto& gameObject : layer) {
 
-			gameObject->postInit(m_gameObjects);
+			gameObject->postInit();
 
 		}
 

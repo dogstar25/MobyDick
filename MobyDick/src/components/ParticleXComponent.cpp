@@ -15,6 +15,9 @@ ParticleXComponent::ParticleXComponent(Json::Value definitionJSON )
 	if (particleComponentJSON.isMember("type")) {
 		m_type = EnumMap::instance().toEnum(particleComponentJSON["type"].asString());
 	}
+	if (particleComponentJSON.isMember("emissionLayer")) {
+		m_emissionLayer = EnumMap::instance().toEnum(particleComponentJSON["emissionLayer"].asString());
+	}
 
 	float emissionInterval = particleComponentJSON["emissionInterval"].asFloat();
 	m_emissionInterval = (std::chrono::duration<float>(emissionInterval));
@@ -131,7 +134,8 @@ void ParticleXComponent::update()
 					physicsComponent->setLinearVelocity(velocityVector);
 
 					//Add the particle to the game world
-					parent()->parentScene()->addGameObject(particle.value(), LAYER_MAIN);
+					//ToDo:Make Layer configurable
+					parent()->parentScene()->addGameObject(particle.value(), m_emissionLayer);
 
 				}
 				else {

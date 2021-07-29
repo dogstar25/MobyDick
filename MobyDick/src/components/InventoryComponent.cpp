@@ -46,8 +46,6 @@ InventoryComponent::~InventoryComponent()
 size_t InventoryComponent::addItem(std::shared_ptr<GameObject> gameObject)
 {
 
-	gameObject->init();
-
 	m_items.emplace_back(gameObject);
 
 	return(m_items.size());

@@ -18,7 +18,6 @@ AttachmentsComponent::AttachmentsComponent(Json::Value definitionJSON, Scene* pa
 		b2Vec2 attachLocation = { itrItem["attachLocation"]["x"].asFloat(), itrItem["attachLocation"]["y"].asFloat() };
 		b2JointType attachB2JointType = static_cast<b2JointType>(EnumMap::instance().toEnum(itrItem["attachB2JointType"].asString()));
 		auto gameObject = std::make_shared<GameObject>(gameObjectId, -1.0F, -1.0F, 0.F, parentScene);
-		gameObject->init();
 
 		Attachment attachment = { addToInventory, attachB2JointType, attachLocation, std::move(gameObject) };
 		m_attachments.emplace_back(attachment);
