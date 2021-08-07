@@ -1,6 +1,7 @@
 #include "Scene.h"
 
 #include <cassert>
+#include <thread>
 
 #include "LevelManager.h"
 #include "Camera.h"
@@ -197,6 +198,8 @@ void Scene::clear()
 void Scene::update() {
 
 
+
+
 	Camera::instance().update();
 
 	// Remove all objects that should be removed in first pass
@@ -219,6 +222,18 @@ void Scene::update() {
 
 	}
 
+
+	//Update ALL physics object states
+	//void (*test)();
+	//test = &Scene::_updatePhysics();
+	//if (hasPhysics()) {
+		//std::thread physicsThread(_updatePhysics, m_physicsWorld);
+	//}
+	if (hasPhysics()) {
+		stepB2PhysicsWorld();
+	}
+
+
 	//Update each gameObject in all layers
 	for (auto& gameObjects : m_gameObjects)
 	{
@@ -230,18 +245,13 @@ void Scene::update() {
 		}
 	}
 
-	//DebugPanel::instance().addItem("Test", util::generateRandomNumber(1,10000), 8);
+	//physicsThread.join();
 
 	//Clear all events
 	SceneManager::instance().playerInputEvents().clear();
 
 	//Level Manager update to handle level specific events
 	LevelManager::instance().update(this);
-
-	//Update ALL physics object states
-	if (hasPhysics()) {
-		stepB2PhysicsWorld();
-	}
 
 }
 
@@ -376,3 +386,10 @@ void Scene::_buildPhysicsWorld(Json::Value physicsJSON)
 	m_physicsWorld->SetContactListener(game->contactListener());
 
 }
+
+void _updatePhysics(b2World* physicsWorld)
+{
+	//Update ALL physics object states
+	physicsWorld->Step(.016, 6, 2);
+}
+

@@ -81,7 +81,7 @@ void LevelManager::_loadDefinition(std::string levelId)
 	//Level definition values
 	m_id = levelId;
 	m_description = root["description"].asString();
-	m_blueprint = root["blueprint"].asString();
+	m_blueprintTexture = root["blueprint"].asString();
 
 	//Dimensions
 	m_width = root["dimensions"]["levelWidth"].asInt();
@@ -148,7 +148,7 @@ void LevelManager::load(std::string levelId, Scene* scene)
 	_loadDefinition(levelId);
 
 	//I am representing the level grid as a png image file 
-	surface = TextureManager::instance().getTexture(m_blueprint)->surface;
+	surface = TextureManager::instance().getTexture(m_blueprintTexture)->surface;
 
 	//Log warning if the bluprint image size doesnt match what we ahve in config
 	int surfaceWidth = surface->w;
@@ -160,19 +160,19 @@ void LevelManager::load(std::string levelId, Scene* scene)
 			<<	m_width << "/" << m_height << "\n";
 	}
 
-	game->_displayLoadingMsg();
+		game->_displayLoadingMsg();
 
-	SDL_LockSurface(surface);
+		SDL_LockSurface(surface);
 
-	//Allocate the 2 dimentional vector
-	setLevelObjectArraySize(m_width, m_height);
+		//Allocate the 2 dimentional vector
+		setLevelObjectArraySize(m_width, m_height);
 
-	//Loop through entire image, top to bottom, left to right and build the
-	//2 dimensional array of tile objects
-	for (int y = 0; y < surface->h; y++)
-	{
-		for (int x = 0; x < surface->w; x++)
+		//Loop through entire image, top to bottom, left to right and build the
+		//2 dimensional array of tile objects
+		for (int y = 0; y < surface->h; y++)
 		{
+			for (int x = 0; x < surface->w; x++)
+			{
 			//determine what tile to build for current x,y location
 			auto levelObject = _determineTile(x, y, surface);
 

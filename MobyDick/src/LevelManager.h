@@ -52,7 +52,7 @@ private:
 	~LevelManager();
 
 	std::string m_description;
-	std::string m_blueprint;
+	std::string m_blueprintTexture;
 	Json::Value m_locationList;
 	std::vector<std::shared_ptr<Trigger>> m_levelTriggers;
 

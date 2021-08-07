@@ -188,6 +188,7 @@
   <ItemGroup>
     <Image Include="assets\blueprints\drone1_blueprint.png" />
     <Image Include="assets\blueprints\drone1_test.png" />
+    <Image Include="assets\blueprints\levels\level1_blueprint.png" />
     <Image Include="assets\bowman1.png" />
     <Image Include="assets\bullet1.png" />
     <Image Include="assets\deflect1.png" />
@@ -222,6 +223,7 @@
     <Image Include="assets\weapon1_IDLE.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\blueprints\levels\level1_blueprint.json" />
     <None Include="assets\config\gameConfig.json" />
     <None Include="assets\config\gameScenes.json" />
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />

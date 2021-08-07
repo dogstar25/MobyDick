@@ -30,6 +30,9 @@ struct PhysicsConfig
 	bool b2DebugDrawMode{false};
 };
 
+
+void _updatePhysics(b2World* physicsWorld);
+
 class Scene
 {
 
@@ -43,6 +46,7 @@ public:
 	void render();
 	void update();
 	void clearEvents();
+	
 	
 
 	GameObject* addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle=0., bool cameraFollow=false);
@@ -124,6 +128,7 @@ private:
 
 	void _processGameObjectInterdependecies();
 	void _buildPhysicsWorld(Json::Value physicsJSON);
+	
 
 };
 
