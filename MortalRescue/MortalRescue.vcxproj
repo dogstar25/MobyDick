@@ -172,13 +172,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\actions\DroneEyeRotateAction.cpp" />
+    <ClCompile Include="src\mortalRescue.cpp" />
     <ClCompile Include="src\MRContactFilter.cpp" />
     <ClCompile Include="src\MRContactListener.cpp" />
     <ClCompile Include="src\actions\MyAction.cpp" />
     <ClCompile Include="src\MRComponentFactory.cpp" />
     <ClCompile Include="src\components\DroneBrainComponent.cpp" />
     <ClCompile Include="src\MRGame.cpp" />
-    <ClCompile Include="src\testOpenGL_refactor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MobyDick\MobyDick.vcxproj">

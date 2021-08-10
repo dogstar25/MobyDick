@@ -36,7 +36,7 @@
     <ClCompile Include="src\actions\DroneEyeRotateAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\testOpenGL_refactor.cpp">
+    <ClCompile Include="src\mortalRescue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
