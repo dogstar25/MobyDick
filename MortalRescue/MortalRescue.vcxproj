@@ -172,13 +172,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\actions\DroneEyeRotateAction.cpp" />
+    <ClCompile Include="src\mortalRescue.cpp" />
     <ClCompile Include="src\MRContactFilter.cpp" />
     <ClCompile Include="src\MRContactListener.cpp" />
     <ClCompile Include="src\actions\MyAction.cpp" />
     <ClCompile Include="src\MRComponentFactory.cpp" />
     <ClCompile Include="src\components\DroneBrainComponent.cpp" />
     <ClCompile Include="src\MRGame.cpp" />
-    <ClCompile Include="src\mortalRescue.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MobyDick\MobyDick.vcxproj">
@@ -188,6 +188,7 @@
   <ItemGroup>
     <Image Include="assets\blueprints\drone1_blueprint.png" />
     <Image Include="assets\blueprints\drone1_test.png" />
+    <Image Include="assets\blueprints\levels\level1_blueprint.png" />
     <Image Include="assets\bowman1.png" />
     <Image Include="assets\bullet1.png" />
     <Image Include="assets\deflect1.png" />
@@ -222,6 +223,7 @@
     <Image Include="assets\weapon1_IDLE.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\blueprints\levels\level1_blueprint.json" />
     <None Include="assets\config\gameConfig.json" />
     <None Include="assets\config\gameScenes.json" />
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />

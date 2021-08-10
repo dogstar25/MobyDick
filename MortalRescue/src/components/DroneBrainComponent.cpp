@@ -486,8 +486,8 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 	auto desiredAngleDegrees = util::radiansToDegrees(desiredAngle);
 	auto objectAngleDegrees = util::radiansToDegrees(currentAngle);
 
-	DebugPanel::instance().addItem("Object Angle", objectAngleDegrees, 2);
-	DebugPanel::instance().addItem("Desired Angle", desiredAngleDegrees, 2);
+	//DebugPanel::instance().addItem("Object Angle", objectAngleDegrees, 2);
+	//DebugPanel::instance().addItem("Desired Angle", desiredAngleDegrees, 2);
 
 	float rotationVelocity{ 0 };
 
@@ -507,7 +507,7 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 	}
 
 	auto difference = abs(desiredAngle - currentAngle);
-	DebugPanel::instance().addItem("Angle Diff in Radians", difference, 2);
+	//DebugPanel::instance().addItem("Angle Diff in Radians", difference, 2);
 
 	//Once the angle is very close then set the angle directly
 	if (difference < 0.1) {

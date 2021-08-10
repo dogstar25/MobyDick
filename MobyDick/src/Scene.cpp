@@ -197,6 +197,8 @@ void Scene::clear()
 void Scene::update() {
 
 
+
+
 	Camera::instance().update();
 
 	// Remove all objects that should be removed in first pass
@@ -219,29 +221,25 @@ void Scene::update() {
 
 	}
 
+	if (hasPhysics()) {
+		stepB2PhysicsWorld();
+	}
+
 	//Update each gameObject in all layers
 	for (auto& gameObjects : m_gameObjects)
 	{
 
 		for (int i = 0; i < gameObjects.size(); i++)
 		{
-			//assert(gameObject != nullptr && "GameObject is null");
 			gameObjects[i]->update();
 		}
 	}
-
-	//DebugPanel::instance().addItem("Test", util::generateRandomNumber(1,10000), 8);
 
 	//Clear all events
 	SceneManager::instance().playerInputEvents().clear();
 
 	//Level Manager update to handle level specific events
 	LevelManager::instance().update(this);
-
-	//Update ALL physics object states
-	if (hasPhysics()) {
-		stepB2PhysicsWorld();
-	}
 
 }
 
@@ -255,7 +253,9 @@ void Scene::render() {
 		//Update normal game objects
 		for (auto& gameObject : gameLayer)
 		{
-			gameObject->render();
+			if (gameObject) {
+				gameObject->render();
+			}
 		}
 	}
 	
@@ -375,4 +375,10 @@ void Scene::_buildPhysicsWorld(Json::Value physicsJSON)
 	m_physicsWorld->SetContactFilter(game->contactFilter());
 	m_physicsWorld->SetContactListener(game->contactListener());
 
+}
+
+void _updatePhysics(b2World* physicsWorld)
+{
+	//Update ALL physics object states
+	physicsWorld->Step(.016, 6, 2);
 }

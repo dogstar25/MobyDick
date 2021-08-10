@@ -643,10 +643,7 @@
                 }
             },
             "particleXComponent": {
-                "type": "ParticleEmitterType::ONETIME",
-                "effects": [
-                    "ricochet"
-                ]
+                "type": "ParticleEmitterType::ONETIME"
 
             }
         },
@@ -657,14 +654,7 @@
             "traitTags": [],
             "description": "Particle Emitter",
             "particleComponent": {
-                "type": "ParticleEmitterType::CONTINUOUS",
-                "emissionInterval": 1.0,
-                "effects": [
-                    "ricochet",
-                    "spark",
-                    "scrap"
-                ]
-
+                "type": "ParticleEmitterType::ONETIME"
             }
         },
         {

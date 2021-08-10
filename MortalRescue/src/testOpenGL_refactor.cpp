@@ -123,6 +123,9 @@ int main(int argc, char* argv[])
     printf("Renderer: %s\n", glGetString(GL_RENDERER));
     printf("Version:  %s\n", glGetString(GL_VERSION));
 
+    //
+    //Begin creating and compiling shaders
+    //
     vs = glCreateShader(GL_VERTEX_SHADER);
     fs = glCreateShader(GL_FRAGMENT_SHADER);
 
@@ -159,23 +162,25 @@ int main(int argc, char* argv[])
 
     glUseProgram(program);
 
+    //Clean up
+    glDeleteShader(vs);
+    glDeleteShader(fs);
+
+    //
+    //END create shaders
+    //
+
+
     glDisable(GL_DEPTH_TEST);
     glClearColor(0.0, 0.0, 0.0, 0.0);
     glViewport(0, 0, width, height);
 
-    GLuint vao, vbo;
+   
 
-    glGenVertexArrays(1, &vao);
-    glGenBuffers(1, &vbo);
-    glBindVertexArray(vao);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-
-    glEnableVertexAttribArray(attrib_position);
-    glEnableVertexAttribArray(attrib_color);
-
-    glVertexAttribPointer(attrib_color, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0);
-    glVertexAttribPointer(attrib_position, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(4 * sizeof(float)));
-
+    ///
+    //Vertex Buffer Input
+    // 
+    //Create a vertext Buffer Array
     const GLfloat g_vertex_buffer_data[] = {
         /*  R, G, B, A, X, Y  */
             1, 0, 0, 1, 0, 0,
@@ -187,8 +192,40 @@ int main(int argc, char* argv[])
             1, 1, 1, 1, 0, height
     };
 
-    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+    // Generate  a vertext buffer object with a unique id, i.e. 1
+    GLuint vbo;
+    glGenBuffers(1, &vbo);
+    //Bind the vertext buffer array to the GL_ARRAY_BUFFER
+    //we can only bind ONE vertex buffer objewct (vbo) to the GL_ARRAY_BUFFER buffer
+    glBindBuffer(GL_ARRAY_BUFFER, vbo); //state setting
+    //We are now bound to the GL_ARRAY_BUFFER buffer
+    //Copy the vertext data into the buffer bound to the GL_ARRAY_BUFFER, which is vbo
+    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW); // state using
+    //
+    //Vertex Buffer complete
+    //
 
+    ///
+    //Vertex Array Input
+    // 
+
+    GLuint vao;
+
+    glGenVertexArrays(1, &vao);
+
+    glBindVertexArray(vao);
+
+
+    glEnableVertexAttribArray(attrib_position);
+    glEnableVertexAttribArray(attrib_color);
+
+    glVertexAttribPointer(attrib_position, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(4 * sizeof(float)));
+    glVertexAttribPointer(attrib_color, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 6, 0);
+    
+
+    //
+    // Projection Matrix
+    //
     t_mat4x4 projection_matrix;
     mat4x4_ortho(projection_matrix, 0.0f, (float)width, (float)height, 0.0f, 0.0f, 100.0f);
     glUniformMatrix4fv(glGetUniformLocation(program, "u_projection_matrix"), 1, GL_FALSE, projection_matrix);

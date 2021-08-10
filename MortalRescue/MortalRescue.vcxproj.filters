@@ -33,10 +33,10 @@
     <ClCompile Include="src\MRContactFilter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mortalRescue.cpp">
+    <ClCompile Include="src\actions\DroneEyeRotateAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\actions\DroneEyeRotateAction.cpp">
+    <ClCompile Include="src\mortalRescue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -143,6 +143,9 @@
     <Image Include="assets\levels\level2_blueprint.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\blueprints\levels\level1_blueprint.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\config\gameConfig.json" />
@@ -157,6 +160,7 @@
     <None Include="assets\gameObjectDefinitions\triggerObjects.json" />
     <None Include="assets\levels\level2_definition.json" />
     <None Include="assets\gameObjectDefinitions\wallObjects.json" />
+    <None Include="assets\blueprints\levels\level1_blueprint.json" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav">

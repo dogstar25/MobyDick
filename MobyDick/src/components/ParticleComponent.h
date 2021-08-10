@@ -42,6 +42,7 @@ public:
 	void update() override;
 	void render();
 	void setType(int type) { m_type = type; }
+	void setEmissionInterval(float emissionIterval) { m_emissionInterval = std::chrono::duration<float>(emissionIterval); }
 	void addParticleEffect(ParticleEffect particleEffect);
 	std::optional<Particle*> getAvailableParticle();
 
