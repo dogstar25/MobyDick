@@ -43,17 +43,8 @@ void bullet_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint
 
 	//Build a One-Time particle emitter object
 	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
-	//const auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
-	//particleComponent->addParticleEffect(ParticleEffects::ricochet);
-	//particleComponent->setType(ParticleEmitterType::ONETIME);
-
-	// 
-	// 
-	//auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
-	//const auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
-	//particleComponent->addParticleEffect(ParticleEffects::ricochet);
-	//particleComponent->setType(ParticleEmitterType::CONTINUOUS);
-	//particleComponent->setEmissionInterval(std::chrono::duration<float>(0.02));
+	const auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+	particleComponent->addParticleEffect(ParticleEffects::ricochet);
 
 	//Convert from box2d to gameWorld coordinates
 	contactPoint.x *= GameConfig::instance().scaleFactor();
@@ -80,9 +71,10 @@ void playerBullet_droneShield(GameObject* contact1, GameObject* contact2, b2Vec2
 	}
 
 
-	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_BACKGROUND_1, -1, -1);
+	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
 	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
 	particleComponent->setType(ParticleEmitterType::ONETIME);
+	//particleComponent->setType(ParticleEmitterType::CONTINUOUS);
 
 	//Convert from box2d to gameWorld coordinates
 	contactPoint.x *= GameConfig::instance().scaleFactor();
@@ -99,7 +91,7 @@ void playerBullet_droneShield(GameObject* contact1, GameObject* contact2, b2Vec2
 	if (shieldHolds == false) {
 
 		shieldVitality->setIsBroken(true);
-		particleComponent->addParticleEffect(ParticleEffects::ricochet);
+		particleComponent->addParticleEffect(ParticleEffects::impactSmoke);
 		particleComponent->addParticleEffect(ParticleEffects::scrap);
 
 	}

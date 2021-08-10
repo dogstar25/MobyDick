@@ -33,10 +33,10 @@
     <ClCompile Include="src\MRContactFilter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\mortalRescue.cpp">
+    <ClCompile Include="src\actions\DroneEyeRotateAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\actions\DroneEyeRotateAction.cpp">
+    <ClCompile Include="src\testOpenGL_refactor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -71,7 +71,6 @@ void SceneManager::run()
 				scene.update();
 			}
 		}
-
 		//Clear the screen
 		Renderer::instance().clear();
 
@@ -82,6 +81,7 @@ void SceneManager::run()
 
 		//Display all rendered objects
 		Renderer::instance().present();
+
 	}
 
 }
@@ -222,4 +222,3 @@ GameObject* SceneManager::addGameObject(std::string gameObjectId, int layer, flo
 	return gameObject;
 
 }
-

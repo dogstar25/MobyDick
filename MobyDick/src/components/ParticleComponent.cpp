@@ -1,6 +1,7 @@
 #include "ParticleComponent.h"
 
 #include <iostream>
+#include <algorithm>
 
 #include "../game.h"
 #include "../GameConfig.h"
@@ -9,6 +10,7 @@
 #include "../Clock.h"
 #include "../particleEffects/ParticleEffectsMap.h"
 #include "../EnumMaps.h"
+
 
 
 ParticleComponent::ParticleComponent(Json::Value definitionJSON )
@@ -106,16 +108,19 @@ void ParticleComponent::update()
 			else {
 			}
 
-			/*particle.position.x += particle.velocity.x * .01666 ;
-			particle.position.y += particle.velocity.y * .01666;*/
-			particle.position.x += particle.velocity.x * Clock::instance().timeElapsed().count();
-			particle.position.y += particle.velocity.y * Clock::instance().timeElapsed().count();
+			//particle.position.x += particle.velocity.x * .01666 ;
+			//particle.position.y += particle.velocity.y * .01666;
+			float timeFactor{ GameConfig::instance().gameLoopStep() };
+			if (SceneManager::instance().gameTimer().timeRemaining().count() > 0) {
+				timeFactor = SceneManager::instance().gameTimer().timeRemaining().count();
+			}
+			particle.position.x += particle.velocity.x * timeFactor;
+			particle.position.y += particle.velocity.y * timeFactor;
 
-		}
-
-		if (particle.alphaFade == true) {
-			Uint8 alpha = int(255 * particle.lifetimeTimer.percentTargetMet());
-			particle.color.a = alpha;
+			if (particle.alphaFade == true) {
+				Uint8 alpha = int(255 * particle.lifetimeTimer.percentTargetMet());
+				particle.color.a = alpha;
+			}
 		}
 
 	}
@@ -123,9 +128,8 @@ void ParticleComponent::update()
 	//Now emit more particles IF,
 	//The emission interval timer has been met AND
 	//this is either a continuous emitter or a onetime emitter that hasnt fired yet
-	if (m_emissionTimer.hasMetTargetDuration() == true &&
-		(m_type == ParticleEmitterType::CONTINUOUS || 
-		(m_type == ParticleEmitterType::ONETIME && m_oneTimeEmitted == false ))) {
+	if ((m_type == ParticleEmitterType::CONTINUOUS && m_emissionTimer.hasMetTargetDuration() == true) ||
+		(m_type == ParticleEmitterType::ONETIME && m_oneTimeEmitted == false )) {
 
 		for (auto& effect : m_particleEffects) {
 
@@ -179,7 +183,7 @@ void ParticleComponent::update()
 						emitAngle = util::generateRandomNumber(effect.angleMin, effect.angleMax);
 					}
 
-					emitAngle += effect.angleMin;
+					//emitAngle += effect.angleMin;
 					emitAngle = util::degreesToRadians(emitAngle);
 
 					//Calculate velocity vector

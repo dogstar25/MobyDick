@@ -1,7 +1,6 @@
 #include "Scene.h"
 
 #include <cassert>
-#include <thread>
 
 #include "LevelManager.h"
 #include "Camera.h"
@@ -222,17 +221,9 @@ void Scene::update() {
 
 	}
 
-
-	//Update ALL physics object states
-	//void (*test)();
-	//test = &Scene::_updatePhysics();
-	//if (hasPhysics()) {
-		//std::thread physicsThread(_updatePhysics, m_physicsWorld);
-	//}
 	if (hasPhysics()) {
 		stepB2PhysicsWorld();
 	}
-
 
 	//Update each gameObject in all layers
 	for (auto& gameObjects : m_gameObjects)
@@ -240,12 +231,9 @@ void Scene::update() {
 
 		for (int i = 0; i < gameObjects.size(); i++)
 		{
-			//assert(gameObject != nullptr && "GameObject is null");
 			gameObjects[i]->update();
 		}
 	}
-
-	//physicsThread.join();
 
 	//Clear all events
 	SceneManager::instance().playerInputEvents().clear();
@@ -265,7 +253,9 @@ void Scene::render() {
 		//Update normal game objects
 		for (auto& gameObject : gameLayer)
 		{
-			gameObject->render();
+			if (gameObject) {
+				gameObject->render();
+			}
 		}
 	}
 	
@@ -392,4 +382,3 @@ void _updatePhysics(b2World* physicsWorld)
 	//Update ALL physics object states
 	physicsWorld->Step(.016, 6, 2);
 }
-

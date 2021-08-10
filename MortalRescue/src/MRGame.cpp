@@ -124,7 +124,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 	//particleComponent->addParticleEffect(ParticleEffects::ricochet);
 	//particleComponent->addParticleEffect(ParticleEffects::spark);
 	//particleComponent->setType(ParticleEmitterType::CONTINUOUS);
-	//particleComponent->setEmissionInterval(std::chrono::duration<float>(1));
+	//particleComponent->setEmissionInterval(1);
 
 
 	auto particleXEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MAIN, 9, 15);

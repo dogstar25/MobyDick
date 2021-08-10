@@ -3,6 +3,7 @@
 #include <memory>
 #include <optional>
 #include <functional>
+#include <thread>
 
 #include <json/json.h>
 
@@ -10,6 +11,9 @@
 #include "Globals.h"
 #include "BaseConstants.h"
 #include "Timer.h"
+
+
+
 
 inline constexpr int MAX_SCENES = 12;
 
@@ -19,7 +23,6 @@ struct PlayerInputEvent
 	unsigned char keyStates[SDL_NUM_SCANCODES];
 	SDL_Event event;
 };
-
 
 class SceneManager
 {
@@ -35,6 +38,7 @@ public:
 	std::optional<SceneAction> pollEvents();
 	void popScene();
 	Scene& pushScene(std::string sceneId);
+	Timer& gameTimer() { return m_gameTimer; }
 
 	std::optional<SceneAction> getSceneKeyAction(SDL_Keycode);
 
@@ -72,6 +76,9 @@ private:
 	int m_currentSceneIndex{};
 	Timer m_gameTimer{};
 	int m_frameCount{};
+
+
+
 
 };
 
