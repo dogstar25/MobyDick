@@ -3,17 +3,21 @@
         {
             "id": "TX_DEFAULT",
             "description": "Default",
-            "filename": "assets/default.png"
+            "filename": "assets/default.png",
+            "retainSurface": true
         },
         {
             "id": "TX_STUBB",
             "description": "Stubb",
-            "filename": "assets/mobydick_circle.png"
+            "filename": "assets/mobydick_circle.png",
+            "retainSurface":  true
+
         },
         {
             "id": "TX_SMOKE_PARTICLE_1",
             "description": "Smoke particle",
-            "filename": "assets/particle1.png"
+            "filename": "assets/particle1.png",
+            "retainSurface": true
         }
     ],
   "fonts": [

@@ -196,6 +196,9 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\opengl\GlRenderer.cpp" />
+    <ClCompile Include="src\opengl\IndexBuffer.cpp" />
+    <ClCompile Include="src\opengl\Shader.cpp" />
     <ClCompile Include="src\Blueprint.cpp" />
     <ClCompile Include="src\BrainAABBCallback.cpp" />
     <ClCompile Include="src\ComponentFactory.cpp" />
@@ -269,8 +272,12 @@
     <ClCompile Include="src\actions\LoadNextLevelAction.cpp" />
     <ClCompile Include="src\triggers\Trigger.cpp" />
     <ClCompile Include="src\Timer.cpp" />
+    <ClCompile Include="src\opengl\VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\opengl\GlRenderer.h" />
+    <ClInclude Include="src\opengl\IndexBuffer.h" />
+    <ClInclude Include="src\opengl\Shader.h" />
     <ClInclude Include="src\Blueprint.h" />
     <ClInclude Include="src\BrainAABBCallback.h" />
     <ClInclude Include="src\triggers\LevelComplete.h" />
@@ -348,6 +355,7 @@
     <ClInclude Include="src\actions\LoadNextLevelAction.h" />
     <ClInclude Include="src\triggers\Trigger.h" />
     <ClInclude Include="src\Timer.h" />
+    <ClInclude Include="src\opengl\VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="ExtraLibs\SDL2main.lib" />
@@ -357,6 +365,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json_old" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\opengl\shaders\basic.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
