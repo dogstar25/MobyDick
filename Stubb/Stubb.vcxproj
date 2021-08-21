@@ -41,12 +41,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -166,10 +166,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="opengl\GlRenderer.cpp" />
+    <ClCompile Include="opengl\IndexBuffer.cpp" />
+    <ClCompile Include="opengl\Shader.cpp" />
+    <ClCompile Include="opengl\VertexBuffer.cpp" />
     <ClCompile Include="src\StubGame.cpp" />
     <ClCompile Include="src\testOpenGL_refactor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="opengl\GlRenderer.h" />
+    <ClInclude Include="opengl\IndexBuffer.h" />
+    <ClInclude Include="opengl\Shader.h" />
+    <ClInclude Include="opengl\VertexBuffer.h" />
     <ClInclude Include="src\GameConstants.h" />
     <ClInclude Include="src\particleEffects\GameParticleEffects.h" />
     <ClInclude Include="src\StubGame.h" />

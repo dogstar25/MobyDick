@@ -21,7 +21,7 @@ VertexBuffer::~VertexBuffer()
 {
 
     glDeleteBuffers(1, &m_rendererId);
-
+         
 }
 
 void VertexBuffer::bind()
@@ -46,4 +46,10 @@ void VertexBuffer::unbind()
     
 
     
+}
+
+void VertexBuffer::addVertex(GLuint bufferPosition, const GLfloat* vertex)
+{
+
+
 }
