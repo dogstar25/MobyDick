@@ -54,6 +54,9 @@ public:
 	float dynamicTextRefreshDelay() {
 		return m_dynamicTextRefreshDelay;
 	}
+	int rendererType() {
+		return m_rendererType;
+	}
 
 private:
 	GameConfig();
@@ -72,7 +75,8 @@ private:
 		m_windowWidth,
 		m_windowHeight,
 		m_debugPanelFontSize,
-		m_soundChannels;
+		m_soundChannels,
+		m_rendererType;
 	std::string 
 		m_gameTitle;
 	float m_scaleFactor{};

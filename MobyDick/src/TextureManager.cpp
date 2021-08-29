@@ -5,6 +5,8 @@
 #include <json/json.h>
 
 #include "Renderer.h"
+#include "GameConfig.h"
+#include "BaseConstants.h"
 
 
 TextureManager::TextureManager()
@@ -115,18 +117,17 @@ bool TextureManager::load(std::string texturesAssetsFile)
 		imageFilename = itr["filename"].asString();
 		retainSurface = itr["retainSurface"].asBool();
 
-		surface = IMG_Load(imageFilename.c_str());
+		//Load the file
+		textureObject->surface = IMG_Load(imageFilename.c_str());
 
-		sdlTexture = SDL_CreateTextureFromSurface(Renderer::instance().SDLRenderer(), surface);
-		textureObject->sdlTexture = sdlTexture;
-		if (retainSurface == true)
-		{
-			textureObject->surface = surface;
-			
-		}
-		else
-		{
-			SDL_FreeSurface(surface);
+		//If this is the SDL Renderer then create the SDL texture and potentially free the image surface
+		if (GameConfig::instance().rendererType() == RendererType::SDL) {
+			sdlTexture = SDL_CreateTextureFromSurface(Renderer::instance().SDLRenderer(), textureObject->surface);
+			textureObject->sdlTexture = sdlTexture;
+			if (retainSurface == false)
+			{
+				SDL_FreeSurface(textureObject->surface);
+			}
 		}
 
 		m_textureMap.emplace(id, std::make_shared<Texture>(*textureObject));

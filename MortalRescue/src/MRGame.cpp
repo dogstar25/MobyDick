@@ -61,7 +61,8 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		TTF_Init();
 
 		//Create the game window
-		uint16 windowFlags = 0 | SDL_WINDOW_OPENGL;
+		//uint16 windowFlags = 0 | SDL_WINDOW_OPENGL;
+		uint16 windowFlags = 0 ;
 		if (GameConfig::instance().windowFullscreen() == true) 
 		{
 			windowFlags = windowFlags | SDL_WINDOW_FULLSCREEN;

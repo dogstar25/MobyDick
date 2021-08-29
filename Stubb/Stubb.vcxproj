@@ -166,21 +166,23 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="opengl\GlRenderer.cpp" />
+    <ClCompile Include="opengl\GLRenderer.cpp" />
     <ClCompile Include="opengl\IndexBuffer.cpp" />
     <ClCompile Include="opengl\Shader.cpp" />
     <ClCompile Include="opengl\VertexBuffer.cpp" />
     <ClCompile Include="src\StubGame.cpp" />
     <ClCompile Include="src\testOpenGL_refactor.cpp" />
+    <ClCompile Include="opengl\VertexBatchDraw.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="opengl\GlRenderer.h" />
+    <ClInclude Include="opengl\GLRenderer.h" />
     <ClInclude Include="opengl\IndexBuffer.h" />
     <ClInclude Include="opengl\Shader.h" />
     <ClInclude Include="opengl\VertexBuffer.h" />
     <ClInclude Include="src\GameConstants.h" />
     <ClInclude Include="src\particleEffects\GameParticleEffects.h" />
     <ClInclude Include="src\StubGame.h" />
+    <ClInclude Include="opengl\VertexBatchDraw.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\config\gameConfig.json" />
@@ -189,6 +191,7 @@
     <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\textureAssets.json" />
     <None Include="opengl\shaders\basic.glsl" />
+    <None Include="opengl\shaders\uberShader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav" />

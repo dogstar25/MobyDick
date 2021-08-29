@@ -20,17 +20,20 @@
 #include "Game.h"
 #include "TextureManager.h"
 #include "Renderer.h"
+#include "../opengl/GLRenderer.h"
 #include <stdio.h>
 
 #include "../opengl/Shader.h"
 #include "../opengl/VertexBuffer.h"
 #include "../opengl/IndexBuffer.h"
+#include "GameConfig.h"
 
 std::unique_ptr<Game> game;
 
 
 int main(int argc, char* argv[])
 {
+
 
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         return -1;
@@ -40,51 +43,28 @@ int main(int argc, char* argv[])
     static const int width = 800;
     static const int height = 600;
 
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
-    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
-    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
-
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-
     // vertex attrubute indexes
     const int attrib_position = 0;
     const int attrib_color = 1;
     const int attrib_texture = 2;
 
     SDL_Window* window = SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-    SDL_GLContext context = SDL_GL_CreateContext(window);
 
     GLuint vs, fs, program;
 
-    if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress))
-    {
-        std::cout << "Failed to initialize GLAD" << std::endl;
-        return -1;
-    }
-    printf("Vendor:   %s\n", glGetString(GL_VENDOR));
-    printf("Renderer: %s\n", glGetString(GL_RENDERER));
-    printf("Version:  %s\n", glGetString(GL_VERSION));
-
-    //Initialize the Renderer
+    //Initialize the SDL Renderer so that texturemanager doesnt explode
     Renderer::instance().init(window);
 
-	//Generate as many vertex arrays as you have different TYPES of objects you will be drawing
-    //ex. sprite, line, pixel - anything that has a different buffer layout
-	GLuint vao[5];
-	glGenVertexArrays(5, vao);
-
+    //Initilaize our new openGl renderer
+    GLRenderer::instance().init(window);
 
     //Initialize the texture manager
     TextureManager::instance().init();
     TextureManager::instance().load("textureAssets");
 
     //Shader
-    Shader basicShader("BASIC");
+    //Shader basicShader("BASIC");
+    Shader basicShader("UBER");
 
     //Create the shader program
     program = glCreateProgram();
@@ -103,8 +83,8 @@ int main(int argc, char* argv[])
     glUseProgram(program);
 
     //Projection matrix
-    glm::mat4 projection_matrix;
-    projection_matrix = glm::ortho( 0.0f, (float)width, (float)height, 0.0f, 1.0f, 10.0f);
+    //Orthographic camera that matches the screen ratio and has a Z range of -1 to -10
+     glm::mat4  projection_matrix = glm::ortho( 0.0f, (float)width, (float)height, 0.0f, 0.0f, 10.0f);
     //glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100, 0, 0));
     //glm::mat4 mvp = projection_matrix * view;
 
@@ -125,59 +105,38 @@ int main(int argc, char* argv[])
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
-    ///
-    //Vertex Buffer Input
-    // 
-
-    //for (gameObjects) {
-    //    SpriteBuffer spriteBuffer(x, y, color.r, color.g, color.b, textureOffset, textureWidth, textureHeight);
-    //    VertextBuffer* vertexBuffer0 = new VertextBuffer();
-    //    vertexBuffer0.addBufferData(SPRITE_BUFFER, spriteBuffer); //enables atrrib array and attrib positions based on the buffer_type
-    //}
-
-    //Renderer::instance().draw(vertexBuffer0);
-
 
     //Create a vertext Buffer Array
     //Example of a 25 pixel object placed at location 50,50
-    const GLfloat g_vertex_buffer_data[] = {
-        /*  x   y  z     R, G, B, A,  txX, txY */
-            50, 50, -2,  1, 0, 0, 1,  0.0, 0.0, // vertex 0
-            75, 50, -2,  1, 0, 0, 1,  1.0, 0.0, // vertex 1
-            75, 75, -2,  1, 0, 0, 1,  1.0, 1.0, // vertex 2
-            50, 75, -2,  1, 0, 0, 1,  0.0, 1.0,  // vertex 3
+  //  const GLfloat g_vertex_buffer_data[] = {
+  //      /*  x   y  z     R, G, B, A,  txX, txY */
+  //          50, 50, -2,  1, 0, 0, 1,  0.0, 0.0, // vertex 0
+  //          75, 50, -2,  1, 0, 0, 1,  1.0, 0.0, // vertex 1
+  //          75, 75, -2,  1, 0, 0, 1,  1.0, 1.0, // vertex 2
+  //          50, 75, -2,  1, 0, 0, 1,  0.0, 1.0,  // vertex 3
 
-			55, 55,-3,  0, 1, 0, 1,  0.0, 0.0, // vertex 0
-			80, 55,-3,  0, 1, 0, 1,  1.0, 0.0, // vertex 1
-			80, 80,-3,  0, 1, 0, 1,  1.0, 1.0, // vertex 2
-			55, 80,-3,  0, 1, 0, 1,  0.0, 1.0  // vertex 3
+		//	55, 55,-3,  0, 1, 0, 1,  0.0, 0.0, // vertex 0
+		//	80, 55,-3,  0, 1, 0, 1,  1.0, 0.0, // vertex 1
+		//	80, 80,-3,  0, 1, 0, 1,  1.0, 1.0, // vertex 2
+		//	55, 80,-3,  0, 1, 0, 1,  0.0, 1.0  // vertex 3
 
-    };
+  //  };
 
-    VertexBuffer vertexBuffer(g_vertex_buffer_data, sizeof(g_vertex_buffer_data));
+  //  GLRenderer::instance().bind();
+  //  glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW); // state using
 
+  //  //index buffer
+  //  const GLuint g_index_buffer[] = {
+  //      0,1,2,
+  //      2,3,0,
 
-    auto x1 = vao[3];
-    glBindVertexArray(x1);
+		//4,5,6,
+		//6,7,4
 
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
-    glEnableVertexAttribArray(2);
-    glVertexAttribPointer(attrib_position, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 9, 0);
-    glVertexAttribPointer(attrib_color, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 9, (void*)(3 * sizeof(float)));
-    glVertexAttribPointer(attrib_texture, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 9, (void*)(7 * sizeof(float)));
+  //  };
 
-    //index buffer
-    const GLuint g_index_buffer[] = {
-        0,1,2,
-        2,3,0,
-
-		4,5,6,
-		6,7,4
-
-    };
-
-    IndexBuffer indexBuffer(g_index_buffer, sizeof(g_index_buffer));
+  //  GLRenderer::instance().bind();
+  //  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(g_index_buffer), g_index_buffer, GL_STATIC_DRAW); // state using
     
 
     //////////////////////////////////////////////////////////////////////////////////////
@@ -219,10 +178,13 @@ int main(int argc, char* argv[])
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
     glUseProgram(0);
-    vertexBuffer.unbind();
-    indexBuffer.unbind();
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     
-    
+    //Allocate memory for 100 vertices in the buffer
+    GLRenderer::instance().bind();
+    glBufferData(GL_ARRAY_BUFFER, sizeof(SpriteVertex) * 1000, nullptr, GL_DYNAMIC_DRAW);
+    //GLRenderer::instance().drawSprite(0, glm::vec3{ 50, 50,-2 }, 25, 25, glm::vec4{ 1,0,0,1 }, texture_id[0], glm::vec2{ 0,0 });
 
     for (;; )
     {
@@ -247,14 +209,14 @@ int main(int argc, char* argv[])
         GLuint matrixId = glGetUniformLocation(program, "u_projection_matrix");
         glUniformMatrix4fv(matrixId, 1, false, (float*)&projection_matrix);
 
-        //Bind the vertex array
-        glBindVertexArray(x1);
+        //Bind the vertex array, index buffer, and vertextbuffer
+        //The vao will remember the attribute layout for this particular vertextBuffer
+        GLRenderer::instance().bind();
+        GLRenderer::instance().drawSprite(0, glm::vec2{ 10, 10 }, -1, 90, 250, 250, glm::vec4{ 1,0,0,1 }, texture_id[0], glm::vec2{ 0,0 });
+        
 
         //Bind the texture
         glBindTexture(GL_TEXTURE_2D, texture_id[0]);
-
-        //Bind the indexBuffer
-        indexBuffer.bind();
 
         //Draw
         glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
@@ -262,10 +224,6 @@ int main(int argc, char* argv[])
         SDL_GL_SwapWindow(window);
         SDL_Delay(1);
     }
-    glDeleteTextures(1, texture_id);
-
-    glDeleteVertexArrays(5, vao);
-    SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
     SDL_Quit();
 

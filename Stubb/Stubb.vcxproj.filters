@@ -21,7 +21,7 @@
     <ClCompile Include="src\testOpenGL_refactor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="opengl\GlRenderer.cpp">
+    <ClCompile Include="opengl\GLRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="opengl\IndexBuffer.cpp">
@@ -31,6 +31,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="opengl\VertexBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl\VertexBatchDraw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +47,7 @@
     <ClInclude Include="src\particleEffects\GameParticleEffects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="opengl\GlRenderer.h">
+    <ClInclude Include="opengl\GLRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="opengl\IndexBuffer.h">
@@ -56,6 +59,9 @@
     <ClInclude Include="opengl\VertexBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="opengl\VertexBatchDraw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\config\gameConfig.json" />
@@ -64,6 +70,7 @@
     <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\textureAssets.json" />
     <None Include="opengl\shaders\basic.glsl" />
+    <None Include="opengl\shaders\uberShader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav">

@@ -247,15 +247,13 @@ void Scene::update() {
 
 void Scene::render() {
 
-	//Render all of the game objects
+	//Render all of the layers
 	for (auto& gameLayer : m_gameObjects)
 	{
-		//Update normal game objects
+		//Render all of the GameObjects in this layer
 		for (auto& gameObject : gameLayer)
 		{
-			if (gameObject) {
-				gameObject->render();
-			}
+			gameObject->render();
 		}
 	}
 	

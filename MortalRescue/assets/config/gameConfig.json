@@ -11,6 +11,7 @@
     "scenes": {
         "maxScenes": 12
     },
+    "rendererType": "RendererType::SDL",
     "mouseSensitivity": 0.5, //higher the mmore sensitive
     "gameLoopStep": 0.016,
     "physics": {

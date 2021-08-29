@@ -15,6 +15,10 @@ Shader::Shader(const std::string& shaderName)
 
         m_shaderSource = _parseShaderSource("opengl/shaders/Basic.glsl");
     }
+	if (shaderName == "UBER") {
+
+		m_shaderSource = _parseShaderSource("opengl/shaders/uberShader.glsl");
+	}
 
     m_vertextShaderId = glCreateShader(GL_VERTEX_SHADER);
     m_fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);

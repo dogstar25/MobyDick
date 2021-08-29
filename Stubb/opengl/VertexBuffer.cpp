@@ -5,12 +5,6 @@
 VertexBuffer::VertexBuffer(const void* data, GLuint size)
 {
 
-    glGenBuffers(1, &m_rendererId);
-
-    //Bind the vertext buffer array to the GL_ARRAY_BUFFER
-    //we can only bind ONE vertex buffer objewct (vbo) to the GL_ARRAY_BUFFER buffer
-    glBindBuffer(GL_ARRAY_BUFFER, m_rendererId); //state setting
-
     //We are now bound to the GL_ARRAY_BUFFER buffer
     //Copy the vertext data into the buffer bound to the GL_ARRAY_BUFFER, which is vbo
     glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW); // state using
@@ -48,8 +42,10 @@ void VertexBuffer::unbind()
     
 }
 
-void VertexBuffer::addVertex(GLuint bufferPosition, const GLfloat* vertex)
+void VertexBuffer::addVertex(GLuint bufferPosition, const SpriteVertex* vertex)
 {
+
+    m_spriteBuffer.push_back(*vertex);
 
 
 }

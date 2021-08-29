@@ -16,6 +16,12 @@ inline constexpr int MOUSE_CLICKED = 3;
 inline constexpr int CONTROL_MODE_SELECT = 0;
 inline constexpr int CONTROL_MODE_PLAY = 1;
 
+//Renderer Types
+namespace RendererType {
+	inline constexpr int SDL = 0;
+	inline constexpr int OPENGL = 1;
+}
+
 //Game Object Collision Tags
 namespace CollisionTag {
 	inline constexpr int MAX_OBJECT_CATEGORIES = 32;

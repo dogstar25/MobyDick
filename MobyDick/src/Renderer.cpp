@@ -24,9 +24,9 @@ Renderer& Renderer::instance()
 void Renderer::init(SDL_Window* window)
 {
 	//SDL_SetHint(SDL_HINT_RENDER_DRIVER, "openGL");
+	SDL_SetHint(SDL_HINT_RENDER_BATCHING, "1");
 	m_SDLRenderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawColor(m_SDLRenderer, 0, 0, 0, 0);
-
 
 }
 
