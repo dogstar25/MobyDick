@@ -1,4 +1,8 @@
-#pragma once
+//#pragma once
+#ifndef BASE_CONSTANTS_H
+#define BASE_CONSTANTS_H
+
+
 
 inline constexpr int CHILD_POSITIONS = 9;
 inline constexpr int MAX_VITALITY_LEVELS = 5;
@@ -16,12 +20,6 @@ inline constexpr int MOUSE_CLICKED = 3;
 inline constexpr int CONTROL_MODE_SELECT = 0;
 inline constexpr int CONTROL_MODE_PLAY = 1;
 
-//Renderer Types
-namespace RendererType {
-	inline constexpr int SDL = 0;
-	inline constexpr int OPENGL = 1;
-}
-
 //Game Object Collision Tags
 namespace CollisionTag {
 	inline constexpr int MAX_OBJECT_CATEGORIES = 32;
@@ -33,12 +31,12 @@ namespace CollisionTag {
 
 namespace TraitTag {
 
-	static const uint16_t player = 1;
-	static const uint16_t barrier = 2;
-	static const uint16_t collectable = 3;
-	static const uint16_t weapon = 4;
-	static const uint16_t gui = 5;
-	static const uint16_t navigation;
+	static const int player = 1;
+	static const int barrier = 2;
+	static const int collectable = 3;
+	static const int weapon = 4;
+	static const int gui = 5;
+	static const int   navigation;
 
 }
 
@@ -51,6 +49,26 @@ namespace GameObjectType {
 	inline constexpr auto RECTANGLE = 4;
 
 }
+
+enum RendererType {
+
+
+	OPENGL = 0,
+	SDL,
+
+	count
+};
+
+enum class GLDrawerType {
+
+	GLSPRITE = 0,
+	GLLINE,
+	GLPOINT,
+	GLRECTANGLE,
+
+	count
+
+};
 
 namespace BrainState {
 
@@ -164,3 +182,4 @@ inline constexpr int DISPLAY_UI_MODE_ONCLICK = 2;
 //Game Object Display Schemes
 inline constexpr int DEFAULT_HOVER_SCHEME = 0;
 
+#endif

@@ -10,7 +10,7 @@
 #include "../Texture.h"
 #include "TransformComponent.h"
 #include "AnimationComponent.h"
-#include "../Renderer.h"
+#include "../RendererSDL.h"
 
 class AnimationComponent;
 class PhysicsComponent;

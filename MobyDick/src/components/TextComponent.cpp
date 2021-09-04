@@ -1,9 +1,13 @@
 #include "TextComponent.h"
 
+#include <memory>
 
+#include "../game.h"
 #include "../DynamicTextManager.h"
 #include "../GameConfig.h"
 #include "../GameObject.h"
+
+extern std::unique_ptr<Game> game;
 
 TextComponent::TextComponent(std::string gameObjectId, Json::Value definitionJSON)
 {
@@ -100,7 +104,7 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 		transformComponent->originalPosition().x + tempSurface->w/2,
 		transformComponent->originalPosition().y + tempSurface->h/2);
 
-	texture->sdlTexture = Renderer::instance().createTextureFromSurface(tempSurface);
+	texture->sdlTexture = game->renderer()->createTextureFromSurface(tempSurface);
 	texture->surface = tempSurface;
 
 	//Add it to the textureManager but first free any texture that may already be there in case this is

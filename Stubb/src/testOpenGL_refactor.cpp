@@ -7,26 +7,16 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 
-#include <SDL2/SDL.h>
 
 
 
 
-#include <glad/glad.h>
 
-#include <SDL2/SDL_opengl.h>
 
-#include <memory>
 #include "Game.h"
-#include "TextureManager.h"
-#include "Renderer.h"
-#include "../opengl/GLRenderer.h"
-#include <stdio.h>
+#include "../opengl/GL2Renderer.h"
 
 #include "../opengl/Shader.h"
-#include "../opengl/VertexBuffer.h"
-#include "../opengl/IndexBuffer.h"
-#include "GameConfig.h"
 
 std::unique_ptr<Game> game;
 
@@ -53,10 +43,10 @@ int main(int argc, char* argv[])
     GLuint vs, fs, program;
 
     //Initialize the SDL Renderer so that texturemanager doesnt explode
-    Renderer::instance().init(window);
+    //game->renderer()->init(window);
 
     //Initilaize our new openGl renderer
-    GLRenderer::instance().init(window);
+    GL2Renderer::instance().init(window);
 
     //Initialize the texture manager
     TextureManager::instance().init();
@@ -122,7 +112,7 @@ int main(int argc, char* argv[])
 
   //  };
 
-  //  GLRenderer::instance().bind();
+  //  GLRendererSDL::instance().bind();
   //  glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW); // state using
 
   //  //index buffer
@@ -135,7 +125,7 @@ int main(int argc, char* argv[])
 
   //  };
 
-  //  GLRenderer::instance().bind();
+  //  GLRendererSDL::instance().bind();
   //  glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(g_index_buffer), g_index_buffer, GL_STATIC_DRAW); // state using
     
 
@@ -182,9 +172,9 @@ int main(int argc, char* argv[])
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     
     //Allocate memory for 100 vertices in the buffer
-    GLRenderer::instance().bind();
+    GL2Renderer::instance().bind();
     glBufferData(GL_ARRAY_BUFFER, sizeof(SpriteVertex) * 1000, nullptr, GL_DYNAMIC_DRAW);
-    //GLRenderer::instance().drawSprite(0, glm::vec3{ 50, 50,-2 }, 25, 25, glm::vec4{ 1,0,0,1 }, texture_id[0], glm::vec2{ 0,0 });
+    //GLRendererSDL::instance().drawSprite(0, glm::vec3{ 50, 50,-2 }, 25, 25, glm::vec4{ 1,0,0,1 }, texture_id[0], glm::vec2{ 0,0 });
 
     for (;; )
     {
@@ -211,8 +201,8 @@ int main(int argc, char* argv[])
 
         //Bind the vertex array, index buffer, and vertextbuffer
         //The vao will remember the attribute layout for this particular vertextBuffer
-        GLRenderer::instance().bind();
-        GLRenderer::instance().drawSprite(0, glm::vec2{ 10, 10 }, -1, 90, 250, 250, glm::vec4{ 1,0,0,1 }, texture_id[0], glm::vec2{ 0,0 });
+        GL2Renderer::instance().bind();
+        GL2Renderer::instance().drawSprite(0, glm::vec2{ 10, 10 }, -1, 90, 250, 250, glm::vec4{ 1,0,0,1 }, texture_id[0], glm::vec2{ 0,0 });
         
 
         //Bind the texture

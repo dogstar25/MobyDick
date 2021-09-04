@@ -1,28 +1,24 @@
-#include "GLRenderer.h"
+#include "GL2Renderer.h"
 
-#include <SDL2/SDL_opengl.h>
 
-#include <memory>
-#include <stdio.h>
 #include <iostream>
 
-#include "../opengl/Shader.h"
-#include "../opengl/VertexBuffer.h"
-#include "../opengl/IndexBuffer.h"
 
 #include "Globals.h"
 
 
-GLRenderer& GLRenderer::instance()
+
+
+GL2Renderer& GL2Renderer::instance()
 {
 
-    static GLRenderer singletonInstance;
+    static GL2Renderer singletonInstance;
     return singletonInstance;
 
 }
 
 
-void GLRenderer::init(SDL_Window* window)
+void GL2Renderer::init(SDL_Window* window)
 {
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
@@ -48,6 +44,10 @@ void GLRenderer::init(SDL_Window* window)
 	std::cout << "Version: " << glGetString(GL_VERSION) << std::endl;
 
 
+
+	//ToDo: need function to build the GLDrawers, aeach shoul dhave its own VAO and VBO ID stored with it
+	_buildDrawers();
+
 	//Generate 1 vao
 	glGenVertexArrays(1, &m_vao);
 	glBindVertexArray(m_vao);
@@ -68,7 +68,7 @@ void GLRenderer::init(SDL_Window* window)
 
 }
 
-void GLRenderer::drawSprite(int objectType, glm::vec2 position, GLint zLayer, GLfloat angle, GLfloat width, GLfloat height, glm::vec4 color, GLuint textureId, glm::vec2 textureCoords)
+void GL2Renderer::drawSprite(int objectType, glm::vec2 position, GLint zLayer, GLfloat angle, GLfloat width, GLfloat height, glm::vec4 color, GLuint textureId, glm::vec2 textureCoords)
 {
 
 	glBindTexture(GL_TEXTURE_2D, textureId);
@@ -137,14 +137,14 @@ void GLRenderer::drawSprite(int objectType, glm::vec2 position, GLint zLayer, GL
 
 }
 
-void GLRenderer::bind()
+void GL2Renderer::bind()
 {
 	glBindVertexArray(m_vao);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
 }
 
-GLRenderer::~GLRenderer()
+GL2Renderer::~GL2Renderer()
 {
 
 	//glDeleteTextures(1, texture_id);
@@ -162,7 +162,7 @@ and is stored using the VAO - vertex array object.
 When doing individual draws, you will bind to the appropriate VAO before adding the vertex and index
 buffer data
 */
-void GLRenderer::_setVertexBufferAttriubuteLayout()
+void GL2Renderer::_setVertexBufferAttriubuteLayout()
 {
 
 	// vertex attrubute indexes
@@ -178,6 +178,16 @@ void GLRenderer::_setVertexBufferAttriubuteLayout()
 	glVertexAttribPointer(attrib_color, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 9, (void*)(3 * sizeof(float)));
 	glVertexAttribPointer(attrib_texture, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 9, (void*)(7 * sizeof(float)));
 
+
+
+}
+
+void GL2Renderer::_buildDrawers()
+{
+
+	//Build a sprite drawer
+	//m_glDrawers[GLDrawerType::GLSPRITE] = GLDrawer(GLDrawerType::GLSPRITE);
+		
 
 
 }

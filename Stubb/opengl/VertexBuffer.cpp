@@ -1,6 +1,4 @@
 #include "VertexBuffer.h"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 VertexBuffer::VertexBuffer(const void* data, GLuint size)
 {

@@ -4,10 +4,12 @@
 
 #include <json/json.h>
 
-#include "Renderer.h"
+#include "game.h"
+#include "RendererSDL.h"
 #include "GameConfig.h"
 #include "BaseConstants.h"
 
+extern std::unique_ptr<Game> game;
 
 TextureManager::TextureManager()
 {
@@ -24,7 +26,9 @@ TextureManager::~TextureManager()
 			if (textureItem.second->surface != NULL) {
 				SDL_FreeSurface(textureItem.second->surface);
 			}
-			SDL_DestroyTexture(textureItem.second->sdlTexture);
+			if (textureItem.second->sdlTexture != NULL) {
+				SDL_DestroyTexture(textureItem.second->sdlTexture);
+			}
 
 		}
 	}
@@ -122,11 +126,12 @@ bool TextureManager::load(std::string texturesAssetsFile)
 
 		//If this is the SDL Renderer then create the SDL texture and potentially free the image surface
 		if (GameConfig::instance().rendererType() == RendererType::SDL) {
-			sdlTexture = SDL_CreateTextureFromSurface(Renderer::instance().SDLRenderer(), textureObject->surface);
+			sdlTexture = SDL_CreateTextureFromSurface(game->renderer()->sdlRenderer(), textureObject->surface);
 			textureObject->sdlTexture = sdlTexture;
 			if (retainSurface == false)
 			{
 				SDL_FreeSurface(textureObject->surface);
+				textureObject->surface = nullptr;
 			}
 		}
 

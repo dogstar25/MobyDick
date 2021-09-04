@@ -11,7 +11,7 @@
 #include "../particleEffects/ParticleEffectsMap.h"
 #include "../EnumMaps.h"
 
-
+extern std::unique_ptr<Game> game;
 
 ParticleComponent::ParticleComponent(Json::Value definitionJSON )
 {
@@ -65,18 +65,20 @@ void ParticleComponent::render()
 			destRect.x -= Camera::instance().frame().x;
 			destRect.y -= Camera::instance().frame().y;
 
-			SDL_SetTextureColorMod(particle.texture, particle.color.r, particle.color.g, particle.color.b);
-			SDL_SetTextureAlphaMod(particle.texture, particle.color.a);
-			SDL_SetTextureBlendMode(particle.texture, SDL_BLENDMODE_ADD);
+			//SDL_SetTextureColorMod(particle.texture, particle.color.r, particle.color.g, particle.color.b);
+			//SDL_SetTextureAlphaMod(particle.texture, particle.color.a);
+			//SDL_SetTextureBlendMode(particle.texture, SDL_BLENDMODE_ADD);
 
-			SDL_RenderCopyExF(
-				Renderer::instance().SDLRenderer(),
-				particle.texture,
-				nullptr,
-				&destRect,
-				0,
-				NULL,
-				SDL_FLIP_NONE);
+			game->renderer()->drawSprite(destRect, particle.color, particle.texture, nullptr, 0, false, SDL_Color{});
+
+			//SDL_RenderCopyExF(
+			//	RendererSDL::instance().renderer(),
+			//	particle.texture,
+			//	nullptr,
+			//	&destRect,
+			//	0,
+			//	NULL,
+			//	SDL_FLIP_NONE);
 		}
 	}
 

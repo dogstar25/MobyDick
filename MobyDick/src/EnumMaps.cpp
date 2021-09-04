@@ -12,6 +12,10 @@ EnumMap& EnumMap::instance()
 EnumMap::EnumMap()
 {
 
+	//Renderer Types
+	m_enumMap["RenderType::OPENGL"] = (int)RendererType::OPENGL;
+	m_enumMap["RenderType::SDL"] = (int)RendererType::SDL;
+
 	//Mouse State
 	m_enumMap["MOUSE_NONE"] = MOUSE_NONE;
 	m_enumMap["MOUSE_HOVER"] = MOUSE_HOVER;

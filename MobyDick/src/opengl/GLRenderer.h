@@ -7,8 +7,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "BaseConstants.h"
 #include "VertexBuffer.h"
+#include "GLDrawer.h"
 
 
 class GLRenderer
@@ -31,11 +31,19 @@ private:
 	~GLRenderer();
 
 	void _setVertexBufferAttriubuteLayout();
+	void _buildDrawers();
 
 	SDL_GLContext m_glcontext{};
 	GLuint m_vao;
 	GLuint m_vbo;
 	GLuint m_ibo;
+
+	//GLDrawer m_glDrawers[static_cast<int>(GLDrawerType::count) + 1];
+
+	GLDrawer m_spriteDrawer;
+	GLDrawer m_lineDrawer;
+
+
 
 	
 

@@ -196,12 +196,19 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\opengl\SpriteVertex.cpp" />
     <ClCompile Include="src\Blueprint.cpp" />
     <ClCompile Include="src\BrainAABBCallback.cpp" />
     <ClCompile Include="src\ComponentFactory.cpp" />
     <ClCompile Include="src\ContactListener.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\ContactFilter.cpp" />
+    <ClCompile Include="src\opengl\GLDrawer.cpp" />
+    <ClCompile Include="src\opengl\GLRenderer.cpp" />
+    <ClCompile Include="src\opengl\IndexBuffer.cpp" />
+    <ClCompile Include="src\opengl\Shader.cpp" />
+    <ClCompile Include="src\opengl\DrawBatch.cpp" />
+    <ClCompile Include="src\opengl\VertexBuffer.cpp" />
     <ClCompile Include="src\triggers\LevelComplete.cpp" />
     <ClCompile Include="src\triggers\TriggerMap.cpp" />
     <ClCompile Include="src\triggers\PlayerDeath.cpp" />
@@ -238,7 +245,7 @@
     <ClCompile Include="src\components\PlayerControlComponent.cpp" />
     <ClCompile Include="src\LevelManager.cpp" />
     <ClCompile Include="src\ObjectPoolManager.cpp" />
-    <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\RendererSDL.cpp" />
     <ClCompile Include="src\components\AnimationComponent.cpp" />
     <ClCompile Include="src\components\AttachmentsComponent.cpp" />
     <ClCompile Include="src\components\ChildrenComponent.cpp" />
@@ -269,10 +276,18 @@
     <ClCompile Include="src\actions\LoadNextLevelAction.cpp" />
     <ClCompile Include="src\triggers\Trigger.cpp" />
     <ClCompile Include="src\Timer.cpp" />
+    <ClCompile Include="src\opengl\Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\opengl\SpriteVertex.h" />
     <ClInclude Include="src\Blueprint.h" />
     <ClInclude Include="src\BrainAABBCallback.h" />
+    <ClInclude Include="src\opengl\GLDrawer.h" />
+    <ClInclude Include="src\opengl\GLRenderer.h" />
+    <ClInclude Include="src\opengl\IndexBuffer.h" />
+    <ClInclude Include="src\opengl\Shader.h" />
+    <ClInclude Include="src\opengl\DrawBatch.h" />
+    <ClInclude Include="src\opengl\VertexBuffer.h" />
     <ClInclude Include="src\triggers\LevelComplete.h" />
     <ClInclude Include="src\triggers\TriggerMap.h" />
     <ClInclude Include="src\triggers\PlayerDeath.h" />
@@ -315,7 +330,7 @@
     <ClInclude Include="src\components\PlayerControlComponent.h" />
     <ClInclude Include="src\LevelManager.h" />
     <ClInclude Include="src\ObjectPoolManager.h" />
-    <ClInclude Include="src\Renderer.h" />
+    <ClInclude Include="src\RendererSDL.h" />
     <ClInclude Include="src\components\AnimationComponent.h" />
     <ClInclude Include="src\components\AttachmentsComponent.h" />
     <ClInclude Include="src\components\ChildrenComponent.h" />
@@ -348,6 +363,8 @@
     <ClInclude Include="src\actions\LoadNextLevelAction.h" />
     <ClInclude Include="src\triggers\Trigger.h" />
     <ClInclude Include="src\Timer.h" />
+    <ClInclude Include="src\Renderer.h" />
+    <ClInclude Include="src\opengl\Vertex.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="ExtraLibs\SDL2main.lib" />
@@ -356,10 +373,9 @@
     <ResourceCompile Include="MobyDick.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\opengl\shaders\basic.glsl" />
+    <None Include="src\opengl\shaders\uberShader.glsl" />
     <None Include="vcpkg.json_old" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="src\opengl\shaders\basic.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

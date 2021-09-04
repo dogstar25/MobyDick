@@ -5,6 +5,8 @@
 #include "../Camera.h"
 #include "../game.h"
 
+#include <glm/glm.hpp>
+
 extern std::unique_ptr<Game> game;
 
 RenderComponent::RenderComponent()
@@ -145,16 +147,6 @@ SDL_Surface* RenderComponent::getRenderSurface()
 
 }
 
-void RenderComponent::outlineObject(SDL_Color color)
-{
-
-	SDL_FRect gameObjectDrawRect = getRenderDestRect();
-
-	SDL_SetRenderDrawColor(Renderer::instance().SDLRenderer(), color.r, color.g, color.b, 255);
-	SDL_RenderDrawRectF(Renderer::instance().SDLRenderer(), &gameObjectDrawRect);
-
-}
-
 void RenderComponent::setColor(int red, int green, int blue, int alpha)
 {
 	m_color.r = red;
@@ -184,29 +176,28 @@ void RenderComponent::render()
 
 		}
 
-		SDL_SetRenderDrawColor(Renderer::instance().SDLRenderer(), m_color.r, m_color.g, m_color.b, m_color.a);
-		SDL_RenderDrawLine(Renderer::instance().SDLRenderer(), static_cast<int>(start.x), static_cast<int>(start.y), static_cast<int>(end.x), static_cast<int>(end.y));
+		game->renderer()->drawLine(transform->lineStart(), transform->lineEnd(), m_color);
 
 	}
 	else if (parent()->m_gameObjectType == GameObjectType::RECTANGLE) {
 
-		SDL_FRect retangle = { getRenderDestRect() };
+		SDL_FRect quad = { getRenderDestRect() };
+		bool outline{};
+		SDL_Color outlineColor{};
 
-		SDL_SetRenderDrawColor(Renderer::instance().SDLRenderer(), m_color.r, m_color.g, m_color.b, m_color.a);
-		SDL_RenderFillRectF(Renderer::instance().SDLRenderer(), &retangle);
-
-		//Outline the gameObject if defined to 
+		//Outline the gameObject if defined to . Either from a displayoverlay or by the objects definition
 		if (m_displayOverlay.has_value() && m_displayOverlay->outlined == true) {
 
-			outlineObject(m_displayOverlay->outlineColor);
+			outline = true;
+			outlineColor = m_displayOverlay->outlineColor;
 		}
 		else {
 
-			if (m_renderOutline == true) {
-				outlineObject(m_outLineColor);
-			}
+			outline = true;
+			outlineColor = m_outLineColor;
 		}
 
+		game->renderer()->drawQuad(quad, m_color, outline, outlineColor);
 
 	}
 	else if (parent()->m_gameObjectType == GameObjectType::SPRITE) {
@@ -221,61 +212,44 @@ void RenderComponent::render()
 			(int)Camera::instance().frame().h + game->worldTileHeight() };
 
 		/*
-		If this object is within the viewable are or if its absolute positioned then render it
+		If this object is within the viewable are or if its absolute positioned and therefore is not dependent on the camera
+		then render it
 		*/
 		if (SDL_HasIntersection(&gameObjectPosRect, &cameraRect) ||
 			transform->absolutePositioning() == true) {
 
-			const SDL_FRect destRect = getRenderDestRect();
-			SDL_Rect* textureSourceRect = getRenderTextureRect();
+			bool outline{};
+			SDL_Color outlineColor{};
+
+			SDL_FRect destQuad = getRenderDestRect();
+			SDL_Rect* textureSourceQuad = getRenderTextureRect();
 			SDL_Texture* texture = getRenderTexture();
 			float angle = transform->angle();
 
-			//Set the color. Use the displayOverlay values if there is one
-			if (m_displayOverlay.has_value() && m_displayOverlay->color.has_value()) {
-
-				SDL_SetTextureAlphaMod(texture, m_displayOverlay->color->a);
-				SDL_SetTextureColorMod(texture,
-					m_displayOverlay->color->r,
-					m_displayOverlay->color->g,
-					m_displayOverlay->color->b);
-			}
-			else
-			{
-				SDL_SetTextureAlphaMod(texture, m_color.a);
-				SDL_SetTextureColorMod(texture, m_color.r, m_color.g, m_color.b);
-			}
-
 			SDL_SetTextureBlendMode(texture, m_textureBlendMode);
-
-			//Render the texture
-			SDL_RenderCopyExF(
-				Renderer::instance().SDLRenderer(),
-				texture,
-				textureSourceRect,
-				&destRect,
-				angle,
-				NULL,
-				SDL_FLIP_NONE);
 
 			//Outline the gameObject if defined to 
 			if (m_displayOverlay.has_value() && m_displayOverlay->outlined == true) {
 
-				outlineObject(m_displayOverlay->outlineColor);
+				outline = true;
+				outlineColor = m_displayOverlay->outlineColor;
 			}
 			else {
 
-				if (m_renderOutline == true) {
-					outlineObject(m_outLineColor);
-				}
+				outline = true;
+				outlineColor = m_outLineColor;
+
 			}
 
+			game->renderer()->drawSprite(destQuad, m_color, texture, textureSourceQuad, angle, outline, outlineColor);
+
+
 			//Drawa a red circle on the bodies center
-			if(parent()->parentScene()->physicsConfig().b2DebugDrawMode == true &&
-			   parent()->hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
-				auto center = physics->physicsBody()->GetWorldCenter();
-				DebugDraw::instance().DrawCircle(center, .1, b2Color(255, 0, 0, 255));
-			}
+			//if(parent()->parentScene()->physicsConfig().b2DebugDrawMode == true &&
+			//   parent()->hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
+			//	auto center = physics->physicsBody()->GetWorldCenter();
+			//	DebugDraw::instance().DrawCircle(center, .1, b2Color(255, 0, 0, 255));
+			//}
 		}
 	}
 
@@ -311,7 +285,7 @@ void RenderComponent::removeDisplayOverlay()
 //{
 //
 //	//Render the rectangle
-//	SDL_SetRenderDrawColor(Renderer::instance().SDLRenderer(), color.r, color.g, color.b, color.a);
-//	SDL_RenderFillRectF(Renderer::instance().SDLRenderer(), destRect);
+//	SDL_SetRenderDrawColor(RendererSDL::instance().renderer(), color.r, color.g, color.b, color.a);
+//	SDL_RenderFillRectF(RendererSDL::instance().renderer(), destRect);
 //
 //}

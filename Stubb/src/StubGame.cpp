@@ -1,16 +1,12 @@
 #include "StubGame.h"
 
-#include "actions/ActionMaps.h"
 #include "GameConstants.h"
 #include "GameObjectManager.h"
 #include "SoundManager.h"
-#include "LevelManager.h"
-#include "Camera.h"
 #include "Clock.h"
-#include "ContactFilter.h"
-#include "ContactListener.h"
 #include "particleEffects/ParticleEffectsMap.h"
 #include "particleEffects/GameParticleEffects.h"
+#include "renderer.h"
 
 #include "EnumMaps.h"
 
@@ -74,7 +70,8 @@ bool StubGame::init(ContactListener* contactListener, ContactFilter* contactFilt
 			windowFlags);
 
 		//Initialize the texture manager
-		Renderer::instance().init(m_window);
+		//m_renderer = new RendererSDL(m_window, RendererType::SDL);
+		m_renderer->init(m_window);
 
 		//Display basic loading message
 		_displayLoadingMsg();

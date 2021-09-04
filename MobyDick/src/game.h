@@ -21,6 +21,7 @@
 #include "ComponentFactory.h"
 #include "ContactListener.h"
 #include "ContactFilter.h"
+#include "Renderer.h"
 
 
 /*
@@ -73,6 +74,8 @@ public:
 		return m_componentFactory;
 	}
 
+	Renderer* renderer() { return m_renderer.get(); }
+
 protected:
 
 	SDL_Window* m_window{};
@@ -81,6 +84,8 @@ protected:
 	ContactListener* m_contactListener{};
 	ContactFilter* m_contactFilter{};
 	ComponentFactory* m_componentFactory{};
+
+	std::shared_ptr<Renderer> m_renderer;
 
 	int m_WorldTileWidth{};
 	int m_WorldTileHeight{};

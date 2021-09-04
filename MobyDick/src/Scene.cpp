@@ -367,7 +367,7 @@ void Scene::_buildPhysicsWorld(Json::Value physicsJSON)
 
 	//Build the box2d physics world
 	m_physicsWorld = new b2World(m_physicsConfig.gravity);
-	m_physicsWorld->SetAutoClearForces(true);
+	//m_physicsWorld->SetAutoClearForces(true);
 
 	//Add a collision contact listener and filter for box2d callbacks
 	m_physicsWorld->SetContactFilter(game->contactFilter());

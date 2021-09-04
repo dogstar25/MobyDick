@@ -37,6 +37,10 @@ Initialize Game
 bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter, 
 	ComponentFactory* componentFactory)
 {
+
+	//Get all of the configuration values
+	GameConfig::instance().init("gameConfig");
+
 	//Required Base Class calls
 	Game::init(contactListener, contactFilter, componentFactory);
 	//End Required
@@ -50,9 +54,6 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 	_addGameActions();
 	_addGameParticleEffects();
 
-	//Get all of the configuration values
-	GameConfig::instance().init("gameConfig");
-	
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
@@ -61,8 +62,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		TTF_Init();
 
 		//Create the game window
-		//uint16 windowFlags = 0 | SDL_WINDOW_OPENGL;
-		uint16 windowFlags = 0 ;
+		uint16 windowFlags = 0 | SDL_WINDOW_OPENGL;
 		if (GameConfig::instance().windowFullscreen() == true) 
 		{
 			windowFlags = windowFlags | SDL_WINDOW_FULLSCREEN;
@@ -79,7 +79,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 			windowFlags);
 
 		//Initialize the texture manager
-		Renderer::instance().init(m_window);
+		m_renderer->init(m_window);
 
 		//Display basic loading message
 		_displayLoadingMsg();
