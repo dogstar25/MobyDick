@@ -1,24 +1,24 @@
 #pragma once
 #include <glad/glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <vector>
+
+struct SpriteindexBuffer {
+	glm::uvec3 topLeftTriangle{ 0,1,2 };
+	glm::uvec3 botRightTriangle{ 2,3,0 };
+};
+
 
 class IndexBuffer
 {
 
 private:
 
-	GLuint m_rendererId{};
-	GLuint m_count{};
+	//This will grow as we add stuff to a particular draw batch>?
+	std::vector<glm::uint> m_indexes;
 
 public:
-	IndexBuffer(const GLuint *data, GLuint count);
-	~IndexBuffer();
-
-	void bind();
-	void unbind();
-
-	GLuint rendererId() { return m_rendererId; }
-
-	inline GLuint count() const { return m_count; }
 
 };
 

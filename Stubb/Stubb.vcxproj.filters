@@ -36,9 +36,6 @@
     <ClCompile Include="opengl\VertexBatchDraw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="opengl\GLDrawer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameConstants.h">
@@ -63,9 +60,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="opengl\VertexBatchDraw.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="opengl\GLDrawer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

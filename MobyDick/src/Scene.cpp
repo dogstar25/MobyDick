@@ -268,12 +268,6 @@ void Scene::render() {
 GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow)
 {
 
-	/*
-	Create a new unique_ptr of game object, emplace in the vector, and then call init on the new gameObject
-	We have to call init after construction in order to set the pointer references correctly.i.e all components will store a raw
-	pointer to gameObject and all gameObjects will store a raw pointer to the scene.
-	*/
-
 	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this, cameraFollow));
 	//gameObject->init(cameraFollow);
 

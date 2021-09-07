@@ -82,7 +82,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		m_renderer->init(m_window);
 
 		//Display basic loading message
-		_displayLoadingMsg();
+		//_displayLoadingMsg();
 
 		//Initialize the texture manager
 		TextureManager::instance().init();
@@ -92,7 +92,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		SceneManager::instance().init();
 		SceneManager::instance().load("gameScenes");
 
-		_displayLoadingMsg();
+		//_displayLoadingMsg();
 
 		//Initialize the Game Object Manager
 		GameObjectManager::instance().init();
@@ -103,7 +103,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 		//Load a first scene
 		Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
-		scene.loadLevel("level1");
+		//scene.loadLevel("level1");
 
 		_displayLoadingMsg();
 
@@ -114,7 +114,8 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//Initialize the clock object
 		Clock::instance().init();
 
-		scene.addGameObject("FPS_VALUE", LAYER_MENU, 1, 1);
+		scene.addGameObject("BOWMAN", LAYER_MENU, 1, 1);
+		//scene.addGameObject("FPS_VALUE", LAYER_MENU, 1, 1);
 
 	}
 
@@ -128,7 +129,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 	//particleComponent->setEmissionInterval(1);
 
 
-	auto particleXEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MAIN, 9, 15);
+	//auto particleXEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MAIN, 9, 15);
 	//const auto& particleXComponent = particleXEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
 	//particleXComponent->addParticleEffect(ParticleEffects::ricochet);
 	//particleXComponent->setType(ParticleEmitterType::CONTINUOUS);

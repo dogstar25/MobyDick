@@ -73,7 +73,7 @@ int main(int argc, char* argv[])
     glUseProgram(program);
 
     //Projection matrix
-    //Orthographic camera that matches the screen ratio and has a Z range of -1 to -10
+    //Orthographic camera that matches the screen ratio and has a Z range of 1 to 10
      glm::mat4  projection_matrix = glm::ortho( 0.0f, (float)width, (float)height, 0.0f, 0.0f, 10.0f);
     //glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100, 0, 0));
     //glm::mat4 mvp = projection_matrix * view;

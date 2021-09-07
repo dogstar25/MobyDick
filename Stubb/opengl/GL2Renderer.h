@@ -8,7 +8,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "VertexBuffer.h"
-#include "GLDrawer.h"
+//#include "GLDrawer.h"
 
 
 class GL2Renderer
@@ -40,8 +40,8 @@ private:
 
 	//GLDrawer m_glDrawers[static_cast<int>(GLDrawerType::count) + 1];
 
-	GLDrawer m_spriteDrawer;
-	GLDrawer m_lineDrawer;
+	//GLDrawer m_spriteDrawer;
+	//GLDrawer m_lineDrawer;
 
 
 

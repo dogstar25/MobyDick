@@ -2,6 +2,7 @@
 #include "GameConfig.h"
 
 #include "RendererSDL.h"
+#include "opengl/GLRenderer.h"
 
 
 Game::~Game()
@@ -27,7 +28,7 @@ bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter,
 
 	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 
-		m_renderer = std::make_shared<RendererSDL>(RendererSDL());
+		m_renderer = std::make_shared<GLRenderer>(GLRenderer());
 
 	}
 	else if (GameConfig::instance().rendererType() == RendererType::SDL) {

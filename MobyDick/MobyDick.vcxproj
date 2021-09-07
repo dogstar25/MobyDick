@@ -208,7 +208,6 @@
     <ClCompile Include="src\opengl\IndexBuffer.cpp" />
     <ClCompile Include="src\opengl\Shader.cpp" />
     <ClCompile Include="src\opengl\DrawBatch.cpp" />
-    <ClCompile Include="src\opengl\VertexBuffer.cpp" />
     <ClCompile Include="src\triggers\LevelComplete.cpp" />
     <ClCompile Include="src\triggers\TriggerMap.cpp" />
     <ClCompile Include="src\triggers\PlayerDeath.cpp" />
@@ -287,7 +286,6 @@
     <ClInclude Include="src\opengl\IndexBuffer.h" />
     <ClInclude Include="src\opengl\Shader.h" />
     <ClInclude Include="src\opengl\DrawBatch.h" />
-    <ClInclude Include="src\opengl\VertexBuffer.h" />
     <ClInclude Include="src\triggers\LevelComplete.h" />
     <ClInclude Include="src\triggers\TriggerMap.h" />
     <ClInclude Include="src\triggers\PlayerDeath.h" />

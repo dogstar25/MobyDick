@@ -166,7 +166,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="opengl\GLDrawer.cpp" />
     <ClCompile Include="opengl\GL2Renderer.cpp" />
     <ClCompile Include="opengl\IndexBuffer.cpp" />
     <ClCompile Include="opengl\Shader.cpp" />
@@ -176,7 +175,6 @@
     <ClCompile Include="opengl\VertexBatchDraw.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="opengl\GLDrawer.h" />
     <ClInclude Include="opengl\GL2Renderer.h" />
     <ClInclude Include="opengl\IndexBuffer.h" />
     <ClInclude Include="opengl\Shader.h" />

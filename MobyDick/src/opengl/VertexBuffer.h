@@ -13,17 +13,17 @@
 //		50, 75, -1,  1, 0, 0, 1,  0.0, 1.0  // vertex 3
 //};
 
-struct SpriteVertex {
-
-	glm::vec3 positionAttribute;
-	glm::vec4 colorAttribute;
-	glm::vec2 textureCoordsAttribute;
-};
-
-struct SpriteindexBuffer {
-	glm::uvec3 topLeftTriangle{0,1,2};
-	glm::uvec3 botRightTriangle{2,3,0};
-};
+//struct SpriteVertex {
+//
+//	glm::vec3 positionAttribute;
+//	glm::vec4 colorAttribute;
+//	glm::vec2 textureCoordsAttribute;
+//};
+//
+//struct SpriteindexBuffer {
+//	glm::uvec3 topLeftTriangle{0,1,2};
+//	glm::uvec3 botRightTriangle{2,3,0};
+//};
 
 
 class VertexBuffer

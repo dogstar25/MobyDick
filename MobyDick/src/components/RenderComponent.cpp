@@ -220,13 +220,15 @@ void RenderComponent::render()
 
 			bool outline{};
 			SDL_Color outlineColor{};
+			float angle = transform->angle();
 
 			SDL_FRect destQuad = getRenderDestRect();
 			SDL_Rect* textureSourceQuad = getRenderTextureRect();
-			SDL_Texture* texture = getRenderTexture();
-			float angle = transform->angle();
 
+			//SDL Only Stuff
+			SDL_Texture* texture = getRenderTexture();
 			SDL_SetTextureBlendMode(texture, m_textureBlendMode);
+			/////
 
 			//Outline the gameObject if defined to 
 			if (m_displayOverlay.has_value() && m_displayOverlay->outlined == true) {

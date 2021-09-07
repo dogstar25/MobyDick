@@ -9,6 +9,9 @@ inline constexpr int MAX_VITALITY_LEVELS = 5;
 inline constexpr int MAX_ANIMATION_STATES = 5;
 inline constexpr int DESTINATION_DISTANCE_TOLERANCE = 10;
 inline constexpr int PARTICLE_EMITTER_FORCE_ADJ = 50;
+inline constexpr int MAX_OBJECT_TYPES = 5;
+inline constexpr int MAX_GL_TEXTURES = 1;
+inline constexpr int MAX_GL_SHADER_TYPES = 5;
 
 //Mouse State
 inline constexpr int MOUSE_NONE = 0;
