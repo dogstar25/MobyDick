@@ -1,9 +1,36 @@
 {
+    "textureAtlas": [
+        {
+            "id": "TEXTURE_ATLAS_1",
+            "description": "Texture atlas 1",
+            "filename": "assets/textureAtlas1.png"
+        }
+    ],
     "textures": [
         {
             "id": "TX_DEFAULT",
             "description": "Default Texure",
-            "filename": "assets/tile1.png"
+            "filename": "assets/tile1.png",
+            "openGL": {
+                "openGLBatchId": 1,
+                "textureFile": "assets/tileset1.png",
+                "textureOffset": {
+                    "x": 25,
+                    "y": 32
+                }
+            }
+        },
+        {
+            "id": "TX_DEFAULT",
+            "description": "Default Texure",
+            "atlas": "TEXTURE_ATLAS_1",
+            "textureBatchId":  1,
+            "textureQuad": {
+                "x": 25,
+                "y": 32,
+                "width": 64,
+                "height": 32
+            }
         },
         {
             "id": "TX_BOWMAN1",
@@ -171,12 +198,12 @@
         }
 
     ],
-  "fonts": [
-    {
-      "id": "FONT_ARIAL_REG",
-      "description": "Arial Regular",
-      "filename": "assets/arial.ttf"
-    }
-  ]
+    "fonts": [
+        {
+            "id": "FONT_ARIAL_REG",
+            "description": "Arial Regular",
+            "filename": "assets/arial.ttf"
+        }
+    ]
 
 }

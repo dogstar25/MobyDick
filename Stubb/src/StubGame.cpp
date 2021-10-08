@@ -78,7 +78,7 @@ bool StubGame::init(ContactListener* contactListener, ContactFilter* contactFilt
 
 		//Initialize the texture manager
 		TextureManager::instance().init();
-		TextureManager::instance().load("textureAssets");
+		TextureManager::instance().load("textureAtlasAssets");
 
 		//Initialize the SceneManager
 		SceneManager::instance().init();

@@ -7,6 +7,7 @@
 #include <json/json.h>
 #include <SDL2/SDL.h>
 #include <box2d/box2d.h>
+#include <glm/glm.hpp>
 
 /*
 Overloaded operators used throught the game
@@ -38,6 +39,7 @@ namespace util
 	const SDL_Color JsonToColor(Json::Value JsonColor);
 	float normalizeRadians(float angleInRadians);
 	float normalizeDegrees(float angleInDegrees);
+	glm::vec2 normalizeTextureCoords(glm::vec2 textureCoords, glm::vec2 textureSize);
 	b2Vec2& toBox2dPoint(b2Vec2& point);
 	b2Vec2& toRenderPoint(b2Vec2& point);
 

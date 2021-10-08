@@ -196,6 +196,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\opengl\GLDebugCallback.cpp" />
     <ClCompile Include="src\opengl\SpriteVertex.cpp" />
     <ClCompile Include="src\Blueprint.cpp" />
     <ClCompile Include="src\BrainAABBCallback.cpp" />
@@ -278,6 +279,7 @@
     <ClCompile Include="src\opengl\Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\opengl\GLDebugCallback.h" />
     <ClInclude Include="src\opengl\SpriteVertex.h" />
     <ClInclude Include="src\Blueprint.h" />
     <ClInclude Include="src\BrainAABBCallback.h" />

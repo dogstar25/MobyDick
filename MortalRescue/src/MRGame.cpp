@@ -86,7 +86,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 		//Initialize the texture manager
 		TextureManager::instance().init();
-		TextureManager::instance().load("textureAssets");
+		TextureManager::instance().load("textureAtlasAssets");
 
 		//Initialize the SceneManager
 		SceneManager::instance().init();
@@ -105,7 +105,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
 		//scene.loadLevel("level1");
 
-		_displayLoadingMsg();
+		//_displayLoadingMsg();
 
 		//Initialize the sound manager
 		SoundManager::instance().initSound();
@@ -114,7 +114,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//Initialize the clock object
 		Clock::instance().init();
 
-		scene.addGameObject("BOWMAN", LAYER_MENU, 1, 1);
+		scene.addGameObject("STUBB", LAYER_MENU, 1, 1);
 		//scene.addGameObject("FPS_VALUE", LAYER_MENU, 1, 1);
 
 	}

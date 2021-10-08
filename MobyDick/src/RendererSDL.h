@@ -9,6 +9,7 @@
 #include <box2d/box2d.h>
 
 #include "Renderer.h"
+#include "texture.h"
 
 
 struct displayOverlay
@@ -49,7 +50,7 @@ public:
 	void drawPoints(SDL_FPoint*, SDL_Color color);
 	void drawLine(b2Vec2 lineStart, b2Vec2 lineEnd, SDL_Color color) override;
 	void drawQuad(SDL_FRect quad, SDL_Color color, bool outline, SDL_Color outlineColor) override;
-	void drawSprite(SDL_FRect quad, SDL_Color color, SDL_Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) override;
+	void drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) override;
 
 	void outlineObject(SDL_FRect quad, SDL_Color color);
 

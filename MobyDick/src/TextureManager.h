@@ -10,9 +10,7 @@
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 
-#pragma warning(push,0)
 #include <box2d/box2d.h>
-#pragma warning(pop)
 
 #include "texture.h"
 

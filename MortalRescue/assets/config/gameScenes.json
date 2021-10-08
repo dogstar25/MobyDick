@@ -12,11 +12,13 @@
             "keyActions": [
                 {
                     "keyCode": "SDLK_ESCAPE",
+                    //"sceneAction": {
+                    //    "action": "SCENE_ACTION_ADD",
+                    //    "newSceneId": "SCENE_PAUSE_MENU"
+                    //},
                     "sceneAction": {
-                        "action": "SCENE_ACTION_ADD",
-                        "newSceneId": "SCENE_PAUSE_MENU"
+                        "action": "SCENE_ACTION_QUIT"
                     }
-
                 }
             ],
             "gameObjectPools": [
@@ -50,7 +52,7 @@
                     "x": 0.0,
                     "y": 0.0
                 },
-                "b2DebugDrawMode": true,
+                "b2DebugDrawMode": false,
                 "timeStep": 0.016, // 1/60 or 1/30
                 "velocityIterations": 6,
                 "positionIterations": 2

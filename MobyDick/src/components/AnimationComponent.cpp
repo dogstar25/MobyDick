@@ -22,6 +22,9 @@ AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 		m_defaultAnimationState=0;
 	}
 
+	m_frameSize.x = animationComponentJSON["frameSize"]["width"].asFloat();
+	m_frameSize.y = animationComponentJSON["frameSize"]["height"].asFloat();
+
 	int i = 0;
 	for (Json::Value animItr : animationComponentJSON["animations"])
 	{
@@ -33,7 +36,7 @@ AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 			m_currentAnimationState = state;
 		}
 
-		m_animations[state] = Animation(animItr, transformComponentJSON);
+		m_animations[state] = Animation(animItr, m_frameSize);
 
 	}
 }
@@ -83,14 +86,12 @@ SDL_Rect* AnimationComponent::getCurrentAnimationTextureRect()
 
 }
 
-SDL_Texture* AnimationComponent::getCurrentAnimationTexture()
+std::shared_ptr<Texture> AnimationComponent::getCurrentAnimationTexture()
 {
-	SDL_Texture* texture = nullptr;
 
 	//assert(m_animations.find(m_currentAnimationState) != m_animations.end() && "Animation State not found in animations collection");
-	texture = m_animations.at(m_currentAnimationState).getTexture();
+	return m_animations.at(m_currentAnimationState).getTexture();
 
-	return texture;
 
 }
 

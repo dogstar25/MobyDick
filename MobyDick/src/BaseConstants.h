@@ -10,8 +10,9 @@ inline constexpr int MAX_ANIMATION_STATES = 5;
 inline constexpr int DESTINATION_DISTANCE_TOLERANCE = 10;
 inline constexpr int PARTICLE_EMITTER_FORCE_ADJ = 50;
 inline constexpr int MAX_OBJECT_TYPES = 5;
+//OpenGl
 inline constexpr int MAX_GL_TEXTURES = 1;
-inline constexpr int MAX_GL_SHADER_TYPES = 5;
+//inline constexpr int MAX_GL_SHADER_TYPES = 5;
 
 //Mouse State
 inline constexpr int MOUSE_NONE = 0;
@@ -53,25 +54,6 @@ namespace GameObjectType {
 
 }
 
-enum RendererType {
-
-
-	OPENGL = 0,
-	SDL,
-
-	count
-};
-
-enum class GLDrawerType {
-
-	GLSPRITE = 0,
-	GLLINE,
-	GLPOINT,
-	GLRECTANGLE,
-
-	count
-
-};
 
 namespace BrainState {
 
@@ -97,9 +79,29 @@ namespace NavigationObjectType {
 	inline constexpr int WAYPOINT = 2;
 }
 
+enum class RendererType {
+	OPENGL = 0,
+	SDL,
+	count
+};
+
+enum class GLShaderType {
+	BASIC = 0,
+	UBER,
+	GLOW,
+	count
+};
+
+enum class GLDrawerType {
+	GLSPRITE = 0,
+	GLLINE,
+	GLPOINT,
+	GLRECTANGLE,
+	count
+};
+
 //Components
 enum class ComponentTypes {
-
 	ACTION_COMPONENT = 0,
 	ANIMATION_COMPONENT,
 	ATTACHMENTS_COMPONENT,
@@ -119,7 +121,6 @@ enum class ComponentTypes {
 	UICONTROL_COMPONENT,
 	VITALITY_COMPONENT,
 	WEAPON_COMPONENT,
-
 	COUNT
 };
 

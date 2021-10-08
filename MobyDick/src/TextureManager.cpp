@@ -21,15 +21,19 @@ TextureManager::~TextureManager()
 
 	for (auto&& textureItem : m_textureMap) {
 
-		if (textureItem.second != NULL) {
+		if (textureItem.second->isRootTexture == true) {
+			if (textureItem.second != NULL) {
 
-			if (textureItem.second->surface != NULL) {
-				SDL_FreeSurface(textureItem.second->surface);
-			}
-			if (textureItem.second->sdlTexture != NULL) {
-				SDL_DestroyTexture(textureItem.second->sdlTexture);
-			}
+				if (textureItem.second->surface != nullptr) {
+					SDL_FreeSurface(textureItem.second->surface);
+					textureItem.second->surface = nullptr;
+				}
+				if (textureItem.second->sdlTexture != nullptr) {
+					SDL_DestroyTexture(textureItem.second->sdlTexture);
+					textureItem.second->sdlTexture = nullptr;
+				}
 
+			}
 		}
 	}
 
@@ -110,16 +114,19 @@ bool TextureManager::load(std::string texturesAssetsFile)
 	SDL_Texture* sdlTexture;
 	Texture* textureObject;
 
+
 	//Loop through every texture defined in the config file, create a texture object
 	//and store it in the main texture map
-	for(auto itr : root["textures"])
+	for(auto itr : root["textureFiles"])
 	{
 		//textureObject = new Texture();
 		textureObject = new Texture();
 
+		//This is a texture object that will store the texture assets that other texture items will share
+		textureObject->isRootTexture = true;
+
 		id = itr["id"].asString();
 		imageFilename = itr["filename"].asString();
-		retainSurface = itr["retainSurface"].asBool();
 
 		//Load the file
 		textureObject->surface = IMG_Load(imageFilename.c_str());
@@ -128,16 +135,44 @@ bool TextureManager::load(std::string texturesAssetsFile)
 		if (GameConfig::instance().rendererType() == RendererType::SDL) {
 			sdlTexture = SDL_CreateTextureFromSurface(game->renderer()->sdlRenderer(), textureObject->surface);
 			textureObject->sdlTexture = sdlTexture;
-			if (retainSurface == false)
-			{
-				SDL_FreeSurface(textureObject->surface);
-				textureObject->surface = nullptr;
-			}
 		}
 
 		m_textureMap.emplace(id, std::make_shared<Texture>(*textureObject));
 
 	}
+
+	//Loop through every texture atlas defined in the config file, create a texture object
+	//and store it in the main texture map.
+	//Texture Atlas' must be done first since hte next texture items could reference the atlas
+	for (auto itr : root["textures"])
+	{
+		//textureObject = new Texture();
+		textureObject = new Texture();
+
+		id = itr["id"].asString();
+		auto atlasId = itr["atlas"].asString();
+		auto quadX = itr["quadPosition"]["x"].asInt();
+		auto quadY = itr["quadPosition"]["y"].asInt();
+		auto quadWidth = itr["quadPosition"]["width"].asInt();
+		auto quadHeight = itr["quadPosition"]["height"].asInt();
+
+		SDL_Rect quad = { quadX , quadY, quadWidth, quadHeight };
+
+		textureObject->textureAtlasQuad = std::move(quad);
+
+		//Load the file
+		textureObject->surface = m_textureMap[atlasId]->surface;
+
+		//If this is the SDL Renderer then create the SDL texture and potentially free the image surface
+		if (GameConfig::instance().rendererType() == RendererType::SDL) {
+			textureObject->sdlTexture = m_textureMap[atlasId]->sdlTexture;
+		}
+
+		m_textureMap.emplace(id, std::make_shared<Texture>(*textureObject));
+
+
+	}
+
 
 	// Loop through every font defined and store it in the main font map
 		for (auto itr : root["fonts"])

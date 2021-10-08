@@ -171,6 +171,12 @@ namespace util
 		return angleInDegrees;
 	}
 
+	glm::vec2 normalizeTextureCoords(glm::vec2 textureCoords, glm::vec2 textureSize)
+	{
+		glm::vec2 textureCoordNormalized = { (textureCoords.x + .5) / textureSize.x, (textureCoords.y + .5) / textureSize.y };
+		return textureCoordNormalized;
+	}
+
 	b2Vec2& toBox2dPoint(b2Vec2& point)
 	{
 		point.x /= (float)25;

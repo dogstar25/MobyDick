@@ -27,8 +27,8 @@ EnumMap::EnumMap()
 	m_enumMap["CONTROL_MODE_PLAY"] = CONTROL_MODE_PLAY;
 
 	//Renderer Types
-	m_enumMap["RendererType::SDL"] = RendererType::SDL;
-	m_enumMap["RendererType::OPENGL"] = RendererType::OPENGL;
+	m_enumMap["RendererType::SDL"] = (int)RendererType::SDL;
+	m_enumMap["RendererType::OPENGL"] = (int)RendererType::OPENGL;
 
 	//GameObject CollisionTags
 	m_enumMap["CollisionTag::GENERAL_SOLID"] = CollisionTag::GENERAL_SOLID;

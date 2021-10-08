@@ -12,16 +12,20 @@ public:
 	GLDrawerType drawerType;
 
 	GLDrawer() = default;
-	GLDrawer(int drawerType);
+	GLDrawer(GLDrawerType drawerType);
 	~GLDrawer();
+
+	void prepare();
+	void bind();
 
 private:
 	
-	GLuint m_vaoId;
-	GLuint m_vboId;
-	GLuint m_iboId;
+	GLuint m_vaoId{};
+	GLuint m_vboId{};
+	GLuint m_iboId{};
+	float m_vertexSize{};
 
-	void _setVertexBufferAttriubuteLayout(int drawerType);
+	void _setVertexBufferAttriubuteLayout(GLDrawerType drawerType);
 
 
 };

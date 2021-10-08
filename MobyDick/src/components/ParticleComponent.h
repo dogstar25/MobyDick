@@ -9,6 +9,7 @@
 
 #include <json/json.h>
 
+#include "../texture.h"
 #include "Component.h"
 #include "../Globals.h"
 #include "../BaseConstants.h"
@@ -25,7 +26,7 @@ struct Particle
 	SDL_FPoint velocity{ 0 };
 	bool isAvailable { true };	
 	bool isActive{ false };
-	SDL_Texture* texture;
+	Texture* texture;
 	SDL_Color color{ 255,255,255,255 };
 	bool alphaFade{};
 	Timer lifetimeTimer{};

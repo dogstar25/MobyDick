@@ -2,14 +2,25 @@
 
 #define GL_GLEXT_PROTOTYPES
 
+#include <memory>
+#include <vector>
+#include <unordered_map>
+#include <array>
+
 #include <SDL2/SDL.h>
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "GLDebugCallback.h"
 #include "GLDrawer.h"
 #include "DrawBatch.h"
 #include "../Renderer.h"
+#include "SpriteVertex.h"
+#include "Vertex.h"
+#include "Shader.h"
+#include "../BaseConstants.h"
+
 
 
 
@@ -22,12 +33,12 @@ public:
 
 	SDL_Renderer* sdlRenderer() { return nullptr; }
 	void init(SDL_Window* window);
-	bool present() { return true; };
-	bool clear() { return true; };
+	bool present();
+	bool clear();
 	SDL_Texture* createTextureFromSurface(SDL_Surface* surface) { return nullptr; };
 	//Note:the renderComponent will call this draw
 	void drawSprite(int objectType, glm::vec2 position, GLint layer, GLfloat angle, GLfloat width, GLfloat height, glm::vec4 color, GLuint textureId, glm::vec2 textureCoords );
-	void drawSprite(SDL_FRect quad, SDL_Color color, SDL_Texture* texture, 
+	void drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, 
 		SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) override;
 	void drawLine(b2Vec2 lineStart, b2Vec2 lineEnd, SDL_Color color) {};
 	void drawQuad(SDL_FRect quad, SDL_Color color, bool outline, SDL_Color outlineColor) {};
@@ -36,10 +47,17 @@ public:
 
 	std::shared_ptr<GLDrawer> spriteDrawer(){ return m_spriteDrawer; }
 
+	Shader shader(GLShaderType shaderType) {
+		return m_shaders[(int)shaderType];
+	}
+
+	glm::mat4  projectionMatrix() { return m_projectionMatrix; }
+
 private:
 
 	void _setVertexBufferAttriubuteLayout();
-	void _buildBatchDrawers();
+	void _addVertexBuffer(std::vector<SpriteVertex> spriteVertices, GLDrawerType objectType, Texture* texture, GLShaderType shaderType);
+	void _addVertexBuffer(std::vector<std::shared_ptr<Vertex>>);
 
 	SDL_GLContext m_glcontext{};
 
@@ -51,8 +69,15 @@ private:
 	//Projection matrix
 	glm::mat4  m_projectionMatrix{1.0};
 
-	//array[objecttypes][textures][shaders]
-	DrawBatch m_drawBatches[MAX_OBJECT_TYPES][MAX_GL_TEXTURES][MAX_GL_SHADER_TYPES];
+	//std::array<int, 4> test2;
+	//std::array<DrawBatch, 2> test;
+	//std::array <std::vector <std::array<DrawBatch, 2>>, 2> m_drawBatches;
+	//3d dimensional vector [OBJECTTYPE][TEXTUREID][SHADERID]
+	//std::vector<std::vector<std::vector<DrawBatch>>> m_drawBatches;
+	//std::unordered_map<int, std::unordered_map< SDL_Surface*, std::unordered_map<int, DrawBatch>>> m_drawBatches;
+	std::unordered_map <std::string, DrawBatch> m_drawBatches;
+	std::array<Shader, int(GLShaderType::count) +1> m_shaders;
+//	DrawBatch m_drawBatches[MAX_OBJECT_TYPES][MAX_GL_TEXTURES][MAX_GL_SHADER_TYPES];
 	
 
 	

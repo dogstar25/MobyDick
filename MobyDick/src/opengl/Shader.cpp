@@ -4,19 +4,19 @@
 #include <sstream>
 #include <iostream>
 
-Shader::Shader(const std::string& shaderName)
+Shader::Shader(GLShaderType shaderType)
 {
 
     GLint status{};
 
     //ToDo:Lookup the actual shader that you want
-    if (shaderName == "BASIC") {
+    if (shaderType == GLShaderType::BASIC) {
 
-        m_shaderSource = _parseShaderSource("opengl/shaders/Basic.glsl");
+        m_shaderSource = _parseShaderSource("shaders/basic.glsl");
     }
-	if (shaderName == "UBER") {
+	if (shaderType == GLShaderType::UBER) {
 
-		m_shaderSource = _parseShaderSource("opengl/shaders/uberShader.glsl");
+		m_shaderSource = _parseShaderSource("../opengl/shaders/uberShader.glsl");
 	}
 
     m_vertextShaderId = glCreateShader(GL_VERTEX_SHADER);
@@ -35,6 +35,17 @@ Shader::Shader(const std::string& shaderName)
     {
         std::cout << "fragment shader compilation failed\n";
     }
+
+    //Greate a program for this shader
+		//Create the shader program
+    m_shaderProgramId = glCreateProgram();
+
+	//Attach my built and ready shader program
+    glAttachShader(m_shaderProgramId, m_vertextShaderId);
+	glAttachShader(m_shaderProgramId, m_fragmentShaderId);
+
+	//Link and use the program
+	glLinkProgram(m_shaderProgramId);
 
     //cleanup
     //glDeleteShader(m_vertextShaderId);

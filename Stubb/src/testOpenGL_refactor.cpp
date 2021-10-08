@@ -6,14 +6,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-
-
-
-
-
-
-
 #include "Game.h"
+#include "BaseConstants.h"
 #include "../opengl/GL2Renderer.h"
 
 #include "../opengl/Shader.h"
@@ -48,13 +42,15 @@ int main(int argc, char* argv[])
     //Initilaize our new openGl renderer
     GL2Renderer::instance().init(window);
 
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
+
     //Initialize the texture manager
     TextureManager::instance().init();
-    TextureManager::instance().load("textureAssets");
+    TextureManager::instance().load("textureAtlasAssets");
 
     //Shader
-    //Shader basicShader("BASIC");
-    Shader basicShader("UBER");
+    Shader basicShader(GLShaderType::BASIC);
+    //Shader basicShader("UBER");
 
     //Create the shader program
     program = glCreateProgram();
@@ -64,9 +60,9 @@ int main(int argc, char* argv[])
     glAttachShader(program, basicShader.fragmentshaderId());
 
     //shader uniforms
-    glBindAttribLocation(program, attrib_position, "i_position");
-    glBindAttribLocation(program, attrib_color, "i_color");
-    glBindAttribLocation(program, attrib_texture, "i_texCoord");
+    //glBindAttribLocation(program, attrib_position, "i_position");
+    //glBindAttribLocation(program, attrib_color, "i_color");
+    //glBindAttribLocation(program, attrib_texture, "i_texCoord");
 
     //Link and use the program
     glLinkProgram(program);
@@ -86,14 +82,15 @@ int main(int argc, char* argv[])
 
     //END create shaders
 
-
-    glEnable(GL_DEPTH_TEST);
+	
+    //glEnable(GL_DEPTH_TEST);
     glClearColor(0.0, 0.0, 0.0, 0.0);
-    glDepthFunc(GL_LEQUAL);
+    //glDepthFunc(GL_LEQUAL);
+    //glDepthFunc(GL_EQUAL);
     //glViewport(0, 0, width, height);
 
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 
     //Create a vertext Buffer Array
@@ -133,8 +130,26 @@ int main(int argc, char* argv[])
     //Texture stuff
     //
     //Generate room for 1 textureId
+    //glEnable(GL_TEXTURE_2D);
     static GLuint texture_id[1];
-    SDL_Surface* surf = TextureManager::instance().getTexture("TX_STUBB")->surface;
+    SDL_Surface* surf = TextureManager::instance().getTexture("TEXTURE_ATLAS_1")->surface;
+    GLenum texture_format{ GL_RGB };
+
+	auto nOfColors = surf->format->BytesPerPixel;
+	if (nOfColors == 4)     // contains an alpha channel
+	{
+		if (surf->format->Rmask == 0x000000ff)
+			texture_format = GL_RGBA;
+		else
+			texture_format = GL_BGRA;
+	}
+	else if (nOfColors == 3)     // no alpha channel
+	{
+		if (surf->format->Rmask == 0x000000ff)
+			texture_format = GL_RGB;
+		else
+			texture_format = GL_BGR;
+	}
     //Generate an array of textures.  We only want one texture (one element array), so trick
     //it by treating "texture" as array of length one.
     glGenTextures(1, texture_id);
@@ -154,7 +169,7 @@ int main(int argc, char* argv[])
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
     //load in the image data
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surf->w, surf->h, 0, GL_RGB, GL_UNSIGNED_BYTE, surf->pixels);
+    glTexImage2D(GL_TEXTURE_2D, 0, texture_format, surf->w, surf->h, 0, texture_format, GL_UNSIGNED_BYTE, surf->pixels);
 
     //Get the location of the texture variable for the program/shader
     GLuint textUniformId = glGetUniformLocation(program, "u_Texture");
@@ -201,15 +216,15 @@ int main(int argc, char* argv[])
 
         //Bind the vertex array, index buffer, and vertextbuffer
         //The vao will remember the attribute layout for this particular vertextBuffer
-        GL2Renderer::instance().bind();
-        GL2Renderer::instance().drawSprite(0, glm::vec2{ 10, 10 }, -1, 90, 250, 250, glm::vec4{ 1,0,0,1 }, texture_id[0], glm::vec2{ 0,0 });
+        //GL2Renderer::instance().bind();
+        GL2Renderer::instance().drawSprite(0, glm::vec2{ 32, 32 }, -1, 0, 128, 128, glm::vec4{ 1,1,1,1 }, texture_id[0], glm::vec2{ 4, 880});
         
 
         //Bind the texture
         glBindTexture(GL_TEXTURE_2D, texture_id[0]);
 
         //Draw
-        glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         SDL_GL_SwapWindow(window);
         SDL_Delay(1);

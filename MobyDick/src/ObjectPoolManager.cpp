@@ -74,11 +74,11 @@ std::optional<std::shared_ptr<GameObject>> ObjectPoolManager::getPooledObject(st
 
 }
 
-SDL_Texture* ObjectPoolManager::getPoolObjectTexture(std::string poolId)
+std::shared_ptr<Texture> ObjectPoolManager::getPoolObjectTexture(std::string poolId)
 {
 
 	auto& gameObject = m_objectPool[poolId].at(0);
-	auto texture = gameObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT)->texture()->sdlTexture;
+	auto texture = gameObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT)->texture();
 
 	return texture;
 }

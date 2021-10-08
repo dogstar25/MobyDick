@@ -4,17 +4,17 @@
 #include <sstream>
 #include <iostream>
 
-Shader::Shader(const std::string& shaderName)
+Shader::Shader(GLShaderType shaderType)
 {
 
     GLint status{};
 
     //ToDo:Lookup the actual shader that you want
-    if (shaderName == "BASIC") {
+    if (shaderType == GLShaderType::BASIC) {
 
         m_shaderSource = _parseShaderSource("opengl/shaders/Basic.glsl");
     }
-	if (shaderName == "UBER") {
+	if (shaderType == GLShaderType::UBER) {
 
 		m_shaderSource = _parseShaderSource("opengl/shaders/uberShader.glsl");
 	}

@@ -103,6 +103,10 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 	transformComponent->setPosition(
 		transformComponent->originalPosition().x + tempSurface->w/2,
 		transformComponent->originalPosition().y + tempSurface->h/2);
+	
+	//Also set the size of the texture itself
+	SDL_Rect quad = { 0 , 0, (float)tempSurface->w, (float)tempSurface->h };
+	texture->textureAtlasQuad = std::move(quad);
 
 	texture->sdlTexture = game->renderer()->createTextureFromSurface(tempSurface);
 	texture->surface = tempSurface;

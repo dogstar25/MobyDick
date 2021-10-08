@@ -1,7 +1,9 @@
 #include "GLDrawer.h"
 
+#include "SpriteVertex.h"
 
-GLDrawer::GLDrawer(int drawerType)
+
+GLDrawer::GLDrawer(GLDrawerType drawerType)
 {
 
 	//Generate and bind to a new VOA (Vertex Object Array)
@@ -21,6 +23,16 @@ GLDrawer::GLDrawer(int drawerType)
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
+	switch (drawerType){
+		case GLDrawerType::GLSPRITE:
+			m_vertexSize = sizeof(SpriteVertex);
+			break;
+		case GLDrawerType::GLLINE:
+			//m_vertexSize = sizeof(SpriteVertex);
+			break;
+	}
+
+
 
 }
 
@@ -28,10 +40,25 @@ GLDrawer::~GLDrawer()
 {
 }
 
-void GLDrawer::_setVertexBufferAttriubuteLayout(int drawerType)
+void GLDrawer::prepare()
 {
 
-	if (drawerType == GameObjectType::SPRITE) {
+	glBindVertexArray(m_vaoId);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vboId);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
+
+
+}
+
+void GLDrawer::bind()
+{
+
+}
+
+void GLDrawer::_setVertexBufferAttriubuteLayout(GLDrawerType drawerType)
+{
+
+	if (drawerType == GLDrawerType::GLSPRITE) {
 
 		// vertex attrubute indexes
 		const int attrib_position = 0;
@@ -47,7 +74,7 @@ void GLDrawer::_setVertexBufferAttriubuteLayout(int drawerType)
 
 
 	}
-	else if (drawerType == GameObjectType::LINE) {
+	else if (drawerType == GLDrawerType::GLLINE) {
 
 	}
 

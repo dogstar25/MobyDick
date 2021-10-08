@@ -167,7 +167,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="opengl\GL2Renderer.cpp" />
-    <ClCompile Include="opengl\IndexBuffer.cpp" />
     <ClCompile Include="opengl\Shader.cpp" />
     <ClCompile Include="opengl\VertexBuffer.cpp" />
     <ClCompile Include="src\StubGame.cpp" />
@@ -176,7 +175,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="opengl\GL2Renderer.h" />
-    <ClInclude Include="opengl\IndexBuffer.h" />
     <ClInclude Include="opengl\Shader.h" />
     <ClInclude Include="opengl\VertexBuffer.h" />
     <ClInclude Include="src\GameConstants.h" />
@@ -190,6 +188,7 @@
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />
     <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\textureAssets.json" />
+    <None Include="assets\textureAtlasAssets.json" />
     <None Include="opengl\shaders\basic.glsl" />
     <None Include="opengl\shaders\uberShader.glsl" />
   </ItemGroup>
@@ -205,6 +204,7 @@
     <Image Include="assets\moby1.png" />
     <Image Include="assets\mobydick_circle.png" />
     <Image Include="assets\particle1.png" />
+    <Image Include="assets\textureAtlas01.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

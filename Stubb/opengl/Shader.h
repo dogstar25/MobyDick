@@ -2,6 +2,7 @@
 
 #include <string>
 #include <glad/glad.h>
+#include "BaseConstants.h"
 
 struct ShaderSource
 {
@@ -14,7 +15,7 @@ struct ShaderSource
 class Shader
 {
 public:
-	Shader(const std::string& shaderFilename);
+	Shader(GLShaderType shaderType);
 	~Shader();
 
 	void bind();

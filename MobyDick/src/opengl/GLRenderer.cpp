@@ -2,37 +2,25 @@
 
 
 #include <iostream>
+#include <sstream>
+#include <utility>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glad/glad.h>
+#include <format>
+
 
 #include "../Globals.h"
 #include "../GameConfig.h"
 #include "GLDrawer.h"
 #include "SpriteVertex.h"
+#include "../game.h"
 
-
-
+extern std::unique_ptr<Game> game;
 
 GLRenderer::GLRenderer()
 {
 
-	//Create the different drawers
-	m_spriteDrawer = std::make_shared<GLDrawer>(GameObjectType::SPRITE);
-	m_lineDrawer = std::make_shared<GLDrawer>(GameObjectType::LINE);
-
-	//Initilaize the various draw batches that can exist
-	for (int objectTypeIndex = 1; objectTypeIndex < MAX_OBJECT_TYPES; objectTypeIndex++) {
-		for (int textureIndex = 0; textureIndex < MAX_GL_TEXTURES; textureIndex++) {
-			for (int shaderIndex = 0; shaderIndex < MAX_GL_SHADER_TYPES; shaderIndex++) {
-
-				m_drawBatches[objectTypeIndex][textureIndex][shaderIndex] = { DrawBatch(1) };
-
-			}
-		}
-	}
-
-	
 
 }
 
@@ -46,9 +34,11 @@ void GLRenderer::init(SDL_Window* window)
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
 
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
 
 
 	SDL_GLContext m_glcontext = SDL_GL_CreateContext(window);
@@ -64,22 +54,65 @@ void GLRenderer::init(SDL_Window* window)
 
 	m_projectionMatrix = glm::ortho(0.0f, (float)GameConfig::instance().windowWidth(), (float)GameConfig::instance().windowHeight(), 0.0f, 0.0f, 10.0f);
 
+	//Create the different drawers
+	m_spriteDrawer = std::make_shared<GLDrawer>(GLDrawerType::GLSPRITE);
+	m_lineDrawer = std::make_shared<GLDrawer>(GLDrawerType::GLLINE);
 
+	//Create all shaders
+	m_shaders[(int)GLShaderType::BASIC] = Shader(GLShaderType::BASIC);
+	m_shaders[(int)GLShaderType::UBER] = Shader(GLShaderType::UBER);
+
+	int flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
+	{
+		glEnable(GL_DEBUG_OUTPUT);
+		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+		glDebugMessageCallback(GLDebugCallback, nullptr);
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+	}
+	
 
 
 
 }
 
-void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, SDL_Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor)
+bool GLRenderer::clear()
 {
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	return true;
+}
+
+bool GLRenderer::present()
+{
+
+	//Draw each batch
+	for (auto& drawBatch : m_drawBatches) {
+		drawBatch.second.draw();
+		drawBatch.second.clear();
+	}
+
+	SDL_GL_SwapWindow(game->window());
+	SDL_Delay(1);
+
+	return true;
+}
+
+void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor)
+{
+
+
+	//Temporary - we need to normalize the color coming in
+	color = { 1,1,1,1 };
 
 	glm::vec2 glPosition{quad.x, quad.y};
 	glm::vec2 glSize{ quad.w, quad.h };
-
 	glm::vec4 glColor{ color.r, color.g, color.b, color.a};
+	//std::shared_ptr<SpriteVertex> vertex;
 
 	//Array of 4 vertices
-	SpriteVertex spriteVertexBuffer[4];
+	std::vector<SpriteVertex> spriteVertexBuffer;
 
 	//Initilaize a new translation matrix with one to start it out as an identity matrix
 	glm::mat4 translationMatrix(1.0f);
@@ -97,29 +130,52 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, SDL_Texture* textur
 	// 	   Build the 4 vertices that make a quad/rectangle/square
 	// 
 
+	SpriteVertex vertex;
 	//v0
-	spriteVertexBuffer[0].positionAttribute = glm::vec3(0, 0, -1);
-	//spriteVertexBuffer[0].positionAttribute = position;
-	spriteVertexBuffer[0].colorAttribute = glColor;
-	spriteVertexBuffer[0].textureCoordsAttribute = { textureSrcQuad->x, textureSrcQuad->y };
+	vertex.positionAttribute = glm::vec3(0, 0, -1);
+	vertex.colorAttribute = glColor;
+	glm::vec2 calculatedTextureCoordinates = { textureSrcQuad->x, textureSrcQuad->y };
+	auto normalizedTextureCoords = util::normalizeTextureCoords(
+		{ calculatedTextureCoordinates.x, calculatedTextureCoordinates.y }, 
+		{ texture->surface->w, texture->surface->h });
+	vertex.textureCoordsAttribute = normalizedTextureCoords;
+	spriteVertexBuffer.push_back(vertex);
 
 	//v1
-	spriteVertexBuffer[1].positionAttribute = glm::vec3{ glSize.x, 0, -1 };
-	//spriteVertexBuffer[1].positionAttribute = position + glm::vec3{ width, 0, 0 };
-	spriteVertexBuffer[1].colorAttribute = glColor;
-	spriteVertexBuffer[1].textureCoordsAttribute = { 1,0 };
+	vertex.positionAttribute = glm::vec3{ glSize.x, 0, -1 };
+	vertex.colorAttribute = glColor;
+
+	calculatedTextureCoordinates = { textureSrcQuad->x + textureSrcQuad->w, textureSrcQuad->y };
+	normalizedTextureCoords = util::normalizeTextureCoords(
+		{ calculatedTextureCoordinates.x, calculatedTextureCoordinates.y },
+		{ texture->surface->w, texture->surface->h });
+	vertex.textureCoordsAttribute = normalizedTextureCoords;
+
+	spriteVertexBuffer.push_back(vertex);
 
 	//v2
-	spriteVertexBuffer[2].positionAttribute = glm::vec3{ glSize.x, glSize.y, -1 };
-	//spriteVertexBuffer[2].positionAttribute = position + glm::vec3{ width, height, 0 };
-	spriteVertexBuffer[2].colorAttribute = glColor;
-	spriteVertexBuffer[2].textureCoordsAttribute = { 1,1 };
+	vertex.positionAttribute = glm::vec3{ glSize.x, glSize.y, -1 };
+	vertex.colorAttribute = glColor;
+
+	calculatedTextureCoordinates = { textureSrcQuad->x + textureSrcQuad->w, textureSrcQuad->y + textureSrcQuad->h };
+	normalizedTextureCoords = util::normalizeTextureCoords(
+		{ calculatedTextureCoordinates.x, calculatedTextureCoordinates.y },
+		{ texture->surface->w, texture->surface->h });
+	vertex.textureCoordsAttribute = normalizedTextureCoords;
+
+	spriteVertexBuffer.push_back(vertex);
 
 	//v3
-	spriteVertexBuffer[3].positionAttribute = glm::vec3{ 0, glSize.y, -1 };
-	//spriteVertexBuffer[3].positionAttribute = glm::vec3{ 0, height, 0 };
-	spriteVertexBuffer[3].colorAttribute = glColor;
-	spriteVertexBuffer[3].textureCoordsAttribute = { 0,1 };
+	vertex.positionAttribute = glm::vec3{ 0, glSize.y, -1 };
+	vertex.colorAttribute = glColor;
+
+	calculatedTextureCoordinates = { textureSrcQuad->x , textureSrcQuad->y + textureSrcQuad->h };
+	normalizedTextureCoords = util::normalizeTextureCoords(
+		{ calculatedTextureCoordinates.x, calculatedTextureCoordinates.y },
+		{ texture->surface->w, texture->surface->h });
+	vertex.textureCoordsAttribute = normalizedTextureCoords;
+
+	spriteVertexBuffer.push_back(vertex);
 
 	//Apply the tranlation matrix to each vertex
 	for (int i = 0; i < 4; i++) {
@@ -128,79 +184,14 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, SDL_Texture* textur
 
 	}
 
-	//m_drawBatches[GameObjectType::SPRITE][][]
+	//shader needs to be passed in
+	auto shadertype = GLShaderType::BASIC;
+
+	_addVertexBuffer(spriteVertexBuffer, GLDrawerType::GLSPRITE, texture, shadertype);
 
 }
 
 
-void GLRenderer::drawSprite(int objectType, glm::vec2 position, GLint zLayer, GLfloat angle, GLfloat width, GLfloat height, glm::vec4 color, GLuint textureId, glm::vec2 textureCoords)
-{
-
-	glBindTexture(GL_TEXTURE_2D, textureId);
-
-	SpriteVertex spriteVertexBuffer[4];
-
-
-	float angleRad = util::degreesToRadians(angle);
-
-	//Initilaize a new translation matrix with one to start it out as an identity matrix
-	glm::mat4 translationMatrix(1.0f);
-
-	//Apply the position to the translation matrix
-	translationMatrix = glm::translate(translationMatrix, glm::vec3(position.x, position.y, 1.0));
-
-	//Apply the rotation - move to center, rotate, move back
-	translationMatrix = glm::translate(translationMatrix, glm::vec3(width / 2, height / 2, 0.0));
-	translationMatrix = glm::rotate(translationMatrix, angleRad, glm::vec3(0.0, 0.0, 1.0));
-	translationMatrix = glm::translate(translationMatrix, glm::vec3(-(width / 2), -(height / 2), 0.0));
-
-	//
-	// Vertex Buffer Data
-	// 	   Build the 4 vertices that make a quad/rectangle/square
-	// 
-	
-	//v0
-	spriteVertexBuffer[0].positionAttribute = glm::vec3(0,0, zLayer);
-	//spriteVertexBuffer[0].positionAttribute = position;
-	spriteVertexBuffer[0].colorAttribute = color;
-	spriteVertexBuffer[0].textureCoordsAttribute = textureCoords;
-
-	//v1
-	spriteVertexBuffer[1].positionAttribute = glm::vec3{ width, 0, zLayer };
-	//spriteVertexBuffer[1].positionAttribute = position + glm::vec3{ width, 0, 0 };
-	spriteVertexBuffer[1].colorAttribute = color;
-	spriteVertexBuffer[1].textureCoordsAttribute = {1,0};
-
-	//v2
-	spriteVertexBuffer[2].positionAttribute = glm::vec3{ width, height, zLayer };
-	//spriteVertexBuffer[2].positionAttribute = position + glm::vec3{ width, height, 0 };
-	spriteVertexBuffer[2].colorAttribute = color;
-	spriteVertexBuffer[2].textureCoordsAttribute = { 1,1 };
-
-	//v3
-	spriteVertexBuffer[3].positionAttribute = glm::vec3{ 0, height, zLayer };
-	//spriteVertexBuffer[3].positionAttribute = glm::vec3{ 0, height, 0 };
-	spriteVertexBuffer[3].colorAttribute = color;
-	spriteVertexBuffer[3].textureCoordsAttribute = { 0,1 };
-
-	//Apply the tranlation matrix to each vertex
-	for (int i = 0; i < 4; i++) {
-
-		spriteVertexBuffer[i].positionAttribute = translationMatrix * glm::vec4(spriteVertexBuffer[i].positionAttribute, 1.0);
-
-	}
-
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(spriteVertexBuffer), &spriteVertexBuffer);
-
-	//
-	// Index Buffer Data
-	// 
-	//SpriteindexBuffer spriteIndexBuffer;
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(g_index_buffer), g_index_buffer, GL_DYNAMIC_DRAW); // state using
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(spriteIndexBuffer), &spriteIndexBuffer, GL_DYNAMIC_DRAW);
-
-
-}
 
 void GLRenderer::bind()
 {
@@ -247,3 +238,37 @@ void GLRenderer::_setVertexBufferAttriubuteLayout()
 
 }
 
+void GLRenderer::_addVertexBuffer(std::vector<SpriteVertex> spriteVertices, GLDrawerType objectType, Texture* texture, GLShaderType shaderType)
+{
+	//Build the map key
+	//const void* texturePtr = static_cast<const void*>(texture);
+	std::stringstream ss;
+	ss << texture;
+	auto key = std::format("{:0d}_{}_{:05d}", (int)objectType, ss.str(), (int)shaderType);
+	
+
+	//See if the drawBatch for this combo exists yet
+	if (m_drawBatches.find(key) == m_drawBatches.end()) {
+
+		m_drawBatches[key] = DrawBatch(objectType, texture, shaderType);
+		m_drawBatches[key].addVertexBuffer(spriteVertices);
+
+	}
+	else {
+
+		m_drawBatches[key].addVertexBuffer(spriteVertices);
+
+	}
+
+
+}
+
+void GLRenderer::_addVertexBuffer(std::vector<std::shared_ptr<Vertex>> vertex)
+{
+
+
+
+
+
+
+}

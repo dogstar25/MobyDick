@@ -72,6 +72,7 @@ void Game::_displayLoadingMsg()
 {
 	static int statusDots{};
 	std::string statusMsg{"Loading"};
+	Texture texture{};
 
 	statusDots++;
 	if (statusDots > 4) {
@@ -94,9 +95,12 @@ void Game::_displayLoadingMsg()
 		GameConfig::instance().windowWidth() / 2 - 100,
 		GameConfig::instance().windowHeight() / 2 - 42,
 		tempSurface->w, tempSurface->h };
-	m_renderer->drawSprite(dest, SDL_Color{ 255,255,255,255 }, sdlTexture, nullptr, 0, false, SDL_Color{});
+
+	texture.sdlTexture = sdlTexture;
+	texture.surface = tempSurface;
+
+	m_renderer->drawSprite(dest, SDL_Color{ 255,255,255,255 }, &texture, nullptr, 0, false, SDL_Color{});
 	m_renderer->present();
 	SDL_DestroyTexture(sdlTexture);
-
 
 }

@@ -6,7 +6,8 @@
 #include "TextureManager.h"
 
 
-Animation::Animation(Json::Value animationDetailsJSON, Json::Value transformDetailsJSON)
+Animation::Animation(Json::Value animationDetailsJSON, b2Vec2 frameSize) :
+	m_frameSize(frameSize)
 {
 
 	m_currentAnimFrame = 0;
@@ -20,31 +21,23 @@ Animation::Animation(Json::Value animationDetailsJSON, Json::Value transformDeta
 	//Get texture
 	std::string textureId = animationDetailsJSON["textureId"].asString();
 
-	m_texture = TextureManager::instance().getTexture(textureId)->sdlTexture;
+	m_texture = TextureManager::instance().getTexture(textureId);
 	m_currentTextureAnimationSrcRect = nullptr;
 
 	//Calculate how many columns and rows this animation texture has
-	int width, height;
-	//First get width of textture
-	SDL_QueryTexture(m_texture, NULL, NULL, &width, &height);
-
-	m_frameSize.x = transformDetailsJSON["size"]["width"].asFloat();
-	m_frameSize.y = transformDetailsJSON["size"]["height"].asFloat();
-
-	//Calculate nnumber of rows and columns - remember to convert the gameObject size to pixels first
 	int rows, columns;
-	columns = (int)(width / m_frameSize.x);
-	rows = (int)(height / m_frameSize.y);
+	columns = (int)(m_texture->textureAtlasQuad.w / m_frameSize.x);
+	rows = (int)(m_texture->textureAtlasQuad.h / m_frameSize.y);
 
-	//	//Calculate top left corner of each animation frame
+	//Calculate top left corner of each animation frame
 	SDL_FPoint point;
 	int frameCount = 0;
 	for (int rowIdx = 0; rowIdx < rows; rowIdx++) 
 	{
 		for (int colIdx = 0; colIdx < columns; colIdx++) 
 		{
-			point.x = colIdx * m_frameSize.x;
-			point.y = rowIdx * m_frameSize.y;
+			point.x = m_texture->textureAtlasQuad.x + (colIdx * m_frameSize.x);
+			point.y = m_texture->textureAtlasQuad.y + (rowIdx * m_frameSize.y);
 			m_animationFramePositions.push_back(point);
 			//do not exceed the maximum number of frames that this texture holds
 			frameCount++;
@@ -68,7 +61,10 @@ int Animation::animate()
 	{
 
 		//Increment animation frame counter and reset if it exceeds last one
-		this->m_currentAnimFrame += 1;
+		if (m_frameCount > 1) {
+			this->m_currentAnimFrame += 1;
+		}
+		
 		if (this->m_currentAnimFrame >
 			m_frameCount - 1) {
 

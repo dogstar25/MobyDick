@@ -5,7 +5,9 @@
 
 class SpriteVertex : public Vertex
 {
+	
 public:
+	SpriteVertex() = default;
 
 	glm::vec3 positionAttribute;
 	glm::vec4 colorAttribute;

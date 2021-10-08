@@ -56,6 +56,10 @@
             },
             "animationComponent": {
                 "defaultState": "ANIMATION_IDLE",
+                "frameSize": {
+                    "width": 64,
+                    "height": 64
+                },
                 "animations": [
                     {
                         "state": "ANIMATION_IDLE",

@@ -3,6 +3,8 @@
 #include <string>
 #include <glad/glad.h>
 
+#include "../BaseConstants.h"
+
 struct ShaderSource
 {
 	std::string vertexSource;
@@ -14,7 +16,8 @@ struct ShaderSource
 class Shader
 {
 public:
-	Shader(const std::string& shaderFilename);
+	Shader() = default;
+	Shader(GLShaderType shaderType);
 	~Shader();
 
 	void bind();
@@ -23,6 +26,7 @@ public:
 
 	GLuint vertexshaderId() { return m_vertextShaderId; }
 	GLuint fragmentshaderId() { return m_fragmentShaderId; }
+	GLuint shaderProgramId() { return m_shaderProgramId; }
 	
 
 private:
@@ -30,8 +34,8 @@ private:
 	ShaderSource m_shaderSource{};
 	unsigned int m_vertextShaderId{};
 	unsigned int m_fragmentShaderId{};
-	unsigned int m_shaderProgramId{};
 	GLuint m_shaderId{};
+	GLuint m_shaderProgramId{};
 
 
 	ShaderSource _parseShaderSource(const std::string& shaderFilename);

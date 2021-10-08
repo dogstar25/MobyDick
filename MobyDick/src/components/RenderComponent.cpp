@@ -101,7 +101,7 @@ Get the portion of the gameObject texture to render
 For animated objects, this is the portion of the texture that
 represents the current frame of animation
 */
-SDL_Rect* RenderComponent::getRenderTextureRect()
+SDL_Rect* RenderComponent::getRenderTextureRect(Texture& texture)
 {
 
 	SDL_Rect* textureSrcRect=nullptr;
@@ -110,6 +110,9 @@ SDL_Rect* RenderComponent::getRenderTextureRect()
 	if (animationComponent)
 	{
 		textureSrcRect = animationComponent->getCurrentAnimationTextureRect();
+	}
+	else {
+		textureSrcRect = &texture.textureAtlasQuad;
 	}
 
 	return textureSrcRect;
@@ -120,12 +123,12 @@ SDL_Rect* RenderComponent::getRenderTextureRect()
 Get the actual texture to display. If this is an animated object then it will have
 different textures for different animation states
 */
-SDL_Texture* RenderComponent::getRenderTexture()
+std::shared_ptr<Texture> RenderComponent::getRenderTexture()
 {
 
-	SDL_Texture* texture = nullptr;
+	//SDL_Texture* texture = nullptr;
+	std::shared_ptr<Texture> texture{};
 	const auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
-
 
 	if (animationComponent)
 	{
@@ -133,7 +136,7 @@ SDL_Texture* RenderComponent::getRenderTexture()
 	}
 	else 
 	{
-		texture = m_texture->sdlTexture;
+		texture = m_texture;
 	}
 
 	return texture;
@@ -222,12 +225,16 @@ void RenderComponent::render()
 			SDL_Color outlineColor{};
 			float angle = transform->angle();
 
+			Texture* texture = getRenderTexture().get();
+
 			SDL_FRect destQuad = getRenderDestRect();
-			SDL_Rect* textureSourceQuad = getRenderTextureRect();
+			SDL_Rect* textureSourceQuad = getRenderTextureRect(*texture);
 
 			//SDL Only Stuff
-			SDL_Texture* texture = getRenderTexture();
-			SDL_SetTextureBlendMode(texture, m_textureBlendMode);
+			if (GameConfig::instance().rendererType() == RendererType::SDL) {
+				SDL_Texture* sdlTexture = getRenderTexture()->sdlTexture;
+				SDL_SetTextureBlendMode(sdlTexture, m_textureBlendMode);
+			}
 			/////
 
 			//Outline the gameObject if defined to 
@@ -242,6 +249,7 @@ void RenderComponent::render()
 				outlineColor = m_outLineColor;
 
 			}
+
 
 			game->renderer()->drawSprite(destQuad, m_color, texture, textureSourceQuad, angle, outline, outlineColor);
 

@@ -213,6 +213,7 @@
     <Image Include="assets\spaceship1.png" />
     <Image Include="assets\square_128.png" />
     <Image Include="assets\swordLady64_Idle.png" />
+    <Image Include="assets\textureAtlas01.png" />
     <Image Include="assets\tile1.png" />
     <Image Include="assets\wall1_column.png" />
     <Image Include="assets\wall1_corner.png" />
@@ -238,6 +239,9 @@
     <None Include="assets\levels\level_test_definition.json" />
     <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\textureAssets.json" />
+    <None Include="assets\textureAtlasAssets.json" />
+    <None Include="shaders\basic.glsl" />
+    <None Include="shaders\uberShader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav" />

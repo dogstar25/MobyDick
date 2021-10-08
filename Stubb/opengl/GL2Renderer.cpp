@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-
+#include "opengl/GLDebugCallback.h"
 #include "Globals.h"
 
 
@@ -27,9 +27,11 @@ void GL2Renderer::init(SDL_Window* window)
 	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
 	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
 
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
 
 
 	SDL_GLContext m_glcontext = SDL_GL_CreateContext(window);
@@ -43,7 +45,14 @@ void GL2Renderer::init(SDL_Window* window)
 	std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;
 	std::cout << "Version: " << glGetString(GL_VERSION) << std::endl;
 
-
+	int flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
+	{
+		glEnable(GL_DEBUG_OUTPUT);
+		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+		glDebugMessageCallback(GLDebugCallback, nullptr);
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+	}
 
 	//ToDo: need function to build the GLDrawers, aeach shoul dhave its own VAO and VBO ID stored with it
 	_buildDrawers();
@@ -71,7 +80,7 @@ void GL2Renderer::init(SDL_Window* window)
 void GL2Renderer::drawSprite(int objectType, glm::vec2 position, GLint zLayer, GLfloat angle, GLfloat width, GLfloat height, glm::vec4 color, GLuint textureId, glm::vec2 textureCoords)
 {
 
-	glBindTexture(GL_TEXTURE_2D, textureId);
+	//glBindTexture(GL_TEXTURE_2D, textureId);
 
 	SpriteVertex spriteVertexBuffer[4];
 
@@ -94,29 +103,34 @@ void GL2Renderer::drawSprite(int objectType, glm::vec2 position, GLint zLayer, G
 	// 	   Build the 4 vertices that make a quad/rectangle/square
 	// 
 	
+	glm::vec2 textureCoordNormalized{};
+
 	//v0
 	spriteVertexBuffer[0].positionAttribute = glm::vec3(0,0, zLayer);
-	//spriteVertexBuffer[0].positionAttribute = position;
 	spriteVertexBuffer[0].colorAttribute = color;
-	spriteVertexBuffer[0].textureCoordsAttribute = textureCoords;
+	textureCoordNormalized = { (textureCoords.x + .5) / 4096, (textureCoords.y + .5) / 4096 };
+	spriteVertexBuffer[0].textureCoordsAttribute = { textureCoordNormalized.x,textureCoordNormalized.y};
+
 
 	//v1
 	spriteVertexBuffer[1].positionAttribute = glm::vec3{ width, 0, zLayer };
-	//spriteVertexBuffer[1].positionAttribute = position + glm::vec3{ width, 0, 0 };
 	spriteVertexBuffer[1].colorAttribute = color;
-	spriteVertexBuffer[1].textureCoordsAttribute = {1,0};
+	textureCoordNormalized = { (textureCoords.x + width + .5) / 4096, (textureCoords.y + .5) / 4096 };
+	spriteVertexBuffer[1].textureCoordsAttribute = { textureCoordNormalized.x,textureCoordNormalized.y };
 
 	//v2
 	spriteVertexBuffer[2].positionAttribute = glm::vec3{ width, height, zLayer };
-	//spriteVertexBuffer[2].positionAttribute = position + glm::vec3{ width, height, 0 };
 	spriteVertexBuffer[2].colorAttribute = color;
-	spriteVertexBuffer[2].textureCoordsAttribute = { 1,1 };
+	textureCoordNormalized = { (textureCoords.x + width + .5) / 4096, (textureCoords.y + height + .5) / 4096 };
+	spriteVertexBuffer[2].textureCoordsAttribute = { textureCoordNormalized.x,textureCoordNormalized.y };
+
 
 	//v3
 	spriteVertexBuffer[3].positionAttribute = glm::vec3{ 0, height, zLayer };
-	//spriteVertexBuffer[3].positionAttribute = glm::vec3{ 0, height, 0 };
 	spriteVertexBuffer[3].colorAttribute = color;
-	spriteVertexBuffer[3].textureCoordsAttribute = { 0,1 };
+	textureCoordNormalized = { (textureCoords.x + .5) / 4096, (textureCoords.y + height + .5) / 4096 };
+	spriteVertexBuffer[3].textureCoordsAttribute = { textureCoordNormalized.x,textureCoordNormalized.y };
+
 
 	//Apply the tranlation matrix to each vertex
 	for (int i = 0; i < 4; i++) {
@@ -125,6 +139,7 @@ void GL2Renderer::drawSprite(int objectType, glm::vec2 position, GLint zLayer, G
 
 	}
 
+	auto test = sizeof(spriteVertexBuffer);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(spriteVertexBuffer), &spriteVertexBuffer);
 
 	//

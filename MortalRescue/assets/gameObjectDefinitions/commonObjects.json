@@ -8,13 +8,17 @@
             "description": "SwordLady",
             "transformComponent": {
                 "size": {
-                    "width": 64,
-                    "height": 43.75
+                    "width": 32,
+                    "height": 32
                 },
                 "absolutePositioning": false
             },
             "animationComponent": {
                 "defaultState": "ANIMATION_IDLE",
+                "frameSize": {
+                    "width": 64,
+                    "height": 64
+                },
                 "animations": [
                     {
                         "state": "ANIMATION_IDLE",
@@ -29,7 +33,7 @@
             "id": "GINA_64",
             "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::PLAYER",
-            "traitTags": ["player"],
+            "traitTags": [ "player" ],
             "transformComponent": {
                 "size": {
                     "width": 64,
@@ -39,6 +43,10 @@
             },
             "animationComponent": {
                 "defaultState": "ANIMATION_IDLE",
+                "frameSize": {
+                    "width": 64,
+                    "height": 64
+                },
                 "animations": [
                     {
                         "state": "ANIMATION_IDLE",
@@ -81,7 +89,7 @@
                 "attachments": [
                     {
                         "gameObjectId": "PISTOL",
-                        "attachLocation": { 
+                        "attachLocation": {
                             "x": 0.8,
                             "y": 0.0
                         },
@@ -153,10 +161,26 @@
             }
         },
         {
+            "id": "STUBB",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_SOLID",
+            "traitTags": [],
+            "transformComponent": {
+                "size": {
+                    "width": 128,
+                    "height": 128
+                },
+                "absolutePositioning": false
+            },
+            "renderComponent": {
+                "textureId": "TX_STUBB"
+            }
+        },
+        {
             "id": "PLAYER_LABEL",
             "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": ["gui"],
+            "traitTags": [ "gui" ],
             "description": "Player Label",
             "transformComponent": {
                 "absolutePositioning": false
@@ -172,7 +196,7 @@
             "id": "FPS_VALUE",
             "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": ["gui"],
+            "traitTags": [ "gui" ],
             "description": "FPS",
             "transformComponent": {
                 "absolutePositioning": true
@@ -205,7 +229,7 @@
             "id": "GUI_PAUSE_PANEL",
             "type": "GameObjectType::RECTANGLE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": ["gui"],
+            "traitTags": [ "gui" ],
             "transformComponent": {
                 "size": {
                     "width": 176,
@@ -377,7 +401,7 @@
             "id": "SETTINGS_BUTTON",
             "type": "GameObjectType::RECTANGLE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": ["gui"],
+            "traitTags": [ "gui" ],
             "transformComponent": {
                 "size": {
                     "width": 128,
@@ -500,7 +524,7 @@
             "id": "PISTOL",
             "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::WEAPON_PICKUP",
-            "traitTags": ["collectable","weapon"],
+            "traitTags": [ "collectable", "weapon" ],
             "category": "ObjectCategory::COLLECTABLE",
             "description": "Weapon 1",
             "transformComponent": {
@@ -524,6 +548,10 @@
                 }
             },
             "animationComponent": {
+                "frameSize": {
+                    "width": 16,
+                    "height": 16
+                },
                 "animations": [
                     {
                         "state": "ANIMATION_IDLE",
@@ -602,6 +630,10 @@
                 }
             },
             "animationComponent": {
+                "frameSize": {
+                    "width": 6,
+                    "height": 3
+                },
                 "defaultState": "ANIMATION_ACTIVE",
                 "animations": [
                     {
@@ -698,7 +730,7 @@
             "id": "NAVIGATION_TRANSIT_POINT",
             "type": "GameObjectType::ABSTRACT",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": ["navigation"],
+            "traitTags": [ "navigation" ],
             "description": "Navigation Object",
             "physicsComponent": {
                 "type": "B2_STATIC",
@@ -719,7 +751,7 @@
             "id": "NAVIGATION_WAYPOINT",
             "type": "GameObjectType::ABSTRACT",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": ["navigation"],
+            "traitTags": [ "navigation" ],
             "description": "Navigation Object",
             "physicsComponent": {
                 "type": "B2_STATIC",
@@ -739,7 +771,7 @@
             "id": "GUI_PLAYERDEATH_PANEL",
             "type": "GameObjectType::RECTANGLE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": ["gui"],
+            "traitTags": [ "gui" ],
             "transformComponent": {
                 "size": {
                     "width": 256,
