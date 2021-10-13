@@ -250,9 +250,7 @@ void RenderComponent::render()
 
 			}
 
-
 			game->renderer()->drawSprite(destQuad, m_color, texture, textureSourceQuad, angle, outline, outlineColor);
-
 
 			//Drawa a red circle on the bodies center
 			//if(parent()->parentScene()->physicsConfig().b2DebugDrawMode == true &&

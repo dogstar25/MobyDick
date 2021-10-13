@@ -103,7 +103,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 		//Load a first scene
 		Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
-		//scene.loadLevel("level1");
+		scene.loadLevel("level1");
 
 		//_displayLoadingMsg();
 
@@ -114,7 +114,14 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//Initialize the clock object
 		Clock::instance().init();
 
-		scene.addGameObject("STUBB", LAYER_MENU, 1, 1);
+		
+		
+		//scene.addGameObject("WALL1_CORNER", LAYER_MENU, 5, 5);
+		//scene.addGameObject("STUBB", LAYER_MENU, 1, 1);
+
+		//scene.addGameObject("GINA_64", LAYER_MENU, 8, 8);
+		
+		
 		//scene.addGameObject("FPS_VALUE", LAYER_MENU, 1, 1);
 
 	}

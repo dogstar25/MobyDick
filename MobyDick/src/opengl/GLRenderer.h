@@ -27,6 +27,8 @@
 class GLRenderer : public Renderer
 {
 
+	inline static constexpr int MAX_TEXTURE_ATLAS = 4;
+
 public:
 	GLRenderer();
 	~GLRenderer();
@@ -42,10 +44,9 @@ public:
 		SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) override;
 	void drawLine(b2Vec2 lineStart, b2Vec2 lineEnd, SDL_Color color) {};
 	void drawQuad(SDL_FRect quad, SDL_Color color, bool outline, SDL_Color outlineColor) {};
-
-	void bind();
-
 	std::shared_ptr<GLDrawer> spriteDrawer(){ return m_spriteDrawer; }
+	GLuint bindTexture(Texture* texture);
+
 
 	Shader shader(GLShaderType shaderType) {
 		return m_shaders[(int)shaderType];
@@ -58,6 +59,10 @@ private:
 	void _setVertexBufferAttriubuteLayout();
 	void _addVertexBuffer(std::vector<SpriteVertex> spriteVertices, GLDrawerType objectType, Texture* texture, GLShaderType shaderType);
 	void _addVertexBuffer(std::vector<std::shared_ptr<Vertex>>);
+	void _prepTexture(int openGlTextureIndex, Texture* texture);
+	GLuint _addTexture(Texture* texture);
+
+	//void prepTextures();
 
 	SDL_GLContext m_glcontext{};
 
@@ -69,16 +74,17 @@ private:
 	//Projection matrix
 	glm::mat4  m_projectionMatrix{1.0};
 
-	//std::array<int, 4> test2;
-	//std::array<DrawBatch, 2> test;
-	//std::array <std::vector <std::array<DrawBatch, 2>>, 2> m_drawBatches;
-	//3d dimensional vector [OBJECTTYPE][TEXTUREID][SHADERID]
-	//std::vector<std::vector<std::vector<DrawBatch>>> m_drawBatches;
-	//std::unordered_map<int, std::unordered_map< SDL_Surface*, std::unordered_map<int, DrawBatch>>> m_drawBatches;
-	std::unordered_map <std::string, DrawBatch> m_drawBatches;
+	std::unordered_map<std::string, std::shared_ptr<DrawBatch>> m_drawBatches;
 	std::array<Shader, int(GLShaderType::count) +1> m_shaders;
-//	DrawBatch m_drawBatches[MAX_OBJECT_TYPES][MAX_GL_TEXTURES][MAX_GL_SHADER_TYPES];
+
+
+
+	//this should be an array of texturePointerAddr's
+	//The index in is array of where it is stored will be the same index that
+	//represents the opengl textures
+	std::array<std::string, MAX_TEXTURE_ATLAS> m_currentTextures{};
 	
+	GLuint m_textureIds[MAX_TEXTURE_ATLAS];
 
 	
 

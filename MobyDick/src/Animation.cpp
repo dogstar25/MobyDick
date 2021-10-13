@@ -48,6 +48,13 @@ Animation::Animation(Json::Value animationDetailsJSON, b2Vec2 frameSize) :
 		}
 	}
 
+	//initialize the current texture source rect to the first frame of animation
+	m_currentTextureAnimationSrcRect = std::make_shared <SDL_Rect>();
+	m_currentTextureAnimationSrcRect->x = m_animationFramePositions.begin()[0].x;
+	m_currentTextureAnimationSrcRect->y = m_animationFramePositions.begin()[0].y;
+	m_currentTextureAnimationSrcRect->w = m_frameSize.x;
+	m_currentTextureAnimationSrcRect->h = m_frameSize.y;
+
 }
 
 
@@ -57,7 +64,7 @@ int Animation::animate()
 {
 	//check the clock and see if enough time as gone by
 
-	if (m_timer.hasMetTargetDuration())
+	if (m_timer.hasMetTargetDuration() || m_currentTextureAnimationSrcRect == nullptr)
 	{
 
 		//Increment animation frame counter and reset if it exceeds last one

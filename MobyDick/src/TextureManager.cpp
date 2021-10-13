@@ -8,6 +8,7 @@
 #include "RendererSDL.h"
 #include "GameConfig.h"
 #include "BaseConstants.h"
+#include "EnumMaps.h"
 
 extern std::unique_ptr<Game> game;
 

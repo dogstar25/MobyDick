@@ -85,7 +85,7 @@
                 "color": {
                     "red": 38,
                     "green": 195,
-                    "blue": 15,
+                    "blue": 0,
                     "alpha": 255,
                     "random": false
                 }

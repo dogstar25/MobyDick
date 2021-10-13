@@ -23,7 +23,7 @@ private:
 public:
 
 	void addSpriteIndexBuffer();
-	void clear() { m_indexes.clear(); }
-
+	void clear();
+	std::vector<glm::uint> const& indexes() { return  m_indexes; }
 };
 

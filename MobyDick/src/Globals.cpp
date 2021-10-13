@@ -171,10 +171,19 @@ namespace util
 		return angleInDegrees;
 	}
 
-	glm::vec2 normalizeTextureCoords(glm::vec2 textureCoords, glm::vec2 textureSize)
+	glm::vec2 glNormalizeTextureCoords(glm::vec2 textureCoords, glm::vec2 textureSize)
 	{
-		glm::vec2 textureCoordNormalized = { (textureCoords.x + .5) / textureSize.x, (textureCoords.y + .5) / textureSize.y };
-		return textureCoordNormalized;
+		//glm::vec2 textureCoordNormalized = { (textureCoords.x + .5) / textureSize.x, (textureCoords.y + .5) / textureSize.y };
+		glm::vec2 textureCoordNormalized = { (textureCoords.x ) / textureSize.x, (textureCoords.y ) / textureSize.y };
+		glm::vec2 adjustment = { 1 / (2 * 1280), 1 / (2 * 720) };
+
+		return textureCoordNormalized + adjustment;
+	}
+
+	glm::vec4 glNormalizeColor(const SDL_Color &color)
+	{
+		glm::vec4 colorNormalized = { (float)color.r / 255, (float)color.g / 255, (float)color.b / 255, (float)color.a / 255 };
+		return colorNormalized;
 	}
 
 	b2Vec2& toBox2dPoint(b2Vec2& point)

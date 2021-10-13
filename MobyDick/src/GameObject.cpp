@@ -45,6 +45,9 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Build the unique name
 	m_name = _buildName(gameObjectId, xMapPos, yMapPos, parentScene);
 
+	if (gameObjectId.compare("GINA_64") == 0) {
+		int todd = 1;
+	}
 	//Trait tags
 	for (Json::Value itrControls : definitionJSON["traitTags"])
 	{

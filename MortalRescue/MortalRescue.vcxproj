@@ -213,7 +213,7 @@
     <Image Include="assets\spaceship1.png" />
     <Image Include="assets\square_128.png" />
     <Image Include="assets\swordLady64_Idle.png" />
-    <Image Include="assets\textureAtlas01.png" />
+    <Image Include="assets\textureAtlas00.png" />
     <Image Include="assets\tile1.png" />
     <Image Include="assets\wall1_column.png" />
     <Image Include="assets\wall1_corner.png" />

@@ -101,17 +101,17 @@
             "vitalityComponent": {
                 "speed": 20
             },
-            "childrenComponent": {
-                "childPadding": 0,
-                "childPositionRelative": false,
-                "childObjects": [
-                    {
-                        "gameObjectId": "PLAYER_LABEL",
-                        "locationSlot": 1
-                    }
+            //"childrenComponent": {
+            //    "childPadding": 0,
+            //    "childPositionRelative": false,
+            //    "childObjects": [
+            //        {
+            //            "gameObjectId": "PLAYER_LABEL",
+            //            "locationSlot": 1
+            //        }
 
-                ]
-            },
+            //    ]
+            //},
             "playerControlComponent": {
                 "controls": [
                     "INPUT_CONTROL_MOVEMENT",
@@ -173,7 +173,13 @@
                 "absolutePositioning": false
             },
             "renderComponent": {
-                "textureId": "TX_STUBB"
+                "textureId": "TX_STUBB",
+                "color": {
+                    "red": 255,
+                    "green": 255,
+                    "blue": 255,
+                    "alpha": 127
+                }
             }
         },
         {

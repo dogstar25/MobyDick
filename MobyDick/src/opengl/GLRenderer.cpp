@@ -14,6 +14,7 @@
 #include "../GameConfig.h"
 #include "GLDrawer.h"
 #include "SpriteVertex.h"
+#include "SpriteDrawBatch.h"
 #include "../game.h"
 
 extern std::unique_ptr<Game> game;
@@ -38,7 +39,7 @@ void GLRenderer::init(SDL_Window* window)
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
+	//SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
 
 
 	SDL_GLContext m_glcontext = SDL_GL_CreateContext(window);
@@ -62,17 +63,17 @@ void GLRenderer::init(SDL_Window* window)
 	m_shaders[(int)GLShaderType::BASIC] = Shader(GLShaderType::BASIC);
 	m_shaders[(int)GLShaderType::UBER] = Shader(GLShaderType::UBER);
 
-	int flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
-	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
-	{
-		glEnable(GL_DEBUG_OUTPUT);
-		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-		glDebugMessageCallback(GLDebugCallback, nullptr);
-		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
-	}
+	//int flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+	//if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
+	//{
+	//	glEnable(GL_DEBUG_OUTPUT);
+	//	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+	//	glDebugMessageCallback(GLDebugCallback, nullptr);
+	//	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+	//}
 	
-
-
+	//Generate the maximum number of possible texture Id's
+	glGenTextures(MAX_TEXTURE_ATLAS, m_textureIds);
 
 }
 
@@ -89,9 +90,11 @@ bool GLRenderer::present()
 
 	//Draw each batch
 	for (auto& drawBatch : m_drawBatches) {
-		drawBatch.second.draw();
-		drawBatch.second.clear();
+		drawBatch.second->draw();
+		//drawBatch.second->clear();
 	}
+
+	m_drawBatches.erase(m_drawBatches.begin(), m_drawBatches.end());
 
 	SDL_GL_SwapWindow(game->window());
 	SDL_Delay(1);
@@ -102,13 +105,11 @@ bool GLRenderer::present()
 void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor)
 {
 
-
-	//Temporary - we need to normalize the color coming in
-	color = { 1,1,1,1 };
+	auto normalizedcolor = util::glNormalizeColor(color);
 
 	glm::vec2 glPosition{quad.x, quad.y};
 	glm::vec2 glSize{ quad.w, quad.h };
-	glm::vec4 glColor{ color.r, color.g, color.b, color.a};
+	glm::vec4 glColor{ normalizedcolor.r, normalizedcolor.g, normalizedcolor.b, normalizedcolor.a};
 	//std::shared_ptr<SpriteVertex> vertex;
 
 	//Array of 4 vertices
@@ -120,6 +121,8 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, S
 	//Apply the position to the translation matrix
 	translationMatrix = glm::translate(translationMatrix, glm::vec3(glPosition.x, glPosition.y, 1.0));
 
+	angle = util::degreesToRadians(angle);
+
 	//Apply the rotation - move to center, rotate, move back
 	translationMatrix = glm::translate(translationMatrix, glm::vec3(glSize.x / 2, glSize.y / 2, 0.0));
 	translationMatrix = glm::rotate(translationMatrix, angle, glm::vec3(0.0, 0.0, 1.0));
@@ -129,24 +132,33 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, S
 	// Vertex Buffer Data
 	// 	   Build the 4 vertices that make a quad/rectangle/square
 	// 
+	int zIndex = -1;
+	
+	//if (textureSrcQuad == nullptr) {
+	//	textureSrcQuad = new SDL_Rect();
+	//	textureSrcQuad->x = 1;
+	//	textureSrcQuad->y = 1;
+	//	textureSrcQuad->w = 64;
+	//	textureSrcQuad->h = 64;
+	//}
 
 	SpriteVertex vertex;
 	//v0
-	vertex.positionAttribute = glm::vec3(0, 0, -1);
+	vertex.positionAttribute = glm::vec3(0, 0, zIndex);
 	vertex.colorAttribute = glColor;
 	glm::vec2 calculatedTextureCoordinates = { textureSrcQuad->x, textureSrcQuad->y };
-	auto normalizedTextureCoords = util::normalizeTextureCoords(
+	auto normalizedTextureCoords = util::glNormalizeTextureCoords(
 		{ calculatedTextureCoordinates.x, calculatedTextureCoordinates.y }, 
 		{ texture->surface->w, texture->surface->h });
 	vertex.textureCoordsAttribute = normalizedTextureCoords;
 	spriteVertexBuffer.push_back(vertex);
 
 	//v1
-	vertex.positionAttribute = glm::vec3{ glSize.x, 0, -1 };
+	vertex.positionAttribute = glm::vec3{ glSize.x, 0, zIndex };
 	vertex.colorAttribute = glColor;
 
 	calculatedTextureCoordinates = { textureSrcQuad->x + textureSrcQuad->w, textureSrcQuad->y };
-	normalizedTextureCoords = util::normalizeTextureCoords(
+	normalizedTextureCoords = util::glNormalizeTextureCoords(
 		{ calculatedTextureCoordinates.x, calculatedTextureCoordinates.y },
 		{ texture->surface->w, texture->surface->h });
 	vertex.textureCoordsAttribute = normalizedTextureCoords;
@@ -154,11 +166,11 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, S
 	spriteVertexBuffer.push_back(vertex);
 
 	//v2
-	vertex.positionAttribute = glm::vec3{ glSize.x, glSize.y, -1 };
+	vertex.positionAttribute = glm::vec3{ glSize.x, glSize.y, zIndex };
 	vertex.colorAttribute = glColor;
 
 	calculatedTextureCoordinates = { textureSrcQuad->x + textureSrcQuad->w, textureSrcQuad->y + textureSrcQuad->h };
-	normalizedTextureCoords = util::normalizeTextureCoords(
+	normalizedTextureCoords = util::glNormalizeTextureCoords(
 		{ calculatedTextureCoordinates.x, calculatedTextureCoordinates.y },
 		{ texture->surface->w, texture->surface->h });
 	vertex.textureCoordsAttribute = normalizedTextureCoords;
@@ -166,11 +178,11 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, S
 	spriteVertexBuffer.push_back(vertex);
 
 	//v3
-	vertex.positionAttribute = glm::vec3{ 0, glSize.y, -1 };
+	vertex.positionAttribute = glm::vec3{ 0, glSize.y, zIndex };
 	vertex.colorAttribute = glColor;
 
 	calculatedTextureCoordinates = { textureSrcQuad->x , textureSrcQuad->y + textureSrcQuad->h };
-	normalizedTextureCoords = util::normalizeTextureCoords(
+	normalizedTextureCoords = util::glNormalizeTextureCoords(
 		{ calculatedTextureCoordinates.x, calculatedTextureCoordinates.y },
 		{ texture->surface->w, texture->surface->h });
 	vertex.textureCoordsAttribute = normalizedTextureCoords;
@@ -191,14 +203,6 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, S
 
 }
 
-
-
-void GLRenderer::bind()
-{
-	//glBindVertexArray(m_vao);
-	//glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_ibo);
-}
 
 GLRenderer::~GLRenderer()
 {
@@ -226,7 +230,6 @@ void GLRenderer::_setVertexBufferAttriubuteLayout()
 	const int attrib_color = 1;
 	const int attrib_texture = 2;
 
-
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
@@ -234,33 +237,122 @@ void GLRenderer::_setVertexBufferAttriubuteLayout()
 	glVertexAttribPointer(attrib_color, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 9, (void*)(3 * sizeof(float)));
 	glVertexAttribPointer(attrib_texture, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 9, (void*)(7 * sizeof(float)));
 
-
-
 }
 
 void GLRenderer::_addVertexBuffer(std::vector<SpriteVertex> spriteVertices, GLDrawerType objectType, Texture* texture, GLShaderType shaderType)
 {
+
+	std::stringstream texturePtrString;
+	std::stringstream keyString;
+	texturePtrString << texture->surface;
+
 	//Build the map key
 	//const void* texturePtr = static_cast<const void*>(texture);
-	std::stringstream ss;
-	ss << texture;
-	auto key = std::format("{:0d}_{}_{:05d}", (int)objectType, ss.str(), (int)shaderType);
+	//auto key = std::format("{:0d}_{}_{:05d}", (int)objectType, texturePtrString.str(), (int)shaderType);
+	keyString << (int)objectType <<"_"<<texturePtrString.str()<<"_"<<(int)shaderType;
 	
 
 	//See if the drawBatch for this combo exists yet
-	if (m_drawBatches.find(key) == m_drawBatches.end()) {
+	if (m_drawBatches.find(keyString.str()) == m_drawBatches.end()) {
 
-		m_drawBatches[key] = DrawBatch(objectType, texture, shaderType);
-		m_drawBatches[key].addVertexBuffer(spriteVertices);
+		auto spriteBatch = std::make_shared<SpriteDrawBatch>(objectType, texture, shaderType);
+		spriteBatch->addVertexBuffer(spriteVertices);
+		m_drawBatches[keyString.str()] = spriteBatch;
 
 	}
 	else {
 
-		m_drawBatches[key].addVertexBuffer(spriteVertices);
+		m_drawBatches[keyString.str()]->addVertexBuffer(spriteVertices);
 
 	}
 
 
+}
+
+GLuint GLRenderer::_addTexture(Texture* texture)
+{
+	std::stringstream textureAddrString;
+	textureAddrString << texture->surface;
+	std::optional<int> foundTextureIndex{};
+	std::optional<int> newTextureIndex{};
+	GLuint index{};
+
+	for (int i = 0; i < m_currentTextures.size(); i++) {
+		std::string currentTexture = m_currentTextures[i];
+		if (currentTexture == textureAddrString.str()) {
+			foundTextureIndex = i;
+			break;
+		}
+		else if (currentTexture.empty() == true && newTextureIndex.has_value() == false) {
+			newTextureIndex = i;
+		}
+
+	}
+
+	//If we did not find the texture in our current texture collection, then load it up
+	if (foundTextureIndex.has_value() == false) {
+
+		glBindTexture(GL_TEXTURE_2D, m_textureIds[newTextureIndex.value()]);
+		_prepTexture(newTextureIndex.value(), texture);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+		index = newTextureIndex.value();
+		m_currentTextures[index] = textureAddrString.str();
+	}
+	else
+	{
+		index = foundTextureIndex.value();
+	}
+
+	return index;
+}
+
+
+GLuint GLRenderer::bindTexture(Texture* texture)
+{
+	//either add this texture or get its current index if it already exists
+	GLuint textureIndex = _addTexture(texture);
+	glBindTexture(GL_TEXTURE_2D, m_textureIds[textureIndex]);
+
+	return textureIndex;
+}
+
+void GLRenderer::_prepTexture(int openGLTextureIndex, Texture* texture)
+{
+
+	SDL_Surface* surf = texture->surface;
+	GLenum texture_format{ GL_RGB };
+
+	auto nOfColors = surf->format->BytesPerPixel;
+	if (nOfColors == 4)     // contains an alpha channel
+	{
+		if (surf->format->Rmask == 0x000000ff)
+			texture_format = GL_RGBA;
+		else
+			texture_format = GL_BGRA;
+	}
+	else if (nOfColors == 3)     // no alpha channel
+	{
+		if (surf->format->Rmask == 0x000000ff)
+			texture_format = GL_RGB;
+		else
+			texture_format = GL_BGR;
+	}
+
+	//Set the minification and magnification filters.  In this case, when the texture is minified (i.e., the texture's pixels (texels) are
+	//*smaller* than the screen pixels you're seeing them on, linearly filter them (i.e. blend them together).  This blends four texels for
+	//each sample--which is not very much.  Mipmapping can give better results.  Find a texturing tutorial that discusses these issues
+	//further.  Conversely, when the texture is magnified (i.e., the texture's texels are *larger* than the screen pixels you're seeing
+	//them on), linearly filter them.  Qualitatively, this causes "blown up" (overmagnified) textures to look blurry instead of blocky.
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+
+	//load in the image data
+	glTexImage2D(GL_TEXTURE_2D, 0, texture_format, surf->w, surf->h, 0, texture_format, GL_UNSIGNED_BYTE, surf->pixels);
+
+	return;
 }
 
 void GLRenderer::_addVertexBuffer(std::vector<std::shared_ptr<Vertex>> vertex)

@@ -146,7 +146,7 @@
     <Image Include="assets\blueprints\levels\level1_blueprint.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="assets\textureAtlas01.png">
+    <Image Include="assets\textureAtlas00.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

@@ -1,9 +1,9 @@
 {
     "textureFiles": [
         {
-            "id": "TEXTURE_ATLAS_1",
+            "id": "TEXTURE_ATLAS_0",
             "description": "Texture atlas 1",
-            "filename": "assets/textureAtlas01.png"
+            "filename": "assets/textureAtlas00.png"
         },
         {
             "id": "TX_LEVEL1_BLUEPRINT",
@@ -31,7 +31,7 @@
         {
             "id": "TX_DEFAULT",
             "description": "Default Texure",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 4,
                 "y": 880,
@@ -42,7 +42,7 @@
         {
             "id": "TX_BOWMAN1",
             "description": "Single bowman image",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 4,
                 "y": 200,
@@ -53,7 +53,7 @@
         {
             "id": "TX_STUBB",
             "description": "Stubb Texure",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 4,
                 "y": 880,
@@ -64,7 +64,7 @@
         {
             "id": "TX_SWORDLADY1_IDLE",
             "description": "Sword lady idle",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 69,
                 "y": 200,
@@ -75,7 +75,7 @@
         {
             "id": "TX_GINA_64_IDLE",
             "description": "Pistol Lady Run 64px",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 1543,
                 "y": 200,
@@ -86,7 +86,7 @@
         {
             "id": "TX_GINA_64_RUN",
             "description": "Pistol Lady Run 64px",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 1286,
                 "y": 200,
@@ -97,7 +97,7 @@
         {
             "id": "TX_WALL1_COLUMN",
             "description": "Wall 1 Column",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 4,
                 "y": 56,
@@ -108,7 +108,7 @@
         {
             "id": "TX_WALL1_CORNER",
             "description": "Wall 1 Corner",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 37,
                 "y": 56,
@@ -119,7 +119,7 @@
         {
             "id": "TX_WALL1_HALL",
             "description": "Wall 1 Hall",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 103,
                 "y": 56,
@@ -130,7 +130,7 @@
         {
             "id": "TX_WALL1_OPEN",
             "description": "Wall 1 Open",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 136,
                 "y": 56,
@@ -141,7 +141,7 @@
         {
             "id": "TX_WALL1_WALL",
             "description": "Wall 1 Wall",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 169,
                 "y": 56,
@@ -152,7 +152,7 @@
         {
             "id": "TX_WALL1_END",
             "description": "Wall 1 End",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 70,
                 "y": 56,
@@ -163,7 +163,7 @@
         {
             "id": "TX_BULLET1",
             "description": "Bullet 1",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 4,
                 "y": 4,
@@ -174,7 +174,7 @@
         {
             "id": "TX_SMOKE_PARTICLE_1",
             "description": "Smoke particle",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 4,
                 "y": 16,
@@ -185,7 +185,7 @@
         {
             "id": "TX_SMOKE_PARTICLE_2",
             "description": "Glow particle",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 1608,
                 "y": 200,
@@ -196,7 +196,7 @@
         {
             "id": "TX_PIECE_FULL_8",
             "description": "8 X 8 square",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 65,
                 "y": 4,
@@ -207,7 +207,7 @@
         {
             "id": "TX_PIECE_ANGLE1_8",
             "description": "Angle",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 29,
                 "y": 4,
@@ -218,7 +218,7 @@
         {
             "id": "TX_PIECE_ANGLE2_8",
             "description": "Angle",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 38,
                 "y": 4,
@@ -229,7 +229,7 @@
         {
             "id": "TX_PIECE_ANGLE3_8",
             "description": "Angle",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 47,
                 "y": 4,
@@ -240,7 +240,7 @@
         {
             "id": "TX_PIECE_ANGLE4_8",
             "description": "Angle",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 56,
                 "y": 4,
@@ -251,10 +251,10 @@
         {
             "id": "TX_ENEMYFRAME1_128",
             "description": "Angle",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 133,
-                "y": 800,
+                "y": 880,
                 "width": 128,
                 "height": 128
             }
@@ -262,7 +262,7 @@
         {
             "id": "TX_DEFLECT1_64",
             "description": "Deflect",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 1673,
                 "y": 200,
@@ -273,7 +273,7 @@
         {
             "id": "TX_WEAPON1_IDLE",
             "description": "Weapon 1 Idle",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 21,
                 "y": 16,
@@ -284,7 +284,7 @@
         {
             "id": "TX_WEAPON1_FIRE",
             "description": "Weapon 1 Fire",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 70,
                 "y": 16,
@@ -295,7 +295,7 @@
         {
             "id": "TX_DRONE_EYE",
             "description": "Drone Eye",
-            "atlas": "TEXTURE_ATLAS_1",
+            "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 1930,
                 "y": 200,

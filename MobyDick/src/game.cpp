@@ -70,6 +70,10 @@ void Game::play()
 
 void Game::_displayLoadingMsg()
 {
+	//temp
+	//
+	return;
+
 	static int statusDots{};
 	std::string statusMsg{"Loading"};
 	Texture texture{};
@@ -92,9 +96,9 @@ void Game::_displayLoadingMsg()
 	SDL_Texture* sdlTexture = m_renderer->createTextureFromSurface(tempSurface);
 	TTF_CloseFont(m_fontObject);
 	SDL_FRect dest = {
-		GameConfig::instance().windowWidth() / 2 - 100,
-		GameConfig::instance().windowHeight() / 2 - 42,
-		tempSurface->w, tempSurface->h };
+		GameConfig::instance().windowWidth() / (float)2 - (float)100,
+		GameConfig::instance().windowHeight() / (float)2 - (float)42,
+		(float)tempSurface->w, (float)tempSurface->h };
 
 	texture.sdlTexture = sdlTexture;
 	texture.surface = tempSurface;

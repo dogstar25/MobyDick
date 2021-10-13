@@ -196,6 +196,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\opengl\SpriteDrawBatch.cpp" />
     <ClCompile Include="src\opengl\GLDebugCallback.cpp" />
     <ClCompile Include="src\opengl\SpriteVertex.cpp" />
     <ClCompile Include="src\Blueprint.cpp" />
@@ -206,7 +207,6 @@
     <ClCompile Include="src\ContactFilter.cpp" />
     <ClCompile Include="src\opengl\GLDrawer.cpp" />
     <ClCompile Include="src\opengl\GLRenderer.cpp" />
-    <ClCompile Include="src\opengl\IndexBuffer.cpp" />
     <ClCompile Include="src\opengl\Shader.cpp" />
     <ClCompile Include="src\opengl\DrawBatch.cpp" />
     <ClCompile Include="src\triggers\LevelComplete.cpp" />
@@ -279,13 +279,13 @@
     <ClCompile Include="src\opengl\Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\opengl\SpriteDrawBatch.h" />
     <ClInclude Include="src\opengl\GLDebugCallback.h" />
     <ClInclude Include="src\opengl\SpriteVertex.h" />
     <ClInclude Include="src\Blueprint.h" />
     <ClInclude Include="src\BrainAABBCallback.h" />
     <ClInclude Include="src\opengl\GLDrawer.h" />
     <ClInclude Include="src\opengl\GLRenderer.h" />
-    <ClInclude Include="src\opengl\IndexBuffer.h" />
     <ClInclude Include="src\opengl\Shader.h" />
     <ClInclude Include="src\opengl\DrawBatch.h" />
     <ClInclude Include="src\triggers\LevelComplete.h" />

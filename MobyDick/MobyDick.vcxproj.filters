@@ -240,9 +240,6 @@
     <ClCompile Include="src\opengl\GLRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\opengl\IndexBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\opengl\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -256,6 +253,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\opengl\GLDebugCallback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\opengl\SpriteDrawBatch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -500,9 +500,6 @@
     <ClInclude Include="src\opengl\GLRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\opengl\IndexBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\opengl\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -516,6 +513,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\opengl\GLDebugCallback.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\opengl\SpriteDrawBatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

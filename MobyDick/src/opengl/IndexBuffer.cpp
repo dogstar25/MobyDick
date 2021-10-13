@@ -14,3 +14,9 @@ void IndexBuffer::addSpriteIndexBuffer()
 	m_objectCount++;
 
 }
+
+void IndexBuffer::clear()
+{
+	m_indexes.clear();
+	m_objectCount = 0;
+}
