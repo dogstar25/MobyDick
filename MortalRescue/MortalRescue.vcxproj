@@ -78,13 +78,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)MobyDick\src</IncludePath>
+    <IncludePath>C:\projects\MobyDick\MobyDick\vendor;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)MobyDick\src</IncludePath>
     <LibraryPath>C:\projects\MobyDick\MobyDick\x64\$(Configuration)\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)MobyDick\src</IncludePath>
+    <IncludePath>C:\projects\MobyDick\MobyDick\vendor;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)MobyDick\src</IncludePath>
     <LibraryPath>C:\projects\MobyDick\MobyDick\x64\$(Configuration)\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
   </PropertyGroup>

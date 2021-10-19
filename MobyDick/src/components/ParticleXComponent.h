@@ -6,7 +6,7 @@
 #include <chrono>
 #include <vector>
 
-#include <json/json.h>
+#include <jsoncpp/include/json/json.h>
 
 #include "Component.h"
 #include "../Globals.h"

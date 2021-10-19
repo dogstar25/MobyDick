@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <bitset>
-#include <json/json.h>
+#include <jsoncpp/include/json/json.h>
 
 #include "../Globals.h"
 #include "../BaseConstants.h"

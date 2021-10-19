@@ -74,20 +74,22 @@
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\projects\MobyDick\MobyDick\vendor;C:\projects\MobyDick\MobyDick\vendor\jsoncpp\include;$(IncludePath)</IncludePath>
     <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\lib\</OutDir>
     <CopyLocalProjectReference>true</CopyLocalProjectReference>
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>C:\projects\vcpkg\installed\x64-windows\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\projects\vcpkg\installed\x64-windows\lib;C:\projects\MobyDick\MobyDick\vendor\jsoncpp;$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <SourcePath>C:\projects\MobyDick\MobyDick\vendor;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>$(IncludePath)</IncludePath>
+    <IncludePath>C:\projects\MobyDick\MobyDick\vendor;C:\projects\MobyDick\MobyDick\vendor\jsoncpp\include;$(IncludePath)</IncludePath>
     <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\lib\</OutDir>
     <CopyLocalProjectReference>true</CopyLocalProjectReference>
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>C:\projects\vcpkg\installed\x64-windows\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\projects\vcpkg\installed\x64-windows\lib;C:\projects\MobyDick\MobyDick\vendor\jsoncpp;$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <SourcePath>C:\projects\MobyDick\MobyDick\vendor;$(SourcePath)</SourcePath>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <VcpkgCurrentInstalledDir>$(VcpkgRoot)\installed\$(VcpkgTriplet)\</VcpkgCurrentInstalledDir>
@@ -140,14 +142,16 @@
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>
       </AdditionalDependencies>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\projects\MobyDick\MobyDick\vendor\jsoncpp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <Verbose>true</Verbose>
+      <AdditionalOptions>
+      </AdditionalOptions>
     </Lib>
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
@@ -161,6 +165,10 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -173,14 +181,16 @@
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>
       </AdditionalDependencies>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\projects\MobyDick\MobyDick\vendor\jsoncpp;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <Verbose>true</Verbose>
+      <AdditionalOptions>
+      </AdditionalOptions>
     </Lib>
     <ProjectReference>
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
@@ -194,6 +204,10 @@
       <Command>
       </Command>
     </PostBuildEvent>
+    <CustomBuildStep>
+      <Command>
+      </Command>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\opengl\SpriteDrawBatch.cpp" />
@@ -277,6 +291,12 @@
     <ClCompile Include="src\triggers\Trigger.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\opengl\Vertex.cpp" />
+    <ClCompile Include="vendor\jsoncpp\src\jsontestrunner\main.cpp" />
+    <ClCompile Include="vendor\jsoncpp\src\lib_json\json_reader.cpp" />
+    <ClCompile Include="vendor\jsoncpp\src\lib_json\json_value.cpp" />
+    <ClCompile Include="vendor\jsoncpp\src\lib_json\json_writer.cpp" />
+    <ClCompile Include="vendor\jsoncpp\src\test_lib_json\jsontest.cpp" />
+    <ClCompile Include="vendor\jsoncpp\src\test_lib_json\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\opengl\shaderCode.h" />
@@ -366,6 +386,18 @@
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\opengl\Vertex.h" />
+    <ClInclude Include="vendor\jsoncpp\include\json\assertions.h" />
+    <ClInclude Include="vendor\jsoncpp\include\json\autolink.h" />
+    <ClInclude Include="vendor\jsoncpp\include\json\config.h" />
+    <ClInclude Include="vendor\jsoncpp\include\json\features.h" />
+    <ClInclude Include="vendor\jsoncpp\include\json\forwards.h" />
+    <ClInclude Include="vendor\jsoncpp\include\json\json.h" />
+    <ClInclude Include="vendor\jsoncpp\include\json\reader.h" />
+    <ClInclude Include="vendor\jsoncpp\include\json\value.h" />
+    <ClInclude Include="vendor\jsoncpp\include\json\version.h" />
+    <ClInclude Include="vendor\jsoncpp\include\json\writer.h" />
+    <ClInclude Include="vendor\jsoncpp\src\lib_json\json_tool.h" />
+    <ClInclude Include="vendor\jsoncpp\src\test_lib_json\jsontest.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="ExtraLibs\SDL2main.lib" />
@@ -377,6 +409,9 @@
     <None Include="src\opengl\shaders\basic.glsl" />
     <None Include="src\opengl\shaders\uberShader.glsl" />
     <None Include="vcpkg.json_old" />
+    <None Include="vendor\jsoncpp\doc\footer.html" />
+    <None Include="vendor\jsoncpp\doc\header.html" />
+    <None Include="vendor\jsoncpp\src\lib_json\json_valueiterator.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

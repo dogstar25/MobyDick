@@ -4,7 +4,7 @@
 #include <string>
 #include <map>
 
-#include <json/json.h>
+#include <jsoncpp/include/json/json.h>
 #include <SDL2/SDL.h>
 #include <box2d/box2d.h>
 #include <glm/glm.hpp>
