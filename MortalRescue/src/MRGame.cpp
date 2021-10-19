@@ -37,6 +37,10 @@ Initialize Game
 bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter, 
 	ComponentFactory* componentFactory)
 {
+
+	//Get all of the configuration values
+	GameConfig::instance().init("gameConfig");
+
 	//Required Base Class calls
 	Game::init(contactListener, contactFilter, componentFactory);
 	//End Required
@@ -50,9 +54,6 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 	_addGameActions();
 	_addGameParticleEffects();
 
-	//Get all of the configuration values
-	GameConfig::instance().init("gameConfig");
-	
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
 	{
@@ -78,20 +79,20 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 			windowFlags);
 
 		//Initialize the texture manager
-		Renderer::instance().init(m_window);
+		m_renderer->init(m_window);
 
 		//Display basic loading message
-		_displayLoadingMsg();
+		//_displayLoadingMsg();
 
 		//Initialize the texture manager
 		TextureManager::instance().init();
-		TextureManager::instance().load("textureAssets");
+		TextureManager::instance().load("textureAtlasAssets");
 
 		//Initialize the SceneManager
 		SceneManager::instance().init();
 		SceneManager::instance().load("gameScenes");
 
-		_displayLoadingMsg();
+		//_displayLoadingMsg();
 
 		//Initialize the Game Object Manager
 		GameObjectManager::instance().init();
@@ -104,7 +105,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
 		scene.loadLevel("level1");
 
-		_displayLoadingMsg();
+		//_displayLoadingMsg();
 
 		//Initialize the sound manager
 		SoundManager::instance().initSound();
@@ -113,6 +114,14 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//Initialize the clock object
 		Clock::instance().init();
 
+		
+		
+		//scene.addGameObject("WALL1_CORNER", LAYER_MENU, 5, 5);
+		//scene.addGameObject("STUBB", LAYER_MENU, 1, 1);
+
+		//scene.addGameObject("GINA_64", LAYER_MENU, 8, 8);
+		
+		
 		scene.addGameObject("FPS_VALUE", LAYER_MENU, 1, 1);
 
 	}
@@ -127,7 +136,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 	//particleComponent->setEmissionInterval(1);
 
 
-	auto particleXEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MAIN, 9, 15);
+	//auto particleXEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MAIN, 9, 15);
 	//const auto& particleXComponent = particleXEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
 	//particleXComponent->addParticleEffect(ParticleEffects::ricochet);
 	//particleXComponent->setType(ParticleEmitterType::CONTINUOUS);

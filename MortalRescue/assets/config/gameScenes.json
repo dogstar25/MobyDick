@@ -12,11 +12,13 @@
             "keyActions": [
                 {
                     "keyCode": "SDLK_ESCAPE",
+                    //"sceneAction": {
+                    //    "action": "SCENE_ACTION_ADD",
+                    //    "newSceneId": "SCENE_PAUSE_MENU"
+                    //},
                     "sceneAction": {
-                        "action": "SCENE_ACTION_ADD",
-                        "newSceneId": "SCENE_PAUSE_MENU"
+                        "action": "SCENE_ACTION_QUIT"
                     }
-
                 }
             ],
             "gameObjectPools": [

@@ -14,6 +14,8 @@
 #include "Camera.h"
 #include "EnumMaps.h"
 
+#include <typeinfo>
+
 extern std::unique_ptr<Game> game;
 
 GameObject::~GameObject()
@@ -21,7 +23,7 @@ GameObject::~GameObject()
 
 }
 
-GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, bool cameraFollow)
+GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, int layer, bool cameraFollow)
 {
 
 	Json::Value definitionJSON;
@@ -45,6 +47,9 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Build the unique name
 	m_name = _buildName(gameObjectId, xMapPos, yMapPos, parentScene);
 
+	if (gameObjectId.compare("GINA_64") == 0) {
+		int todd = 1;
+	}
 	//Trait tags
 	for (Json::Value itrControls : definitionJSON["traitTags"])
 	{
@@ -59,7 +64,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	std::shared_ptr<Component> component{};
 
 	//Always build a render component
-	component = game->componentFactory()->create(definitionJSON, ComponentTypes::RENDER_COMPONENT);
+	component = game->componentFactory()->create(definitionJSON, layer, ComponentTypes::RENDER_COMPONENT);
 	component->setParent(this);
 	addComponent(component, ComponentTypes::RENDER_COMPONENT);
 

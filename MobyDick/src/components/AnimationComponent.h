@@ -6,8 +6,11 @@
 #include <memory>
 #include <json/json.h>
 
+#include <memory>
+
 #include "Component.h"
 #include "../Animation.h"
+#include "../texture.h"
 
 class TransformComponent;
 
@@ -20,7 +23,7 @@ public:
 
 	void update() override;
 	SDL_Rect* getCurrentAnimationTextureRect();
-	SDL_Texture* getCurrentAnimationTexture();
+	std::shared_ptr<Texture> getCurrentAnimationTexture();
 	void animate(int animationState, int animationMode);
 
 	void setCurrentAnimationState(int animationState) { m_currentAnimationState = animationState; }
@@ -35,7 +38,7 @@ private:
 	int m_currentAnimationState {};
 	int m_currentAnimationMode { ANIMATE_ONE_TIME };
 	int m_defaultAnimationState {};
-
+	b2Vec2 m_frameSize{};
 	std::array<Animation, MAX_ANIMATION_STATES> m_animations;
 };
 

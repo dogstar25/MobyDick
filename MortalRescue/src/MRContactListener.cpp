@@ -73,6 +73,9 @@ void playerBullet_droneShield(GameObject* contact1, GameObject* contact2, b2Vec2
 
 	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
 	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+	//auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
+	//auto particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
+
 	particleComponent->setType(ParticleEmitterType::ONETIME);
 	//particleComponent->setType(ParticleEmitterType::CONTINUOUS);
 

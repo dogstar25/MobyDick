@@ -3,12 +3,11 @@
 
 #include <SDL2/SDL.h>
 
-#pragma warning(push,0)
 #include <box2d/box2d.h>
-#pragma warning(pop)
-
 
 #include <string>
+
+#include "BaseConstants.h"
 
 class GameConfig
 {
@@ -54,10 +53,15 @@ public:
 	float dynamicTextRefreshDelay() {
 		return m_dynamicTextRefreshDelay;
 	}
+	RendererType rendererType() {
+		return m_rendererType;
+	}
 
 private:
 	GameConfig();
 	~GameConfig();
+
+	RendererType m_rendererType;
 
 	float
 		m_mouseSensitivity,
@@ -73,6 +77,7 @@ private:
 		m_windowHeight,
 		m_debugPanelFontSize,
 		m_soundChannels;
+
 	std::string 
 		m_gameTitle;
 	float m_scaleFactor{};

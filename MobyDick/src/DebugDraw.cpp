@@ -1,8 +1,11 @@
 #include "DebugDraw.h"
 
+#include "game.h"
 
 #include "GameConfig.h"
 #include "Camera.h"
+
+extern std::unique_ptr<Game> game;
 
 DebugDraw& DebugDraw::instance()
 {
@@ -52,7 +55,7 @@ void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, cons
 	points[vertexCount] = firstPoint;
 
 	SDL_Color sdlColor = { 255,255,255,255 };
-	Renderer::instance().drawPoints(points, sdlColor);
+	//RendererSDL::instance().drawPoints(points, sdlColor);
 
 	delete[] points;
 }
@@ -94,8 +97,8 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2
 		angle += d_a;
 		
 		//SDL_Color sdlColor = { 255,255,255,255 };
-		SDL_Color sdlColor = { color.r,color.b,color.g,color.a };
-		Renderer::instance().drawLine(start, end, sdlColor);
+		SDL_Color sdlColor = { (Uint8)color.r,(Uint8)color.b,(Uint8)color.g,(Uint8)color.a };
+		game->renderer()->drawLine(start, end, sdlColor);
 	}
 
 
@@ -104,7 +107,7 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2
 void DebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 {
 	SDL_Color sdlColor = { 255,0,0,255 };
-	Renderer::instance().drawLine(p1, p2, sdlColor);
+	game->renderer()->drawLine(p1, p2, sdlColor);
 
 }
 
@@ -124,7 +127,7 @@ void DebugDraw::DrawTransform(const b2Transform& xf)
 	//float length = point.x + xf.p.Length();
 	//point2 = { point.x + (xf.p.Length() * GameConfig::instance().scaleFactor()), point.y };
 	//SDL_Color sdlColor = { 255,0,0,255 };
-	//Renderer::instance().drawLine(point, point2, sdlColor);
+	//RendererSDL::instance().drawLine(point, point2, sdlColor);
 
 	
 	DrawSegment(xf.q.GetXAxis(), xf.q.GetYAxis(),b2Color());

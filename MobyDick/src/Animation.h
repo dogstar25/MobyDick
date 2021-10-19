@@ -11,6 +11,8 @@
 #include "BaseConstants.h"
 #include "Timer.h"
 
+#include "texture.h"
+
 class GameObjectDefinition;
 
 class Animation
@@ -19,13 +21,13 @@ class Animation
 public:
 
 	Animation() = default;
-	Animation(Json::Value animationDetailsJSON, Json::Value transformComponentJSON);
+	Animation(Json::Value animationDetailsJSON, b2Vec2 frameSize);
 
 	int animate();
 
 	//Accessor Functions
 	std::shared_ptr<SDL_Rect> getCurrentTextureAnimationSrcRect() { return m_currentTextureAnimationSrcRect; }
-	SDL_Texture* getTexture() { return m_texture; }
+	std::shared_ptr<Texture> getTexture() { return m_texture; }
 	int getCurrentAnimFrame() { return m_currentAnimFrame; }
 
 
@@ -42,7 +44,7 @@ private:
 
 	//Array of all x,y coordinates of the top left corner of each animation frame in the texture
 	std::vector<SDL_FPoint> m_animationFramePositions;
-	SDL_Texture* m_texture{nullptr};
+	std::shared_ptr<Texture> m_texture{};
 	Timer m_timer;
 
 };

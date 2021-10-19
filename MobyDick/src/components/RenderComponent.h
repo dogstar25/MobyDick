@@ -10,7 +10,7 @@
 #include "../Texture.h"
 #include "TransformComponent.h"
 #include "AnimationComponent.h"
-#include "../Renderer.h"
+#include "../RendererSDL.h"
 
 class AnimationComponent;
 class PhysicsComponent;
@@ -21,7 +21,7 @@ class RenderComponent : public Component
 
 public:
 	RenderComponent();
-	RenderComponent(Json::Value definitionJSON);
+	RenderComponent(Json::Value definitionJSON, int layer);
 	~RenderComponent();
 
 	void update() override;
@@ -36,8 +36,8 @@ public:
 	void applyDisplayOverlay(displayOverlay);
 	void removeDisplayOverlay();
 
-	SDL_Rect* getRenderTextureRect();
-	SDL_Texture* getRenderTexture();
+	SDL_Rect* getRenderTextureRect(Texture& texture);
+	std::shared_ptr<Texture> getRenderTexture();
 	SDL_Surface* getRenderSurface();
 	
 
@@ -61,6 +61,7 @@ private:
 	bool                        m_renderOutline;
 	std::string	                m_textureId;
 	SDL_BlendMode				m_textureBlendMode;
+	int							m_layer{};
 
 	std::optional<displayOverlay> m_displayOverlay;
 

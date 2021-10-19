@@ -1,10 +1,18 @@
-#pragma once
+//#pragma once
+#ifndef BASE_CONSTANTS_H
+#define BASE_CONSTANTS_H
+
+
 
 inline constexpr int CHILD_POSITIONS = 9;
 inline constexpr int MAX_VITALITY_LEVELS = 5;
 inline constexpr int MAX_ANIMATION_STATES = 5;
 inline constexpr int DESTINATION_DISTANCE_TOLERANCE = 10;
 inline constexpr int PARTICLE_EMITTER_FORCE_ADJ = 50;
+inline constexpr int MAX_OBJECT_TYPES = 5;
+//OpenGl
+inline constexpr int MAX_GL_TEXTURES = 1;
+//inline constexpr int MAX_GL_SHADER_TYPES = 5;
 
 //Mouse State
 inline constexpr int MOUSE_NONE = 0;
@@ -27,12 +35,12 @@ namespace CollisionTag {
 
 namespace TraitTag {
 
-	static const uint16_t player = 1;
-	static const uint16_t barrier = 2;
-	static const uint16_t collectable = 3;
-	static const uint16_t weapon = 4;
-	static const uint16_t gui = 5;
-	static const uint16_t navigation;
+	static const int player = 1;
+	static const int barrier = 2;
+	static const int collectable = 3;
+	static const int weapon = 4;
+	static const int gui = 5;
+	static const int   navigation;
 
 }
 
@@ -45,6 +53,7 @@ namespace GameObjectType {
 	inline constexpr auto RECTANGLE = 4;
 
 }
+
 
 namespace BrainState {
 
@@ -70,9 +79,29 @@ namespace NavigationObjectType {
 	inline constexpr int WAYPOINT = 2;
 }
 
+enum class RendererType {
+	OPENGL = 0,
+	SDL,
+	count
+};
+
+enum class GLShaderType {
+	BASIC = 0,
+	UBER,
+	GLOW,
+	count
+};
+
+enum class GLDrawerType {
+	GLSPRITE = 0,
+	GLLINE,
+	GLPOINT,
+	GLRECTANGLE,
+	count
+};
+
 //Components
 enum class ComponentTypes {
-
 	ACTION_COMPONENT = 0,
 	ANIMATION_COMPONENT,
 	ATTACHMENTS_COMPONENT,
@@ -92,7 +121,6 @@ enum class ComponentTypes {
 	UICONTROL_COMPONENT,
 	VITALITY_COMPONENT,
 	WEAPON_COMPONENT,
-
 	COUNT
 };
 
@@ -158,3 +186,4 @@ inline constexpr int DISPLAY_UI_MODE_ONCLICK = 2;
 //Game Object Display Schemes
 inline constexpr int DEFAULT_HOVER_SCHEME = 0;
 
+#endif

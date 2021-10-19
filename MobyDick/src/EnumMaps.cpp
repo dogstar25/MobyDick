@@ -12,6 +12,10 @@ EnumMap& EnumMap::instance()
 EnumMap::EnumMap()
 {
 
+	//Renderer Types
+	m_enumMap["RenderType::OPENGL"] = (int)RendererType::OPENGL;
+	m_enumMap["RenderType::SDL"] = (int)RendererType::SDL;
+
 	//Mouse State
 	m_enumMap["MOUSE_NONE"] = MOUSE_NONE;
 	m_enumMap["MOUSE_HOVER"] = MOUSE_HOVER;
@@ -21,6 +25,10 @@ EnumMap::EnumMap()
 	//Mouse Modes
 	m_enumMap["CONTROL_MODE_SELECT"] = CONTROL_MODE_SELECT;
 	m_enumMap["CONTROL_MODE_PLAY"] = CONTROL_MODE_PLAY;
+
+	//Renderer Types
+	m_enumMap["RendererType::SDL"] = (int)RendererType::SDL;
+	m_enumMap["RendererType::OPENGL"] = (int)RendererType::OPENGL;
 
 	//GameObject CollisionTags
 	m_enumMap["CollisionTag::GENERAL_SOLID"] = CollisionTag::GENERAL_SOLID;

@@ -1,6 +1,9 @@
 #ifndef OBJECT_POOL_MANAGER_H
 #define OBJECT_POOL_MANAGER_H
 
+
+#include "texture.h"
+
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -23,7 +26,7 @@ public:
 	~ObjectPoolManager();
 
 	std::optional<std::shared_ptr<GameObject>> getPooledObject(std::string);
-	SDL_Texture* getPoolObjectTexture(std::string);
+	std::shared_ptr<Texture> getPoolObjectTexture(std::string);
 
 	//Accessor Functions
 	const std::unordered_map <std::string, std::vector<std::shared_ptr<GameObject>>>& objectPool() {

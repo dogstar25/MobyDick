@@ -27,7 +27,7 @@ void ObjectPoolManager::init(Json::Value definitionJSON,  Scene* parentScene)
 
 		for (int index = 0; index < maxItems; index++) {
 
-			auto& gameObject = m_objectPool[poolId].emplace_back(std::make_shared<GameObject>(gameObjectId, -50.0f, -50.0f, 0.0f, parentScene));
+			auto& gameObject = m_objectPool[poolId].emplace_back(std::make_shared<GameObject>(gameObjectId, -50.0f, -50.0f, 0.0f, parentScene, LAYER_MAIN));
 			gameObject->reset();
 
 		}
@@ -74,11 +74,11 @@ std::optional<std::shared_ptr<GameObject>> ObjectPoolManager::getPooledObject(st
 
 }
 
-SDL_Texture* ObjectPoolManager::getPoolObjectTexture(std::string poolId)
+std::shared_ptr<Texture> ObjectPoolManager::getPoolObjectTexture(std::string poolId)
 {
 
 	auto& gameObject = m_objectPool[poolId].at(0);
-	auto texture = gameObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT)->texture()->sdlTexture;
+	auto texture = gameObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT)->texture();
 
 	return texture;
 }

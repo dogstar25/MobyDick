@@ -2,10 +2,12 @@
 
 #include <fstream>
 
+#include "game.h"
 #include "Clock.h"
 #include "DynamicTextManager.h"
 #include "DebugPanel.h"
 
+extern std::unique_ptr<Game> game;
 
 SceneManager::~SceneManager()
 {
@@ -72,7 +74,7 @@ void SceneManager::run()
 			}
 		}
 		//Clear the screen
-		Renderer::instance().clear();
+		game->renderer()->clear();
 
 		//Render every scene, active or not
 		for (auto& scene : m_scenes) {
@@ -80,7 +82,7 @@ void SceneManager::run()
 		}
 
 		//Display all rendered objects
-		Renderer::instance().present();
+		game->renderer()->present();
 
 	}
 

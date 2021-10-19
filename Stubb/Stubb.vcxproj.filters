@@ -15,10 +15,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Stubb.cpp">
+    <ClCompile Include="src\StubGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\StubGame.cpp">
+    <ClCompile Include="src\testOpenGL_refactor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl\GL2Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl\VertexBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl\VertexBatchDraw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="opengl\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,6 +44,18 @@
     <ClInclude Include="src\particleEffects\GameParticleEffects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="opengl\GL2Renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl\VertexBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl\VertexBatchDraw.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\config\gameConfig.json" />
@@ -39,6 +63,9 @@
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />
     <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\textureAssets.json" />
+    <None Include="opengl\shaders\basic.glsl" />
+    <None Include="opengl\shaders\uberShader.glsl" />
+    <None Include="assets\textureAtlasAssets.json" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav">
@@ -62,6 +89,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\mobydick_circle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\textureAtlas01.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

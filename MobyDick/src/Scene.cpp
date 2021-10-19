@@ -247,15 +247,13 @@ void Scene::update() {
 
 void Scene::render() {
 
-	//Render all of the game objects
+	//Render all of the layers
 	for (auto& gameLayer : m_gameObjects)
 	{
-		//Update normal game objects
+		//Render all of the GameObjects in this layer
 		for (auto& gameObject : gameLayer)
 		{
-			if (gameObject) {
-				gameObject->render();
-			}
+			gameObject->render();
 		}
 	}
 	
@@ -270,13 +268,7 @@ void Scene::render() {
 GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow)
 {
 
-	/*
-	Create a new unique_ptr of game object, emplace in the vector, and then call init on the new gameObject
-	We have to call init after construction in order to set the pointer references correctly.i.e all components will store a raw
-	pointer to gameObject and all gameObjects will store a raw pointer to the scene.
-	*/
-
-	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this, cameraFollow));
+	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this, layer, cameraFollow));
 	//gameObject->init(cameraFollow);
 
 	return gameObject.get();
@@ -369,7 +361,7 @@ void Scene::_buildPhysicsWorld(Json::Value physicsJSON)
 
 	//Build the box2d physics world
 	m_physicsWorld = new b2World(m_physicsConfig.gravity);
-	m_physicsWorld->SetAutoClearForces(true);
+	//m_physicsWorld->SetAutoClearForces(true);
 
 	//Add a collision contact listener and filter for box2d callbacks
 	m_physicsWorld->SetContactFilter(game->contactFilter());

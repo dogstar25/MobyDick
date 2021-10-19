@@ -56,6 +56,10 @@
             },
             "animationComponent": {
                 "defaultState": "ANIMATION_IDLE",
+                "frameSize": {
+                    "width": 64,
+                    "height": 64
+                },
                 "animations": [
                     {
                         "state": "ANIMATION_IDLE",
@@ -67,7 +71,7 @@
             },
             "physicsComponent": {
                 "type": "B2_DYNAMIC",
-                "collisionShape": "B2_CIRCLE",
+                "collisionShape": "B2_BOX",
                 "collisionRadius": 0.16,
                 "friction": 0.0,
                 "density": 0.1,

@@ -1,4 +1,8 @@
 #include "Game.h"
+#include "GameConfig.h"
+
+#include "RendererSDL.h"
+#include "opengl/GLRenderer.h"
 
 
 Game::~Game()
@@ -21,6 +25,17 @@ bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter,
 	m_contactListener = contactListener;
 	m_contactFilter = contactFilter;
 	m_componentFactory = componentFactory;
+
+	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
+
+		m_renderer = std::make_shared<GLRenderer>(GLRenderer());
+
+	}
+	else if (GameConfig::instance().rendererType() == RendererType::SDL) {
+
+		m_renderer = std::make_shared<RendererSDL>(RendererSDL());
+
+	}
 
 	return true;
 }
@@ -55,8 +70,13 @@ void Game::play()
 
 void Game::_displayLoadingMsg()
 {
+	//temp
+	//
+	return;
+
 	static int statusDots{};
 	std::string statusMsg{"Loading"};
+	Texture texture{};
 
 	statusDots++;
 	if (statusDots > 4) {
@@ -70,18 +90,21 @@ void Game::_displayLoadingMsg()
 
 	//Assume nothing has been initialzed yet except for the renderer so build and render a text item in
 	//a very crude and manual way
-	Renderer::instance().clear();
+	m_renderer->clear();
 	TTF_Font* m_fontObject = TTF_OpenFont("assets/arial.ttf", 32);
 	SDL_Surface* tempSurface = TTF_RenderText_Blended(m_fontObject, statusMsg.c_str(), SDL_Color(255, 255, 255, 255));
-	SDL_Texture* sdlTexture = Renderer::instance().createTextureFromSurface(tempSurface);
+	SDL_Texture* sdlTexture = m_renderer->createTextureFromSurface(tempSurface);
 	TTF_CloseFont(m_fontObject);
-	SDL_Rect dest = {
-		GameConfig::instance().windowWidth() / 2 - 100,
-		GameConfig::instance().windowHeight() / 2 - 42,
-		tempSurface->w, tempSurface->h };
-	SDL_RenderCopy(Renderer::instance().SDLRenderer(), sdlTexture, nullptr, &dest);
-	Renderer::instance().present();
-	SDL_DestroyTexture(sdlTexture);
+	SDL_FRect dest = {
+		GameConfig::instance().windowWidth() / (float)2 - (float)100,
+		GameConfig::instance().windowHeight() / (float)2 - (float)42,
+		(float)tempSurface->w, (float)tempSurface->h };
 
+	texture.sdlTexture = sdlTexture;
+	texture.surface = tempSurface;
+
+	m_renderer->drawSprite(dest, SDL_Color{ 255,255,255,255 }, LAYER_MENU, &texture, nullptr, 0, false, SDL_Color{});
+	m_renderer->present();
+	SDL_DestroyTexture(sdlTexture);
 
 }
