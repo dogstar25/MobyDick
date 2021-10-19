@@ -279,6 +279,7 @@
     <ClCompile Include="src\opengl\Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\opengl\shaderCode.h" />
     <ClInclude Include="src\opengl\SpriteDrawBatch.h" />
     <ClInclude Include="src\opengl\GLDebugCallback.h" />
     <ClInclude Include="src\opengl\SpriteVertex.h" />

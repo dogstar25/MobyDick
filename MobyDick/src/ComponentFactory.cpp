@@ -17,35 +17,42 @@ ComponentFactory& ComponentFactory::instance()
 std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, ComponentTypes componentType)
 {
 	std::shared_ptr<Component> component{};
-	component = _create(definitionJSON, "", nullptr, 0, 0, 0, componentType);
+	component = _create(definitionJSON, "", nullptr, 0, 0, 0, 0, componentType);
+	return component;
+}
+
+std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, int layer, ComponentTypes componentType)
+{
+	std::shared_ptr<Component> component{};
+	component = _create(definitionJSON, "", nullptr, 0, 0, 0, layer, componentType);
 	return component;
 }
 
 std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, Scene* scene, ComponentTypes componentType)
 {
 	std::shared_ptr<Component> component{};
-	component = _create(definitionJSON, "", scene, 0, 0, 0, componentType);
+	component = _create(definitionJSON, "", scene, 0, 0, 0, 0, componentType);
 	return component;
 }
 
 std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, std::string textGameObjectId, ComponentTypes componentType)
 {
 	std::shared_ptr<Component> component{};
-	component = _create(definitionJSON, textGameObjectId, nullptr, 0, 0, 0, componentType);
+	component = _create(definitionJSON, textGameObjectId, nullptr, 0, 0, 0, 0, componentType);
 	return component;
 }
 
 std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust, ComponentTypes componentType)
 {
 	std::shared_ptr<Component> component{};
-	component = _create(definitionJSON, "", nullptr, xMapPos, yMapPos, angleAdjust, componentType);
+	component = _create(definitionJSON, "", nullptr, xMapPos, yMapPos, angleAdjust, 0, componentType);
 	return component;
 }
 
 std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, Scene* scene, float xMapPos, float yMapPos, float angleAdjust, ComponentTypes componentType)
 {
 	std::shared_ptr<Component> component{};
-	component = _create(definitionJSON, "", scene, xMapPos, yMapPos, angleAdjust, componentType);
+	component = _create(definitionJSON, "", scene, xMapPos, yMapPos, angleAdjust, 0, componentType);
 	return component;
 
 }
@@ -57,6 +64,7 @@ std::shared_ptr<Component> ComponentFactory::_create(
 	float xMapPos,
 	float yMapPos,
 	float angleAdjust,
+	int layer,
 	ComponentTypes componentType)
 {
 	std::shared_ptr<Component> component{};
@@ -105,7 +113,7 @@ std::shared_ptr<Component> ComponentFactory::_create(
 			component = std::make_shared<PoolComponent>(definitionJSON);
 			break;
 		case ComponentTypes::RENDER_COMPONENT:
-			component = std::make_shared<RenderComponent>(definitionJSON);
+			component = std::make_shared<RenderComponent>(definitionJSON, layer);
 			break;
 		case ComponentTypes::TEXT_COMPONENT:
 			component = std::make_shared<TextComponent>(textComponentGameObjectid, definitionJSON);

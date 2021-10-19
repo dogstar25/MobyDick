@@ -1,8 +1,11 @@
 #include "shader.h"
+#include "shaderCode.h"
+
 
 #include <fstream>
 #include <sstream>
 #include <iostream>
+
 
 Shader::Shader(GLShaderType shaderType)
 {
@@ -12,11 +15,14 @@ Shader::Shader(GLShaderType shaderType)
     //ToDo:Lookup the actual shader that you want
     if (shaderType == GLShaderType::BASIC) {
 
-        m_shaderSource = _parseShaderSource("shaders/basic.glsl");
+        //m_shaderSource = _parseShaderSource("shaders/basic.glsl");
+        m_shaderSource.vertexSource = std::string(basicShader::vertextShader);
+        m_shaderSource.fragmentSource = std::string(basicShader::fragmentShader);
     }
 	if (shaderType == GLShaderType::UBER) {
 
 		m_shaderSource = _parseShaderSource("../opengl/shaders/uberShader.glsl");
+        //m_shaderSource.vertexSource = std::string(gonFrag1);
 	}
 
     m_vertextShaderId = glCreateShader(GL_VERTEX_SHADER);
@@ -72,6 +78,14 @@ void Shader::cleanup()
     glDeleteShader(m_fragmentShaderId);
 
 }
+
+//ShaderSource Shader::_parseShaderSource2(const std::string& shaderSource)
+//{
+//
+//
+//
+//
+//}
 
 ShaderSource Shader::_parseShaderSource(const std::string& shaderFilename)
 {

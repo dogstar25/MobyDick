@@ -40,12 +40,14 @@ public:
 	SDL_Texture* createTextureFromSurface(SDL_Surface* surface) { return nullptr; };
 	//Note:the renderComponent will call this draw
 	void drawSprite(int objectType, glm::vec2 position, GLint layer, GLfloat angle, GLfloat width, GLfloat height, glm::vec4 color, GLuint textureId, glm::vec2 textureCoords );
-	void drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, 
+	void drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture* texture,
 		SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) override;
 	void drawLine(b2Vec2 lineStart, b2Vec2 lineEnd, SDL_Color color) {};
 	void drawQuad(SDL_FRect quad, SDL_Color color, bool outline, SDL_Color outlineColor) {};
 	std::shared_ptr<GLDrawer> spriteDrawer(){ return m_spriteDrawer; }
-	GLuint bindTexture(Texture* texture);
+	void bindTexture(Texture* texture);
+	//void prepTexture(int openGlTextureIndex, Texture* texture);
+	void prepTexture(Texture* texture);
 
 
 	Shader shader(GLShaderType shaderType) {
@@ -57,9 +59,9 @@ public:
 private:
 
 	void _setVertexBufferAttriubuteLayout();
-	void _addVertexBuffer(std::vector<SpriteVertex> spriteVertices, GLDrawerType objectType, Texture* texture, GLShaderType shaderType);
+	void _addVertexBuffer(const std::vector<SpriteVertex>& spriteVertices, int layer, GLDrawerType objectType, Texture* texture, GLShaderType shaderType);
 	void _addVertexBuffer(std::vector<std::shared_ptr<Vertex>>);
-	void _prepTexture(int openGlTextureIndex, Texture* texture);
+	
 	GLuint _addTexture(Texture* texture);
 
 	//void prepTextures();
@@ -74,7 +76,7 @@ private:
 	//Projection matrix
 	glm::mat4  m_projectionMatrix{1.0};
 
-	std::unordered_map<std::string, std::shared_ptr<DrawBatch>> m_drawBatches;
+	std::map<std::string, std::shared_ptr<DrawBatch>> m_drawBatches;
 	std::array<Shader, int(GLShaderType::count) +1> m_shaders;
 
 

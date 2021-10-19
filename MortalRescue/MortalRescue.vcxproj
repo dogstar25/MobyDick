@@ -240,8 +240,6 @@
     <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\textureAssets.json" />
     <None Include="assets\textureAtlasAssets.json" />
-    <None Include="shaders\basic.glsl" />
-    <None Include="shaders\uberShader.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav" />

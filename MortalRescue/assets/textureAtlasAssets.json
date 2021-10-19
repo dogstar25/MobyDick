@@ -1,10 +1,12 @@
 {
-    "textureFiles": [
+    "textureAtlas": [
         {
             "id": "TEXTURE_ATLAS_0",
             "description": "Texture atlas 1",
             "filename": "assets/textureAtlas00.png"
-        },
+        }
+    ],
+    "textureBlueprints": [
         {
             "id": "TX_LEVEL1_BLUEPRINT",
             "description": "Level 1 Bluprint",

@@ -39,6 +39,7 @@ private:
 
 
 	ShaderSource _parseShaderSource(const std::string& shaderFilename);
+	ShaderSource _parseShaderSource2(const std::string& shaderSource);
 	GLint _compileShader(unsigned int type, const std::string shaderSource);
 	int _getUniformLocation(std::string& uniformName);
 

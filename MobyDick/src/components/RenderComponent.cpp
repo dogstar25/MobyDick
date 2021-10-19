@@ -15,7 +15,7 @@ RenderComponent::RenderComponent()
 }
 
 
-RenderComponent::RenderComponent(Json::Value definitionJSON)
+RenderComponent::RenderComponent(Json::Value definitionJSON, int layer)
 {
 	Json::Value itrRender = definitionJSON["renderComponent"];
 
@@ -33,6 +33,7 @@ RenderComponent::RenderComponent(Json::Value definitionJSON)
 	m_textureId = itrRender["textureId"].asString();
 	m_xRenderAdjustment = itrRender["xRenderAdjustment"].asFloat();
 	m_yRenderAdjustment = itrRender["yRenderAdjustment"].asFloat();
+	m_layer = layer;
 
 	if (itrRender.isMember("textureBlendMode")) {
 		m_textureBlendMode = static_cast<SDL_BlendMode>(EnumMap::instance().toEnum(itrRender["textureBlendMode"].asString()));
@@ -40,7 +41,6 @@ RenderComponent::RenderComponent(Json::Value definitionJSON)
 	else {
 		m_textureBlendMode = SDL_BLENDMODE_BLEND;
 	}
-	
 
 	if (itrRender.isMember("outline")) {
 		m_renderOutline = true;
@@ -250,7 +250,7 @@ void RenderComponent::render()
 
 			}
 
-			game->renderer()->drawSprite(destQuad, m_color, texture, textureSourceQuad, angle, outline, outlineColor);
+			game->renderer()->drawSprite(destQuad, m_color, m_layer, texture, textureSourceQuad, angle, outline, outlineColor);
 
 			//Drawa a red circle on the bodies center
 			//if(parent()->parentScene()->physicsConfig().b2DebugDrawMode == true &&

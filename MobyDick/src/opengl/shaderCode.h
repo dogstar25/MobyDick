@@ -1,4 +1,8 @@
-#shader vertex
+#pragma once
+
+namespace basicShader
+{
+    const char* vertextShader = R"(
 #version 330 core
 
 layout(location=0) in vec3 i_position;
@@ -15,7 +19,9 @@ void main() {
     gl_Position = u_projection_matrix * vec4( i_position, 1.0 );
 };
 
-#shader fragment
+)";
+
+    const char* fragmentShader = R"(
 #version 330 core
 
 layout(location=0) out vec4 o_color;
@@ -29,3 +35,7 @@ void main() {
     vec4 texColor = texture(u_Texture, v_texCoord );
     o_color = texColor * v_color ;
 };
+
+)";
+
+}

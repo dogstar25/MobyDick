@@ -23,10 +23,10 @@ SpriteDrawBatch::SpriteDrawBatch(GLDrawerType objectType, Texture* texture, GLSh
 
 }
 
-void SpriteDrawBatch::addVertexBuffer(std::vector<SpriteVertex> spriteVertices)
+void SpriteDrawBatch::addVertexBuffer(const std::vector<SpriteVertex>& spriteVertices)
 {
 
-	for (auto vertex : spriteVertices) {
+	for (const auto& vertex : spriteVertices) {
 
 		m_vertexBatch.push_back(vertex);
 	}
@@ -52,7 +52,10 @@ void SpriteDrawBatch::draw()
 
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glEnable(GL_BLEND);
+	//GL_ONE_MINUS_SRC_ALPHA
+	//GL_DST_ALPHA
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 
 	m_glDrawer->prepare();
 
@@ -60,7 +63,7 @@ void SpriteDrawBatch::draw()
 	//SpriteVertex* arrayBufferData = (SpriteVertex*)malloc(sizeof(SpriteVertex) * 1000);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(SpriteVertex) * m_vertexBatch.size(), nullptr, GL_DYNAMIC_DRAW);
 
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 
 	//Use the program first
 	glUseProgram(m_shader->shaderProgramId());
@@ -76,9 +79,11 @@ void SpriteDrawBatch::draw()
 
 	//We need to texture index here
 	//int textureIndex = static_cast<GLRenderer*>(game->renderer())->addTexture(m_texture);
-	int textureIndex = static_cast<GLRenderer*>(game->renderer())->bindTexture(m_texture);
+	//int textureIndex = static_cast<GLRenderer*>(game->renderer())->bindTexture(m_texture);
+	glBindTexture(GL_TEXTURE_2D, m_texture->gLTextureId);
+	//static_cast<GLRenderer*>(game->renderer())->bindTexture(m_texture);
 	//glBindTexture(GL_TEXTURE_2D, [textureIndex]);
-	glUniform1i(textUniformId, textureIndex);
+	glUniform1i(textUniformId, GL_ZERO);
 
 	//Submit the vertices
 	auto bufferSize = m_vertexBatch.size() * sizeof(SpriteVertex);

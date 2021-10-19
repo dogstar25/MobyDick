@@ -518,6 +518,9 @@
     <ClInclude Include="src\opengl\SpriteDrawBatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\opengl\shaderCode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="ExtraLibs\SDL2main.lib" />

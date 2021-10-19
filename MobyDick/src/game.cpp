@@ -103,7 +103,7 @@ void Game::_displayLoadingMsg()
 	texture.sdlTexture = sdlTexture;
 	texture.surface = tempSurface;
 
-	m_renderer->drawSprite(dest, SDL_Color{ 255,255,255,255 }, &texture, nullptr, 0, false, SDL_Color{});
+	m_renderer->drawSprite(dest, SDL_Color{ 255,255,255,255 }, LAYER_MENU, &texture, nullptr, 0, false, SDL_Color{});
 	m_renderer->present();
 	SDL_DestroyTexture(sdlTexture);
 

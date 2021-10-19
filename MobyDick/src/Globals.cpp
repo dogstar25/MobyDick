@@ -175,9 +175,9 @@ namespace util
 	{
 		//glm::vec2 textureCoordNormalized = { (textureCoords.x + .5) / textureSize.x, (textureCoords.y + .5) / textureSize.y };
 		glm::vec2 textureCoordNormalized = { (textureCoords.x ) / textureSize.x, (textureCoords.y ) / textureSize.y };
-		glm::vec2 adjustment = { 1 / (2 * 1280), 1 / (2 * 720) };
+		//glm::vec2 adjustment = { (float)1 / (2 * textureSize.x), (float)1 / (2 * textureSize.y) };
 
-		return textureCoordNormalized + adjustment;
+		return textureCoordNormalized;
 	}
 
 	glm::vec4 glNormalizeColor(const SDL_Color &color)

@@ -122,7 +122,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//scene.addGameObject("GINA_64", LAYER_MENU, 8, 8);
 		
 		
-		//scene.addGameObject("FPS_VALUE", LAYER_MENU, 1, 1);
+		scene.addGameObject("FPS_VALUE", LAYER_MENU, 1, 1);
 
 	}
 

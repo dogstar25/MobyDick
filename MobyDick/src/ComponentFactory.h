@@ -12,6 +12,7 @@ public:
 
 	static ComponentFactory& instance();
 	std::shared_ptr<Component> create(Json::Value definitionJSON, ComponentTypes componentType);
+	std::shared_ptr<Component> create(Json::Value definitionJSON, int layer, ComponentTypes componentType);
 	std::shared_ptr<Component> create(Json::Value definitionJSON, Scene* scene, ComponentTypes componentType);
 	std::shared_ptr<Component> create(Json::Value definitionJSON, std::string textGameObjectId, ComponentTypes componentType);
 	std::shared_ptr<Component> create(
@@ -28,6 +29,7 @@ protected:
 		float xMapPos,
 		float yMapPos,
 		float angleAdjust,
+		int layer,
 		ComponentTypes componentType);
 
 };

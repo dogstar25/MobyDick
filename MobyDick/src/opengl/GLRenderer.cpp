@@ -102,7 +102,7 @@ bool GLRenderer::present()
 	return true;
 }
 
-void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor)
+void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor)
 {
 
 	auto normalizedcolor = util::glNormalizeColor(color);
@@ -199,7 +199,7 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, S
 	//shader needs to be passed in
 	auto shadertype = GLShaderType::BASIC;
 
-	_addVertexBuffer(spriteVertexBuffer, GLDrawerType::GLSPRITE, texture, shadertype);
+	_addVertexBuffer(spriteVertexBuffer, layer, GLDrawerType::GLSPRITE, texture, shadertype);
 
 }
 
@@ -239,7 +239,7 @@ void GLRenderer::_setVertexBufferAttriubuteLayout()
 
 }
 
-void GLRenderer::_addVertexBuffer(std::vector<SpriteVertex> spriteVertices, GLDrawerType objectType, Texture* texture, GLShaderType shaderType)
+void GLRenderer::_addVertexBuffer(const std::vector<SpriteVertex>& spriteVertices, int layer, GLDrawerType objectType, Texture* texture, GLShaderType shaderType)
 {
 
 	std::stringstream texturePtrString;
@@ -249,7 +249,7 @@ void GLRenderer::_addVertexBuffer(std::vector<SpriteVertex> spriteVertices, GLDr
 	//Build the map key
 	//const void* texturePtr = static_cast<const void*>(texture);
 	//auto key = std::format("{:0d}_{}_{:05d}", (int)objectType, texturePtrString.str(), (int)shaderType);
-	keyString << (int)objectType <<"_"<<texturePtrString.str()<<"_"<<(int)shaderType;
+	keyString << (int)layer <<"_"<<(int)objectType << "_" << texturePtrString.str() << "_" << (int)shaderType;
 	
 
 	//See if the drawBatch for this combo exists yet
@@ -269,6 +269,10 @@ void GLRenderer::_addVertexBuffer(std::vector<SpriteVertex> spriteVertices, GLDr
 
 }
 
+/*
+
+*/
+[[deprecated]]
 GLuint GLRenderer::_addTexture(Texture* texture)
 {
 	std::stringstream textureAddrString;
@@ -293,7 +297,7 @@ GLuint GLRenderer::_addTexture(Texture* texture)
 	if (foundTextureIndex.has_value() == false) {
 
 		glBindTexture(GL_TEXTURE_2D, m_textureIds[newTextureIndex.value()]);
-		_prepTexture(newTextureIndex.value(), texture);
+		//prepTexture(newTextureIndex.value(), texture);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
 		index = newTextureIndex.value();
@@ -307,17 +311,7 @@ GLuint GLRenderer::_addTexture(Texture* texture)
 	return index;
 }
 
-
-GLuint GLRenderer::bindTexture(Texture* texture)
-{
-	//either add this texture or get its current index if it already exists
-	GLuint textureIndex = _addTexture(texture);
-	glBindTexture(GL_TEXTURE_2D, m_textureIds[textureIndex]);
-
-	return textureIndex;
-}
-
-void GLRenderer::_prepTexture(int openGLTextureIndex, Texture* texture)
+void GLRenderer::prepTexture(Texture* texture)
 {
 
 	SDL_Surface* surf = texture->surface;

@@ -11,6 +11,7 @@ std::shared_ptr<Component> MRComponentFactory::_create(
 	float xMapPos,
 	float yMapPos,
 	float angleAdjust,
+	int layer,
 	ComponentTypes componentType)
 {
 	std::shared_ptr<Component> component{};
@@ -29,6 +30,7 @@ std::shared_ptr<Component> MRComponentFactory::_create(
 			xMapPos,
 			yMapPos,
 			angleAdjust,
+			layer,
 			componentType);
 	}
 

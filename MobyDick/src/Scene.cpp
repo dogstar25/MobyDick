@@ -268,7 +268,7 @@ void Scene::render() {
 GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow)
 {
 
-	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this, cameraFollow));
+	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this, layer, cameraFollow));
 	//gameObject->init(cameraFollow);
 
 	return gameObject.get();

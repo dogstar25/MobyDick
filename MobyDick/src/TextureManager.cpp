@@ -9,6 +9,7 @@
 #include "GameConfig.h"
 #include "BaseConstants.h"
 #include "EnumMaps.h"
+#include "opengl/GLRenderer.h"
 
 extern std::unique_ptr<Game> game;
 
@@ -115,10 +116,39 @@ bool TextureManager::load(std::string texturesAssetsFile)
 	SDL_Texture* sdlTexture;
 	Texture* textureObject;
 
+	for (auto itr : root["textureAtlas"])
+	{
+		//textureObject = new Texture();
+		textureObject = new Texture();
+
+		//This is a texture object that will store the texture assets that other texture items will share
+		textureObject->isRootTexture = true;
+
+		id = itr["id"].asString();
+		imageFilename = itr["filename"].asString();
+
+		//Load the file
+		textureObject->surface = IMG_Load(imageFilename.c_str());
+
+		//If this is the SDL Renderer then create the SDL texture and potentially free the image surface
+		if (GameConfig::instance().rendererType() == RendererType::SDL) {
+			sdlTexture = SDL_CreateTextureFromSurface(game->renderer()->sdlRenderer(), textureObject->surface);
+			textureObject->sdlTexture = sdlTexture;
+		}
+		else if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
+
+			//DO prepTexture code from the GLRenderer
+			static_cast<GLRenderer*>(game->renderer())->prepTexture(textureObject);
+
+		}
+
+		m_textureMap.emplace(id, std::make_shared<Texture>(*textureObject));
+
+	}
 
 	//Loop through every texture defined in the config file, create a texture object
 	//and store it in the main texture map
-	for(auto itr : root["textureFiles"])
+	for(auto itr : root["textureBlueprints"])
 	{
 		//textureObject = new Texture();
 		textureObject = new Texture();

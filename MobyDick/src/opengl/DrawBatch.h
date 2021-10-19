@@ -16,7 +16,7 @@ public:
 
 	DrawBatch() = default;
 	
-	virtual void addVertexBuffer(std::vector<SpriteVertex> spriteVertices) = 0;
+	virtual void addVertexBuffer(const std::vector<SpriteVertex>& spriteVertices) = 0;
 	virtual void draw() = 0;
 	virtual void clear() = 0;
 	

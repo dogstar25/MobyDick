@@ -21,7 +21,7 @@ class RenderComponent : public Component
 
 public:
 	RenderComponent();
-	RenderComponent(Json::Value definitionJSON);
+	RenderComponent(Json::Value definitionJSON, int layer);
 	~RenderComponent();
 
 	void update() override;
@@ -61,6 +61,7 @@ private:
 	bool                        m_renderOutline;
 	std::string	                m_textureId;
 	SDL_BlendMode				m_textureBlendMode;
+	int							m_layer{};
 
 	std::optional<displayOverlay> m_displayOverlay;
 
