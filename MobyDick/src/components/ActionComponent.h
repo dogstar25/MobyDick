@@ -7,7 +7,7 @@
 #include <vector>
 #include <optional>
 
-#include <json/json.h>
+#include <jsoncpp/include/json/json.h>
 #include <box2d/box2d.h>
 
 #include "../actions/Action.h"

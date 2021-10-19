@@ -6,7 +6,7 @@
 #include <vector> 
 #include <SDL2/SDL.h>
 #include <box2d/box2d.h>
-#include <json/json.h>
+#include <jsoncpp/include/json/json.h>
 #include "Globals.h"
 #include "BaseConstants.h"
 #include "Timer.h"
