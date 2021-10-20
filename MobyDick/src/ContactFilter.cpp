@@ -26,8 +26,8 @@ bool ContactFilter::ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB)
 		return false;
 	}
 
-	GameObject* gameObjectA = static_cast<GameObject*>(fixtureA->GetBody()->GetUserData());
-	GameObject* gameObjectB = static_cast<GameObject*>(fixtureB->GetBody()->GetUserData());
+	GameObject* gameObjectA = reinterpret_cast<GameObject*>(fixtureA->GetBody()->GetUserData().pointer);
+	GameObject* gameObjectB = reinterpret_cast<GameObject*>(fixtureB->GetBody()->GetUserData().pointer);
 
 	if (gameObjectA == nullptr || gameObjectB == nullptr) {
 		return false;

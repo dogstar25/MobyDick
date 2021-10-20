@@ -1,7 +1,7 @@
 #pragma once
-#include <glad/glad.h>
 #include <vector>
 #include <memory>
+#include <glad/glad.h>
 
 #include "GLDrawer.h"
 #include "Vertex.h"

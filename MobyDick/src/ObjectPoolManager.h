@@ -11,7 +11,7 @@
 #include <optional>
 
 #include <SDL2/SDL.h>
-#include <jsoncpp/include/json/json.h>
+#include <json/json.h>
 
 class GameObject;
 class Scene;

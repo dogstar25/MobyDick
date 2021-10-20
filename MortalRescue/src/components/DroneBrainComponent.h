@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <optional>
-#include <jsoncpp/include/json/json.h>
+#include <json/json.h>
 
 #include "Timer.h"
 

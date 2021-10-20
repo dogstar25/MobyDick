@@ -13,7 +13,7 @@ bool BrainAABBCallback::ReportFixture(b2Fixture* fixture)
 {
 	BrainAABBFoundObject brainAABBFoundObject;
 	brainAABBFoundObject.fixture = fixture;
-	brainAABBFoundObject.gameObject = static_cast<GameObject*>(fixture->GetBody()->GetUserData());
+	brainAABBFoundObject.gameObject = reinterpret_cast<GameObject*>(fixture->GetBody()->GetUserData().pointer);
 
 	//only store the objects that we care about
 	//if (brainAABBFoundObject.gameObject->hasTrait(TraitTag::player) ||

@@ -4,7 +4,7 @@
 #include "../BrainAABBCallback.h"
 #include "../LevelManager.h"
 
-#include <jsoncpp/include/json/json.h>
+#include <json/json.h>
 
 #include <optional>
 

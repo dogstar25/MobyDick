@@ -61,7 +61,7 @@ void PhysicsComponent::setTransform(b2Vec2 positionVector, float angle)
 
 void PhysicsComponent::setPhysicsBodyActive(bool  active)
 {
-	m_physicsBody->SetActive(active);
+	m_physicsBody->SetEnabled(active);
 
 }
 
@@ -279,7 +279,7 @@ void PhysicsComponent::setOffGrid()
 
 	m_physicsBody->SetTransform(positionVector, 0);
 	m_physicsBody->SetLinearVelocity(velocityVector);
-	m_physicsBody->SetActive(false);
+	m_physicsBody->SetEnabled(false);
 }
 
 void PhysicsComponent::attachItem(GameObject* attachObject, b2JointType jointType, std::optional<b2Vec2> attachLocation)

@@ -5,7 +5,7 @@
 #include <memory>
 #include <optional>
 
-#include <jsoncpp/include/json/json.h>
+#include <json/json.h>
 #include "Component.h"
 //#include "../GameObject.h"
 

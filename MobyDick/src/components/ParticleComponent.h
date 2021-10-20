@@ -7,7 +7,7 @@
 #include <vector>
 #include <optional>
 
-#include <jsoncpp/include/json/json.h>
+#include <json/json.h>
 
 #include "../texture.h"
 #include "Component.h"
