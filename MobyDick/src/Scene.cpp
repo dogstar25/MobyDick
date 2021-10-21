@@ -260,7 +260,7 @@ void Scene::render() {
 	//DebugDraw
 	if (m_hasPhysics && m_physicsConfig.b2DebugDrawMode == true)
 	{
-		m_physicsWorld->DrawDebugData();
+		m_physicsWorld->DebugDraw();
 	}
 
 }
