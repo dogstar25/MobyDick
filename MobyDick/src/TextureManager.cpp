@@ -2,7 +2,7 @@
 
 #include <fstream>
 
-#include <jsoncpp/include/json/json.h>
+#include <json/json.h>
 
 #include "game.h"
 #include "RendererSDL.h"

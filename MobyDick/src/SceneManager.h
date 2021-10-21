@@ -5,7 +5,7 @@
 #include <functional>
 #include <thread>
 
-#include <jsoncpp/include/json/json.h>
+#include <json/json.h>
 
 #include "Scene.h"
 #include "Globals.h"
