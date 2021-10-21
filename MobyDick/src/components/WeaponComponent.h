@@ -4,7 +4,7 @@
 #include<string>
 #pragma warning(push,0)
 #include <box2d/box2d.h>
-#include <jsoncpp/include/json/json.h>
+#include <json/json.h>
 #pragma warning(pop)
 #include <SDL2/SDL.h>
 

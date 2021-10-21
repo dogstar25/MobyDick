@@ -1,6 +1,6 @@
 #pragma once
 #include "components/Component.h"
-#include <jsoncpp/include/json/json.h>
+#include <json/json.h>
 
 class Scene;
 

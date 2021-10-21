@@ -2,7 +2,7 @@
 #define TEXT_COMPONENT_H
 
 #include <string>
-#include <jsoncpp/include/json/json.h>
+#include <json/json.h>
 #include "Component.h"
 #include "../TextureManager.h"
 #include "../Timer.h"
