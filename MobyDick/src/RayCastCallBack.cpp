@@ -16,7 +16,7 @@ float RayCastCallBack::ReportFixture(b2Fixture* fixture, const b2Vec2& point, co
 
 	BrainRayCastFoundItem brainRayCastFoundItem;
 	brainRayCastFoundItem.fixture = fixture;
-	brainRayCastFoundItem.gameObject = static_cast<GameObject*>(fixture->GetBody()->GetUserData());
+	brainRayCastFoundItem.gameObject = reinterpret_cast<GameObject*>(fixture->GetBody()->GetUserData().pointer);
 	brainRayCastFoundItem.intersectPoint = point;
 	brainRayCastFoundItem.normal = normal;
 	brainRayCastFoundItem.fraction = fraction;

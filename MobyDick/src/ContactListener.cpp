@@ -10,8 +10,8 @@ void ContactListener::BeginContact(b2Contact* contact) {
 
 
 	//Get the 2 object pointers
-	GameObject* gameObjectA = static_cast<GameObject*>(contact->GetFixtureA()->GetBody()->GetUserData());
-	GameObject* gameObjectB = static_cast<GameObject*>(contact->GetFixtureB()->GetBody()->GetUserData());
+	GameObject* gameObjectA = reinterpret_cast<GameObject*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
+	GameObject* gameObjectB = reinterpret_cast<GameObject*>(contact->GetFixtureB()->GetBody()->GetUserData().pointer);
 
 	float x = 0;
 	float y = 0;

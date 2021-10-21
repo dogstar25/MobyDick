@@ -88,7 +88,8 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 		component = game->componentFactory()->create(definitionJSON, parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PHYSICS_COMPONENT);
 		component->setParent(this);
-		std::static_pointer_cast<PhysicsComponent>(component)->physicsBody()->SetUserData(this);
+		//std::static_pointer_cast<PhysicsComponent>(component)->physicsBody()->SetUserData((void*)this);
+		std::static_pointer_cast<PhysicsComponent>(component)->physicsBody()->GetUserData().pointer = reinterpret_cast<uintptr_t>(this);
 		addComponent(component, ComponentTypes::PHYSICS_COMPONENT);
 
 	}
