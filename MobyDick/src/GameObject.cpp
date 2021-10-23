@@ -9,7 +9,7 @@
 #include "Scene.h"
 #include "components/InventoryComponent.h"
 #include "ComponentFactory.h"
-#include "Globals.h"
+#include "Util.h"
 #include "BaseConstants.h"
 #include "Camera.h"
 #include "EnumMaps.h"

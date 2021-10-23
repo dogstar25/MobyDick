@@ -5,7 +5,7 @@
 #include <bitset>
 #include <json/json.h>
 
-#include "../Globals.h"
+#include "../Util.h"
 #include "../BaseConstants.h"
 
 class GameObject;

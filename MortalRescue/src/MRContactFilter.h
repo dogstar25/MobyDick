@@ -7,7 +7,7 @@
 #include <box2d/box2d.h>
 
 #include "ContactFilter.h"
-#include "Globals.h"
+#include "Util.h"
 #include "BaseConstants.h"
 
 class MRContactFilter : public ContactFilter

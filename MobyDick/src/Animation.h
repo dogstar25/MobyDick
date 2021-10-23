@@ -7,7 +7,7 @@
 #include <SDL2/SDL.h>
 #include <box2d/box2d.h>
 #include <json/json.h>
-#include "Globals.h"
+#include "Util.h"
 #include "BaseConstants.h"
 #include "Timer.h"
 

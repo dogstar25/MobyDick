@@ -1,5 +1,5 @@
-#ifndef GLOBALS_H
-#define GLOBALS_H
+#ifndef UTIL_H
+#define UTIL_H
 
 #include <string>
 #include <map>
@@ -47,31 +47,6 @@ namespace util
 	b2Vec2 matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float);
 
 };
-
-/*
-Game State
-*/
-enum class GameState{ 
-	QUIT = 0,
-	PLAY = 1,
-	PAUSE = 2,
-	EXIT = 3
-};
-
-enum class SceneState {
-	RUN = 0,
-	PAUSE = 1,
-	EXIT = 2
-};
-
-namespace WindowPosition {
-
-	inline constexpr int CENTER = 0;
-	inline constexpr int TOP_LEFT = 1;
-	inline constexpr int TOP_CENTER = 2;
-	inline constexpr int TOP_RIGHT = 3;
-}
-
 
 
 #endif

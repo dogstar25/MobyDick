@@ -5,10 +5,13 @@
 
 #include "game.h"
 #include "GameConstants.h"
+#include "SoundManager.h"
 #include "particleEffects/GameParticleEffects.h"
+#include "components/InventoryComponent.h"
+#include "components/PistolWeaponComponent.h"
 
 
-void player_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+void MRContactListener::_player_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
 {
 	GameObject* player;
 	GameObject* wall;
@@ -27,7 +30,7 @@ void player_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint
 
 }
 
-void bullet_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+void MRContactListener::_bullet_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
 {
 	GameObject* bullet;
 	GameObject* wall;
@@ -56,7 +59,7 @@ void bullet_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint
 
 }
 
-void playerBullet_droneShield(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+void MRContactListener::_playerBullet_droneShield(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
 {
 	GameObject* bullet;
 	GameObject* shield;
@@ -96,23 +99,48 @@ void playerBullet_droneShield(GameObject* contact1, GameObject* contact2, b2Vec2
 		shieldVitality->setIsBroken(true);
 		particleComponent->addParticleEffect(ParticleEffects::impactSmoke);
 		particleComponent->addParticleEffect(ParticleEffects::scrap);
+		SoundManager::instance().playSound("SFX_IMPACT_1");
 
 	}
 	else {
 
 		particleComponent->addParticleEffect(ParticleEffects::deflect);
+		SoundManager::instance().playSound("SFX_IMPACT_3");
 	}
 
 }
 
-//MRContactListener& MRContactListener::instance()
-//{
-//
-//	static MRContactListener singletonInstance;
-//	return singletonInstance;
-//
-//}
+void MRContactListener::_player_shieldScrap(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+{
 
+	GameObject* player;
+	GameObject* scrap;
+
+	if (contact1->collisionTag() == CollisionTag::PLAYER) {
+		player = contact1;
+		scrap = contact2;
+	}
+	else {
+		scrap = contact1;
+		player = contact2;
+	}
+
+	//Acknowledge the scrap collection
+	auto inventoryComponent = player->getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT);
+	auto scrapCount = inventoryComponent->addCollectible(CollectibleTypes::DRONE_SCRAP, 1);
+
+	//Check to see if this upgrades the players weapon
+	auto pistol = inventoryComponent->getItem(TraitTag::weapon);
+	if (pistol.has_value()) {
+		auto pistolWeaponComponent = pistol.value()->getComponent<PistolWeaponComponent>(ComponentTypes::WEAPON_COMPONENT);
+		pistolWeaponComponent->checkLevelUp(scrapCount);
+	}
+	
+	//flag the scrap item to be removed from the game and play a sound effect
+	scrap->setRemoveFromWorld(true);
+	SoundManager::instance().playSound("SFX_PICKUP_2");
+
+}
 
 void MRContactListener::BeginContact(b2Contact* contact) {
 
@@ -156,7 +184,7 @@ void MRContactListener::handleContact(GameObject* contact1, GameObject* contact2
 	if ((category1 == CollisionTag::PLAYER && category2 == CollisionTag::WALL) ||
 		(category2 == CollisionTag::PLAYER && category1 == CollisionTag::WALL)) {
 
-		player_wall(contact1, contact2, contactPoint);
+		_player_wall(contact1, contact2, contactPoint);
 
 	}
 
@@ -166,7 +194,7 @@ void MRContactListener::handleContact(GameObject* contact1, GameObject* contact2
 	if ((category1 == CollisionTag::PLAYER_BULLET && category2 == CollisionTag::WALL) ||
 		(category2 == CollisionTag::PLAYER_BULLET && category1 == CollisionTag::WALL)) {
 
-		bullet_wall(contact1, contact2, contactPoint);
+		_bullet_wall(contact1, contact2, contactPoint);
 
 	}
 
@@ -176,206 +204,22 @@ void MRContactListener::handleContact(GameObject* contact1, GameObject* contact2
 	if ((category1 == CollisionTag::PLAYER_BULLET && category2 == CollisionTag::DRONE_SHIELD) ||
 		(category2 == CollisionTag::PLAYER_BULLET && category1 == CollisionTag::DRONE_SHIELD)) {
 
-		playerBullet_droneShield(contact1, contact2, contactPoint);
+		_playerBullet_droneShield(contact1, contact2, contactPoint);
+
+	}
+
+	///////////////////////////////////
+	// Player - Drone Scrap
+	///////////////////////////////////
+	if ((category1 == CollisionTag::PLAYER && category2 == CollisionTag::SHIELD_SCRAP) ||
+		(category2 == CollisionTag::PLAYER && category1 == CollisionTag::SHIELD_SCRAP)) {
+
+		_player_shieldScrap(contact1, contact2, contactPoint);
 
 	}
 
 }
 
-
-
-
-//void ContactListener::playerBitPiece(PlayerObject* player, WorldObject* piece, b2Vec2 contactPoint)
-//{
-//	//Set flag for bullet to be removed from world
-//	piece->setRemoveFromWorld(true);
-//	player->incrementPiecesCollected();
-//
-//	//Sound
-//	SoundManager::instance().playSound("SFX_PICKUP_2");
-//
-//
-//}
-//
-//
-//void ContactListener::bulletWall(WorldObject* bullet, WorldObject* wall, b2Vec2 contactPoint)
-//{
-//	//Set flag for bullet to be removed from world
-//	bullet->setRemoveFromWorld(true);
-//
-//	//use the collision point for the particle emission
-//	float x = contactPoint.x;
-//	float y = contactPoint.y;
-//	b2Vec2 particleOrigin = { x,y };
-//
-//	//temp color code
-//	SDL_Color colorMin = { 0,0,0,255 };
-//	SDL_Color colorMax = { 225,255,255,255 };
-//
-//
-//	ParticleEmission* particleEmission = new ParticleEmission(
-//		"PARTICLE1_POOL",
-//		particleOrigin, //min position
-//		particleOrigin,	//max position
-//		5,	//Force Min
-//		5,	//force Max
-//		0.55,	//Lifetime Min
-//		1.55,	//Lifetime Max
-//		true,	// Alpha fade
-//		0,	//Angle min
-//		360,	//Angle Max
-//		0.28,	//Size Min
-//		1.48,	//Size Max
-//		colorMin,	//Color Min
-//		colorMax,	//Color Max
-//		40,	//Particle count min
-//		50	//Particle count max
-//	);
-//	ParticleMachine::instance().add(particleEmission);
-//
-//}
-//
-//void ContactListener::bulletPiece(WorldObject* bullet, WorldObject* piece, b2Vec2 contactPoint)
-//{
-//
-//
-//	//Set flag for bullet to be removed from world
-//	bullet->setRemoveFromWorld(true);
-//
-//	//Set flag for piece to be removed from world
-//	//only if bullet was strong enough
-//	if (piece->testStrength(bullet->force())) {
-//		piece->setRemoveFromWorld(true);
-//		bulletPieceExplode(bullet,piece,contactPoint);
-//	}
-//	else
-//	{
-//		bulletPieceDeflect(bullet, piece, contactPoint);
-//	}
-//	
-//
-//
-//}
-//
-//void ContactListener::bulletPieceExplode(WorldObject* bullet, WorldObject* piece, b2Vec2 contactPoint)
-//{
-//	ParticleEmission* particleEmission = NULL;
-//
-//	float x = contactPoint.x;
-//	float y = contactPoint.y;
-//	b2Vec2 particleOrigin = { x,y };
-//
-//	SDL_Color colorMin = piece->color();
-//	SDL_Color colorMax = piece->color();
-//
-//	particleEmission = new ParticleEmission(
-//		"PARTICLE1_POOL",
-//		particleOrigin, //min position
-//		particleOrigin,	//max position
-//		1,	//Force Min
-//		10,	//force Max
-//		0.35,	//Lifetime Min
-//		0.65,	//Lifetime Max
-//		true,	// Alpha fade
-//		0,	//Angle min
-//		360,	//Angle Max
-//		1.28,	//Size Min
-//		3.48,	//Size Max
-//		colorMin,	//Color Min
-//		colorMax,	//Color Max
-//		10,	//Particle count min
-//		25	//Particle count max
-//	);
-//	ParticleMachine::instance().add(particleEmission);
-//
-//	//Create some white smoke particles
-//	colorMin = { 255,255,255,50 };
-//	colorMax = { 255,255,255,100 };
-//
-//	particleEmission = new ParticleEmission(
-//		"PARTICLE1_POOL",
-//		particleOrigin, //min position
-//		particleOrigin,	//max position
-//		1,	//Force Min
-//		8,	//force Max
-//		0.55,	//Lifetime Min
-//		0.75,	//Lifetime Max
-//		false,	// Alpha fade
-//		0,	//Angle min
-//		360,	//Angle Max
-//		2.00,	//Size Min
-//		5.25,	//Size Max
-//		colorMin,	//Color Min
-//		colorMax,	//Color Max
-//		1,	//Particle count min
-//		8	//Particle count max
-//	);
-//	ParticleMachine::instance().add(particleEmission);
-//
-//	//Also emit 2 pieces that will remain on teh ground
-//	colorMin = piece->color();
-//	colorMax = piece->color();
-//	particleEmission = new ParticleEmission(
-//		"PIECES1_POOL",
-//		particleOrigin, //min position
-//		particleOrigin,	//max position
-//		20,	//Force Min
-//		75,	//force Max
-//		0,	//Lifetime Min
-//		0,	//Lifetime Max
-//		false,	// Alpha fade
-//		0,	//Angle min
-//		360,	//Angle Max
-//		0.16,	//Size Min
-//		0.16,	//Size Max
-//		colorMin,	//Color Min
-//		colorMax,	//Color Max
-//		2,	//Particle count min
-//		3	//Particle count max
-//	);
-//	ParticleMachine::instance().add(particleEmission);
-//
-//	//Sound
-//	SoundManager::instance().playSound("SFX_IMPACT_1");
-//
-//}
-//
-//void ContactListener::bulletPieceDeflect(WorldObject* bullet, WorldObject* piece, b2Vec2 contactPoint)
-//{
-//	ParticleEmission* particleEmission = NULL;
-//
-//	float x = contactPoint.x;
-//	float y = contactPoint.y;
-//	b2Vec2 particleOrigin = { x,y };
-//
-//	SDL_Color colorMin = { 255,255,255,175 };
-//	SDL_Color colorMax = { 255,255,255,175 };
-//
-//	particleEmission = new ParticleEmission(
-//		"DEFLECT1_POOL",
-//		particleOrigin, //min position
-//		particleOrigin,	//max position
-//		2,	//Force Min
-//		3,	//force Max
-//		0.10,	//Lifetime Min
-//		0.25,	//Lifetime Max
-//		true,	// Alpha fade
-//		0,	//Angle min
-//		360,	//Angle Max
-//		2.56,	//Size Min
-//		2.56,	//Size Max
-//		colorMin,	//Color Min
-//		colorMax,	//Color Max
-//		2,	//Particle count min
-//		3	//Particle count max
-//	);
-//	ParticleMachine::instance().add(particleEmission);
-//
-//	//Sound
-//	SoundManager::instance().playSound("SFX_IMPACT_3");
-//
-//
-//}
 
 
 

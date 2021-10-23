@@ -9,17 +9,17 @@
         "tileHeight": 32
     },
     "tileSize": 32,
-    //"levelTriggers": [
-    ////    //{
-    ////    //    "description": "Player Death",
-    ////    //    "triggerClass": "PlayerDeath"
-    ////    //},
-    //    {
-    //        "description": "Level Complete",
-    //        "triggerClass": "LevelComplete"
-    //    }
+    "levelTriggers": [
+        {
+            "description": "Player Death",
+            "triggerClass": "PlayerDeath"
+        },
+        {
+            "description": "Level Complete",
+            "triggerClass": "LevelComplete"
+        }
 
-    //],
+    ],
     "locationObjects": [
         {
             "id": "LOC_0007_0005",
@@ -31,14 +31,19 @@
             "gameObjectId": "DRONE",
             "cameraFollow": false
         },
-        //{
-        //    "id": "LOC_0058_0004",
-        //    "gameObjectId": "DRONE",
-        //    "cameraFollow": false
-        //},
         {
             "id": "LOC_0092_0024",
             "gameObjectId": "DRONE",
+            "cameraFollow": false
+        },
+        {
+            "id": "LOC_0028_0041",
+            "gameObjectId": "SURVIVOR",
+            "cameraFollow": false
+        },
+        {
+            "id": "LOC_0033_0002",
+            "gameObjectId": "SURVIVOR",
             "cameraFollow": false
         },
         {

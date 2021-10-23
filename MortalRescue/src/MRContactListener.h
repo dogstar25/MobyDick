@@ -26,6 +26,11 @@ public:
 
 	void virtual handleContact(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
 
+private:
+	void _player_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
+	void _bullet_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
+	void _playerBullet_droneShield(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
+	void _player_shieldScrap(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
 };
 
 #endif

@@ -194,10 +194,13 @@ void RenderComponent::render()
 			outline = true;
 			outlineColor = m_displayOverlay->outlineColor;
 		}
-		else {
+		else if (m_renderOutline == true){
 
 			outline = true;
 			outlineColor = m_outLineColor;
+		}
+		else {
+			outline = false;
 		}
 
 		game->renderer()->drawQuad(quad, m_color, outline, outlineColor);

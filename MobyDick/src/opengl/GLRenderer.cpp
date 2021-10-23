@@ -10,7 +10,7 @@
 #include <format>
 
 
-#include "../Globals.h"
+#include "../Util.h"
 #include "../GameConfig.h"
 #include "GLDrawer.h"
 #include "SpriteVertex.h"

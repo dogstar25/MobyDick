@@ -17,10 +17,10 @@ bool LevelComplete::hasMetCriteria()
 			//assert(gameObject != nullptr && "GameObject is null");
 			if (gameObjects[i]->hasTrait(TraitTag::player)) {
 
-				const auto& transformComponent = gameObjects[i]->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-				if (transformComponent->getCenterPosition().x > 400) {
-					hasMet = true;
-				}
+				//const auto& transformComponent = gameObjects[i]->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+				//if (transformComponent->getCenterPosition().x > 400) {
+				//	hasMet = true;
+				//}
 				break;
 			}
 

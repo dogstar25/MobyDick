@@ -48,7 +48,7 @@
     <ClCompile Include="src\TextureManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Globals.cpp">
+    <ClCompile Include="src\Util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\EnumMaps.cpp">
@@ -258,24 +258,6 @@
     <ClCompile Include="src\opengl\SpriteDrawBatch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\jsoncpp\src\jsontestrunner\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\jsoncpp\src\lib_json\json_reader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\jsoncpp\src\lib_json\json_value.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\jsoncpp\src\lib_json\json_writer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\jsoncpp\src\test_lib_json\jsontest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="vendor\jsoncpp\src\test_lib_json\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation.h">
@@ -302,7 +284,7 @@
     <ClInclude Include="src\GameObjectManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Globals.h">
+    <ClInclude Include="src\Util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\SoundManager.h">
@@ -539,42 +521,6 @@
     <ClInclude Include="src\opengl\shaderCode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\jsoncpp\include\json\assertions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\jsoncpp\include\json\autolink.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\jsoncpp\include\json\config.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\jsoncpp\include\json\features.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\jsoncpp\include\json\forwards.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\jsoncpp\include\json\json.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\jsoncpp\include\json\reader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\jsoncpp\include\json\value.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\jsoncpp\include\json\version.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\jsoncpp\include\json\writer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\jsoncpp\src\lib_json\json_tool.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\jsoncpp\src\test_lib_json\jsontest.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Library Include="ExtraLibs\SDL2main.lib" />
@@ -588,10 +534,5 @@
     <None Include="vcpkg.json_old" />
     <None Include="src\opengl\shaders\basic.glsl" />
     <None Include="src\opengl\shaders\uberShader.glsl" />
-    <None Include="vendor\jsoncpp\doc\footer.html" />
-    <None Include="vendor\jsoncpp\doc\header.html" />
-    <None Include="vendor\jsoncpp\src\lib_json\json_valueiterator.inl">
-      <Filter>Header Files</Filter>
-    </None>
   </ItemGroup>
 </Project>

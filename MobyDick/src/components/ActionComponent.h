@@ -17,7 +17,7 @@
 #include "../actions/UseAction.h"
 #include "../actions/NoAction.h"
 #include "../actions/LoadNextLevelAction.h"
-#include "../Globals.h"
+#include "../Util.h"
 #include "../BaseConstants.h"
 
 

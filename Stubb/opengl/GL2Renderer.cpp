@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "opengl/GLDebugCallback.h"
-#include "Globals.h"
+#include "Util.h"
 
 
 

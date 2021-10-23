@@ -59,6 +59,29 @@ GameObject* InventoryComponent::getActiveItem() {
 	return m_items[m_activeItem].get();
 }
 
+std::optional<GameObject*> InventoryComponent::getItem(const int traitTag)
+{
+	std::optional<GameObject*> foundItem{};
+
+	for (auto item : m_items) {
+
+		//This assumes only one item with this trait - returns first one
+		if(item->hasTrait(traitTag)){
+			foundItem = item.get();
+			break;
+		}
+	}
+	return foundItem;
+}
+
+int InventoryComponent::addCollectible(const int collectibleType, int count)
+{
+
+	m_collectibles.at(collectibleType) += count;
+
+	return m_collectibles.at(collectibleType);
+}
+
 void InventoryComponent::render()
 {
 

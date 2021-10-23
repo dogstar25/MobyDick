@@ -6,7 +6,7 @@
 
 #include <box2d/box2d.h>
 
-#include "Globals.h"
+#include "Util.h"
 #include "BaseConstants.h"
 
 class ContactFilter : public b2ContactFilter

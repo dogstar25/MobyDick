@@ -18,9 +18,11 @@ bool PlayerDeath::hasMetCriteria()
 			if (gameObjects[i]->hasTrait(TraitTag::player)) {
 
 				const auto& transformComponent = gameObjects[i]->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-				if (transformComponent->getCenterPosition().x > 400) {
-					hasMet = true;
-				}
+				//dumb test to test
+				//this woudl check the vitality component for current health
+				//if (transformComponent->getCenterPosition().x > 400) {
+				//	hasMet = true;
+				//}
 				break;
 			}
 
