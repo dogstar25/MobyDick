@@ -1,6 +1,6 @@
 #include "DebugPanel.h"
 
-#include "Globals.h"
+#include "Util.h"
 #include "BaseConstants.h"
 #include "game.h"
 #include "DynamicTextManager.h"

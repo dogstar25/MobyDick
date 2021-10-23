@@ -9,7 +9,7 @@
 #include <map>
 
 #include "GameObject.h"
-#include "Globals.h"
+#include "Util.h"
 #include "BaseConstants.h"
 #include "triggers/Trigger.h"
 

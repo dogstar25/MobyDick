@@ -35,12 +35,12 @@ namespace CollisionTag {
 
 namespace TraitTag {
 
-	static const int player = 1;
-	static const int barrier = 2;
-	static const int collectable = 3;
-	static const int weapon = 4;
-	static const int gui = 5;
-	static const int   navigation;
+	inline constexpr int player = 1;
+	inline constexpr int barrier = 2;
+	inline constexpr int collectable = 3;
+	inline constexpr int weapon = 4;
+	inline constexpr int gui = 5;
+	inline constexpr int navigation = 6;
 
 }
 
@@ -78,6 +78,27 @@ namespace NavigationObjectType {
 	inline constexpr int TRANSIT_POINT = 1;
 	inline constexpr int WAYPOINT = 2;
 }
+
+namespace WindowPosition {
+
+	inline constexpr int CENTER = 0;
+	inline constexpr int TOP_LEFT = 1;
+	inline constexpr int TOP_CENTER = 2;
+	inline constexpr int TOP_RIGHT = 3;
+}
+
+enum class GameState {
+	QUIT = 0,
+	PLAY = 1,
+	PAUSE = 2,
+	EXIT = 3
+};
+
+enum class SceneState {
+	RUN = 0,
+	PAUSE = 1,
+	EXIT = 2
+};
 
 enum class RendererType {
 	OPENGL = 0,

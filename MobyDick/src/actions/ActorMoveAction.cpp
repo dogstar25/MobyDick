@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "../Globals.h"
+#include "../Util.h"
 #include "../BaseConstants.h"
 #include "../GameObject.h"
 

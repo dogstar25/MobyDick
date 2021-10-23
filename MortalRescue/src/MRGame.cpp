@@ -100,6 +100,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		GameObjectManager::instance().load("gameObjectDefinitions/wallObjects");
 		GameObjectManager::instance().load("gameObjectDefinitions/particleObjects");
 		GameObjectManager::instance().load("gameObjectDefinitions/compositeObjects");
+		GameObjectManager::instance().load("gameObjectDefinitions/guiObjects");
 
 		//Load a first scene
 		Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
@@ -121,8 +122,10 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 		//scene.addGameObject("GINA_64", LAYER_MENU, 8, 8);
 		
+		scene.addGameObject("TRANSPARENT_PANEL", LAYER_MENU, 16, 1);
+		scene.addGameObject("FPS_VALUE", LAYER_MENU, 16, 1);
 		
-		scene.addGameObject("FPS_VALUE", LAYER_MENU, 1, 1);
+		
 
 	}
 

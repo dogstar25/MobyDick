@@ -46,7 +46,7 @@ namespace ParticleEffects {
 		.originMin = {0,0},
 		.originMax = {0,0},
 		.forceMin = 2,
-		.forceMax = 2,
+		.forceMax = 15,
 		.lifetimeMin = 0.0F,
 		.lifetimeMax = 0.0F,
 		.alphaFade = false,

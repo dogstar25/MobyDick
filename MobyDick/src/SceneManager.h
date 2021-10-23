@@ -8,7 +8,7 @@
 #include <json/json.h>
 
 #include "Scene.h"
-#include "Globals.h"
+#include "Util.h"
 #include "BaseConstants.h"
 #include "Timer.h"
 

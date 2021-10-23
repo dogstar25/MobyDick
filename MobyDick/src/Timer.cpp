@@ -1,7 +1,7 @@
 #include "Timer.h"
 #include "DebugPanel.h"
 #include "DynamicTextManager.h"
-#include "Globals.h"
+#include "Util.h"
 #include <iostream>
 
 Timer::Timer(float targetDuration) : m_targetDuration(targetDuration) 

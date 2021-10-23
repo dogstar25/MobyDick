@@ -2,6 +2,7 @@
 #include "components/BrainComponent.h"
 #include "components/InventoryComponent.h"
 #include "components/DroneBrainComponent.h"
+#include "components/PistolWeaponComponent.h"
 
 
 std::shared_ptr<Component> MRComponentFactory::_create(
@@ -21,6 +22,9 @@ std::shared_ptr<Component> MRComponentFactory::_create(
 	//Handle game specific componenets, otherwise call the base ComponentFactory _create
 	if (gameObjectId == "DRONE" && componentType == ComponentTypes::BRAIN_COMPONENT) {
 		component = std::make_shared<DroneBrainComponent>(definitionJSON);
+	}
+	else if (gameObjectId == "GINA_64" && componentType == ComponentTypes::WEAPON_COMPONENT) {
+		component = std::make_shared<PistolWeaponComponent>(definitionJSON);
 	}
 	else {
 		component = ComponentFactory::_create(

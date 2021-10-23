@@ -279,7 +279,7 @@
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\GameObjectDefinition.cpp" />
     <ClCompile Include="src\GameObjectManager.cpp" />
-    <ClCompile Include="src\Globals.cpp" />
+    <ClCompile Include="src\Util.cpp" />
     <ClCompile Include="src\SoundManager.cpp" />
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
@@ -367,7 +367,7 @@
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\GameObjectDefinition.h" />
     <ClInclude Include="src\GameObjectManager.h" />
-    <ClInclude Include="src\Globals.h" />
+    <ClInclude Include="src\Util.h" />
     <ClInclude Include="src\SoundManager.h" />
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\TextureManager.h" />

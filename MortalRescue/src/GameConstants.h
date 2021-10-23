@@ -23,3 +23,7 @@ namespace CollisionTag {
 	inline constexpr int WEAPON_PICKUP = 22;
 
 }
+
+namespace CollectibleTypes {
+	inline constexpr int DRONE_SCRAP = 1;
+}

@@ -31,13 +31,16 @@ public:
 
 	void update();
 	void fire(const b2Vec2& origin, const float& angle);
-	bool checkLevelUp(const int& pieceCount);
-	void levelUp();
+	void checkLevelUp() {};
+	void checkLevelUp(const int) {};
 
 
-private:
-	int	
-		m_currentLevel;
+protected:
+	
+	void _levelUp();
+	
+	int	m_maxLevel{ 1 };
+	int m_currentLevel{ 1 };
 	float
 		m_fireOffset;
 

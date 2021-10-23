@@ -9,7 +9,7 @@
 #include <json/json.h>
 
 #include "Component.h"
-#include "../Globals.h"
+#include "../Util.h"
 #include "../BaseConstants.h"
 #include "../particleEffects/BaseParticleEffects.h"
 #include "../Timer.h"

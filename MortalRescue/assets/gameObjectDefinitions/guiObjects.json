@@ -1,0 +1,314 @@
+{
+    "gameObjects": [
+        {
+            "id": "GUI_PAUSE_PANEL",
+            "type": "GameObjectType::RECTANGLE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "transformComponent": {
+                "size": {
+                    "width": 176,
+                    "height": 164
+                },
+                "absolutePositioning": true,
+                "centeredPositioning": true
+            },
+            "renderComponent": {
+                "color": {
+                    "red": 0,
+                    "green": 0,
+                    "blue": 0,
+                    "alpha": 0
+                },
+                "outline": {
+                    "thickness": 1,
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
+                }
+            },
+            "childrenComponent": {
+                "childPadding": 8,
+                "childPositionRelative": false,
+                "childObjects": [
+                    {
+                        "gameObjectId": "CONTINUE_BUTTON",
+                        "locationSlot": 5
+                    },
+                    {
+                        "gameObjectId": "QUIT_BUTTON",
+                        "locationSlot": 5
+                    },
+                    {
+                        "gameObjectId": "SETTINGS_BUTTON",
+                        "locationSlot": 5
+                    }
+                ]
+            }
+        },
+        {
+            "id": "CONTINUE_BUTTON",
+            "type": "GameObjectType::RECTANGLE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "transformComponent": {
+                "size": {
+                    "width": 128,
+                    "height": 32
+                },
+                "absolutePositioning": true
+            },
+            "renderComponent": {
+
+                "color": {
+                    "red": 0,
+                    "green": 0,
+                    "blue": 0,
+                    "alpha": 255
+                },
+                "outline": {
+                    "thickness": 1,
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
+                }
+            },
+            "childrenComponent": {
+                "childObjects": [
+                    {
+                        "gameObjectId": "CONTINUE_LABEL",
+                        "locationSlot": 5
+                    }
+                ]
+            },
+            "UIControlComponent": {
+                "controls": [
+                    "INPUT_CONTROL_HOVER",
+                    "INPUT_CONTROL_CLICK"
+                ]
+            },
+            "actionComponent": {
+                "actions": [
+                    {
+                        "actionId": "ACTION_ON_HOVER",
+                        "actionClass": "DefaultHover"
+                    },
+                    {
+                        "actionId": "ACTION_ON_HOVER_OUT",
+                        "actionClass": "DefaultHoverOut"
+                    },
+                    {
+                        "actionId": "ACTION_ON_CLICK",
+                        "actionClass": "ContinueClick"
+                    }
+
+                ]
+            }
+        },
+        {
+            "id": "QUIT_BUTTON",
+            "type": "GameObjectType::RECTANGLE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "transformComponent": {
+                "size": {
+                    "width": 128,
+                    "height": 32
+                },
+                "absolutePositioning": true
+            },
+            "renderComponent": {
+                "color": {
+                    "red": 0,
+                    "green": 0,
+                    "blue": 0,
+                    "alpha": 255
+                },
+                "outline": {
+                    "thickness": 1,
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
+                }
+            },
+            "childrenComponent": {
+                "childObjects": [
+                    {
+                        "gameObjectId": "QUIT_LABEL",
+                        "locationSlot": 5
+                    }
+                ]
+            },
+            "UIControlComponent": {
+                "controls": [
+                    "INPUT_CONTROL_HOVER",
+                    "INPUT_CONTROL_CLICK"
+                ]
+            },
+            "actionComponent": {
+                "actions": [
+                    {
+                        "actionId": "ACTION_ON_HOVER",
+                        "actionClass": "DefaultHover"
+                    },
+                    {
+                        "actionId": "ACTION_ON_HOVER_OUT",
+                        "actionClass": "DefaultHoverOut"
+                    },
+                    {
+                        "actionId": "ACTION_ON_CLICK",
+                        "actionClass": "QuitClick"
+                    }
+
+                ]
+            }
+        },
+        {
+            "id": "SETTINGS_BUTTON",
+            "type": "GameObjectType::RECTANGLE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "transformComponent": {
+                "size": {
+                    "width": 128,
+                    "height": 32
+                },
+                "absolutePositioning": true
+            },
+            "renderComponent": {
+                "color": {
+                    "red": 0,
+                    "green": 0,
+                    "blue": 0,
+                    "alpha": 255
+                },
+                "outline": {
+                    "thickness": 1,
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
+                }
+            },
+            "childrenComponent": {
+                "childObjects": [
+                    {
+                        "gameObjectId": "SETTINGS_LABEL",
+                        "locationSlot": 5
+                    }
+                ]
+            },
+            "UIControlComponent": {},
+            "actionComponent": {
+                "actions": [
+                    {
+                        "actionId": "ACTION_ON_CLICK",
+                        "actionClass": "ContinueClick"
+                    }
+                ]
+            }
+        },
+        {
+            "id": "CONTINUE_LABEL",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "transformComponent": {
+                "absolutePositioning": true
+            },
+            "textComponent": {
+                "value": "Continue",
+                "dynamic": false,
+                "font": "FONT_ARIAL_REG",
+                "fontSize": 22
+            }
+        },
+        {
+            "id": "QUIT_LABEL",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "transformComponent": {
+                "absolutePositioning": true
+            },
+            "textComponent": {
+                "value": "Quit",
+                "dynamic": false,
+                "font": "FONT_ARIAL_REG",
+                "fontSize": 22
+            }
+        },
+        {
+            "id": "SETTINGS_LABEL",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "transformComponent": {
+                "absolutePositioning": true
+            },
+            "textComponent": {
+                "value": "Settings",
+                "dynamic": false,
+                "font": "FONT_ARIAL_REG",
+                "fontSize": 22
+            }
+        },
+        {
+            "id": "PLAYERDEATH_LABEL",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "transformComponent": {
+                "absolutePositioning": true
+            },
+            "textComponent": {
+                "value": "Player Has Died!",
+                "dynamic": false,
+                "font": "FONT_ARIAL_REG",
+                "fontSize": 22
+            }
+        },
+        {
+            "id": "TRANSPARENT_PANEL",
+            "type": "GameObjectType::RECTANGLE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "transformComponent": {
+                "size": {
+                    "width": 255,
+                    "height": 64
+                },
+                "absolutePositioning": true
+            },
+            "renderComponent": {
+                "textureBlendMode": "SDL_BLENDMODE_BLEND",
+                "color": {
+                    "red": 10,
+                    "green": 75,
+                    "blue": 10,
+                    "alpha": 100
+                }//,
+                //"outline": {
+                //    "thickness": 1,
+                //    "color": {
+                //        "red": 255,
+                //        "green": 255,
+                //        "blue": 255,
+                //        "alpha": 255
+                //    }
+                //}
+            }
+        }
+    ]
+}

@@ -97,26 +97,14 @@ void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 
 }
 
-bool WeaponComponent::checkLevelUp(const int& pieceCount)
+void WeaponComponent::_levelUp()
 {
-	/*if (m_currentLevel < this->definition()->weaponDetails.weaponLevelDetails.size() &&
-		ritemCount >= this->definition()->weaponDetails.weaponLevelDetails[m_currentLevel].levelUpTarget)
-	{
-		return true;
+
+	if (m_currentLevel < m_weaponLevelDetails.size()) {
+		m_currentLevel++;
 	}
-	else
-	{
-		return false;
-	}*/
 
-	return true;
-}
-
-void WeaponComponent::levelUp()
-{
-	/*if (m_currentLevel < this->definition()->weaponDetails.weaponLevelDetails.size())
-	{
-		m_currentLevel += 1;
-	}*/
 
 }
+
+

@@ -13,7 +13,7 @@
 #include <memory>
 
 #include "game.h"
-#include "Globals.h"
+#include "Util.h"
 #include "BaseConstants.h"
 #include "GameObject.h"
 #include "DebugDraw.h"
