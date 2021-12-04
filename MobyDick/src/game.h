@@ -21,6 +21,7 @@
 #include "ComponentFactory.h"
 #include "ContactListener.h"
 #include "ContactFilter.h"
+#include "StatusManager.h"
 #include "Renderer.h"
 
 
@@ -35,7 +36,7 @@ public:
 	~Game();
 
 	virtual bool init();
-	virtual bool init(ContactListener*, ContactFilter*,	ComponentFactory* ) = 0;
+	virtual bool init(ContactListener*, ContactFilter*,	ComponentFactory* , StatusManager*) = 0;
 	virtual void play();
 	virtual void _displayLoadingMsg();
 	
@@ -73,6 +74,9 @@ public:
 	ComponentFactory* componentFactory() {
 		return m_componentFactory;
 	}
+	StatusManager* statusMananger() {
+		return m_statusMananger;
+	}
 
 	Renderer* renderer() { return m_renderer.get(); }
 
@@ -84,6 +88,7 @@ protected:
 	ContactListener* m_contactListener{};
 	ContactFilter* m_contactFilter{};
 	ComponentFactory* m_componentFactory{};
+	StatusManager* m_statusMananger{};
 
 	std::shared_ptr<Renderer> m_renderer;
 

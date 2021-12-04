@@ -39,7 +39,7 @@
                     "gameObjectId": "STUBB",
                     "layer": "LAYER_MAIN",
                     "location": {
-                        "windowPosition": "WindowPosition::CENTER"
+                        "windowPosition": "PositionAlignment::CENTER"
                     }
                 },
                 {

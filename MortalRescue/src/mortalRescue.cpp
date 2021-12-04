@@ -5,13 +5,14 @@
 #include "MRContactListener.h"
 #include "MRContactFilter.h"
 #include "MRComponentFactory.h"
+#include "MRStatusManager.h"
 
 std::unique_ptr<Game> game;
 
 int main(int argc, char* args[])
 {
 	game = std::make_unique<MRGame>();
-	game->init(new MRContactListener(), new MRContactFilter(), new MRComponentFactory());
+	game->init(new MRContactListener(), new MRContactFilter(), new MRComponentFactory(), new MRStatusManager());
 
 	while (game->gameState() != GameState::QUIT)
 	{

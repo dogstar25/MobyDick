@@ -69,7 +69,6 @@ void RendererSDL::drawLine(b2Vec2 start, b2Vec2 end, SDL_Color color)
 void RendererSDL::drawQuad(SDL_FRect quad, SDL_Color color, bool outline, SDL_Color outlineColor)
 {
 	SDL_SetRenderDrawColor(m_sdlRenderer, color.r, color.g, color.b, color.a);
-	SDL_SetRenderDrawBlendMode(m_sdlRenderer, SDL_BLENDMODE_BLEND);
 	SDL_RenderFillRectF(m_sdlRenderer, &quad);
 
 	if (outline) {

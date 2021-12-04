@@ -20,11 +20,12 @@ bool Game::init()
 
 
 bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter, 
-	ComponentFactory* componentFactory)
+	ComponentFactory* componentFactory, StatusManager* statusManager)
 {
 	m_contactListener = contactListener;
 	m_contactFilter = contactFilter;
 	m_componentFactory = componentFactory;
+	m_statusMananger = statusManager;
 
 	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 

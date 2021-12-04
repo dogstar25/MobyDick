@@ -30,23 +30,23 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -143,6 +143,8 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>
@@ -175,13 +177,15 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <SDLCheck>true</SDLCheck>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
+      <Optimization>Full</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
       <SupportJustMyCode>true</SupportJustMyCode>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Lib>
       <AdditionalDependencies>
@@ -210,6 +214,12 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\hud\HudItemFactory.cpp" />
+    <ClCompile Include="src\components\HudComponent.cpp" />
+    <ClCompile Include="src\hud\HudStatusSeries.cpp" />
+    <ClCompile Include="src\hud\HudStatusText.cpp" />
+    <ClCompile Include="src\hud\HudItem.cpp" />
+    <ClCompile Include="src\HudManager.cpp" />
     <ClCompile Include="src\opengl\SpriteDrawBatch.cpp" />
     <ClCompile Include="src\opengl\GLDebugCallback.cpp" />
     <ClCompile Include="src\opengl\SpriteVertex.cpp" />
@@ -291,8 +301,15 @@
     <ClCompile Include="src\triggers\Trigger.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\opengl\Vertex.cpp" />
+    <ClCompile Include="src\StatusManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\hud\HudItemFactory.h" />
+    <ClInclude Include="src\components\HudComponent.h" />
+    <ClInclude Include="src\hud\HudStatusSeries.h" />
+    <ClInclude Include="src\hud\HudStatusText.h" />
+    <ClInclude Include="src\hud\HudItem.h" />
+    <ClInclude Include="src\HudManager.h" />
     <ClInclude Include="src\opengl\shaderCode.h" />
     <ClInclude Include="src\opengl\SpriteDrawBatch.h" />
     <ClInclude Include="src\opengl\GLDebugCallback.h" />
@@ -380,6 +397,7 @@
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\opengl\Vertex.h" />
+    <ClInclude Include="src\StatusManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="ExtraLibs\SDL2main.lib" />

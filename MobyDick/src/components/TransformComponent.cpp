@@ -80,6 +80,12 @@ void TransformComponent::setPosition(b2Vec2 position)
 	m_position = position;
 }
 
+void TransformComponent::setPosition(SDL_FPoint position)
+{
+	m_position.x = position.x;
+	m_position.y = position.y;
+}
+
 void TransformComponent::setPosition(float xPosition, float yPosition)
 {
 	m_position.x = xPosition;

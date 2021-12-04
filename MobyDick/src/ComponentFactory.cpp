@@ -1,8 +1,3 @@
-#include "..\..\MobyDick\src\ComponentFactory.h"
-#include "..\..\MobyDick\src\ComponentFactory.h"
-#include "..\..\MobyDick\src\ComponentFactory.h"
-#include "..\..\MobyDick\src\ComponentFactory.h"
-#include "..\..\MobyDick\src\ComponentFactory.h"
 #include "ComponentFactory.h"
 #include "components/BrainComponent.h"
 #include "components/InventoryComponent.h"
@@ -90,6 +85,9 @@ std::shared_ptr<Component> ComponentFactory::_create(
 			break;
 		case ComponentTypes::COMPOSITE_COMPONENT:
 			component = std::make_shared<CompositeComponent>(definitionJSON, scene);
+			break;
+		case ComponentTypes::HUD_COMPONENT:
+			component = std::make_shared<HudComponent>(definitionJSON, scene);
 			break;
 		case ComponentTypes::INVENTORY_COMPONENT:
 			component = std::make_shared<InventoryComponent>(definitionJSON, scene);

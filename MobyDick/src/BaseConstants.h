@@ -79,12 +79,18 @@ namespace NavigationObjectType {
 	inline constexpr int WAYPOINT = 2;
 }
 
-namespace WindowPosition {
+namespace PositionAlignment {
 
 	inline constexpr int CENTER = 0;
 	inline constexpr int TOP_LEFT = 1;
 	inline constexpr int TOP_CENTER = 2;
 	inline constexpr int TOP_RIGHT = 3;
+	inline constexpr int CENTER_LEFT = 4;
+	inline constexpr int CENTER_RIGHT = 5;
+	inline constexpr int BOTTOM_LEFT = 6;
+	inline constexpr int BOTTOM_CENTER = 7;
+	inline constexpr int BOTTOM_RIGHT = 8;
+
 }
 
 enum class GameState {
@@ -129,6 +135,7 @@ enum class ComponentTypes {
 	BRAIN_COMPONENT,
 	CHILDREN_COMPONENT,
 	COMPOSITE_COMPONENT,
+	HUD_COMPONENT,
 	INVENTORY_COMPONENT,
 	PARTICLE_COMPONENT,
 	NAVIGATION_COMPONENT,

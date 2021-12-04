@@ -226,6 +226,14 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 		addComponent(component, ComponentTypes::ATTACHMENTS_COMPONENT);
 	}
 
+	//Hud Component
+	if (definitionJSON.isMember("hudComponent"))
+	{
+		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::HUD_COMPONENT);
+		component->setParent(this);
+		addComponent(component, ComponentTypes::HUD_COMPONENT);
+	}
+
 	//Set the camera to follow this GameObject
 	if (cameraFollow) {
 		Camera::instance().setFollowMe(this);
@@ -237,6 +245,13 @@ void GameObject::setPosition(float x, float y)
 {
 
 	getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT)->setPosition(x, y);
+
+}
+
+void GameObject::setPosition(SDL_FPoint position)
+{
+
+	getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT)->setPosition(position);
 
 }
 
@@ -295,6 +310,12 @@ void GameObject::render()
 	if (hasComponent(ComponentTypes::COMPOSITE_COMPONENT)) {
 
 		getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT)->render();
+	}
+
+	//If you have a hud component, then render the hud items
+	if (hasComponent(ComponentTypes::HUD_COMPONENT)) {
+
+		getComponent<HudComponent>(ComponentTypes::HUD_COMPONENT)->render();
 	}
 
 }
@@ -358,6 +379,9 @@ void GameObject::setAngleInDegrees(float angle)
 /*
 The postInit function allows for initialization that requires all objects to be 'already' instantiated 
 ex. The brainComponent needs all navigation related gameObjects to be built first
+OR
+For at least all components of a gameObject to be instantiated
+ex. The HudComponent requires that the tranform component be instantiated so that it can set some of its properties
 */
 void GameObject::postInit()
 {
