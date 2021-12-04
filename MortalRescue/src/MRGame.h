@@ -20,6 +20,7 @@
 #include "GameConfig.h"
 #include "SceneManager.h"
 #include "ComponentFactory.h"
+#include "StatusManager.h"
 
 /*
 	Main Game Class
@@ -32,7 +33,7 @@ public:
 	~MRGame();
 
 	bool init() override { return true; }
-	bool init(ContactListener*, ContactFilter*, ComponentFactory* ) override;
+	bool init(ContactListener*, ContactFilter*, ComponentFactory*, StatusManager* ) override;
 
 private:
 

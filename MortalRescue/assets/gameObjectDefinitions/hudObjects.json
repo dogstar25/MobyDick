@@ -1,0 +1,170 @@
+{
+    "gameObjects": [
+        {
+            "id": "HUD_STATUS_TOP",
+            "type": "GameObjectType::RECTANGLE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "transformComponent": {
+                "size": {
+                    "width": 255,
+                    "height": 100
+                },
+                "absolutePositioning": true
+            },
+            "renderComponent": {
+                "textureBlendMode": "SDL_BLENDMODE_BLEND",
+                "color": {
+                    "red": 10,
+                    "green": 75,
+                    "blue": 10,
+                    "alpha": 50
+                },
+                "outline": {
+                    "thickness": 1,
+                    "color": {
+                        "red": 10,
+                        "green": 75,
+                        "blue": 10,
+                        "alpha": 255
+                    }
+
+                }
+            },
+            "childrenComponent": {
+                "childObjects": [
+                    {
+                        "gameObjectId": "HUD_LEVEL",
+                        "locationSlot": 1,
+                        "locationSlotAlignment": "PositionAlignment::CENTER_LEFT",
+                        "absolutePosition": {
+                            "x": 2,
+                            "y": 3
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "id": "HUD_LEVEL",
+            "type": "GameObjectType::ABSTRACT",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "description": "Hud Level Dynamic Text",
+            "hudComponent": {
+                "hudType": "HudItemTypes::STATUS_SINGLE",
+                "labelObjectId": "HUD_LEVEL_LABEL",
+                "labelPadding": 2,
+                "statusObjectId": "HUD_SCRAP"
+            }
+        },
+        {
+            "id": "HUD_LEVEL_LABEL",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "description": "Hud Level Label",
+            "textComponent": {
+                "value": "Level",
+                "dynamic": false,
+                "font": "FONT_ARIAL_REG",
+                "fontSize": 16
+            },
+            "renderComponent": {
+                "color": {
+                    "red": 255,
+                    "green": 255,
+                    "blue": 255,
+                    "alpha": 255
+                }
+            }
+        },
+        {
+            "id": "HUD_LEVEL_VALUE",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "description": "Hud Level Value",
+            "textComponent": {
+                "value": "Level",
+                "dynamic": true,
+                "font": "FONT_ARIAL_REG",
+                "fontSize": 16
+            },
+            "renderComponent": {
+                "color": {
+                    "red": 255,
+                    "green": 255,
+                    "blue": 255,
+                    "alpha": 255
+                }
+            }
+        },
+        {
+            "id": "HUD_SCRAP",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "description": "Hud Level Value",
+           "textComponent": {
+                "value": "Level",
+                "dynamic": true,
+                "font": "FONT_ARIAL_REG",
+                "fontSize": 16
+            },
+            "renderComponent": {
+                "color": {
+                    "red": 255,
+                    "green": 255,
+                    "blue": 255,
+                    "alpha": 255
+                }
+            }
+        },
+
+        {
+            "id": "HUD_TEST_LABEL",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "description": "Hud Level Label",
+            "textComponent": {
+                "value": "Level",
+                "dynamic": false,
+                "font": "FONT_ARIAL_REG",
+                "fontSize": 16
+            },
+            "renderComponent": {
+                "color": {
+                    "red": 255,
+                    "green": 255,
+                    "blue": 255,
+                    "alpha": 255
+                }
+            }
+        },
+        {
+            "id": "TEST_PANEL",
+            "type": "GameObjectType::RECTANGLE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "transformComponent": {
+                "size": {
+                    "width": 176,
+                    "height": 164
+                },
+                "absolutePositioning": true
+            },
+            "renderComponent": {
+                "textureBlendMode": "SDL_BLENDMODE_BLEND",
+                "color": {
+                    "red": 5,
+                    "green": 255,
+                    "blue": 5,
+                    "alpha": 200
+                }
+            }
+
+        }
+    ]
+}

@@ -192,6 +192,7 @@ void SceneManager::popScene()
 
 	m_scenes.pop_back();
 	m_scenes.back().setState(SceneState::RUN);
+	m_scenes.back().applyCurrentControlMode();
 
 }
 

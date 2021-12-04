@@ -42,6 +42,9 @@
     <ClCompile Include="src\components\PistolWeaponComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\MRStatusManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\blueprints\drone1_blueprint.png">
@@ -169,6 +172,7 @@
     <None Include="assets\blueprints\levels\level1_blueprint.json" />
     <None Include="assets\textureAtlasAssets.json" />
     <None Include="assets\gameObjectDefinitions\guiObjects.json" />
+    <None Include="assets\gameObjectDefinitions\hudObjects.json" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav">
@@ -231,6 +235,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\components\PistolWeaponComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MRStatusManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

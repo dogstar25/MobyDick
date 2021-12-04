@@ -269,7 +269,6 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMap
 {
 
 	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this, layer, cameraFollow));
-	//gameObject->init(cameraFollow);
 
 	return gameObject.get();
 
@@ -291,6 +290,13 @@ GameObject* Scene::addGameObject(std::shared_ptr<GameObject> gameObject, int lay
 void Scene::addKeyAction(SDL_Keycode keyCode, SceneAction sceneAction)
 {
 	m_sceneKeyActions.emplace(keyCode, sceneAction);
+}
+
+void Scene::applyCurrentControlMode()
+{
+
+	setInputControlMode(m_inputControlMode);
+
 }
 
 void Scene::clearEvents()
@@ -320,12 +326,33 @@ SDL_FPoint Scene::calcWindowPosition(int globalPosition)
 {
 	SDL_FPoint globalPoint = {};
 
-	if (globalPosition == WindowPosition::CENTER) {
+	if (globalPosition == PositionAlignment::CENTER) {
 
 		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() / 2);
 		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight() / 2);
 
 	}
+	else if (globalPosition == PositionAlignment::TOP_CENTER) {
+
+		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() / 2);
+		globalPoint.y = 0;
+	}
+	else if (globalPosition == PositionAlignment::TOP_LEFT) {
+
+		globalPoint.x = 0;
+		globalPoint.y = 0;
+	}
+	else if (globalPosition == PositionAlignment::CENTER_LEFT) {
+
+		globalPoint.x = 0;
+		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight() / 2);
+	}
+	else if (globalPosition == PositionAlignment::BOTTOM_LEFT) {
+
+		globalPoint.x = 0;
+		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight());
+	}
+
 	else {
 		/* Need other calcs added*/
 	}

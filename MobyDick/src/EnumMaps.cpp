@@ -1,4 +1,5 @@
 #include "EnumMaps.h"
+#include "hud/HudItemFactory.h"
 
 #include <box2d/box2d.h>
 
@@ -79,7 +80,18 @@ EnumMap::EnumMap()
 
 	//Scene Tags
 	m_enumMap["SCENETAG_MENU"] = SCENETAG_MENU;
-	
+
+	//Object Alignments
+	m_enumMap["PositionAlignment::TOP_LEFT"] = PositionAlignment::TOP_LEFT;
+	m_enumMap["PositionAlignment::TOP_CENTER"] = PositionAlignment::TOP_CENTER;
+	m_enumMap["PositionAlignment::TOP_RIGHT"] = PositionAlignment::TOP_RIGHT;
+	m_enumMap["PositionAlignment::CENTER_LEFT"] = PositionAlignment::CENTER_LEFT;
+	m_enumMap["PositionAlignment::CENTER"] = PositionAlignment::CENTER;
+	m_enumMap["PositionAlignment::CENTER_RIGHT"] = PositionAlignment::CENTER_RIGHT;
+	m_enumMap["PositionAlignment::BOTTOM_LEFT"] = PositionAlignment::BOTTOM_LEFT;
+	m_enumMap["PositionAlignment::BOTTOM_CENTER"] = PositionAlignment::BOTTOM_CENTER;
+	m_enumMap["PositionAlignment::BOTTOM_RIGHT"] = PositionAlignment::BOTTOM_RIGHT;
+
 	//Game Layers
 	m_enumMap["LAYER_BACKGROUND_1"] = LAYER_BACKGROUND_1;
 	m_enumMap["LAYER_BACKGROUND_2"] = LAYER_BACKGROUND_2;
@@ -95,7 +107,7 @@ EnumMap::EnumMap()
 	m_enumMap["DISPLAY_UI_MODE_ONCLICK"] = DISPLAY_UI_MODE_ONCLICK;
 
 	//Global Screen Position
-	m_enumMap["WindowPosition::CENTER"] = WindowPosition::CENTER;
+	m_enumMap["PositionAlignment::CENTER"] = PositionAlignment::CENTER;
 
 	//Particle Emitter types
 	m_enumMap["ParticleEmitterType::ONETIME"] = ParticleEmitterType::ONETIME;
@@ -109,6 +121,7 @@ EnumMap::EnumMap()
 	//Texure Blend Modes
 	m_enumMap["SDL_BLENDMODE_BLEND"] = SDL_BLENDMODE_BLEND;
 	m_enumMap["SDL_BLENDMODE_ADD"] = SDL_BLENDMODE_ADD;
+	m_enumMap["SDL_BLENDMODE_NONE"] = SDL_BLENDMODE_NONE;
 
 	//GameObject Types
 	m_enumMap["GameObjectType::ABSTRACT"] = GameObjectType::ABSTRACT;
@@ -124,6 +137,10 @@ EnumMap::EnumMap()
 	m_enumMap["weapon"] = TraitTag::weapon;
 	m_enumMap["gui"] = TraitTag::gui;
 	m_enumMap["navigation"] = TraitTag::navigation;
+
+	//Hud Item Types
+	m_enumMap["HudItemTypes::STATUS_SINGLE"] = (int)HudItemTypes::STATUS_SINGLE;
+	m_enumMap["HudItemTypes::STATUS_SERIES"] = (int)HudItemTypes::STATUS_SERIES;
 
 }
 

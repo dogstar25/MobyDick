@@ -21,6 +21,7 @@ public:
 	void update() override;
 
 	void setPosition(b2Vec2 position);
+	void setPosition(SDL_FPoint position);
 	void setPosition(float xPosition, float yPosition);
 	void setPosition(b2Vec2 position, float angle);
 	void setPosition(float xPosition, float yPosition, float angle);

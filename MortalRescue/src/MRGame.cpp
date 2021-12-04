@@ -5,6 +5,7 @@
 #include "GameObjectManager.h"
 #include "SoundManager.h"
 #include "LevelManager.h"
+#include "MRStatusManager.h"
 #include "Camera.h"
 #include "Clock.h"
 #include "ContactFilter.h"
@@ -35,14 +36,14 @@ MRGame::~MRGame()
 Initialize Game
 */
 bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter, 
-	ComponentFactory* componentFactory)
+	ComponentFactory* componentFactory, StatusManager* statusManager)
 {
 
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
 
 	//Required Base Class calls
-	Game::init(contactListener, contactFilter, componentFactory);
+	Game::init(contactListener, contactFilter, componentFactory, statusManager);
 	//End Required
 
 	std::cout << "Mortal Rescue Begins\n";
@@ -83,8 +84,10 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 		//Display basic loading message
 		//_displayLoadingMsg();
+		statusManager->setLevel(19);
+		statusManager->initHudMappings();
+		static_cast<MRStatusManager*>(statusManager)->setLives(9);
 
-		//Initialize the texture manager
 		TextureManager::instance().init();
 		TextureManager::instance().load("textureAtlasAssets");
 
@@ -101,10 +104,13 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		GameObjectManager::instance().load("gameObjectDefinitions/particleObjects");
 		GameObjectManager::instance().load("gameObjectDefinitions/compositeObjects");
 		GameObjectManager::instance().load("gameObjectDefinitions/guiObjects");
+		GameObjectManager::instance().load("gameObjectDefinitions/hudObjects");
 
 		//Load a first scene
 		Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
 		scene.loadLevel("level1");
+
+		//scene.addHudItemValue("hudId", &MRStatusManager::level());
 
 		//_displayLoadingMsg();
 
@@ -122,8 +128,12 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 		//scene.addGameObject("GINA_64", LAYER_MENU, 8, 8);
 		
-		scene.addGameObject("TRANSPARENT_PANEL", LAYER_MENU, 16, 1);
-		scene.addGameObject("FPS_VALUE", LAYER_MENU, 16, 1);
+		//scene.addGameObject("HUD_STATUS", LAYER_MENU, 16, 1);
+		//scene.addGameObject("FPS_VALUE", LAYER_MENU, 16, 1);
+		//scene.addGameObject("HUD_STATUS_TOP", LAYER_MENU, 2, 2);
+		//scene.addGameObject("HUD_TEST_LABEL", LAYER_MENU, 2, 2);
+		scene.addGameObject("SWORDLADY", LAYER_MENU, 0, 22);
+		
 		
 		
 

@@ -3,6 +3,7 @@
 
 #include <iostream>
 
+#include "MRStatusManager.h"
 #include "game.h"
 #include "GameConstants.h"
 #include "SoundManager.h"
@@ -10,6 +11,7 @@
 #include "components/InventoryComponent.h"
 #include "components/PistolWeaponComponent.h"
 
+extern std::unique_ptr<Game> game;
 
 void MRContactListener::_player_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
 {
@@ -128,6 +130,9 @@ void MRContactListener::_player_shieldScrap(GameObject* contact1, GameObject* co
 	//Acknowledge the scrap collection
 	auto inventoryComponent = player->getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT);
 	auto scrapCount = inventoryComponent->addCollectible(CollectibleTypes::DRONE_SCRAP, 1);
+
+	//Update the status Manager
+	static_cast<MRStatusManager*>(game->statusMananger())->hudValueMap()["HUD_SCRAP"].adjust(1);
 
 	//Check to see if this upgrades the players weapon
 	auto pistol = inventoryComponent->getItem(TraitTag::weapon);

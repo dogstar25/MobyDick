@@ -203,6 +203,14 @@ void RenderComponent::render()
 			outline = false;
 		}
 
+		//SDL Only Stuff
+		if (GameConfig::instance().rendererType() == RendererType::SDL) {
+			SDL_Texture* sdlTexture = getRenderTexture()->sdlTexture;
+			SDL_SetTextureBlendMode(sdlTexture, m_textureBlendMode);
+			SDL_SetRenderDrawBlendMode(game->renderer()->sdlRenderer(), m_textureBlendMode);
+		}
+		/////
+
 		game->renderer()->drawQuad(quad, m_color, outline, outlineColor);
 
 	}
@@ -237,6 +245,7 @@ void RenderComponent::render()
 			if (GameConfig::instance().rendererType() == RendererType::SDL) {
 				SDL_Texture* sdlTexture = getRenderTexture()->sdlTexture;
 				SDL_SetTextureBlendMode(sdlTexture, m_textureBlendMode);
+				SDL_SetRenderDrawBlendMode(game->renderer()->sdlRenderer(), m_textureBlendMode);
 			}
 			/////
 

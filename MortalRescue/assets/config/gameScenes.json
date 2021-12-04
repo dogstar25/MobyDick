@@ -9,15 +9,21 @@
             "id": "SCENE_PLAY",
             "inputControlMode": "CONTROL_MODE_PLAY",
             "maxObjects": 5000,
+            "gameObjects": [
+                {
+                    "gameObjectId": "HUD_STATUS_TOP",
+                    "layer": "LAYER_MENU",
+                    "location": {
+                        "windowPosition": "PositionAlignment::BOTTOM_LEFT"
+                    }
+                }
+            ],
             "keyActions": [
                 {
                     "keyCode": "SDLK_ESCAPE",
-                    //"sceneAction": {
-                    //    "action": "SCENE_ACTION_ADD",
-                    //    "newSceneId": "SCENE_PAUSE_MENU"
-                    //},
                     "sceneAction": {
-                        "action": "SCENE_ACTION_QUIT"
+                        "action": "SCENE_ACTION_ADD",
+                        "newSceneId": "SCENE_PAUSE_MENU"
                     }
                 }
             ],
@@ -72,7 +78,7 @@
                     "gameObjectId": "GUI_PLAYERDEATH_PANEL",
                     "layer": "LAYER_MAIN",
                     "location": {
-                        "windowPosition": "WindowPosition::CENTER"
+                        "windowPosition": "PositionAlignment::CENTER"
                     }
                 }
             ]
@@ -107,7 +113,7 @@
                     "gameObjectId": "GUI_PAUSE_PANEL",
                     "layer": "LAYER_MAIN",
                     "location": {
-                        "windowPosition": "WindowPosition::CENTER"
+                        "windowPosition": "PositionAlignment::CENTER"
                     }
                 },
                 {

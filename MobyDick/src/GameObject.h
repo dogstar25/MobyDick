@@ -25,6 +25,7 @@
 #include "components/CompositeComponent.h"
 #include "components/NavigationComponent.h"
 #include "components/ParticleXComponent.h"
+#include "components/HudComponent.h"
 #include "components/ParticleComponent.h"
 #include "components/PhysicsComponent.h"
 #include "components/PlayerControlComponent.h"
@@ -63,6 +64,8 @@ public:
 	void setRemoveFromWorld(bool removeFromWorld) { m_removeFromWorld = removeFromWorld; }
 	void setPosition(b2Vec2 position, float angle);
 	void setPosition(float x, float y);
+	void setPosition(SDL_FPoint position);
+
 	SDL_FPoint getCenterPosition();
 	void postInit();
 	void setPhysicsActive(bool active);

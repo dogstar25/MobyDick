@@ -63,7 +63,7 @@ void DroneBrainComponent::update()
 			_doPatrol();
 			break;
 		case BrainState::ENGAGE:
-			//_doEngage();
+			_doEngage();
 			break;
 		default:
 			_doPatrol();
