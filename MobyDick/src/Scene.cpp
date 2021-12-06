@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "EnumMaps.h"
 
+#include "GameObjectManager.h"
 #include "ContactFilter.h"
 #include "ContactListener.h"
 #include "ObjectPoolManager.h"
@@ -49,26 +50,7 @@ Scene::Scene(std::string sceneId)
 	setInputControlMode(inputControlMode);
 
 	//GameObjects that are defined at the scene level, not a level built scene
-	for (Json::Value gameObjectJSON : definitionJSON["gameObjects"]) {
-
-		auto id = gameObjectJSON["gameObjectId"].asString();
-
-		auto layer = EnumMap::instance().toEnum(gameObjectJSON["layer"].asString());
-
-		//Determine location
-		auto locationJSON = gameObjectJSON["location"];
-		if (locationJSON.isMember("windowPosition")) {
-
-			auto windowPosition = EnumMap::instance().toEnum(gameObjectJSON["location"]["windowPosition"].asString());
-			SDL_FPoint location = calcWindowPosition(windowPosition);
-			addGameObject(id, layer, location.x, location.y, 0);
-		}
-		else {
-			auto locationX = gameObjectJSON["location"]["x"].asFloat();
-			auto locationY = gameObjectJSON["location"]["y"].asFloat();
-			addGameObject(id, layer, locationX, locationY, 0);
-		}
-	}
+	_buildSceneGameObjects(definitionJSON);
 
 	//Tags
 	for (Json::Value itrTag : definitionJSON["tags"]) {
@@ -142,26 +124,8 @@ void Scene::reset()
 	m_objectPoolManager.init(sceneJSON, this);
 
 	//GameObjects that are defined at the scene level, not a level built scene
-	for (Json::Value gameObjectJSON : sceneJSON["gameObjects"]) {
-
-		auto id = gameObjectJSON["gameObjectId"].asString();
-
-		auto layer = EnumMap::instance().toEnum(gameObjectJSON["layer"].asString());
-
-		//Determine location
-		auto locationJSON = gameObjectJSON["location"];
-		if (locationJSON.isMember("windowPosition")) {
-
-			auto windowPosition = EnumMap::instance().toEnum(gameObjectJSON["location"]["windowPosition"].asString());
-			SDL_FPoint location = calcWindowPosition(windowPosition);
-			addGameObject(id, layer, location.x, location.y, 0);
-		}
-		else {
-			auto locationX = gameObjectJSON["location"]["x"].asFloat();
-			auto locationY = gameObjectJSON["location"]["y"].asFloat();
-			addGameObject(id, layer, locationX, locationY, 0);
-		}
-	}
+	//GameObjects that are defined at the scene level, not a level built scene
+	_buildSceneGameObjects(sceneJSON);
 
 	//Debug Mode
 	if (m_hasPhysics && m_physicsConfig.b2DebugDrawMode == true)
@@ -231,6 +195,10 @@ void Scene::update() {
 
 		for (int i = 0; i < gameObjects.size(); i++)
 		{
+			if (gameObjects[i]->id().compare("HUD_STATUS_TOP") == 0) {
+				int todd = 1;
+			}
+
 			gameObjects[i]->update();
 		}
 	}
@@ -267,6 +235,81 @@ void Scene::render() {
 
 GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow)
 {
+
+	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this, layer, cameraFollow));
+
+	return gameObject.get();
+
+}
+
+GameObject* Scene::addGameObject(std::string gameObjectId, int layer, PositionAlignment windowPosition, float angle, bool cameraFollow)
+{
+	float xMapPos{};
+	float yMapPos{};
+	Json::Value definitionJSON;
+
+	//Build components
+	if (gameObjectId.rfind("DEBUG_", 0) != 0)
+	{
+		definitionJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
+	}
+	else
+	{
+		definitionJSON = GameObjectManager::instance().getDefinition("DEBUG_ITEM")->definitionJSON();
+	}
+
+	Json::Value transformComponentJSON = definitionJSON["transformComponent"];
+
+	auto objectWidth = transformComponentJSON["size"]["width"].asFloat();
+	auto objectHeight = transformComponentJSON["size"]["height"].asFloat();
+
+
+	if (windowPosition == PositionAlignment::CENTER) {
+
+		xMapPos = (float)GameConfig::instance().windowWidth() / game->worldTileWidth() / 2;
+		yMapPos = (float)GameConfig::instance().windowHeight() / game->worldTileHeight() / 2;
+
+	}
+	else if (windowPosition == PositionAlignment::TOP_CENTER) {
+
+		xMapPos = (float)GameConfig::instance().windowWidth() / game->worldTileWidth() / 2;
+		yMapPos = 0;
+	}
+	else if (windowPosition == PositionAlignment::TOP_LEFT) {
+
+		xMapPos = 0;
+		yMapPos = 0;
+	}
+	else if (windowPosition == PositionAlignment::TOP_RIGHT) {
+
+		xMapPos = (float)(GameConfig::instance().windowWidth() - objectWidth) / game->worldTileWidth();
+		yMapPos = 0;
+	}
+	else if (windowPosition == PositionAlignment::CENTER_LEFT) {
+
+		xMapPos = 0;
+		yMapPos = (float)GameConfig::instance().windowHeight() / game->worldTileHeight() / 2;
+	}
+	else if (windowPosition == PositionAlignment::CENTER_RIGHT) {
+
+		xMapPos = (float)(GameConfig::instance().windowWidth() - objectWidth) / game->worldTileWidth();
+		yMapPos = (float)GameConfig::instance().windowHeight() / game->worldTileHeight() / 2;
+	}
+	else if (windowPosition == PositionAlignment::BOTTOM_LEFT) {
+
+		xMapPos = 0;
+		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight) / game->worldTileHeight();
+	}
+	else if (windowPosition == PositionAlignment::BOTTOM_CENTER) {
+
+		xMapPos = (float)GameConfig::instance().windowWidth() / game->worldTileWidth() / 2;
+		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight) / game->worldTileHeight();
+	}
+	else if (windowPosition == PositionAlignment::BOTTOM_RIGHT) {
+
+		xMapPos = (float)(GameConfig::instance().windowWidth() - objectWidth) / game->worldTileWidth();
+		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight) / game->worldTileHeight();
+	}
 
 	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this, layer, cameraFollow));
 
@@ -322,44 +365,49 @@ void Scene::setInputControlMode(int inputControlMode)
 
 }
 
-SDL_FPoint Scene::calcWindowPosition(int globalPosition)
-{
-	SDL_FPoint globalPoint = {};
-
-	if (globalPosition == PositionAlignment::CENTER) {
-
-		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() / 2);
-		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight() / 2);
-
-	}
-	else if (globalPosition == PositionAlignment::TOP_CENTER) {
-
-		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() / 2);
-		globalPoint.y = 0;
-	}
-	else if (globalPosition == PositionAlignment::TOP_LEFT) {
-
-		globalPoint.x = 0;
-		globalPoint.y = 0;
-	}
-	else if (globalPosition == PositionAlignment::CENTER_LEFT) {
-
-		globalPoint.x = 0;
-		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight() / 2);
-	}
-	else if (globalPosition == PositionAlignment::BOTTOM_LEFT) {
-
-		globalPoint.x = 0;
-		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight());
-	}
-
-	else {
-		/* Need other calcs added*/
-	}
-
-	return globalPoint;
-
-}
+//SDL_FPoint Scene::calcWindowPosition(int globalPosition)
+//{
+//	SDL_FPoint globalPoint = {};
+//
+//	if (globalPosition == PositionAlignment::CENTER) {
+//
+//		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() / 2);
+//		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight() / 2);
+//
+//	}
+//	else if (globalPosition == PositionAlignment::TOP_CENTER) {
+//
+//		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() / 2);
+//		globalPoint.y = 0;
+//	}
+//	else if (globalPosition == PositionAlignment::TOP_LEFT) {
+//
+//		globalPoint.x = 0;
+//		globalPoint.y = 0;
+//	}
+//	else if (globalPosition == PositionAlignment::TOP_RIGHT) {
+//
+//		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() - 5);
+//		globalPoint.y = 0;
+//	}
+//	else if (globalPosition == PositionAlignment::CENTER_LEFT) {
+//
+//		globalPoint.x = 0;
+//		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight() / 2);
+//	}
+//	else if (globalPosition == PositionAlignment::BOTTOM_LEFT) {
+//
+//		globalPoint.x = 0;
+//		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight());
+//	}
+//
+//	else {
+//		/* Need other calcs added*/
+//	}
+//
+//	return globalPoint;
+//
+//}
 
 
 void Scene::_processGameObjectInterdependecies()
@@ -400,4 +448,27 @@ void _updatePhysics(b2World* physicsWorld)
 {
 	//Update ALL physics object states
 	physicsWorld->Step(.016, 6, 2);
+}
+
+void Scene::_buildSceneGameObjects(Json::Value definitionJSON)
+{
+	for (Json::Value gameObjectJSON : definitionJSON["gameObjects"]) {
+
+		auto id = gameObjectJSON["gameObjectId"].asString();
+
+		auto layer = EnumMap::instance().toEnum(gameObjectJSON["layer"].asString());
+
+		//Determine location
+		auto locationJSON = gameObjectJSON["location"];
+		if (locationJSON.isMember("windowPosition")) {
+
+			PositionAlignment windowPosition = static_cast<PositionAlignment>(EnumMap::instance().toEnum(gameObjectJSON["location"]["windowPosition"].asString()));
+			addGameObject(id, layer, windowPosition, 0);
+		}
+		else {
+			auto locationX = gameObjectJSON["location"]["x"].asFloat();
+			auto locationY = gameObjectJSON["location"]["y"].asFloat();
+			addGameObject(id, layer, locationX, locationY, 0);
+		}
+	}
 }

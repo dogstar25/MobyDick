@@ -29,7 +29,8 @@ struct ChildLocation {
 	ChildLocationType locationType{};
 	b2Vec2 absolutePosition{};
 	int slot{};
-	int positionAlignment{ PositionAlignment::CENTER };
+	PositionAlignment positionAlignment{ PositionAlignment::CENTER };
+	bool centeredOnLocation{true};
 };
 
 struct Child {
@@ -63,6 +64,7 @@ private:
 	//	int locationSlot, int locationAlignment, int childNumber, int childCount, SDL_FPoint parentPositionRec, float parentAngle);
 
 	b2Vec2 _calcChildPosition(b2Vec2 childSize, int childCount, ChildLocation location, SDL_FPoint parentPositionRec, float parentAngle);
+	b2Vec2 _calcChildPosition(b2Vec2 childSize, ChildLocation location, SDL_FPoint parentPositionRec, float parentAngle);
 
 
 };

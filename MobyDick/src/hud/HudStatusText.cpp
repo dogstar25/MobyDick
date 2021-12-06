@@ -3,6 +3,8 @@
 #include "../DynamicTextManager.h"
 #include "../game.h"
 
+#include <algorithm>
+
 extern std::unique_ptr<Game> game;
 
 HudStatusText::HudStatusText(std::string labelObjectId, std::string statusObjectId, float labelPadding, Scene* parentScene)
@@ -26,21 +28,32 @@ void HudStatusText::update(GameObject* parentGameObject)
 {
 
 	float labelPositionAdjustment{};
+	float labelHeight{};
+	float labelWidth{};
+
+	const auto& statusTransformComponent = m_statusObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	auto statusObjectWidth = statusTransformComponent->getPositionRect().w;
+	auto statusObjectHeight = statusTransformComponent->getPositionRect().h;
 
 	//If we have a lable object then update its position based on its parent and 
 	//also call its normal update 
 	if (m_label.has_value()) {
 
-		m_label.value()->setPosition(parentGameObject->getCenterPosition());
+		SDL_FPoint labelPosition;
 		m_label.value()->update();
 
 		const auto& labelTransformComponent = m_label.value()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-		auto labelWidth = labelTransformComponent->getPositionRect().w;
-
-		const auto& statusTransformComponent = m_statusObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-		auto statusObjectWidth = statusTransformComponent->getPositionRect().w;
+		labelWidth = labelTransformComponent->getPositionRect().w;
 
 		labelPositionAdjustment = (labelWidth / 2) + (statusObjectWidth / 2) + m_labelPadding;
+		labelHeight = labelTransformComponent->getPositionRect().h;
+
+		float height = std::max(labelHeight, statusObjectHeight);
+
+		labelPosition.x = parentGameObject->getTopLeftPosition().x + (labelWidth / 2);
+		labelPosition.y = parentGameObject->getTopLeftPosition().y + (height / 2);
+		m_label.value()->setPosition(labelPosition);
+
 	}
 
 	//Update the dynamic text item that is used by this TextObject
@@ -56,7 +69,23 @@ void HudStatusText::update(GameObject* parentGameObject)
 	SDL_FPoint statusPosition = parentPosition;
 	statusPosition.x = parentPosition.x + labelPositionAdjustment;
 	m_statusObject->setPosition(statusPosition);
-	
+
+	//Calculate the size of the hud item
+	float hudHeight{};
+	float hudWidth{};
+
+	//Width
+	hudWidth = labelWidth + statusObjectWidth;
+
+	//Height
+	hudHeight = std::max(labelHeight, statusObjectHeight);
+
+
+	const auto& parentTransformComponent = parentGameObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	parentTransformComponent->setSize(hudWidth, hudHeight);
+
+
+
 }
 
 void HudStatusText::render(GameObject* parentGameObject)

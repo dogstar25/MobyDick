@@ -23,7 +23,9 @@ HudComponent::HudComponent(Json::Value definitionJSON, Scene* parentScene)
 void HudComponent::update()
 {
 
+	//Execute specific HudClassType updates
 	m_hudItem->update(parent());
+
 
 }
 

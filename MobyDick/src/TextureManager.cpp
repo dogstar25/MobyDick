@@ -94,6 +94,7 @@ void TextureManager::addOrReplaceTexture(std::string textureId, std::shared_ptr<
 
 		//Use [] for the replacing of an item already there
 		m_textureMap[textureId] = texture;
+
 	}
 
 }

@@ -79,19 +79,33 @@ namespace NavigationObjectType {
 	inline constexpr int WAYPOINT = 2;
 }
 
-namespace PositionAlignment {
+//namespace PositionAlignment {
+//
+//	inline constexpr int CENTER = 0;
+//	inline constexpr int TOP_LEFT = 1;
+//	inline constexpr int TOP_CENTER = 2;
+//	inline constexpr int TOP_RIGHT = 3;
+//	inline constexpr int CENTER_LEFT = 4;
+//	inline constexpr int CENTER_RIGHT = 5;
+//	inline constexpr int BOTTOM_LEFT = 6;
+//	inline constexpr int BOTTOM_CENTER = 7;
+//	inline constexpr int BOTTOM_RIGHT = 8;
+//
+//}
 
-	inline constexpr int CENTER = 0;
-	inline constexpr int TOP_LEFT = 1;
-	inline constexpr int TOP_CENTER = 2;
-	inline constexpr int TOP_RIGHT = 3;
-	inline constexpr int CENTER_LEFT = 4;
-	inline constexpr int CENTER_RIGHT = 5;
-	inline constexpr int BOTTOM_LEFT = 6;
-	inline constexpr int BOTTOM_CENTER = 7;
-	inline constexpr int BOTTOM_RIGHT = 8;
+enum class PositionAlignment {
 
-}
+	CENTER = 0,
+	TOP_LEFT = 1,
+	TOP_CENTER = 2,
+	TOP_RIGHT = 3,
+	CENTER_LEFT = 4,
+	CENTER_RIGHT = 5,
+	BOTTOM_LEFT = 6,
+	BOTTOM_CENTER = 7,
+	BOTTOM_RIGHT = 8
+
+};
 
 enum class GameState {
 	QUIT = 0,

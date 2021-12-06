@@ -132,7 +132,7 @@ void MRContactListener::_player_shieldScrap(GameObject* contact1, GameObject* co
 	auto scrapCount = inventoryComponent->addCollectible(CollectibleTypes::DRONE_SCRAP, 1);
 
 	//Update the status Manager
-	static_cast<MRStatusManager*>(game->statusMananger())->hudValueMap()["HUD_SCRAP"].adjust(1);
+	static_cast<MRStatusManager*>(game->statusMananger())->hudValueMap()["HUD_SCRAP_VALUE"].adjust(1);
 
 	//Check to see if this upgrades the players weapon
 	auto pistol = inventoryComponent->getItem(TraitTag::weapon);

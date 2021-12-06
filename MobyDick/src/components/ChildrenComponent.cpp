@@ -16,6 +16,7 @@ ChildrenComponent::ChildrenComponent(Json::Value definitionJSON, Scene* parentSc
 	m_childPadding = childrenComponentJSON["childPadding"].asFloat();
 	m_childPositionRelative = childrenComponentJSON["childPositionRelative"].asBool();
 	std::optional<int> locationSlot{};
+	bool centeredOnLocation{true};
 
 	for (Json::Value itrChild : childrenComponentJSON["childObjects"])
 	{
@@ -28,15 +29,19 @@ ChildrenComponent::ChildrenComponent(Json::Value definitionJSON, Scene* parentSc
 		}
 
 		//Slot alignment
-		int positionAlignment{ PositionAlignment::CENTER };
+		PositionAlignment positionAlignment{ PositionAlignment::CENTER };
 		if (itrChild.isMember("alignment")) {
-			positionAlignment = EnumMap::instance().toEnum(itrChild["alignment"].asString());
+			positionAlignment = static_cast<PositionAlignment>(EnumMap::instance().toEnum(itrChild["alignment"].asString()));
 		}
 
 		//Absolute position
 		std::optional<b2Vec2> absolutePosition{};
 		if (itrChild.isMember("absolutePosition")) {
 			absolutePosition = { itrChild["absolutePosition"]["x"].asFloat() , itrChild["absolutePosition"]["y"].asFloat() };
+		}
+
+		if (itrChild.isMember("centeredOnLocation")) {
+			centeredOnLocation = itrChild["centeredOnLocation"].asBool();
 		}
 
 		Child child{};
@@ -55,6 +60,7 @@ ChildrenComponent::ChildrenComponent(Json::Value definitionJSON, Scene* parentSc
 			location.absolutePosition = absolutePosition.value();
 		}
 
+		location.centeredOnLocation = centeredOnLocation;
 		child.location = location;
 		child.gameObject = std::make_shared<GameObject>(childObjectId, -1.0F, -1.0F, 0.F, parentScene, LAYER_MAIN);
 
@@ -87,15 +93,16 @@ void ChildrenComponent::update()
 		const auto& childTransformComponent = childObject.gameObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 		//Calculate child position based on what type of location the child uses
-		SDL_FPoint parentPosition = transformComponent->getCenterPosition();
+		SDL_FPoint parentCenterPosition = transformComponent->getCenterPosition();
+		SDL_FPoint parentTopLeftPosition = transformComponent->getTopLeftPosition();
 		float parentAngle = transformComponent->angle();
 
 		if (childObject.location.locationType == ChildLocationType::SLOT) {
-			newChildPosition = _calcChildPosition(childTransformComponent->size(), childCount, childObject.location, parentPosition, parentAngle);
+			newChildPosition = _calcChildPosition(childTransformComponent->size(), childCount, childObject.location, parentCenterPosition, parentAngle);
 		}
 		else if (childObject.location.locationType == ChildLocationType::ABSOLUTE_POSITION) {
 
-			std::cout << "oops";
+			newChildPosition = _calcChildPosition(childTransformComponent->size(), childObject.location, parentTopLeftPosition, parentAngle);
 
 		}
 	
@@ -227,11 +234,56 @@ b2Vec2 ChildrenComponent::_calcChildPosition(b2Vec2 childSize, int childCount, C
 
 	}
 
-	b2Vec2 b2Vec2ChildPosition = { childCenterPosition.x, childCenterPosition.y };
+	b2Vec2 b2Vec2ChildPosition{};
+	if (location.centeredOnLocation == true) {
+		b2Vec2ChildPosition = { childCenterPosition.x, childCenterPosition.y };
+	}
+	else {
+		b2Vec2ChildPosition = { childCenterPosition.x + (childSize.x/2), childCenterPosition.y + (childSize.y / 2) };
+	}
 	return b2Vec2ChildPosition;
 
 }
 
+
+//b2Vec2 ChildrenComponent::_applyAlignment(b2Vec2 childSize, b2Vec2 childPosition, PositionAlignment positionAlignment)
+//{
+//	float x{};
+//	float y{};
+//
+//	if (location.positionAlignment == PositionAlignment::TOP_LEFT) {
+//
+//		x = 0;
+//		y = 0;
+//
+//	}
+//	else if (location.positionAlignment == PositionAlignment::TOP_CENTER) {
+//
+//		x = parentPosition.x;
+//		y = 0;
+//
+//	}
+//
+//}
+
+b2Vec2 ChildrenComponent::_calcChildPosition(b2Vec2 childSize, ChildLocation location, SDL_FPoint parentPosition, float parentAngle)
+{
+	b2Vec2 position{};
+
+	if (location.centeredOnLocation == true) {
+		position.x = parentPosition.x + location.absolutePosition.x;
+		position.y = parentPosition.y + location.absolutePosition.y;
+	}
+	else {
+		position.x = parentPosition.x + location.absolutePosition.x + (childSize.x / 2);
+		position.y = parentPosition.y + location.absolutePosition.y + (childSize.y / 2);
+
+	}
+
+	return position;
+
+
+}
 
 //b2Vec2 ChildrenComponent::_calcChildPosition2(
 //	b2Vec2 childSize,

@@ -45,6 +45,8 @@ private:
 	std::string m_textValue{ "" };
 	std::string m_debugId{ "" };
 
+	static inline int m_dynamicCount{0};
+
 	//test
 	TTF_Font* m_fontObject;
 

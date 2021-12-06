@@ -18,7 +18,7 @@
     "physics": {
         "box2dScale": 25
     },
-    "dynamicTextRefreshDelay": 0.1, //need a tiny delay to prevent millions of dynamic text texture regenerations
+    "dynamicTextRefreshDelay": 0.2, //need a tiny delay to prevent millions of dynamic text texture regenerations
     "debugPanel": {
         "show": true,
         "xPos": 1,
