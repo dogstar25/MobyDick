@@ -86,7 +86,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//_displayLoadingMsg();
 		statusManager->setLevel(19);
 		statusManager->initHudMappings();
-		static_cast<MRStatusManager*>(statusManager)->setLives(9);
+		static_cast<MRStatusManager*>(statusManager)->setLives(1);
 
 		TextureManager::instance().init();
 		TextureManager::instance().load("textureAtlasAssets");
@@ -129,10 +129,9 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//scene.addGameObject("GINA_64", LAYER_MENU, 8, 8);
 		
 		//scene.addGameObject("HUD_STATUS", LAYER_MENU, 16, 1);
-		//scene.addGameObject("FPS_VALUE", LAYER_MENU, 16, 1);
+		scene.addGameObject("FPS_VALUE", LAYER_MENU, 16, 1);
 		//scene.addGameObject("HUD_STATUS_TOP", LAYER_MENU, 2, 2);
 		//scene.addGameObject("HUD_TEST_LABEL", LAYER_MENU, 2, 2);
-		scene.addGameObject("SWORDLADY", LAYER_MENU, 0, 22);
 		
 		
 		

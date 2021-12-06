@@ -56,14 +56,16 @@ void TransformComponent::update()
 
 SDL_FRect TransformComponent::getPositionRect()
 {
-	SDL_FRect positionRect;
+	SDL_FRect positionRect{};
+	SDL_FPoint position{};
 
 	positionRect.w = m_size.x;
 	positionRect.h = m_size.y;
 
 	//Adjust to make it top left
-	positionRect.x = m_position.x - (m_size.x / 2);
-	positionRect.y = m_position.y - (m_size.y / 2);
+	position = getTopLeftPosition();
+	positionRect.x = position.x;
+	positionRect.y = position.y;
 
 	return positionRect;
 
@@ -73,6 +75,16 @@ SDL_FPoint TransformComponent::getCenterPosition()
 {
 	return SDL_FPoint{ m_position.x, m_position.y };
 
+}
+
+SDL_FPoint TransformComponent::getTopLeftPosition()
+{
+	SDL_FPoint position{};
+
+	position.x = m_position.x - (m_size.x / 2);
+	position.y = m_position.y - (m_size.y / 2);
+
+	return position;
 }
 
 void TransformComponent::setPosition(b2Vec2 position)

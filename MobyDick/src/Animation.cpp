@@ -50,10 +50,10 @@ Animation::Animation(Json::Value animationDetailsJSON, b2Vec2 frameSize) :
 
 	//initialize the current texture source rect to the first frame of animation
 	m_currentTextureAnimationSrcRect = std::make_shared <SDL_Rect>();
-	m_currentTextureAnimationSrcRect->x = m_animationFramePositions.begin()[0].x;
-	m_currentTextureAnimationSrcRect->y = m_animationFramePositions.begin()[0].y;
-	m_currentTextureAnimationSrcRect->w = m_frameSize.x;
-	m_currentTextureAnimationSrcRect->h = m_frameSize.y;
+	m_currentTextureAnimationSrcRect->x = (int)m_animationFramePositions.begin()[0].x;
+	m_currentTextureAnimationSrcRect->y = (int)m_animationFramePositions.begin()[0].y;
+	m_currentTextureAnimationSrcRect->w = (int)m_frameSize.x;
+	m_currentTextureAnimationSrcRect->h = (int)m_frameSize.y;
 
 }
 

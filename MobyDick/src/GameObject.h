@@ -57,6 +57,7 @@ public:
 	int m_gameObjectType{ GameObjectType::SPRITE };
 
 	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, int layer, bool cameraFollow=false);
+	GameObject(std::string gameObjectId, int windowPosition, float angleAdjust, Scene* parentScene, int layer);
 
 	virtual void update();
 	virtual void render();
@@ -67,6 +68,8 @@ public:
 	void setPosition(SDL_FPoint position);
 
 	SDL_FPoint getCenterPosition();
+	SDL_FPoint getTopLeftPosition();
+	
 	void postInit();
 	void setPhysicsActive(bool active);
 	void setParentScene( Scene* parentScene);
@@ -167,6 +170,8 @@ private:
 	std::array<std::shared_ptr<Component>, static_cast<int>(ComponentTypes::COUNT)+1>m_components;
 
 	std::string _buildName(std::string id, float xMapPos, float yMapPos, Scene* parentScene);
+
+	void _init(std::string gameObjectId, Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, int layer, bool cameraFollow = false);
 };
 
 #endif

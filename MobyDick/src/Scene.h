@@ -50,6 +50,7 @@ public:
 	
 
 	GameObject* addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle=0., bool cameraFollow=false);
+	GameObject* addGameObject(std::string gameObjectId, int layer, PositionAlignment windowPosition, float angle=0, bool cameraFollow=false);
 	GameObject* addGameObject(std::shared_ptr<GameObject> gameObject, int layer);
 	void addKeyAction(SDL_Keycode, SceneAction);
 	void applyCurrentControlMode();
@@ -128,6 +129,7 @@ private:
 
 	void _processGameObjectInterdependecies();
 	void _buildPhysicsWorld(Json::Value physicsJSON);
+	void _buildSceneGameObjects(Json::Value sceneJSON);
 	
 
 };

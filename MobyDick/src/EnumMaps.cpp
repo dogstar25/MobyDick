@@ -82,15 +82,15 @@ EnumMap::EnumMap()
 	m_enumMap["SCENETAG_MENU"] = SCENETAG_MENU;
 
 	//Object Alignments
-	m_enumMap["PositionAlignment::TOP_LEFT"] = PositionAlignment::TOP_LEFT;
-	m_enumMap["PositionAlignment::TOP_CENTER"] = PositionAlignment::TOP_CENTER;
-	m_enumMap["PositionAlignment::TOP_RIGHT"] = PositionAlignment::TOP_RIGHT;
-	m_enumMap["PositionAlignment::CENTER_LEFT"] = PositionAlignment::CENTER_LEFT;
-	m_enumMap["PositionAlignment::CENTER"] = PositionAlignment::CENTER;
-	m_enumMap["PositionAlignment::CENTER_RIGHT"] = PositionAlignment::CENTER_RIGHT;
-	m_enumMap["PositionAlignment::BOTTOM_LEFT"] = PositionAlignment::BOTTOM_LEFT;
-	m_enumMap["PositionAlignment::BOTTOM_CENTER"] = PositionAlignment::BOTTOM_CENTER;
-	m_enumMap["PositionAlignment::BOTTOM_RIGHT"] = PositionAlignment::BOTTOM_RIGHT;
+	m_enumMap["PositionAlignment::TOP_LEFT"] = (int)PositionAlignment::TOP_LEFT;
+	m_enumMap["PositionAlignment::TOP_CENTER"] = (int)PositionAlignment::TOP_CENTER;
+	m_enumMap["PositionAlignment::TOP_RIGHT"] = (int)PositionAlignment::TOP_RIGHT;
+	m_enumMap["PositionAlignment::CENTER_LEFT"] = (int)PositionAlignment::CENTER_LEFT;
+	m_enumMap["PositionAlignment::CENTER"] = (int)PositionAlignment::CENTER;
+	m_enumMap["PositionAlignment::CENTER_RIGHT"] = (int)PositionAlignment::CENTER_RIGHT;
+	m_enumMap["PositionAlignment::BOTTOM_LEFT"] = (int)PositionAlignment::BOTTOM_LEFT;
+	m_enumMap["PositionAlignment::BOTTOM_CENTER"] = (int)PositionAlignment::BOTTOM_CENTER;
+	m_enumMap["PositionAlignment::BOTTOM_RIGHT"] = (int)PositionAlignment::BOTTOM_RIGHT;
 
 	//Game Layers
 	m_enumMap["LAYER_BACKGROUND_1"] = LAYER_BACKGROUND_1;
@@ -105,9 +105,6 @@ EnumMap::EnumMap()
 	m_enumMap["DISPLAY_UI_MODE_STANDARD"] = DISPLAY_UI_MODE_STANDARD;
 	m_enumMap["DISPLAY_UI_MODE_ONHOVER"] = DISPLAY_UI_MODE_ONHOVER;
 	m_enumMap["DISPLAY_UI_MODE_ONCLICK"] = DISPLAY_UI_MODE_ONCLICK;
-
-	//Global Screen Position
-	m_enumMap["PositionAlignment::CENTER"] = PositionAlignment::CENTER;
 
 	//Particle Emitter types
 	m_enumMap["ParticleEmitterType::ONETIME"] = ParticleEmitterType::ONETIME;

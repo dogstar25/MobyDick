@@ -42,6 +42,7 @@ public:
 
 	SDL_FRect  getPositionRect();
 	SDL_FPoint getCenterPosition();
+	SDL_FPoint getTopLeftPosition();
 
 private:
 	float

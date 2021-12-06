@@ -35,11 +35,18 @@
                 "childObjects": [
                     {
                         "gameObjectId": "HUD_LEVEL",
-                        "locationSlot": 1,
-                        "locationSlotAlignment": "PositionAlignment::CENTER_LEFT",
+                        "centeredOnLocation": false,
                         "absolutePosition": {
                             "x": 2,
-                            "y": 3
+                            "y": 2
+                        }
+                    },
+                    {
+                        "gameObjectId": "HUD_LIVES",
+                        "centeredOnLocation": false,
+                        "absolutePosition": {
+                            "x": 2,
+                            "y": 32
                         }
                     }
                 ]
@@ -55,7 +62,7 @@
                 "hudType": "HudItemTypes::STATUS_SINGLE",
                 "labelObjectId": "HUD_LEVEL_LABEL",
                 "labelPadding": 2,
-                "statusObjectId": "HUD_SCRAP"
+                "statusObjectId": "HUD_SCRAP_VALUE"
             }
         },
         {
@@ -101,12 +108,12 @@
             }
         },
         {
-            "id": "HUD_SCRAP",
+            "id": "HUD_SCRAP_VALUE",
             "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "description": "Hud Level Value",
-           "textComponent": {
+            "textComponent": {
                 "value": "Level",
                 "dynamic": true,
                 "font": "FONT_ARIAL_REG",
@@ -121,15 +128,27 @@
                 }
             }
         },
-
         {
-            "id": "HUD_TEST_LABEL",
+            "id": "HUD_LIVES",
+            "type": "GameObjectType::ABSTRACT",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "description": "Hud Level Dynamic Text",
+            "hudComponent": {
+                "hudType": "HudItemTypes::STATUS_SERIES",
+                "labelObjectId": "HUD_LIVES_LABEL",
+                "labelPadding": 4,
+                "statusObjectId": "HUD_LIVES_VALUE"
+            }
+        },
+        {
+            "id": "HUD_LIVES_LABEL",
             "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
-            "description": "Hud Level Label",
+            "description": "Hud Level Value",
             "textComponent": {
-                "value": "Level",
+                "value": "Lives",
                 "dynamic": false,
                 "font": "FONT_ARIAL_REG",
                 "fontSize": 16
@@ -144,27 +163,20 @@
             }
         },
         {
-            "id": "TEST_PANEL",
-            "type": "GameObjectType::RECTANGLE",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
+            "id": "HUD_LIVES_VALUE",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_SOLID",
+            "traitTags": [],
             "transformComponent": {
                 "size": {
-                    "width": 176,
-                    "height": 164
+                    "width": 16,
+                    "height": 16
                 },
                 "absolutePositioning": true
             },
             "renderComponent": {
-                "textureBlendMode": "SDL_BLENDMODE_BLEND",
-                "color": {
-                    "red": 5,
-                    "green": 255,
-                    "blue": 5,
-                    "alpha": 200
-                }
+                "textureId": "TX_BOWMAN1"
             }
-
         }
     ]
 }

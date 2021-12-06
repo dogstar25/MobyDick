@@ -161,6 +161,7 @@ void RenderComponent::setColor(int red, int green, int blue, int alpha)
 
 void RenderComponent::render()
 {
+	
 
 	const auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	const auto& physics = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
@@ -243,7 +244,9 @@ void RenderComponent::render()
 
 			//SDL Only Stuff
 			if (GameConfig::instance().rendererType() == RendererType::SDL) {
+
 				SDL_Texture* sdlTexture = getRenderTexture()->sdlTexture;
+				SDL_QueryTexture(sdlTexture, NULL, NULL, NULL, NULL);
 				SDL_SetTextureBlendMode(sdlTexture, m_textureBlendMode);
 				SDL_SetRenderDrawBlendMode(game->renderer()->sdlRenderer(), m_textureBlendMode);
 			}

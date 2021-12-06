@@ -428,6 +428,14 @@ SDL_FPoint GameObject::getCenterPosition()
 
 }
 
+SDL_FPoint GameObject::getTopLeftPosition()
+{
+
+	const auto& transformComponent = getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	return(transformComponent->getTopLeftPosition());
+
+}
+
 std::string GameObject::_buildName(std::string id, float xMapPos, float yMapPos, Scene* parentScene)
 {
 	auto name = std::format("{}_{:.0f}_{:.0f}_{:05d}", id, xMapPos, yMapPos, parentScene->gameObjectCount());

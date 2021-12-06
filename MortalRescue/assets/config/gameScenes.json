@@ -14,7 +14,7 @@
                     "gameObjectId": "HUD_STATUS_TOP",
                     "layer": "LAYER_MENU",
                     "location": {
-                        "windowPosition": "PositionAlignment::BOTTOM_LEFT"
+                        "windowPosition": "PositionAlignment::BOTTOM_RIGHT"
                     }
                 }
             ],
@@ -124,6 +124,7 @@
                         "y": 10
                     }
                 }
+
             ],
             "keyActions": [
                 {

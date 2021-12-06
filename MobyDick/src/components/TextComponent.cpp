@@ -13,7 +13,6 @@ TextComponent::TextComponent(std::string gameObjectId, Json::Value definitionJSO
 {
 
 	//gameObjectId can be dynamic because of the debug text so it must be passed in
-	m_textureId = "TX_" + gameObjectId;
 	m_gameObjectId = gameObjectId;
 
 	Json::Value textComponentJSON = definitionJSON["textComponent"];
@@ -32,6 +31,20 @@ TextComponent::TextComponent(std::string gameObjectId, Json::Value definitionJSO
 	m_fontObject = TTF_OpenFont(fontFile.c_str(), m_fontSize);
 
 	m_refreshTimer = Timer(GameConfig::instance().dynamicTextRefreshDelay());
+
+
+	if (m_isDynamic == true) {
+		m_dynamicCount++;
+		std::stringstream uniqueTextureId;
+		uniqueTextureId << "TX_" << gameObjectId << m_dynamicCount;
+
+		m_textureId = uniqueTextureId.str();
+
+	}
+	else {
+		m_textureId = "TX_" + gameObjectId;
+
+	}
 
 }
 
@@ -52,16 +65,19 @@ void TextComponent::update()
 	const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 	const auto& transformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
-	std::string textureId = "TX_" + m_gameObjectId;
+	//std::string textureId = "TX_" + m_gameObjectId;
+	//std::string textureId = "TX_" + parent()->name();
 
-	if (TextureManager::instance().hasTexture(textureId))
+	if (TextureManager::instance().hasTexture(m_textureId))
 	{
 		//If we have already set the texture, dont have to do it again
-		if (renderComponent->texture())
-		{
-			renderComponent->setTexture(TextureManager::instance().getTexture(textureId));
+		//if (renderComponent->texture())
+		//{
+			renderComponent->setTexture(TextureManager::instance().getTexture(m_textureId));
 			transformComponent->setSize((float)renderComponent->texture()->surface->w, (float)renderComponent->texture()->surface->h);
-		}
+
+			SDL_QueryTexture(renderComponent->getRenderTexture()->sdlTexture, NULL, NULL, NULL, NULL);
+		//}
 
 	}
 	else
@@ -72,6 +88,7 @@ void TextComponent::update()
 	if (m_isDynamic == true)
 	{
 		renderComponent->setTexture(updateDynamicTextTexture());
+
 	}
 
 }
@@ -113,7 +130,9 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 
 	//Add it to the textureManager but first free any texture that may already be there in case this is
 	//being generated for a dynamic text object
+	SDL_QueryTexture(texture->sdlTexture, NULL, NULL, NULL, NULL);
 	TextureManager::instance().addOrReplaceTexture(m_textureId, texture);
+	SDL_QueryTexture(texture->sdlTexture, NULL, NULL, NULL, NULL);
 
 	return 	texture;
 
@@ -128,19 +147,21 @@ std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
 	newText = DynamicTextManager::instance().getTextItem(m_gameObjectId);
 
 	//use a timer to slow down the re-generating of dynamic text because its time consuming
-	if (newText->hasChanged == true && m_refreshTimer.hasMetTargetDuration())
+	//if (newText->hasChanged == true && m_refreshTimer.hasMetTargetDuration())
+	if ( m_refreshTimer.hasMetTargetDuration())
 	{
 
 		//Build new texture
 		m_textValue = newText->textValue;
 		texture = generateTextTexture();
 		newText->hasChanged = false;
-
+		SDL_QueryTexture(texture->sdlTexture, NULL, NULL, NULL, NULL);
 	}
 	else
 	{
 
 		texture = TextureManager::instance().getTexture(m_textureId);
+		SDL_QueryTexture(texture->sdlTexture, NULL, NULL, NULL, NULL);
 
 		//TODO:set a flag at game object level so that the TextureManager::render(TextObject* gameObject) doesnt have to 
 		// do SDL_QueryTexture

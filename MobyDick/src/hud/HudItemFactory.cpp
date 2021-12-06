@@ -24,6 +24,7 @@ std::shared_ptr<HudItem> HudItemFactory::create(HudItemTypes type, std::string l
     }
     else if (type == HudItemTypes::STATUS_SERIES) {
 
+        hudItem = std::make_shared<HudStatusSeries>(labelId, statusId, labelPadding, parentScene);
     }
 
 
