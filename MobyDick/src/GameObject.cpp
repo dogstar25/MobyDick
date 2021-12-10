@@ -282,6 +282,15 @@ void GameObject::update()
 
 }
 
+void GameObject::render(SDL_FRect destQuad)
+{
+
+	//Render yourself
+	getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT)->render(destQuad);
+
+}
+
+
 void GameObject::render()
 {
 
@@ -291,7 +300,7 @@ void GameObject::render()
 	//Render your children
 	if (hasComponent(ComponentTypes::CHILDREN_COMPONENT)){
 
-		getComponent<ChildrenComponent>(ComponentTypes::CHILDREN_COMPONENT)->renderChildren();
+		getComponent<ChildrenComponent>(ComponentTypes::CHILDREN_COMPONENT)->render();
 	}
 
 	//Render your attached inventory items

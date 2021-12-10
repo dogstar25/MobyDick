@@ -115,8 +115,8 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//_displayLoadingMsg();
 
 		//Initialize the sound manager
-		SoundManager::instance().initSound();
-		SoundManager::instance().playMusic("music_ambience_1", -1);
+		//SoundManager::instance().initSound();
+		//SoundManager::instance().playMusic("music_ambience_1", -1);
 
 		//Initialize the clock object
 		Clock::instance().init();
@@ -132,6 +132,9 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		scene.addGameObject("FPS_VALUE", LAYER_MENU, 16, 1);
 		//scene.addGameObject("HUD_STATUS_TOP", LAYER_MENU, 2, 2);
 		//scene.addGameObject("HUD_TEST_LABEL", LAYER_MENU, 2, 2);
+
+		scene.addGameObject("GLOW_TRIANGLE", LAYER_MENU, 3, 3);
+		
 		
 		
 		

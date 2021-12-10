@@ -161,31 +161,26 @@ void RenderComponent::setColor(int red, int green, int blue, int alpha)
 
 void RenderComponent::render()
 {
+	const auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	SDL_FRect destQuad = { getRenderDestRect() };
+	//SDL_FRect destQuad = { transform->getPositionRect()};
+
+	render(destQuad);
+
+}
+
+
+void RenderComponent::render(SDL_FRect destQuad)
+//void RenderComponent::render()
+{
 	
 
 	const auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	const auto& physics = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 
-	if (parent()->m_gameObjectType == GameObjectType::LINE) {
+	if (parent()->m_gameObjectType == GameObjectType::RECTANGLE) {
 
-		b2Vec2 start = transform->lineStart();
-		b2Vec2 end = transform->lineEnd();
-
-		if (transform->absolutePositioning() == false)
-		{
-			start.x -= Camera::instance().frame().x;
-			start.y -= Camera::instance().frame().y;
-			end.x -= Camera::instance().frame().x;
-			end.y -= Camera::instance().frame().y;
-
-		}
-
-		game->renderer()->drawLine(transform->lineStart(), transform->lineEnd(), m_color);
-
-	}
-	else if (parent()->m_gameObjectType == GameObjectType::RECTANGLE) {
-
-		SDL_FRect quad = { getRenderDestRect() };
+		//SDL_FRect destQuad = { transform->getPositionRect() };
 		bool outline{};
 		SDL_Color outlineColor{};
 
@@ -210,9 +205,8 @@ void RenderComponent::render()
 			SDL_SetTextureBlendMode(sdlTexture, m_textureBlendMode);
 			SDL_SetRenderDrawBlendMode(game->renderer()->sdlRenderer(), m_textureBlendMode);
 		}
-		/////
 
-		game->renderer()->drawQuad(quad, m_color, outline, outlineColor);
+		game->renderer()->drawQuad(destQuad, m_color, outline, outlineColor);
 
 	}
 	else if (parent()->m_gameObjectType == GameObjectType::SPRITE) {
@@ -239,14 +233,13 @@ void RenderComponent::render()
 
 			Texture* texture = getRenderTexture().get();
 
-			SDL_FRect destQuad = getRenderDestRect();
+			//SDL_FRect destQuad = getRenderDestRect();
 			SDL_Rect* textureSourceQuad = getRenderTextureRect(*texture);
 
 			//SDL Only Stuff
 			if (GameConfig::instance().rendererType() == RendererType::SDL) {
 
 				SDL_Texture* sdlTexture = getRenderTexture()->sdlTexture;
-				SDL_QueryTexture(sdlTexture, NULL, NULL, NULL, NULL);
 				SDL_SetTextureBlendMode(sdlTexture, m_textureBlendMode);
 				SDL_SetRenderDrawBlendMode(game->renderer()->sdlRenderer(), m_textureBlendMode);
 			}

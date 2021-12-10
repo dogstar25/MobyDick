@@ -46,8 +46,7 @@ public:
 	~ChildrenComponent();
 
 	void update() override;
-	void update2();
-	void renderChildren(); //move to render component?
+	void render();
 
 	const auto& childObjects() { return m_childObjects; }
 
