@@ -209,9 +209,9 @@
                         {
                             "resistance": 2,
                             "color": {
-                                "red": 20,
+                                "red": 200,
                                 "green": 200,
-                                "blue": 237,
+                                "blue": 22,
                                 "alpha": 255
                             }
                         },

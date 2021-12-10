@@ -8,12 +8,21 @@ class StatusItem
 {
 
 public:
-	void adjust(float adjustValue) { *m_value += adjustValue; }
+	StatusItem(float* value, float maxValue) :
+		m_value(value),
+		m_originalValue(*value),
+		m_maximumValue(maxValue) {}
+	StatusItem() = default;
+	void adjust(float adjustValue);
 	float* get() { return m_value; }
-	void set(float* value) { m_value = value; }
+	void set(float* value, float maximum);
+
+	void reset();
 
 private:
 	float* m_value;
+	float m_originalValue;
+	float m_maximumValue;
 
 };
 

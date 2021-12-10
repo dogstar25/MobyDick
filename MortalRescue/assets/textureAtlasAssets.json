@@ -304,6 +304,17 @@
                 "width": 78,
                 "height": 33
             }
+        },
+        {
+            "id": "TX_GLOW_TRIANGLE_256",
+            "description": "Glow Triangle 256",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 260,
+                "y": 1540,
+                "width": 256,
+                "height": 256
+            }
         }
 
     ],

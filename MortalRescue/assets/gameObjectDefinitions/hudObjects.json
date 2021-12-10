@@ -61,7 +61,7 @@
             "hudComponent": {
                 "hudType": "HudItemTypes::STATUS_SINGLE",
                 "labelObjectId": "HUD_LEVEL_LABEL",
-                "labelPadding": 2,
+                "labelPadding": 16,
                 "statusObjectId": "HUD_SCRAP_VALUE"
             }
         },
@@ -137,8 +137,9 @@
             "hudComponent": {
                 "hudType": "HudItemTypes::STATUS_SERIES",
                 "labelObjectId": "HUD_LIVES_LABEL",
-                "labelPadding": 4,
-                "statusObjectId": "HUD_LIVES_VALUE"
+                "labelPadding": 16,
+                "statusObjectId": "HUD_BAR"
+                //"statusObjectId": "HUD_LIVES_VALUE"
             }
         },
         {
@@ -177,6 +178,29 @@
             "renderComponent": {
                 "textureId": "TX_BOWMAN1"
             }
+        },
+        {
+            "id": "HUD_BAR",
+            "type": "GameObjectType::RECTANGLE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "description": "Hud Level Dynamic Text",
+            "transformComponent": {
+                "size": {
+                    "width": 2,
+                    "height": 32
+                },
+                "absolutePositioning": true
+            },
+            "renderComponent": {
+                "color": {
+                    "red": 255,
+                    "green": 255,
+                    "blue": 255,
+                    "alpha": 255
+                }
+            }
         }
+
     ]
 }

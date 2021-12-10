@@ -564,6 +564,30 @@
             "renderComponent": {
                 "textureId": "TX_BOWMAN1"
             }
+        },
+        {
+            "id": "GLOW_TRIANGLE",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [],
+            "transformComponent": {
+                "size": {
+                    "width": 256,
+                    "height": 256
+                },
+                "absolutePositioning": false
+            },
+            "renderComponent": {
+                "textureBlendMode": "SDL_BLENDMODE_ADD",
+                "textureId": "TX_PIECE_FULL_8",
+                "color": {
+                    "red": 8,
+                    "green": 242,
+                    "blue": 250,
+                    "alpha": 255
+                }
+            }
         }
+
     ]
 }

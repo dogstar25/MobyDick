@@ -127,7 +127,7 @@ void ChildrenComponent::update()
 
 
 
-void ChildrenComponent::renderChildren()
+void ChildrenComponent::render()
 {
 	//Loop through any possible child objects, in all 9 positions, and render them too
 	for (auto& childObject : m_childObjects)

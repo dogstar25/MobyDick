@@ -252,7 +252,6 @@
     <None Include="assets\levels\level2_definition.json" />
     <None Include="assets\levels\level_test_definition.json" />
     <None Include="assets\sound\soundAssets.json" />
-    <None Include="assets\textureAssets.json" />
     <None Include="assets\textureAtlasAssets.json" />
   </ItemGroup>
   <ItemGroup>

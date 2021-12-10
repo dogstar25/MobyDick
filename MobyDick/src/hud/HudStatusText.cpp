@@ -27,7 +27,7 @@ HudStatusText::HudStatusText(std::string labelObjectId, std::string statusObject
 void HudStatusText::update(GameObject* parentGameObject)
 {
 
-	float labelPositionAdjustment{};
+	float labelPositionXAdjustment{};
 	float labelHeight{};
 	float labelWidth{};
 
@@ -44,15 +44,15 @@ void HudStatusText::update(GameObject* parentGameObject)
 
 		const auto& labelTransformComponent = m_label.value()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 		labelWidth = labelTransformComponent->getPositionRect().w;
-
-		labelPositionAdjustment = (labelWidth / 2) + (statusObjectWidth / 2) + m_labelPadding;
 		labelHeight = labelTransformComponent->getPositionRect().h;
 
-		float height = std::max(labelHeight, statusObjectHeight);
+		float maxheight = std::max(labelHeight, statusObjectHeight);
 
 		labelPosition.x = parentGameObject->getTopLeftPosition().x + (labelWidth / 2);
-		labelPosition.y = parentGameObject->getTopLeftPosition().y + (height / 2);
+		labelPosition.y = parentGameObject->getTopLeftPosition().y + (maxheight / 2);
 		m_label.value()->setPosition(labelPosition);
+
+		labelPositionXAdjustment = labelWidth + m_labelPadding;
 
 	}
 
@@ -64,21 +64,20 @@ void HudStatusText::update(GameObject* parentGameObject)
 	m_statusObject->update();
 
 	//Update the position of the status object
-	auto parentPosition = parentGameObject->getCenterPosition();
+	auto parentPosition = parentGameObject->getTopLeftPosition();
 
-	SDL_FPoint statusPosition = parentPosition;
-	statusPosition.x = parentPosition.x + labelPositionAdjustment;
+	float maxheight = std::max(labelHeight, statusObjectHeight);
+	SDL_FPoint statusPosition{};
+	statusPosition.x = parentPosition.x + labelPositionXAdjustment;
+	statusPosition.y = parentPosition.y + maxheight / 2;
 	m_statusObject->setPosition(statusPosition);
 
 	//Calculate the size of the hud item
-	float hudHeight{};
+	float hudHeight{ maxheight };
 	float hudWidth{};
 
 	//Width
 	hudWidth = labelWidth + statusObjectWidth;
-
-	//Height
-	hudHeight = std::max(labelHeight, statusObjectHeight);
 
 
 	const auto& parentTransformComponent = parentGameObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);

@@ -61,6 +61,7 @@ public:
 
 	virtual void update();
 	virtual void render();
+	virtual void render(SDL_FRect destQuad);
 
 	void setRemoveFromWorld(bool removeFromWorld) { m_removeFromWorld = removeFromWorld; }
 	void setPosition(b2Vec2 position, float angle);

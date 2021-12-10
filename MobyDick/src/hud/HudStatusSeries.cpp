@@ -25,7 +25,7 @@ HudStatusSeries::HudStatusSeries(std::string labelObjectId, std::string statusOb
 void HudStatusSeries::update(GameObject* parentGameObject)
 {
 
-	float labelPositionAdjustment{};
+	float labelPositionXAdjustment{};
 	float labelHeight{};
 	float labelWidth{};
 
@@ -42,36 +42,39 @@ void HudStatusSeries::update(GameObject* parentGameObject)
 
 		const auto& labelTransformComponent = m_label.value()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 		labelWidth = labelTransformComponent->getPositionRect().w;
-
-		labelPositionAdjustment = (labelWidth / 2) + (statusObjectWidth / 2) + m_labelPadding;
 		labelHeight = labelTransformComponent->getPositionRect().h;
 
-		float height = std::max(labelHeight, statusObjectHeight);
+		float maxheight = std::max(labelHeight, statusObjectHeight);
 
 		labelPosition.x = parentGameObject->getTopLeftPosition().x + (labelWidth / 2);
-		labelPosition.y = parentGameObject->getTopLeftPosition().y + (height / 2);
+		labelPosition.y = parentGameObject->getTopLeftPosition().y + (maxheight / 2);
 		m_label.value()->setPosition(labelPosition);
+
+		labelPositionXAdjustment = labelWidth + m_labelPadding;
+
+
 	}
 
 	//Update the statusObject
 	m_statusObject->update();
 
 	//Update the position of the first status Object
-	auto parentPosition = parentGameObject->getCenterPosition();
+	auto parentPosition = parentGameObject->getTopLeftPosition();
 
-	SDL_FPoint statusPosition = parentPosition;
-	statusPosition.x = parentPosition.x + labelPositionAdjustment;
+	float maxheight = std::max(labelHeight, statusObjectHeight);
+	SDL_FPoint statusPosition{};
+	statusPosition.x = parentPosition.x + labelPositionXAdjustment;
+	statusPosition.y = parentPosition.y + maxheight/2;
 	m_statusObject->setPosition(statusPosition);
 
 	//Calculate the size of the hud item
-	float hudHeight{};
+	float hudHeight{ maxheight };
 	float hudWidth{};
 
 	//Width - Label size plus the status object repeated
-	hudWidth = labelWidth + (statusObjectWidth * (*m_statusValue));
-
-	//Height
-	hudHeight = std::max(labelHeight, statusObjectHeight);
+	if (m_statusValue != nullptr) {
+		hudWidth = labelWidth + (statusObjectWidth * (*m_statusValue));
+	}
 
 	const auto& parentTransformComponent = parentGameObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	parentTransformComponent->setSize(hudWidth, hudHeight);
@@ -82,9 +85,9 @@ void HudStatusSeries::update(GameObject* parentGameObject)
 void HudStatusSeries::render(GameObject* parentGameObject)
 {
 	const auto& statusTransformComponent = m_statusObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	const auto& statusRenderComponent = m_statusObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 
-	float x{};
-	float y{};
+	SDL_FRect positionRect{};
 
 
 	if (m_label.has_value()) {
@@ -93,13 +96,13 @@ void HudStatusSeries::render(GameObject* parentGameObject)
 
 	m_statusObject->render();
 
-	//Draw it again
-	x = statusTransformComponent->getCenterPosition().x + statusTransformComponent->getPositionRect().w;
-	y = statusTransformComponent->getCenterPosition().y;
+	for (int x = 0; x < *m_statusValue;x++) {
+		positionRect = statusRenderComponent->getRenderDestRect();
+		positionRect.x += positionRect.w * x;
 
-	m_statusObject->render(x,y);
-	//m_statusObject->render(x, y);
-	//m_statusObject->render(x, y);
+		m_statusObject->render(positionRect);
+	}
+
 
 
 }

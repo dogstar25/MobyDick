@@ -159,7 +159,7 @@ void DroneBrainComponent::_doPursue()
 void DroneBrainComponent::_doEngage()
 {
 
-	std::cout << "Engaging player \n";
+	//std::cout << "Engaging player \n";
 
 	//clear out patrol temp vistied
 	m_tempVisitedNavPoints.clear();

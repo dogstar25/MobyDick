@@ -4,11 +4,12 @@ void MRStatusManager::initHudMappings()
 {
 	StatusManager::initHudMappings();
 
-	StatusItem statusItem{};
-	statusItem.set(&m_lives);
-	m_hudValueMap["HUD_LIVES_VALUE"] = statusItem;
+	m_hudValueMap["HUD_LIVES_VALUE"] = StatusItem{&m_lives, 6};
 
-	statusItem.set(&m_scrapCount);
-	m_hudValueMap["HUD_SCRAP_VALUE"] = statusItem;
+
+	m_hudValueMap["HUD_SCRAP_VALUE"] = StatusItem{ &m_scrapCount, 50 };
+	
+	m_hudValueMap["HUD_BAR"] = StatusItem{ &m_scrapCount, 75 };
+
 
 }

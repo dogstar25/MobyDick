@@ -76,7 +76,6 @@ void TextComponent::update()
 			renderComponent->setTexture(TextureManager::instance().getTexture(m_textureId));
 			transformComponent->setSize((float)renderComponent->texture()->surface->w, (float)renderComponent->texture()->surface->h);
 
-			SDL_QueryTexture(renderComponent->getRenderTexture()->sdlTexture, NULL, NULL, NULL, NULL);
 		//}
 
 	}
@@ -130,9 +129,7 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 
 	//Add it to the textureManager but first free any texture that may already be there in case this is
 	//being generated for a dynamic text object
-	SDL_QueryTexture(texture->sdlTexture, NULL, NULL, NULL, NULL);
 	TextureManager::instance().addOrReplaceTexture(m_textureId, texture);
-	SDL_QueryTexture(texture->sdlTexture, NULL, NULL, NULL, NULL);
 
 	return 	texture;
 
@@ -155,16 +152,11 @@ std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
 		m_textValue = newText->textValue;
 		texture = generateTextTexture();
 		newText->hasChanged = false;
-		SDL_QueryTexture(texture->sdlTexture, NULL, NULL, NULL, NULL);
 	}
 	else
 	{
 
 		texture = TextureManager::instance().getTexture(m_textureId);
-		SDL_QueryTexture(texture->sdlTexture, NULL, NULL, NULL, NULL);
-
-		//TODO:set a flag at game object level so that the TextureManager::render(TextObject* gameObject) doesnt have to 
-		// do SDL_QueryTexture
 	}
 
 	return texture;
