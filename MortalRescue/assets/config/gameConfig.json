@@ -14,7 +14,7 @@
     //"rendererType": "RendererType::SDL",
     "rendererType": "RendererType::OPENGL",
     "mouseSensitivity": 0.5, //higher the mmore sensitive
-    "gameLoopStep": 0.016,
+    "gameLoopStep": 0.025,
     "physics": {
         "box2dScale": 25
     },

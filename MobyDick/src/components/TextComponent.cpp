@@ -112,6 +112,7 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 	//FIXME:Add a vector of TTF_Font* fontObject's with maybe 6 different font sizes. OPen them in the contructor
 	//and leave them open for regenerating text textures. Then close them in the deconstructor.
 	//This should save loads of time
+	//tempSurface = TTF_RenderText_Blended(m_fontObject, m_textValue.c_str(), renderComponent->color());
 	tempSurface = TTF_RenderText_Blended(m_fontObject, m_textValue.c_str(), renderComponent->color());
 
 	//Set the size of the textObject now that its texture has been generated
@@ -125,7 +126,13 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 	texture->textureAtlasQuad = std::move(quad);
 
 	texture->sdlTexture = game->renderer()->createTextureFromSurface(tempSurface);
+	//texture->surface = SDL_ConvertSurface(tempSurface, SDL_PixelFormat, 0);
 	texture->surface = tempSurface;
+
+	//For openGL, text items are always at texture index 1
+	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
+		texture->gLTextureId = 2;
+	}
 
 	//Add it to the textureManager but first free any texture that may already be there in case this is
 	//being generated for a dynamic text object

@@ -27,10 +27,10 @@ StubGame::~StubGame()
 Initialize Game
 */
 bool StubGame::init(ContactListener* contactListener, ContactFilter* contactFilter,
-	ComponentFactory* componentFactory)
+	ComponentFactory* componentFactory, StatusManager* statusManager)
 {
 	//Required Base Class calls
-	Game::init(contactListener, contactFilter, componentFactory);
+	Game::init(contactListener, contactFilter, componentFactory, statusManager);
 	//End Required
 
 	std::cout << "Stubb Begins\n";

@@ -18,7 +18,7 @@
                     "red": 10,
                     "green": 75,
                     "blue": 10,
-                    "alpha": 50
+                    "alpha": 200
                 },
                 "outline": {
                     "thickness": 1,
@@ -195,8 +195,8 @@
             "renderComponent": {
                 "color": {
                     "red": 255,
-                    "green": 255,
-                    "blue": 255,
+                    "green": 0,
+                    "blue": 0,
                     "alpha": 255
                 }
             }

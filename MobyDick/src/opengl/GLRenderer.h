@@ -43,7 +43,7 @@ public:
 	void drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture* texture,
 		SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) override;
 	void drawLine(b2Vec2 lineStart, b2Vec2 lineEnd, SDL_Color color) {};
-	void drawQuad(SDL_FRect quad, SDL_Color color, bool outline, SDL_Color outlineColor) {};
+	void drawQuad(SDL_FRect quad, SDL_Color color, bool outline, SDL_Color outlineColor);
 	std::shared_ptr<GLDrawer> spriteDrawer(){ return m_spriteDrawer; }
 	void bindTexture(Texture* texture);
 	//void prepTexture(int openGlTextureIndex, Texture* texture);

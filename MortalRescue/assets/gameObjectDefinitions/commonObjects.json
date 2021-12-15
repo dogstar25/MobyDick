@@ -1,6 +1,7 @@
 {
     "gameObjects": [
         {
+
             "id": "SWORDLADY",
             "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_SOLID",

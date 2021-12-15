@@ -131,7 +131,7 @@ bool TextureManager::load(std::string texturesAssetsFile)
 		//Load the file
 		textureObject->surface = IMG_Load(imageFilename.c_str());
 
-		//If this is the SDL Renderer then create the SDL texture and potentially free the image surface
+		//If this is the SDL Renderer then create the SDL texture
 		if (GameConfig::instance().rendererType() == RendererType::SDL) {
 			sdlTexture = SDL_CreateTextureFromSurface(game->renderer()->sdlRenderer(), textureObject->surface);
 			textureObject->sdlTexture = sdlTexture;
@@ -139,6 +139,9 @@ bool TextureManager::load(std::string texturesAssetsFile)
 		else if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 
 			//DO prepTexture code from the GLRenderer
+			//Index 0 is always the main texture atlas
+			glBindTexture(GL_TEXTURE_2D, 0);
+			textureObject->gLTextureId = 1;
 			static_cast<GLRenderer*>(game->renderer())->prepTexture(textureObject);
 
 		}
@@ -191,6 +194,10 @@ bool TextureManager::load(std::string texturesAssetsFile)
 		SDL_Rect quad = { quadX , quadY, quadWidth, quadHeight };
 
 		textureObject->textureAtlasQuad = std::move(quad);
+
+		if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
+			textureObject->gLTextureId = 1;
+		}
 
 		//Load the file
 		textureObject->surface = m_textureMap[atlasId]->surface;

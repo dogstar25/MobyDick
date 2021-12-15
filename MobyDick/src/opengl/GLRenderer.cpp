@@ -102,10 +102,78 @@ bool GLRenderer::present()
 	return true;
 }
 
+void GLRenderer::drawQuad(SDL_FRect quad, SDL_Color color, bool outline, SDL_Color outlineColor)
+{
+
+	auto normalizedcolor = util::glNormalizeColor(color);
+
+
+	glm::vec2 glPosition{ quad.x, quad.y };
+	glm::vec2 glSize{ quad.w, quad.h };
+	glm::vec4 glColor{ normalizedcolor.r, normalizedcolor.g, normalizedcolor.b, normalizedcolor.a };
+
+	//Array of 4 vertices
+	std::vector<SpriteVertex> spriteVertexBuffer;
+
+	//Initilaize a new translation matrix with one to start it out as an identity matrix
+	glm::mat4 translationMatrix(1.0f);
+
+	//Apply the position to the translation matrix
+	translationMatrix = glm::translate(translationMatrix, glm::vec3(glPosition.x, glPosition.y, 1.0));
+
+	float angle = 0;
+
+	//Apply the rotation - move to center, rotate, move back
+	translationMatrix = glm::translate(translationMatrix, glm::vec3(glSize.x / 2, glSize.y / 2, 0.0));
+	translationMatrix = glm::rotate(translationMatrix, angle, glm::vec3(0.0, 0.0, 1.0));
+	translationMatrix = glm::translate(translationMatrix, glm::vec3(-(glSize.x / 2), -(glSize.y / 2), 0.0));
+
+	//
+	// Vertex Buffer Data
+	// 	   Build the 4 vertices that make a quad/rectangle/square
+	// 
+	int zIndex = -1;
+
+	SpriteVertex vertex;
+	//v0
+	vertex.positionAttribute = glm::vec3(0, 0, zIndex);
+	vertex.colorAttribute = glColor;
+	spriteVertexBuffer.push_back(vertex);
+
+	//v1
+	vertex.positionAttribute = glm::vec3{ glSize.x, 0, zIndex };
+	vertex.colorAttribute = glColor;
+	spriteVertexBuffer.push_back(vertex);
+
+	//v2
+	vertex.positionAttribute = glm::vec3{ glSize.x, glSize.y, zIndex };
+	vertex.colorAttribute = glColor;
+	spriteVertexBuffer.push_back(vertex);
+
+	//v3
+	vertex.positionAttribute = glm::vec3{ 0, glSize.y, zIndex };
+	vertex.colorAttribute = glColor;
+	spriteVertexBuffer.push_back(vertex);
+
+	//Apply the tranlation matrix to each vertex
+	for (int i = 0; i < 4; i++) {
+
+		spriteVertexBuffer[i].positionAttribute = translationMatrix * glm::vec4(spriteVertexBuffer[i].positionAttribute, 1.0);
+
+	}
+
+	//shader needs to be passed in
+	auto shadertype = GLShaderType::BASIC;
+
+	_addVertexBuffer(spriteVertexBuffer, LAYER_BACKGROUND_1, GLDrawerType::GLSPRITE, nullptr, shadertype);
+}
+
+
 void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor)
 {
 
 	auto normalizedcolor = util::glNormalizeColor(color);
+
 
 	glm::vec2 glPosition{quad.x, quad.y};
 	glm::vec2 glSize{ quad.w, quad.h };
@@ -244,13 +312,20 @@ void GLRenderer::_addVertexBuffer(const std::vector<SpriteVertex>& spriteVertice
 
 	std::stringstream texturePtrString;
 	std::stringstream keyString;
-	texturePtrString << texture->surface;
 
-	//Build the map key
-	//const void* texturePtr = static_cast<const void*>(texture);
-	//auto key = std::format("{:0d}_{}_{:05d}", (int)objectType, texturePtrString.str(), (int)shaderType);
-	keyString << (int)layer <<"_"<<(int)objectType << "_" << texturePtrString.str() << "_" << (int)shaderType;
+	if (texture == nullptr) {
+
+		texturePtrString << "NO_TEXTURE";
+	}
+	else {
+		texturePtrString << texture->surface;
+	}
 	
+	//Build the map key
+	keyString << (int)layer <<"_"<<(int)objectType << "_" << texturePtrString.str() << "_" << (int)shaderType;
+	//sprintf_s(key, "%d_%d_%s_%d", (int)layer, (int)objectType, texturePtrString.str().c_str(), (int)shaderType);
+	//keyString << (int)layer << "_" << (int)objectType << "_" << texturePtrString.str() << "_" << (int)shaderType;
+	//std::string keyString{ key };
 
 	//See if the drawBatch for this combo exists yet
 	if (m_drawBatches.find(keyString.str()) == m_drawBatches.end()) {
@@ -323,7 +398,7 @@ void GLRenderer::prepTexture(Texture* texture)
 		if (surf->format->Rmask == 0x000000ff)
 			texture_format = GL_RGBA;
 		else
-			texture_format = GL_BGRA;
+			texture_format = GL_RGBA; //WEIRD PROBLEM assume always that the image is GL_RGBA
 	}
 	else if (nOfColors == 3)     // no alpha channel
 	{

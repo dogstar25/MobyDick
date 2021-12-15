@@ -169,8 +169,8 @@
     <ClCompile Include="opengl\GL2Renderer.cpp" />
     <ClCompile Include="opengl\Shader.cpp" />
     <ClCompile Include="opengl\VertexBuffer.cpp" />
+    <ClCompile Include="src\Stubb.cpp" />
     <ClCompile Include="src\StubGame.cpp" />
-    <ClCompile Include="src\testOpenGL_refactor.cpp" />
     <ClCompile Include="opengl\VertexBatchDraw.cpp" />
   </ItemGroup>
   <ItemGroup>
