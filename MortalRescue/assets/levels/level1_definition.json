@@ -24,7 +24,9 @@
         {
             "id": "LOC_0007_0005",
             "gameObjectId": "GINA_64",
-            "cameraFollow": true
+            "cameraFollow": true,
+            "layer": "LAYER_BACKGROUND_2"
+
         },
         {
             "id": "LOC_0016_0013",

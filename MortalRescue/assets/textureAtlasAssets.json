@@ -42,6 +42,17 @@
             }
         },
         {
+            "id": "TX_WHITE_QUAD",
+            "description": "White Quad",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 37,
+                "y": 92,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
             "id": "TX_BOWMAN1",
             "description": "Single bowman image",
             "atlas": "TEXTURE_ATLAS_0",

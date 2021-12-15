@@ -53,6 +53,7 @@ RenderComponent::RenderComponent(Json::Value definitionJSON, int layer)
 
 	//Get Texture
 	m_texture = TextureManager::instance().getTexture(itrRender["textureId"].asString());
+	
 
 }
 
@@ -163,7 +164,6 @@ void RenderComponent::render()
 {
 	const auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	SDL_FRect destQuad = { getRenderDestRect() };
-	//SDL_FRect destQuad = { transform->getPositionRect()};
 
 	render(destQuad);
 
@@ -171,7 +171,6 @@ void RenderComponent::render()
 
 
 void RenderComponent::render(SDL_FRect destQuad)
-//void RenderComponent::render()
 {
 	
 

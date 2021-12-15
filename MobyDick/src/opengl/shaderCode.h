@@ -29,11 +29,31 @@ layout(location=0) out vec4 o_color;
 in vec4 v_color;
 in vec2 v_texCoord;
 uniform sampler2D u_Texture;
+uniform sampler2D u_dynamicTexture;
+uniform int u_isDynamicTexture;
+uniform int u_isNoTexture;
+
 
 void main() {
+    vec4 texColor;
 
-    vec4 texColor = texture(u_Texture, v_texCoord );
+    if(u_isNoTexture == 1)
+    {
+        texColor = v_color;
+    }
+    else if(u_isDynamicTexture == 0)
+    {
+        texColor = texture(u_Texture, v_texCoord );
+
+    }
+    else
+    {
+        texColor = texture(u_dynamicTexture, v_texCoord );
+
+    }
+
     o_color = texColor * v_color ;
+
 };
 
 )";

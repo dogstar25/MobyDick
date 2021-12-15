@@ -18,9 +18,6 @@
     <ClCompile Include="src\StubGame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\testOpenGL_refactor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="opengl\GL2Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -31,6 +28,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="opengl\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Stubb.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

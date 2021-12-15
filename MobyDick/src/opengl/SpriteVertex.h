@@ -12,6 +12,7 @@ public:
 	glm::vec3 positionAttribute;
 	glm::vec4 colorAttribute;
 	glm::vec2 textureCoordsAttribute;
+	//glm::int16 textureIndex;
 
 
 };
