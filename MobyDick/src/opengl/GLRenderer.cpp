@@ -15,6 +15,8 @@
 #include "GLDrawer.h"
 #include "SpriteVertex.h"
 #include "SpriteDrawBatch.h"
+#include "DrawBatch.h"
+
 #include "../game.h"
 
 extern std::unique_ptr<Game> game;
@@ -73,7 +75,7 @@ void GLRenderer::init(SDL_Window* window)
 	//}
 	
 	//Generate the maximum number of possible texture Id's
-	glGenTextures(MAX_TEXTURE_ATLAS, m_textureIds);
+	glGenTextures((int)GL_TextureIndexType::COUNT, m_textureIds);
 
 }
 
@@ -175,6 +177,10 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture*
 	auto normalizedcolor = util::glNormalizeColor(color);
 
 
+	if (texture == nullptr) {
+		int todd = 1;
+	}
+
 	glm::vec2 glPosition{quad.x, quad.y};
 	glm::vec2 glSize{ quad.w, quad.h };
 	glm::vec4 glColor{ normalizedcolor.r, normalizedcolor.g, normalizedcolor.b, normalizedcolor.a};
@@ -182,6 +188,11 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture*
 
 	//Array of 4 vertices
 	std::vector<SpriteVertex> spriteVertexBuffer;
+
+	//Texture Index
+	// 0 = White Square
+	// 1 = Texture Atlas
+	// 2 = Any Dynamically Generated Texture
 
 	//Initilaize a new translation matrix with one to start it out as an identity matrix
 	glm::mat4 translationMatrix(1.0f);
@@ -219,6 +230,7 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture*
 		{ calculatedTextureCoordinates.x, calculatedTextureCoordinates.y }, 
 		{ texture->surface->w, texture->surface->h });
 	vertex.textureCoordsAttribute = normalizedTextureCoords;
+	vertex.textureIndex = (float)texture->openglTextureIndex;
 	spriteVertexBuffer.push_back(vertex);
 
 	//v1
@@ -230,6 +242,7 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture*
 		{ calculatedTextureCoordinates.x, calculatedTextureCoordinates.y },
 		{ texture->surface->w, texture->surface->h });
 	vertex.textureCoordsAttribute = normalizedTextureCoords;
+	vertex.textureIndex = (float)texture->openglTextureIndex;
 
 	spriteVertexBuffer.push_back(vertex);
 
@@ -242,6 +255,7 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture*
 		{ calculatedTextureCoordinates.x, calculatedTextureCoordinates.y },
 		{ texture->surface->w, texture->surface->h });
 	vertex.textureCoordsAttribute = normalizedTextureCoords;
+	vertex.textureIndex = (float)texture->openglTextureIndex;
 
 	spriteVertexBuffer.push_back(vertex);
 
@@ -254,6 +268,7 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture*
 		{ calculatedTextureCoordinates.x, calculatedTextureCoordinates.y },
 		{ texture->surface->w, texture->surface->h });
 	vertex.textureCoordsAttribute = normalizedTextureCoords;
+	vertex.textureIndex = (float)texture->openglTextureIndex;
 
 	spriteVertexBuffer.push_back(vertex);
 
@@ -297,13 +312,16 @@ void GLRenderer::_setVertexBufferAttriubuteLayout()
 	const int attrib_position = 0;
 	const int attrib_color = 1;
 	const int attrib_texture = 2;
+	const int attrib_texture_index = 3;
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(attrib_position, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 9, 0);
-	glVertexAttribPointer(attrib_color, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 9, (void*)(3 * sizeof(float)));
-	glVertexAttribPointer(attrib_texture, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 9, (void*)(7 * sizeof(float)));
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(attrib_position, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 10, 0);
+	glVertexAttribPointer(attrib_color, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(attrib_texture, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (void*)(7 * sizeof(float)));
+	glVertexAttribPointer(attrib_texture_index, 1, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (void*)(9 * sizeof(float)));
 
 }
 
@@ -422,6 +440,14 @@ void GLRenderer::prepTexture(Texture* texture)
 	glTexImage2D(GL_TEXTURE_2D, 0, texture_format, surf->w, surf->h, 0, texture_format, GL_UNSIGNED_BYTE, surf->pixels);
 
 	return;
+}
+
+GLuint GLRenderer::getTextureId(GL_TextureIndexType textureIndex)
+{
+
+	GLuint textureId = m_textureIds[(int)textureIndex];
+	return textureId;
+
 }
 
 void GLRenderer::_addVertexBuffer(std::vector<std::shared_ptr<Vertex>> vertex)

@@ -14,15 +14,22 @@
 
 #include "GLDebugCallback.h"
 #include "GLDrawer.h"
-#include "DrawBatch.h"
 #include "../Renderer.h"
 #include "SpriteVertex.h"
 #include "Vertex.h"
 #include "Shader.h"
 #include "../BaseConstants.h"
 
+class DrawBatch;
 
+enum class GL_TextureIndexType {
+	WHITE_SQUARE = 0,
+	MAIN_TEXTURE_ATLAS,
+	DYNAMICALLY_LOADED,
 
+	LAST_INDEX,
+	COUNT
+};
 
 class GLRenderer : public Renderer
 {
@@ -48,6 +55,7 @@ public:
 	void bindTexture(Texture* texture);
 	//void prepTexture(int openGlTextureIndex, Texture* texture);
 	void prepTexture(Texture* texture);
+	GLuint getTextureId(GL_TextureIndexType textureindex);
 
 
 	Shader shader(GLShaderType shaderType) {

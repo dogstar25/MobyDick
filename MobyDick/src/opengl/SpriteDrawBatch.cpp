@@ -76,57 +76,34 @@ void SpriteDrawBatch::draw()
 
 	//Initialize the texture and set the texture uniform
 	
-	GLuint textureUniformId = glGetUniformLocation(m_shader->shaderProgramId(), "u_Texture");
-	GLuint dynamicTexturetUniformId = glGetUniformLocation(m_shader->shaderProgramId(), "u_dynamicTexture");
-	GLuint isDynamicUniformId = glGetUniformLocation(m_shader->shaderProgramId(), "u_isDynamicTexture");
-	GLuint isNoTextureUniform = glGetUniformLocation(m_shader->shaderProgramId(), "u_isNoTexture");
+	GLuint textureArrayUniformId = glGetUniformLocation(m_shader->shaderProgramId(), "u_Texture");
+	//GLuint dynamicTexturetUniformId = glGetUniformLocation(m_shader->shaderProgramId(), "u_dynamicTexture");
+	//GLuint isDynamicUniformId = glGetUniformLocation(m_shader->shaderProgramId(), "u_isDynamicTexture");
+	//GLuint isNoTextureUniform = glGetUniformLocation(m_shader->shaderProgramId(), "u_isNoTexture");
 
 	//We need to texture index here
 	//int textureIndex = static_cast<GLRenderer*>(game->renderer())->addTexture(m_texture);
 	//int textureIndex = static_cast<GLRenderer*>(game->renderer())->bindTexture(m_texture);
 
-	//If tyhis is NOT textureId 0, then its not the mian texture atlas so we need to load this texture to 
-	//the given index
-	GLuint isDynamic = 0;
-	GLuint isNoTexture = 0;
+	//Texture Index
+	// 0 = White Square
+	// 1 = Texture Atlas
+	// 2 = Any Dynamically Generated Texture
+
 	if (m_texture != nullptr) {
-		if (m_texture->gLTextureId != 1) {
-
-			isDynamic = 1;
-			glBindTexture(GL_TEXTURE_2D, 2);
+		GLuint textureId = static_cast<GLRenderer*>(game->renderer())->getTextureId(m_texture->openglTextureIndex);
+		glBindTexture(GL_TEXTURE_2D, textureId);
+		if (m_texture->openglTextureIndex == GL_TextureIndexType::DYNAMICALLY_LOADED) {
 			static_cast<GLRenderer*>(game->renderer())->prepTexture(m_texture);
-			glActiveTexture(GL_TEXTURE2);
-
 		}
-		else {
-			isDynamic = 0;
-			glActiveTexture(GL_TEXTURE1);
-			glBindTexture(GL_TEXTURE_2D, 1);
-		}
-
+		glActiveTexture((int)m_texture->openglTextureIndex);
 	}
-	else {
-
-		isNoTexture = 1;
-
-	}
+	
+	
 
 	//This m_texture->gLTextureId should be the index of the texture - always 0?
-	glUniform1i(textureUniformId, 0);
-	glUniform1i(dynamicTexturetUniformId, 1);
-	glUniform1i(isDynamicUniformId, isDynamic);
-	glUniform1i(isNoTextureUniform, isNoTexture);
-
-
-	//glBindTexture(GL_TEXTURE_2D, 0);
-	//static_cast<GLRenderer*>(game->renderer())->prepTexture(m_texture);
-	//glBindTexture(GL_TEXTURE_2D, m_texture->gLTextureId);
-
-	//glBindTexture(GL_TEXTURE_2D, 0);
-	
-	//static_cast<GLRenderer*>(game->renderer())->bindTexture(m_texture);
-	//glBindTexture(GL_TEXTURE_2D, [textureIndex]);
-	//glUniform1i(txtTextUniformId, 1);
+	int textureSlots[3] = {0,1,2};
+	glUniform1iv(textureArrayUniformId, 3, textureSlots);
 
 	//Submit the vertices
 	auto bufferSize = m_vertexBatch.size() * sizeof(SpriteVertex);

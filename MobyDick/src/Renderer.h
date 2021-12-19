@@ -7,11 +7,12 @@
 
 #include <glm/glm.hpp>
 
-#include "texture.h"
+//#include "texture.h"
 
 #include <SDL2/SDL.h>
 #include <box2d/box2d.h>
 
+class Texture;
 
 //struct displayOverlay
 //{
