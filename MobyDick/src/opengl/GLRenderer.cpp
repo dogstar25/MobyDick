@@ -65,14 +65,14 @@ void GLRenderer::init(SDL_Window* window)
 	m_shaders[(int)GLShaderType::BASIC] = Shader(GLShaderType::BASIC);
 	m_shaders[(int)GLShaderType::UBER] = Shader(GLShaderType::UBER);
 
-	//int flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
-	//if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
-	//{
-	//	glEnable(GL_DEBUG_OUTPUT);
-	//	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-	//	glDebugMessageCallback(GLDebugCallback, nullptr);
-	//	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
-	//}
+	int flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
+	{
+		glEnable(GL_DEBUG_OUTPUT);
+		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+		glDebugMessageCallback(GLDebugCallback, nullptr);
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+	}
 	
 	//Generate the maximum number of possible texture Id's
 	glGenTextures((int)GL_TextureIndexType::COUNT, m_textureIds);
@@ -341,6 +341,7 @@ void GLRenderer::_addVertexBuffer(const std::vector<SpriteVertex>& spriteVertice
 	
 	//Build the map key
 	keyString << (int)layer <<"_"<<(int)objectType << "_" << texturePtrString.str() << "_" << (int)shaderType;
+	//keyString << (int)layer << "_" << (int)objectType << "_" << (int)shaderType;
 	//sprintf_s(key, "%d_%d_%s_%d", (int)layer, (int)objectType, texturePtrString.str().c_str(), (int)shaderType);
 	//keyString << (int)layer << "_" << (int)objectType << "_" << texturePtrString.str() << "_" << (int)shaderType;
 	//std::string keyString{ key };

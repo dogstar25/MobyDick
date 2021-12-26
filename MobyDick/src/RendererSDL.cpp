@@ -93,6 +93,12 @@ void RendererSDL::drawSprite(SDL_FRect destQuad, SDL_Color color, int layer, Tex
 		NULL,
 		SDL_FLIP_NONE);
 
+	if (outline) {
+
+		outlineObject(destQuad, outlineColor);
+	}
+
+
 }
 
 void RendererSDL::outlineObject(SDL_FRect quad, SDL_Color color)

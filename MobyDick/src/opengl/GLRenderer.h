@@ -23,8 +23,7 @@
 class DrawBatch;
 
 enum class GL_TextureIndexType {
-	WHITE_SQUARE = 0,
-	MAIN_TEXTURE_ATLAS,
+	MAIN_TEXTURE_ATLAS = 0,
 	DYNAMICALLY_LOADED,
 
 	LAST_INDEX,

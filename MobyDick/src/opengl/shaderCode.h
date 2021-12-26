@@ -3,7 +3,7 @@
 namespace basicShader
 {
     const char* vertextShader = R"(
-#version 330 core
+#version 450 core
 
 layout(location=0) in vec3 i_position;
 layout(location=1) in vec4 i_color;
@@ -13,7 +13,7 @@ layout(location=3) in float i_texIndex;
 uniform mat4 u_projection_matrix;
 out vec4 v_color;
 out vec2 v_texCoord;
-out int v_texIndex;
+out float v_texIndex;
 
 void main() {
     v_color = i_color;
@@ -25,26 +25,22 @@ void main() {
 )";
 
     const char* fragmentShader = R"(
-#version 330 core
+#version 450 core
 
 layout(location=0) out vec4 o_color;
 
 in vec4 v_color;
 in vec2 v_texCoord;
-in int v_texIndex;
-uniform sampler2D u_Texture[3];
+in float v_texIndex;
+uniform sampler2D u_Texture;
 
 
 void main() {
     vec4 texColor;
 
-    int textureIndex = int(v_texIndex);
+    texColor = texture(u_Texture, v_texCoord );
 
-    texColor = texture(u_Texture[textureIndex], v_texCoord );
-
-    //o_color = texColor * v_color ;
-    //o_color = vec4(textureIndex,textureIndex,textureIndex,1.0) ;
-    o_color = vec4(1.0,1.0,1.0,1.0) ;
+    o_color = texColor * v_color ;
 
 };
 

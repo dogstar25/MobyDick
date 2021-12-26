@@ -141,6 +141,7 @@ bool TextureManager::load(std::string texturesAssetsFile)
 			//DO prepTexture code from the GLRenderer
 			//Index 1 is always the main texture atlas
 			GLuint textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::MAIN_TEXTURE_ATLAS);
+			glActiveTexture((int)GL_TextureIndexType::MAIN_TEXTURE_ATLAS);
 			glBindTexture(GL_TEXTURE_2D, textureAtlasId);
 			textureObject->openglTextureIndex = GL_TextureIndexType::MAIN_TEXTURE_ATLAS;
 			static_cast<GLRenderer*>(game->renderer())->prepTexture(textureObject);

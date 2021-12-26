@@ -51,8 +51,16 @@ RenderComponent::RenderComponent(Json::Value definitionJSON, int layer)
 		m_renderOutline = false;
 	}
 
-	//Get Texture
-	m_texture = TextureManager::instance().getTexture(itrRender["textureId"].asString());
+	//Get Texture - If this is a rectangle then get the white square texture
+	auto m_gameObjectType = EnumMap::instance().toEnum(definitionJSON["type"].asString());
+	if (m_gameObjectType == GameObjectType::RECTANGLE) {
+		m_texture = TextureManager::instance().getTexture("TX_WHITE_QUAD");
+	}
+	else {
+		m_texture = TextureManager::instance().getTexture(itrRender["textureId"].asString());
+	}
+
+	
 	
 
 }
@@ -177,7 +185,7 @@ void RenderComponent::render(SDL_FRect destQuad)
 	const auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	const auto& physics = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 
-	if (parent()->m_gameObjectType == GameObjectType::RECTANGLE) {
+	if (parent()->m_gameObjectType == GameObjectType::POINT) {
 
 		//SDL_FRect destQuad = { transform->getPositionRect() };
 		bool outline{};
@@ -203,12 +211,16 @@ void RenderComponent::render(SDL_FRect destQuad)
 			SDL_Texture* sdlTexture = getRenderTexture()->sdlTexture;
 			SDL_SetTextureBlendMode(sdlTexture, m_textureBlendMode);
 			SDL_SetRenderDrawBlendMode(game->renderer()->sdlRenderer(), m_textureBlendMode);
+			game->renderer()->drawQuad(destQuad, m_color, outline, outlineColor);
+		}
+		else {
+
 		}
 
 		game->renderer()->drawQuad(destQuad, m_color, outline, outlineColor);
 
 	}
-	else if (parent()->m_gameObjectType == GameObjectType::SPRITE) {
+	else if (parent()->m_gameObjectType == GameObjectType::SPRITE || parent()->m_gameObjectType == GameObjectType::RECTANGLE) {
 		
 		//Check if this object is in the viewable area of the world
 		//Add a tiles width to the camera to buffer it some
@@ -252,7 +264,7 @@ void RenderComponent::render(SDL_FRect destQuad)
 			}
 			else {
 
-				outline = true;
+				outline = m_renderOutline;
 				outlineColor = m_outLineColor;
 
 			}
