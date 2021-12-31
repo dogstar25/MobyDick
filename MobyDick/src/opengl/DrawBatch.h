@@ -25,8 +25,8 @@ public:
 protected:
 
 	std::vector<glm::uint> m_indexes;
-	std::shared_ptr<GLDrawer> m_glDrawer;
-	std::shared_ptr<Shader> m_shader;
+	GLDrawer m_glDrawer;
+	Shader m_shader;
 	int m_objectCount{};
 
 	virtual void _addSpriteIndexBuffer() = 0;

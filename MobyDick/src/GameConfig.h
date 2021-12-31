@@ -56,6 +56,9 @@ public:
 	RendererType rendererType() {
 		return m_rendererType;
 	}
+	bool openGLBatching() {
+		return m_openGLBatching;
+	}
 
 private:
 	GameConfig();
@@ -69,6 +72,7 @@ private:
 		m_gameLoopStep;
 	bool
 		m_windowFullscreen,
+		m_openGLBatching,
 		m_debugPanel;
 	SDL_Point 
 		m_debugPanelLocation;

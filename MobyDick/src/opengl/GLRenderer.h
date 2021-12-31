@@ -33,7 +33,9 @@ enum class GL_TextureIndexType {
 class GLRenderer : public Renderer
 {
 
-	inline static constexpr int MAX_TEXTURE_ATLAS = 4;
+	inline static constexpr int MAX_TEXTURES_IDS = 4;
+	const std::vector<glm::uint> spriteindexBuffer{ 0,1,2,2,3,0 };
+
 
 public:
 	GLRenderer();
@@ -46,7 +48,7 @@ public:
 	SDL_Texture* createTextureFromSurface(SDL_Surface* surface) { return nullptr; };
 	void draw(SDL_FRect quad, SDL_Color color, int layer, Texture* texture,
 		SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) override;
-	std::shared_ptr<GLDrawer> spriteDrawer(){ return m_spriteDrawer; }
+	const GLDrawer& spriteDrawer(){ return m_spriteDrawer; }
 	void bindTexture(Texture* texture);
 	//void prepTexture(int openGlTextureIndex, Texture* texture);
 	void prepTexture(Texture* texture);
@@ -54,7 +56,7 @@ public:
 	void renderPrimitives(int layerIndex);
 
 
-	Shader shader(GLShaderType shaderType) {
+	const Shader& shader(GLShaderType shaderType) {
 		return m_shaders[(int)shaderType];
 	}
 
@@ -63,8 +65,7 @@ public:
 private:
 
 	void _setVertexBufferAttriubuteLayout();
-	void _addVertexBuffer(const std::vector<SpriteVertex>& spriteVertices, int layer, GLDrawerType objectType, Texture* texture, GLShaderType shaderType);
-	void _addVertexBuffer(std::vector<std::shared_ptr<Vertex>>);
+	void _addVertexBufferToBatch(const std::vector<SpriteVertex>& spriteVertices, int layer, GLDrawerType objectType, Texture* texture, GLShaderType shaderType);
 	
 	GLuint _addTexture(Texture* texture);
 
@@ -74,8 +75,8 @@ private:
 
 	//GLDrawer m_glDrawers[static_cast<int>(GLDrawerType::count) + 1];
 
-	std::shared_ptr<GLDrawer> m_spriteDrawer;
-	std::shared_ptr<GLDrawer> m_lineDrawer;
+	GLDrawer m_spriteDrawer;
+	GLDrawer m_lineDrawer;
 
 	//Projection matrix
 	glm::mat4  m_projectionMatrix{1.0};
@@ -83,14 +84,7 @@ private:
 	std::map<std::string, std::shared_ptr<DrawBatch>> m_drawBatches;
 	std::array<Shader, int(GLShaderType::count) +1> m_shaders;
 
-
-
-	//this should be an array of texturePointerAddr's
-	//The index in is array of where it is stored will be the same index that
-	//represents the opengl textures
-	std::array<std::string, MAX_TEXTURE_ATLAS> m_currentTextures{};
-	
-	GLuint m_textureIds[MAX_TEXTURE_ATLAS];
+	GLuint m_textureIds[MAX_TEXTURES_IDS];
 
 	
 

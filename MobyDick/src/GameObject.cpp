@@ -281,6 +281,9 @@ void GameObject::update()
 
 }
 
+/*
+Render this object somewhere other than the GameObjects transformcomponent location
+*/
 void GameObject::render(SDL_FRect destQuad)
 {
 

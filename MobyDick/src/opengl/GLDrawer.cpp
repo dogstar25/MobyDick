@@ -1,7 +1,11 @@
 #include "GLDrawer.h"
 
-#include "SpriteVertex.h"
+#include <vector>
 
+#include "SpriteVertex.h"
+#include "../game.h"
+
+extern std::unique_ptr<Game> game;
 
 GLDrawer::GLDrawer(GLDrawerType drawerType)
 {
@@ -47,6 +51,62 @@ void GLDrawer::prepare()
 	glBindBuffer(GL_ARRAY_BUFFER, m_vboId);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_iboId);
 
+
+}
+
+
+void GLDrawer::draw(const std::vector<SpriteVertex>& spriteVertices, const std::vector<glm::uint>& spriteVertexIndexes, Shader& shader, Texture* texture)
+{
+
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glEnable(GL_BLEND);
+	//GL_ONE_MINUS_SRC_ALPHA
+	//GL_DST_ALPHA
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
+	prepare();
+
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(SpriteVertex) * spriteVertices.size(), nullptr, GL_DYNAMIC_DRAW);
+
+	//Use the program first
+	glUseProgram(shader.shaderProgramId());
+
+	//Set the Projection matrix uniform
+	GLuint matrixId = glGetUniformLocation(shader.shaderProgramId(), "u_projection_matrix");
+	auto projection_matrix = static_cast<GLRenderer*>(game->renderer())->projectionMatrix();
+	glUniformMatrix4fv(matrixId, 1, false, (float*)&projection_matrix);
+
+	//Initialize the texture and set the texture uniform
+
+	GLuint textureArrayUniformId = glGetUniformLocation(shader.shaderProgramId(), "u_Texture");
+	glUniform1i(textureArrayUniformId, GL_TEXTURE0);
+
+	//Texture Index
+	// 0 = Texture Atlas
+	// 1 = Any Dynamically Generated Texture
+
+	if (texture != nullptr) {
+		GLuint textureId = static_cast<GLRenderer*>(game->renderer())->getTextureId(texture->openglTextureIndex);
+		glBindTexture(GL_TEXTURE_2D, textureId);
+
+		if (texture->openglTextureIndex == GL_TextureIndexType::DYNAMICALLY_LOADED) {
+			static_cast<GLRenderer*>(game->renderer())->prepTexture(texture);
+		}
+
+	}
+
+	//Submit the vertices
+	auto bufferSize = spriteVertices.size() * sizeof(SpriteVertex);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, bufferSize, &spriteVertices[0]);
+
+	//Submit the vertex indices
+	auto indexBufferSize = sizeof(GL_UNSIGNED_INT) * spriteVertexIndexes.size();
+	//auto indexBufferSize = sizeof(glm::uint) * m_indexes.size();
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBufferSize, &spriteVertexIndexes[0], GL_DYNAMIC_DRAW);
+
+	glDrawElements(GL_TRIANGLES, spriteVertexIndexes.size(), GL_UNSIGNED_INT, 0);
 
 }
 
