@@ -36,6 +36,7 @@ bool GameConfig::init(std::string configFile)
 	m_soundChannels = root["sound"]["numberOfChannels"].asInt();
 	m_scaleFactor = root["physics"]["box2dScale"].asFloat();
 	m_rendererType = static_cast<RendererType>(EnumMap::instance().toEnum(root["rendererType"].asString()));
+	m_openGLBatching = root["openGLBatching"].asBool();
 
 	m_windowWidth = root["window"]["width"].asInt();
 	m_windowHeight = root["window"]["height"].asInt();
