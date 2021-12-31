@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <glm/glm.hpp>
 #include <glad/glad.h>
+#include "opengl/GLRenderer.h"
 
 class Texture
 {
@@ -12,7 +13,7 @@ public:
 	SDL_Surface* surface{};
 	SDL_Rect textureAtlasQuad{};
 	bool isRootTexture{ false };
-	GLuint gLTextureId{};
+	GL_TextureIndexType openglTextureIndex{};
 };
 
 class AtlasTexture : public Texture

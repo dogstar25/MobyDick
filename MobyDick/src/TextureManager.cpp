@@ -139,9 +139,11 @@ bool TextureManager::load(std::string texturesAssetsFile)
 		else if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 
 			//DO prepTexture code from the GLRenderer
-			//Index 0 is always the main texture atlas
-			glBindTexture(GL_TEXTURE_2D, 0);
-			textureObject->gLTextureId = 1;
+			//Index 1 is always the main texture atlas
+			GLuint textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::MAIN_TEXTURE_ATLAS);
+			glActiveTexture((int)GL_TextureIndexType::MAIN_TEXTURE_ATLAS);
+			glBindTexture(GL_TEXTURE_2D, textureAtlasId);
+			textureObject->openglTextureIndex = GL_TextureIndexType::MAIN_TEXTURE_ATLAS;
 			static_cast<GLRenderer*>(game->renderer())->prepTexture(textureObject);
 
 		}
@@ -196,7 +198,8 @@ bool TextureManager::load(std::string texturesAssetsFile)
 		textureObject->textureAtlasQuad = std::move(quad);
 
 		if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
-			textureObject->gLTextureId = 1;
+			textureObject->openglTextureIndex = GL_TextureIndexType::MAIN_TEXTURE_ATLAS;
+
 		}
 
 		//Load the file

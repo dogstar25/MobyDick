@@ -14,6 +14,7 @@
                 "centeredPositioning": true
             },
             "renderComponent": {
+                "textureId": "TX_WHITE_QUAD",
                 "textureBlendMode": "SDL_BLENDMODE_NONE",
                 "color": {
                     "red": 0,
@@ -63,7 +64,7 @@
                 "absolutePositioning": true
             },
             "renderComponent": {
-
+                "textureId": "TX_WHITE_QUAD",
                 "color": {
                     "red": 0,
                     "green": 0,
@@ -125,6 +126,7 @@
                 "absolutePositioning": true
             },
             "renderComponent": {
+                "textureId": "TX_WHITE_QUAD",
                 "color": {
                     "red": 0,
                     "green": 0,
@@ -186,6 +188,7 @@
                 "absolutePositioning": true
             },
             "renderComponent": {
+                "textureId": "TX_WHITE_QUAD",
                 "color": {
                     "red": 0,
                     "green": 0,

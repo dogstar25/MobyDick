@@ -54,7 +54,7 @@ public:
 	std::string m_id;
 	
 
-	int m_gameObjectType{ GameObjectType::SPRITE };
+	//int m_gameObjectType{ GameObjectType::SPRITE };
 
 	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, int layer, bool cameraFollow=false);
 	GameObject(std::string gameObjectId, int windowPosition, float angleAdjust, Scene* parentScene, int layer);

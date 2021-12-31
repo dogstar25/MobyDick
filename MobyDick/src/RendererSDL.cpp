@@ -58,26 +58,16 @@ void RendererSDL::drawPoints(SDL_FPoint* points, SDL_Color color)
 
 }
 
-void RendererSDL::drawLine(b2Vec2 start, b2Vec2 end, SDL_Color color)
-{
+//void RendererSDL::drawLine(b2Vec2 start, b2Vec2 end, SDL_Color color)
+//{
+//
+//	SDL_SetRenderDrawColor(m_sdlRenderer, color.r, color.b, color.g, color.a);
+//	SDL_RenderDrawLineF(m_sdlRenderer, start.x, start.y, end.x, end.y);
+//
+//}
 
-	SDL_SetRenderDrawColor(m_sdlRenderer, color.r, color.b, color.g, color.a);
-	SDL_RenderDrawLineF(m_sdlRenderer, start.x, start.y, end.x, end.y);
 
-}
-
-void RendererSDL::drawQuad(SDL_FRect quad, SDL_Color color, bool outline, SDL_Color outlineColor)
-{
-	SDL_SetRenderDrawColor(m_sdlRenderer, color.r, color.g, color.b, color.a);
-	SDL_RenderFillRectF(m_sdlRenderer, &quad);
-
-	if (outline) {
-
-		outlineObject(quad, outlineColor);
-	}
-}
-
-void RendererSDL::drawSprite(SDL_FRect destQuad, SDL_Color color, int layer, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor)
+void RendererSDL::draw(SDL_FRect destQuad, SDL_Color color, int layer, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor)
 {
 
 	SDL_SetTextureAlphaMod(texture->sdlTexture, color.a);
@@ -93,6 +83,11 @@ void RendererSDL::drawSprite(SDL_FRect destQuad, SDL_Color color, int layer, Tex
 		NULL,
 		SDL_FLIP_NONE);
 
+	if (outline) {
+
+		outlineObject(destQuad, outlineColor);
+	}
+
 }
 
 void RendererSDL::outlineObject(SDL_FRect quad, SDL_Color color)
@@ -100,6 +95,11 @@ void RendererSDL::outlineObject(SDL_FRect quad, SDL_Color color)
 
 	SDL_SetRenderDrawColor(m_sdlRenderer, color.r, color.g, color.b, 255);
 	SDL_RenderDrawRectF(m_sdlRenderer, &quad);
+
+}
+
+void RendererSDL::renderPrimitives(int layerIndex)
+{
 
 }
 

@@ -220,15 +220,6 @@
                     "green": 255,
                     "blue": 255,
                     "alpha": 255
-                },
-                "outline": {
-                    "thickness": 1,
-                    "color": {
-                        "red": 255,
-                        "green": 255,
-                        "blue": 255,
-                        "alpha": 255
-                    }
                 }
             }
         },
@@ -458,7 +449,7 @@
             "id": "NAVIGATION_TRANSIT_POINT",
             "type": "GameObjectType::ABSTRACT",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "navigation" ],
+            "traitTags": [ "navigation", "abstract" ],
             "description": "Navigation Object",
             "physicsComponent": {
                 "type": "B2_STATIC",
@@ -479,7 +470,7 @@
             "id": "NAVIGATION_WAYPOINT",
             "type": "GameObjectType::ABSTRACT",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "navigation" ],
+            "traitTags": [ "navigation", "abstract" ],
             "description": "Navigation Object",
             "physicsComponent": {
                 "type": "B2_STATIC",
@@ -509,7 +500,7 @@
                 "centeredPositioning": true
             },
             "renderComponent": {
-
+                "textureId": "TX_WHITE_QUAD",
                 "color": {
                     "red": 0,
                     "green": 0,
@@ -580,7 +571,7 @@
             },
             "renderComponent": {
                 "textureBlendMode": "SDL_BLENDMODE_ADD",
-                "textureId": "TX_PIECE_FULL_8",
+                "textureId": "TX_WHITE_QUAD",
                 "color": {
                     "red": 8,
                     "green": 242,

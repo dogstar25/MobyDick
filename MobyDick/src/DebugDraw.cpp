@@ -98,7 +98,7 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2
 		
 		//SDL_Color sdlColor = { 255,255,255,255 };
 		SDL_Color sdlColor = { (Uint8)color.r,(Uint8)color.b,(Uint8)color.g,(Uint8)color.a };
-		game->renderer()->drawLine(start, end, sdlColor);
+		//game->renderer()->drawLine(start, end, sdlColor);
 	}
 
 
@@ -107,7 +107,7 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2
 void DebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 {
 	SDL_Color sdlColor = { 255,0,0,255 };
-	game->renderer()->drawLine(p1, p2, sdlColor);
+	//game->renderer()->drawLine(p1, p2, sdlColor);
 
 }
 

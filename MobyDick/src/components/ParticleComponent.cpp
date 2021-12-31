@@ -69,7 +69,7 @@ void ParticleComponent::render()
 			//SDL_SetTextureAlphaMod(particle.texture, particle.color.a);
 			//SDL_SetTextureBlendMode(particle.texture, SDL_BLENDMODE_ADD);
 
-			game->renderer()->drawSprite(destRect, particle.color, LAYER_MAIN, particle.texture, nullptr, 0, false, SDL_Color{});
+			game->renderer()->draw(destRect, particle.color, LAYER_MAIN, particle.texture, nullptr, 0, false, SDL_Color{});
 
 			//SDL_RenderCopyExF(
 			//	RendererSDL::instance().renderer(),

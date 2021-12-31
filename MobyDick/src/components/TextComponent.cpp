@@ -98,7 +98,13 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 	const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 	const auto& transformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
-	std::shared_ptr<Texture> texture = std::make_shared<Texture>();;
+	std::shared_ptr<Texture> texture = std::make_shared<Texture>();
+	//If this is openGL, then set this textureIndex to the dynammically loaded type
+	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
+
+		texture->openglTextureIndex = GL_TextureIndexType::DYNAMICALLY_LOADED;
+	}
+
 
 	/*
 	TextObjects have their textures generated here, not in the TextureManager.init().
@@ -128,11 +134,6 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 	texture->sdlTexture = game->renderer()->createTextureFromSurface(tempSurface);
 	//texture->surface = SDL_ConvertSurface(tempSurface, SDL_PixelFormat, 0);
 	texture->surface = tempSurface;
-
-	//For openGL, text items are always at texture index 1
-	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
-		texture->gLTextureId = 2;
-	}
 
 	//Add it to the textureManager but first free any texture that may already be there in case this is
 	//being generated for a dynamic text object
