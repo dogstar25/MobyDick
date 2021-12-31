@@ -51,15 +51,7 @@ RenderComponent::RenderComponent(Json::Value definitionJSON, int layer)
 		m_renderOutline = false;
 	}
 
-	//Get Texture - If this is a rectangle then get the white square texture
-	auto m_gameObjectType = EnumMap::instance().toEnum(definitionJSON["type"].asString());
-	if (m_gameObjectType == GameObjectType::RECTANGLE) {
-		m_texture = TextureManager::instance().getTexture("TX_WHITE_QUAD");
-	}
-	else {
-		m_texture = TextureManager::instance().getTexture(itrRender["textureId"].asString());
-	}
-
+	m_texture = TextureManager::instance().getTexture(itrRender["textureId"].asString());
 	
 	
 
@@ -170,6 +162,11 @@ void RenderComponent::setColor(int red, int green, int blue, int alpha)
 
 void RenderComponent::render()
 {
+	//If this gameObject is anabstract object then do not display
+	if (parent()->hasTrait(TraitTag::abstract) == true) {
+		return;
+	}
+		
 	const auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	SDL_FRect destQuad = { getRenderDestRect() };
 
@@ -181,120 +178,58 @@ void RenderComponent::render()
 void RenderComponent::render(SDL_FRect destQuad)
 {
 	
-
 	const auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	const auto& physics = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+		
+	//Check if this object is in the viewable area of the world
+	//Add a tiles width to the camera to buffer it some
+	const SDL_FRect positionRect = transform->getPositionRect();
+	SDL_Rect gameObjectPosRect = { (int)positionRect.x, (int)positionRect.y, (int)positionRect.w, (int)positionRect.h };
+	SDL_Rect cameraRect = { (int)Camera::instance().frame().x,
+		(int)Camera::instance().frame().y,
+		(int)Camera::instance().frame().w + game->worldTileWidth(),
+		(int)Camera::instance().frame().h + game->worldTileHeight() };
 
-	if (parent()->m_gameObjectType == GameObjectType::POINT) {
+	/*
+	If this object is within the viewable are or if its absolute positioned and therefore is not dependent on the camera
+	then render it
+	*/
+	if (SDL_HasIntersection(&gameObjectPosRect, &cameraRect) ||
+		transform->absolutePositioning() == true) {
 
-		//SDL_FRect destQuad = { transform->getPositionRect() };
 		bool outline{};
 		SDL_Color outlineColor{};
+		float angle = transform->angle();
 
-		//Outline the gameObject if defined to . Either from a displayoverlay or by the objects definition
+		Texture* texture = getRenderTexture().get();
+
+		//SDL_FRect destQuad = getRenderDestRect();
+		SDL_Rect* textureSourceQuad = getRenderTextureRect(*texture);
+
+		//SDL Only Stuff
+		if (GameConfig::instance().rendererType() == RendererType::SDL) {
+
+			SDL_Texture* sdlTexture = getRenderTexture()->sdlTexture;
+			SDL_SetTextureBlendMode(sdlTexture, m_textureBlendMode);
+			SDL_SetRenderDrawBlendMode(game->renderer()->sdlRenderer(), m_textureBlendMode);
+		}
+
+		//Outline the gameObject if defined to 
 		if (m_displayOverlay.has_value() && m_displayOverlay->outlined == true) {
 
 			outline = true;
 			outlineColor = m_displayOverlay->outlineColor;
 		}
-		else if (m_renderOutline == true){
+		else {
 
-			outline = true;
+			outline = m_renderOutline;
 			outlineColor = m_outLineColor;
-		}
-		else {
-			outline = false;
-		}
-
-		//SDL Only Stuff
-		if (GameConfig::instance().rendererType() == RendererType::SDL) {
-			SDL_Texture* sdlTexture = getRenderTexture()->sdlTexture;
-			SDL_SetTextureBlendMode(sdlTexture, m_textureBlendMode);
-			SDL_SetRenderDrawBlendMode(game->renderer()->sdlRenderer(), m_textureBlendMode);
-			game->renderer()->drawQuad(destQuad, m_color, outline, outlineColor);
-		}
-		else {
 
 		}
 
-		game->renderer()->drawQuad(destQuad, m_color, outline, outlineColor);
+		game->renderer()->draw(destQuad, m_color, m_layer, texture, textureSourceQuad, angle, outline, outlineColor);
 
 	}
-	else if (parent()->m_gameObjectType == GameObjectType::SPRITE || parent()->m_gameObjectType == GameObjectType::RECTANGLE) {
-		
-		//Check if this object is in the viewable area of the world
-		//Add a tiles width to the camera to buffer it some
-		const SDL_FRect positionRect = transform->getPositionRect();
-		SDL_Rect gameObjectPosRect = { (int)positionRect.x, (int)positionRect.y, (int)positionRect.w, (int)positionRect.h };
-		SDL_Rect cameraRect = { (int)Camera::instance().frame().x,
-			(int)Camera::instance().frame().y,
-			(int)Camera::instance().frame().w + game->worldTileWidth(),
-			(int)Camera::instance().frame().h + game->worldTileHeight() };
-
-		/*
-		If this object is within the viewable are or if its absolute positioned and therefore is not dependent on the camera
-		then render it
-		*/
-		if (SDL_HasIntersection(&gameObjectPosRect, &cameraRect) ||
-			transform->absolutePositioning() == true) {
-
-			bool outline{};
-			SDL_Color outlineColor{};
-			float angle = transform->angle();
-
-			Texture* texture = getRenderTexture().get();
-
-			//SDL_FRect destQuad = getRenderDestRect();
-			SDL_Rect* textureSourceQuad = getRenderTextureRect(*texture);
-
-			//SDL Only Stuff
-			if (GameConfig::instance().rendererType() == RendererType::SDL) {
-
-				SDL_Texture* sdlTexture = getRenderTexture()->sdlTexture;
-				SDL_SetTextureBlendMode(sdlTexture, m_textureBlendMode);
-				SDL_SetRenderDrawBlendMode(game->renderer()->sdlRenderer(), m_textureBlendMode);
-			}
-			/////
-
-			//Outline the gameObject if defined to 
-			if (m_displayOverlay.has_value() && m_displayOverlay->outlined == true) {
-
-				outline = true;
-				outlineColor = m_displayOverlay->outlineColor;
-			}
-			else {
-
-				outline = m_renderOutline;
-				outlineColor = m_outLineColor;
-
-			}
-
-			game->renderer()->drawSprite(destQuad, m_color, m_layer, texture, textureSourceQuad, angle, outline, outlineColor);
-
-			//Drawa a red circle on the bodies center
-			//if(parent()->parentScene()->physicsConfig().b2DebugDrawMode == true &&
-			//   parent()->hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
-			//	auto center = physics->physicsBody()->GetWorldCenter();
-			//	DebugDraw::instance().DrawCircle(center, .1, b2Color(255, 0, 0, 255));
-			//}
-		}
-	}
-
-}
-
-void RenderComponent::setDependencyReferences(GameObject* gameObject)
-{
-	//auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
-
-	//if (gameObject->hasComponent(ComponentTypes::ANIMATION_COMPONENT)) {
-	//	auto animationComponent = gameObject->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
-	//	m_animationComponent = animationComponent.get();
-	//}
-
-	//if (gameObject->hasComponent(ComponentTypes::TRANSFORM_COMPONENT)) {
-	//	auto transformComponent = gameObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-	//	m_transformComponent = transformComponent.get();
-	//}
 
 }
 
@@ -308,11 +243,3 @@ void RenderComponent::removeDisplayOverlay()
 	m_displayOverlay.reset();
 }
 
-//void RenderComponent::render(SDL_FRect* destRect, SDL_Color color)
-//{
-//
-//	//Render the rectangle
-//	SDL_SetRenderDrawColor(RendererSDL::instance().renderer(), color.r, color.g, color.b, color.a);
-//	SDL_RenderFillRectF(RendererSDL::instance().renderer(), destRect);
-//
-//}

@@ -64,16 +64,13 @@ void GLDrawer::_setVertexBufferAttriubuteLayout(GLDrawerType drawerType)
 		const int attrib_position = 0;
 		const int attrib_color = 1;
 		const int attrib_texture = 2;
-		const int attrib_texture_index = 3;
 
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
-		glEnableVertexAttribArray(3);
-		glVertexAttribPointer(attrib_position, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 10, 0);
-		glVertexAttribPointer(attrib_color, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (void*)(3 * sizeof(float)));
-		glVertexAttribPointer(attrib_texture, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (void*)(7 * sizeof(float)));
-		glVertexAttribPointer(attrib_texture_index, 1, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (void*)(9 * sizeof(float)));
+		glVertexAttribPointer(attrib_position, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 9, 0);
+		glVertexAttribPointer(attrib_color, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 9, (void*)(3 * sizeof(float)));
+		glVertexAttribPointer(attrib_texture, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 9, (void*)(7 * sizeof(float)));
 
 
 	}

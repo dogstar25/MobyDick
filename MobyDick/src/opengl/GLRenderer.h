@@ -44,17 +44,14 @@ public:
 	bool present();
 	bool clear();
 	SDL_Texture* createTextureFromSurface(SDL_Surface* surface) { return nullptr; };
-	//Note:the renderComponent will call this draw
-	void drawSprite(int objectType, glm::vec2 position, GLint layer, GLfloat angle, GLfloat width, GLfloat height, glm::vec4 color, GLuint textureId, glm::vec2 textureCoords );
-	void drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture* texture,
+	void draw(SDL_FRect quad, SDL_Color color, int layer, Texture* texture,
 		SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) override;
-	void drawLine(b2Vec2 lineStart, b2Vec2 lineEnd, SDL_Color color) {};
-	void drawQuad(SDL_FRect quad, SDL_Color color, bool outline, SDL_Color outlineColor);
 	std::shared_ptr<GLDrawer> spriteDrawer(){ return m_spriteDrawer; }
 	void bindTexture(Texture* texture);
 	//void prepTexture(int openGlTextureIndex, Texture* texture);
 	void prepTexture(Texture* texture);
 	GLuint getTextureId(GL_TextureIndexType textureindex);
+	void renderPrimitives(int layerIndex);
 
 
 	Shader shader(GLShaderType shaderType) {

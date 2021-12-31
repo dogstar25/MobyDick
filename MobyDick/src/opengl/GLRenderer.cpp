@@ -104,74 +104,7 @@ bool GLRenderer::present()
 	return true;
 }
 
-void GLRenderer::drawQuad(SDL_FRect quad, SDL_Color color, bool outline, SDL_Color outlineColor)
-{
-
-	auto normalizedcolor = util::glNormalizeColor(color);
-
-
-	glm::vec2 glPosition{ quad.x, quad.y };
-	glm::vec2 glSize{ quad.w, quad.h };
-	glm::vec4 glColor{ normalizedcolor.r, normalizedcolor.g, normalizedcolor.b, normalizedcolor.a };
-
-	//Array of 4 vertices
-	std::vector<SpriteVertex> spriteVertexBuffer;
-
-	//Initilaize a new translation matrix with one to start it out as an identity matrix
-	glm::mat4 translationMatrix(1.0f);
-
-	//Apply the position to the translation matrix
-	translationMatrix = glm::translate(translationMatrix, glm::vec3(glPosition.x, glPosition.y, 1.0));
-
-	float angle = 0;
-
-	//Apply the rotation - move to center, rotate, move back
-	translationMatrix = glm::translate(translationMatrix, glm::vec3(glSize.x / 2, glSize.y / 2, 0.0));
-	translationMatrix = glm::rotate(translationMatrix, angle, glm::vec3(0.0, 0.0, 1.0));
-	translationMatrix = glm::translate(translationMatrix, glm::vec3(-(glSize.x / 2), -(glSize.y / 2), 0.0));
-
-	//
-	// Vertex Buffer Data
-	// 	   Build the 4 vertices that make a quad/rectangle/square
-	// 
-	int zIndex = -1;
-
-	SpriteVertex vertex;
-	//v0
-	vertex.positionAttribute = glm::vec3(0, 0, zIndex);
-	vertex.colorAttribute = glColor;
-	spriteVertexBuffer.push_back(vertex);
-
-	//v1
-	vertex.positionAttribute = glm::vec3{ glSize.x, 0, zIndex };
-	vertex.colorAttribute = glColor;
-	spriteVertexBuffer.push_back(vertex);
-
-	//v2
-	vertex.positionAttribute = glm::vec3{ glSize.x, glSize.y, zIndex };
-	vertex.colorAttribute = glColor;
-	spriteVertexBuffer.push_back(vertex);
-
-	//v3
-	vertex.positionAttribute = glm::vec3{ 0, glSize.y, zIndex };
-	vertex.colorAttribute = glColor;
-	spriteVertexBuffer.push_back(vertex);
-
-	//Apply the tranlation matrix to each vertex
-	for (int i = 0; i < 4; i++) {
-
-		spriteVertexBuffer[i].positionAttribute = translationMatrix * glm::vec4(spriteVertexBuffer[i].positionAttribute, 1.0);
-
-	}
-
-	//shader needs to be passed in
-	auto shadertype = GLShaderType::BASIC;
-
-	_addVertexBuffer(spriteVertexBuffer, LAYER_BACKGROUND_1, GLDrawerType::GLSPRITE, nullptr, shadertype);
-}
-
-
-void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor)
+void GLRenderer::draw(SDL_FRect quad, SDL_Color color, int layer, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor)
 {
 
 	auto normalizedcolor = util::glNormalizeColor(color);
@@ -188,11 +121,6 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture*
 
 	//Array of 4 vertices
 	std::vector<SpriteVertex> spriteVertexBuffer;
-
-	//Texture Index
-	// 0 = White Square
-	// 1 = Texture Atlas
-	// 2 = Any Dynamically Generated Texture
 
 	//Initilaize a new translation matrix with one to start it out as an identity matrix
 	glm::mat4 translationMatrix(1.0f);
@@ -230,7 +158,6 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture*
 		{ calculatedTextureCoordinates.x, calculatedTextureCoordinates.y }, 
 		{ texture->surface->w, texture->surface->h });
 	vertex.textureCoordsAttribute = normalizedTextureCoords;
-	vertex.textureIndex = (float)texture->openglTextureIndex;
 	spriteVertexBuffer.push_back(vertex);
 
 	//v1
@@ -242,7 +169,6 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture*
 		{ calculatedTextureCoordinates.x, calculatedTextureCoordinates.y },
 		{ texture->surface->w, texture->surface->h });
 	vertex.textureCoordsAttribute = normalizedTextureCoords;
-	vertex.textureIndex = (float)texture->openglTextureIndex;
 
 	spriteVertexBuffer.push_back(vertex);
 
@@ -255,7 +181,6 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture*
 		{ calculatedTextureCoordinates.x, calculatedTextureCoordinates.y },
 		{ texture->surface->w, texture->surface->h });
 	vertex.textureCoordsAttribute = normalizedTextureCoords;
-	vertex.textureIndex = (float)texture->openglTextureIndex;
 
 	spriteVertexBuffer.push_back(vertex);
 
@@ -268,7 +193,6 @@ void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture*
 		{ calculatedTextureCoordinates.x, calculatedTextureCoordinates.y },
 		{ texture->surface->w, texture->surface->h });
 	vertex.textureCoordsAttribute = normalizedTextureCoords;
-	vertex.textureIndex = (float)texture->openglTextureIndex;
 
 	spriteVertexBuffer.push_back(vertex);
 
@@ -295,33 +219,6 @@ GLRenderer::~GLRenderer()
 	//glDeleteVertexArrays(1, &m_vao);
 
     SDL_GL_DeleteContext(m_glcontext);
-
-}
-
-/*
-For each type of object we want to render (sprite, line, pixel, rectangle), 
-set the vertextArrtribute layout/structure. This should only have to done once for each type
-and is stored using the VAO - vertex array object.
-When doing individual draws, you will bind to the appropriate VAO before adding the vertex and index
-buffer data
-*/
-void GLRenderer::_setVertexBufferAttriubuteLayout()
-{
-
-	// vertex attrubute indexes
-	const int attrib_position = 0;
-	const int attrib_color = 1;
-	const int attrib_texture = 2;
-	const int attrib_texture_index = 3;
-
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(attrib_position, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 10, 0);
-	glVertexAttribPointer(attrib_color, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (void*)(3 * sizeof(float)));
-	glVertexAttribPointer(attrib_texture, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (void*)(7 * sizeof(float)));
-	glVertexAttribPointer(attrib_texture_index, 1, GL_FLOAT, GL_FALSE, sizeof(float) * 10, (void*)(9 * sizeof(float)));
 
 }
 
@@ -448,6 +345,11 @@ GLuint GLRenderer::getTextureId(GL_TextureIndexType textureIndex)
 
 	GLuint textureId = m_textureIds[(int)textureIndex];
 	return textureId;
+
+}
+
+void GLRenderer::renderPrimitives(int layerIndex)
+{
 
 }
 

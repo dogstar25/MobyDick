@@ -48,11 +48,10 @@ public:
 	bool clear();
 	SDL_Texture* createTextureFromSurface(SDL_Surface* surface);
 	void drawPoints(SDL_FPoint*, SDL_Color color);
-	void drawLine(b2Vec2 lineStart, b2Vec2 lineEnd, SDL_Color color) override;
-	void drawQuad(SDL_FRect quad, SDL_Color color, bool outline, SDL_Color outlineColor) override;
-	void drawSprite(SDL_FRect quad, SDL_Color color, int layer, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) override;
+	void draw(SDL_FRect quad, SDL_Color color, int layer, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) override;
 
 	void outlineObject(SDL_FRect quad, SDL_Color color);
+	void renderPrimitives(int layerIndex);
 
 	SDL_Renderer* sdlRenderer() {
 		return m_sdlRenderer;

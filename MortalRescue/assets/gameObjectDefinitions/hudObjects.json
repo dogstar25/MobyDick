@@ -13,6 +13,7 @@
                 "absolutePositioning": true
             },
             "renderComponent": {
+                "textureId": "TX_WHITE_QUAD",
                 "textureBlendMode": "SDL_BLENDMODE_BLEND",
                 "color": {
                     "red": 10,
@@ -56,7 +57,7 @@
             "id": "HUD_LEVEL",
             "type": "GameObjectType::ABSTRACT",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
+            "traitTags": [ "gui", "abstract" ],
             "description": "Hud Level Dynamic Text",
             "hudComponent": {
                 "hudType": "HudItemTypes::STATUS_SINGLE",
@@ -132,7 +133,7 @@
             "id": "HUD_LIVES",
             "type": "GameObjectType::ABSTRACT",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
+            "traitTags": [ "gui", "abstract" ],
             "description": "Hud Level Dynamic Text",
             "hudComponent": {
                 "hudType": "HudItemTypes::STATUS_SERIES",
@@ -193,6 +194,7 @@
                 "absolutePositioning": true
             },
             "renderComponent": {
+                "textureId": "TX_WHITE_QUAD",
                 "color": {
                     "red": 255,
                     "green": 0,

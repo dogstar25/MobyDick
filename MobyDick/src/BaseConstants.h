@@ -41,6 +41,7 @@ namespace TraitTag {
 	inline constexpr int weapon = 4;
 	inline constexpr int gui = 5;
 	inline constexpr int navigation = 6;
+	inline constexpr int abstract = 7;
 
 }
 
@@ -103,7 +104,7 @@ enum class PositionAlignment {
 	CENTER_RIGHT = 5,
 	BOTTOM_LEFT = 6,
 	BOTTOM_CENTER = 7,
-	BOTTOM_RIGHT = 8
+	BOTTOM_RIGHT = 8,
 
 };
 
@@ -120,7 +121,7 @@ enum class SceneState {
 	EXIT = 2
 };
 
-enum class RendererType {
+enum class RendererType{
 	OPENGL = 0,
 	SDL,
 	count

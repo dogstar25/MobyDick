@@ -121,11 +121,11 @@ EnumMap::EnumMap()
 	m_enumMap["SDL_BLENDMODE_NONE"] = SDL_BLENDMODE_NONE;
 
 	//GameObject Types
-	m_enumMap["GameObjectType::ABSTRACT"] = GameObjectType::ABSTRACT;
-	m_enumMap["GameObjectType::SPRITE"] = GameObjectType::SPRITE;
-	m_enumMap["GameObjectType::LINE"] = GameObjectType::LINE;
-	m_enumMap["GameObjectType::POINT"] = GameObjectType::POINT;
-	m_enumMap["GameObjectType::RECTANGLE"] = GameObjectType::RECTANGLE;
+	//m_enumMap["GameObjectType::ABSTRACT"] = GameObjectType::ABSTRACT;
+	//m_enumMap["GameObjectType::SPRITE"] = GameObjectType::SPRITE;
+	//m_enumMap["GameObjectType::LINE"] = GameObjectType::LINE;
+	//m_enumMap["GameObjectType::POINT"] = GameObjectType::POINT;
+	//m_enumMap["GameObjectType::RECTANGLE"] = GameObjectType::RECTANGLE;
 
 	//GameObject Trait Tags
 	m_enumMap["player"] = TraitTag::player;
@@ -134,6 +134,7 @@ EnumMap::EnumMap()
 	m_enumMap["weapon"] = TraitTag::weapon;
 	m_enumMap["gui"] = TraitTag::gui;
 	m_enumMap["navigation"] = TraitTag::navigation;
+	m_enumMap["abstract"] = TraitTag::abstract;
 
 	//Hud Item Types
 	m_enumMap["HudItemTypes::STATUS_SINGLE"] = (int)HudItemTypes::STATUS_SINGLE;

@@ -215,14 +215,23 @@ void Scene::update() {
 
 void Scene::render() {
 
+	int gameLayerIndex{0};
+
 	//Render all of the layers
 	for (auto& gameLayer : m_gameObjects)
 	{
+
 		//Render all of the GameObjects in this layer
 		for (auto& gameObject : gameLayer)
 		{
 			gameObject->render();
 		}
+
+		//Render any primitive object for this layer (lines and single pixels/points)
+		game->renderer()->renderPrimitives(gameLayerIndex);
+
+	gameLayerIndex++;
+
 	}
 	
 	//DebugDraw
