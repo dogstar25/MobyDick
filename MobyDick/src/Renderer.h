@@ -36,7 +36,7 @@ public:
 	virtual void init(SDL_Window* window) = 0;;
 	virtual bool present() = 0;
 	virtual bool clear() = 0;
-	virtual void draw(SDL_FRect quad, SDL_Color color, int layer, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) = 0;
+	virtual void drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) = 0;
 	virtual void renderPrimitives(int layerIndex) = 0;
 
 	//SDL Specific stuff

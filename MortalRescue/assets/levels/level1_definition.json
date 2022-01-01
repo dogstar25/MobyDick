@@ -25,7 +25,7 @@
             "id": "LOC_0007_0005",
             "gameObjectId": "GINA_64",
             "cameraFollow": true,
-            "layer": "LAYER_MENU"
+            "layer": "LAYER_MAIN"
 
         },
         {

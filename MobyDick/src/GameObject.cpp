@@ -23,7 +23,7 @@ GameObject::~GameObject()
 
 }
 
-GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, int layer, bool cameraFollow)
+GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, bool cameraFollow)
 {
 
 	Json::Value definitionJSON;
@@ -63,7 +63,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	std::shared_ptr<Component> component{};
 
 	//Always build a render component
-	component = game->componentFactory()->create(definitionJSON, layer, ComponentTypes::RENDER_COMPONENT);
+	component = game->componentFactory()->create(definitionJSON, ComponentTypes::RENDER_COMPONENT);
 	component->setParent(this);
 	addComponent(component, ComponentTypes::RENDER_COMPONENT);
 

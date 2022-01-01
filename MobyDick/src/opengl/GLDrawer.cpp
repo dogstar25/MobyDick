@@ -62,11 +62,10 @@ void GLDrawer::draw(const std::vector<SpriteVertex>& spriteVertices, const std::
 	glEnable(GL_BLEND);
 	//GL_ONE_MINUS_SRC_ALPHA
 	//GL_DST_ALPHA
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
 	prepare();
-
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(SpriteVertex) * spriteVertices.size(), nullptr, GL_DYNAMIC_DRAW);
 

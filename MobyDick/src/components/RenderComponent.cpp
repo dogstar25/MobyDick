@@ -15,7 +15,7 @@ RenderComponent::RenderComponent()
 }
 
 
-RenderComponent::RenderComponent(Json::Value definitionJSON, int layer)
+RenderComponent::RenderComponent(Json::Value definitionJSON)
 {
 	Json::Value itrRender = definitionJSON["renderComponent"];
 
@@ -33,7 +33,6 @@ RenderComponent::RenderComponent(Json::Value definitionJSON, int layer)
 	m_textureId = itrRender["textureId"].asString();
 	m_xRenderAdjustment = itrRender["xRenderAdjustment"].asFloat();
 	m_yRenderAdjustment = itrRender["yRenderAdjustment"].asFloat();
-	m_layer = layer;
 
 	if (itrRender.isMember("textureBlendMode")) {
 		m_textureBlendMode = static_cast<SDL_BlendMode>(EnumMap::instance().toEnum(itrRender["textureBlendMode"].asString()));
@@ -227,7 +226,7 @@ void RenderComponent::render(SDL_FRect destQuad)
 
 		}
 
-		game->renderer()->draw(destQuad, m_color, m_layer, texture, textureSourceQuad, angle, outline, outlineColor);
+		game->renderer()->drawSprite(destQuad, m_color, texture, textureSourceQuad, angle, outline, outlineColor);
 
 	}
 

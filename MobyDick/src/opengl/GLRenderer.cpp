@@ -105,7 +105,7 @@ bool GLRenderer::present()
 	return true;
 }
 
-void GLRenderer::draw(SDL_FRect quad, SDL_Color color, int layer, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor)
+void GLRenderer::drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor)
 {
 
 	auto normalizedcolor = util::glNormalizeColor(color);
@@ -142,14 +142,6 @@ void GLRenderer::draw(SDL_FRect quad, SDL_Color color, int layer, Texture* textu
 	// 
 	int zIndex = -1;
 	
-	//if (textureSrcQuad == nullptr) {
-	//	textureSrcQuad = new SDL_Rect();
-	//	textureSrcQuad->x = 1;
-	//	textureSrcQuad->y = 1;
-	//	textureSrcQuad->w = 64;
-	//	textureSrcQuad->h = 64;
-	//}
-
 	SpriteVertex vertex;
 	//v0
 	vertex.positionAttribute = glm::vec3(0, 0, zIndex);
@@ -209,7 +201,7 @@ void GLRenderer::draw(SDL_FRect quad, SDL_Color color, int layer, Texture* textu
 
 
 	if (GameConfig::instance().openGLBatching() == true) {
-		_addVertexBufferToBatch(spriteVertexBuffer, layer, GLDrawerType::GLSPRITE, texture, shadertype);
+		_addVertexBufferToBatch(spriteVertexBuffer, GLDrawerType::GLSPRITE, texture, shadertype);
 	}
 	else {
 		Shader shader = static_cast<GLRenderer*>(game->renderer())->shader(shadertype);
@@ -231,7 +223,7 @@ GLRenderer::~GLRenderer()
 
 }
 
-void GLRenderer::_addVertexBufferToBatch(const std::vector<SpriteVertex>& spriteVertices, int layer, GLDrawerType objectType, Texture* texture, GLShaderType shaderType)
+void GLRenderer::_addVertexBufferToBatch(const std::vector<SpriteVertex>& spriteVertices, GLDrawerType objectType, Texture* texture, GLShaderType shaderType)
 {
 
 	std::stringstream texturePtrString;
@@ -264,48 +256,6 @@ void GLRenderer::_addVertexBufferToBatch(const std::vector<SpriteVertex>& sprite
 
 
 }
-
-/*
-
-*/
-//[[deprecated]]
-//GLuint GLRenderer::_addTexture(Texture* texture)
-//{
-//	std::stringstream textureAddrString;
-//	textureAddrString << texture->surface;
-//	std::optional<int> foundTextureIndex{};
-//	std::optional<int> newTextureIndex{};
-//	GLuint index{};
-//
-//	for (int i = 0; i < m_currentTextures.size(); i++) {
-//		std::string currentTexture = m_currentTextures[i];
-//		if (currentTexture == textureAddrString.str()) {
-//			foundTextureIndex = i;
-//			break;
-//		}
-//		else if (currentTexture.empty() == true && newTextureIndex.has_value() == false) {
-//			newTextureIndex = i;
-//		}
-//
-//	}
-//
-//	//If we did not find the texture in our current texture collection, then load it up
-//	if (foundTextureIndex.has_value() == false) {
-//
-//		glBindTexture(GL_TEXTURE_2D, m_textureIds[newTextureIndex.value()]);
-//		//prepTexture(newTextureIndex.value(), texture);
-//		glBindTexture(GL_TEXTURE_2D, 0);
-//
-//		index = newTextureIndex.value();
-//		m_currentTextures[index] = textureAddrString.str();
-//	}
-//	else
-//	{
-//		index = foundTextureIndex.value();
-//	}
-//
-//	return index;
-//}
 
 void GLRenderer::prepTexture(Texture* texture)
 {
