@@ -14,14 +14,17 @@
 
 struct PrimitivePoint{
 	glm::vec2 point{};
-	glm::vec4 color{};
+	glm::uvec4 color{};
 };
 
-struct PrimitiveLine {
+class PrimitiveLine {
 
+public:
+	//PrimitiveLine(glm::vec2 pointA, glm::vec2 pointB, glm::vec4 color) :
+	//	pointA(pointA), pointB(pointB), color(color) {}
 	glm::vec2 pointA{};
 	glm::vec2 pointB{};
-	glm::vec4 color{};
+	glm::uvec4 color{};
 };
 
 
@@ -39,11 +42,15 @@ public:
 	virtual void drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) = 0;
 	virtual void renderPrimitives(int layerIndex) = 0;
 
+	void addLine(glm::vec2 pointA, glm::vec2 pointB, glm::uvec4 color);
+	void addLine(PrimitiveLine line);
+	
+
 	//SDL Specific stuff
 	virtual SDL_Texture* createTextureFromSurface(SDL_Surface* surface) = 0;
 	virtual SDL_Renderer* sdlRenderer() = 0;
 
-private:
+protected:
 	
 	std::vector<PrimitivePoint> m_primitivePoints{};
 	std::vector<PrimitiveLine> m_primitiveLines{};

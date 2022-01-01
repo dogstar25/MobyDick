@@ -233,6 +233,7 @@
     <ClCompile Include="src\opengl\GLRenderer.cpp" />
     <ClCompile Include="src\opengl\Shader.cpp" />
     <ClCompile Include="src\opengl\DrawBatch.cpp" />
+    <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\triggers\LevelComplete.cpp" />
     <ClCompile Include="src\triggers\TriggerMap.cpp" />
     <ClCompile Include="src\triggers\PlayerDeath.cpp" />

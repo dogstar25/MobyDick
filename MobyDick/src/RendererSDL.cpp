@@ -93,13 +93,41 @@ void RendererSDL::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* textu
 void RendererSDL::outlineObject(SDL_FRect quad, SDL_Color color)
 {
 
-	SDL_SetRenderDrawColor(m_sdlRenderer, color.r, color.g, color.b, 255);
-	SDL_RenderDrawRectF(m_sdlRenderer, &quad);
+	//SDL_SetRenderDrawColor(m_sdlRenderer, color.r, color.g, color.b, 255);
+	//SDL_RenderDrawRectF(m_sdlRenderer, &quad);
+
+	glm::vec2 topLeftPoint(quad.x, quad.y);
+	glm::vec2 topRightPoint(quad.x + quad.w, quad.y);
+	glm::vec2 bottomRightPoint(quad.x + quad.w, quad.y + quad.h);
+	glm::vec2 bottomLeftPoint(quad.x, quad.y + quad.h);
+
+	glm::vec4 lineColor(color.r, color.g, color.b, color.a);
+
+	//top line
+	addLine(topLeftPoint, topRightPoint, lineColor);
+
+	//right side line
+	addLine(topRightPoint, bottomRightPoint, lineColor);
+
+	//bottom line
+	addLine(bottomRightPoint, bottomLeftPoint, lineColor);
+
+	//Left line
+	addLine(bottomLeftPoint, topLeftPoint, lineColor);
 
 }
 
 void RendererSDL::renderPrimitives(int layerIndex)
 {
+
+	for (auto& line : m_primitiveLines) {
+
+		SDL_SetRenderDrawColor(m_sdlRenderer, line.color.r, line.color.g, line.color.b, line.color.a);
+		SDL_RenderDrawLineF(m_sdlRenderer, line.pointA.x, line.pointA.y, line.pointB.x, line.pointB.y);
+
+	}
+
+	m_primitiveLines.clear();
 
 }
 

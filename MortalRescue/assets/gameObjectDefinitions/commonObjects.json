@@ -35,6 +35,17 @@
             "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::PLAYER",
             "traitTags": [ "player" ],
+            "renderComponent": {
+                "outline": {
+                    "thickness": 1,
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
+                }
+            },
             "transformComponent": {
                 "size": {
                     "width": 64,
