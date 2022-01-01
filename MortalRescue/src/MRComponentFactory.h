@@ -20,7 +20,6 @@ private:
 		float xMapPos,
 		float yMapPos,
 		float angleAdjust,
-		int layer,
 		ComponentTypes componentType) override;
 
 };

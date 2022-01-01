@@ -62,7 +62,7 @@ ChildrenComponent::ChildrenComponent(Json::Value definitionJSON, Scene* parentSc
 
 		location.centeredOnLocation = centeredOnLocation;
 		child.location = location;
-		child.gameObject = std::make_shared<GameObject>(childObjectId, -1.0F, -1.0F, 0.F, parentScene, LAYER_MAIN);
+		child.gameObject = std::make_shared<GameObject>(childObjectId, -1.0F, -1.0F, 0.F, parentScene);
 
 
 		m_childObjects.push_back(child);

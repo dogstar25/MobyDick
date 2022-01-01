@@ -46,11 +46,8 @@ public:
 	bool present();
 	bool clear();
 	SDL_Texture* createTextureFromSurface(SDL_Surface* surface) { return nullptr; };
-	void draw(SDL_FRect quad, SDL_Color color, int layer, Texture* texture,
-		SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) override;
+	void drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) override;
 	const GLDrawer& spriteDrawer(){ return m_spriteDrawer; }
-	void bindTexture(Texture* texture);
-	//void prepTexture(int openGlTextureIndex, Texture* texture);
 	void prepTexture(Texture* texture);
 	GLuint getTextureId(GL_TextureIndexType textureindex);
 	void renderPrimitives(int layerIndex);
@@ -64,17 +61,10 @@ public:
 
 private:
 
-	void _setVertexBufferAttriubuteLayout();
-	void _addVertexBufferToBatch(const std::vector<SpriteVertex>& spriteVertices, int layer, GLDrawerType objectType, Texture* texture, GLShaderType shaderType);
+	void _addVertexBufferToBatch(const std::vector<SpriteVertex>& spriteVertices, GLDrawerType objectType, Texture* texture, GLShaderType shaderType);
 	
 	GLuint _addTexture(Texture* texture);
-
-	//void prepTextures();
-
 	SDL_GLContext m_glcontext{};
-
-	//GLDrawer m_glDrawers[static_cast<int>(GLDrawerType::count) + 1];
-
 	GLDrawer m_spriteDrawer;
 	GLDrawer m_lineDrawer;
 

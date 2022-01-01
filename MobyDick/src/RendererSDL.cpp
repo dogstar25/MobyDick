@@ -67,7 +67,7 @@ void RendererSDL::drawPoints(SDL_FPoint* points, SDL_Color color)
 //}
 
 
-void RendererSDL::draw(SDL_FRect destQuad, SDL_Color color, int layer, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor)
+void RendererSDL::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor)
 {
 
 	SDL_SetTextureAlphaMod(texture->sdlTexture, color.a);
