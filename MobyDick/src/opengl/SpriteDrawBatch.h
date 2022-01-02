@@ -20,7 +20,7 @@ public:
 	SpriteDrawBatch(GLDrawerType ObjectType, Texture * texture, GLShaderType shaderType);
 
 	void addVertexBuffer(const std::vector<SpriteVertex>& spriteVertices) override;
-	void _addSpriteIndexBuffer() override;
+	void _addSpriteIndexBuffer();
 	void draw() override ;
 	void clear() override;
 
