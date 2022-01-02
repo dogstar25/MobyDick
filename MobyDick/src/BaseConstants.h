@@ -130,7 +130,7 @@ enum class RendererType{
 enum class GLShaderType {
 	BASIC = 0,
 	UBER,
-	GLOW,
+	LINE,
 	count
 };
 

@@ -180,10 +180,16 @@ namespace util
 		return textureCoordNormalized;
 	}
 
-	glm::vec4 glNormalizeColor(const SDL_Color &color)
+	glm::vec4 glNormalizeColor(const glm::uvec4 &color)
 	{
 		glm::vec4 colorNormalized = { (float)color.r / 255, (float)color.g / 255, (float)color.b / 255, (float)color.a / 255 };
 		return colorNormalized;
+	}
+
+	glm::vec4 glNormalizeColor(const SDL_Color& color)
+	{
+		glm::vec4 colorNormalized = { (float)color.r, (float)color.g, (float)color.b, (float)color.a };
+		return glNormalizeColor(colorNormalized);
 	}
 
 	b2Vec2& toBox2dPoint(b2Vec2& point)

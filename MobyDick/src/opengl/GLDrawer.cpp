@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "SpriteVertex.h"
+#include "Vertex.h"
 #include "../game.h"
 
 extern std::unique_ptr<Game> game;
@@ -109,6 +109,44 @@ void GLDrawer::draw(const std::vector<SpriteVertex>& spriteVertices, const std::
 
 }
 
+void GLDrawer::draw(const std::vector<LineVertex>& lineVertices, int vertexCount, Shader& shader)
+{
+
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glEnable(GL_BLEND);
+	//GL_ONE_MINUS_SRC_ALPHA
+	//GL_DST_ALPHA
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
+	prepare();
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(LineVertex) * lineVertices.size(), nullptr, GL_DYNAMIC_DRAW);
+
+	//Use the program first
+	glUseProgram(shader.shaderProgramId());
+
+	//Set the Projection matrix uniform
+	GLuint matrixId = glGetUniformLocation(shader.shaderProgramId(), "u_projection_matrix");
+	auto projection_matrix = static_cast<GLRenderer*>(game->renderer())->projectionMatrix();
+	glUniformMatrix4fv(matrixId, 1, false, (float*)&projection_matrix);
+
+	//Submit the vertices
+	auto swize = sizeof(LineVertex);
+	auto bufferSize = lineVertices.size() * sizeof(LineVertex);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, bufferSize, &lineVertices[0]);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(lineVertices), &lineVertices[0], GL_DYNAMIC_DRAW);
+
+	//Submit the vertex indices
+	//const std::vector<glm::uint>lineVertexIndexes{0,1};
+	//auto indexBufferSize = sizeof(GL_UNSIGNED_INT) * lineVertexIndexes.size();
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBufferSize, &lineVertexIndexes[0], GL_DYNAMIC_DRAW);
+
+	glDrawArrays(GL_LINES, 0, vertexCount);
+	//glDrawElements(GL_TRIANGLES, lineVertices.size(), GL_UNSIGNED_INT, 0);
+
+}
+
 void GLDrawer::bind()
 {
 
@@ -134,6 +172,15 @@ void GLDrawer::_setVertexBufferAttriubuteLayout(GLDrawerType drawerType)
 
 	}
 	else if (drawerType == GLDrawerType::GLLINE) {
+
+		// vertex attrubute indexes
+		const int attrib_position = 0;
+		const int attrib_color = 1;
+
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(attrib_position, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 7, 0);
+		glVertexAttribPointer(attrib_color, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 7, (void*)(3 * sizeof(float)));
 
 	}
 

@@ -217,6 +217,9 @@ void Scene::render() {
 
 	int gameLayerIndex{0};
 
+	game->renderer()->addLine(glm::vec2(100, 100), glm::vec2(600, 600), glm::uvec4(255, 0, 0, 255));
+
+
 	//Render all of the layers
 	for (auto& gameLayer : m_gameObjects)
 	{
