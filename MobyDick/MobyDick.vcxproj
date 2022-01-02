@@ -222,7 +222,6 @@
     <ClCompile Include="src\HudManager.cpp" />
     <ClCompile Include="src\opengl\SpriteDrawBatch.cpp" />
     <ClCompile Include="src\opengl\GLDebugCallback.cpp" />
-    <ClCompile Include="src\opengl\SpriteVertex.cpp" />
     <ClCompile Include="src\Blueprint.cpp" />
     <ClCompile Include="src\BrainAABBCallback.cpp" />
     <ClCompile Include="src\ComponentFactory.cpp" />
@@ -314,7 +313,6 @@
     <ClInclude Include="src\opengl\shaderCode.h" />
     <ClInclude Include="src\opengl\SpriteDrawBatch.h" />
     <ClInclude Include="src\opengl\GLDebugCallback.h" />
-    <ClInclude Include="src\opengl\SpriteVertex.h" />
     <ClInclude Include="src\Blueprint.h" />
     <ClInclude Include="src\BrainAABBCallback.h" />
     <ClInclude Include="src\opengl\GLDrawer.h" />

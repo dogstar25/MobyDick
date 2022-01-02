@@ -4,7 +4,7 @@
 #include <glad/glad.h>
 #include "GLRenderer.h"
 #include "../game.h"
-#include "SpriteVertex.h"
+#include "Vertex.h"
 
 extern std::unique_ptr<Game> game;
 
@@ -53,124 +53,7 @@ void SpriteDrawBatch::draw()
 	m_glDrawer.draw(m_vertexBatch, m_indexes, m_shader, m_texture);
 
 
-	//glClearColor(0.0, 0.0, 0.0, 0.0);
-	//glEnable(GL_BLEND);
-	////GL_ONE_MINUS_SRC_ALPHA
-	////GL_DST_ALPHA
-	////glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-
-
-	//m_glDrawer.prepare();
-
-
-	////SpriteVertex* arrayBufferData = (SpriteVertex*)malloc(sizeof(SpriteVertex) * 1000);
-	//glBufferData(GL_ARRAY_BUFFER, sizeof(SpriteVertex) * m_vertexBatch.size(), nullptr, GL_DYNAMIC_DRAW);
-
-	////glEnable(GL_DEPTH_TEST);
-
-	////Use the program first
-	//glUseProgram(m_shader.shaderProgramId());
-
-	////Set the Projection matrix uniform
-	//GLuint matrixId = glGetUniformLocation(m_shader.shaderProgramId(), "u_projection_matrix");
-	//auto projection_matrix = static_cast<GLRenderer*>(game->renderer())->projectionMatrix();
-	//glUniformMatrix4fv(matrixId, 1, false, (float*)&projection_matrix);
-
-	////Initialize the texture and set the texture uniform
-	//
-	//GLuint textureArrayUniformId = glGetUniformLocation(m_shader.shaderProgramId(), "u_Texture");
-	//glUniform1i(textureArrayUniformId, GL_TEXTURE0);
-
-	////Texture Index
-	//// 0 = Texture Atlas
-	//// 1 = Any Dynamically Generated Texture
-
-	//if (m_texture != nullptr) {
-	//	GLuint textureId = static_cast<GLRenderer*>(game->renderer())->getTextureId(m_texture->openglTextureIndex);
-	//	glBindTexture(GL_TEXTURE_2D, textureId);
-
-	//	if (m_texture->openglTextureIndex == GL_TextureIndexType::DYNAMICALLY_LOADED) {
-	//		static_cast<GLRenderer*>(game->renderer())->prepTexture(m_texture);
-	//	}
-	//	
-	//}
-	//
-	//
-
-	////This m_texture->gLTextureId should be the index of the texture - always 0?
-
-	////Submit the vertices
-	//auto bufferSize = m_vertexBatch.size() * sizeof(SpriteVertex);
-	//glBufferSubData(GL_ARRAY_BUFFER, 0, bufferSize, &m_vertexBatch[0]);
-
-	////Submit the vertex indices
-	//auto indexBufferSize = sizeof(GL_UNSIGNED_INT) * m_indexes.size();
-	////auto indexBufferSize = sizeof(glm::uint) * m_indexes.size();
-	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBufferSize, &m_indexes[0], GL_DYNAMIC_DRAW);
-
-	//glDrawElements(GL_TRIANGLES, m_indexes.size(), GL_UNSIGNED_INT, 0);
-
 }
-
-//void SpriteDrawBatch::prepTexture()
-//{
-//
-//	GLuint texture_id[1];
-//	SDL_Surface* surf = m_texture->surface;
-//	GLenum texture_format{ GL_RGB };
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//	auto nOfColors = surf->format->BytesPerPixel;
-//	if (nOfColors == 4)     // contains an alpha channel
-//	{
-//		if (surf->format->Rmask == 0x000000ff)
-//			texture_format = GL_RGBA;
-//		else
-//			texture_format = GL_BGRA;
-//	}
-//	else if (nOfColors == 3)     // no alpha channel
-//	{
-//		if (surf->format->Rmask == 0x000000ff)
-//			texture_format = GL_RGB;
-//		else
-//			texture_format = GL_BGR;
-//	}
-//	//Generate an array of textures.  We only want one texture (one element array), so trick
-//	//it by treating "texture" as array of length one.
-//	//glGenTextures(1, texture_id);
-//	//Select (bind) the texture we just generated as the current 2D texture OpenGL is using/modifying.
-//	//All subsequent changes to OpenGL's texturing state for 2D textures will affect this texture.
-//	//glActiveTexture(GL_TEXTURE0, texture_id);
-//	glBindTexture(GL_TEXTURE_2D, texture_id[0]);
-//
-//	//Set the minification and magnification filters.  In this case, when the texture is minified (i.e., the texture's pixels (texels) are
-//	//*smaller* than the screen pixels you're seeing them on, linearly filter them (i.e. blend them together).  This blends four texels for
-//	//each sample--which is not very much.  Mipmapping can give better results.  Find a texturing tutorial that discusses these issues
-//	//further.  Conversely, when the texture is magnified (i.e., the texture's texels are *larger* than the screen pixels you're seeing
-//	//them on), linearly filter them.  Qualitatively, this causes "blown up" (overmagnified) textures to look blurry instead of blocky.
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-//	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-//
-//	//load in the image data
-//	glTexImage2D(GL_TEXTURE_2D, 0, texture_format, surf->w, surf->h, 0, texture_format, GL_UNSIGNED_BYTE, surf->pixels);
-//
-//	return;
-//}
 
 void SpriteDrawBatch::_addSpriteIndexBuffer()
 {

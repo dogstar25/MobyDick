@@ -135,9 +135,6 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 		scene.addGameObject("GLOW_TRIANGLE", LAYER_FOREGROUND_2, 3, 3);
 		
-		
-		
-		
 
 	}
 

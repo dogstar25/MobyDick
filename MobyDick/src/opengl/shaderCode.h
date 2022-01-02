@@ -47,3 +47,38 @@ void main() {
 )";
 
 }
+namespace lineShader
+{
+    const char* vertextShader = R"(
+#version 450 core
+
+layout(location=0) in vec3 i_position;
+layout(location=1) in vec4 i_color;
+
+uniform mat4 u_projection_matrix;
+out vec4 v_color;
+
+void main() {
+    v_color = i_color;
+    gl_Position = u_projection_matrix * vec4( i_position, 1.0 );
+};
+
+)";
+
+    const char* fragmentShader = R"(
+#version 450 core
+
+layout(location=0) out vec4 o_color;
+
+in vec4 v_color;
+
+
+void main() {
+
+    o_color = v_color ;
+
+};
+
+)";
+
+}

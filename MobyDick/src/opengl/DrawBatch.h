@@ -5,7 +5,6 @@
 
 #include "GLDrawer.h"
 #include "Vertex.h"
-#include "SpriteVertex.h"
 //#include "IndexBuffer.h"
 #include "Shader.h"
 #include "../texture.h"

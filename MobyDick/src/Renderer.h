@@ -51,6 +51,8 @@ public:
 	virtual SDL_Renderer* sdlRenderer() = 0;
 
 protected:
+
+	void outlineObject(SDL_FRect quad, SDL_Color color);
 	
 	std::vector<PrimitivePoint> m_primitivePoints{};
 	std::vector<PrimitiveLine> m_primitiveLines{};

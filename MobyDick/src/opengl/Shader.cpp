@@ -19,6 +19,12 @@ Shader::Shader(GLShaderType shaderType)
         m_shaderSource.vertexSource = std::string(basicShader::vertextShader);
         m_shaderSource.fragmentSource = std::string(basicShader::fragmentShader);
     }
+    if (shaderType == GLShaderType::LINE) {
+
+        //m_shaderSource = _parseShaderSource("shaders/basic.glsl");
+        m_shaderSource.vertexSource = std::string(lineShader::vertextShader);
+        m_shaderSource.fragmentSource = std::string(lineShader::fragmentShader);
+    }
 	if (shaderType == GLShaderType::UBER) {
 
 		m_shaderSource = _parseShaderSource("../opengl/shaders/uberShader.glsl");

@@ -4,7 +4,7 @@
 
 #include <vector>
 
-#include "SpriteVertex.h"
+#include "Vertex.h"
 #include "Shader.h"
 //#include "../texture.h"
 #include "../BaseConstants.h"
@@ -24,6 +24,7 @@ public:
 
 	void prepare();
 	void draw(const std::vector<SpriteVertex>& spriteVertices, const std::vector<glm::uint>& spriteVertexIndexes, Shader& shader, Texture* texture);
+	void draw(const std::vector<LineVertex>& lineVertices, int vertexCount, Shader& shader);
 	void bind();
 
 private:
