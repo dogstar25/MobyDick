@@ -220,6 +220,7 @@
     <ClCompile Include="src\hud\HudStatusText.cpp" />
     <ClCompile Include="src\hud\HudItem.cpp" />
     <ClCompile Include="src\HudManager.cpp" />
+    <ClCompile Include="src\opengl\LineDrawBatch.cpp" />
     <ClCompile Include="src\opengl\SpriteDrawBatch.cpp" />
     <ClCompile Include="src\opengl\GLDebugCallback.cpp" />
     <ClCompile Include="src\Blueprint.cpp" />
@@ -310,6 +311,7 @@
     <ClInclude Include="src\hud\HudStatusText.h" />
     <ClInclude Include="src\hud\HudItem.h" />
     <ClInclude Include="src\HudManager.h" />
+    <ClInclude Include="src\opengl\LineDrawBatch.h" />
     <ClInclude Include="src\opengl\shaderCode.h" />
     <ClInclude Include="src\opengl\SpriteDrawBatch.h" />
     <ClInclude Include="src\opengl\GLDebugCallback.h" />

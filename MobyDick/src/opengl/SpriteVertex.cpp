@@ -1,1 +1,0 @@
-#include "SpriteVertex.h"

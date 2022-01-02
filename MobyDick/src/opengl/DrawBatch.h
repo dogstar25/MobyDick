@@ -15,7 +15,8 @@ public:
 
 	DrawBatch() = default;
 	
-	virtual void addVertexBuffer(const std::vector<SpriteVertex>& spriteVertices) = 0;
+	virtual void addVertexBuffer(const std::vector<SpriteVertex>& spriteVertices) {};
+	virtual void addVertexBuffer(const std::vector<LineVertex>& lineVertices) {};
 	virtual void draw() = 0;
 	virtual void clear() = 0;
 	
@@ -28,7 +29,7 @@ protected:
 	Shader m_shader;
 	int m_objectCount{};
 
-	virtual void _addSpriteIndexBuffer() = 0;
+	//virtual void _addSpriteIndexBuffer() = 0;
 
 };
 

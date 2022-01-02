@@ -49,6 +49,7 @@ public:
 	void drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) override;
 	void drawLine(glm::vec2 pointA, glm::vec2 pointB, glm::uvec4 color);
 	const GLDrawer& spriteDrawer(){ return m_spriteDrawer; }
+	const GLDrawer& lineDrawer() { return m_lineDrawer; }
 	void prepTexture(Texture* texture);
 	GLuint getTextureId(GL_TextureIndexType textureindex);
 	void renderPrimitives(int layerIndex);

@@ -14,6 +14,7 @@
 #include "../GameConfig.h"
 #include "GLDrawer.h"
 #include "Vertex.h"
+#include "LineDrawBatch.h"
 #include "SpriteDrawBatch.h"
 #include "DrawBatch.h"
 
@@ -93,11 +94,13 @@ bool GLRenderer::present()
 
 	//Draw each batch if batching is turned on
 	if (GameConfig::instance().openGLBatching() == true) {
+
 		for (auto& drawBatch : m_drawBatches) {
 			drawBatch.second->draw();
 		}
 
 		m_drawBatches.erase(m_drawBatches.begin(), m_drawBatches.end());
+
 	}
 
 	SDL_GL_SwapWindow(game->window());
@@ -221,29 +224,12 @@ void GLRenderer::drawLine(glm::vec2 pointA, glm::vec2 pointB, glm::uvec4 color)
 	glm::vec4 normalizedcolor = util::glNormalizeColor(color);
 	glm::vec4 redcolor = util::glNormalizeColor(glm::uvec4(255,0,0,255));
 
-	//glm::vec2 glPosition{ quad.x, quad.y };
-	//glm::vec2 glSize{ quad.w, quad.h };
-	//glm::vec4 glColor{ normalizedcolor.r, normalizedcolor.g, normalizedcolor.b, normalizedcolor.a };
-	//std::shared_ptr<SpriteVertex> vertex;
-
 	//Array of 4 vertices
 	std::vector<LineVertex> lineVertexBuffer;
 
-	//Initilaize a new translation matrix with one to start it out as an identity matrix
-	glm::mat4 translationMatrix(1.0f);
-
-	//Apply the position to the translation matrix
-	//translationMatrix = glm::translate(translationMatrix, glm::vec3(pointA, 1.0));
-
-
-	//Apply the rotation - move to center, rotate, move back
-	//translationMatrix = glm::translate(translationMatrix, glm::vec3(glSize.x / 2, glSize.y / 2, 0.0));
-	//translationMatrix = glm::rotate(translationMatrix, angle, glm::vec3(0.0, 0.0, 1.0));
-	//translationMatrix = glm::translate(translationMatrix, glm::vec3(-(glSize.x / 2), -(glSize.y / 2), 0.0));
-
 	//
 	// Vertex Buffer Data
-	// 	   Build the 4 vertices that make a quad/rectangle/square
+	// 	   Build the 2 vertices that make a line
 	// 
 	int zIndex = -1;
 
@@ -258,19 +244,11 @@ void GLRenderer::drawLine(glm::vec2 pointA, glm::vec2 pointB, glm::uvec4 color)
 	vertex.colorAttribute = normalizedcolor;
 	lineVertexBuffer.push_back(vertex);
 
-	//Apply the tranlation matrix to each vertex
-	for (int i = 0; i < 2; i++) {
-
-		//lineVertexBuffer[i].positionAttribute = translationMatrix * glm::vec4(lineVertexBuffer[i].positionAttribute, 1.0);
-
-	}
-
 	//shader needs to be passed in
 	auto shadertype = GLShaderType::LINE;
 
-
 	if (GameConfig::instance().openGLBatching() == true) {
-		//_addVertexBufferToBatch(lineVertexBuffer, GLDrawerType::GLLINE, shadertype);
+		_addVertexBufferToBatch(lineVertexBuffer, GLDrawerType::GLLINE, shadertype);
 	}
 	else {
 		Shader shader = static_cast<GLRenderer*>(game->renderer())->shader(shadertype);
@@ -328,27 +306,24 @@ void GLRenderer::_addVertexBufferToBatch(const std::vector<SpriteVertex>& sprite
 void GLRenderer::_addVertexBufferToBatch(const std::vector<LineVertex>& lineVertices, GLDrawerType objectType, GLShaderType shaderType)
 {
 
-	std::stringstream texturePtrString;
 	std::stringstream keyString;
 
-	texturePtrString << "LINE_PRIMITIVE";
-
 	//Build the map key
-	keyString << (int)objectType << "_" << texturePtrString.str() << "_" << (int)shaderType;
+	keyString << (int)objectType << "_" << (int)shaderType;
 
 	//See if the drawBatch for this combo exists yet
-	//if (m_drawBatches.find(keyString.str()) == m_drawBatches.end()) {
+	if (m_drawBatches.find(keyString.str()) == m_drawBatches.end()) {
 
-	//	auto spriteBatch = std::make_shared<SpriteDrawBatch>(objectType, texture, shaderType);
-	//	spriteBatch->addVertexBuffer(spriteVertices);
-	//	m_drawBatches[keyString.str()] = spriteBatch;
+		auto lineBatch = std::make_shared<LineDrawBatch>(shaderType);
+		lineBatch->addVertexBuffer(lineVertices);
+		m_drawBatches[keyString.str()] = lineBatch;
 
-	//}
-	//else {
+	}
+	else {
 
-	//	m_drawBatches[keyString.str()]->addVertexBuffer(lineVertices);
+		m_drawBatches[keyString.str()]->addVertexBuffer(lineVertices);
 
-	//}
+	}
 
 
 }
