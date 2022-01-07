@@ -40,7 +40,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 	//Category Id and Object Type
 	m_id = gameObjectId;
-	m_collisionTag = EnumMap::instance().toEnum(definitionJSON["collisionTag"].asString());
+	m_collisionTag = m_originalCollisionTag = EnumMap::instance().toEnum(definitionJSON["collisionTag"].asString());
 	m_removeFromWorld = false;
 
 	//Build the unique name
