@@ -338,6 +338,7 @@ void GameObject::reset()
 	}
 	if (hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
 		getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT)->setOffGrid();
+		getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT)->update();
 	}
 
 }

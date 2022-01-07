@@ -7,7 +7,6 @@
 #include <iomanip>
 
 
-
 namespace util
 {
 
@@ -201,6 +200,14 @@ namespace util
 	}
 
 	b2Vec2& toRenderPoint(b2Vec2& point)
+	{
+		point.x *= (float)25;
+		point.y *= (float)25;
+
+		return point;
+	}
+
+	glm::vec2& toRenderPoint(glm::vec2& point)
 	{
 		point.x *= (float)25;
 		point.y *= (float)25;

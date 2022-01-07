@@ -7,7 +7,8 @@
 #include <json/json.h>
 #include <SDL2/SDL.h>
 #include <box2d/box2d.h>
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
+#include <glm/gtc/matrix_transform.hpp>
 
 /*
 Overloaded operators used throught the game
@@ -44,6 +45,7 @@ namespace util
 	glm::vec4 glNormalizeColor(const glm::uvec4& color);
 	b2Vec2& toBox2dPoint(b2Vec2& point);
 	b2Vec2& toRenderPoint(b2Vec2& point);
+	glm::vec2& toRenderPoint(glm::vec2& point);
 
 	b2Vec2 matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float);
 

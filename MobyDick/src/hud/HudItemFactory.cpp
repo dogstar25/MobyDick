@@ -20,7 +20,7 @@ std::shared_ptr<HudItem> HudItemFactory::create(HudItemTypes type, std::string l
     if (type == HudItemTypes::STATUS_SINGLE) {
 
         hudItem = std::make_shared<HudStatusText>(labelId, statusId, labelPadding, parentScene);
-
+        
     }
     else if (type == HudItemTypes::STATUS_SERIES) {
 

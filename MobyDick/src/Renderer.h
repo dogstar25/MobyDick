@@ -4,13 +4,18 @@
 #include <vector>
 #include <map>
 #include <optional>
-
 #include <glm/glm.hpp>
-
-//#include "texture.h"
-
 #include <SDL2/SDL.h>
 #include <box2d/box2d.h>
+
+
+enum class RenderBlendMode {
+
+	BLEND,
+	ADD,
+	NONE
+
+};
 
 struct PrimitivePoint{
 	glm::vec2 point{};
@@ -39,7 +44,8 @@ public:
 	virtual void init(SDL_Window* window) = 0;;
 	virtual bool present() = 0;
 	virtual bool clear() = 0;
-	virtual void drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor) = 0;
+	virtual void drawSprite(SDL_FRect quad, SDL_Color color, Texture* texture, SDL_Rect* textureSrcQuad, float angle, 
+		bool outline, SDL_Color outlineColor, RenderBlendMode textureBlendMode) = 0;
 	virtual void renderPrimitives(int layerIndex) = 0;
 
 	void addLine(glm::vec2 pointA, glm::vec2 pointB, glm::uvec4 color);
@@ -54,6 +60,7 @@ protected:
 
 	void outlineObject(SDL_FRect quad, SDL_Color color);
 	
+	//ToDo:Add a layer level - all outlines will be put in a arbitrary layer below the menu/gui layer
 	std::vector<PrimitivePoint> m_primitivePoints{};
 	std::vector<PrimitiveLine> m_primitiveLines{};
 

@@ -160,9 +160,6 @@ void Scene::clear()
 
 void Scene::update() {
 
-
-
-
 	Camera::instance().update();
 
 	// Remove all objects that should be removed in first pass
@@ -195,10 +192,6 @@ void Scene::update() {
 
 		for (int i = 0; i < gameObjects.size(); i++)
 		{
-			if (gameObjects[i]->id().compare("HUD_STATUS_TOP") == 0) {
-				int todd = 1;
-			}
-
 			gameObjects[i]->update();
 		}
 	}
@@ -216,9 +209,6 @@ void Scene::update() {
 void Scene::render() {
 
 	int gameLayerIndex{0};
-
-	game->renderer()->addLine(glm::vec2(100, 100), glm::vec2(600, 600), glm::uvec4(255, 0, 0, 255));
-
 
 	//Render all of the layers
 	for (auto& gameLayer : m_gameObjects)

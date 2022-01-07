@@ -6,10 +6,13 @@
 #include "../DebugPanel.h"
 #include "../RayCastCallBack.h"
 #include "../BrainAABBCallback.h"
+#include "../Camera.h"
 
 #include <math.h>
 #include <random>
+#include "glm/glm.hpp"
 
+extern std::unique_ptr<Game> game;
 
 BrainComponent::BrainComponent()
 {
@@ -156,8 +159,6 @@ void BrainComponent::_updateSensorInput()
 	m_detectedObjects.clear();
 	m_seenObjects.clear();
 
-
-
 	b2Vec2 centerB2 = { centerPosition.x, centerPosition.y};
 	util::toBox2dPoint(centerB2);
 
@@ -166,31 +167,29 @@ void BrainComponent::_updateSensorInput()
 	aabb.upperBound = b2Vec2(centerB2.x + m_sightSensorSize, centerB2.y + m_sightSensorSize);
 	
 	//Draw the sight sensor
-	b2Vec2 topLeft = aabb.lowerBound;
-	b2Vec2 topRight = { aabb.upperBound.x, aabb.lowerBound.y };
-	b2Vec2 botRight = aabb.upperBound;
-	b2Vec2 botLeft = { aabb.lowerBound.x, aabb.upperBound.y };
+	glm::vec2 topLeft = { aabb.lowerBound.x, aabb.lowerBound.y };
+	glm::vec2 topRight = { aabb.upperBound.x, aabb.lowerBound.y };
+	glm::vec2 botRight = { aabb.upperBound.x, aabb.upperBound.y };
+	glm::vec2 botLeft = { aabb.lowerBound.x, aabb.upperBound.y };
+	glm::vec4 lineColor{ 255,255,255,255 };
 	util::toRenderPoint(topLeft);
 	util::toRenderPoint(topRight);
 	util::toRenderPoint(botRight);
 	util::toRenderPoint(botLeft);
 
+	topLeft -= glm::vec2{Camera::instance().frame().x, Camera::instance().frame().y};
+	topRight -= glm::vec2{ Camera::instance().frame().x, Camera::instance().frame().y };
+	botRight -= glm::vec2{ Camera::instance().frame().x, Camera::instance().frame().y };
+	botLeft -= glm::vec2{ Camera::instance().frame().x, Camera::instance().frame().y };
+
 	//top
-	auto lineObject = parent()->parentScene()->addGameObject("PRIMITIVE_LINE", LAYER_MAIN, -1, -1);
-	auto lineTransform = lineObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-	lineTransform->setLine(topLeft,topRight);
+	game->renderer()->addLine(topLeft, topRight, lineColor);
 	//right
-	lineObject = parent()->parentScene()->addGameObject("PRIMITIVE_LINE", LAYER_MAIN, -1, -1);
-	lineTransform = lineObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-	lineTransform->setLine(topRight,botRight);
+	game->renderer()->addLine(topRight, botRight, lineColor);
 	//bottom
-	lineObject = parent()->parentScene()->addGameObject("PRIMITIVE_LINE", LAYER_MAIN, -1, -1);
-	lineTransform = lineObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-	lineTransform->setLine(botRight,botLeft);
+	game->renderer()->addLine(botRight, botLeft, lineColor);
 	//left
-	lineObject = parent()->parentScene()->addGameObject("PRIMITIVE_LINE", LAYER_MAIN, -1, -1);
-	lineTransform = lineObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-	lineTransform->setLine(botLeft,topLeft);
+	game->renderer()->addLine(botLeft, topLeft, lineColor);
 
 	//Make the AABB query
 	parent()->parentScene()->physicsWorld()->QueryAABB(&BrainAABBCallback::instance(), aabb);
@@ -241,7 +240,7 @@ bool BrainComponent::_hasLineOfSight(BrainAABBFoundObject& detectedObject)
 
 	// If the distance is zero, 
 	//then this object is right on top of the Brain owner so assume its a seen object
-	//and dont call the raycast because box2d will blow up is distance is zero
+	//and dont call the raycast because box2d will blow up if distance is zero
 	if (distance.LengthSquared() > 0.0f) {
 
 		//Cast the ray, storing all intersected objects
@@ -249,6 +248,8 @@ bool BrainComponent::_hasLineOfSight(BrainAABBFoundObject& detectedObject)
 
 		//Loop through all objects hit between the brain owner and the detected object
 		//If there is a clear line of sight then store it in seenObjects
+		//We must sort the raycast hit objects by distance because they are not guarenteed to return in
+		//distance order
 		std::sort(RayCastCallBack::instance().intersectionItems().begin(),
 			RayCastCallBack::instance().intersectionItems().end(),
 			intersection_sort_compare());

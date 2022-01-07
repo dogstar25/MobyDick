@@ -109,7 +109,8 @@ bool GLRenderer::present()
 	return true;
 }
 
-void GLRenderer::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* texture, SDL_Rect* textureSrcQuad, float angle, bool outline, SDL_Color outlineColor)
+void GLRenderer::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* texture, SDL_Rect* textureSrcQuad, float angle, 
+	bool outline, SDL_Color outlineColor, RenderBlendMode textureBlendMode)
 {
 
 	auto normalizedcolor = util::glNormalizeColor(color);
@@ -201,11 +202,11 @@ void GLRenderer::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* textur
 
 
 	if (GameConfig::instance().openGLBatching() == true) {
-		_addVertexBufferToBatch(spriteVertexBuffer, GLDrawerType::GLSPRITE, texture, shadertype);
+		_addVertexBufferToBatch(spriteVertexBuffer, GLDrawerType::GLSPRITE, texture, shadertype, textureBlendMode);
 	}
 	else {
 		Shader shader = static_cast<GLRenderer*>(game->renderer())->shader(shadertype);
-		m_spriteDrawer.draw(spriteVertexBuffer, spriteindexBuffer, shader, texture);
+		m_spriteDrawer.draw(spriteVertexBuffer, spriteindexBuffer, shader, texture, textureBlendMode);
 
 	}
 
@@ -268,7 +269,8 @@ GLRenderer::~GLRenderer()
 
 }
 
-void GLRenderer::_addVertexBufferToBatch(const std::vector<SpriteVertex>& spriteVertices, GLDrawerType objectType, Texture* texture, GLShaderType shaderType)
+void GLRenderer::_addVertexBufferToBatch(const std::vector<SpriteVertex>& spriteVertices, GLDrawerType objectType, Texture* texture, 
+	GLShaderType shaderType, RenderBlendMode textureBlendMode)
 {
 
 	std::stringstream texturePtrString;
@@ -283,12 +285,12 @@ void GLRenderer::_addVertexBufferToBatch(const std::vector<SpriteVertex>& sprite
 	}
 	
 	//Build the map key
-	keyString << (int)objectType << "_" << texturePtrString.str() << "_" << (int)shaderType;
+	keyString << (int)objectType << "_" << texturePtrString.str() << "_" << (int)shaderType << "_" << (int)textureBlendMode;
 
 	//See if the drawBatch for this combo exists yet
 	if (m_drawBatches.find(keyString.str()) == m_drawBatches.end()) {
 
-		auto spriteBatch = std::make_shared<SpriteDrawBatch>(objectType, texture, shaderType);
+		auto spriteBatch = std::make_shared<SpriteDrawBatch>(objectType, texture, shaderType, textureBlendMode);
 		spriteBatch->addVertexBuffer(spriteVertices);
 		m_drawBatches[keyString.str()] = spriteBatch;
 

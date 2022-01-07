@@ -1,5 +1,6 @@
 #include "EnumMaps.h"
 #include "hud/HudItemFactory.h"
+#include "Renderer.h"
 
 #include <box2d/box2d.h>
 
@@ -16,6 +17,11 @@ EnumMap::EnumMap()
 	//Renderer Types
 	m_enumMap["RenderType::OPENGL"] = (int)RendererType::OPENGL;
 	m_enumMap["RenderType::SDL"] = (int)RendererType::SDL;
+
+	//Render Modes
+	m_enumMap["RenderBlendMode::BLEND"] = (int)RenderBlendMode::BLEND;
+	m_enumMap["RenderBlendMode::ADD"] = (int)RenderBlendMode::ADD;
+	m_enumMap["RenderBlendMode::NONE"] = (int)RenderBlendMode::NONE;
 
 	//Mouse State
 	m_enumMap["MOUSE_NONE"] = MOUSE_NONE;
@@ -116,9 +122,9 @@ EnumMap::EnumMap()
 	m_enumMap["NavigationObjectType::WAYPOINT"] = NavigationObjectType::WAYPOINT;
 
 	//Texure Blend Modes
-	m_enumMap["SDL_BLENDMODE_BLEND"] = SDL_BLENDMODE_BLEND;
-	m_enumMap["SDL_BLENDMODE_ADD"] = SDL_BLENDMODE_ADD;
-	m_enumMap["SDL_BLENDMODE_NONE"] = SDL_BLENDMODE_NONE;
+	//m_enumMap["SDL_BLENDMODE_BLEND"] = SDL_BLENDMODE_BLEND;
+	//m_enumMap["SDL_BLENDMODE_ADD"] = SDL_BLENDMODE_ADD;
+	//m_enumMap["SDL_BLENDMODE_NONE"] = SDL_BLENDMODE_NONE;
 
 	//GameObject Types
 	//m_enumMap["GameObjectType::ABSTRACT"] = GameObjectType::ABSTRACT;

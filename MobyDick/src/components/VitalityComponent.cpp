@@ -83,6 +83,11 @@ void VitalityComponent::_levelUp()
 		//Update the color based on the new level
 		const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 		renderComponent->setColor(level.color);
+
+		//Manually update the physics component so that it doesnt get displayed in the spot where it was last broken
+		//if (parent()->hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
+		//	parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT)->update();
+		//}
 	}
 
 }
@@ -95,8 +100,6 @@ void VitalityComponent::_updateFiniteLifetime()
 
 		//Mark this object for removal so that the removal loop will delete it
 		parent()->setRemoveFromWorld(true);
-		//test
-		parent()->reset();
 
 	}
 	else
@@ -120,6 +123,8 @@ void VitalityComponent::_updateRegeneration()
 	//If the broken flag was set in the contact listener, then set the physics active to false
 	if (m_isBroken == true) {
 		parent()->setPhysicsActive(false);
+		//parent()->reset();
+		//parent()->setCollisionTag(CollisionTag::GENERAL_FREE);
 	}
 	
 	//If this gameObject is considered broken and we have met the regen time, then level up the piece

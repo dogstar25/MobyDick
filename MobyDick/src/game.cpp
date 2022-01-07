@@ -62,6 +62,21 @@ void Game::play()
 				SceneManager::instance().popScene();
 				SceneManager::instance().pushScene(action->sceneId);
 			}
+			else if (action->actionCode == SCENE_ACTION_HIJACK) {
+				//SceneManager::instance().hiJackScene(action->cutSceneId);
+				//Set scene status to DIRECTED
+				//Disable the player control of the player
+				//takeover the camera
+				//initialze all of the players that need to be controlled
+				//create any new gameObjects needed
+			}
+			else if (action->actionCode == SCENE_ACTION_UNHIJACK) {
+				//SceneManager::instance().unHiJackScene();
+				//Reset scene status to RUN
+				//Restore player control and other things
+				//Various triggers will activate HIJACK and UNHIJACK
+			}
+
 		}
 
 		SceneManager::instance().run();
@@ -104,7 +119,7 @@ void Game::_displayLoadingMsg()
 	texture.sdlTexture = sdlTexture;
 	texture.surface = tempSurface;
 
-	m_renderer->drawSprite(dest, SDL_Color{ 255,255,255,255 }, &texture, nullptr, 0, false, SDL_Color{});
+	m_renderer->drawSprite(dest, SDL_Color{ 255,255,255,255 }, &texture, nullptr, 0, false, SDL_Color{}, RenderBlendMode::BLEND);
 	m_renderer->present();
 	SDL_DestroyTexture(sdlTexture);
 

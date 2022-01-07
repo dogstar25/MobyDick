@@ -72,6 +72,11 @@ void SceneManager::run()
 			if (scene.state() == SceneState::RUN) {
 				scene.update();
 			}
+			else if (scene.state() == SceneState::DIRECTED) {
+				//scene.direct(); // move the various things around and whatever
+				scene.update();
+			}
+
 		}
 		//Clear the screen
 		game->renderer()->clear();

@@ -118,7 +118,8 @@ enum class GameState {
 enum class SceneState {
 	RUN = 0,
 	PAUSE = 1,
-	EXIT = 2
+	EXIT = 2,
+	DIRECTED = 3
 };
 
 enum class RendererType{
@@ -206,6 +207,8 @@ inline constexpr int SCENE_ACTION_QUIT = 0;
 inline constexpr int SCENE_ACTION_ADD = 1;
 inline constexpr int SCENE_ACTION_REPLACE = 2;
 inline constexpr int SCENE_ACTION_EXIT = 3;
+inline constexpr int SCENE_ACTION_HIJACK = 4;
+inline constexpr int SCENE_ACTION_UNHIJACK = 5;
 
 //Scene Tags
 inline constexpr int SCENETAG_MENU = 1;
