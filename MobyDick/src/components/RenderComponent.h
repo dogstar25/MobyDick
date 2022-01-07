@@ -48,6 +48,7 @@ public:
 	//Accessors
 	SDL_Color color() {	return m_color;	}
 	std::shared_ptr<Texture> texture() { return m_texture; }
+	RenderBlendMode textureRenderMode() { return m_textureBlendMode; }
 	
 
 
@@ -61,7 +62,7 @@ private:
 	int                         m_outlineThickness;
 	bool                        m_renderOutline;
 	std::string	                m_textureId;
-	SDL_BlendMode				m_textureBlendMode;
+	RenderBlendMode				m_textureBlendMode;
 
 	std::optional<displayOverlay> m_displayOverlay;
 

@@ -6,6 +6,7 @@
 #include "../game.h"
 
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 extern std::unique_ptr<Game> game;
 
@@ -35,10 +36,10 @@ RenderComponent::RenderComponent(Json::Value definitionJSON)
 	m_yRenderAdjustment = itrRender["yRenderAdjustment"].asFloat();
 
 	if (itrRender.isMember("textureBlendMode")) {
-		m_textureBlendMode = static_cast<SDL_BlendMode>(EnumMap::instance().toEnum(itrRender["textureBlendMode"].asString()));
+		m_textureBlendMode = static_cast<RenderBlendMode>(EnumMap::instance().toEnum(itrRender["textureBlendMode"].asString()));
 	}
 	else {
-		m_textureBlendMode = SDL_BLENDMODE_BLEND;
+		m_textureBlendMode = RenderBlendMode::BLEND;
 	}
 
 	if (itrRender.isMember("outline")) {
@@ -209,8 +210,6 @@ void RenderComponent::render(SDL_FRect destQuad)
 		if (GameConfig::instance().rendererType() == RendererType::SDL) {
 
 			SDL_Texture* sdlTexture = getRenderTexture()->sdlTexture;
-			SDL_SetTextureBlendMode(sdlTexture, m_textureBlendMode);
-			SDL_SetRenderDrawBlendMode(game->renderer()->sdlRenderer(), m_textureBlendMode);
 		}
 
 		//Outline the gameObject if defined to 
@@ -226,7 +225,7 @@ void RenderComponent::render(SDL_FRect destQuad)
 
 		}
 
-		game->renderer()->drawSprite(destQuad, m_color, texture, textureSourceQuad, angle, outline, outlineColor);
+		game->renderer()->drawSprite(destQuad, m_color, texture, textureSourceQuad, angle, outline, outlineColor, m_textureBlendMode);
 
 	}
 

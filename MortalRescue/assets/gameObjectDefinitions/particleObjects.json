@@ -21,7 +21,7 @@
             },
             "renderComponent": {
                 "textureId": "TX_SMOKE_PARTICLE_2",
-                "textureBlendMode": "SDL_BLENDMODE_ADD"
+                "textureBlendMode": "RenderBlendMode::ADD"
             },
             "physicsComponent": {
                 "type": "B2_DYNAMIC",

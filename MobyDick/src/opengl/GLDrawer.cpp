@@ -55,16 +55,23 @@ void GLDrawer::prepare()
 }
 
 
-void GLDrawer::draw(const std::vector<SpriteVertex>& spriteVertices, const std::vector<glm::uint>& spriteVertexIndexes, Shader& shader, Texture* texture)
+void GLDrawer::draw(const std::vector<SpriteVertex>& spriteVertices, const std::vector<glm::uint>& spriteVertexIndexes, 
+	Shader& shader, Texture* texture, RenderBlendMode textureBlendMode)
 {
 
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glEnable(GL_BLEND);
-	//GL_ONE_MINUS_SRC_ALPHA
-	//GL_DST_ALPHA
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 
+	if (textureBlendMode == RenderBlendMode::BLEND) {
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
+	else if (textureBlendMode == RenderBlendMode::ADD) {
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+	}
+	else if (textureBlendMode == RenderBlendMode::NONE) {
+		glBlendFunc(GL_ONE, GL_ZERO);
+	}
+	
 	prepare();
 
 	glBufferData(GL_ARRAY_BUFFER, sizeof(SpriteVertex) * spriteVertices.size(), nullptr, GL_DYNAMIC_DRAW);

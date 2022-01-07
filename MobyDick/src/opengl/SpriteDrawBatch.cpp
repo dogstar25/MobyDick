@@ -8,15 +8,11 @@
 
 extern std::unique_ptr<Game> game;
 
-SpriteDrawBatch::SpriteDrawBatch(GLDrawerType objectType, Texture* texture, GLShaderType shaderType)
+SpriteDrawBatch::SpriteDrawBatch(GLDrawerType objectType, Texture* texture, GLShaderType shaderType, RenderBlendMode textureBlendMode)
 {
 
-	switch (objectType) {
-	case GLDrawerType::GLSPRITE:
-		m_glDrawer = static_cast<GLRenderer*>(game->renderer())->spriteDrawer();
-		break;
-	}
-
+	m_glDrawer = static_cast<GLRenderer*>(game->renderer())->spriteDrawer();
+	m_textureBlendMode = textureBlendMode;
 	m_shader = static_cast<GLRenderer*>(game->renderer())->shader(shaderType);
 
 	m_texture = texture;
@@ -50,7 +46,7 @@ void SpriteDrawBatch::clear()
 void SpriteDrawBatch::draw()
 {
 
-	m_glDrawer.draw(m_vertexBatch, m_indexes, m_shader, m_texture);
+	m_glDrawer.draw(m_vertexBatch, m_indexes, m_shader, m_texture, m_textureBlendMode);
 
 
 }

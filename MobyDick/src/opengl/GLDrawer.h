@@ -6,7 +6,7 @@
 
 #include "Vertex.h"
 #include "Shader.h"
-//#include "../texture.h"
+#include "../Renderer.h"
 #include "../BaseConstants.h"
 
 class Texture;
@@ -23,7 +23,8 @@ public:
 	~GLDrawer();
 
 	void prepare();
-	void draw(const std::vector<SpriteVertex>& spriteVertices, const std::vector<glm::uint>& spriteVertexIndexes, Shader& shader, Texture* texture);
+	void draw(const std::vector<SpriteVertex>& spriteVertices, const std::vector<glm::uint>& spriteVertexIndexes, Shader& shader, 
+		Texture* texture, RenderBlendMode textureBlendMode);
 	void draw(const std::vector<LineVertex>& lineVertices, int vertexCount, Shader& shader);
 	void bind();
 

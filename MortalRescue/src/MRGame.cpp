@@ -133,7 +133,9 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//scene.addGameObject("HUD_STATUS_TOP", LAYER_MENU, 2, 2);
 		//scene.addGameObject("HUD_TEST_LABEL", LAYER_MENU, 2, 2);
 
-		scene.addGameObject("GLOW_TRIANGLE", LAYER_FOREGROUND_2, 3, 3);
+		scene.addGameObject("GLOW_TRIANGLE", LAYER_MENU, 3, 3);
+		scene.addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MENU, 13, 13);
+		
 		
 
 	}

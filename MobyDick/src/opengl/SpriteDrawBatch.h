@@ -17,7 +17,7 @@ class SpriteDrawBatch : public DrawBatch
 public:
 
 	SpriteDrawBatch() = default;
-	SpriteDrawBatch(GLDrawerType ObjectType, Texture * texture, GLShaderType shaderType);
+	SpriteDrawBatch(GLDrawerType ObjectType, Texture * texture, GLShaderType shaderType, RenderBlendMode textureBlendMode);
 
 	void addVertexBuffer(const std::vector<SpriteVertex>& spriteVertices) override;
 	void _addSpriteIndexBuffer();
@@ -28,6 +28,7 @@ public:
 private:
 
 	std::vector<SpriteVertex> m_vertexBatch{};
+	RenderBlendMode m_textureBlendMode;
 	Texture* m_texture;
 
 };

@@ -35,17 +35,6 @@
             "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::PLAYER",
             "traitTags": [ "player" ],
-            "renderComponent": {
-                "outline": {
-                    "thickness": 1,
-                    "color": {
-                        "red": 255,
-                        "green": 255,
-                        "blue": 255,
-                        "alpha": 255
-                    }
-                }
-            },
             "transformComponent": {
                 "size": {
                     "width": 64,
@@ -581,13 +570,12 @@
                 "absolutePositioning": false
             },
             "renderComponent": {
-                "textureBlendMode": "SDL_BLENDMODE_ADD",
                 "textureId": "TX_WHITE_QUAD",
                 "color": {
                     "red": 8,
                     "green": 242,
                     "blue": 250,
-                    "alpha": 255
+                    "alpha": 100
                 }
             }
         }

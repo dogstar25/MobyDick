@@ -14,7 +14,6 @@
             },
             "renderComponent": {
                 "textureId": "TX_WHITE_QUAD",
-                "textureBlendMode": "SDL_BLENDMODE_BLEND",
                 "color": {
                     "red": 10,
                     "green": 75,

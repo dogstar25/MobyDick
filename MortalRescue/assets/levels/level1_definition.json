@@ -26,15 +26,9 @@
             "gameObjectId": "GINA_64",
             "cameraFollow": true,
             "layer": "LAYER_MAIN"
-
         },
         {
             "id": "LOC_0016_0013",
-            "gameObjectId": "DRONE",
-            "cameraFollow": false
-        },
-        {
-            "id": "LOC_0092_0024",
             "gameObjectId": "DRONE",
             "cameraFollow": false
         },

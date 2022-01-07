@@ -64,19 +64,19 @@ namespace ParticleEffects {
 		.poolId = "SMOKE1_POOL",
 		.originMin = {0,0},
 		.originMax = {0,0},
-		.forceMin = 10,
-		.forceMax = 15,
-		.lifetimeMin = 0.2F,
-		.lifetimeMax = 1.5F,
+		.forceMin = 1,
+		.forceMax = 3,
+		.lifetimeMin = 1.2F,
+		.lifetimeMax = 4.5F,
 		.alphaFade = true,
 		.angleMin = 1,
 		.angleMax = 255,
 		.particleSizeMin = 3.F,
-		.particleSizeMax = 5.F,
-		.colorRangeBegin = {255,0,0,255},
-		.colorRangeEnd = {255,0,0,255},
-		.particleSpawnCountMin = 2,
-		.particleSpawnCountMax = 5
+		.particleSizeMax = 20.F,
+		.colorRangeBegin = {0,0,0,255},
+		.colorRangeEnd = {255,255,255,255},
+		.particleSpawnCountMin = 10,
+		.particleSpawnCountMax = 20
 	};
 
 	static const ParticleEffect impactSmoke = {

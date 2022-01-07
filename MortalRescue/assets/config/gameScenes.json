@@ -95,7 +95,7 @@
                     "id": "SMOKE1_POOL",
                     "gameObjectId": "PARTICLE_SMOKE_1",
                     "lifetime": 2.25,
-                    "maxItems": 25
+                    "maxItems": 250
                 }
             ],
             "physics": {
@@ -111,7 +111,7 @@
             "gameObjects": [
                 {
                     "gameObjectId": "GUI_PAUSE_PANEL",
-                    "layer": "LAYER_MAIN",
+                    "layer": "LAYER_MENU",
                     "location": {
                         "windowPosition": "PositionAlignment::CENTER"
                     }
@@ -120,8 +120,8 @@
                     "gameObjectId": "PARTICLE_EMITTER_SPARK",
                     "layer": "LAYER_MAIN",
                     "location": {
-                        "x": 10,
-                        "y": 10
+                        "x": 12,
+                        "y": 12
                     }
                 }
 
