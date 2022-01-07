@@ -77,17 +77,13 @@ void VitalityComponent::_levelUp()
 		m_currentLevel++;
 		auto& level = m_regenLevels[(uint_fast64_t)m_currentLevel - 1];
 		m_isBroken = false;
-		parent()->setPhysicsActive(true);
+		parent()->resetCollisionTag();
 		m_resistance = level.resistance;
 		
 		//Update the color based on the new level
 		const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 		renderComponent->setColor(level.color);
 
-		//Manually update the physics component so that it doesnt get displayed in the spot where it was last broken
-		//if (parent()->hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
-		//	parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT)->update();
-		//}
 	}
 
 }
@@ -120,11 +116,9 @@ void VitalityComponent::_updateFiniteLifetime()
 void VitalityComponent::_updateRegeneration()
 {
 
-	//If the broken flag was set in the contact listener, then set the physics active to false
+	//If the broken flag was set in the contact listener, then set the collision tag to FREE
 	if (m_isBroken == true) {
-		parent()->setPhysicsActive(false);
-		//parent()->reset();
-		//parent()->setCollisionTag(CollisionTag::GENERAL_FREE);
+		parent()->setCollisionTag(CollisionTag::GENERAL_FREE);
 	}
 	
 	//If this gameObject is considered broken and we have met the regen time, then level up the piece

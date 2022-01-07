@@ -93,6 +93,8 @@ public:
 	auto const& gameObjectDefinition() { return m_gameObjectDefinition; }
 	auto& components() { return m_components; }
 	Scene* parentScene() { return m_parentScene; }
+	void setCollisionTag(int collisionTag) { m_collisionTag = collisionTag; }
+	void resetCollisionTag() { m_collisionTag = m_originalCollisionTag; }
 
 	void reset();
 	void addInventoryItem(GameObject* gameObject);
@@ -158,6 +160,7 @@ private:
 	
 	std::string m_name;
 	int m_collisionTag{ 0 };
+	int m_originalCollisionTag{ 0 };
 	bool m_removeFromWorld{ false };
 	Scene* m_parentScene{nullptr};
 	std::bitset<32> m_traitTags{};
