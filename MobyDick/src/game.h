@@ -65,16 +65,16 @@ public:
 	int worldTileHeight() {
 		return m_WorldTileHeight;
 	}
-	ContactListener* contactListener() {
+	std::shared_ptr <ContactListener> contactListener() {
 		return m_contactListener;
 	}
-	ContactFilter* contactFilter() {
+	std::shared_ptr<ContactFilter> contactFilter() {
 		return m_contactFilter;
 	}
-	ComponentFactory* componentFactory() {
+	std::shared_ptr<ComponentFactory> componentFactory() {
 		return m_componentFactory;
 	}
-	StatusManager* statusMananger() {
+	std::shared_ptr<StatusManager> statusMananger() {
 		return m_statusMananger;
 	}
 
@@ -85,10 +85,10 @@ protected:
 	SDL_Window* m_window{};
 	GameState m_gameState{};
 	SDL_Rect m_WorldBounds{};
-	ContactListener* m_contactListener{};
-	ContactFilter* m_contactFilter{};
-	ComponentFactory* m_componentFactory{};
-	StatusManager* m_statusMananger{};
+	std::shared_ptr<ContactListener> m_contactListener{};
+	std::shared_ptr<ContactFilter> m_contactFilter{};
+	std::shared_ptr<ComponentFactory> m_componentFactory{};
+	std::shared_ptr<StatusManager> m_statusMananger{};
 
 	std::shared_ptr<Renderer> m_renderer;
 
