@@ -42,9 +42,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
 
-	//Required Base Class calls
 	Game::init(contactListener, contactFilter, componentFactory, statusManager);
-	//End Required
 
 	std::cout << "Mortal Rescue Begins\n";
 

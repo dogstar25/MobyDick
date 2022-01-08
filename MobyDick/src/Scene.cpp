@@ -441,8 +441,8 @@ void Scene::_buildPhysicsWorld(Json::Value physicsJSON)
 	//m_physicsWorld->SetAutoClearForces(true);
 
 	//Add a collision contact listener and filter for box2d callbacks
-	m_physicsWorld->SetContactFilter(game->contactFilter());
-	m_physicsWorld->SetContactListener(game->contactListener());
+	m_physicsWorld->SetContactFilter(game->contactFilter().get());
+	m_physicsWorld->SetContactListener(game->contactListener().get());
 
 }
 

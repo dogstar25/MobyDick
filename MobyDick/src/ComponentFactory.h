@@ -10,6 +10,8 @@ class ComponentFactory
 
 public:
 
+	ComponentFactory() = default;
+
 	static ComponentFactory& instance();
 	std::shared_ptr<Component> create(Json::Value definitionJSON, ComponentTypes componentType);
 	std::shared_ptr<Component> create(Json::Value definitionJSON, Scene* scene, ComponentTypes componentType);

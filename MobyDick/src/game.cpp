@@ -8,8 +8,8 @@
 Game::~Game()
 {
 
-	delete m_contactListener;
-	delete m_contactFilter;
+	//delete m_contactListener;
+	//delete m_contactFilter;
 }
 
 bool Game::init()
@@ -22,10 +22,10 @@ bool Game::init()
 bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter, 
 	ComponentFactory* componentFactory, StatusManager* statusManager)
 {
-	m_contactListener = contactListener;
-	m_contactFilter = contactFilter;
-	m_componentFactory = componentFactory;
-	m_statusMananger = statusManager;
+	m_contactListener = std::shared_ptr<ContactListener>(contactListener);
+	m_contactFilter = std::shared_ptr<ContactFilter>(contactFilter);
+	m_componentFactory = std::shared_ptr<ComponentFactory>(componentFactory);
+	m_statusMananger = std::shared_ptr<StatusManager>(statusManager);
 
 	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 
