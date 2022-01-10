@@ -2,7 +2,6 @@
     "gameObjects": [
         {
             "id": "HUD_STATUS_TOP",
-            "type": "GameObjectType::RECTANGLE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "transformComponent": {
@@ -54,7 +53,6 @@
         },
         {
             "id": "HUD_LEVEL",
-            "type": "GameObjectType::ABSTRACT",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui", "abstract" ],
             "description": "Hud Level Dynamic Text",
@@ -67,7 +65,6 @@
         },
         {
             "id": "HUD_LEVEL_LABEL",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "description": "Hud Level Label",
@@ -88,12 +85,10 @@
         },
         {
             "id": "HUD_LEVEL_VALUE",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "description": "Hud Level Value",
             "textComponent": {
-                "value": "Level",
                 "dynamic": true,
                 "font": "FONT_ARIAL_REG",
                 "fontSize": 16
@@ -109,12 +104,10 @@
         },
         {
             "id": "HUD_SCRAP_VALUE",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "description": "Hud Level Value",
             "textComponent": {
-                "value": "Level",
                 "dynamic": true,
                 "font": "FONT_ARIAL_REG",
                 "fontSize": 16
@@ -130,7 +123,6 @@
         },
         {
             "id": "HUD_LIVES",
-            "type": "GameObjectType::ABSTRACT",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui", "abstract" ],
             "description": "Hud Level Dynamic Text",
@@ -139,12 +131,10 @@
                 "labelObjectId": "HUD_LIVES_LABEL",
                 "labelPadding": 16,
                 "statusObjectId": "HUD_BAR"
-                //"statusObjectId": "HUD_LIVES_VALUE"
             }
         },
         {
             "id": "HUD_LIVES_LABEL",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "description": "Hud Level Value",
@@ -165,7 +155,6 @@
         },
         {
             "id": "HUD_LIVES_VALUE",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_SOLID",
             "traitTags": [],
             "transformComponent": {
@@ -181,10 +170,9 @@
         },
         {
             "id": "HUD_BAR",
-            "type": "GameObjectType::RECTANGLE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
-            "description": "Hud Level Dynamic Text",
+            "description": "Hud Bar rectangle image",
             "transformComponent": {
                 "size": {
                     "width": 2,

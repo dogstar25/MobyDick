@@ -150,9 +150,6 @@
     <ClCompile Include="src\actions\UseAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\actions\ActionMaps.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\actions\DefaultOnHoverAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -280,6 +277,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\opengl\LineDrawBatch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\actions\ActionFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -422,9 +422,6 @@
     <ClInclude Include="src\actions\UseAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\actions\ActionMaps.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\actions\DefaultOnHoverAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -564,6 +561,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\opengl\LineDrawBatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\actions\ActionFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

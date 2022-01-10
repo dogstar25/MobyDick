@@ -10,6 +10,5 @@ public:
 
 	void perform(GameObject* gameObject) override;
 
-
 };
 

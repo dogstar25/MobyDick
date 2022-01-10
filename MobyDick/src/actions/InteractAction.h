@@ -1,7 +1,6 @@
 #pragma once
 #include "Action.h"
-class InteractAction :
-    public Action
+class InteractAction : public Action
 {
 
 

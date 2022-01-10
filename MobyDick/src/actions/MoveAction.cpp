@@ -17,6 +17,19 @@ MoveAction::~MoveAction()
 
 }
 
+void MoveAction::setMoveParms(int direction, int strafe)
+{
+	m_direction = direction;
+	m_strafe = strafe;
+
+}
+
+void MoveAction::setMoveParms(b2Vec2 trajectory)
+{
+	m_trajectory = trajectory;
+}
+
+
 
 
 

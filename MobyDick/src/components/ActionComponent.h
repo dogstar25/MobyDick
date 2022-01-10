@@ -42,6 +42,8 @@ public:
 	void performOnClickAction();
 	void performTriggerAction();
 
+	std::shared_ptr<Action> getAction(int actionId);
+
 private:
 	std::vector<std::shared_ptr<Action>>m_actions;
 

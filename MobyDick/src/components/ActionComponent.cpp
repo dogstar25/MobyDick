@@ -2,9 +2,15 @@
 
 #include <cassert>
 
-#include "../actions/ActionMaps.h"
 #include "../EnumMaps.h"
+#include "../game.h"
+#include "../actions/DefaultMoveAction.h"
+#include "../actions/DefaultRotateAction.h"
+#include "../actions/DefaultOnHoverAction.h"
+#include "../actions/DefaultOnHoverOutAction.h"
+#include "../actions/NoAction.h"
 
+extern std::unique_ptr<Game> game;
 
 ActionComponent::ActionComponent(Json::Value definitionJSON)
 {
@@ -14,14 +20,12 @@ ActionComponent::ActionComponent(Json::Value definitionJSON)
 	for (Json::Value itrAction: componentJSON["actions"])
 	{
 		//Get the name of the class to be used as the action as a string
-		std::string actionCode = itrAction["actionClass"].asString();
+		std::string actionClass = itrAction["actionClass"].asString();
 
 		//Get the Enum that represents the Game Objects action as an int
 		int actionId = EnumMap::instance().toEnum(itrAction["actionId"].asString());
 
-
-		m_actions[actionId] = ActionMaps::instance().getAction(actionCode);
-
+		m_actions[actionId] = game->actionFactory()->create(actionClass);
 
 	}
 
@@ -51,7 +55,7 @@ void ActionComponent::performMoveAction(int direction, int strafe)
 		action->setStrafe(strafe);
 	}
 	else {
-		action = std::dynamic_pointer_cast<MoveAction>(ActionMaps::instance().getAction("DefaultMove"));
+		action = std::make_shared<DefaultMoveAction>();
 	}
 
 	assert(action != nullptr && "Move Action is null!");
@@ -68,7 +72,7 @@ void ActionComponent::performMoveAction(b2Vec2 trajectory)
 		action->setTrajectory(trajectory);
 	}
 	else {
-		action = std::dynamic_pointer_cast<MoveAction>(ActionMaps::instance().getAction("DefaultMove"));
+		action = std::make_shared<DefaultMoveAction>();
 	}
 
 	assert(action != nullptr && "Move Action is null!");
@@ -85,7 +89,7 @@ void ActionComponent::performRotateAction(float angularVelocity)
 		action->setAngularVelocity(angularVelocity);
 	}
 	else{
-		action = std::dynamic_pointer_cast<RotateAction>(ActionMaps::instance().getAction("DefaultRotate"));
+		action = std::make_shared<DefaultRotateAction>();
 	}
 
 	assert(action != nullptr && "Rotate Action is null!");
@@ -100,7 +104,7 @@ void ActionComponent::performUseAction()
 		action = m_actions[ACTION_USE];
 	}
 	else {
-		action = ActionMaps::instance().getAction("NoAction");
+		action = std::make_shared<NoAction>();
 	}
 
 	assert(action != nullptr && "Use Action is null!");
@@ -115,7 +119,7 @@ void ActionComponent::performUsageAction()
 		action = m_actions[ACTION_USAGE];
 	}
 	else {
-		action = ActionMaps::instance().getAction("NoAction");
+		action = std::make_shared<NoAction>();
 	}
 
 	assert(action != nullptr && "Usage Action is null!");
@@ -124,15 +128,14 @@ void ActionComponent::performUsageAction()
 
 void ActionComponent::performInteractAction(std::tuple<std::string, int, float> params)
 {
-	std::shared_ptr<InteractAction> action;
+	std::shared_ptr<Action> action;
 
 	if (m_actions[ACTION_INTERACT]) {
 
 		action = std::dynamic_pointer_cast<InteractAction>(m_actions[ACTION_INTERACT]);
-		action->setParams(params);
 	}
 	else {
-		action = std::dynamic_pointer_cast<InteractAction>(ActionMaps::instance().getAction("Interact"));
+		action = std::make_shared<NoAction>();
 	}
 
 	assert(action != nullptr && "Action is null!");
@@ -148,7 +151,7 @@ void ActionComponent::performOnHoverAction()
 		action = m_actions[ACTION_ON_HOVER];
 	}
 	else {
-		action = ActionMaps::instance().getAction("DefaultHover");
+		action = std::make_shared<DefaultOnHoverAction>();
 	}
 
 	assert(action != nullptr && "Action is null!");
@@ -163,7 +166,7 @@ void ActionComponent::performOnHoverOutAction()
 		action = m_actions[ACTION_ON_HOVER_OUT];
 	}
 	else {
-		action = ActionMaps::instance().getAction("DefaultHoverOut");
+		action = std::make_shared<DefaultOnHoverOutAction>();
 	}
 
 	assert(action != nullptr && "Action is null!");
@@ -179,7 +182,7 @@ void ActionComponent::performOnClickAction()
 		action = m_actions[ACTION_ON_CLICK];
 	}
 	else {
-		action = ActionMaps::instance().getAction("NoAction");
+		action = std::make_shared<NoAction>();
 	}
 
 	assert(action != nullptr && "Action is null!");
@@ -195,11 +198,17 @@ void ActionComponent::performTriggerAction()
 		action = std::dynamic_pointer_cast<Action>(m_actions[ACTION_ON_TRIGGER]);
 	}
 	else {
-		action = std::dynamic_pointer_cast<Action>(ActionMaps::instance().getAction("NoAction"));
+		action = std::make_shared<NoAction>();
 	}
 
 	assert(action != nullptr && "Action is null!");
 	action->perform();
+}
+
+std::shared_ptr<Action> ActionComponent::getAction(int actionId)
+{
+
+	return m_actions[actionId];
 }
 
 

@@ -13,11 +13,11 @@ ActorMoveAction::ActorMoveAction() :
 
 }
 
-ActorMoveAction::ActorMoveAction(int direction, int strafe) : 
-	MoveAction(direction, strafe)
-{
-
-}
+//ActorMoveAction::ActorMoveAction(int direction, int strafe) : 
+//	MoveAction(direction, strafe)
+//{
+//
+//}
 
 ActorMoveAction::~ActorMoveAction()
 {
