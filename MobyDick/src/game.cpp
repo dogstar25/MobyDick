@@ -20,11 +20,12 @@ bool Game::init()
 
 
 bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter, 
-	ComponentFactory* componentFactory, StatusManager* statusManager)
+	ComponentFactory* componentFactory, ActionFactory* actionFactory, StatusManager* statusManager)
 {
 	m_contactListener = std::shared_ptr<ContactListener>(contactListener);
 	m_contactFilter = std::shared_ptr<ContactFilter>(contactFilter);
 	m_componentFactory = std::shared_ptr<ComponentFactory>(componentFactory);
+	m_actionFactory = std::shared_ptr<ActionFactory>(actionFactory);
 	m_statusMananger = std::shared_ptr<StatusManager>(statusManager);
 
 	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {

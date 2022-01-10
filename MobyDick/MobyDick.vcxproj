@@ -214,6 +214,7 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\actions\ActionFactory.cpp" />
     <ClCompile Include="src\hud\HudItemFactory.cpp" />
     <ClCompile Include="src\components\HudComponent.cpp" />
     <ClCompile Include="src\hud\HudStatusSeries.cpp" />
@@ -262,7 +263,6 @@
     <ClCompile Include="src\components\InventoryComponent.cpp" />
     <ClCompile Include="src\actions\ActorRotateAction.cpp" />
     <ClCompile Include="src\actions\ActorMoveAction.cpp" />
-    <ClCompile Include="src\actions\ActionMaps.cpp" />
     <ClCompile Include="src\components\ActionComponent.cpp" />
     <ClCompile Include="src\actions\Action.cpp" />
     <ClCompile Include="src\DebugPanel.cpp" />
@@ -305,6 +305,7 @@
     <ClCompile Include="src\StatusManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\actions\ActionFactory.h" />
     <ClInclude Include="src\hud\HudItemFactory.h" />
     <ClInclude Include="src\components\HudComponent.h" />
     <ClInclude Include="src\hud\HudStatusSeries.h" />
@@ -355,7 +356,6 @@
     <ClInclude Include="src\components\InventoryComponent.h" />
     <ClInclude Include="src\actions\ActorRotateAction.h" />
     <ClInclude Include="src\actions\ActorMoveAction.h" />
-    <ClInclude Include="src\actions\ActionMaps.h" />
     <ClInclude Include="src\components\ActionComponent.h" />
     <ClInclude Include="src\actions\Action.h" />
     <ClInclude Include="src\DebugPanel.h" />

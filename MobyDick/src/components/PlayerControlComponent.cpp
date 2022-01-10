@@ -72,12 +72,11 @@ void PlayerControlComponent::handleActions()
 				case SDL_KEYDOWN:
 					if (keyStates[SDL_SCANCODE_G])
 					{
-						actionComponent->performUseAction();
 						std::cout << "Dropped Weapon" << "\n";
 					}
 					break;
 				case SDL_MOUSEBUTTONDOWN:
-					//Execute USE
+
 					if (m_controls.test(INPUT_CONTROL_USE))
 					{
 						actionComponent->performUseAction();
@@ -122,6 +121,7 @@ void PlayerControlComponent::handleMovement()
 		strafe = 1;
 	}
 
+	//Keyboard movement
 	actionComponent->performMoveAction(direction, strafe);
 
 	//Handle Mouse related movement

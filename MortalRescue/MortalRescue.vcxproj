@@ -183,6 +183,7 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\actions\MRActionFactory.cpp" />
     <ClCompile Include="src\actions\DroneEyeRotateAction.cpp" />
     <ClCompile Include="src\components\PistolWeaponComponent.cpp" />
     <ClCompile Include="src\mortalRescue.cpp" />
@@ -269,6 +270,7 @@
     <Font Include="assets\arial.ttf" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\actions\MRActionFactory.h" />
     <ClInclude Include="src\actions\DroneEyeRotateAction.h" />
     <ClInclude Include="src\actions\MyAction.h" />
     <ClInclude Include="src\components\PistolWeaponComponent.h" />

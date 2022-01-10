@@ -12,6 +12,9 @@ public:
 	MoveAction(b2Vec2 trajectory);
 	~MoveAction();
 
+	void setMoveParms(int direction, int strafe);
+	void setMoveParms(b2Vec2 trajectory);
+
 	virtual void perform(GameObject* gameObject) {};
 
 	int direction() {

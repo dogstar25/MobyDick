@@ -1,6 +1,5 @@
 #include "MRGame.h"
 
-#include "actions/ActionMaps.h"
 #include "GameConstants.h"
 #include "GameObjectManager.h"
 #include "SoundManager.h"
@@ -36,13 +35,13 @@ MRGame::~MRGame()
 Initialize Game
 */
 bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter, 
-	ComponentFactory* componentFactory, StatusManager* statusManager)
+	ComponentFactory* componentFactory, ActionFactory* actionFactory, StatusManager* statusManager)
 {
 
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
 
-	Game::init(contactListener, contactFilter, componentFactory, statusManager);
+	Game::init(contactListener, contactFilter, componentFactory, actionFactory, statusManager);
 
 	std::cout << "Mortal Rescue Begins\n";
 
@@ -50,7 +49,6 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 	//Add Game Specific stuff
 	_addGameCollisionTags();
-	_addGameActions();
 	_addGameParticleEffects();
 
 	//Initialize world
@@ -157,16 +155,6 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 	return true;
 }
 
-
-void MRGame::_addGameActions()
-{
-
-	ActionMaps::instance().addAction("MyAction", std::make_shared<MyAction>());
-	ActionMaps::instance().addAction("DroneEyeRotateAction", std::make_shared<DroneEyeRotateAction>());
-
-	
-
-}
 
 void MRGame::_addGameParticleEffects()
 {
