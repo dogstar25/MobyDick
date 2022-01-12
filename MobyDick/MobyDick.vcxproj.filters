@@ -192,9 +192,6 @@
     <ClCompile Include="src\actions\DroneMoveAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\particleEffects\ParticleEffectsMap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\actions\LoadNextLevelAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -280,6 +277,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\actions\ActionFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particleEffects\ParticleEffectsFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -485,9 +485,6 @@
     <ClInclude Include="src\BaseConstants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\particleEffects\ParticleEffectsMap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\actions\LoadNextLevelAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -564,6 +561,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\actions\ActionFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\particleEffects\ParticleEffectsFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

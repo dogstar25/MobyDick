@@ -1,4 +1,5 @@
  #pragma once
+#include "BaseConstants.h"
 
 namespace CollisionTag {
 	
@@ -27,3 +28,7 @@ namespace CollisionTag {
 namespace CollectibleTypes {
 	inline constexpr int DRONE_SCRAP = 1;
 }
+
+//enum  MRComponentTypes ComponentTypes {
+//	cACTION_COMPONENT = 0,
+//};

@@ -4,9 +4,9 @@
 #include <chrono>
 
 #include "../EnumMaps.h"
-#include "../particleEffects/ParticleEffectsMap.h"
 #include "../game.h"
 
+extern std::unique_ptr<Game> game;
 
 ParticleXComponent::ParticleXComponent(Json::Value definitionJSON )
 {
@@ -29,7 +29,8 @@ ParticleXComponent::ParticleXComponent(Json::Value definitionJSON )
 
 		auto effectId = itrEffect.asString();
 
-		ParticleEffect effect = ParticleEffectsMap::instance().getParticleEffect(effectId);
+		//ParticleEffect effect = ParticleEffectsMap::instance().getParticleEffect(effectId);
+		ParticleEffect effect = game->particleEffectsFactory()->create(effectId);
 		addParticleEffect(effect);
 	
 	}

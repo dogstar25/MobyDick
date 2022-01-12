@@ -8,7 +8,6 @@
 #include "../Camera.h"
 #include "../DebugPanel.h"
 #include "../Clock.h"
-#include "../particleEffects/ParticleEffectsMap.h"
 #include "../EnumMaps.h"
 
 extern std::unique_ptr<Game> game;
@@ -32,7 +31,7 @@ ParticleComponent::ParticleComponent(Json::Value definitionJSON )
 	{
 		auto effectId = itrEffect.asString();
 
-		ParticleEffect effect = ParticleEffectsMap::instance().getParticleEffect(effectId);
+		ParticleEffect effect = game->particleEffectsFactory()->create(effectId);
 		addParticleEffect(effect);
 	}
 

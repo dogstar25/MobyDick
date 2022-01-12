@@ -21,6 +21,7 @@
 #include "SceneManager.h"
 #include "ComponentFactory.h"
 #include "actions/ActionFactory.h"
+#include "particleEffects/ParticleEffectsFactory.h"
 #include "StatusManager.h"
 
 /*
@@ -34,12 +35,11 @@ public:
 	~MRGame();
 
 	bool init() override { return true; }
-	bool init(ContactListener*, ContactFilter*, ComponentFactory*, ActionFactory*, StatusManager* ) override;
+	bool init(ContactListener*, ContactFilter*, ComponentFactory*, ActionFactory*, ParticleEffectsFactory*, StatusManager* ) override;
 
 private:
 
 	void _addGameCollisionTags() override;
-	void _addGameParticleEffects() override;
 
 };
 
