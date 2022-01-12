@@ -10,7 +10,6 @@
 #include "ContactFilter.h"
 #include "ContactListener.h"
 #include "components/DroneBrainComponent.h"
-#include "particleEffects/ParticleEffectsMap.h"
 #include "particleEffects/GameParticleEffects.h"
 
 #include "EnumMaps.h"
@@ -35,13 +34,14 @@ MRGame::~MRGame()
 Initialize Game
 */
 bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter, 
-	ComponentFactory* componentFactory, ActionFactory* actionFactory, StatusManager* statusManager)
+	ComponentFactory* componentFactory, ActionFactory* actionFactory, ParticleEffectsFactory* particleEffectsFactory, 
+	StatusManager* statusManager)
 {
 
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
 
-	Game::init(contactListener, contactFilter, componentFactory, actionFactory, statusManager);
+	Game::init(contactListener, contactFilter, componentFactory, actionFactory, particleEffectsFactory, statusManager);
 
 	std::cout << "Mortal Rescue Begins\n";
 
@@ -49,7 +49,6 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 	//Add Game Specific stuff
 	_addGameCollisionTags();
-	_addGameParticleEffects();
 
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
@@ -155,16 +154,6 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 	return true;
 }
 
-
-void MRGame::_addGameParticleEffects()
-{
-
-	ParticleEffectsMap::instance().addParticleEffect("ricochet", ParticleEffects::ricochet);
-	ParticleEffectsMap::instance().addParticleEffect("deflect", ParticleEffects::deflect);
-	ParticleEffectsMap::instance().addParticleEffect("scrap", ParticleEffects::scrap);
-	ParticleEffectsMap::instance().addParticleEffect("spark", ParticleEffects::spark);
-
-}
 
 void MRGame::_addGameCollisionTags()
 {

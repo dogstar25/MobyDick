@@ -194,6 +194,7 @@
     <ClCompile Include="src\components\DroneBrainComponent.cpp" />
     <ClCompile Include="src\MRGame.cpp" />
     <ClCompile Include="src\MRStatusManager.cpp" />
+    <ClCompile Include="src\particleEffects\MRParticleEffectsFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MobyDick\MobyDick.vcxproj">
@@ -282,6 +283,7 @@
     <ClInclude Include="src\GameConstants.h" />
     <ClInclude Include="src\particleEffects\GameParticleEffects.h" />
     <ClInclude Include="src\MRStatusManager.h" />
+    <ClInclude Include="src\particleEffects\MRParticleEffectsFactory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

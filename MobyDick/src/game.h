@@ -20,6 +20,7 @@
 #include "SceneManager.h"
 #include "ComponentFactory.h"
 #include "actions/ActionFactory.h"
+#include "particleEffects/ParticleEffectsFactory.h"
 #include "ContactListener.h"
 #include "ContactFilter.h"
 #include "StatusManager.h"
@@ -37,7 +38,7 @@ public:
 	~Game();
 
 	virtual bool init();
-	virtual bool init(ContactListener*, ContactFilter*,	ComponentFactory*, ActionFactory*, StatusManager*) = 0;
+	virtual bool init(ContactListener*, ContactFilter*,	ComponentFactory*, ActionFactory*, ParticleEffectsFactory*, StatusManager*) = 0;
 	virtual void play();
 	virtual void _displayLoadingMsg();
 	
@@ -81,6 +82,9 @@ public:
 	std::shared_ptr<StatusManager> statusMananger() {
 		return m_statusMananger;
 	}
+	std::shared_ptr<ParticleEffectsFactory> particleEffectsFactory() {
+		return m_particleEffectsFactory;
+	}
 
 	Renderer* renderer() { return m_renderer.get(); }
 
@@ -94,6 +98,7 @@ protected:
 	std::shared_ptr<ComponentFactory> m_componentFactory{};
 	std::shared_ptr<ActionFactory> m_actionFactory{};
 	std::shared_ptr<StatusManager> m_statusMananger{};
+	std::shared_ptr<ParticleEffectsFactory> m_particleEffectsFactory{};
 
 	std::shared_ptr<Renderer> m_renderer;
 
@@ -101,8 +106,6 @@ protected:
 	int m_WorldTileHeight{};
 
 	virtual void _addGameCollisionTags() = 0;
-	//virtual void _addGameActions() = 0;
-	virtual void _addGameParticleEffects() = 0;
 	
 
 };

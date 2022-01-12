@@ -234,13 +234,13 @@
     <ClCompile Include="src\opengl\GLRenderer.cpp" />
     <ClCompile Include="src\opengl\Shader.cpp" />
     <ClCompile Include="src\opengl\DrawBatch.cpp" />
+    <ClCompile Include="src\particleEffects\ParticleEffectsFactory.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\triggers\LevelComplete.cpp" />
     <ClCompile Include="src\triggers\TriggerMap.cpp" />
     <ClCompile Include="src\triggers\PlayerDeath.cpp" />
     <ClCompile Include="src\actions\DroneMoveAction.cpp" />
     <ClCompile Include="src\components\NavigationComponent.cpp" />
-    <ClCompile Include="src\particleEffects\ParticleEffectsMap.cpp" />
     <ClCompile Include="src\RayCastCallBack.cpp" />
     <ClCompile Include="src\components\BrainComponent.cpp" />
     <ClCompile Include="src\components\ParticleComponent.cpp" />
@@ -322,6 +322,7 @@
     <ClInclude Include="src\opengl\GLRenderer.h" />
     <ClInclude Include="src\opengl\Shader.h" />
     <ClInclude Include="src\opengl\DrawBatch.h" />
+    <ClInclude Include="src\particleEffects\ParticleEffectsFactory.h" />
     <ClInclude Include="src\triggers\LevelComplete.h" />
     <ClInclude Include="src\triggers\TriggerMap.h" />
     <ClInclude Include="src\triggers\PlayerDeath.h" />
@@ -330,7 +331,6 @@
     <ClInclude Include="src\components\NavigationComponent.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\BaseConstants.h" />
-    <ClInclude Include="src\particleEffects\ParticleEffectsMap.h" />
     <ClInclude Include="src\RayCastCallBack.h" />
     <ClInclude Include="src\components\BrainComponent.h" />
     <ClInclude Include="src\components\ParticleComponent.h" />
