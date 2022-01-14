@@ -43,6 +43,7 @@
                 ]
             },
             "brainComponent": {
+                "overrideClass": "DroneBrain",
                 "sensorLength": 550,
                 "sensorOffset": 0,
                 "sensorCount": 250,

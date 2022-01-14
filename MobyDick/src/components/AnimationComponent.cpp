@@ -10,7 +10,6 @@ AnimationComponent::AnimationComponent(Json::Value definitionJSON)
 
 	//Get reference to the animationComponent JSON config and transformComponent JSON config
 	Json::Value animationComponentJSON = definitionJSON["animationComponent"];
-	Json::Value transformComponentJSON = definitionJSON["transformComponent"];
 
 	//Build animationComponent details
 	m_gameObjectId = definitionJSON["id"].asString();

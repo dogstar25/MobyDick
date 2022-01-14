@@ -20,7 +20,8 @@ public:
 	~PhysicsComponent();
 
 	void update() override;
-	void postInit(GameObject*) override;
+	void postInit() override;
+	void setParent(GameObject* gameObject) override;
 
 	void applyMovement(float velocity, int direction, int strafeDirection);
 	void applyMovement(float velocity, b2Vec2 trajectory);

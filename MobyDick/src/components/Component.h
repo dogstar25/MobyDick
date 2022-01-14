@@ -34,7 +34,7 @@ public:
 	virtual void postInit() {};
 	virtual void postInit(GameObject*) {};
 
-	void setParent(GameObject* gameObject) { m_parentGameObject = gameObject; }
+	virtual void setParent(GameObject* gameObject) { m_parentGameObject = gameObject; }
 	GameObject* parent() { return m_parentGameObject; }
 
 	std::string m_gameObjectId{ "" };

@@ -2,57 +2,59 @@
 #include "components/BrainComponent.h"
 #include "components/InventoryComponent.h"
 
+#include <iostream>
 
-ComponentFactory& ComponentFactory::instance()
-{
-	static ComponentFactory singletonInstance;
-	return singletonInstance;
-}
 
-std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, ComponentTypes componentType)
-{
-	std::shared_ptr<Component> component{};
-	component = _create(definitionJSON, "", nullptr, 0, 0, 0, componentType);
-	return component;
-}
+//ComponentFactory& ComponentFactory::instance()
+//{
+//	static ComponentFactory singletonInstance;
+//	return singletonInstance;
+//}
+//
+//std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, const int componentType)
+//{
+//	std::shared_ptr<Component> component{};
+//	component = _create(definitionJSON, "", nullptr, 0, 0, 0, componentType);
+//	return component;
+//}
+//
+//std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, Scene* scene, const int componentType)
+//{
+//	std::shared_ptr<Component> component{};
+//	component = _create(definitionJSON, "", scene, 0, 0, 0, componentType);
+//	return component;
+//}
+//
+//std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, std::string textGameObjectId, const int componentType)
+//{
+//	std::shared_ptr<Component> component{};
+//	component = _create(definitionJSON, textGameObjectId, nullptr, 0, 0, 0, componentType);
+//	return component;
+//}
+//
+//std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust, const int componentType)
+//{
+//	std::shared_ptr<Component> component{};
+//	component = _create(definitionJSON, "", nullptr, xMapPos, yMapPos, angleAdjust, componentType);
+//	return component;
+//}
+//
+//std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, Scene* scene, float xMapPos, float yMapPos, float angleAdjust, const int componentType)
+//{
+//	std::shared_ptr<Component> component{};
+//	component = _create(definitionJSON, "", scene, xMapPos, yMapPos, angleAdjust, componentType);
+//	return component;
+//
+//}
 
-std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, Scene* scene, ComponentTypes componentType)
-{
-	std::shared_ptr<Component> component{};
-	component = _create(definitionJSON, "", scene, 0, 0, 0, componentType);
-	return component;
-}
-
-std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, std::string textGameObjectId, ComponentTypes componentType)
-{
-	std::shared_ptr<Component> component{};
-	component = _create(definitionJSON, textGameObjectId, nullptr, 0, 0, 0, componentType);
-	return component;
-}
-
-std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust, ComponentTypes componentType)
-{
-	std::shared_ptr<Component> component{};
-	component = _create(definitionJSON, "", nullptr, xMapPos, yMapPos, angleAdjust, componentType);
-	return component;
-}
-
-std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, Scene* scene, float xMapPos, float yMapPos, float angleAdjust, ComponentTypes componentType)
-{
-	std::shared_ptr<Component> component{};
-	component = _create(definitionJSON, "", scene, xMapPos, yMapPos, angleAdjust, componentType);
-	return component;
-
-}
-
-std::shared_ptr<Component> ComponentFactory::_create(
+std::shared_ptr<Component> ComponentFactory::create(
 	Json::Value definitionJSON,
 	std::string textComponentGameObjectid,
 	Scene* scene,
 	float xMapPos,
 	float yMapPos,
 	float angleAdjust,
-	ComponentTypes componentType)
+	const int componentType)
 {
 	std::shared_ptr<Component> component{};
 
@@ -120,6 +122,8 @@ std::shared_ptr<Component> ComponentFactory::_create(
 		case ComponentTypes::WEAPON_COMPONENT:
 			component = std::make_shared<WeaponComponent>(definitionJSON);
 			break;
+		default:
+			std::cout << "This component type did not match any of the existing component types" << std::endl;
 
 	}
 

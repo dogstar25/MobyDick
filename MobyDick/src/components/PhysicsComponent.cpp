@@ -49,10 +49,15 @@ PhysicsComponent::~PhysicsComponent()
 
 }
 
-void PhysicsComponent::postInit(GameObject* parentGameObject)
+void PhysicsComponent::postInit()
 {
-	//m_physicsBody->SetUserData((void*)parentGameObject);
-	m_physicsBody->GetUserData().pointer = reinterpret_cast<uintptr_t>(parentGameObject);
+	
+}
+
+void PhysicsComponent::setParent(GameObject* gameObject)
+{
+	Component::setParent(gameObject);
+	m_physicsBody->GetUserData().pointer = reinterpret_cast<uintptr_t>(gameObject);
 }
 
 void PhysicsComponent::setTransform(b2Vec2 positionVector, float angle)

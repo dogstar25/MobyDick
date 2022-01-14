@@ -46,9 +46,6 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Build the unique name
 	m_name = _buildName(gameObjectId, xMapPos, yMapPos, parentScene);
 
-	if (gameObjectId.compare("GINA_64") == 0) {
-		int todd = 1;
-	}
 	//Trait tags
 	for (Json::Value itrControls : definitionJSON["traitTags"])
 	{
@@ -63,19 +60,20 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	std::shared_ptr<Component> component{};
 
 	//Always build a render component
-	component = game->componentFactory()->create(definitionJSON, ComponentTypes::RENDER_COMPONENT);
+	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::RENDER_COMPONENT);
 	component->setParent(this);
 	addComponent(component, ComponentTypes::RENDER_COMPONENT);
 
 	//Always build a transform component
-	component = game->componentFactory()->create(definitionJSON, xMapPos, yMapPos, angleAdjust, ComponentTypes::TRANSFORM_COMPONENT);
+	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::TRANSFORM_COMPONENT);
 	component->setParent(this);
 	addComponent(component, ComponentTypes::TRANSFORM_COMPONENT);
+
 
 	//Animation Component
 	if (definitionJSON.isMember("animationComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::ANIMATION_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::ANIMATION_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::ANIMATION_COMPONENT);
 
@@ -85,10 +83,8 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	if (definitionJSON.isMember("physicsComponent"))
 	{
 
-		component = game->componentFactory()->create(definitionJSON, parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PHYSICS_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PHYSICS_COMPONENT);
 		component->setParent(this);
-		//std::static_pointer_cast<PhysicsComponent>(component)->physicsBody()->SetUserData((void*)this);
-		std::static_pointer_cast<PhysicsComponent>(component)->physicsBody()->GetUserData().pointer = reinterpret_cast<uintptr_t>(this);
 		addComponent(component, ComponentTypes::PHYSICS_COMPONENT);
 
 	}
@@ -96,7 +92,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Vitality Component
 	if (definitionJSON.isMember("vitalityComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::VITALITY_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::VITALITY_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::VITALITY_COMPONENT);
 
@@ -105,7 +101,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Player control Component
 	if (definitionJSON.isMember("playerControlComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::PLAYERCONTROL_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PLAYERCONTROL_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::PLAYERCONTROL_COMPONENT);
 
@@ -114,7 +110,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Text Component
 	if (definitionJSON.isMember("textComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, gameObjectId, ComponentTypes::TEXT_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, gameObjectId, parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::TEXT_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::TEXT_COMPONENT);
 
@@ -123,7 +119,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Children Component
 	if (definitionJSON.isMember("childrenComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::CHILDREN_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::CHILDREN_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::CHILDREN_COMPONENT);
 
@@ -132,7 +128,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Action Component
 	if (definitionJSON.isMember("actionComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::ACTION_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::ACTION_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::ACTION_COMPONENT);
 
@@ -141,7 +137,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Particle X Component
 	if (definitionJSON.isMember("particleXComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::PARTICLE_X_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PARTICLE_X_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::PARTICLE_X_COMPONENT);
 
@@ -150,7 +146,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Simple Particle Component
 	if (definitionJSON.isMember("particleComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::PARTICLE_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PARTICLE_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::PARTICLE_COMPONENT);
 
@@ -159,7 +155,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Inventory Component
 	if (definitionJSON.isMember("inventoryComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::INVENTORY_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::INVENTORY_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::INVENTORY_COMPONENT);
 
@@ -168,7 +164,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//UIControl Component
 	if (definitionJSON.isMember("UIControlComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::UICONTROL_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::UICONTROL_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::UICONTROL_COMPONENT);
 
@@ -177,7 +173,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Weapon Component
 	if (definitionJSON.isMember("weaponComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::WEAPON_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::WEAPON_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::WEAPON_COMPONENT);
 
@@ -186,7 +182,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Pool Component
 	if (definitionJSON.isMember("poolComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::POOL_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::POOL_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::POOL_COMPONENT);
 
@@ -195,7 +191,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Composite Component
 	if (definitionJSON.isMember("compositeComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::COMPOSITE_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::COMPOSITE_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::COMPOSITE_COMPONENT);
 
@@ -204,7 +200,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Brain Component
 	if (definitionJSON.isMember("brainComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::BRAIN_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::BRAIN_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::BRAIN_COMPONENT);
 	}
@@ -212,7 +208,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Navigation Component
 	if (definitionJSON.isMember("navigationComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::NAVIGATION_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::NAVIGATION_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::NAVIGATION_COMPONENT);
 	}
@@ -220,7 +216,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Attachments Component
 	if (definitionJSON.isMember("attachmentsComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::ATTACHMENTS_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::ATTACHMENTS_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::ATTACHMENTS_COMPONENT);
 	}
@@ -228,7 +224,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Hud Component
 	if (definitionJSON.isMember("hudComponent"))
 	{
-		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::HUD_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::HUD_COMPONENT);
 		component->setParent(this);
 		addComponent(component, ComponentTypes::HUD_COMPONENT);
 	}
@@ -424,6 +420,7 @@ void GameObject::postInit()
 		const auto attachmentsComponent = getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
 		attachmentsComponent->postInit();
 	}
+
 
 }
 

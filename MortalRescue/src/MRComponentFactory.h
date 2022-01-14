@@ -13,14 +13,14 @@ public:
 
 private:
 	//Create version that has ALL possible inputs
-	std::shared_ptr<Component> _create(
+	std::shared_ptr<Component> create(
 		Json::Value definitionJSON,
 		std::string textComponentGameObjectid,
 		Scene* scene,
 		float xMapPos,
 		float yMapPos,
 		float angleAdjust,
-		ComponentTypes componentType) override;
+		const int componentType) override;
 
 };
 

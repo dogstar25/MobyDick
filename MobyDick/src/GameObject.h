@@ -15,6 +15,8 @@
 
 #include <box2d/box2d.h>
 
+#include "BaseConstants.h"
+
 #include "GameObjectDefinition.h"
 #include "components/TransformComponent.h"
 #include "components/ActionComponent.h"
@@ -106,7 +108,7 @@ public:
 		return std::static_pointer_cast<componentType>(m_components.at((int)componentTypeIndex));
 	}*/
 
-	inline std::shared_ptr<Component> addComponent(std::shared_ptr<Component> component, ComponentTypes componentTypeIndex)
+	inline std::shared_ptr<Component> addComponent(std::shared_ptr<Component> component, const int componentTypeIndex)
 	{
 		m_components[(int)componentTypeIndex] = std::move(component);
 		return m_components.at((int)componentTypeIndex);
@@ -114,7 +116,7 @@ public:
 
 
 	template <typename componentType>
-	inline std::shared_ptr<componentType> getComponent(ComponentTypes componentTypeIndex)
+	inline std::shared_ptr<componentType> getComponent(const int componentTypeIndex)
 	{
 
 		if (hasComponent(componentTypeIndex))
@@ -127,7 +129,7 @@ public:
 		}
 	}
 
-	bool hasComponent(ComponentTypes componentTypeIndex) {
+	bool hasComponent(const int componentTypeIndex) {
 
 		if (!m_components[(int)componentTypeIndex]) {
 			return false;
@@ -170,7 +172,7 @@ private:
 
 	//Components
 	//std::unordered_map<std::type_index, std::shared_ptr<Component>>m_components;
-	std::array<std::shared_ptr<Component>, static_cast<int>(ComponentTypes::COUNT)+1>m_components;
+	std::array<std::shared_ptr<Component>, static_cast<int>(ComponentTypes::MAX_COMPONENT_TYPES)>m_components;
 
 	std::string _buildName(std::string id, float xMapPos, float yMapPos, Scene* parentScene);
 
