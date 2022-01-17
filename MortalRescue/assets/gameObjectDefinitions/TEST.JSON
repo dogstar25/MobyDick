@@ -1,0 +1,61 @@
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                }
+            ]
+
+
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "PHYSICS_COMPONENT"
+                },
+                {
+                    "id": "ANIMATION_COMPONENT"
+                },
+                {
+                    "id": "CHILDREN_COMPONENT"
+                },
+                {
+                    "id": "ATTACHMENTS_COMPONENT"
+                },
+                {
+                    "id": "ACTION_COMPONENT"
+                },
+                {
+                    "id": "COMPOSITE_COMPONENT"
+                },
+                {
+                    "id": "HUD_COMPONENT"
+                },
+                {
+                    "id": "PARTICLE_COMPONENT"
+                },
+                {
+                    "id": "PARTICLE_X_COMPONENT"
+                },
+                {
+                    "id": "POOL_COMPONENT"
+                },
+                {
+                    "id": "TEXT_COMPONENT"
+                },
+                {
+                    "id": "VITALITY_COMPONENT"
+                },
+                {
+                    "id": "NAVIGATION_COMPONENT"
+                },
+                {
+                    "id": "WEAPON_COMPONENT"
+                }
+
+            ]

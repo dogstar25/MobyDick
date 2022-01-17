@@ -161,7 +161,7 @@ namespace ComponentTypes {
 	inline constexpr int NAVIGATION_COMPONENT = 10;
 	inline constexpr int PARTICLE_X_COMPONENT = 11;
 	inline constexpr int PHYSICS_COMPONENT = 12;
-	inline constexpr int PLAYERCONTROL_COMPONENT = 13;
+	inline constexpr int PLAYER_CONTROL_COMPONENT = 13;
 	inline constexpr int POOL_COMPONENT = 14;
 	inline constexpr int RENDER_COMPONENT = 15;
 	inline constexpr int TEXT_COMPONENT = 16;

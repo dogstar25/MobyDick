@@ -30,17 +30,15 @@ public:
 
 	Component();
 	~Component();
-	virtual void update();
+	virtual void update() = 0;
 	virtual void postInit() {};
-	virtual void postInit(GameObject*) {};
 
 	virtual void setParent(GameObject* gameObject) { m_parentGameObject = gameObject; }
 	GameObject* parent() { return m_parentGameObject; }
 
-	std::string m_gameObjectId{ "" };
-
 protected:
 	GameObject* m_parentGameObject{ nullptr };
+	std::string m_gameObjectId{};
 
 
 };

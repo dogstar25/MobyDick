@@ -9,18 +9,15 @@
 
 extern std::unique_ptr<Game> game;
 
-TextComponent::TextComponent(std::string gameObjectId, Json::Value definitionJSON)
+TextComponent::TextComponent(std::string gameObjectId, Json::Value componentJSON)
 {
 
-	//gameObjectId can be dynamic because of the debug text so it must be passed in
-	m_gameObjectId = gameObjectId;
-
-	Json::Value textComponentJSON = definitionJSON["textComponent"];
 	m_isDebugText = false;
-	m_isDynamic = textComponentJSON["dynamic"].asBool();
-	m_fontId = textComponentJSON["font"].asString();
-	m_textValue = textComponentJSON["value"].asString();
-	m_fontSize = textComponentJSON["fontSize"].asInt();
+	m_isDynamic = componentJSON["dynamic"].asBool();
+	m_fontId = componentJSON["font"].asString();
+	m_textValue = componentJSON["value"].asString();
+	m_fontSize = componentJSON["fontSize"].asInt();
+	m_gameObjectId = gameObjectId;
 
 	if (m_textValue.empty())
 	{
@@ -149,6 +146,12 @@ std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
 	TextItem* newText;
 	std::shared_ptr<Texture> texture;
 
+
+
+
+	//
+	//ToDo: completely delete dynamicTextManager and use Status Manager instead
+	//
 	newText = DynamicTextManager::instance().getTextItem(m_gameObjectId);
 
 	//use a timer to slow down the re-generating of dynamic text because its time consuming

@@ -2,135 +2,135 @@
     "gameObjects": [
         {
             "id": "WALL1_OPEN",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::WALL",
-            "traitTags": ["barrier"],
+            "traitTags": [ "barrier" ],
             "description": "WALL1_OPEN",
-            "transformComponent": {
-                "size": {
-                    "width": 32,
-                    "height": 32
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_WALL1_OPEN",
+                    "color": {
+                        "red": 38,
+                        "green": 195,
+                        "blue": 15,
+                        "alpha": 255,
+                        "random": false
+                    }
                 },
-                "absolutePositioning": false
-
-            },
-            "renderComponent": {
-                "textureId": "TX_WALL1_OPEN",
-                "color": {
-                    "red": 38,
-                    "green": 195,
-                    "blue": 15,
-                    "alpha": 255,
-                    "random": false
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "collisionShape": "B2_BOX",
+                    "friction": 0.3
                 }
-
-            },
-            "physicsComponent": {
-                "type": "B2_STATIC",
-                "collisionShape": "B2_BOX",
-                "friction": 0.3
-                // "collisionCategory": "CollisionCat::WALL"
-            }
-
+            ]
         },
         {
             "id": "WALL1_COLUMN",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::WALL",
             "traitTags": [ "barrier" ],
             "description": "WALL1_COLUMN",
-            "transformComponent": {
-                "size": {
-                    "width": 32,
-                    "height": 32
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_WALL1_COLUMN",
+                    "color": {
+                        "red": 38,
+                        "green": 195,
+                        "blue": 15,
+                        "alpha": 255,
+                        "random": false
+                    }
                 },
-                "absolutePositioning": false
-
-            },
-            "renderComponent": {
-                "textureId": "TX_WALL1_COLUMN",
-                "color": {
-                    "red": 38,
-                    "green": 195,
-                    "blue": 15,
-                    "alpha": 255,
-                    "random": false
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "collisionShape": "B2_BOX",
+                    "friction": 0.3
                 }
-
-            },
-            "physicsComponent": {
-                "type": "B2_STATIC",
-                "collisionShape": "B2_BOX",
-                "friction": 0.3,
-                "collisionCategory": "CollisionCat::WALL"
-            }
-
+            ]
         },
         {
             "id": "WALL1_CORNER",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::WALL",
             "traitTags": [ "barrier" ],
             "description": "WALL1_CORNER",
-            "transformComponent": {
-                "size": {
-                    "width": 32,
-                    "height": 32
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_WALL1_CORNER",
+                    "color": {
+                        "red": 38,
+                        "green": 195,
+                        "blue": 15,
+                        "alpha": 255,
+                        "random": false
+                    }
                 },
-                "absolutePositioning": false
-
-            },
-            "renderComponent": {
-                "textureId": "TX_WALL1_CORNER",
-                "color": {
-                    "red": 38,
-                    "green": 195,
-                    "blue": 0,
-                    "alpha": 255,
-                    "random": false
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "collisionShape": "B2_BOX",
+                    "friction": 0.3
                 }
-
-            },
-            "physicsComponent": {
-                "type": "B2_STATIC",
-                "collisionShape": "B2_BOX",
-                "friction": 0.3,
-                "collisionCategory": "CollisionCat::WALL"
-            }
-
+            ]
         },
         {
             "id": "WALL1_END",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::WALL",
             "traitTags": [ "barrier" ],
             "description": "WALL1_END",
-            "transformComponent": {
-                "size": {
-                    "width": 32,
-                    "height": 32
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_WALL1_END",
+                    "color": {
+                        "red": 38,
+                        "green": 195,
+                        "blue": 15,
+                        "alpha": 255,
+                        "random": false
+                    }
                 },
-                "absolutePositioning": false
-
-            },
-            "renderComponent": {
-                "textureId": "TX_WALL1_END",
-                "color": {
-                    "red": 38,
-                    "green": 195,
-                    "blue": 15,
-                    "alpha": 255,
-                    "random": false
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "collisionShape": "B2_BOX",
+                    "friction": 0.3
                 }
-
-            },
-            "physicsComponent": {
-                "type": "B2_STATIC",
-                "collisionShape": "B2_BOX",
-                "friction": 0.3,
-                "collisionCategory": "CollisionCat::WALL"
-            }
-
+            ]
         },
         {
             "id": "WALL1_HALL",
@@ -138,67 +138,66 @@
             "collisionTag": "CollisionTag::WALL",
             "traitTags": [ "barrier" ],
             "description": "WALL1_HALL",
-            "transformComponent": {
-                "size": {
-                    "width": 32,
-                    "height": 32
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_WALL1_HALL",
+                    "color": {
+                        "red": 38,
+                        "green": 195,
+                        "blue": 15,
+                        "alpha": 255,
+                        "random": false
+                    }
                 },
-                "absolutePositioning": false
-
-            },
-            "renderComponent": {
-                "textureId": "TX_WALL1_HALL",
-                "color": {
-                    "red": 38,
-                    "green": 195,
-                    "blue": 15,
-                    "alpha": 255,
-                    "random": false
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "collisionShape": "B2_BOX",
+                    "friction": 0.3
                 }
-
-            },
-            "physicsComponent": {
-                "type": "B2_STATIC",
-                "collisionShape": "B2_BOX",
-                "friction": 0.3,
-                "collisionCategory": "CollisionCat::WALL"
-            }
-
+            ]
         },
-
         {
             "id": "WALL1_WALL",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::WALL",
             "traitTags": [ "barrier" ],
             "description": "WALL1_WALL",
-            "transformComponent": {
-                "size": {
-                    "width": 32,
-                    "height": 32
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_WALL1_WALL",
+                    "color": {
+                        "red": 38,
+                        "green": 195,
+                        "blue": 15,
+                        "alpha": 255,
+                        "random": false
+                    }
                 },
-                "absolutePositioning": false
-
-            },
-            "renderComponent": {
-                "textureId": "TX_WALL1_WALL",
-                "color": {
-                    "red": 38,
-                    "green": 195,
-                    "blue": 15,
-                    "alpha": 255,
-                    "random": false
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "collisionShape": "B2_BOX",
+                    "friction": 0.3
                 }
-
-            },
-            "physicsComponent": {
-                "type": "B2_STATIC",
-                "collisionShape": "B2_BOX",
-                "friction": 0.3,
-                "collisionCategory": "CollisionCat::WALL"
-            }
-
+            ]
         }
-
     ]
 }

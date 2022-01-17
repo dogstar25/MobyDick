@@ -14,6 +14,29 @@ EnumMap& EnumMap::instance()
 EnumMap::EnumMap()
 {
 
+	//Component Types
+	m_enumMap["ACTION_COMPONENT"] = (int)ComponentTypes::ACTION_COMPONENT;
+	m_enumMap["ANIMATION_COMPONENT"] = (int)ComponentTypes::ANIMATION_COMPONENT;
+	m_enumMap["ATTACHMENTS_COMPONENT"] = (int)ComponentTypes::ATTACHMENTS_COMPONENT;
+	m_enumMap["BRAIN_COMPONENT"] = (int)ComponentTypes::BRAIN_COMPONENT;
+	m_enumMap["CHILDREN_COMPONENT"] = (int)ComponentTypes::CHILDREN_COMPONENT;
+	m_enumMap["COMPOSITE_COMPONENT"] = (int)ComponentTypes::COMPOSITE_COMPONENT;
+	m_enumMap["HUD_COMPONENT"] = (int)ComponentTypes::HUD_COMPONENT;
+	m_enumMap["INVENTORY_COMPONENT"] = (int)ComponentTypes::INVENTORY_COMPONENT;
+	m_enumMap["PARTICLE_COMPONENT"] = (int)ComponentTypes::PARTICLE_COMPONENT;
+	m_enumMap["NAVIGATION_COMPONENT"] = (int)ComponentTypes::NAVIGATION_COMPONENT;
+	m_enumMap["PARTICLE_X_COMPONENT"] = (int)ComponentTypes::PARTICLE_X_COMPONENT;
+	m_enumMap["PHYSICS_COMPONENT"] = (int)ComponentTypes::PHYSICS_COMPONENT;
+	m_enumMap["PLAYER_CONTROL_COMPONENT"] = (int)ComponentTypes::PLAYER_CONTROL_COMPONENT;
+	m_enumMap["POOL_COMPONENT"] = (int)ComponentTypes::POOL_COMPONENT;
+	m_enumMap["RENDER_COMPONENT"] = (int)ComponentTypes::RENDER_COMPONENT;
+	m_enumMap["TEXT_COMPONENT"] = (int)ComponentTypes::TEXT_COMPONENT;
+	m_enumMap["TRANSFORM_COMPONENT"] = (int)ComponentTypes::TRANSFORM_COMPONENT;
+	m_enumMap["UICONTROL_COMPONENT"] = (int)ComponentTypes::UICONTROL_COMPONENT;
+	m_enumMap["VITALITY_COMPONENT"] = (int)ComponentTypes::VITALITY_COMPONENT;
+	m_enumMap["WEAPON_COMPONENT"] = (int)ComponentTypes::WEAPON_COMPONENT;
+
+
 	//Renderer Types
 	m_enumMap["RenderType::OPENGL"] = (int)RendererType::OPENGL;
 	m_enumMap["RenderType::SDL"] = (int)RendererType::SDL;

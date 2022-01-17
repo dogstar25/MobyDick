@@ -42,7 +42,7 @@ class ChildrenComponent : public Component
 {
 public:
 	ChildrenComponent();
-	ChildrenComponent(Json::Value definitionJSON, Scene* scene);
+	ChildrenComponent(Json::Value componentJSON, Scene* scene);
 	~ChildrenComponent();
 
 	void update() override;

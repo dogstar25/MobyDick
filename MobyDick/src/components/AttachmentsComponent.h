@@ -30,7 +30,7 @@ class AttachmentsComponent :   public Component
 {
 public:
 	AttachmentsComponent();
-	AttachmentsComponent(Json::Value definitionJSON, Scene* parentScene);
+	AttachmentsComponent(Json::Value componentJSON, Scene* parentScene);
 	~AttachmentsComponent();
 
 	void update() override;

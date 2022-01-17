@@ -5,27 +5,21 @@
 #include "../GameObject.h"
 
 
-AnimationComponent::AnimationComponent(Json::Value definitionJSON)
+AnimationComponent::AnimationComponent(Json::Value componentJSON)
 {
 
-	//Get reference to the animationComponent JSON config and transformComponent JSON config
-	Json::Value animationComponentJSON = definitionJSON["animationComponent"];
-
-	//Build animationComponent details
-	m_gameObjectId = definitionJSON["id"].asString();
-	
-	if (animationComponentJSON.isMember("defaultState")) {
-		m_defaultAnimationState = EnumMap::instance().toEnum(animationComponentJSON["defaultState"].asString());
+	if (componentJSON.isMember("defaultState")) {
+		m_defaultAnimationState = EnumMap::instance().toEnum(componentJSON["defaultState"].asString());
 	}
 	else {
 		m_defaultAnimationState=0;
 	}
 
-	m_frameSize.x = animationComponentJSON["frameSize"]["width"].asFloat();
-	m_frameSize.y = animationComponentJSON["frameSize"]["height"].asFloat();
+	m_frameSize.x = componentJSON["frameSize"]["width"].asFloat();
+	m_frameSize.y = componentJSON["frameSize"]["height"].asFloat();
 
 	int i = 0;
-	for (Json::Value animItr : animationComponentJSON["animations"])
+	for (Json::Value animItr : componentJSON["animations"])
 	{
 		i++;
 		int state = EnumMap::instance().toEnum(animItr["state"].asString());

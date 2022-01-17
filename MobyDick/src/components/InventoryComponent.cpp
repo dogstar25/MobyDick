@@ -6,12 +6,10 @@ InventoryComponent::InventoryComponent()
 
 }
 
-InventoryComponent::InventoryComponent(Json::Value definitionJSON, Scene* parentScene)
+InventoryComponent::InventoryComponent(Json::Value componentJSON, Scene* parentScene)
 {
 
 	m_activeItem = 0;
-
-	Json::Value definitionComponentJSON = definitionJSON["inventoryComponent"];
 
 	//for (Json::Value itrItem : definitionComponentJSON["items"])
 	//{

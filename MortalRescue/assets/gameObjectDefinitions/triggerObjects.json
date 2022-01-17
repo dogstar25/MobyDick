@@ -2,30 +2,36 @@
     "gameObjects": [
         {
             "id": "LOADLEVEL_TRIGGER",
-            "type": "GameObjectType::ABSTRACT",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": ["trigger"],
-            "transformComponent": {
-                "size": {
-                    "width": 64,
-                    "height": 64
+            "traitTags": [ "trigger" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
                 },
-                "absolutePositioning": false
-            },
-            "physicsComponent": {
-                "type": "B2_STATIC",
-                "collisionShape": "B2_BOX"
-            },
-            "actionComponent": {
-                "actions": [
-                    {
-                        "actionId": "ACTION_ON_TRIGGER",
-                        "actionClass": "LoadLevel",
-                        "param1": "2"
-                    }
-                ]
-            }
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "collisionShape": "B2_BOX"
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_ON_TRIGGER",
+                            "actionClass": "LoadLevel",
+                            "param1": "2"
+                        }
+                    ]
+                }
+            ]
         }
-
     ]
 }

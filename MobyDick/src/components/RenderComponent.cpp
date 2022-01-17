@@ -16,42 +16,39 @@ RenderComponent::RenderComponent()
 }
 
 
-RenderComponent::RenderComponent(Json::Value definitionJSON)
+RenderComponent::RenderComponent(Json::Value componentJSON)
 {
-	Json::Value itrRender = definitionJSON["renderComponent"];
 
-	m_gameObjectId = definitionJSON["id"].asString();;
-
-	if (itrRender.isMember("color"))
+	if (componentJSON.isMember("color"))
 	{
-		m_color = util::JsonToColor(itrRender["color"]);
+		m_color = util::JsonToColor(componentJSON["color"]);
 	}
 	else
 	{
 		setColor(255, 255, 255, 255);
 	}
 
-	m_textureId = itrRender["textureId"].asString();
-	m_xRenderAdjustment = itrRender["xRenderAdjustment"].asFloat();
-	m_yRenderAdjustment = itrRender["yRenderAdjustment"].asFloat();
+	m_textureId = componentJSON["textureId"].asString();
+	m_xRenderAdjustment = componentJSON["xRenderAdjustment"].asFloat();
+	m_yRenderAdjustment = componentJSON["yRenderAdjustment"].asFloat();
 
-	if (itrRender.isMember("textureBlendMode")) {
-		m_textureBlendMode = static_cast<RenderBlendMode>(EnumMap::instance().toEnum(itrRender["textureBlendMode"].asString()));
+	if (componentJSON.isMember("textureBlendMode")) {
+		m_textureBlendMode = static_cast<RenderBlendMode>(EnumMap::instance().toEnum(componentJSON["textureBlendMode"].asString()));
 	}
 	else {
 		m_textureBlendMode = RenderBlendMode::BLEND;
 	}
 
-	if (itrRender.isMember("outline")) {
+	if (componentJSON.isMember("outline")) {
 		m_renderOutline = true;
-		m_outlineThickness = itrRender["outline"]["thickness"].asInt();
-		m_outLineColor =  util::JsonToColor(itrRender["outline"]["color"]);
+		m_outlineThickness = componentJSON["outline"]["thickness"].asInt();
+		m_outLineColor =  util::JsonToColor(componentJSON["outline"]["color"]);
 	}
 	else {
 		m_renderOutline = false;
 	}
 
-	m_texture = TextureManager::instance().getTexture(itrRender["textureId"].asString());
+	m_texture = TextureManager::instance().getTexture(componentJSON["textureId"].asString());
 	
 	
 

@@ -19,7 +19,7 @@ class PlayerControlComponent : public Component
 public:
 
 	PlayerControlComponent();
-	PlayerControlComponent(Json::Value definitionJSON);
+	PlayerControlComponent(Json::Value componentJSON);
 
 	~PlayerControlComponent();
 

@@ -19,7 +19,7 @@ class GameObject;
 class ParticleXComponent : public Component
 {
 public:
-	ParticleXComponent(Json::Value definitionJSON);
+	ParticleXComponent(Json::Value componentJSON);
 	~ParticleXComponent();
 
 	void update() override;

@@ -7,18 +7,14 @@ TransformComponent::TransformComponent()
 {
 }
 
-TransformComponent::TransformComponent(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust)
+TransformComponent::TransformComponent(Json::Value componentJSON, float xMapPos, float yMapPos, float angleAdjust)
 {
-		Json::Value transformComponentJSON = definitionJSON["transformComponent"];
-
-		m_gameObjectId = definitionJSON["id"].asString();;
-
 		m_angle = angleAdjust;
 
-		auto objectWidth = transformComponentJSON["size"]["width"].asFloat();
-		auto objectHeight = transformComponentJSON["size"]["height"].asFloat();
+		auto objectWidth = componentJSON["size"]["width"].asFloat();
+		auto objectHeight = componentJSON["size"]["height"].asFloat();
 
-		m_centeredPositioning = transformComponentJSON["centeredPositioning"].asBool();
+		m_centeredPositioning = componentJSON["centeredPositioning"].asBool();
 
 		if (m_centeredPositioning == true) {
 
@@ -36,9 +32,9 @@ TransformComponent::TransformComponent(Json::Value definitionJSON, float xMapPos
 		}
 
 		m_originalPosition = m_position;
-		m_size.Set(transformComponentJSON["size"]["width"].asFloat(), transformComponentJSON["size"]["height"].asFloat());
+		m_size.Set(componentJSON["size"]["width"].asFloat(), componentJSON["size"]["height"].asFloat());
 
-		m_absolutePositioning = transformComponentJSON["absolutePositioning"].asBool();
+		m_absolutePositioning = componentJSON["absolutePositioning"].asBool();
 		
 
 }

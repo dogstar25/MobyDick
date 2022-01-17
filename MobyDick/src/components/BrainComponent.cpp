@@ -18,16 +18,13 @@ BrainComponent::BrainComponent()
 {
 }
 
-BrainComponent::BrainComponent(Json::Value definitionJSON)
+BrainComponent::BrainComponent(Json::Value componentJSON)
 {
 
-	Json::Value brainComponentJSON = definitionJSON["brainComponent"];
-
-	m_sensorLength = brainComponentJSON["sensorLength"].asInt();
-	m_sensorOffset = brainComponentJSON["sensorOffset"].asInt();
-	m_sensorCount = brainComponentJSON["sensorCount"].asInt();
-	m_sightSensorSize = brainComponentJSON["sightSensorSize"].asInt();
-
+	m_sensorLength = componentJSON["sensorLength"].asInt();
+	m_sensorOffset = componentJSON["sensorOffset"].asInt();
+	m_sensorCount = componentJSON["sensorCount"].asInt();
+	m_sightSensorSize = componentJSON["sightSensorSize"].asInt();
 
 }
 

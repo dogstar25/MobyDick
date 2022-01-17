@@ -46,6 +46,7 @@ namespace util
 	b2Vec2& toBox2dPoint(b2Vec2& point);
 	b2Vec2& toRenderPoint(b2Vec2& point);
 	glm::vec2& toRenderPoint(glm::vec2& point);
+	Json::Value getComponentConfig(Json::Value definitionJSON, int);
 
 	b2Vec2 matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float);
 

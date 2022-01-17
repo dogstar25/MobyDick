@@ -11,7 +11,7 @@ class NavigationComponent : public Component
 
 public:
 	NavigationComponent() = default;
-	NavigationComponent(Json::Value definitionJSON);
+	NavigationComponent(Json::Value componentJSON);
 	~NavigationComponent();
 
 	void update() override;

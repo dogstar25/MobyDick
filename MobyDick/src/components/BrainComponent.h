@@ -13,10 +13,10 @@ class BrainComponent : public Component
 
 public:
     BrainComponent();
-    BrainComponent(Json::Value definitionJSON);
+    BrainComponent(Json::Value componentJSON);
     ~BrainComponent();
 
-    void update();
+    void update() override;
     void postInit() override;
 
     int sensorLength() { return m_sensorLength; }

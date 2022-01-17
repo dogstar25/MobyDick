@@ -49,6 +49,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 	//Add Game Specific stuff
 	_addGameCollisionTags();
+	_addGameComponentTypes();
 
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
@@ -163,4 +164,11 @@ void MRGame::_addGameCollisionTags()
 
 
 }
+
+void MRGame::_addGameComponentTypes()
+{
+	EnumMap::instance().addEnumItem("BRAIN_DRONE_COMPONENT", ComponentTypes::BRAIN_DRONE_COMPONENT);
+	EnumMap::instance().addEnumItem("WEAPON_PISTOL_COMPONENT", ComponentTypes::WEAPON_PISTOL_COMPONENT);
+}
+
 

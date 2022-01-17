@@ -37,7 +37,6 @@ public:
 	void setBullet(bool isBullet);
 	void setAngle(float angle);
 	
-
 	void attachItem(GameObject* inventoryObject, b2JointType jointType, std::optional<b2Vec2> attachLocation = std::nullopt);
 
 	//Accessor functions
@@ -45,7 +44,6 @@ public:
 	b2Vec2 position() { return m_physicsBody->GetPosition(); }
 	float angle() { return m_physicsBody->GetAngle(); }
 	b2Body* physicsBody() {	return m_physicsBody; }
-
 
 private:
 

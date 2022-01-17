@@ -59,68 +59,91 @@ std::shared_ptr<Component> ComponentFactory::create(
 	std::shared_ptr<Component> component{};
 
 	auto gameObjectId = definitionJSON["id"].asString();
+	Json::Value componentJSON{};
 
 	switch (componentType) {
 
 		case ComponentTypes::ANIMATION_COMPONENT:
-				component = std::make_shared<AnimationComponent>(definitionJSON);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::ANIMATION_COMPONENT);
+			component = std::make_shared<AnimationComponent>(componentJSON);
 			break;
 		case ComponentTypes::ACTION_COMPONENT:
-				component = std::make_shared<ActionComponent>(definitionJSON);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::ACTION_COMPONENT);
+			component = std::make_shared<ActionComponent>(componentJSON);
 			break;
 		case ComponentTypes::ATTACHMENTS_COMPONENT:
-			component = std::make_shared<AttachmentsComponent>(definitionJSON, scene);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::ATTACHMENTS_COMPONENT);
+			component = std::make_shared<AttachmentsComponent>(componentJSON, scene);
 			break;
 		case ComponentTypes::BRAIN_COMPONENT:
-			component = std::make_shared<BrainComponent>(definitionJSON);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::BRAIN_COMPONENT);
+			component = std::make_shared<BrainComponent>(componentJSON);
 			break;
 		case ComponentTypes::CHILDREN_COMPONENT:
-			component = std::make_shared<ChildrenComponent>(definitionJSON, scene);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::CHILDREN_COMPONENT);
+			component = std::make_shared<ChildrenComponent>(componentJSON, scene);
 			break;
 		case ComponentTypes::COMPOSITE_COMPONENT:
-			component = std::make_shared<CompositeComponent>(definitionJSON, scene);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::COMPOSITE_COMPONENT);
+			component = std::make_shared<CompositeComponent>(componentJSON, scene);
 			break;
 		case ComponentTypes::HUD_COMPONENT:
-			component = std::make_shared<HudComponent>(definitionJSON, scene);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::HUD_COMPONENT);
+			component = std::make_shared<HudComponent>(componentJSON, scene);
 			break;
 		case ComponentTypes::INVENTORY_COMPONENT:
-			component = std::make_shared<InventoryComponent>(definitionJSON, scene);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::INVENTORY_COMPONENT);
+			component = std::make_shared<InventoryComponent>(componentJSON, scene);
 			break;
 		case ComponentTypes::NAVIGATION_COMPONENT:
-			component = std::make_shared<NavigationComponent>(definitionJSON);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::NAVIGATION_COMPONENT);
+			component = std::make_shared<NavigationComponent>(componentJSON);
 			break;
 		case ComponentTypes::PARTICLE_COMPONENT:
-			component = std::make_shared<ParticleComponent>(definitionJSON);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::PARTICLE_COMPONENT);
+			component = std::make_shared<ParticleComponent>(componentJSON);
 			break;
 		case ComponentTypes::PARTICLE_X_COMPONENT:
-			component = std::make_shared<ParticleXComponent>(definitionJSON);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::PARTICLE_X_COMPONENT);
+			component = std::make_shared<ParticleXComponent>(componentJSON);
 			break;
 		case ComponentTypes::PHYSICS_COMPONENT:
+			//
+			//Physics component cannot be overridden right now so pass in the whole gameobject definition is needed
+			//
 			component = std::make_shared<PhysicsComponent>(definitionJSON, scene, xMapPos, yMapPos, angleAdjust);
 			break;
-		case ComponentTypes::PLAYERCONTROL_COMPONENT:
-			component = std::make_shared<PlayerControlComponent>(definitionJSON);
+		case ComponentTypes::PLAYER_CONTROL_COMPONENT:
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::PLAYER_CONTROL_COMPONENT);
+			component = std::make_shared<PlayerControlComponent>(componentJSON);
 			break;
 		case ComponentTypes::POOL_COMPONENT:
-			component = std::make_shared<PoolComponent>(definitionJSON);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::POOL_COMPONENT);
+			component = std::make_shared<PoolComponent>(componentJSON);
 			break;
 		case ComponentTypes::RENDER_COMPONENT:
-			component = std::make_shared<RenderComponent>(definitionJSON);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::RENDER_COMPONENT);
+			component = std::make_shared<RenderComponent>(componentJSON);
 			break;
 		case ComponentTypes::TEXT_COMPONENT:
-			component = std::make_shared<TextComponent>(textComponentGameObjectid, definitionJSON);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::TEXT_COMPONENT);
+			component = std::make_shared<TextComponent>(textComponentGameObjectid, componentJSON);
 			break;
 		case ComponentTypes::TRANSFORM_COMPONENT:
-			component = std::make_shared<TransformComponent>(definitionJSON, xMapPos, yMapPos, angleAdjust);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::TRANSFORM_COMPONENT);
+			component = std::make_shared<TransformComponent>(componentJSON, xMapPos, yMapPos, angleAdjust);
 			break;
 		case ComponentTypes::UICONTROL_COMPONENT:
-			component = std::make_shared<UIControlComponent>(definitionJSON);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::UICONTROL_COMPONENT);
+			component = std::make_shared<UIControlComponent>(componentJSON);
 			break;
 		case ComponentTypes::VITALITY_COMPONENT:
-			component = std::make_shared<VitalityComponent>(definitionJSON);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::VITALITY_COMPONENT);
+			component = std::make_shared<VitalityComponent>(componentJSON);
 			break;
 		case ComponentTypes::WEAPON_COMPONENT:
-			component = std::make_shared<WeaponComponent>(definitionJSON);
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::WEAPON_COMPONENT);
+			component = std::make_shared<WeaponComponent>(componentJSON);
 			break;
 		default:
 			std::cout << "This component type did not match any of the existing component types" << std::endl;

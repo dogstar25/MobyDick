@@ -7,9 +7,8 @@
 
 
 
-AttachmentsComponent::AttachmentsComponent(Json::Value definitionJSON, Scene* parentScene)
+AttachmentsComponent::AttachmentsComponent(Json::Value componentJSON, Scene* parentScene)
 {
-	Json::Value componentJSON = definitionJSON["attachmentsComponent"];
 
 	for (Json::Value itrItem : componentJSON["attachments"])
 	{
