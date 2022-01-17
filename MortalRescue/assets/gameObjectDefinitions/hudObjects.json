@@ -4,191 +4,256 @@
             "id": "HUD_STATUS_TOP",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
-            "transformComponent": {
-                "size": {
-                    "width": 255,
-                    "height": 100
-                },
-                "absolutePositioning": true
-            },
-            "renderComponent": {
-                "textureId": "TX_WHITE_QUAD",
-                "color": {
-                    "red": 10,
-                    "green": 75,
-                    "blue": 10,
-                    "alpha": 200
-                },
-                "outline": {
-                    "thickness": 1,
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_WHITE_QUAD",
                     "color": {
                         "red": 10,
                         "green": 75,
                         "blue": 10,
-                        "alpha": 255
-                    }
-
-                }
-            },
-            "childrenComponent": {
-                "childObjects": [
-                    {
-                        "gameObjectId": "HUD_LEVEL",
-                        "centeredOnLocation": false,
-                        "absolutePosition": {
-                            "x": 2,
-                            "y": 2
-                        }
+                        "alpha": 200
                     },
-                    {
-                        "gameObjectId": "HUD_LIVES",
-                        "centeredOnLocation": false,
-                        "absolutePosition": {
-                            "x": 2,
-                            "y": 32
+                    "outline": {
+                        "thickness": 1,
+                        "color": {
+                            "red": 10,
+                            "green": 75,
+                            "blue": 10,
+                            "alpha": 255
                         }
                     }
-                ]
-            }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 255,
+                        "height": 100
+                    },
+                    "absolutePositioning": true
+                },
+                {
+                    "id": "CHILDREN_COMPONENT",
+                    "childObjects": [
+                        {
+                            "gameObjectId": "HUD_LEVEL",
+                            "centeredOnLocation": false,
+                            "absolutePosition": {
+                                "x": 2,
+                                "y": 2
+                            }
+                        },
+                        {
+                            "gameObjectId": "HUD_LIVES",
+                            "centeredOnLocation": false,
+                            "absolutePosition": {
+                                "x": 2,
+                                "y": 32
+                            }
+                        }
+                    ]
+                }
+            ]
         },
         {
             "id": "HUD_LEVEL",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui", "abstract" ],
             "description": "Hud Level Dynamic Text",
-            "hudComponent": {
-                "hudType": "HudItemTypes::STATUS_SINGLE",
-                "labelObjectId": "HUD_LEVEL_LABEL",
-                "labelPadding": 16,
-                "statusObjectId": "HUD_SCRAP_VALUE"
-            }
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "HUD_COMPONENT",
+                    "hudType": "HudItemTypes::STATUS_SINGLE",
+                    "labelObjectId": "HUD_LEVEL_LABEL",
+                    "labelPadding": 16,
+                    "statusObjectId": "HUD_SCRAP_VALUE"
+                }
+            ]
         },
         {
             "id": "HUD_LEVEL_LABEL",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "description": "Hud Level Label",
-            "textComponent": {
-                "value": "Level",
-                "dynamic": false,
-                "font": "FONT_ARIAL_REG",
-                "fontSize": 16
-            },
-            "renderComponent": {
-                "color": {
-                    "red": 255,
-                    "green": 255,
-                    "blue": 255,
-                    "alpha": 255
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "TEXT_COMPONENT",
+                    "value": "Level",
+                    "dynamic": false,
+                    "font": "FONT_ARIAL_REG",
+                    "fontSize": 16
                 }
-            }
+            ]
         },
         {
             "id": "HUD_LEVEL_VALUE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "description": "Hud Level Value",
-            "textComponent": {
-                "dynamic": true,
-                "font": "FONT_ARIAL_REG",
-                "fontSize": 16
-            },
-            "renderComponent": {
-                "color": {
-                    "red": 255,
-                    "green": 255,
-                    "blue": 255,
-                    "alpha": 255
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "TEXT_COMPONENT",
+                    "dynamic": true,
+                    "font": "FONT_ARIAL_REG",
+                    "fontSize": 16
                 }
-            }
+            ]
         },
         {
             "id": "HUD_SCRAP_VALUE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "description": "Hud Level Value",
-            "textComponent": {
-                "dynamic": true,
-                "font": "FONT_ARIAL_REG",
-                "fontSize": 16
-            },
-            "renderComponent": {
-                "color": {
-                    "red": 255,
-                    "green": 255,
-                    "blue": 255,
-                    "alpha": 255
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "TEXT_COMPONENT",
+                    "dynamic": true,
+                    "font": "FONT_ARIAL_REG",
+                    "fontSize": 16
                 }
-            }
+            ]
         },
         {
             "id": "HUD_LIVES",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui", "abstract" ],
             "description": "Hud Level Dynamic Text",
-            "hudComponent": {
-                "hudType": "HudItemTypes::STATUS_SERIES",
-                "labelObjectId": "HUD_LIVES_LABEL",
-                "labelPadding": 16,
-                "statusObjectId": "HUD_BAR"
-            }
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "HUD_COMPONENT",
+                    "hudType": "HudItemTypes::STATUS_SERIES",
+                    "labelObjectId": "HUD_LIVES_LABEL",
+                    "labelPadding": 16,
+                    "statusObjectId": "HUD_BAR"
+                }
+            ]
         },
         {
             "id": "HUD_LIVES_LABEL",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "description": "Hud Level Value",
-            "textComponent": {
-                "value": "Lives",
-                "dynamic": false,
-                "font": "FONT_ARIAL_REG",
-                "fontSize": 16
-            },
-            "renderComponent": {
-                "color": {
-                    "red": 255,
-                    "green": 255,
-                    "blue": 255,
-                    "alpha": 255
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "TEXT_COMPONENT",
+                    "value": "Lives",
+                    "dynamic": false,
+                    "font": "FONT_ARIAL_REG",
+                    "fontSize": 16
                 }
-            }
+            ]
         },
         {
             "id": "HUD_LIVES_VALUE",
             "collisionTag": "CollisionTag::GENERAL_SOLID",
             "traitTags": [],
-            "transformComponent": {
-                "size": {
-                    "width": 16,
-                    "height": 16
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_BOWMAN1"
                 },
-                "absolutePositioning": true
-            },
-            "renderComponent": {
-                "textureId": "TX_BOWMAN1"
-            }
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 16,
+                        "height": 16
+                    },
+                    "absolutePositioning": true
+                },
+                {
+                    "id": "TEXT_COMPONENT",
+                    "value": "Lives",
+                    "dynamic": false,
+                    "font": "FONT_ARIAL_REG",
+                    "fontSize": 16
+                }
+            ]
         },
         {
             "id": "HUD_BAR",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "description": "Hud Bar rectangle image",
-            "transformComponent": {
-                "size": {
-                    "width": 2,
-                    "height": 32
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_WHITE_QUAD",
+                    "color": {
+                        "red": 255,
+                        "green": 0,
+                        "blue": 0,
+                        "alpha": 255
+                    }
                 },
-                "absolutePositioning": true
-            },
-            "renderComponent": {
-                "textureId": "TX_WHITE_QUAD",
-                "color": {
-                    "red": 255,
-                    "green": 0,
-                    "blue": 0,
-                    "alpha": 255
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 2,
+                        "height": 32
+                    },
+                    "absolutePositioning": true
                 }
-            }
+            ]
         }
 
     ]

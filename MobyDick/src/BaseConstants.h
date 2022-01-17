@@ -143,30 +143,62 @@ enum class GLDrawerType {
 	count
 };
 
+
+//Component Types
+namespace ComponentTypes {
+	inline constexpr int MAX_COMPONENT_TYPES = 32;
+
+	inline constexpr int NONE = 0;
+	inline constexpr int ACTION_COMPONENT = 1;
+	inline constexpr int ANIMATION_COMPONENT = 2;
+	inline constexpr int ATTACHMENTS_COMPONENT = 3;
+	inline constexpr int BRAIN_COMPONENT = 4;
+	inline constexpr int CHILDREN_COMPONENT = 5;
+	inline constexpr int COMPOSITE_COMPONENT = 6;
+	inline constexpr int HUD_COMPONENT = 7;
+	inline constexpr int INVENTORY_COMPONENT = 8;
+	inline constexpr int PARTICLE_COMPONENT = 9;
+	inline constexpr int NAVIGATION_COMPONENT = 10;
+	inline constexpr int PARTICLE_X_COMPONENT = 11;
+	inline constexpr int PHYSICS_COMPONENT = 12;
+	inline constexpr int PLAYER_CONTROL_COMPONENT = 13;
+	inline constexpr int POOL_COMPONENT = 14;
+	inline constexpr int RENDER_COMPONENT = 15;
+	inline constexpr int TEXT_COMPONENT = 16;
+	inline constexpr int TRANSFORM_COMPONENT = 17;
+	inline constexpr int UICONTROL_COMPONENT = 18;
+	inline constexpr int VITALITY_COMPONENT = 19;
+	inline constexpr int WEAPON_COMPONENT = 20;
+	inline constexpr int LAST_BASE_COMPONENT = 21;
+
+}
+
+
+
 //Components
-enum class ComponentTypes {
-	ACTION_COMPONENT = 0,
-	ANIMATION_COMPONENT,
-	ATTACHMENTS_COMPONENT,
-	BRAIN_COMPONENT,
-	CHILDREN_COMPONENT,
-	COMPOSITE_COMPONENT,
-	HUD_COMPONENT,
-	INVENTORY_COMPONENT,
-	PARTICLE_COMPONENT,
-	NAVIGATION_COMPONENT,
-	PARTICLE_X_COMPONENT,
-	PHYSICS_COMPONENT,
-	PLAYERCONTROL_COMPONENT,
-	POOL_COMPONENT,
-	RENDER_COMPONENT,
-	TEXT_COMPONENT,
-	TRANSFORM_COMPONENT,
-	UICONTROL_COMPONENT,
-	VITALITY_COMPONENT,
-	WEAPON_COMPONENT,
-	COUNT
-};
+//enum class ComponentTypes {
+//	ACTION_COMPONENT = 0,
+//	ANIMATION_COMPONENT,
+//	ATTACHMENTS_COMPONENT,
+//	BRAIN_COMPONENT,
+//	CHILDREN_COMPONENT,
+//	COMPOSITE_COMPONENT,
+//	HUD_COMPONENT,
+//	INVENTORY_COMPONENT,
+//	PARTICLE_COMPONENT,
+//	NAVIGATION_COMPONENT,
+//	PARTICLE_X_COMPONENT,
+//	PHYSICS_COMPONENT,
+//	PLAYERCONTROL_COMPONENT,
+//	POOL_COMPONENT,
+//	RENDER_COMPONENT,
+//	TEXT_COMPONENT,
+//	TRANSFORM_COMPONENT,
+//	UICONTROL_COMPONENT,
+//	VITALITY_COMPONENT,
+//	WEAPON_COMPONENT,
+//	COUNT
+//};
 
 //Animation States
 inline constexpr int ANIMATION_IDLE = 0;

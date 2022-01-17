@@ -26,7 +26,7 @@ class WeaponComponent : public Component
 
 public:
 	WeaponComponent();
-	WeaponComponent(Json::Value definitionJSON);
+	WeaponComponent(Json::Value componentJSON);
 	~WeaponComponent();
 
 	void update();

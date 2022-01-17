@@ -9,24 +9,22 @@ VitalityComponent::VitalityComponent()
 }
 
 
-VitalityComponent::VitalityComponent(Json::Value definitionJSON)
+VitalityComponent::VitalityComponent(Json::Value componentJSON)
 {
 
-	Json::Value vitalityComponentJSON = definitionJSON["vitalityComponent"];
-
-	m_speed = vitalityComponentJSON["speed"].asFloat();
-	m_rotationSpeed = vitalityComponentJSON["rotationSpeed"].asFloat();
-	m_lifetime = std::chrono::duration<float>(vitalityComponentJSON["lifetime"].asFloat());
+	m_speed = componentJSON["speed"].asFloat();
+	m_rotationSpeed = componentJSON["rotationSpeed"].asFloat();
+	m_lifetime = std::chrono::duration<float>(componentJSON["lifetime"].asFloat());
 	
-	float lifetime = vitalityComponentJSON["lifetime"].asFloat();
+	float lifetime = componentJSON["lifetime"].asFloat();
 	m_lifetimeTimer = Timer(lifetime);
 
-	m_isLifetimeAlphaFade = vitalityComponentJSON["lifetimeAlphaFade"].asBool();
+	m_isLifetimeAlphaFade = componentJSON["lifetimeAlphaFade"].asBool();
 
 	//Regeneration related
-	if (vitalityComponentJSON.isMember("regenerating")) {
+	if (componentJSON.isMember("regenerating")) {
 		m_isRegenerative = true;
-		auto& regenJSON = vitalityComponentJSON["regenerating"];
+		auto& regenJSON = componentJSON["regenerating"];
 
 			m_regenSpeed = regenJSON["regenerateSpeed"].asFloat();
 			m_resistance = regenJSON["resistance"].asFloat();

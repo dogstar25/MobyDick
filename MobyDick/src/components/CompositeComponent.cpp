@@ -7,14 +7,11 @@
 
 
 
-CompositeComponent::CompositeComponent(Json::Value definitionJSON, Scene* parentScene)
+CompositeComponent::CompositeComponent(Json::Value componentJSON, Scene* parentScene)
 {
-	Json::Value compositeComponentJSON = definitionJSON["compositeComponent"];
+	Json::Value bluePrintJSON = componentJSON["blueprint"];
 
-
-	Json::Value bluePrintJSON = compositeComponentJSON["blueprint"];
-
-	m_physicsWeldPiecesOn = compositeComponentJSON["physicsWeldPiecesOn"].asBool();
+	m_physicsWeldPiecesOn = componentJSON["physicsWeldPiecesOn"].asBool();
 
 	m_blueprint.textureId = bluePrintJSON["texture"].asString();
 

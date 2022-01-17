@@ -105,7 +105,8 @@ protected:
 	int m_WorldTileWidth{};
 	int m_WorldTileHeight{};
 
-	virtual void _addGameCollisionTags() = 0;
+	virtual void _addGameCollisionTags() {};
+	virtual void _addGameComponentTypes() {};
 	
 
 };

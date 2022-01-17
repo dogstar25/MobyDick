@@ -2,6 +2,7 @@
 
 
 #include "../EnumMaps.h"
+#include "../Util.h"
 #include "../Game.h"
 
 extern std::unique_ptr<Game> game;
@@ -9,10 +10,8 @@ extern std::unique_ptr<Game> game;
 PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, Scene* parentScene, float xMapPos, float yMapPos, float angleAdjust)
 {
 	//Get reference to the animationComponent JSON config and transformComponent JSON config
-	Json::Value physicsComponentJSON = definitionJSON["physicsComponent"];
-	Json::Value transformComponentJSON = definitionJSON["transformComponent"];
-
-	m_gameObjectId = definitionJSON["id"].asString();;
+	Json::Value physicsComponentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::PHYSICS_COMPONENT);
+	Json::Value transformComponentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::TRANSFORM_COMPONENT);
 
 	m_physicsType = EnumMap::instance().toEnum(physicsComponentJSON["type"].asString());
 	m_collisionShape = EnumMap::instance().toEnum(physicsComponentJSON["collisionShape"].asString());
@@ -49,10 +48,15 @@ PhysicsComponent::~PhysicsComponent()
 
 }
 
-void PhysicsComponent::postInit(GameObject* parentGameObject)
+void PhysicsComponent::postInit()
 {
-	//m_physicsBody->SetUserData((void*)parentGameObject);
-	m_physicsBody->GetUserData().pointer = reinterpret_cast<uintptr_t>(parentGameObject);
+	
+}
+
+void PhysicsComponent::setParent(GameObject* gameObject)
+{
+	Component::setParent(gameObject);
+	m_physicsBody->GetUserData().pointer = reinterpret_cast<uintptr_t>(gameObject);
 }
 
 void PhysicsComponent::setTransform(b2Vec2 positionVector, float angle)

@@ -1,10 +1,14 @@
 #include "Util.h"
 
+#include "EnumMaps.h"
+
 #include <random>
 #include <format>
 
 #include <box2d/b2_math.h>
 #include <iomanip>
+#include <iostream>
+
 
 
 namespace util
@@ -213,6 +217,22 @@ namespace util
 		point.y *= (float)25;
 
 		return point;
+	}
+
+	Json::Value getComponentConfig(Json::Value definitionJSON, int componentType)
+	{
+		for (Json::Value componentJSON : definitionJSON["components"]) {
+
+			std::string id = componentJSON["id"].asString();
+			int type = EnumMap::instance().toEnum(id);
+			if (type == componentType) {
+				return componentJSON;
+			}
+
+		}
+
+		std::cout << "ComponentType " << componentType << "not found" << std::endl;
+		return Json::Value();
 	}
 
 	b2JointDef* createJoint(b2JointType jointType)

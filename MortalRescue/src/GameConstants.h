@@ -3,7 +3,6 @@
 
 namespace CollisionTag {
 	
-
 	inline constexpr int SMOKE_PARTICLE = 2;
 	inline constexpr int NAVIGATION_POINT = 3;
 	inline constexpr int HEAVY_PARTICLE = 4;
@@ -29,6 +28,9 @@ namespace CollectibleTypes {
 	inline constexpr int DRONE_SCRAP = 1;
 }
 
-//enum  MRComponentTypes ComponentTypes {
-//	cACTION_COMPONENT = 0,
-//};
+namespace ComponentTypes {
+
+	inline constexpr int BRAIN_DRONE_COMPONENT = 22;
+	inline constexpr int WEAPON_PISTOL_COMPONENT = 23;
+
+}

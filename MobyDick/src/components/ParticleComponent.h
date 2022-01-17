@@ -37,7 +37,7 @@ struct Particle
 class ParticleComponent : public Component
 {
 public:
-	ParticleComponent(Json::Value definitionJSON);
+	ParticleComponent(Json::Value componentJSON);
 	~ParticleComponent();
 
 	void update() override;

@@ -40,7 +40,7 @@ public:
 private:
 
 	void _addGameCollisionTags() override;
-
+	void _addGameComponentTypes() override;
 };
 
 

@@ -1,32 +1,36 @@
 #include "MRComponentFactory.h"
+
+#include "GameConstants.h"
 #include "components/BrainComponent.h"
 #include "components/InventoryComponent.h"
 #include "components/DroneBrainComponent.h"
 #include "components/PistolWeaponComponent.h"
 
 
-std::shared_ptr<Component> MRComponentFactory::_create(
+std::shared_ptr<Component> MRComponentFactory::create(
 	Json::Value definitionJSON,
 	std::string textComponentGameObjectid,
 	Scene* scene,
 	float xMapPos,
 	float yMapPos,
 	float angleAdjust,
-	ComponentTypes componentType)
+	const int componentType)
 {
 	std::shared_ptr<Component> component{};
-
 	auto gameObjectId = definitionJSON["id"].asString();
+	Json::Value componentJSON{};
 
-	//Handle game specific componenets, otherwise call the base ComponentFactory _create
-	if (gameObjectId == "DRONE" && componentType == ComponentTypes::BRAIN_COMPONENT) {
-		component = std::make_shared<DroneBrainComponent>(definitionJSON);
+	//Handle game specific componenets, otherwise call the base ComponentFactory 'create'
+	if (componentType == ComponentTypes::BRAIN_DRONE_COMPONENT) {
+		componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::BRAIN_DRONE_COMPONENT);
+		component = std::make_shared<DroneBrainComponent>(componentJSON);
 	}
-	else if (gameObjectId == "GINA_64" && componentType == ComponentTypes::WEAPON_COMPONENT) {
-		component = std::make_shared<PistolWeaponComponent>(definitionJSON);
+	else if (componentType == ComponentTypes::WEAPON_PISTOL_COMPONENT) {
+		componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::WEAPON_PISTOL_COMPONENT);
+		component = std::make_shared<PistolWeaponComponent>(componentJSON);
 	}
 	else {
-		component = ComponentFactory::_create(
+		component = ComponentFactory::create(
 			definitionJSON,
 			textComponentGameObjectid,
 			scene,

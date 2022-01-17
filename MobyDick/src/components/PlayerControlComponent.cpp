@@ -14,10 +14,8 @@ PlayerControlComponent::PlayerControlComponent()
 
 }
 
-PlayerControlComponent::PlayerControlComponent(Json::Value definitionJSON)
+PlayerControlComponent::PlayerControlComponent(Json::Value componentJSON)
 {
-
-	Json::Value componentJSON = definitionJSON["playerControlComponent"];
 
 	for (Json::Value itrControls : componentJSON["controls"])
 	{

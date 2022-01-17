@@ -14,10 +14,8 @@ UIControlComponent::~UIControlComponent()
 
 }
 
-UIControlComponent::UIControlComponent(Json::Value definitionJSON)
+UIControlComponent::UIControlComponent(Json::Value componentJSON)
 {
-
-	Json::Value componentJSON = definitionJSON["UIControlComponent"];
 
 	for (Json::Value itrControls : componentJSON["controls"])
 	{

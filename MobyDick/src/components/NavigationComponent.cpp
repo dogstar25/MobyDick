@@ -9,12 +9,10 @@ NavigationComponent::~NavigationComponent()
 
 }
 
-NavigationComponent::NavigationComponent(Json::Value definitionJSON)
+NavigationComponent::NavigationComponent(Json::Value componentJSON)
 {
 
-	Json::Value definitionComponentJSON = definitionJSON["navigationComponent"];
-
-	m_type = EnumMap::instance().toEnum(definitionComponentJSON["type"].asString());
+	m_type = EnumMap::instance().toEnum(componentJSON["type"].asString());
 
 }
 

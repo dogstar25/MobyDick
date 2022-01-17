@@ -2,37 +2,44 @@
     "gameObjects": [
         {
             "id": "PARTICLE_SMOKE_1",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::HEAVY_PARTICLE",
             "traitTags": [],
             "description": "Smoke Particle 1",
-            "transformComponent": {
-                "size": {
-                    "width": 32,
-                    "height": 32
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_SMOKE_PARTICLE_2",
+                    "textureBlendMode": "RenderBlendMode::ADD"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "collisionShape": "B2_BOX",
+                    "collisionRadius": 0.16,
+                    "friction": 0.0,
+                    "density": 5.1,
+                    "restitution": 0.3,
+                    "linearDamping": 0.0,
+                    "angularDamping": 0.0
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 50,
+                    "lifetime": 1.25,
+                    "lifetimeAlphaFade": true
+                },
+                {
+                    "id": "POOL_COMPONENT"
                 }
-            },
-            "poolComponent": {
-            },
-            "vitalityComponent": {
-                "speed": 50,
-                "lifetime": 1.25,
-                "lifetimeAlphaFade": true
-            },
-            "renderComponent": {
-                "textureId": "TX_SMOKE_PARTICLE_2",
-                "textureBlendMode": "RenderBlendMode::ADD"
-            },
-            "physicsComponent": {
-                "type": "B2_DYNAMIC",
-                "collisionShape": "B2_BOX",
-                "collisionRadius": 0.16,
-                "friction": 0.0,
-                "density": 5.1,
-                "restitution": 0.3,
-                "linearDamping": 0.0,
-                "angularDamping": 0.0
-            }
+
+            ]
         },
         {
             "id": "DEFLECT1",
@@ -40,81 +47,105 @@
             "collisionTag": "CollisionTag::DEFLECT_EFFECT",
             "traitTags": [],
             "description": "Deflect 1",
-            "transformComponent": {
-                "size": {
-                    "width": 64,
-                    "height": 64
+
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_SMOKE_PARTICLE_2",
+                    "textureBlendMode": "RenderBlendMode::ADD"
                 },
-                "absolutePositioning": false
-            },
-            "poolComponent": {
-            },
-            "vitalityComponent": {
-                "speed": 5,
-                "lifetime": 1.0,
-                "lifetimeAlphaFade": true
-            },
-            "animationComponent": {
-                "defaultState": "ANIMATION_IDLE",
-                "frameSize": {
-                    "width": 64,
-                    "height": 64
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "absolutePositioning": false
                 },
-                "animations": [
-                    {
-                        "state": "ANIMATION_IDLE",
-                        "textureId": "TX_DEFLECT1_64",
-                        "speed": 0.05,
-                        "frames": 4
-                    }
-                ]
-            },
-            "physicsComponent": {
-                "type": "B2_DYNAMIC",
-                "collisionShape": "B2_BOX",
-                "collisionRadius": 0.16,
-                "friction": 0.0,
-                "density": 0.1,
-                "restitution": 0.3,
-                "linearDamping": 0.0,
-                "angularDamping": 12.0
-            }
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "collisionShape": "B2_BOX",
+                    "collisionRadius": 0.16,
+                    "friction": 0.0,
+                    "density": 0.1,
+                    "restitution": 0.3,
+                    "linearDamping": 0.0,
+                    "angularDamping": 12.0
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 5,
+                    "lifetime": 1.0,
+                    "lifetimeAlphaFade": true
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_DEFLECT1_64",
+                            "speed": 0.05,
+                            "frames": 4
+                        }
+                    ]
+                },
+                {
+                    "id": "POOL_COMPONENT"
+                }
+
+            ]
         },
         {
             "id": "SCRAP_PIECE",
             "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::SHIELD_SCRAP",
             "traitTags": [],
-            "transformComponent": {
-                "size": {
-                    "width": 8,
-                    "height": 8
-                },
-                "absolutePositioning": false
-            },
-            "poolComponent": {
-            },
-            "vitalityComponent": {
-            },
-            "renderComponent": {
-                "textureId": "TX_PIECE_ANGLE1_8",
-                "xRenderAdjustment": 0,
-                "yRenderAdjustment": 0
-            },
-            "physicsComponent": {
-                "type": "B2_DYNAMIC",
-                "collisionShape": "B2_BOX",
-                "friction": 0.0,
-                "restitution": 1.5,
-                "density": 1.1,
-                "linearDamping": 5.0,
-                "angularDamping": 5.0,
-                "anchorPoint": {
-                    "x": 0.0,
-                    "y": 0.0
-                }
-            }
-        }
 
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_PIECE_ANGLE1_8",
+                    "xRenderAdjustment": 0,
+                    "yRenderAdjustment": 0
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 8,
+                        "height": 8
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "collisionShape": "B2_BOX",
+                    "friction": 0.0,
+                    "restitution": 1.5,
+                    "density": 1.1,
+                    "linearDamping": 5.0,
+                    "angularDamping": 5.0,
+                    "anchorPoint": {
+                        "x": 0.0,
+                        "y": 0.0
+                    }
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 50,
+                    "lifetime": 1.25,
+                    "lifetimeAlphaFade": true
+                },
+                {
+                    "id": "POOL_COMPONENT"
+                }
+            ]
+        }
     ]
 }

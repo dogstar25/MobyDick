@@ -49,6 +49,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 	//Add Game Specific stuff
 	_addGameCollisionTags();
+	_addGameComponentTypes();
 
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
@@ -135,22 +136,6 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 	}
 
-	//test
-	//auto particleXEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MAIN, 9, 9);
-	//auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, 9, 9);
-	//const auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
-	//particleComponent->addParticleEffect(ParticleEffects::ricochet);
-	//particleComponent->addParticleEffect(ParticleEffects::spark);
-	//particleComponent->setType(ParticleEmitterType::CONTINUOUS);
-	//particleComponent->setEmissionInterval(1);
-
-
-	//auto particleXEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MAIN, 9, 15);
-	//const auto& particleXComponent = particleXEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
-	//particleXComponent->addParticleEffect(ParticleEffects::ricochet);
-	//particleXComponent->setType(ParticleEmitterType::CONTINUOUS);
-
-
 	return true;
 }
 
@@ -177,5 +162,13 @@ void MRGame::_addGameCollisionTags()
 	EnumMap::instance().addEnumItem("CollisionTag::WEAPON_PICKUP", CollisionTag::WEAPON_PICKUP);
 
 
+
 }
+
+void MRGame::_addGameComponentTypes()
+{
+	EnumMap::instance().addEnumItem("BRAIN_DRONE_COMPONENT", ComponentTypes::BRAIN_DRONE_COMPONENT);
+	EnumMap::instance().addEnumItem("WEAPON_PISTOL_COMPONENT", ComponentTypes::WEAPON_PISTOL_COMPONENT);
+}
+
 

@@ -6,7 +6,7 @@ class UIControlComponent : public Component
 public:
 
 	UIControlComponent();
-	UIControlComponent(Json::Value definitionJSON);
+	UIControlComponent(Json::Value componentJSON);
 	~UIControlComponent();
 	void update();
 

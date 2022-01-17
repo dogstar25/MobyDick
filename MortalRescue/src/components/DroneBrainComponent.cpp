@@ -114,11 +114,11 @@ void DroneBrainComponent::_doPatrol()
 
 	//set back to normal speed
 	//ToDo:Need to store original speed instead of going back to json
-	definitionJSON = GameObjectManager::instance().getDefinition(parent()->id())->definitionJSON();
-	Json::Value vitalityComponentJSON = definitionJSON["vitalityComponent"];
-	auto speed = vitalityComponentJSON["speed"].asFloat();
+	//definitionJSON = GameObjectManager::instance().getDefinition(parent()->id())->definitionJSON();
+	//Json::Value vitalityComponentJSON = definitionJSON["vitalityComponent"];
+	//auto speed = vitalityComponentJSON["speed"].asFloat();
 	const auto& vitals = parent()->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
-	vitals->setSpeed(speed);
+	//vitals->setSpeed(speed);
 
 
 	auto transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);

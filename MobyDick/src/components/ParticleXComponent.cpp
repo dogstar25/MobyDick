@@ -8,23 +8,22 @@
 
 extern std::unique_ptr<Game> game;
 
-ParticleXComponent::ParticleXComponent(Json::Value definitionJSON )
+ParticleXComponent::ParticleXComponent(Json::Value componentJSON)
 {
-	Json::Value particleComponentJSON = definitionJSON["particleXComponent"];
 
-	if (particleComponentJSON.isMember("type")) {
-		m_type = EnumMap::instance().toEnum(particleComponentJSON["type"].asString());
+	if (componentJSON.isMember("type")) {
+		m_type = EnumMap::instance().toEnum(componentJSON["type"].asString());
 	}
-	if (particleComponentJSON.isMember("emissionLayer")) {
-		m_emissionLayer = EnumMap::instance().toEnum(particleComponentJSON["emissionLayer"].asString());
+	if (componentJSON.isMember("emissionLayer")) {
+		m_emissionLayer = EnumMap::instance().toEnum(componentJSON["emissionLayer"].asString());
 	}
 
-	float emissionInterval = particleComponentJSON["emissionInterval"].asFloat();
+	float emissionInterval = componentJSON["emissionInterval"].asFloat();
 	m_emissionInterval = (std::chrono::duration<float>(emissionInterval));
 	m_emissionTimer = Timer(emissionInterval);
 
 	//Add any effects that may be pre-built into the particle emitter
-	for (Json::Value itrEffect : particleComponentJSON["effects"])
+	for (Json::Value itrEffect : componentJSON["effects"])
 	{
 
 		auto effectId = itrEffect.asString();

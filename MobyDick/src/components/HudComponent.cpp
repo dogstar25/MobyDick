@@ -6,10 +6,8 @@
 #include "../hud/HudItem.h"
 
 
-HudComponent::HudComponent(Json::Value definitionJSON, Scene* parentScene)
+HudComponent::HudComponent(Json::Value componentJSON, Scene* parentScene)
 {
-
-	Json::Value componentJSON = definitionJSON["hudComponent"];
 
 	std::string labelObjectId = componentJSON["labelObjectId"].asString();
 	std::string statusObjectId = componentJSON["statusObjectId"].asString();

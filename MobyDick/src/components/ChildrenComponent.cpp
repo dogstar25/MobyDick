@@ -8,17 +8,15 @@ ChildrenComponent::ChildrenComponent()
 
 }
 
-ChildrenComponent::ChildrenComponent(Json::Value definitionJSON, Scene* parentScene)
+ChildrenComponent::ChildrenComponent(Json::Value componentJSON, Scene* parentScene)
 {
 
-	Json::Value childrenComponentJSON = definitionJSON["childrenComponent"];
-
-	m_childPadding = childrenComponentJSON["childPadding"].asFloat();
-	m_childPositionRelative = childrenComponentJSON["childPositionRelative"].asBool();
+	m_childPadding = componentJSON["childPadding"].asFloat();
+	m_childPositionRelative = componentJSON["childPositionRelative"].asBool();
 	std::optional<int> locationSlot{};
 	bool centeredOnLocation{true};
 
-	for (Json::Value itrChild : childrenComponentJSON["childObjects"])
+	for (Json::Value itrChild : componentJSON["childObjects"])
 	{
 		std::string childObjectId = itrChild["gameObjectId"].asString();
 
@@ -63,7 +61,6 @@ ChildrenComponent::ChildrenComponent(Json::Value definitionJSON, Scene* parentSc
 		location.centeredOnLocation = centeredOnLocation;
 		child.location = location;
 		child.gameObject = std::make_shared<GameObject>(childObjectId, -1.0F, -1.0F, 0.F, parentScene);
-
 
 		m_childObjects.push_back(child);
 

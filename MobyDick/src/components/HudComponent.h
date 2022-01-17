@@ -12,7 +12,7 @@ class HudComponent : public Component
 
 public:
 	HudComponent() = default;
-	HudComponent(Json::Value definitionJSON, Scene* parentScene);
+	HudComponent(Json::Value componentJSON, Scene* parentScene);
 
 	void update();
 	void render();

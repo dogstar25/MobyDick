@@ -36,7 +36,7 @@ class CompositeComponent : public Component
 {
 public:
 	CompositeComponent();
-	CompositeComponent(Json::Value definitionJSON, Scene* parentScene);
+	CompositeComponent(Json::Value componentJSON, Scene* parentScene);
 	~CompositeComponent();
 
 	void update() override;

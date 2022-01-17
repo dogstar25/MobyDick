@@ -20,7 +20,7 @@ class InventoryComponent : public Component
 public:
 
 	InventoryComponent();
-	InventoryComponent(Json::Value definitionJSON, Scene* parentScene);
+	InventoryComponent(Json::Value componentJSON, Scene* parentScene);
 	~InventoryComponent();
 
 	size_t addItem(std::shared_ptr<GameObject> gameObject);

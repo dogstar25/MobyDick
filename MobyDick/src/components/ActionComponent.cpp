@@ -12,10 +12,8 @@
 
 extern std::unique_ptr<Game> game;
 
-ActionComponent::ActionComponent(Json::Value definitionJSON)
+ActionComponent::ActionComponent(Json::Value componentJSON)
 {
-	Json::Value componentJSON = definitionJSON["actionComponent"];
-
 	m_actions.resize(32);
 	for (Json::Value itrAction: componentJSON["actions"])
 	{

@@ -7,11 +7,9 @@ WeaponComponent::WeaponComponent()
 
 }
 
-WeaponComponent::WeaponComponent(Json::Value definitionJSON)
+WeaponComponent::WeaponComponent(Json::Value componentJSON)
 {
 	
-	Json::Value componentJSON = definitionJSON["weaponComponent"];
-
 	m_currentLevel = 1;
 
 	m_fireOffset = componentJSON["fireOffset"].asFloat();

@@ -21,7 +21,7 @@ class RenderComponent : public Component
 
 public:
 	RenderComponent();
-	RenderComponent(Json::Value definitionJSON);
+	RenderComponent(Json::Value componentJSON);
 	~RenderComponent();
 
 	void update() override;

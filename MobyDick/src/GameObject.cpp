@@ -46,9 +46,6 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Build the unique name
 	m_name = _buildName(gameObjectId, xMapPos, yMapPos, parentScene);
 
-	if (gameObjectId.compare("GINA_64") == 0) {
-		int todd = 1;
-	}
 	//Trait tags
 	for (Json::Value itrControls : definitionJSON["traitTags"])
 	{
@@ -62,176 +59,185 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 	std::shared_ptr<Component> component{};
 
-	//Always build a render component
-	component = game->componentFactory()->create(definitionJSON, ComponentTypes::RENDER_COMPONENT);
-	component->setParent(this);
-	addComponent(component, ComponentTypes::RENDER_COMPONENT);
+	for (Json::Value componentJSON : definitionJSON["components"]){
 
-	//Always build a transform component
-	component = game->componentFactory()->create(definitionJSON, xMapPos, yMapPos, angleAdjust, ComponentTypes::TRANSFORM_COMPONENT);
-	component->setParent(this);
-	addComponent(component, ComponentTypes::TRANSFORM_COMPONENT);
+		int componentType = EnumMap::instance().toEnum(componentJSON["id"].asString());
 
-	//Animation Component
-	if (definitionJSON.isMember("animationComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::ANIMATION_COMPONENT);
+		component = game->componentFactory()->create(definitionJSON, gameObjectId, parentScene, xMapPos, yMapPos, angleAdjust, componentType);
 		component->setParent(this);
-		addComponent(component, ComponentTypes::ANIMATION_COMPONENT);
+		addComponent(component, componentType);
 
 	}
 
-	//Physics Component
-	if (definitionJSON.isMember("physicsComponent"))
-	{
+	////Always build a render component
+	//component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::RENDER_COMPONENT);
+	//component->setParent(this);
+	//addComponent(component, ComponentTypes::RENDER_COMPONENT);
 
-		component = game->componentFactory()->create(definitionJSON, parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PHYSICS_COMPONENT);
-		component->setParent(this);
-		//std::static_pointer_cast<PhysicsComponent>(component)->physicsBody()->SetUserData((void*)this);
-		std::static_pointer_cast<PhysicsComponent>(component)->physicsBody()->GetUserData().pointer = reinterpret_cast<uintptr_t>(this);
-		addComponent(component, ComponentTypes::PHYSICS_COMPONENT);
+	////Always build a transform component
+	//component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::TRANSFORM_COMPONENT);
+	//component->setParent(this);
+	//addComponent(component, ComponentTypes::TRANSFORM_COMPONENT);
 
-	}
 
-	//Vitality Component
-	if (definitionJSON.isMember("vitalityComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::VITALITY_COMPONENT);
-		component->setParent(this);
-		addComponent(component, ComponentTypes::VITALITY_COMPONENT);
+	////Animation Component
+	//if (definitionJSON.isMember("animationComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::ANIMATION_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::ANIMATION_COMPONENT);
 
-	}
+	//}
 
-	//Player control Component
-	if (definitionJSON.isMember("playerControlComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::PLAYERCONTROL_COMPONENT);
-		component->setParent(this);
-		addComponent(component, ComponentTypes::PLAYERCONTROL_COMPONENT);
+	////Physics Component
+	//if (definitionJSON.isMember("physicsComponent"))
+	//{
 
-	}
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PHYSICS_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::PHYSICS_COMPONENT);
 
-	//Text Component
-	if (definitionJSON.isMember("textComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, gameObjectId, ComponentTypes::TEXT_COMPONENT);
-		component->setParent(this);
-		addComponent(component, ComponentTypes::TEXT_COMPONENT);
+	//}
 
-	}
+	////Vitality Component
+	//if (definitionJSON.isMember("vitalityComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::VITALITY_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::VITALITY_COMPONENT);
 
-	//Children Component
-	if (definitionJSON.isMember("childrenComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::CHILDREN_COMPONENT);
-		component->setParent(this);
-		addComponent(component, ComponentTypes::CHILDREN_COMPONENT);
+	//}
 
-	}
+	////Player control Component
+	//if (definitionJSON.isMember("playerControlComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PLAYERCONTROL_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::PLAYERCONTROL_COMPONENT);
 
-	//Action Component
-	if (definitionJSON.isMember("actionComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::ACTION_COMPONENT);
-		component->setParent(this);
-		addComponent(component, ComponentTypes::ACTION_COMPONENT);
+	//}
 
-	}
+	////Text Component
+	//if (definitionJSON.isMember("textComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, gameObjectId, parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::TEXT_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::TEXT_COMPONENT);
 
-	//Particle X Component
-	if (definitionJSON.isMember("particleXComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::PARTICLE_X_COMPONENT);
-		component->setParent(this);
-		addComponent(component, ComponentTypes::PARTICLE_X_COMPONENT);
+	//}
 
-	}
+	////Children Component
+	//if (definitionJSON.isMember("childrenComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::CHILDREN_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::CHILDREN_COMPONENT);
 
-	//Simple Particle Component
-	if (definitionJSON.isMember("particleComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::PARTICLE_COMPONENT);
-		component->setParent(this);
-		addComponent(component, ComponentTypes::PARTICLE_COMPONENT);
+	//}
 
-	}
+	////Action Component
+	//if (definitionJSON.isMember("actionComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::ACTION_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::ACTION_COMPONENT);
 
-	//Inventory Component
-	if (definitionJSON.isMember("inventoryComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::INVENTORY_COMPONENT);
-		component->setParent(this);
-		addComponent(component, ComponentTypes::INVENTORY_COMPONENT);
+	//}
 
-	}
+	////Particle X Component
+	//if (definitionJSON.isMember("particleXComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PARTICLE_X_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::PARTICLE_X_COMPONENT);
 
-	//UIControl Component
-	if (definitionJSON.isMember("UIControlComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::UICONTROL_COMPONENT);
-		component->setParent(this);
-		addComponent(component, ComponentTypes::UICONTROL_COMPONENT);
+	//}
 
-	}
+	////Simple Particle Component
+	//if (definitionJSON.isMember("particleComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PARTICLE_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::PARTICLE_COMPONENT);
 
-	//Weapon Component
-	if (definitionJSON.isMember("weaponComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::WEAPON_COMPONENT);
-		component->setParent(this);
-		addComponent(component, ComponentTypes::WEAPON_COMPONENT);
+	//}
 
-	}
+	////Inventory Component
+	//if (definitionJSON.isMember("inventoryComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::INVENTORY_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::INVENTORY_COMPONENT);
 
-	//Pool Component
-	if (definitionJSON.isMember("poolComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::POOL_COMPONENT);
-		component->setParent(this);
-		addComponent(component, ComponentTypes::POOL_COMPONENT);
+	//}
 
-	}
+	////UIControl Component
+	//if (definitionJSON.isMember("UIControlComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::UICONTROL_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::UICONTROL_COMPONENT);
 
-	//Composite Component
-	if (definitionJSON.isMember("compositeComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::COMPOSITE_COMPONENT);
-		component->setParent(this);
-		addComponent(component, ComponentTypes::COMPOSITE_COMPONENT);
+	//}
 
-	}
+	////Weapon Component
+	//if (definitionJSON.isMember("weaponComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::WEAPON_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::WEAPON_COMPONENT);
 
-	//Brain Component
-	if (definitionJSON.isMember("brainComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::BRAIN_COMPONENT);
-		component->setParent(this);
-		addComponent(component, ComponentTypes::BRAIN_COMPONENT);
-	}
+	//}
 
-	//Navigation Component
-	if (definitionJSON.isMember("navigationComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, ComponentTypes::NAVIGATION_COMPONENT);
-		component->setParent(this);
-		addComponent(component, ComponentTypes::NAVIGATION_COMPONENT);
-	}
+	////Pool Component
+	//if (definitionJSON.isMember("poolComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::POOL_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::POOL_COMPONENT);
 
-	//Attachments Component
-	if (definitionJSON.isMember("attachmentsComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::ATTACHMENTS_COMPONENT);
-		component->setParent(this);
-		addComponent(component, ComponentTypes::ATTACHMENTS_COMPONENT);
-	}
+	//}
 
-	//Hud Component
-	if (definitionJSON.isMember("hudComponent"))
-	{
-		component = game->componentFactory()->create(definitionJSON, parentScene, ComponentTypes::HUD_COMPONENT);
-		component->setParent(this);
-		addComponent(component, ComponentTypes::HUD_COMPONENT);
-	}
+	////Composite Component
+	//if (definitionJSON.isMember("compositeComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::COMPOSITE_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::COMPOSITE_COMPONENT);
+
+	//}
+
+	////Brain Component
+	//if (definitionJSON.isMember("brainComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::BRAIN_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::BRAIN_COMPONENT);
+	//}
+
+	////Navigation Component
+	//if (definitionJSON.isMember("navigationComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::NAVIGATION_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::NAVIGATION_COMPONENT);
+	//}
+
+	////Attachments Component
+	//if (definitionJSON.isMember("attachmentsComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::ATTACHMENTS_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::ATTACHMENTS_COMPONENT);
+	//}
+
+	////Hud Component
+	//if (definitionJSON.isMember("hudComponent"))
+	//{
+	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::HUD_COMPONENT);
+	//	component->setParent(this);
+	//	addComponent(component, ComponentTypes::HUD_COMPONENT);
+	//}
 
 	//Set the camera to follow this GameObject
 	if (cameraFollow) {
@@ -398,32 +404,41 @@ ex. The HudComponent requires that the tranform component be instantiated so tha
 void GameObject::postInit()
 {
 
-	//GameObjects with a NavigationComponent need to build a navigation array based on the location of 
-	//other navigation objects
-	if (hasComponent(ComponentTypes::NAVIGATION_COMPONENT)) {
-		const auto navigationComponent = getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
-		navigationComponent->postInit();
+	for (int i = 0; i < ComponentTypes::MAX_COMPONENT_TYPES; i++) {
+
+		if (components()[i]) {
+			components()[i]->postInit();
+		}
 	}
 
-	//The BrainComponent needs to gather and store all of the waypoint nav points and
-	//interim nav points for its navigating logic
-	if (hasComponent(ComponentTypes::BRAIN_COMPONENT)) {
-		const auto brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
-		brainComponent->postInit();
-	}
 
-	//The CompositeComponent needs to weld on its composite pieces if the weld flag is turned on
-	if (hasComponent(ComponentTypes::COMPOSITE_COMPONENT)) {
-		const auto compositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
-		compositeComponent->postInit();
-	}
+	////GameObjects with a NavigationComponent need to build a navigation array based on the location of 
+	////other navigation objects
+	//if (hasComponent(ComponentTypes::NAVIGATION_COMPONENT)) {
+	//	const auto navigationComponent = getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
+	//	navigationComponent->postInit();
+	//}
 
-	//The Attachments component needs to weld on attachment objects as well as potentially add the 
-	// attachement object to the inventory component
-	if (hasComponent(ComponentTypes::ATTACHMENTS_COMPONENT)) {
-		const auto attachmentsComponent = getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
-		attachmentsComponent->postInit();
-	}
+	////The BrainComponent needs to gather and store all of the waypoint nav points and
+	////interim nav points for its navigating logic
+	//if (hasComponent(ComponentTypes::BRAIN_COMPONENT)) {
+	//	const auto brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+	//	brainComponent->postInit();
+	//}
+
+	////The CompositeComponent needs to weld on its composite pieces if the weld flag is turned on
+	//if (hasComponent(ComponentTypes::COMPOSITE_COMPONENT)) {
+	//	const auto compositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
+	//	compositeComponent->postInit();
+	//}
+
+	////The Attachments component needs to weld on attachment objects as well as potentially add the 
+	//// attachement object to the inventory component
+	//if (hasComponent(ComponentTypes::ATTACHMENTS_COMPONENT)) {
+	//	const auto attachmentsComponent = getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
+	//	attachmentsComponent->postInit();
+	//}
+
 
 }
 

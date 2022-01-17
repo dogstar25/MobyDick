@@ -18,8 +18,6 @@ HudStatusSeries::HudStatusSeries(std::string labelObjectId, std::string statusOb
 
 	m_labelPadding = labelPadding;
 	m_statusValue = game->statusMananger()->hudValueMap()[statusObjectId].get();
-
-
 }
 
 void HudStatusSeries::update(GameObject* parentGameObject)

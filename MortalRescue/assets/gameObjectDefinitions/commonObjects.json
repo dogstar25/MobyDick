@@ -3,447 +3,519 @@
         {
 
             "id": "SWORDLADY",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_SOLID",
             "traitTags": [],
             "description": "SwordLady",
-            "transformComponent": {
-                "size": {
-                    "width": 32,
-                    "height": 32
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
                 },
-                "absolutePositioning": false
-            },
-            "animationComponent": {
-                "defaultState": "ANIMATION_IDLE",
-                "frameSize": {
-                    "width": 64,
-                    "height": 64
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
                 },
-                "animations": [
-                    {
-                        "state": "ANIMATION_IDLE",
-                        "textureId": "TX_SWORDLADY1_IDLE",
-                        "speed": 0.05,
-                        "frames": 19
-                    }
-                ]
-            }
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_SWORDLADY1_IDLE",
+                            "speed": 0.05,
+                            "frames": 19
+                        }
+                    ]
+                }
+            ]
         },
         {
             "id": "GINA_64",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::PLAYER",
             "traitTags": [ "player" ],
-            "transformComponent": {
-                "size": {
-                    "width": 64,
-                    "height": 64
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
                 },
-                "absolutePositioning": false
-            },
-            "animationComponent": {
-                "defaultState": "ANIMATION_IDLE",
-                "frameSize": {
-                    "width": 64,
-                    "height": 64
-                },
-                "animations": [
-                    {
-                        "state": "ANIMATION_IDLE",
-                        "textureId": "TX_GINA_64_IDLE",
-                        "speed": 0.1,
-                        "frames": 1
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 64
                     },
-                    {
-                        "state": "ANIMATION_RUN",
-                        "textureId": "TX_GINA_64_RUN",
-                        "speed": 0.06,
-                        "frames": 4
+                    "absolutePositioning": false
+
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "collisionShape": "B2_CIRCLE",
+                    "collisionRadius": 0.64,
+                    "friction": 0.00,
+                    "restitution": 0.0,
+                    "density": 50.5,
+                    "linearDamping": 0.2,
+                    "angularDamping": 3.0,
+                    "anchorPoint": { // starts from centered 0,0 position
+                        "x": 0.8,
+                        "y": 0.0
                     }
-                ]
-            },
-            "physicsComponent": {
-                "type": "B2_DYNAMIC",
-                "collisionShape": "B2_CIRCLE",
-                "collisionRadius": 0.64,
-                "friction": 0.00,
-                "restitution": 0.0,
-                "density": 50.5,
-                "linearDamping": 0.2,
-                "angularDamping": 3.0,
-                "anchorPoint": { // starts from centered 0,0 position
-                    "x": 0.8,
-                    "y": 0.0
-                }
-            },
-            "inventoryComponent": {
-                "items": [
-                    {
-                        "gameObjectId": "PISTOL",
-                        "attach": true,
-                        "weapon": true
-                    }
-                ]
-            },
-            "attachmentsComponent": {
-                "attachments": [
-                    {
-                        "gameObjectId": "PISTOL",
-                        "attachLocation": {
-                            "x": 0.8,
-                            "y": 0.0
+
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_GINA_64_IDLE",
+                            "speed": 0.1,
+                            "frames": 1
                         },
-                        "addToInventory": true,
-                        "attachB2JointType": "B2_WELD"
-                    }
-                ]
-            },
-            "vitalityComponent": {
-                "speed": 20
-            },
-            "childrenComponent": {
-                "childPadding": 0,
-                "childPositionRelative": false,
-                "childObjects": [
-                    {
-                        "gameObjectId": "PLAYER_LABEL",
-                        "locationSlot": 1
-                    }
+                        {
+                            "state": "ANIMATION_RUN",
+                            "textureId": "TX_GINA_64_RUN",
+                            "speed": 0.06,
+                            "frames": 4
+                        }
+                    ]
+                },
+                {
+                    "id": "CHILDREN_COMPONENT",
+                    "childPadding": 0,
+                    "childPositionRelative": false,
+                    "childObjects": [
+                        {
+                            "gameObjectId": "PLAYER_LABEL",
+                            "locationSlot": 1
+                        }
 
-                ]
-            },
-            "playerControlComponent": {
-                "controls": [
-                    "INPUT_CONTROL_MOVEMENT",
-                    "INPUT_CONTROL_USE"
-                ]
-            },
-            "actionComponent": {
-                "actions": [
-                    {
-                        "actionId": "ACTION_MOVE",
-                        "actionClass": "ActorMove"
-                    },
-                    {
-                        "actionId": "ACTION_ROTATE",
-                        "actionClass": "ActorRotate"
-                    },
-                    {
-                        "actionId": "ACTION_USE",
-                        "actionClass": "ActorUse"
-                    },
-                    {
-                        "actionId": "ACTION_ON_HOVER",
-                        "actionClass": "DefaultHover"
-                    },
-                    {
-                        "actionId": "ACTION_ON_CLICK",
-                        "actionClass": "ContinueClick"
-                    }
+                    ]
+                },
+                {
+                    "id": "ATTACHMENTS_COMPONENT",
+                    "attachments": [
+                        {
+                            "gameObjectId": "PISTOL",
+                            "attachLocation": {
+                                "x": 0.8,
+                                "y": 0.0
+                            },
+                            "addToInventory": true,
+                            "attachB2JointType": "B2_WELD"
+                        }
+                    ]
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_MOVE",
+                            "actionClass": "ActorMove"
+                        },
+                        {
+                            "actionId": "ACTION_ROTATE",
+                            "actionClass": "ActorRotate"
+                        },
+                        {
+                            "actionId": "ACTION_USE",
+                            "actionClass": "ActorUse"
+                        },
+                        {
+                            "actionId": "ACTION_ON_HOVER",
+                            "actionClass": "DefaultHover"
+                        },
+                        {
+                            "actionId": "ACTION_ON_CLICK",
+                            "actionClass": "ContinueClick"
+                        }
+                    ]
+                },
+                {
+                    "id": "INVENTORY_COMPONENT",
+                    "items": [
+                        {
+                            "gameObjectId": "PISTOL",
+                            "attach": true,
+                            "weapon": true
+                        }
+                    ]
 
-                ]
-            }
+                },
+                {
+                    "id": "PLAYER_CONTROL_COMPONENT",
+                    "controls": [
+                        "INPUT_CONTROL_MOVEMENT",
+                        "INPUT_CONTROL_USE"
+                    ]
+
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 20
+                }
+            ]
         },
         {
             "id": "BOWMAN",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_SOLID",
             "traitTags": [],
-            "transformComponent": {
-                "size": {
-                    "width": 64,
-                    "height": 64
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_BOWMAN1"
                 },
-                "absolutePositioning": false
-            },
-            "renderComponent": {
-                "textureId": "TX_BOWMAN1"
-            }
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "absolutePositioning": false
+
+                }
+            ]
         },
         {
             "id": "STUBB",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_SOLID",
             "traitTags": [],
-            "transformComponent": {
-                "size": {
-                    "width": 128,
-                    "height": 128
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_STUBB",
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 127
+                    }
                 },
-                "absolutePositioning": false
-            },
-            "renderComponent": {
-                "textureId": "TX_STUBB",
-                "color": {
-                    "red": 255,
-                    "green": 255,
-                    "blue": 255,
-                    "alpha": 127
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 128,
+                        "height": 128
+                    },
+                    "absolutePositioning": false
+
                 }
-            }
+            ]
         },
         {
             "id": "PLAYER_LABEL",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "description": "Player Label",
-            "transformComponent": {
-                "absolutePositioning": false
-            },
-            "textComponent": {
-                "value": "Player 1",
-                "dynamic": false,
-                "font": "FONT_ARIAL_REG",
-                "fontSize": 12
-            }
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "TEXT_COMPONENT",
+                    "value": "Player 1",
+                    "dynamic": false,
+                    "font": "FONT_ARIAL_REG",
+                    "fontSize": 12
+                }
+            ]
         },
         {
             "id": "FPS_VALUE",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "description": "FPS",
-            "transformComponent": {
-                "absolutePositioning": true
-            },
-            "textComponent": {
-                "value": "",
-                "dynamic": true,
-                "font": "FONT_ARIAL_REG",
-                "fontSize": 16
-            },
-            "renderComponent": {
-                "color": {
-                    "red": 255,
-                    "green": 255,
-                    "blue": 255,
-                    "alpha": 255
-                }
-            }
-        },
-        {
-            "id": "DEBUG_ITEM",
-            "type": "GameObjectType::SPRITE",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
-            "description": "Debug Item",
-            "transformComponent": {
-                "absolutePositioning": true
-            },
-            "textComponent": {
-                "value": "default",
-                "dynamic": true,
-                "font": "FONT_ARIAL_REG",
-                "fontSize": 12
-            }
-        },
-        {
-            "id": "PISTOL",
-            "type": "GameObjectType::SPRITE",
-            "collisionTag": "CollisionTag::WEAPON_PICKUP",
-            "traitTags": [ "collectable", "weapon" ],
-            "category": "ObjectCategory::COLLECTABLE",
-            "description": "Weapon 1",
-            "transformComponent": {
-                "size": {
-                    "width": 16,
-                    "height": 16
-                },
-                "absolutePositioning": false
-            },
-            "physicsComponent": {
-                "type": "B2_DYNAMIC",
-                "collisionShape": "B2_BOX",
-                "friction": 0.0,
-                "restitution": 0.0,
-                "density": 2.05,
-                "linearDamping": 3.0,
-                "angularDamping": 1.0,
-                "anchorPoint": {
-                    "x": -0.2,
-                    "y": 0.0
-                }
-            },
-            "animationComponent": {
-                "frameSize": {
-                    "width": 16,
-                    "height": 16
-                },
-                "animations": [
-                    {
-                        "state": "ANIMATION_IDLE",
-                        "textureId": "TX_WEAPON1_IDLE",
-                        "speed": 0.5,
-                        "frames": 3
-                    },
-                    {
-                        "state": "ANIMATION_ACTION",
-                        "textureId": "TX_WEAPON1_FIRE",
-                        "speed": 0.1,
-                        "frames": 3
-                    }
-                ]
-            },
-            "actionComponent": {
-                "actions": [
-                    {
-                        "actionId": "ACTION_USAGE",
-                        "actionClass": "PistolFire"
-                    }
-                ]
-            },
-            "weaponComponent": {
-                "fireOffset": -0.5,
-                "weaponLevels": [
-                    {
-                        "level": 1,
-                        "force": 1,
-                        "levelUpTarget": 25,
-                        "color": {
-                            "red": 255,
-                            "green": 0,
-                            "blue": 0,
-                            "alpha": 255
-                        },
-                        "bulletPoolId": "BULLET1_POOL"
-                    },
-                    {
-                        "level": 2,
-                        "force": 2,
-                        "levelUpTarget": 50,
-                        "color": {
-                            "red": 0,
-                            "green": 255,
-                            "blue": 0,
-                            "alpha": 255
-                        },
-                        "bulletPoolId": "BULLET1_POOL"
-                    },
-                    {
-                        "level": 3,
-                        "force": 5,
-                        "levelUpTarget": 75,
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
                         "color": {
                             "red": 255,
                             "green": 255,
                             "blue": 255,
                             "alpha": 255
-                        },
-                        "bulletPoolId": "BULLET1_POOL"
+                        }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                        "absolutePositioning": true
+                },
+                {
+                    "id": "TEXT_COMPONENT",
+                        "value": "",
+                        "dynamic": true,
+                        "font": "FONT_ARIAL_REG",
+                        "fontSize": 16
+                }
+            ]
+        },
+        {
+            "id": "DEBUG_ITEM",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "description": "Debug Item",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
                     }
-                ]
-            }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "absolutePositioning": true
+                },
+                {
+                    "id": "TEXT_COMPONENT",
+                    "value": "default",
+                    "dynamic": true,
+                    "font": "FONT_ARIAL_REG",
+                    "fontSize": 12
+                }
+            ]
+        },
+        {
+            "id": "PISTOL",
+            "collisionTag": "CollisionTag::WEAPON_PICKUP",
+            "traitTags": [ "collectable", "weapon" ],
+            "description": "Weapon 1",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 16,
+                        "height": 16
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "collisionShape": "B2_BOX",
+                    "friction": 0.0,
+                    "restitution": 0.0,
+                    "density": 2.05,
+                    "linearDamping": 3.0,
+                    "angularDamping": 1.0,
+                    "anchorPoint": {
+                        "x": -0.2,
+                        "y": 0.0
+                    }
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "frameSize": {
+                        "width": 16,
+                        "height": 16
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_WEAPON1_IDLE",
+                            "speed": 0.5,
+                            "frames": 3
+                        },
+                        {
+                            "state": "ANIMATION_ACTION",
+                            "textureId": "TX_WEAPON1_FIRE",
+                            "speed": 0.1,
+                            "frames": 3
+                        }
+                    ]
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_USAGE",
+                            "actionClass": "PistolFire"
+                        }
+                    ]
+
+                },
+                {
+                    "id": "WEAPON_COMPONENT",
+                    "fireOffset": -0.5,
+                    "weaponLevels": [
+                        {
+                            "level": 1,
+                            "force": 1,
+                            "levelUpTarget": 25,
+                            "color": {
+                                "red": 255,
+                                "green": 0,
+                                "blue": 0,
+                                "alpha": 255
+                            },
+                            "bulletPoolId": "BULLET1_POOL"
+                        },
+                        {
+                            "level": 2,
+                            "force": 2,
+                            "levelUpTarget": 50,
+                            "color": {
+                                "red": 0,
+                                "green": 255,
+                                "blue": 0,
+                                "alpha": 255
+                            },
+                            "bulletPoolId": "BULLET1_POOL"
+                        },
+                        {
+                            "level": 3,
+                            "force": 5,
+                            "levelUpTarget": 75,
+                            "color": {
+                                "red": 255,
+                                "green": 255,
+                                "blue": 255,
+                                "alpha": 255
+                            },
+                            "bulletPoolId": "BULLET1_POOL"
+                        }
+                    ]
+                }
+            ]
         },
         {
             "id": "BULLET1",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::PLAYER_BULLET",
             "traitTags": [],
             "description": "Bullet 1",
-            "transformComponent": {
-                "size": {
-                    "width": 6,
-                    "height": 3
-                }
-            },
-            "animationComponent": {
-                "frameSize": {
-                    "width": 6,
-                    "height": 3
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
                 },
-                "defaultState": "ANIMATION_ACTIVE",
-                "animations": [
-                    {
-                        "state": "ANIMATION_ACTIVE",
-                        "textureId": "TX_BULLET1",
-                        "speed": 0.02,
-                        "frames": 4
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 6,
+                        "height": 3
                     }
-                ]
-            },
-            "vitalityComponent": {
-                "speed": 50,
-                "lifetime": 1.0,
-                "lifetimeAlphaFade": true
-            },
-            "poolComponent": {
-            },
-            "physicsComponent": {
-                "type": "B2_DYNAMIC",
-                "collisionShape": "B2_BOX",
-                "collisionRadius": 0.16,
-                "friction": 0.0,
-                "density": 0.1,
-                "restitution": 0.3,
-                "linearDamping": 0.0,
-                "angularDamping": 0.0
-            }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "collisionShape": "B2_BOX",
+                    "collisionRadius": 0.16,
+                    "friction": 0.0,
+                    "density": 0.1,
+                    "restitution": 0.3,
+                    "linearDamping": 0.0,
+                    "angularDamping": 0.0
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "frameSize": {
+                        "width": 6,
+                        "height": 3
+                    },
+                    "defaultState": "ANIMATION_ACTIVE",
+                    "animations": [
+                        {
+                            "state": "ANIMATION_ACTIVE",
+                            "textureId": "TX_BULLET1",
+                            "speed": 0.02,
+                            "frames": 4
+                        }
+                    ]
+                },
+                {
+                    "id": "POOL_COMPONENT"
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 50,
+                    "lifetime": 1.0,
+                    "lifetimeAlphaFade": true
+                }
+            ]
         },
         {
             "id": "PARTICLE_X_EMITTER",
-            "type": "GameObjectType::ABSTRACT",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [],
+            "traitTags": ["abstract"],
             "description": "Particle Emitter",
-            "transformComponent": {
-                "size": {
-                    "width": 4,
-                    "height": 4
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 4,
+                        "height": 4
+                    }
+                },
+                {
+                    "id": "PARTICLE_X_COMPONENT",
+                    "type": "ParticleEmitterType::ONETIME"
                 }
-            },
-            "particleXComponent": {
-                "type": "ParticleEmitterType::ONETIME"
-
-            }
+            ]
         },
         {
             "id": "PARTICLE_EMITTER",
-            "type": "GameObjectType::ABSTRACT",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [],
+            "traitTags": [ "abstract" ],
             "description": "Particle Emitter",
-            "particleComponent": {
-                "type": "ParticleEmitterType::ONETIME"
-            }
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "PARTICLE_COMPONENT",
+                    "type": "ParticleEmitterType::ONETIME"
+                }
+            ]
         },
         {
             "id": "PARTICLE_EMITTER_SPARK",
-            "type": "GameObjectType::ABSTRACT",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [],
+            "traitTags": [ "abstract" ],
             "description": "Particle Emitter",
-            "transformComponent": {
-                "size": {
-                    "width": 4,
-                    "height": 4
-                }
-            },
-            "particleXComponent": {
-                "type": "ParticleEmitterType::CONTINUOUS",
-                "emissionInterval": 0.2,
-                "effects": [
-                    "spark"
-                ]
-            }
-        },
-        {
-            "id": "PRIMITIVE_LINE",
-            "type": "GameObjectType::LINE",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [],
-            "description": "Line",
-            "transformComponent": {
-                "size": {
-                    "width": 1,
-                    "height": 1
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
                 },
-                "absolutePositioning": false
-            },
-            "vitalityComponent": {
-                "lifetime": 0.0001
-            }
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 4,
+                        "height": 4
+                    }
+                },
+                {
+                    "id": "PARTICLE_X_COMPONENT",
+                    "type": "ParticleEmitterType::CONTINUOUS",
+                    "emissionInterval": 0.2,
+                    "effects": [
+                        "spark"
+                    ]
+                }
+            ]
         },
         {
             "id": "NAVIGATION_TRANSIT_POINT",
@@ -451,20 +523,27 @@
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "navigation", "abstract" ],
             "description": "Navigation Object",
-            "physicsComponent": {
-                "type": "B2_STATIC",
-                "collisionShape": "B2_BOX"
-            },
-            "transformComponent": {
-                "size": {
-                    "width": 64,
-                    "height": 64
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 64
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "collisionShape": "B2_BOX"
+                },
+                {
+                    "id": "NAVIGATION_COMPONENT",
+                    "type": "NavigationObjectType::TRANSIT_POINT",
                 }
-            },
-            "navigationComponent": {
-                "type": "NavigationObjectType::TRANSIT_POINT"
-
-            }
+            ]
         },
         {
             "id": "NAVIGATION_WAYPOINT",
@@ -472,19 +551,27 @@
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "navigation", "abstract" ],
             "description": "Navigation Object",
-            "physicsComponent": {
-                "type": "B2_STATIC",
-                "collisionShape": "B2_BOX"
-            },
-            "transformComponent": {
-                "size": {
-                    "width": 64,
-                    "height": 64
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 64
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "collisionShape": "B2_BOX"
+                },
+                {
+                    "id": "NAVIGATION_COMPONENT",
+                    "type": "NavigationObjectType::WAYPOINT"
                 }
-            },
-            "navigationComponent": {
-                "type": "NavigationObjectType::WAYPOINT"
-            }
+            ]
         },
         {
             "id": "GUI_PLAYERDEATH_PANEL",
@@ -546,39 +633,46 @@
             "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::SURVIVOR",
             "traitTags": [],
-            "transformComponent": {
-                "size": {
-                    "width": 64,
-                    "height": 64
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_BOWMAN1"
                 },
-                "absolutePositioning": false
-            },
-            "renderComponent": {
-                "textureId": "TX_BOWMAN1"
-            }
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "absolutePositioning": false
+                }
+            ]
         },
         {
             "id": "GLOW_TRIANGLE",
             "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [],
-            "transformComponent": {
-                "size": {
-                    "width": 256,
-                    "height": 256
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_WHITE_QUAD",
+                    "color": {
+                        "red": 8,
+                        "green": 242,
+                        "blue": 250,
+                        "alpha": 100
+                    }
                 },
-                "absolutePositioning": false
-            },
-            "renderComponent": {
-                "textureId": "TX_WHITE_QUAD",
-                "color": {
-                    "red": 8,
-                    "green": 242,
-                    "blue": 250,
-                    "alpha": 100
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 256,
+                        "height": 256
+                    },
+                    "absolutePositioning": false
                 }
-            }
+            ]
         }
-
     ]
 }
