@@ -19,7 +19,7 @@ HudStatusText::HudStatusText(std::string labelObjectId, std::string statusObject
 	statusTransformComponent->setAbsolutePositioning(true);
 
 	m_labelPadding = labelPadding;
-	m_statusValue = game->statusMananger()->hudValueMap()[statusObjectId].get();
+	//m_statusValue = game->statusMananger()->hudValueMap()[statusObjectId].get();
 
 
 }
@@ -58,7 +58,10 @@ void HudStatusText::update(GameObject* parentGameObject)
 
 	//Update the dynamic text item that is used by this TextObject
 	std::stringstream ss;
+	//ss << static_cast<float>(*m_statusValue);
 	ss << static_cast<float>(*m_statusValue);
+
+	//float statusValue = game->statusMananger()->hudValueMap()[statusObjectId].get();
 	DynamicTextManager::instance().updateText(m_statusObject->id(), ss.str());
 
 	m_statusObject->update();
