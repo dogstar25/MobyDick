@@ -1,13 +1,12 @@
 #include "HudStatusText.h"
 #include "../StatusManager.h"
-#include "../DynamicTextManager.h"
 #include "../game.h"
 
 #include <algorithm>
 
 extern std::unique_ptr<Game> game;
 
-HudStatusText::HudStatusText(std::string labelObjectId, std::string statusObjectId, float labelPadding, Scene* parentScene)
+HudStatusText::HudStatusText(std::string labelObjectId, std::string statusObjectId, std::string statusValueId, float labelPadding, Scene* parentScene)
 {
 
 	m_label = std::make_shared<GameObject>(labelObjectId, -50.0f, -50.0f, 0.0f, parentScene);
@@ -19,8 +18,7 @@ HudStatusText::HudStatusText(std::string labelObjectId, std::string statusObject
 	statusTransformComponent->setAbsolutePositioning(true);
 
 	m_labelPadding = labelPadding;
-	m_statusValue = game->statusMananger()->hudValueMap()[statusObjectId].get();
-
+	m_statusValueId = statusValueId;
 
 }
 
@@ -57,10 +55,10 @@ void HudStatusText::update(GameObject* parentGameObject)
 	}
 
 	//Update the dynamic text item that is used by this TextObject
-	std::stringstream ss;
-	ss << static_cast<float>(*m_statusValue);
-	DynamicTextManager::instance().updateText(m_statusObject->id(), ss.str());
-
+	//NOTE: This statusObject should already be a text item and already pointing to a specific
+	//      statusValie, this is probably not necesaary
+	auto textComponent = m_statusObject->getComponent<TextComponent>(ComponentTypes::TEXT_COMPONENT);
+	//textComponent->setDynamicValueId(m_statusValueId);
 	m_statusObject->update();
 
 	//Update the position of the status object

@@ -36,7 +36,7 @@
                     "id": "CHILDREN_COMPONENT",
                     "childObjects": [
                         {
-                            "gameObjectId": "HUD_LEVEL",
+                            "gameObjectId": "HUD_SCRAP_COUNT",
                             "centeredOnLocation": false,
                             "absolutePosition": {
                                 "x": 2,
@@ -44,7 +44,7 @@
                             }
                         },
                         {
-                            "gameObjectId": "HUD_LIVES",
+                            "gameObjectId": "HUD_SCRAP_BAR",
                             "centeredOnLocation": false,
                             "absolutePosition": {
                                 "x": 2,
@@ -56,10 +56,10 @@
             ]
         },
         {
-            "id": "HUD_LEVEL",
+            "id": "HUD_SCRAP_COUNT",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui", "abstract" ],
-            "description": "Hud Level Dynamic Text",
+            "description": "Hud Scrap Dynamic Text",
             "components": [
                 {
                     "id": "RENDER_COMPONENT"
@@ -70,14 +70,14 @@
                 {
                     "id": "HUD_COMPONENT",
                     "hudType": "HudItemTypes::STATUS_SINGLE",
-                    "labelObjectId": "HUD_LEVEL_LABEL",
+                    "labelObjectId": "HUD_SCRAP_LABEL",
                     "labelPadding": 16,
                     "statusObjectId": "HUD_SCRAP_VALUE"
                 }
             ]
         },
         {
-            "id": "HUD_LEVEL_LABEL",
+            "id": "HUD_SCRAP_LABEL",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "description": "Hud Level Label",
@@ -96,34 +96,8 @@
                 },
                 {
                     "id": "TEXT_COMPONENT",
-                    "value": "Level",
                     "dynamic": false,
-                    "font": "FONT_ARIAL_REG",
-                    "fontSize": 16
-                }
-            ]
-        },
-        {
-            "id": "HUD_LEVEL_VALUE",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
-            "description": "Hud Level Value",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "color": {
-                        "red": 255,
-                        "green": 255,
-                        "blue": 255,
-                        "alpha": 255
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT"
-                },
-                {
-                    "id": "TEXT_COMPONENT",
-                    "dynamic": true,
+                    "value": "Scrap",
                     "font": "FONT_ARIAL_REG",
                     "fontSize": 16
                 }
@@ -151,12 +125,13 @@
                     "id": "TEXT_COMPONENT",
                     "dynamic": true,
                     "font": "FONT_ARIAL_REG",
-                    "fontSize": 16
+                    "fontSize": 16,
+                    "statusValueId": "SCRAP_COUNT"
                 }
             ]
         },
         {
-            "id": "HUD_LIVES",
+            "id": "HUD_SCRAP_BAR",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui", "abstract" ],
             "description": "Hud Level Dynamic Text",
@@ -170,62 +145,10 @@
                 {
                     "id": "HUD_COMPONENT",
                     "hudType": "HudItemTypes::STATUS_SERIES",
-                    "labelObjectId": "HUD_LIVES_LABEL",
+                    "labelObjectId": "HUD_SCRAP_LABEL",
                     "labelPadding": 16,
-                    "statusObjectId": "HUD_BAR"
-                }
-            ]
-        },
-        {
-            "id": "HUD_LIVES_LABEL",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
-            "description": "Hud Level Value",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "color": {
-                        "red": 255,
-                        "green": 255,
-                        "blue": 255,
-                        "alpha": 255
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT"
-                },
-                {
-                    "id": "TEXT_COMPONENT",
-                    "value": "Lives",
-                    "dynamic": false,
-                    "font": "FONT_ARIAL_REG",
-                    "fontSize": 16
-                }
-            ]
-        },
-        {
-            "id": "HUD_LIVES_VALUE",
-            "collisionTag": "CollisionTag::GENERAL_SOLID",
-            "traitTags": [],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_BOWMAN1"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 16,
-                        "height": 16
-                    },
-                    "absolutePositioning": true
-                },
-                {
-                    "id": "TEXT_COMPONENT",
-                    "value": "Lives",
-                    "dynamic": false,
-                    "font": "FONT_ARIAL_REG",
-                    "fontSize": 16
+                    "statusObjectId": "HUD_BAR",
+                    "statusValueId": "SCRAP_COUNT"
                 }
             ]
         },

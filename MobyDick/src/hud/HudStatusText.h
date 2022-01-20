@@ -12,7 +12,7 @@ class HudStatusText : public HudItem
 
 public:
 	HudStatusText() = default;
-	HudStatusText(std::string labelObjectId, std::string statusObjectId, float labelPadding, Scene* parentScene);
+	HudStatusText(std::string labelObjectId, std::string statusObjectId, std::string statusValueId, float labelPadding, Scene* parentScene);
 	void update(GameObject* parentGameObject) override;
 	void render(GameObject* parentGameObject) override;
 

@@ -3,7 +3,6 @@
 #include <memory>
 
 #include "../game.h"
-#include "../DynamicTextManager.h"
 #include "../GameConfig.h"
 #include "../GameObject.h"
 
@@ -17,7 +16,9 @@ TextComponent::TextComponent(std::string gameObjectId, Json::Value componentJSON
 	m_fontId = componentJSON["font"].asString();
 	m_textValue = componentJSON["value"].asString();
 	m_fontSize = componentJSON["fontSize"].asInt();
+	m_dynamicValueId = componentJSON["statusValueId"].asString();
 	m_gameObjectId = gameObjectId;
+
 
 	if (m_textValue.empty())
 	{
@@ -30,13 +31,13 @@ TextComponent::TextComponent(std::string gameObjectId, Json::Value componentJSON
 	m_refreshTimer = Timer(GameConfig::instance().dynamicTextRefreshDelay());
 
 
+	//
+	//Problem here
+	//
 	if (m_isDynamic == true) {
-		m_dynamicCount++;
 		std::stringstream uniqueTextureId;
-		uniqueTextureId << "TX_" << gameObjectId << m_dynamicCount;
-
+		uniqueTextureId << "TX_" << m_dynamicValueId;
 		m_textureId = uniqueTextureId.str();
-
 	}
 	else {
 		m_textureId = "TX_" + gameObjectId;
@@ -62,19 +63,10 @@ void TextComponent::update()
 	const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 	const auto& transformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
-	//std::string textureId = "TX_" + m_gameObjectId;
-	//std::string textureId = "TX_" + parent()->name();
-
 	if (TextureManager::instance().hasTexture(m_textureId))
 	{
-		//If we have already set the texture, dont have to do it again
-		//if (renderComponent->texture())
-		//{
-			renderComponent->setTexture(TextureManager::instance().getTexture(m_textureId));
-			transformComponent->setSize((float)renderComponent->texture()->surface->w, (float)renderComponent->texture()->surface->h);
-
-		//}
-
+		renderComponent->setTexture(TextureManager::instance().getTexture(m_textureId));
+		transformComponent->setSize((float)renderComponent->texture()->surface->w, (float)renderComponent->texture()->surface->h);
 	}
 	else
 	{
@@ -84,7 +76,6 @@ void TextComponent::update()
 	if (m_isDynamic == true)
 	{
 		renderComponent->setTexture(updateDynamicTextTexture());
-
 	}
 
 }
@@ -143,26 +134,17 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
 {
 
-	TextItem* newText;
 	std::shared_ptr<Texture> texture;
 
-
-
-
-	//
-	//ToDo: completely delete dynamicTextManager and use Status Manager instead
-	//
-	newText = DynamicTextManager::instance().getTextItem(m_gameObjectId);
-
-	//use a timer to slow down the re-generating of dynamic text because its time consuming
-	//if (newText->hasChanged == true && m_refreshTimer.hasMetTargetDuration())
 	if ( m_refreshTimer.hasMetTargetDuration())
 	{
 
 		//Build new texture
-		m_textValue = newText->textValue;
+		auto newTextValue = game->statusMananger()->getValue(m_dynamicValueId);
+		std::stringstream ss;
+		ss << static_cast<float>(newTextValue);
+		m_textValue = ss.str();
 		texture = generateTextTexture();
-		newText->hasChanged = false;
 	}
 	else
 	{

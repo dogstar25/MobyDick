@@ -93,9 +93,6 @@
     <ClCompile Include="src\components\PlayerControlComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\DynamicTextManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\DebugPanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -363,9 +360,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\components\PlayerControlComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\DynamicTextManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\DebugPanel.h">

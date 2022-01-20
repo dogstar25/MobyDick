@@ -11,10 +11,11 @@ HudComponent::HudComponent(Json::Value componentJSON, Scene* parentScene)
 
 	std::string labelObjectId = componentJSON["labelObjectId"].asString();
 	std::string statusObjectId = componentJSON["statusObjectId"].asString();
+	std::string statusValueId = componentJSON["statusValueId"].asString();
 	float labelPadding = componentJSON["labelPadding"].asFloat();
 	HudItemTypes type = static_cast<HudItemTypes>(EnumMap::instance().toEnum(componentJSON["hudType"].asString()));
 
-	m_hudItem = HudItemFactory::instance().create(type, labelObjectId, statusObjectId, labelPadding, parentScene);
+	m_hudItem = HudItemFactory::instance().create(type, labelObjectId, statusObjectId, statusValueId, labelPadding, parentScene);
 }
 
 

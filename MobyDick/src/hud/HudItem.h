@@ -18,9 +18,7 @@ protected:
 	float m_labelPadding{};
 	std::optional<std::shared_ptr<GameObject>> m_label{};
 	std::shared_ptr<GameObject> m_statusObject{};
-
-	float* m_statusValue;
-
+	std::string m_statusValueId{};
 
 };
 

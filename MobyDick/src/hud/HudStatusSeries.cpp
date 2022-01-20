@@ -5,7 +5,7 @@
 
 extern std::unique_ptr<Game> game;
 
-HudStatusSeries::HudStatusSeries(std::string labelObjectId, std::string statusObjectId, float labelPadding, Scene* parentScene)
+HudStatusSeries::HudStatusSeries(std::string labelObjectId, std::string statusObjectId, std::string statusValueId, float labelPadding, Scene* parentScene)
 {
 
 	m_label = std::make_shared<GameObject>(labelObjectId, -50.0f, -50.0f, 0.0f, parentScene);
@@ -17,7 +17,7 @@ HudStatusSeries::HudStatusSeries(std::string labelObjectId, std::string statusOb
 	statusTransformComponent->setAbsolutePositioning(true);
 
 	m_labelPadding = labelPadding;
-	m_statusValue = game->statusMananger()->hudValueMap()[statusObjectId].get();
+	m_statusValueId = statusValueId;
 }
 
 void HudStatusSeries::update(GameObject* parentGameObject)
@@ -70,13 +70,11 @@ void HudStatusSeries::update(GameObject* parentGameObject)
 	float hudWidth{};
 
 	//Width - Label size plus the status object repeated
-	if (m_statusValue != nullptr) {
-		hudWidth = labelWidth + (statusObjectWidth * (*m_statusValue));
-	}
+	float statusValue = game->statusMananger()->getValue(m_statusValueId);
+	hudWidth = labelWidth + (statusObjectWidth * statusValue);
 
 	const auto& parentTransformComponent = parentGameObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	parentTransformComponent->setSize(hudWidth, hudHeight);
-
 
 }
 
@@ -87,20 +85,19 @@ void HudStatusSeries::render(GameObject* parentGameObject)
 
 	SDL_FRect positionRect{};
 
-
 	if (m_label.has_value()) {
 		m_label.value()->render();
 	}
 
 	m_statusObject->render();
 
-	for (int x = 0; x < *m_statusValue;x++) {
+	float statusValue = game->statusMananger()->getValue(m_statusValueId);
+
+	for (int x = 0; x < statusValue;x++) {
 		positionRect = statusRenderComponent->getRenderDestRect();
 		positionRect.x += positionRect.w * x;
 
 		m_statusObject->render(positionRect);
 	}
-
-
 
 }

@@ -80,9 +80,6 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 		//Display basic loading message
 		//_displayLoadingMsg();
-		statusManager->setLevel(19);
-		statusManager->initHudMappings();
-		static_cast<MRStatusManager*>(statusManager)->setLives(1);
 
 		TextureManager::instance().init();
 		TextureManager::instance().load("textureAtlasAssets");
