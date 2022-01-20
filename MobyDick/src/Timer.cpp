@@ -1,6 +1,5 @@
 #include "Timer.h"
 #include "DebugPanel.h"
-#include "DynamicTextManager.h"
 #include "Util.h"
 #include <iostream>
 

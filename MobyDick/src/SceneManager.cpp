@@ -4,7 +4,6 @@
 
 #include "game.h"
 #include "Clock.h"
-#include "DynamicTextManager.h"
 #include "DebugPanel.h"
 
 extern std::unique_ptr<Game> game;
@@ -64,7 +63,9 @@ void SceneManager::run()
 		m_frameCount++;
 		float fps = m_gameTimer.calculateFPS(m_frameCount);
 
-		game->statusMananger()->setValue("FPS_VALUE", fps);
+		if (fps > 0) {
+			game->statusMananger()->setValue("FPS_VALUE", fps);
+		}
 
 		//Run update for every active scene
 		for (auto& scene : m_scenes) {

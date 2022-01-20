@@ -72,8 +72,34 @@
                     "hudType": "HudItemTypes::STATUS_SINGLE",
                     "labelObjectId": "HUD_SCRAP_LABEL",
                     "labelPadding": 16,
-                    "statusObjectId": "HUD_SCRAP_VALUE",
-                    "statusValueId": "SCRAP_COUNT"
+                    "statusObjectId": "HUD_SCRAP_VALUE"
+                }
+            ]
+        },
+        {
+            "id": "HUD_SCRAP_LABEL",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "description": "Hud Level Label",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "TEXT_COMPONENT",
+                    "dynamic": false,
+                    "value": "Scrap",
+                    "font": "FONT_ARIAL_REG",
+                    "fontSize": 16
                 }
             ]
         },
@@ -99,7 +125,8 @@
                     "id": "TEXT_COMPONENT",
                     "dynamic": true,
                     "font": "FONT_ARIAL_REG",
-                    "fontSize": 16
+                    "fontSize": 16,
+                    "statusValueId": "SCRAP_COUNT"
                 }
             ]
         },

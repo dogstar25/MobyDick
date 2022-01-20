@@ -108,6 +108,28 @@
             }
         },
         {
+            "id": "TX_GINA_64_REDUX_IDLE",
+            "description": "Pistol Lady Run 64px",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2266,
+                "y": 200,
+                "width": 64,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_GINA_64_REDUX_RUN",
+            "description": "Pistol Lady Run 64px",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2009,
+                "y": 200,
+                "width": 256,
+                "height": 64
+            }
+        },
+        {
             "id": "TX_WALL1_COLUMN",
             "description": "Wall 1 Column",
             "atlas": "TEXTURE_ATLAS_0",

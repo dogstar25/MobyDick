@@ -21,14 +21,16 @@ public:
 	~TextComponent();
 
 	void update() override;
+	void setDynamicValueId(std::string dynamicValueId) { m_dynamicValueId = dynamicValueId; }
 
 	//Accessor functions
-	bool        isDynamic()	{ return m_isDynamic; }
-	bool        isDebugText() { return m_isDebugText; }
+	bool isDynamic() { return m_isDynamic; }
+	bool isDebugText() { return m_isDebugText; }
 	std::string fontId() { return m_fontId; }
 	std::string textValue() { return m_textValue; }
 	std::string debugId() { return m_debugId; }
-	int         fontSize() { return m_fontSize; }
+	std::string dynamicValueId() { return m_dynamicValueId; }
+	int fontSize() { return m_fontSize; }
 
 private:
 
@@ -37,15 +39,16 @@ private:
 
 	void construct();
 
-	int		    m_fontSize{ 0 };
-	bool        m_isDynamic{ false };
-	bool		m_isDebugText{ false };
-	std::string	m_textureId{ "" };
-	std::string m_fontId{ "" };
-	std::string m_textValue{ "" };
-	std::string m_debugId{ "" };
+	int m_fontSize{};
+	bool m_isDynamic{};
+	bool m_isDebugText{};
+	std::string	m_textureId{};
+	std::string m_fontId{};
+	std::string m_textValue{};
+	std::string m_debugId{};
+	std::string m_dynamicValueId{};
 
-	static inline int m_dynamicCount{0};
+	static inline int m_dynamicCount{};
 
 	//test
 	TTF_Font* m_fontObject;

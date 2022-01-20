@@ -266,7 +266,6 @@
     <ClCompile Include="src\components\ActionComponent.cpp" />
     <ClCompile Include="src\actions\Action.cpp" />
     <ClCompile Include="src\DebugPanel.cpp" />
-    <ClCompile Include="src\DynamicTextManager.cpp" />
     <ClCompile Include="src\components\PlayerControlComponent.cpp" />
     <ClCompile Include="src\LevelManager.cpp" />
     <ClCompile Include="src\ObjectPoolManager.cpp" />
@@ -359,7 +358,6 @@
     <ClInclude Include="src\components\ActionComponent.h" />
     <ClInclude Include="src\actions\Action.h" />
     <ClInclude Include="src\DebugPanel.h" />
-    <ClInclude Include="src\DynamicTextManager.h" />
     <ClInclude Include="src\components\PlayerControlComponent.h" />
     <ClInclude Include="src\LevelManager.h" />
     <ClInclude Include="src\ObjectPoolManager.h" />

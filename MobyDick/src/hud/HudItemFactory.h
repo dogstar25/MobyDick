@@ -20,7 +20,8 @@ class HudItemFactory
 public:
 
 	static HudItemFactory& instance();
-	std::shared_ptr<HudItem> create(HudItemTypes type, std::string labelId, std::string statusId, float labelPadding, Scene* parentScene);
+	std::shared_ptr<HudItem> create(HudItemTypes type, std::string labelId, std::string statusId, std::string statusValueId,
+		float labelPadding, Scene* parentScene);
 
 
 private:

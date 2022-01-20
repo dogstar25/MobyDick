@@ -11,7 +11,7 @@ class HudStatusSeries :  public HudItem
 
 public:
 	HudStatusSeries() = default;
-	HudStatusSeries(std::string labelObjectId, std::string statusObjectId, float labelPadding, Scene * parentScene);
+	HudStatusSeries(std::string labelObjectId, std::string statusObjectId, std::string statusValueId, float labelPadding, Scene * parentScene);
 	void update(GameObject * parentGameObject) override;
 	void render(GameObject * parentGameObject) override;
 

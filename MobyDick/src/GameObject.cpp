@@ -29,14 +29,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	Json::Value definitionJSON;
 
 	//Build components
-	if (gameObjectId.rfind("DEBUG_", 0) != 0)
-	{
-		definitionJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
-	}
-	else
-	{
-		definitionJSON = GameObjectManager::instance().getDefinition("DEBUG_ITEM")->definitionJSON();
-	}
+	definitionJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
 
 	//Category Id and Object Type
 	m_id = gameObjectId;
