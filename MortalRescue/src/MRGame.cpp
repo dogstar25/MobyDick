@@ -35,13 +35,13 @@ Initialize Game
 */
 bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter, 
 	ComponentFactory* componentFactory, ActionFactory* actionFactory, ParticleEffectsFactory* particleEffectsFactory, 
-	StatusManager* statusManager)
+	CutSceneFactory* cutSceneFactory, StatusManager* statusManager)
 {
 
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
 
-	Game::init(contactListener, contactFilter, componentFactory, actionFactory, particleEffectsFactory, statusManager);
+	Game::init(contactListener, contactFilter, componentFactory, actionFactory, particleEffectsFactory, cutSceneFactory, statusManager);
 
 	std::cout << "Mortal Rescue Begins\n";
 
@@ -128,7 +128,9 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 		scene.addGameObject("GLOW_TRIANGLE", LAYER_MENU, 3, 3);
 		scene.addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MENU, 13, 13);
-		
+		//scene.addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MENU, 1, 1);
+		scene.addGameObject("BOWMAN", LAYER_MENU, 3, 3);
+
 		
 
 	}

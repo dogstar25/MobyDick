@@ -1,6 +1,8 @@
 #include "Scene.h"
 
 #include <cassert>
+#include <sstream>
+#include "glm/glm.hpp"
 
 #include "LevelManager.h"
 #include "Camera.h"
@@ -12,6 +14,7 @@
 #include "ObjectPoolManager.h"
 #include "SceneManager.h"
 #include "DebugDraw.h"
+#include "cutScenes/CutScene.h"
 #include "game.h"
 
 
@@ -103,6 +106,41 @@ void Scene::loadLevel(std::string levelId)
 	//Run GameObject code that requires ALL gameObjects to be created first, for interdependency logic
 	_processGameObjectInterdependecies();
 
+	//
+	//test cutscene stuff
+	//
+
+	//Json::Value componentsDefinition{};
+	//Json::Value brainDefinition{};
+	//
+	//brainDefinition["id"] = "BRAIN_COMPONENT";
+	//brainDefinition["sightSensorSize"] = 25;
+	//componentsDefinition["components"].append(brainDefinition);
+
+	//std::stringstream ss;
+	//ss << componentsDefinition.toStyledString();
+	//std::cout << ss.str();
+
+	//const auto& brainComponent = 
+	//	std::static_pointer_cast<BrainComponent>(
+	//		game->componentFactory()->create(componentsDefinition, "SURVIVOR", this, 0, 0, 0, ComponentTypes::BRAIN_COMPONENT)
+	//		);
+	//brainComponent->setParent(getGameObject("Frank"));
+	//getGameObject("Frank")->addComponent(brainComponent, ComponentTypes::BRAIN_COMPONENT);
+
+
+	//brainComponent->dispatch({ 4000,900 });
+	//Camera::instance().dispatch(glm::vec2(4000, 900));
+
+}
+
+std::optional<SceneAction> Scene::getkeycodeAction(SDL_Keycode keycode) {
+	if (m_sceneKeyActions.find(keycode) != m_sceneKeyActions.end()) {
+		return m_sceneKeyActions.at(keycode);
+	}
+	else {
+		return std::nullopt;
+	}
 }
 
 void Scene::reset()
@@ -134,9 +172,6 @@ void Scene::reset()
 		m_physicsWorld->SetDebugDraw(&DebugDraw::instance());
 	}
 
-
-
-
 }
 
 void Scene::clear()
@@ -159,6 +194,11 @@ void Scene::clear()
 }
 
 void Scene::update() {
+
+	//Direct the scne if it has a cutScene assigned
+	if (m_cutScene.has_value() == true) {
+		direct();
+	}
 
 	Camera::instance().update();
 
@@ -204,8 +244,6 @@ void Scene::update() {
 
 }
 
-
-
 void Scene::render() {
 
 	int gameLayerIndex{0};
@@ -223,7 +261,7 @@ void Scene::render() {
 		//Render any primitive object for this layer (lines and single pixels/points)
 		game->renderer()->renderPrimitives(gameLayerIndex);
 
-	gameLayerIndex++;
+		gameLayerIndex++;
 
 	}
 	
@@ -235,10 +273,32 @@ void Scene::render() {
 
 }
 
-GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow)
+
+void Scene::direct()
 {
 
-	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this, cameraFollow));
+	m_cutScene.value()->run(this);
+
+}
+
+void Scene::setCutScene(std::shared_ptr<CutScene>cutScene)
+{
+
+	m_cutScene = cutScene;
+
+}
+
+void Scene::deleteCutScene()
+{
+
+	m_cutScene.reset();
+
+}
+
+GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow,std::string name)
+{
+
+	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this, cameraFollow, name));
 
 	return gameObject.get();
 
@@ -473,4 +533,25 @@ void Scene::_buildSceneGameObjects(Json::Value definitionJSON)
 			addGameObject(id, layer, locationX, locationY, 0);
 		}
 	}
+}
+
+GameObject* Scene::getGameObject(std::string name)
+{
+	std::optional<GameObject*> foundGameObject{};
+
+	for (auto& layer : m_gameObjects) {
+
+		for (auto& gameObject : layer) {
+
+			if (gameObject->name() == name) {
+
+				foundGameObject = gameObject.get();
+				break;
+			}
+		}
+	}
+
+	assert(foundGameObject.has_value() && "GameObject wasnt found!");
+
+	return foundGameObject.value();
 }

@@ -5,6 +5,7 @@
 #include "MRContactListener.h"
 #include "MRContactFilter.h"
 #include "MRComponentFactory.h"
+#include "cutScenes/MRCutSceneFactory.h"
 #include "actions/MRActionFactory.h"
 #include "particleEffects/MRParticleEffectsFactory.h"
 #include "MRStatusManager.h"
@@ -20,7 +21,8 @@ int main(int argc, char* args[])
 		new MRContactFilter(),
 		new MRComponentFactory(), 
 		new MRActionFactory(), 
-		new MRParticleEffectsFactory, 
+		new MRParticleEffectsFactory,
+		new MRCutSceneFactory,
 		new MRStatusManager()
 	);
 

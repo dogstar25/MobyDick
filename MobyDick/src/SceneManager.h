@@ -11,11 +11,20 @@
 #include "Util.h"
 #include "BaseConstants.h"
 #include "Timer.h"
+#include "Camera.h"
+
 
 
 
 
 inline constexpr int MAX_SCENES = 12;
+
+struct SceneSnapshot {
+	SceneState state{};
+	std::optional<GameObject*> cameraFollowedObject{};
+	SDL_FPoint cameraLocation{};
+	int inputControlMode{};
+};
 
 struct PlayerInputEvent
 {
@@ -37,6 +46,8 @@ public:
 	void run();
 	std::optional<SceneAction> pollEvents();
 	void popScene();
+	void directScene(std::string cutSceneId);
+	void releaseDirectScene();
 	Scene& pushScene(std::string sceneId);
 	Timer& gameTimer() { return m_gameTimer; }
 
@@ -72,13 +83,17 @@ private:
 	std::vector<PlayerInputEvent> m_PlayerInputEvents;
 	//std::vector<LevelTriggerEvent> m_LevelTriggerEvents;
 	std::map<std::string, Json::Value>m_sceneDefinitions;
+	std::map<std::string, SceneSnapshot>m_sceneSaveSnapshots{};
+	
 
 	int m_currentSceneIndex{};
 	Timer m_gameTimer{};
 	int m_frameCount{};
 
-
-
+	void _directorTakeOver();
+	void _directorRelease();
+	void _saveCurrentState(std::string sceneId);
+	void _restoreSceneState(std::string sceneId);
 
 };
 

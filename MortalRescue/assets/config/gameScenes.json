@@ -25,7 +25,15 @@
                         "action": "SCENE_ACTION_ADD",
                         "newSceneId": "SCENE_PAUSE_MENU"
                     }
+                },
+                {
+                    "keyCode": "SDLK_F1",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_DIRECT",
+                        "newSceneId": "CutSceneExample"
+                    }
                 }
+
             ],
             "gameObjectPools": [
                 {

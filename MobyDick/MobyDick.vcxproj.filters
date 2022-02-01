@@ -279,6 +279,18 @@
     <ClCompile Include="src\particleEffects\ParticleEffectsFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\actions\PrimitiveMoveAction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cutScenes\CutSceneExample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cutScenes\CutScene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cutScenes\CutSceneFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation.h">
@@ -558,6 +570,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\particleEffects\ParticleEffectsFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\actions\PrimitiveMoveAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cutScenes\CutScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cutScenes\CutSceneExample.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cutScenes\CutSceneFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,14 +11,15 @@
 #include "BaseConstants.h"
 #include "GameObject.h"
 #include "GameConfig.h"
+//#include "cutScenes/CutScene.h"
 
 #include "ObjectPoolManager.h"
-//class ObjectPoolManager;
+class CutScene;
 
 struct SceneAction
 {
 	int actionCode{ 0 };
-	std::string sceneId;
+	std::string actionId;
 };
 
 struct PhysicsConfig
@@ -46,15 +47,14 @@ public:
 	void render();
 	void update();
 	void clearEvents();
-	
-	
 
-	GameObject* addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle=0., bool cameraFollow=false);
+	GameObject* addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle = 0., bool cameraFollow = false,std::string name="");
 	GameObject* addGameObject(std::string gameObjectId, int layer, PositionAlignment windowPosition, float angle=0, bool cameraFollow=false);
 	GameObject* addGameObject(std::shared_ptr<GameObject> gameObject, int layer);
 	void addKeyAction(SDL_Keycode, SceneAction);
 	void applyCurrentControlMode();
 	SDL_FPoint calcWindowPosition(int globalPosition);
+	GameObject* getGameObject(std::string name);
 	
 	void stepB2PhysicsWorld() {
 		m_physicsWorld->Step(m_physicsConfig.timeStep,
@@ -66,49 +66,30 @@ public:
 		return m_gameObjects;
 	}
 
-	std::string id() {
-		return m_id;
-	}
-	int parentSceneIndex() {
-		return m_parentSceneIndex;
-	}
-
 	//Accessor Functions
-	b2World* physicsWorld() {
-		return m_physicsWorld;
-	}
+	std::string id() {	return m_id;}
+	int parentSceneIndex() { return m_parentSceneIndex; }
+	b2World* physicsWorld() { return m_physicsWorld;	}
+	int inputControlMode() { return m_inputControlMode; }
 
-	void setState(SceneState state) {
-		m_state = state;
-	}
+	void setState(SceneState state) { m_state = state; }
+	SceneState state() { return m_state; }
 
-	SceneState state() {
-		return m_state;
-	}
+	std::optional<std::shared_ptr<CutScene>> cutScene() { return m_cutScene; }
 
-	ObjectPoolManager& objectPoolManager() {
-		return m_objectPoolManager;
-	}
-
+	ObjectPoolManager& objectPoolManager() { return m_objectPoolManager; }
 	PhysicsConfig physicsConfig() { return m_physicsConfig; }
-
-	void setInputControlMode(int inputControlMode);
-
-	std::optional<SceneAction> getkeycodeAction(SDL_Keycode keycode) {
-		if (m_sceneKeyActions.find(keycode) != m_sceneKeyActions.end()) {
-			return m_sceneKeyActions.at(keycode);
-		}
-		else {
-			return std::nullopt;
-		}
-	}
-
-	bool hasPhysics() {
-		return m_hasPhysics;
-	}
-
+	bool hasPhysics() { return m_hasPhysics; }
 	int gameObjectCount() { return m_gameObjectCount; }
 	void incrementGameObjectCount() { m_gameObjectCount += 1; }
+
+	void setInputControlMode(int inputControlMode);
+	std::optional<SceneAction> getkeycodeAction(SDL_Keycode keycode);
+	void direct();
+	void setCutScene(std::shared_ptr<CutScene>cutScene);
+	void deleteCutScene();
+
+
 	
 private:
 
@@ -119,6 +100,7 @@ private:
 	bool m_hasPhysics{};
 
 	SceneState m_state{};
+	std::optional<std::shared_ptr<CutScene>> m_cutScene{};
 	b2World* m_physicsWorld{};
 	PhysicsConfig m_physicsConfig{};
 	ObjectPoolManager m_objectPoolManager{};

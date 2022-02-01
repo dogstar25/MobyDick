@@ -24,9 +24,9 @@ WeaponComponent::WeaponComponent(Json::Value componentJSON)
 		weaponLevelDetail.levelUpTarget = itrWeaponLevel["levelUpTarget"].asInt();
 		weaponLevelDetail.force = itrWeaponLevel["force"].asFloat();
 		weaponLevelDetail.color.r = itrWeaponLevel["color"]["red"].asUInt();
-		weaponLevelDetail.color.g = itrWeaponLevel["color"]["red"].asUInt();
-		weaponLevelDetail.color.b = itrWeaponLevel["color"]["red"].asUInt();
-		weaponLevelDetail.color.a = itrWeaponLevel["color"]["red"].asUInt();
+		weaponLevelDetail.color.g = itrWeaponLevel["color"]["green"].asUInt();
+		weaponLevelDetail.color.b = itrWeaponLevel["color"]["blue"].asUInt();
+		weaponLevelDetail.color.a = itrWeaponLevel["color"]["alpha"].asUInt();
 		weaponLevelDetail.bulletPoolId = itrWeaponLevel["bulletPoolId"].asString();
 		m_weaponLevelDetails.emplace(level, std::move(weaponLevelDetail));
 
@@ -91,6 +91,9 @@ void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 
 		//Add the bullet object to the main gameObject collection
 		parent()->parentScene()->addGameObject(bullet.value(), LAYER_MAIN);
+	}
+	else {
+		std::cout << "No Bullet available" << std::endl;
 	}
 
 }

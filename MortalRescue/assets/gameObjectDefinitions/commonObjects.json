@@ -185,6 +185,7 @@
                     "absolutePositioning": false
 
                 }
+
             ]
         },
         {
@@ -243,16 +244,16 @@
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                        "color": {
-                            "red": 255,
-                            "green": 255,
-                            "blue": 255,
-                            "alpha": 255
-                        }
+                    "color": {
+                        "red": 255,
+                        "green": 255,
+                        "blue": 255,
+                        "alpha": 255
+                    }
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
-                        "absolutePositioning": true
+                    "absolutePositioning": true
                 },
                 {
                     "id": "TEXT_COMPONENT",
@@ -454,7 +455,7 @@
         {
             "id": "PARTICLE_X_EMITTER",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": ["abstract"],
+            "traitTags": [ "abstract" ],
             "description": "Particle Emitter",
             "components": [
                 {
@@ -518,6 +519,27 @@
             ]
         },
         {
+            "id": "RAIN_EMITTER",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "abstract" ],
+            "description": "Rain Emitter",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "PARTICLE_COMPONENT",
+                    "type": "ParticleEmitterType::CONTINUOUS",
+                    "effects": [
+                        "rain"
+                    ]
+                }
+            ]
+        },
+        {
             "id": "NAVIGATION_TRANSIT_POINT",
             "type": "GameObjectType::ABSTRACT",
             "collisionTag": "CollisionTag::GENERAL_FREE",
@@ -541,7 +563,7 @@
                 },
                 {
                     "id": "NAVIGATION_COMPONENT",
-                    "type": "NavigationObjectType::TRANSIT_POINT",
+                    "type": "NavigationObjectType::TRANSIT_POINT"
                 }
             ]
         },
@@ -636,7 +658,7 @@
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "textureId": "TX_BOWMAN1"
+                    "textureId": "TX_STUBB"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
@@ -645,7 +667,38 @@
                         "height": 64
                     },
                     "absolutePositioning": false
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 10
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "collisionShape": "B2_CIRCLE",
+                    "collisionRadius": 0.64,
+                    "friction": 0.00,
+                    "restitution": 0.0,
+                    "density": 50.5,
+                    "linearDamping": 0.2,
+                    "angularDamping": 3.0
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_MOVE",
+                            "actionClass": "DroneMove"
+                        }
+                    ]
                 }
+                //{
+                //    "id": "BRAIN_COMPONENT",
+                //    //"sensorLength": 550,
+                //    //"sensorOffset": 0,
+                //    //"sensorCount": 250,
+                //    "sightSensorSize": 25
+                //}
             ]
         },
         {

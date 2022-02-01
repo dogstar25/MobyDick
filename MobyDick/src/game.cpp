@@ -20,13 +20,15 @@ bool Game::init()
 
 
 bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter, 
-	ComponentFactory* componentFactory, ActionFactory* actionFactory, ParticleEffectsFactory* particleEffectsFactory, StatusManager* statusManager)
+	ComponentFactory* componentFactory, ActionFactory* actionFactory, ParticleEffectsFactory* particleEffectsFactory, 
+	CutSceneFactory* cutSceneFactory, StatusManager* statusManager)
 {
 	m_contactListener = std::shared_ptr<ContactListener>(contactListener);
 	m_contactFilter = std::shared_ptr<ContactFilter>(contactFilter);
 	m_componentFactory = std::shared_ptr<ComponentFactory>(componentFactory);
 	m_actionFactory = std::shared_ptr<ActionFactory>(actionFactory);
 	m_particleEffectsFactory = std::shared_ptr<ParticleEffectsFactory>(particleEffectsFactory);
+	m_cutSceneFactory = std::shared_ptr<CutSceneFactory>(cutSceneFactory);
 	m_statusMananger = std::shared_ptr<StatusManager>(statusManager);
 
 	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
@@ -58,25 +60,17 @@ void Game::play()
 				SceneManager::instance().popScene();
 			}
 			else if (action->actionCode == SCENE_ACTION_ADD) {
-				SceneManager::instance().pushScene(action->sceneId);
+				SceneManager::instance().pushScene(action->actionId);
 			}
 			else if (action->actionCode == SCENE_ACTION_REPLACE) {
 				SceneManager::instance().popScene();
-				SceneManager::instance().pushScene(action->sceneId);
+				SceneManager::instance().pushScene(action->actionId);
 			}
-			else if (action->actionCode == SCENE_ACTION_HIJACK) {
-				//SceneManager::instance().hiJackScene(action->cutSceneId);
-				//Set scene status to DIRECTED
-				//Disable the player control of the player
-				//takeover the camera
-				//initialze all of the players that need to be controlled
-				//create any new gameObjects needed
+			else if (action->actionCode == SCENE_ACTION_DIRECT) {
+				SceneManager::instance().directScene(action->actionId);
 			}
-			else if (action->actionCode == SCENE_ACTION_UNHIJACK) {
-				//SceneManager::instance().unHiJackScene();
-				//Reset scene status to RUN
-				//Restore player control and other things
-				//Various triggers will activate HIJACK and UNHIJACK
+			else if (action->actionCode == SCENE_ACTION_RELEASE_DIRECT) {
+				SceneManager::instance().releaseDirectScene();
 			}
 
 		}

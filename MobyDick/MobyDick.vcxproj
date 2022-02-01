@@ -40,13 +40,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -215,6 +215,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\actions\ActionFactory.cpp" />
+    <ClCompile Include="src\actions\PrimitiveMoveAction.cpp" />
+    <ClCompile Include="src\cutScenes\CutScene.cpp" />
+    <ClCompile Include="src\cutScenes\CutSceneExample.cpp" />
+    <ClCompile Include="src\cutScenes\CutSceneFactory.cpp" />
     <ClCompile Include="src\hud\HudItemFactory.cpp" />
     <ClCompile Include="src\components\HudComponent.cpp" />
     <ClCompile Include="src\hud\HudStatusSeries.cpp" />
@@ -305,6 +309,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\actions\ActionFactory.h" />
+    <ClInclude Include="src\actions\PrimitiveMoveAction.h" />
+    <ClInclude Include="src\cutScenes\CutScene.h" />
+    <ClInclude Include="src\cutScenes\CutSceneExample.h" />
+    <ClInclude Include="src\cutScenes\CutSceneFactory.h" />
     <ClInclude Include="src\hud\HudItemFactory.h" />
     <ClInclude Include="src\components\HudComponent.h" />
     <ClInclude Include="src\hud\HudStatusSeries.h" />

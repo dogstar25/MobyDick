@@ -22,6 +22,7 @@ struct LevelObject
 	int layer{ LAYER_MAIN };
 	int angleAdjustment {};
 	bool cameraFollow{ false };
+	std::string name{};
 };
 
 class LevelManager

@@ -17,14 +17,13 @@ public:
 	void postInit() override;
 
 private:
-	std::optional<GameObject*> m_targetDestination{};
-	std::optional<GameObject*> m_interimDestination{};
+	//std::optional<GameObject*> m_targetDestination{};
+	//std::optional<GameObject*> m_interimDestination{};
 	std::vector<GameObject*> m_wayPoints;
-	std::vector<GameObject*> m_navPoints;
-	std::vector<GameObject*> m_tempVisitedNavPoints;
-	GameObject* getClosestNavPoint(SDL_FPoint targetPosition, int navType);
+	//std::vector<GameObject*> m_navPoints;
+	//std::vector<GameObject*> m_tempVisitedNavPoints;
+	//GameObject* getClosestNavPoint(SDL_FPoint targetPosition, int navType);
 	GameObject* getNextPatrolDestination();
-	std::optional<GameObject*> getNextinterimDestination();
 
 	int m_currentWaypointIndex{ 0 };
 	SDL_FPoint m_targetLocation{0,0};
@@ -37,17 +36,14 @@ private:
 	void _doPursue();
 	void _doEngage();
 
-	float calculateDistance(SDL_FPoint location1, SDL_FPoint location2);
-	bool existsInAlreadyVistedNavList(GameObject* navPoint);
+	//float calculateDistance(SDL_FPoint location1, SDL_FPoint location2);
 	void _rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCenter, GameObject* gameObject);
 	void _applyAvoidanceMovement();
 	int _determineState();
-	void _executeMove();
-	void _stopMovement();
 
 	std::optional<SDL_FPoint> _detectPlayer();
 
-	void navigatePatrol();
+	//void navigatePatrol();
 	void navigateEngage();
 
 };

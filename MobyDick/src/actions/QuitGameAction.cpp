@@ -20,7 +20,7 @@ void QuitGameAction::perform(GameObject* gameObject)
 
 	SceneAction* sceneAction = new SceneAction();
 	sceneAction->actionCode = SCENE_ACTION_QUIT;
-	sceneAction->sceneId = "";
+	sceneAction->actionId = "";
 
 	event.type = SDL_USEREVENT;
 	event.user.data1 = sceneAction;
