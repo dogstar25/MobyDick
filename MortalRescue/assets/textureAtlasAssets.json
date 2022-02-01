@@ -348,6 +348,17 @@
                 "width": 256,
                 "height": 256
             }
+        },
+        {
+            "id": "TX_DRONE_BRAIN_64",
+            "description": "Dron Brain 64",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 69,
+                "y": 268,
+                "width": 64,
+                "height": 64
+            }
         }
 
     ],
