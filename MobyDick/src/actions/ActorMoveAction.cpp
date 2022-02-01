@@ -13,18 +13,6 @@ ActorMoveAction::ActorMoveAction() :
 
 }
 
-//ActorMoveAction::ActorMoveAction(int direction, int strafe) : 
-//	MoveAction(direction, strafe)
-//{
-//
-//}
-
-ActorMoveAction::~ActorMoveAction()
-{
-
-
-}
-
 void ActorMoveAction::perform(GameObject* gameObject)
 {
 	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);

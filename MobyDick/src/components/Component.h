@@ -32,6 +32,9 @@ public:
 	~Component();
 	virtual void update() = 0;
 	virtual void postInit() {};
+	void disable() { disabled = true; }
+	void enable() { disabled = false; }
+	bool isDisabled() { return disabled; }
 
 	virtual void setParent(GameObject* gameObject) { m_parentGameObject = gameObject; }
 	GameObject* parent() { return m_parentGameObject; }
@@ -39,6 +42,7 @@ public:
 protected:
 	GameObject* m_parentGameObject{ nullptr };
 	std::string m_gameObjectId{};
+	bool disabled{ false };
 
 
 };

@@ -5,6 +5,8 @@
 #include "game.h"
 #include "Clock.h"
 #include "DebugPanel.h"
+#include "cutscenes/CutScene.h"
+#include "cutScenes/CutSceneExample.h"
 
 extern std::unique_ptr<Game> game;
 
@@ -69,15 +71,12 @@ void SceneManager::run()
 
 		//Run update for every active scene
 		for (auto& scene : m_scenes) {
+
 			if (scene.state() == SceneState::RUN) {
 				scene.update();
 			}
-			else if (scene.state() == SceneState::DIRECTED) {
-				//scene.direct(); // move the various things around and whatever
-				scene.update();
-			}
-
 		}
+
 		//Clear the screen
 		game->renderer()->clear();
 
@@ -196,20 +195,47 @@ void SceneManager::popScene()
 {
 
 	m_scenes.pop_back();
-	m_scenes.back().setState(SceneState::RUN);
-	m_scenes.back().applyCurrentControlMode();
+	_restoreSceneState(m_scenes.back().id());
 
 }
 
 Scene& SceneManager::pushScene(std::string sceneId)
 {
 	if (m_scenes.empty() == false) {
+
+		//Save the currect state and position of ket objects
+		_saveCurrentState(m_scenes.back().id());
+
+		//Pause the current Scene
 		m_scenes.back().setState(SceneState::PAUSE);
 	}
 	Scene& scene = SceneManager::instance().scenes().emplace_back(sceneId);
 
 	return scene;
 	
+}
+
+void SceneManager::directScene(std::string cutSceneId)
+{
+
+	//if wer are already in the middle of a curscene then disregard the
+	// new cutscene trying to be added
+	if (m_scenes.back().cutScene().has_value() == false) {
+		//disable and enable certain game objects and stuff
+		_directorTakeOver();
+
+		std::shared_ptr<CutScene> cutScene = game->cutSceneFactory()->create(cutSceneId);
+		//std::shared_ptr<CutScene> cutScene = std::make_shared<CutSceneExample>();
+		m_scenes.back().setCutScene(cutScene);
+	}
+
+}
+
+void SceneManager::releaseDirectScene()
+{
+	_directorRelease();
+	m_scenes.back().deleteCutScene();
+
 }
 
 GameObject* SceneManager::addGameObject(std::shared_ptr<GameObject>gameObject, int layer)
@@ -228,5 +254,50 @@ GameObject* SceneManager::addGameObject(std::string gameObjectId, int layer, flo
 	auto gameObject = currentScene.addGameObject(gameObjectId, layer, xMapPos, yMapPos, angle, cameraFollow);
 
 	return gameObject;
+
+}
+
+void SceneManager::_directorTakeOver()
+{
+
+	_saveCurrentState("DIRECTED");
+
+}
+
+void SceneManager::_directorRelease()
+{
+
+	_restoreSceneState("DIRECTED");
+
+}
+
+void SceneManager::_saveCurrentState(std::string sceneId)
+{
+	SceneSnapshot snapshot{};
+	snapshot.state = m_scenes.back().state();
+	snapshot.inputControlMode = m_scenes.back().inputControlMode();
+	snapshot.cameraFollowedObject = Camera::instance().getFollowMeObject();
+	snapshot.cameraLocation = { Camera::instance().frame().x, Camera::instance().frame().y };
+
+	m_sceneSaveSnapshots[sceneId] = snapshot;
+
+}
+
+void SceneManager::_restoreSceneState(std::string sceneId)
+{
+
+	assert(m_sceneSaveSnapshots.find(sceneId) != m_sceneSaveSnapshots.end() && "SceneId not found in saved scene snapshots map");
+
+	m_scenes.back().setState(m_sceneSaveSnapshots[sceneId].state);
+	m_scenes.back().setInputControlMode(m_sceneSaveSnapshots[sceneId].inputControlMode);
+	if (m_sceneSaveSnapshots[sceneId].cameraFollowedObject.has_value()) {
+		Camera::instance().setFollowMe(m_sceneSaveSnapshots[sceneId].cameraFollowedObject.value());
+	}
+	else {
+		Camera::instance().setFramePosition(m_sceneSaveSnapshots[sceneId].cameraLocation.x, m_sceneSaveSnapshots[sceneId].cameraLocation.y);
+	}
+
+	auto it = m_sceneSaveSnapshots.find(sceneId);
+	m_sceneSaveSnapshots.erase(it);
 
 }

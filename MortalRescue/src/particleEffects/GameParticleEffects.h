@@ -98,4 +98,23 @@ namespace ParticleEffects {
 		.particleSpawnCountMax = 5
 	};
 
+	static const ParticleEffect rain = {
+		.poolId = "SMOKE1_POOL",
+		.originMin = {0,0},
+		.originMax = {1280,720},
+		.forceMin = 1,
+		.forceMax = 3,
+		.lifetimeMin = 1.2F,
+		.lifetimeMax = 4.5F,
+		.alphaFade = true,
+		.angleMin = 45,
+		.angleMax = 45,
+		.particleSizeMin = 3.F,
+		.particleSizeMax = 3.F,
+		.colorRangeBegin = {255,255,255,255},
+		.colorRangeEnd = {255,255,255,255},
+		.particleSpawnCountMin = 10,
+		.particleSpawnCountMax = 200
+	};
+
 }

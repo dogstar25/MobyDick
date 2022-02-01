@@ -42,7 +42,7 @@ void PlayerDeath::execute()
 
 	SceneAction* sceneAction = new SceneAction();
 	sceneAction->actionCode = SCENE_ACTION_ADD;
-	sceneAction->sceneId = "SCENE_PLAYER_DEATH";
+	sceneAction->actionId = "SCENE_PLAYER_DEATH";
 
 	event.type = SDL_USEREVENT;
 	event.user.data1 = sceneAction;

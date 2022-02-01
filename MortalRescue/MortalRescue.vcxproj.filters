@@ -51,6 +51,12 @@
     <ClCompile Include="src\particleEffects\MRParticleEffectsFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\cutScenes\MRCutSceneFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cutScenes\CutSceneDiscoverTreasure.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\blueprints\drone1_blueprint.png">
@@ -178,6 +184,7 @@
     <None Include="assets\textureAtlasAssets.json" />
     <None Include="assets\gameObjectDefinitions\guiObjects.json" />
     <None Include="assets\gameObjectDefinitions\hudObjects.json" />
+    <None Include="assets\gameObjectDefinitions\TEST.JSON" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav">
@@ -249,6 +256,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\particleEffects\MRParticleEffectsFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cutScenes\MRCutSceneFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cutScenes\CutSceneDiscoverTreasure.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

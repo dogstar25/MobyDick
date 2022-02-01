@@ -58,7 +58,7 @@ public:
 
 	//int m_gameObjectType{ GameObjectType::SPRITE };
 
-	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, bool cameraFollow=false);
+	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, bool cameraFollow=false, std::string name="");
 
 	virtual void update();
 	virtual void render();
@@ -77,18 +77,14 @@ public:
 	void setParentScene( Scene* parentScene);
 	void setAngleInDegrees(float angle);
 	void setAngleInRadians(float angle);
-	bool hasTrait(int32_t trait) {
-		return m_traitTags.test(trait);
-	}
-	void addTrait(int32_t trait) {
-		m_traitTags.set(trait, true);
-	}
-	void removeTrait(int32_t trait) {
-		m_traitTags.set(trait, false);
-	}
-	std::string name() { return m_name; }
+	bool hasTrait(int32_t trait) { return m_traitTags.test(trait); }
+	void addTrait(int32_t trait) { m_traitTags.set(trait, true); }
+	void removeTrait(int32_t trait) { m_traitTags.set(trait, false); }
+	void dispatch(SDL_FPoint destination);
+	int brainState();
 
 	//Accessor Functions
+	std::string name() { return m_name; }
 	auto removeFromWorld() { return m_removeFromWorld; }
 	std::string id() { return m_id; }
 	int collisionTag() { return m_collisionTag; }

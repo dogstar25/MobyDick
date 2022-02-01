@@ -9,6 +9,7 @@ inline constexpr int MAX_VITALITY_LEVELS = 5;
 inline constexpr int MAX_ANIMATION_STATES = 5;
 inline constexpr int DESTINATION_DISTANCE_TOLERANCE = 10;
 inline constexpr int PARTICLE_EMITTER_FORCE_ADJ = 50;
+inline constexpr int PRACTICLE_MOVE_SPEED_ADJ = 50;
 inline constexpr int MAX_OBJECT_TYPES = 5;
 //OpenGl
 inline constexpr int MAX_GL_TEXTURES = 1;
@@ -59,12 +60,20 @@ namespace GameObjectType {
 namespace BrainState {
 
 	inline constexpr auto IDLE = 0;
-	inline constexpr auto PATROL = 1;
-	inline constexpr auto ALERT = 2;
-	inline constexpr auto PURSUE = 3;
-	inline constexpr auto ENGAGE = 4;
-	inline constexpr auto FLEE = 5;
+	inline constexpr auto DISPATCH = 1;
+	inline constexpr auto PATROL = 2;
+	inline constexpr auto ALERT = 3;
+	inline constexpr auto PURSUE = 4;
+	inline constexpr auto ENGAGE = 5;
+	inline constexpr auto FLEE = 6;
 
+}
+
+namespace CameraState {
+
+	inline constexpr auto IDLE = 0;
+	inline constexpr auto DISPATCH = 1;
+	inline constexpr auto FOLLOW = 2;
 }
 
 namespace ParticleEmitterType {
@@ -118,8 +127,7 @@ enum class GameState {
 enum class SceneState {
 	RUN = 0,
 	PAUSE = 1,
-	EXIT = 2,
-	DIRECTED = 3
+	EXIT = 2
 };
 
 enum class RendererType{
@@ -239,8 +247,8 @@ inline constexpr int SCENE_ACTION_QUIT = 0;
 inline constexpr int SCENE_ACTION_ADD = 1;
 inline constexpr int SCENE_ACTION_REPLACE = 2;
 inline constexpr int SCENE_ACTION_EXIT = 3;
-inline constexpr int SCENE_ACTION_HIJACK = 4;
-inline constexpr int SCENE_ACTION_UNHIJACK = 5;
+inline constexpr int SCENE_ACTION_DIRECT = 4;
+inline constexpr int SCENE_ACTION_RELEASE_DIRECT = 5;
 
 //Scene Tags
 inline constexpr int SCENETAG_MENU = 1;

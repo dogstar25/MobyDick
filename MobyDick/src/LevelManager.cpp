@@ -246,7 +246,13 @@ std::optional<LevelObject> LevelManager::_determineLocationObject(int x, int y, 
 			if (locationItemJSON.isMember("layer")) {
 				levelObject->layer = EnumMap::instance().toEnum(locationItemJSON["layer"].asString());
 			}
-			levelObject->cameraFollow = locationItemJSON["cameraFollow"].asBool();
+			if (locationItemJSON.isMember("cameraFollow")) {
+				levelObject->cameraFollow = locationItemJSON["cameraFollow"].asBool();
+			}
+			if (locationItemJSON.isMember("name")) {
+				levelObject->name = locationItemJSON["name"].asString();
+			}
+
 			break;
 		}
 	}
@@ -395,7 +401,7 @@ void LevelManager::_buildLevelObjects(Scene* scene)
 
 				levelObject = &m_levelObjects[x][y];
 				scene->addGameObject(levelObject->gameObjectId, levelObject->layer,
-					(float)x, (float)y, (float)levelObject->angleAdjustment, levelObject->cameraFollow);
+					(float)x, (float)y, (float)levelObject->angleAdjustment, levelObject->cameraFollow, levelObject->name);
 
 			}
 

@@ -20,7 +20,7 @@ void ContinueGameClickAction::perform(GameObject* gameObject)
 
 	SceneAction* sceneAction = new SceneAction();
 	sceneAction->actionCode = SCENE_ACTION_EXIT;
-	sceneAction->sceneId = "";
+	sceneAction->actionId = "";
 
 	event.type = SDL_USEREVENT;
 	event.user.data1 = sceneAction;

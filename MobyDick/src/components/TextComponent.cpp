@@ -108,6 +108,7 @@ std::shared_ptr<Texture> TextComponent::generateTextTexture()
 	//This should save loads of time
 	//tempSurface = TTF_RenderText_Blended(m_fontObject, m_textValue.c_str(), renderComponent->color());
 	tempSurface = TTF_RenderText_Blended(m_fontObject, m_textValue.c_str(), renderComponent->color());
+	//TTF_RenderText_Blended_Wrapped() - for wrapping text - swesome
 
 	//Set the size of the textObject now that its texture has been generated
 	transformComponent->setSize((float)tempSurface->w, (float)tempSurface->h);

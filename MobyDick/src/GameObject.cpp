@@ -23,7 +23,7 @@ GameObject::~GameObject()
 
 }
 
-GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, bool cameraFollow)
+GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, bool cameraFollow, std::string name)
 {
 
 	Json::Value definitionJSON;
@@ -36,8 +36,13 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	m_collisionTag = m_originalCollisionTag = EnumMap::instance().toEnum(definitionJSON["collisionTag"].asString());
 	m_removeFromWorld = false;
 
-	//Build the unique name
-	m_name = _buildName(gameObjectId, xMapPos, yMapPos, parentScene);
+	//Build the unique name if a name wasnt given
+	if (name.empty()) {
+		m_name = _buildName(gameObjectId, xMapPos, yMapPos, parentScene);
+	}
+	else {
+		m_name = name;
+	}
 
 	//Trait tags
 	for (Json::Value itrControls : definitionJSON["traitTags"])
@@ -61,176 +66,6 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 		addComponent(component, componentType);
 
 	}
-
-	////Always build a render component
-	//component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::RENDER_COMPONENT);
-	//component->setParent(this);
-	//addComponent(component, ComponentTypes::RENDER_COMPONENT);
-
-	////Always build a transform component
-	//component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::TRANSFORM_COMPONENT);
-	//component->setParent(this);
-	//addComponent(component, ComponentTypes::TRANSFORM_COMPONENT);
-
-
-	////Animation Component
-	//if (definitionJSON.isMember("animationComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::ANIMATION_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::ANIMATION_COMPONENT);
-
-	//}
-
-	////Physics Component
-	//if (definitionJSON.isMember("physicsComponent"))
-	//{
-
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PHYSICS_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::PHYSICS_COMPONENT);
-
-	//}
-
-	////Vitality Component
-	//if (definitionJSON.isMember("vitalityComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::VITALITY_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::VITALITY_COMPONENT);
-
-	//}
-
-	////Player control Component
-	//if (definitionJSON.isMember("playerControlComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PLAYERCONTROL_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::PLAYERCONTROL_COMPONENT);
-
-	//}
-
-	////Text Component
-	//if (definitionJSON.isMember("textComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, gameObjectId, parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::TEXT_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::TEXT_COMPONENT);
-
-	//}
-
-	////Children Component
-	//if (definitionJSON.isMember("childrenComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::CHILDREN_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::CHILDREN_COMPONENT);
-
-	//}
-
-	////Action Component
-	//if (definitionJSON.isMember("actionComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::ACTION_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::ACTION_COMPONENT);
-
-	//}
-
-	////Particle X Component
-	//if (definitionJSON.isMember("particleXComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PARTICLE_X_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::PARTICLE_X_COMPONENT);
-
-	//}
-
-	////Simple Particle Component
-	//if (definitionJSON.isMember("particleComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::PARTICLE_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::PARTICLE_COMPONENT);
-
-	//}
-
-	////Inventory Component
-	//if (definitionJSON.isMember("inventoryComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::INVENTORY_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::INVENTORY_COMPONENT);
-
-	//}
-
-	////UIControl Component
-	//if (definitionJSON.isMember("UIControlComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::UICONTROL_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::UICONTROL_COMPONENT);
-
-	//}
-
-	////Weapon Component
-	//if (definitionJSON.isMember("weaponComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::WEAPON_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::WEAPON_COMPONENT);
-
-	//}
-
-	////Pool Component
-	//if (definitionJSON.isMember("poolComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::POOL_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::POOL_COMPONENT);
-
-	//}
-
-	////Composite Component
-	//if (definitionJSON.isMember("compositeComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::COMPOSITE_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::COMPOSITE_COMPONENT);
-
-	//}
-
-	////Brain Component
-	//if (definitionJSON.isMember("brainComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::BRAIN_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::BRAIN_COMPONENT);
-	//}
-
-	////Navigation Component
-	//if (definitionJSON.isMember("navigationComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::NAVIGATION_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::NAVIGATION_COMPONENT);
-	//}
-
-	////Attachments Component
-	//if (definitionJSON.isMember("attachmentsComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::ATTACHMENTS_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::ATTACHMENTS_COMPONENT);
-	//}
-
-	////Hud Component
-	//if (definitionJSON.isMember("hudComponent"))
-	//{
-	//	component = game->componentFactory()->create(definitionJSON, "", parentScene, xMapPos, yMapPos, angleAdjust, ComponentTypes::HUD_COMPONENT);
-	//	component->setParent(this);
-	//	addComponent(component, ComponentTypes::HUD_COMPONENT);
-	//}
 
 	//Set the camera to follow this GameObject
 	if (cameraFollow) {
@@ -273,7 +108,7 @@ void GameObject::update()
 
 	for (auto& component : m_components)
 	{
-		if (component) {
+		if (component && component->isDisabled() == false) {
 			component->update();
 		}
 	}
@@ -462,4 +297,17 @@ std::string GameObject::_buildName(std::string id, float xMapPos, float yMapPos,
 
 	return name;
 
+}
+
+void GameObject::dispatch(SDL_FPoint destination)
+{
+	const auto& brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+	brainComponent->dispatch(destination);
+}
+
+int GameObject::brainState()
+{
+	const auto& brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+
+	return brainComponent->state();
 }

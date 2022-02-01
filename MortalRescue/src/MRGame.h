@@ -35,7 +35,8 @@ public:
 	~MRGame();
 
 	bool init() override { return true; }
-	bool init(ContactListener*, ContactFilter*, ComponentFactory*, ActionFactory*, ParticleEffectsFactory*, StatusManager* ) override;
+	bool init(ContactListener*, ContactFilter*, ComponentFactory*, ActionFactory*, ParticleEffectsFactory*, 
+		CutSceneFactory*, StatusManager* ) override;
 
 private:
 

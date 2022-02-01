@@ -25,7 +25,8 @@
             "id": "LOC_0007_0005",
             "gameObjectId": "GINA_64",
             "cameraFollow": true,
-            "layer": "LAYER_MAIN"
+            "layer": "LAYER_MAIN",
+            "name": "PlayerGina"
         },
         {
             "id": "LOC_0016_0013",
@@ -40,11 +41,17 @@
         {
             "id": "LOC_0033_0002",
             "gameObjectId": "SURVIVOR",
-            "cameraFollow": false
+            "cameraFollow": false,
+            "name": "Frank"
         },
         {
             "id": "LOC_0002_0012",
             "gameObjectId": "SWORDLADY"
+        },
+        {
+            "id": "LOC_0002_0002",
+            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "layer": "LAYER_ABSTRACT"
         },
         {
             "id": "LOC_0020_0016",

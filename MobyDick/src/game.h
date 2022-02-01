@@ -19,6 +19,7 @@
 #include "GameConfig.h"
 #include "SceneManager.h"
 #include "ComponentFactory.h"
+#include "cutScenes/CutSceneFactory.h"
 #include "actions/ActionFactory.h"
 #include "particleEffects/ParticleEffectsFactory.h"
 #include "ContactListener.h"
@@ -38,7 +39,7 @@ public:
 	~Game();
 
 	virtual bool init();
-	virtual bool init(ContactListener*, ContactFilter*,	ComponentFactory*, ActionFactory*, ParticleEffectsFactory*, StatusManager*) = 0;
+	virtual bool init(ContactListener*, ContactFilter*,	ComponentFactory*, ActionFactory*, ParticleEffectsFactory*, CutSceneFactory*, StatusManager*) = 0;
 	virtual void play();
 	virtual void _displayLoadingMsg();
 	
@@ -79,6 +80,9 @@ public:
 	std::shared_ptr<ActionFactory> actionFactory() {
 		return m_actionFactory;
 	}
+	std::shared_ptr<CutSceneFactory> cutSceneFactory() {
+		return m_cutSceneFactory;
+	}
 	std::shared_ptr<StatusManager> statusMananger() {
 		return m_statusMananger;
 	}
@@ -97,6 +101,7 @@ protected:
 	std::shared_ptr<ContactFilter> m_contactFilter{};
 	std::shared_ptr<ComponentFactory> m_componentFactory{};
 	std::shared_ptr<ActionFactory> m_actionFactory{};
+	std::shared_ptr<CutSceneFactory> m_cutSceneFactory{};
 	std::shared_ptr<StatusManager> m_statusMananger{};
 	std::shared_ptr<ParticleEffectsFactory> m_particleEffectsFactory{};
 

@@ -5,6 +5,7 @@
 #include "../LevelManager.h"
 
 #include <json/json.h>
+#include "glm/glm.hpp"
 
 #include <optional>
 
@@ -18,6 +19,10 @@ public:
 
     void update() override;
     void postInit() override;
+    void setTargetDestination(SDL_FPoint destination);
+    void dispatch(SDL_FPoint destination);
+    void dispatch();
+    int state() { return m_currentState; }
 
     int sensorLength() { return m_sensorLength; }
     int sensorOffset() { return m_sensorOffset; }
@@ -31,6 +36,12 @@ protected:
 
     int m_currentState{ BrainState::PATROL };
     
+    std::vector<GameObject*> m_navPoints;
+    std::vector<GameObject*> m_tempVisitedNavPoints;
+
+    std::optional<GameObject*> m_targetDestination{};
+    std::optional<GameObject*> m_interimDestination{};
+
     int m_sensorLength{};
     int m_sensorOffset{};
     int m_sensorCount{};
@@ -41,8 +52,19 @@ protected:
     std::vector<BrainAABBFoundObject> m_seenObjects;
     std::vector<BrainAABBFoundObject> m_detectedObjects;
 
+    GameObject* getClosestNavPoint(SDL_FPoint targetPosition, int navType);
+    GameObject* getClosestSeenNavPoint(SDL_FPoint targetPosition, int navType);
+    std::optional<GameObject*> getNextinterimDestination();
+    void navigate();
+    void executeMove();
+    void stopMovement();
+
+private:
     void _updateSensorInput();
-    bool _hasLineOfSight( BrainAABBFoundObject& detectedObject);
+    bool _existsInAlreadyVistedNavList(GameObject* navPoint);
+    bool _hasLineOfSight(BrainAABBFoundObject& detectedObject);
+    bool _doDispatch();
+    void _doIdle();
 
 
 };

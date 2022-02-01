@@ -4,6 +4,7 @@
 #include "DefaultRotateAction.h"
 #include "DefaultOnHoverAction.h"
 #include "DefaultOnHoverOutAction.h"
+#include "PrimitiveMoveAction.h"
 #include "ActorMoveAction.h"
 #include "DroneMoveAction.h"
 #include "ActorRotateAction.h"
@@ -45,6 +46,10 @@ std::shared_ptr<Action> ActionFactory::create(std::string actionType)
     else if (actionType == "ActorMove") {
 
         action = std::make_shared<ActorMoveAction>();
+    }
+    else if (actionType == "PrimitiveMove") {
+
+        action = std::make_shared<PrimitiveMoveAction>();
     }
     else if (actionType == "DroneMove") {
 

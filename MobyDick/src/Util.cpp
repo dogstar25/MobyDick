@@ -252,7 +252,23 @@ namespace util
 		
 	}
 
-	
+	float calculateDistance(SDL_FPoint location1, SDL_FPoint location2)
+	{
+
+		auto distance = std::powf((location1.x - location2.x), 2) + std::powf((location1.y - location2.y), 2);
+		distance = std::sqrtf(distance);
+
+		return distance;
+	}
+
+	float calculateDistance(glm::vec2 location1, glm::vec2 location2)
+	{
+
+		auto distance = glm::distance(location1, location2);
+
+		return distance;
+	}
+
 
 }
 
