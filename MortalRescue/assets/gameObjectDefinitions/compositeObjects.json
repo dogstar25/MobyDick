@@ -44,6 +44,15 @@
                             },
                             "addToInventory": false,
                             "attachB2JointType": "B2_REVOLUTE"
+                        },
+                        {
+                            "gameObjectId": "DRONE_BRAIN",
+                            "attachLocation": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "addToInventory": false,
+                            "attachB2JointType": "B2_WELD"
                         }
                     ]
                 },
@@ -125,6 +134,46 @@
                     "id": "VITALITY_COMPONENT",
                     "speed": 20.0,
                     "rotationSpeed": 30
+                }
+            ]
+        },
+        {
+            "id": "DRONE_BRAIN",
+            "type": "GameObjectType::SPRITE",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [],
+            "description": "Drone Brain",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_DRONE_BRAIN_64",
+                    "color": {
+                        "red": 173,
+                        "green": 167,
+                        "blue": 54,
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "collisionShape": "B2_BOX",
+                    "friction": 0.0,
+                    "restitution": 0.0,
+                    "density": 1.0,
+                    "linearDamping": 0.0,
+                    "angularDamping": 0.0,
+                    "anchorPoint": {
+                        "x": 0.0,
+                        "y": 0.0
+                    }
                 }
             ]
         },
