@@ -90,6 +90,9 @@ public:
 	void deleteCutScene();
 
 
+	void testIMGUI();
+
+
 	
 private:
 

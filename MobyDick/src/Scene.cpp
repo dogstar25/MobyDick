@@ -1,21 +1,11 @@
 #include "Scene.h"
 
-#include <cassert>
-#include <sstream>
-#include "glm/glm.hpp"
 
-#include "LevelManager.h"
-#include "Camera.h"
 #include "EnumMaps.h"
 
 #include "GameObjectManager.h"
-#include "ContactFilter.h"
-#include "ContactListener.h"
-#include "ObjectPoolManager.h"
-#include "SceneManager.h"
-#include "DebugDraw.h"
-#include "cutScenes/CutScene.h"
 #include "game.h"
+
 
 
 extern std::unique_ptr<Game> game;
@@ -105,32 +95,6 @@ void Scene::loadLevel(std::string levelId)
 
 	//Run GameObject code that requires ALL gameObjects to be created first, for interdependency logic
 	_processGameObjectInterdependecies();
-
-	//
-	//test cutscene stuff
-	//
-
-	//Json::Value componentsDefinition{};
-	//Json::Value brainDefinition{};
-	//
-	//brainDefinition["id"] = "BRAIN_COMPONENT";
-	//brainDefinition["sightSensorSize"] = 25;
-	//componentsDefinition["components"].append(brainDefinition);
-
-	//std::stringstream ss;
-	//ss << componentsDefinition.toStyledString();
-	//std::cout << ss.str();
-
-	//const auto& brainComponent = 
-	//	std::static_pointer_cast<BrainComponent>(
-	//		game->componentFactory()->create(componentsDefinition, "SURVIVOR", this, 0, 0, 0, ComponentTypes::BRAIN_COMPONENT)
-	//		);
-	//brainComponent->setParent(getGameObject("Frank"));
-	//getGameObject("Frank")->addComponent(brainComponent, ComponentTypes::BRAIN_COMPONENT);
-
-
-	//brainComponent->dispatch({ 4000,900 });
-	//Camera::instance().dispatch(glm::vec2(4000, 900));
 
 }
 
@@ -241,7 +205,6 @@ void Scene::update() {
 
 	//Level Manager update to handle level specific events
 	LevelManager::instance().update(this);
-
 }
 
 void Scene::render() {
@@ -270,6 +233,9 @@ void Scene::render() {
 	{
 		m_physicsWorld->DebugDraw();
 	}
+
+
+
 
 }
 
@@ -555,3 +521,4 @@ GameObject* Scene::getGameObject(std::string name)
 
 	return foundGameObject.value();
 }
+

@@ -5,8 +5,6 @@
 #include <random>
 #include <format>
 
-#include <box2d/b2_math.h>
-#include <iomanip>
 #include <iostream>
 
 
@@ -232,7 +230,7 @@ namespace util
 		}
 
 		std::cout << "ComponentType " << componentType << "not found" << std::endl;
-		assert(true, && "Component not found");
+		assert(true && "Component not found");
 		return Json::Value();
 	}
 

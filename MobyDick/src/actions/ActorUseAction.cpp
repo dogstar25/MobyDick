@@ -2,7 +2,6 @@
 
 
 #include "../components/InventoryComponent.h"
-#include "../GameObject.h"
 
 ActorUseAction::ActorUseAction()
 {

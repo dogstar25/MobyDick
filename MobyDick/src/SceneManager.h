@@ -50,6 +50,7 @@ public:
 	void releaseDirectScene();
 	Scene& pushScene(std::string sceneId);
 	Timer& gameTimer() { return m_gameTimer; }
+	void testIMGUI();
 
 	std::optional<SceneAction> getSceneKeyAction(SDL_Keycode);
 

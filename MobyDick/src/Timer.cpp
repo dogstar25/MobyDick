@@ -1,7 +1,4 @@
 #include "Timer.h"
-#include "DebugPanel.h"
-#include "Util.h"
-#include <iostream>
 
 Timer::Timer(float targetDuration) : m_targetDuration(targetDuration) 
 {

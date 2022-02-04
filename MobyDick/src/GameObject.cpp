@@ -1,20 +1,11 @@
 #include "GameObject.h"
 
 
-#include <format>
 
 #include "GameObjectManager.h"
 #include "game.h"
-#include "SceneManager.h"
-#include "Scene.h"
-#include "components/InventoryComponent.h"
-#include "ComponentFactory.h"
-#include "Util.h"
-#include "BaseConstants.h"
-#include "Camera.h"
 #include "EnumMaps.h"
 
-#include <typeinfo>
 
 extern std::unique_ptr<Game> game;
 
@@ -161,6 +152,12 @@ void GameObject::render()
 	if (hasComponent(ComponentTypes::HUD_COMPONENT)) {
 
 		getComponent<HudComponent>(ComponentTypes::HUD_COMPONENT)->render();
+	}
+
+	//If you have a IMGui component, then render it
+	if (hasComponent(ComponentTypes::IMGUI_COMPONENT)) {
+
+		getComponent<IMGuiComponent>(ComponentTypes::IMGUI_COMPONENT)->render();
 	}
 
 }

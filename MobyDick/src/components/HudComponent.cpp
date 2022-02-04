@@ -1,6 +1,5 @@
 #include "HudComponent.h"
 
-#include "../Scene.h"
 #include "../hud/HudItemFactory.h"
 #include "../EnumMaps.h"
 #include "../hud/HudItem.h"

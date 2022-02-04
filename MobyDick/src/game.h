@@ -92,6 +92,8 @@ public:
 
 	Renderer* renderer() { return m_renderer.get(); }
 
+	bool IMGuiControlled=false;
+
 protected:
 
 	SDL_Window* m_window{};

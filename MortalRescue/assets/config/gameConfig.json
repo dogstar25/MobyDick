@@ -1,8 +1,8 @@
 {
     "gameTitle": "MortalRescue",
     "window": {
-        "width": 1280,
-        "height": 720,
+        "width": 1920,
+        "height": 1080,
         "fullscreen": false
     },
     "sound": {
@@ -13,7 +13,7 @@
     },
     "rendererType": "RendererType::SDL",
     //"rendererType": "RendererType::OPENGL",
-    "openGLBatching":  true,
+    "openGLBatching":  false,
     "mouseSensitivity": 0.5, //higher the mmore sensitive
     "gameLoopStep": 0.016,
     "physics": {

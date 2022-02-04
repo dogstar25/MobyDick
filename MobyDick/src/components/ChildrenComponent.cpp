@@ -1,7 +1,6 @@
 #include "ChildrenComponent.h"
 #include "../EnumMaps.h"
 #include "../GameObject.h"
-#include "../Scene.h"
 
 ChildrenComponent::ChildrenComponent()
 {

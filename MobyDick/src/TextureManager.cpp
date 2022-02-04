@@ -2,14 +2,8 @@
 
 #include <fstream>
 
-#include <json/json.h>
 
 #include "game.h"
-#include "RendererSDL.h"
-#include "GameConfig.h"
-#include "BaseConstants.h"
-#include "EnumMaps.h"
-#include "opengl/GLRenderer.h"
 
 extern std::unique_ptr<Game> game;
 

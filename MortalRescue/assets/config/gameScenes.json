@@ -145,6 +145,32 @@
             ]
         },
         {
+            "id": "SCENE_SETTINGS_MENU",
+            "inputControlMode": "CONTROL_MODE_SELECT",
+            "maxObjects": 4,
+            "tags": [
+                "SCENETAG_MENU"
+            ],
+            "gameObjects": [
+                {
+                    "gameObjectId": "IMGUI_SETTINGS_PANEL",
+                    "layer": "LAYER_MENU",
+                    "location": {
+                        "windowPosition": "PositionAlignment::CENTER"
+                    }
+                }
+            ],
+            "keyActions": [
+                {
+                    "keyCode": "SDLK_ESCAPE",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_EXIT"
+                    }
+
+                }
+            ]
+        },
+        {
             "id": "SCENE_AREYOUSURE_MENU",
             "inputControlMode": "CONTROL_MODE_SELECT",
             "maxObjects": 24,

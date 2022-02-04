@@ -1,9 +1,7 @@
 #include "ContactListener.h"
 #include "SceneManager.h"
 
-#include <iostream>
 
-#include "game.h"
 
 
 void ContactListener::BeginContact(b2Contact* contact) {

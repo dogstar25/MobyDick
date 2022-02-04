@@ -2,7 +2,6 @@
 
 
 #include "../EnumMaps.h"
-#include "../GameObject.h"
 
 
 AnimationComponent::AnimationComponent(Json::Value componentJSON)

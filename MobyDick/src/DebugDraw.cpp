@@ -2,8 +2,6 @@
 
 #include "game.h"
 
-#include "GameConfig.h"
-#include "Camera.h"
 
 extern std::unique_ptr<Game> game;
 

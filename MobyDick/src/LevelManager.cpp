@@ -1,12 +1,8 @@
 #include "LevelManager.h"
 
-#include "triggers/Trigger.h"
 #include "triggers/TriggerMap.h"
 
-#include <iostream>
 #include <fstream>
-#include <sstream>
-#include <iomanip>
 
 #include "EnumMaps.h"
 #include "Game.h"

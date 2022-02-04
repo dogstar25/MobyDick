@@ -17,6 +17,10 @@
 #include "actions/MyAction.h"
 #include "actions/DroneEyeRotateAction.h"
 
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_sdl.h"
+//#include "imgui_impl_sdlrenderer.h"
+
 using namespace std::chrono_literals;
 
 
@@ -78,8 +82,14 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//Initialize the texture manager
 		m_renderer->init(m_window);
 
+		
 		//Display basic loading message
 		//_displayLoadingMsg();
+
+
+		//Test for IMGUI
+		testIMGUI_GL_Init();
+
 
 		TextureManager::instance().init();
 		TextureManager::instance().load("textureAtlasAssets");
@@ -87,6 +97,10 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//Initialize the SceneManager
 		SceneManager::instance().init();
 		SceneManager::instance().load("gameScenes");
+
+		float x, y;
+		SDL_RenderGetScale(m_renderer.get()->sdlRenderer(), &x, &y);
+		//SDL_RenderSetScale(m_renderer.get()->sdlRenderer(), 1.58, 1.45);
 
 		//_displayLoadingMsg();
 
@@ -171,3 +185,49 @@ void MRGame::_addGameComponentTypes()
 }
 
 
+//void MRGame::testIMGUI_SDL_Init()
+//{
+//
+//	IMGUI_CHECKVERSION();
+//	ImGui::CreateContext();
+//	ImGuiIO& io = ImGui::GetIO(); (void)io;
+//	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+//	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+//
+//	// Setup Dear ImGui style
+//	ImGui::StyleColorsDark();
+//	//ImGui::StyleColorsClassic();
+//
+//	auto gl_context = SDL_GL_GetCurrentContext();
+//	const char* glsl_version = "#version 130";
+//
+//
+//	ImGui_ImplSDL2_InitForSDLRenderer(window());
+//	ImGui_ImplSDLRenderer_Init(renderer);
+//
+//
+//
+//}
+
+void MRGame::testIMGUI_GL_Init()
+{
+
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+	// Setup Dear ImGui style
+	ImGui::StyleColorsDark();
+	//ImGui::StyleColorsClassic();
+
+	auto gl_context = SDL_GL_GetCurrentContext();
+	const char* glsl_version = "#version 130";
+
+	// Setup Platform/Renderer backends
+	ImGui_ImplSDL2_InitForOpenGL(window(), gl_context);
+	ImGui_ImplOpenGL3_Init(glsl_version);
+
+
+}

@@ -1,5 +1,4 @@
 #include "TriggerMap.h"
-#include "PlayerDeath.h"
 #include "LevelComplete.h"
 
 TriggerMap& TriggerMap::instance()

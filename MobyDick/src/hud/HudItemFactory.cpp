@@ -1,9 +1,7 @@
 #include "HudItemFactory.h"
 
-#include "HudItem.h"
 #include "HudStatusText.h"
 #include "HudStatusSeries.h"
-#include "../Scene.h"
 
 HudItemFactory& HudItemFactory::instance()
 {

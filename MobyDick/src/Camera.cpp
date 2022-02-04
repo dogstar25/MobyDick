@@ -1,11 +1,6 @@
 #include "Camera.h"
 
-#include <assert.h>
 
-#include "GameConfig.h"
-#include "LevelManager.h"
-#include "actions/ActionFactory.h"
-#include "Util.h"
 #include "game.h"
 
 extern std::unique_ptr<Game> game;

@@ -1,10 +1,7 @@
 #include "TextComponent.h"
 
-#include <memory>
 
 #include "../game.h"
-#include "../GameConfig.h"
-#include "../GameObject.h"
 
 extern std::unique_ptr<Game> game;
 

@@ -38,6 +38,9 @@ public:
 	bool init(ContactListener*, ContactFilter*, ComponentFactory*, ActionFactory*, ParticleEffectsFactory*, 
 		CutSceneFactory*, StatusManager* ) override;
 
+	void testIMGUI_GL_Init();
+	void testIMGUI_SDL_Init();
+
 private:
 
 	void _addGameCollisionTags() override;

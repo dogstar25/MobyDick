@@ -57,7 +57,7 @@
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
                     "collisionShape": "B2_CIRCLE",
-                    "collisionRadius": 0.64,
+                    "collisionRadius": 1.32,
                     "friction": 0.00,
                     "restitution": 0.0,
                     "density": 50.5,

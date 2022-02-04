@@ -28,6 +28,8 @@
 #include "components/NavigationComponent.h"
 #include "components/ParticleXComponent.h"
 #include "components/HudComponent.h"
+#include "components/InventoryComponent.h"
+#include "components/IMGuiComponent.h"
 #include "components/ParticleComponent.h"
 #include "components/PhysicsComponent.h"
 #include "components/PlayerControlComponent.h"

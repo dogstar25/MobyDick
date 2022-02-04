@@ -1,12 +1,6 @@
 #include "DebugPanel.h"
 
-#include "Util.h"
-#include "BaseConstants.h"
 #include "game.h"
-#include "GameObjectManager.h"
-#include "GameConfig.h"
-#include "SceneManager.h"
-#include "LevelManager.h"
 
 
 DebugPanel& DebugPanel::instance()

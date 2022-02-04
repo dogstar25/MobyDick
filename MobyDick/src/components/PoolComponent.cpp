@@ -1,5 +1,4 @@
 #include "PoolComponent.h"
-#include "../GameObject.h"
 
 
 PoolComponent::PoolComponent(Json::Value componentJSON)
