@@ -2,7 +2,6 @@
 
 
 #include "../GameObject.h"
-#include "../GameConfig.h"
 #include "../SoundManager.h"
 
 PistolFireAction::PistolFireAction()

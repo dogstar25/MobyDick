@@ -1,6 +1,5 @@
 #include "BrainAABBCallback.h"
 
-#include "GameObject.h"
 
 BrainAABBCallback& BrainAABBCallback::instance()
 {

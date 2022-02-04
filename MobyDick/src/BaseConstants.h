@@ -165,19 +165,21 @@ namespace ComponentTypes {
 	inline constexpr int COMPOSITE_COMPONENT = 6;
 	inline constexpr int HUD_COMPONENT = 7;
 	inline constexpr int INVENTORY_COMPONENT = 8;
-	inline constexpr int PARTICLE_COMPONENT = 9;
-	inline constexpr int NAVIGATION_COMPONENT = 10;
-	inline constexpr int PARTICLE_X_COMPONENT = 11;
-	inline constexpr int PHYSICS_COMPONENT = 12;
-	inline constexpr int PLAYER_CONTROL_COMPONENT = 13;
-	inline constexpr int POOL_COMPONENT = 14;
-	inline constexpr int RENDER_COMPONENT = 15;
-	inline constexpr int TEXT_COMPONENT = 16;
-	inline constexpr int TRANSFORM_COMPONENT = 17;
-	inline constexpr int UICONTROL_COMPONENT = 18;
-	inline constexpr int VITALITY_COMPONENT = 19;
-	inline constexpr int WEAPON_COMPONENT = 20;
-	inline constexpr int LAST_BASE_COMPONENT = 21;
+	inline constexpr int IMGUI_COMPONENT = 9;
+	inline constexpr int PARTICLE_COMPONENT = 10;
+	inline constexpr int NAVIGATION_COMPONENT = 11;
+	inline constexpr int PARTICLE_X_COMPONENT = 12;
+	inline constexpr int PHYSICS_COMPONENT = 13;
+	inline constexpr int PLAYER_CONTROL_COMPONENT = 14;
+	inline constexpr int POOL_COMPONENT = 15;
+	inline constexpr int RENDER_COMPONENT = 16;
+	inline constexpr int TEXT_COMPONENT = 17;
+	inline constexpr int TRANSFORM_COMPONENT = 18;
+	inline constexpr int UICONTROL_COMPONENT = 19;
+	inline constexpr int VITALITY_COMPONENT = 20;
+	inline constexpr int WEAPON_COMPONENT = 21;
+	
+	inline constexpr int LAST_BASE_COMPONENT = 22;
 
 }
 

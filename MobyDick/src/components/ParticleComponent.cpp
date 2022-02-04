@@ -1,13 +1,7 @@
 #include "ParticleComponent.h"
 
-#include <iostream>
-#include <algorithm>
 
 #include "../game.h"
-#include "../GameConfig.h"
-#include "../Camera.h"
-#include "../DebugPanel.h"
-#include "../Clock.h"
 #include "../EnumMaps.h"
 
 extern std::unique_ptr<Game> game;

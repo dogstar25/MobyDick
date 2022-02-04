@@ -1,7 +1,5 @@
 #include "ParticleXComponent.h"
 
-#include <iostream>
-#include <chrono>
 
 #include "../EnumMaps.h"
 #include "../game.h"

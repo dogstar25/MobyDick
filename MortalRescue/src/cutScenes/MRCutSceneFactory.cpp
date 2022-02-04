@@ -15,4 +15,5 @@ std::shared_ptr<CutScene> MRCutSceneFactory::create(std::string cutSceneType)
 		assert(false && "CuteScene Types was not found");
 	}
 
+	return cutScene;
 }

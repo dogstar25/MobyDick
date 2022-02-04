@@ -1,8 +1,6 @@
 #include "GLDrawer.h"
 
-#include <vector>
 
-#include "Vertex.h"
 #include "../game.h"
 
 extern std::unique_ptr<Game> game;

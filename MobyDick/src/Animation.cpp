@@ -1,6 +1,5 @@
 #include "Animation.h"
 
-#include <iostream>
 
 #include "EnumMaps.h"
 #include "TextureManager.h"

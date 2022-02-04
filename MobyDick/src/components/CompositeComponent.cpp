@@ -1,9 +1,6 @@
 #include "CompositeComponent.h"
 
-#include <memory>
 
-#include "../game.h"
-#include "../GameObject.h"
 
 
 

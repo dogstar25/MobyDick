@@ -1,7 +1,6 @@
 #include "HudStatusSeries.h"
 #include "../game.h"
 
-#include <algorithm>
 
 extern std::unique_ptr<Game> game;
 

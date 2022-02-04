@@ -1,10 +1,5 @@
 #include "RendererSDL.h"
 
-#include "Util.h"
-#include "BaseConstants.h"
-#include "GameConfig.h"
-#include <glad/glad.h>
-#include <glm/glm.hpp>
 
 RendererSDL::RendererSDL()
 {

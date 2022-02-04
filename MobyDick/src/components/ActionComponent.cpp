@@ -1,6 +1,5 @@
 #include "ActionComponent.h"
 
-#include <cassert>
 
 #include "../EnumMaps.h"
 #include "../game.h"
@@ -8,7 +7,6 @@
 #include "../actions/DefaultRotateAction.h"
 #include "../actions/DefaultOnHoverAction.h"
 #include "../actions/DefaultOnHoverOutAction.h"
-#include "../actions/NoAction.h"
 
 extern std::unique_ptr<Game> game;
 

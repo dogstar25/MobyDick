@@ -1,17 +1,9 @@
 #include "BrainComponent.h"
 
-#include <box2d/box2d.h>
 
 #include "../game.h"
-#include "../DebugPanel.h"
 #include "../RayCastCallBack.h"
-#include "../BrainAABBCallback.h"
-#include "../Camera.h"
-#include "../Util.h"
 
-#include <math.h>
-#include <random>
-#include "glm/glm.hpp"
 
 extern std::unique_ptr<Game> game;
 

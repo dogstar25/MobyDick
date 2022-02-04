@@ -1,10 +1,8 @@
 #include "Blueprint.h"
 
 #include <fstream>
-#include <memory>
 
 #include "game.h"
-#include "TextureManager.h"
 
 extern std::unique_ptr<Game> game;
 

@@ -1,6 +1,5 @@
 #include "LevelComplete.h"
 
-#include "../Scene.h"
 #include "../SceneManager.h"
 
 bool LevelComplete::hasMetCriteria()

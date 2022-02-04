@@ -2,7 +2,6 @@
 
 #include "../EnumMaps.h"
 #include "../GameObject.h"
-#include "InventoryComponent.h"
 
 
 

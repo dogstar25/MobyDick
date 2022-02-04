@@ -1,7 +1,5 @@
 #include "CutSceneExample.h"
 
-#include "../components/BrainComponent.h"
-#include "../Camera.h"
 #include "../game.h"
 
 extern std::unique_ptr<Game> game;

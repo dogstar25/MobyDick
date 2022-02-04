@@ -1,8 +1,6 @@
 #include "HudStatusText.h"
-#include "../StatusManager.h"
 #include "../game.h"
 
-#include <algorithm>
 
 extern std::unique_ptr<Game> game;
 

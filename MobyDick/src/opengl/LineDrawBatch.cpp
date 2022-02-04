@@ -1,10 +1,6 @@
 #include "LineDrawBatch.h"
 
-#include <memory>
-#include <glad/glad.h>
-#include "GLRenderer.h"
 #include "../game.h"
-#include "Vertex.h"
 
 extern std::unique_ptr<Game> game;
 

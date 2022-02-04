@@ -1,7 +1,6 @@
 #include "PrimitiveMoveAction.h"
 
 #include "../SceneManager.h"
-#include "../GameConfig.h"
 
 
 PrimitiveMoveAction::PrimitiveMoveAction() :

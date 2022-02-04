@@ -1,51 +1,6 @@
 #include "ComponentFactory.h"
 #include "components/BrainComponent.h"
-#include "components/InventoryComponent.h"
 
-#include <iostream>
-
-
-//ComponentFactory& ComponentFactory::instance()
-//{
-//	static ComponentFactory singletonInstance;
-//	return singletonInstance;
-//}
-//
-//std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, const int componentType)
-//{
-//	std::shared_ptr<Component> component{};
-//	component = _create(definitionJSON, "", nullptr, 0, 0, 0, componentType);
-//	return component;
-//}
-//
-//std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, Scene* scene, const int componentType)
-//{
-//	std::shared_ptr<Component> component{};
-//	component = _create(definitionJSON, "", scene, 0, 0, 0, componentType);
-//	return component;
-//}
-//
-//std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, std::string textGameObjectId, const int componentType)
-//{
-//	std::shared_ptr<Component> component{};
-//	component = _create(definitionJSON, textGameObjectId, nullptr, 0, 0, 0, componentType);
-//	return component;
-//}
-//
-//std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust, const int componentType)
-//{
-//	std::shared_ptr<Component> component{};
-//	component = _create(definitionJSON, "", nullptr, xMapPos, yMapPos, angleAdjust, componentType);
-//	return component;
-//}
-//
-//std::shared_ptr<Component> ComponentFactory::create(Json::Value definitionJSON, Scene* scene, float xMapPos, float yMapPos, float angleAdjust, const int componentType)
-//{
-//	std::shared_ptr<Component> component{};
-//	component = _create(definitionJSON, "", scene, xMapPos, yMapPos, angleAdjust, componentType);
-//	return component;
-//
-//}
 
 std::shared_ptr<Component> ComponentFactory::create(
 	Json::Value definitionJSON,
@@ -94,6 +49,10 @@ std::shared_ptr<Component> ComponentFactory::create(
 		case ComponentTypes::INVENTORY_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::INVENTORY_COMPONENT);
 			component = std::make_shared<InventoryComponent>(componentJSON, scene);
+			break;
+		case ComponentTypes::IMGUI_COMPONENT:
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::IMGUI_COMPONENT);
+			component = std::make_shared<IMGuiComponent>(componentJSON);
 			break;
 		case ComponentTypes::NAVIGATION_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::NAVIGATION_COMPONENT);

@@ -1,12 +1,11 @@
 #include "SceneManager.h"
 
 #include <fstream>
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_sdl.h"
 
 #include "game.h"
-#include "Clock.h"
-#include "DebugPanel.h"
-#include "cutscenes/CutScene.h"
-#include "cutScenes/CutSceneExample.h"
+
 
 extern std::unique_ptr<Game> game;
 
@@ -85,6 +84,12 @@ void SceneManager::run()
 			scene.render();
 		}
 
+
+
+		//test
+//		testIMGUI();
+
+
 		//Display all rendered objects
 		game->renderer()->present();
 
@@ -106,6 +111,10 @@ std::optional<SceneAction> SceneManager::pollEvents()
 	//input related so staore it for later
 	while (SDL_PollEvent(&event) && sceneAction.has_value() == false)
 	{
+		/*if (game->IMGuiControlled == true) {
+			ImGui_ImplSDL2_ProcessEvent(&event);
+		}*/
+
 		switch (event.type)
 		{
 			case SDL_KEYUP:
@@ -299,5 +308,36 @@ void SceneManager::_restoreSceneState(std::string sceneId)
 
 	auto it = m_sceneSaveSnapshots.find(sceneId);
 	m_sceneSaveSnapshots.erase(it);
+
+}
+
+void SceneManager::testIMGUI()
+{
+
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
+	ImGui::NewFrame();
+
+	bool show_demo_window = true;
+	ImGui::ShowDemoWindow(&show_demo_window);
+
+	bool show_another_window = true;
+	ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+	ImGui::Text("Hello from another window!");
+	if (ImGui::Button("Close Me"))
+		show_another_window = false;
+	ImGui::End();
+
+	// Rendering
+	ImGui::Render();
+	//glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
+	//glClearColor(0.0, 0.0, 0.0, 0.0);
+	//glClear(GL_COLOR_BUFFER_BIT);
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	//SDL_GL_SwapWindow(window);
 
 }

@@ -1,5 +1,4 @@
 #include "ParticleEffectsFactory.h"
-#include "../BaseConstants.h"
 
 
 #include <iostream>

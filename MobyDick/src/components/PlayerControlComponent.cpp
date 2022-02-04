@@ -1,11 +1,8 @@
 #include "PlayerControlComponent.h"
 
-#include <iostream>
 
 #include "../SceneManager.h"
-#include "../GameConfig.h"
 #include "../EnumMaps.h"
-#include "../DebugPanel.h"
 
 
 

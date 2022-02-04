@@ -1,22 +1,10 @@
 #include "GLRenderer.h"
 
 
-#include <iostream>
-#include <sstream>
-#include <utility>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glad/glad.h>
-#include <format>
 
 
-#include "../Util.h"
-#include "../GameConfig.h"
-#include "GLDrawer.h"
-#include "Vertex.h"
 #include "LineDrawBatch.h"
 #include "SpriteDrawBatch.h"
-#include "DrawBatch.h"
 
 #include "../game.h"
 

@@ -2,11 +2,8 @@
 
 
 #include "../EnumMaps.h"
-#include "../Camera.h"
 #include "../game.h"
 
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
 
 extern std::unique_ptr<Game> game;
 

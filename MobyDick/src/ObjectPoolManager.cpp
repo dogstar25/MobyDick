@@ -1,10 +1,7 @@
 #include "ObjectPoolManager.h"
 
-#include <fstream>
 
 #include "game.h"
-#include "GameObject.h"
-#include "Scene.h"
 
 
 void ObjectPoolManager::init(Json::Value definitionJSON,  Scene* parentScene)

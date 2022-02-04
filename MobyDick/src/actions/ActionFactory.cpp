@@ -1,5 +1,4 @@
 #include "ActionFactory.h"
-#include "../BaseConstants.h"
 #include "DefaultMoveAction.h"
 #include "DefaultRotateAction.h"
 #include "DefaultOnHoverAction.h"
@@ -11,6 +10,7 @@
 #include "LoadNextLevelAction.h"
 #include "ActorUseAction.h"
 #include "InteractAction.h"
+#include "ActionSettingsClick.h"
 #include "PistolFireAction.h"
 #include "ContinueGameClickAction.h"
 #include "QuitGameAction.h"
@@ -87,6 +87,10 @@ std::shared_ptr<Action> ActionFactory::create(std::string actionType)
 
         action = std::make_shared<NoAction>();
     }
+	else if (actionType == "SettingsClick") {
+
+		action = std::make_shared<ActionSettingsClick>();
+	}
 
     else {
         std::cout << "No Action was Matched" << std::endl;

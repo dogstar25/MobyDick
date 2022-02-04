@@ -1,15 +1,15 @@
 #include "Game.h"
-#include "GameConfig.h"
 
-#include "RendererSDL.h"
-#include "opengl/GLRenderer.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_sdl.h"
 
 
 Game::~Game()
 {
 
-	//delete m_contactListener;
-	//delete m_contactFilter;
+	//ImGui_ImplOpenGL3_Shutdown();
+	//ImGui_ImplSDL2_Shutdown();
+	//ImGui::DestroyContext();
 }
 
 bool Game::init()
@@ -53,6 +53,7 @@ void Game::play()
 		std::optional<SceneAction> action = SceneManager::instance().pollEvents();
 
 		if (action.has_value()) {
+
 			if (action->actionCode == SCENE_ACTION_QUIT) {
 				m_gameState = GameState::QUIT;
 			}

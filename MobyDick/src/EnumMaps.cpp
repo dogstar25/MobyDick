@@ -2,7 +2,6 @@
 #include "hud/HudItemFactory.h"
 #include "Renderer.h"
 
-#include <box2d/box2d.h>
 
 EnumMap& EnumMap::instance()
 {
@@ -23,6 +22,7 @@ EnumMap::EnumMap()
 	m_enumMap["COMPOSITE_COMPONENT"] = (int)ComponentTypes::COMPOSITE_COMPONENT;
 	m_enumMap["HUD_COMPONENT"] = (int)ComponentTypes::HUD_COMPONENT;
 	m_enumMap["INVENTORY_COMPONENT"] = (int)ComponentTypes::INVENTORY_COMPONENT;
+	m_enumMap["IMGUI_COMPONENT"] = (int)ComponentTypes::IMGUI_COMPONENT;
 	m_enumMap["PARTICLE_COMPONENT"] = (int)ComponentTypes::PARTICLE_COMPONENT;
 	m_enumMap["NAVIGATION_COMPONENT"] = (int)ComponentTypes::NAVIGATION_COMPONENT;
 	m_enumMap["PARTICLE_X_COMPONENT"] = (int)ComponentTypes::PARTICLE_X_COMPONENT;
