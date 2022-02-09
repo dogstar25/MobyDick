@@ -94,6 +94,7 @@ EnumMap::EnumMap()
 	m_enumMap["ACTION_USE"] = ACTION_USE;
 	m_enumMap["ACTION_USAGE"] = ACTION_USAGE;
 	m_enumMap["ACTION_INTERACT"] = ACTION_INTERACT;
+	m_enumMap["ACTION_INTERACTION"] = ACTION_INTERACTION;
 	m_enumMap["ACTION_ON_HOVER"] = ACTION_ON_HOVER;
 	m_enumMap["ACTION_ON_HOVER_OUT"] = ACTION_ON_HOVER_OUT;
 	m_enumMap["ACTION_ON_CLICK"] = ACTION_ON_CLICK;
@@ -167,6 +168,7 @@ EnumMap::EnumMap()
 	m_enumMap["gui"] = TraitTag::gui;
 	m_enumMap["navigation"] = TraitTag::navigation;
 	m_enumMap["abstract"] = TraitTag::abstract;
+	m_enumMap["interactive"] = TraitTag::interactive;
 
 	//Hud Item Types
 	m_enumMap["HudItemTypes::STATUS_SINGLE"] = (int)HudItemTypes::STATUS_SINGLE;

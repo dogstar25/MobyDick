@@ -359,7 +359,42 @@
                 "width": 64,
                 "height": 64
             }
+        },
+        {
+            "id": "TX_USE_HINT",
+            "description": "Use Hint",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 119,
+                "y": 16,
+                "width": 16,
+                "height": 16
+            }
+        },
+        {
+            "id": "TX_WALL_BUTTON_IDLE",
+            "description": "Wall Button",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 202,
+                "y": 56,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_WALL_BUTTON_ACTIVE",
+            "description": "Wall Button",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 235,
+                "y": 56,
+                "width": 32,
+                "height": 32
+            }
+
         }
+
 
     ],
     "fonts": [

@@ -37,6 +37,7 @@ public:
 	void performUseAction();
 	void performUsageAction();
 	void performInteractAction(std::tuple<std::string, int, float> params);
+	void performInteractionAction();
 	void performOnHoverAction();
 	void performOnHoverOutAction();
 	void performOnClickAction();

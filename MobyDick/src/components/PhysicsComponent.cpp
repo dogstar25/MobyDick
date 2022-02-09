@@ -21,6 +21,7 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, Scene* parentScen
 	m_linearDamping = physicsComponentJSON["linearDamping"].asFloat();
 	m_angularDamping = physicsComponentJSON["angularDamping"].asFloat();
 	m_gravityScale = physicsComponentJSON["gravityScale"].asFloat();
+	m_isSensor = physicsComponentJSON["isSensor"].asBool();
 
 	m_objectAnchorPoint.Set(physicsComponentJSON["anchorPoint"]["x"].asFloat(),
 		physicsComponentJSON["anchorPoint"]["y"].asFloat());
@@ -158,6 +159,7 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 	fixtureDef.density = m_density;
 	fixtureDef.friction = m_friction;
 	fixtureDef.restitution = m_restitution;
+	fixtureDef.isSensor = m_isSensor;
 	
 	//collision category
 	//fixtureDef.filter.categoryBits = m_collisionCategory;

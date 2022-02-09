@@ -121,45 +121,46 @@ void GameObject::render(SDL_FRect destQuad)
 void GameObject::render()
 {
 
-	//Render yourself
-	getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT)->render();
-		
-	//Render your children
-	if (hasComponent(ComponentTypes::CHILDREN_COMPONENT)){
+	if (m_disabled == false) {
+		//Render yourself
+		getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT)->render();
 
-		getComponent<ChildrenComponent>(ComponentTypes::CHILDREN_COMPONENT)->render();
+		//Render your children
+		if (hasComponent(ComponentTypes::CHILDREN_COMPONENT)) {
+
+			getComponent<ChildrenComponent>(ComponentTypes::CHILDREN_COMPONENT)->render();
+		}
+
+		//Render your attached inventory items
+		if (hasComponent(ComponentTypes::ATTACHMENTS_COMPONENT)) {
+
+			getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT)->render();
+		}
+
+		//If you have an arcade particle emitter then render those particles
+		if (hasComponent(ComponentTypes::PARTICLE_COMPONENT)) {
+
+			getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT)->render();
+		}
+
+		//If you have a composite component, then render the composite pieces
+		if (hasComponent(ComponentTypes::COMPOSITE_COMPONENT)) {
+
+			getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT)->render();
+		}
+
+		//If you have a hud component, then render the hud items
+		if (hasComponent(ComponentTypes::HUD_COMPONENT)) {
+
+			getComponent<HudComponent>(ComponentTypes::HUD_COMPONENT)->render();
+		}
+
+		//If you have a IMGui component, then render it
+		if (hasComponent(ComponentTypes::IMGUI_COMPONENT)) {
+
+			getComponent<IMGuiComponent>(ComponentTypes::IMGUI_COMPONENT)->render();
+		}
 	}
-
-	//Render your attached inventory items
-	if (hasComponent(ComponentTypes::ATTACHMENTS_COMPONENT)) {
-
-		getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT)->render();
-	}
-
-	//If you have an arcade particle emitter then render those particles
-	if (hasComponent(ComponentTypes::PARTICLE_COMPONENT)) {
-
-		getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT)->render();
-	}
-
-	//If you have a composite component, then render the composite pieces
-	if (hasComponent(ComponentTypes::COMPOSITE_COMPONENT)) {
-
-		getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT)->render();
-	}
-
-	//If you have a hud component, then render the hud items
-	if (hasComponent(ComponentTypes::HUD_COMPONENT)) {
-
-		getComponent<HudComponent>(ComponentTypes::HUD_COMPONENT)->render();
-	}
-
-	//If you have a IMGui component, then render it
-	if (hasComponent(ComponentTypes::IMGUI_COMPONENT)) {
-
-		getComponent<IMGuiComponent>(ComponentTypes::IMGUI_COMPONENT)->render();
-	}
-
 }
 
 void GameObject::reset()
@@ -307,4 +308,34 @@ int GameObject::brainState()
 	const auto& brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
 
 	return brainComponent->state();
+}
+
+void GameObject::disable(bool disablePhysicsBody)
+{
+	m_disabled = true;
+	if (disablePhysicsBody == true) {
+
+		if (hasComponent(ComponentTypes::PHYSICS_COMPONENT) == true) {
+			const auto& physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+			if (physicsComponent) {
+				physicsComponent->setPhysicsBodyActive(false);
+			}
+		}
+
+	}
+
+}
+
+void GameObject::enable()
+{
+	m_disabled = false;
+	if (hasComponent(ComponentTypes::PHYSICS_COMPONENT) == true) {
+
+		const auto& physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+		if (physicsComponent) {
+			physicsComponent->setPhysicsBodyActive(true);
+		}
+
+	}
+
 }

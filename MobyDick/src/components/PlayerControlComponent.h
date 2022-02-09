@@ -25,13 +25,13 @@ public:
 
 	void update() override;
 
-	void testParticle();
 
 private:
 
 	void init();
 	void handleMovement();
 	void handleActions();
+	//std::optional<Action> getKeyAction();
 
 
 	std::bitset<8> m_controls;

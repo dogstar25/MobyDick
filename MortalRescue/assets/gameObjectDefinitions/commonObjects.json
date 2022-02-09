@@ -1,42 +1,6 @@
 {
     "gameObjects": [
         {
-
-            "id": "SWORDLADY",
-            "collisionTag": "CollisionTag::GENERAL_SOLID",
-            "traitTags": [],
-            "description": "SwordLady",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 32,
-                        "height": 32
-                    },
-                    "absolutePositioning": false
-                },
-                {
-                    "id": "ANIMATION_COMPONENT",
-                    "defaultState": "ANIMATION_IDLE",
-                    "frameSize": {
-                        "width": 64,
-                        "height": 64
-                    },
-                    "animations": [
-                        {
-                            "state": "ANIMATION_IDLE",
-                            "textureId": "TX_SWORDLADY1_IDLE",
-                            "speed": 0.05,
-                            "frames": 19
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "id": "GINA_64",
             "collisionTag": "CollisionTag::PLAYER",
             "traitTags": [ "player" ],
@@ -51,7 +15,6 @@
                         "height": 64
                     },
                     "absolutePositioning": false
-
                 },
                 {
                     "id": "PHYSICS_COMPONENT",
@@ -61,13 +24,12 @@
                     "friction": 0.00,
                     "restitution": 0.0,
                     "density": 50.5,
-                    "linearDamping": 0.2,
+                    "linearDamping": 0.5,
                     "angularDamping": 3.0,
                     "anchorPoint": { // starts from centered 0,0 position
                         "x": 0.8,
                         "y": 0.0
                     }
-
                 },
                 {
                     "id": "ANIMATION_COMPONENT",
@@ -100,7 +62,6 @@
                             "gameObjectId": "PLAYER_LABEL",
                             "locationSlot": 1
                         }
-
                     ]
                 },
                 {
@@ -133,6 +94,10 @@
                             "actionClass": "ActorUse"
                         },
                         {
+                            "actionId": "ACTION_INTERACT",
+                            "actionClass": "Interact"
+                        },
+                        {
                             "actionId": "ACTION_ON_HOVER",
                             "actionClass": "DefaultHover"
                         },
@@ -151,7 +116,6 @@
                             "weapon": true
                         }
                     ]
-
                 },
                 {
                     "id": "PLAYER_CONTROL_COMPONENT",
@@ -159,11 +123,112 @@
                         "INPUT_CONTROL_MOVEMENT",
                         "INPUT_CONTROL_USE"
                     ]
-
                 },
                 {
                     "id": "VITALITY_COMPONENT",
-                    "speed": 20
+                    "speed": 14
+                }
+            ]
+        },
+        {
+            "id": "WALL_BUTTON",
+            "collisionTag": "CollisionTag::GENERAL_SOLID",
+            "traitTags": [ "interactive" ],
+            "description": "Wall button",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "red": 254,
+                        "green": 0,
+                        "blue": 0,
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    }
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_WALL_BUTTON_IDLE",
+                            "speed": 0.05,
+                            "frames": 1
+                        },
+                        {
+                            "state": "ANIMATION_ACTIVE",
+                            "textureId": "TX_WALL_BUTTON_ACTIVE",
+                            "speed": 0.05,
+                            "frames": 1
+                        }
+                    ]
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "collisionShape": "B2_BOX",
+                    "density": 0.1,
+                    "isSensor": true,
+                    "anchorPoint": {
+                        "x": 0.0,
+                        "y": 0.0
+                    }
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_INTERACTION",
+                            "actionClass": "ButtonInteraction"
+                        }
+                    ]
+                }
+
+            ]
+        },
+        {
+            "id": "SWORDLADY",
+            "collisionTag": "CollisionTag::GENERAL_SOLID",
+            "traitTags": [],
+            "description": "SwordLady",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_SWORDLADY1_IDLE",
+                            "speed": 0.05,
+                            "frames": 19
+                        }
+                    ]
                 }
             ]
         },
@@ -703,7 +768,6 @@
         },
         {
             "id": "GLOW_TRIANGLE",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [],
             "components": [
@@ -726,6 +790,31 @@
                     "absolutePositioning": false
                 }
             ]
+        },
+        {
+            "id": "USE_HINT",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_USE_HINT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 16,
+                        "height": 16
+                    }
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "lifetime": 1.0,
+                    "lifetimeAlphaFade": true
+                }
+            ]
+
+
         }
     ]
 }

@@ -55,7 +55,7 @@ void CompositeComponent::render()
 	{
 		const auto& vitals = piece.pieceObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
-		if (vitals->isBroken() == false && vitals->isDestroyed() == false)
+		if (piece.pieceObject->disabled()==false)
 		{
 			piece.pieceObject->render();
 		}

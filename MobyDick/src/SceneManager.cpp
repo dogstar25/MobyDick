@@ -105,7 +105,7 @@ std::optional<SceneAction> SceneManager::pollEvents()
 	const Uint8* keyStates = nullptr;
 	std::optional<SceneAction> sceneAction;
 
-	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+	//const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 
 	//Handle special events and everything else should be player control
 	//input related so staore it for later
@@ -153,24 +153,9 @@ std::optional<SceneAction> SceneManager::pollEvents()
 			{
 
 				int* type = static_cast<int*>(event.user.data1);
-				//if (type == SCENE_ACTION_TYPE) {
-				//	sceneAction = *(static_cast<std::optional<SceneAction>*>(event.user.data1));
-				//}
-				//else if (type == LEVEL_ACTION_TYPE) {
-
-				//	levelAction = *(static_cast<std::optional<LevelAction>*>(event.user.data1));
-				//}
-				//std::optional<SceneActionCode*> actionCode = (SceneActionCode*)event.user.data1;
 				sceneAction = *(static_cast<std::optional<SceneAction>*>(event.user.data1));
 				delete event.user.data1;
 				break;
-
-				//TODO:
-				//Check what the action code value in this void ptr is and if its a level action then
-				//put it in th levelManager
-				//Like player killed, level completed, etc - this , in turn, could trigger creation of a sceneAction
-
-
 
 			}
 			case SDL_MOUSEBUTTONUP:
@@ -185,9 +170,7 @@ std::optional<SceneAction> SceneManager::pollEvents()
 			default:
 				break;
 
-
 		}
-
 
 	}
 

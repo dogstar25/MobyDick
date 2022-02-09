@@ -44,8 +44,6 @@ void PlayerControlComponent::update()
 		handleMovement();
 	}
 
-	
-
 }
 
 void PlayerControlComponent::handleActions()
@@ -59,16 +57,26 @@ void PlayerControlComponent::handleActions()
 
 		for (auto& inputEvent : SceneManager::instance().playerInputEvents())
 		{
+			std::optional<Action> playerAction{};
 			keyStates = inputEvent.keyStates;
 
 			switch (inputEvent.event.type)
 			{
 				//case SDL_KEYUP:
 				case SDL_KEYDOWN:
+
+					//playerAction = getKeyAction(keyCode);
+					//playerAction.value()->perform();
+
 					if (keyStates[SDL_SCANCODE_G])
 					{
 						std::cout << "Dropped Weapon" << "\n";
 					}
+					if (keyStates[SDL_SCANCODE_E])
+					{
+						actionComponent->performInteractAction({"test", 5.0, 1});
+					}
+
 					break;
 				case SDL_MOUSEBUTTONDOWN:
 
@@ -117,12 +125,25 @@ void PlayerControlComponent::handleMovement()
 	}
 
 	//Keyboard movement
+	//Json::Value runtimeParms(Json::objectValue);
+	//runtimeParms["direction"] = direction;
+	//runtimeParms["strafe"] = strafe;
+
 	actionComponent->performMoveAction(direction, strafe);
 
 	//Handle Mouse related movement
 	const uint32_t currentMouseStates = SDL_GetRelativeMouseState(&mouseX, &mouseY);
 	float angularVelocity = mouseX * GameConfig::instance().mouseSensitivity();
+
+	//TEST
+	//runtimeParms.clear();
+	//runtimeParms["angularVelocity"] = angularVelocity;
+	////auto rotateAction = actionComponent->getAction(ACTION_ROTATE);
+	////rotateAction->perform(parent(), runtimeParms);
+	//auto test = runtimeParms["angularVelocity"].asFloat();
+
 	actionComponent->performRotateAction(angularVelocity);
+	//actionComponent->performRotateAction(angularVelocity, runtimeParms);
 
 }
 

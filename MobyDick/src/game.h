@@ -42,6 +42,7 @@ public:
 	virtual bool init(ContactListener*, ContactFilter*,	ComponentFactory*, ActionFactory*, ParticleEffectsFactory*, CutSceneFactory*, StatusManager*) = 0;
 	virtual void play();
 	virtual void _displayLoadingMsg();
+	GameObject* getGameObject(std::string name);
 	
 	void setGameState(GameState state) {
 		m_gameState = state;
@@ -114,6 +115,8 @@ protected:
 
 	virtual void _addGameCollisionTags() {};
 	virtual void _addGameComponentTypes() {};
+
+	
 	
 
 };

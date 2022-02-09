@@ -1,6 +1,6 @@
 #pragma once
 #include "actions\Action.h"
-class MyAction : public Action
+class ButtonInteraction : public Action
 {
 
 	void perform(GameObject* gameObject) override;

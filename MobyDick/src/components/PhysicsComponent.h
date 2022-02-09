@@ -54,11 +54,12 @@ private:
 
 	float m_friction{ 0 };
 	float m_restitution{ 0 };
-	float m_density{ 0 };
+	float m_density{ 0.1 };
 	float m_linearDamping{ 0 };
 	float m_collisionRadius{ 0 };
 	float m_angularDamping{ 0 };
 	float m_gravityScale{ 0 };
+	bool m_isSensor{};
 
 	uint16 m_collisionCategory{ 0 };
 	uint16 m_collisionShape{ 0 };

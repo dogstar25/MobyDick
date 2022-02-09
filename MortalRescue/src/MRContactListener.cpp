@@ -27,6 +27,34 @@ void MRContactListener::_player_wall(GameObject* contact1, GameObject* contact2,
 		wall = contact1;
 	}
 
+	//do What?
+
+
+}
+
+void MRContactListener::_player_interactive(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+{
+	GameObject* player;
+	GameObject* interactiveObject;
+
+	if (contact1->collisionTag() == CollisionTag::PLAYER) {
+		player = contact1;
+		interactiveObject = contact2;
+	}
+	else {
+		player = contact2;
+		interactiveObject = contact1;
+	}
+
+
+	//Put the usuable indicator somewhere in the area
+	auto interactiveIndicator = SceneManager::instance().addGameObject("USE_HINT", LAYER_MAIN, -1, -1);
+
+	//Convert from box2d to gameWorld coordinates
+	//contactPoint.x *= GameConfig::instance().scaleFactor();
+	//contactPoint.y *= GameConfig::instance().scaleFactor();
+	interactiveIndicator->setPosition(interactiveObject->getCenterPosition().x, interactiveObject->getCenterPosition().y);
+
 
 }
 
@@ -96,7 +124,6 @@ void MRContactListener::_playerBullet_droneShield(GameObject* contact1, GameObje
 	auto shieldHolds = shieldVitality->testResistance(bulletVitality->attackPower());
 	if (shieldHolds == false) {
 
-		shieldVitality->setIsBroken(true);
 		particleComponent->addParticleEffect(ParticleEffects::impactSmoke);
 		particleComponent->addParticleEffect(ParticleEffects::scrap);
 		SoundManager::instance().playSound("SFX_IMPACT_1");
@@ -170,7 +197,7 @@ void MRContactListener::BeginContact(b2Contact* contact) {
 
 void MRContactListener::EndContact(b2Contact* contact)
 {
-	
+
 
 }
 
@@ -180,7 +207,19 @@ void MRContactListener::handleContact(GameObject* contact1, GameObject* contact2
 {
 	auto category1 = contact1->collisionTag();
 	auto category2 = contact2->collisionTag();
+	auto traits1 = contact1->traits();
+	auto traits2 = contact2->traits();
 	std::string collisionActionClass = {};
+
+
+	////////////////////////////////
+	// Player Usuable Object Contact
+	////////////////////////////////
+	if ((category1 == CollisionTag::PLAYER && contact2->hasTrait(TraitTag::interactive)) ||
+		(category2 == CollisionTag::PLAYER && contact1->hasTrait(TraitTag::interactive))) {
+
+		_player_interactive(contact1, contact2, contactPoint);
+	}
 
 	/////////////////////////
 	// Player Wall Contact

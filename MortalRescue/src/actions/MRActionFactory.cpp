@@ -3,7 +3,7 @@
 #include "BaseConstants.h"
 #include "actions/NoAction.h"
 #include "DroneEyeRotateAction.h"
-#include "MyAction.h"
+#include "ButtonInteraction.h"
 
 #include <iostream>
 
@@ -12,15 +12,14 @@ std::shared_ptr<Action> MRActionFactory::create(std::string actionType)
 {
     std::shared_ptr<Action> action;
 
-    if (actionType == "MyAction") {
-
-        action =  std::make_shared<MyAction>();
-    }
-    else if (actionType == "DroneEyeRotateAction") {
+    if (actionType == "DroneEyeRotateAction") {
 
         action = std::make_shared<DroneEyeRotateAction>();
     }
+	else if (actionType == "ButtonInteraction") {
 
+		action = std::make_shared<ButtonInteraction>();
+	}
     else {
         action = ActionFactory::create(actionType);
     }

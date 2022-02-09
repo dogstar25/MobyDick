@@ -24,7 +24,7 @@
     <ClCompile Include="src\MRComponentFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\actions\MyAction.cpp">
+    <ClCompile Include="src\actions\ButtonInteraction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MRContactListener.cpp">
@@ -222,7 +222,7 @@
     <ClInclude Include="src\components\DroneBrainComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\actions\MyAction.h">
+    <ClInclude Include="src\actions\ButtonInteraction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameConstants.h">

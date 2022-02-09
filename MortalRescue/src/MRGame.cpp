@@ -14,8 +14,6 @@
 
 #include "EnumMaps.h"
 
-#include "actions/MyAction.h"
-#include "actions/DroneEyeRotateAction.h"
 
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"

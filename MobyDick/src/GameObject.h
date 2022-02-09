@@ -80,10 +80,15 @@ public:
 	void setAngleInDegrees(float angle);
 	void setAngleInRadians(float angle);
 	bool hasTrait(int32_t trait) { return m_traitTags.test(trait); }
+	std::bitset<32> traits() {	return m_traitTags;	}
 	void addTrait(int32_t trait) { m_traitTags.set(trait, true); }
 	void removeTrait(int32_t trait) { m_traitTags.set(trait, false); }
 	void dispatch(SDL_FPoint destination);
 	int brainState();
+
+	bool disabled() { return m_disabled; }
+	void disable(bool disablePhysicsBody);
+	void enable();
 
 	//Accessor Functions
 	std::string name() { return m_name; }
@@ -164,6 +169,7 @@ private:
 	bool m_removeFromWorld{ false };
 	Scene* m_parentScene{nullptr};
 	std::bitset<32> m_traitTags{};
+	bool m_disabled{};
 
 
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
