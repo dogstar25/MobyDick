@@ -47,8 +47,8 @@ void CutSceneExample::start()
 	}
 	else if (m_currentAct == 2) {
 
-		_frank->dispatch({ 1,1 });
- 		Camera::instance().dispatch({ 4000,900 });
+		Camera::instance().dispatch({ 4000,900 });
+ 		
 	}
 
 }
@@ -64,8 +64,7 @@ void CutSceneExample::update()
 		}
 	}
 	else if (m_currentAct == 2) {
-		if (_frank->brainState() == BrainState::IDLE &&
-			Camera::instance().state() == CameraState::IDLE) {
+		if (Camera::instance().state() == CameraState::IDLE) {
 			currentState = cutSceneState::IDLE;
 			m_currentAct += 1;
 		}

@@ -2,7 +2,6 @@
     "gameObjects": [
         {
             "id": "DRONE",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::DRONE_FRAME",
             "traitTags": [],
             "components": [
@@ -139,7 +138,6 @@
         },
         {
             "id": "DRONE_BRAIN",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [],
             "description": "Drone Brain",
@@ -179,7 +177,6 @@
         },
         {
             "id": "DRONE_EYE",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [],
             "description": "Drone Eye",
@@ -250,7 +247,6 @@
         },
         {
             "id": "FULL_PIECE",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::DRONE_SHIELD",
             "traitTags": [],
             "components": [
@@ -331,7 +327,6 @@
         },
         {
             "id": "ANGLE1_PIECE",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::DRONE_SHIELD",
             "traitTags": [],
             "components": [
@@ -412,7 +407,6 @@
         },
         {
             "id": "ANGLE2_PIECE",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::DRONE_SHIELD",
             "traitTags": [],
             "components": [
@@ -493,7 +487,6 @@
         },
         {
             "id": "ANGLE3_PIECE",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::DRONE_SHIELD",
             "traitTags": [],
             "components": [
@@ -574,7 +567,6 @@
         },
         {
             "id": "ANGLE4_PIECE",
-            "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::DRONE_SHIELD",
             "traitTags": [],
             "components": [

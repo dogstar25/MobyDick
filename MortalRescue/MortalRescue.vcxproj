@@ -191,7 +191,7 @@
     <ClCompile Include="src\mortalRescue.cpp" />
     <ClCompile Include="src\MRContactFilter.cpp" />
     <ClCompile Include="src\MRContactListener.cpp" />
-    <ClCompile Include="src\actions\MyAction.cpp" />
+    <ClCompile Include="src\actions\ButtonInteraction.cpp" />
     <ClCompile Include="src\MRComponentFactory.cpp" />
     <ClCompile Include="src\components\DroneBrainComponent.cpp" />
     <ClCompile Include="src\MRGame.cpp" />
@@ -276,7 +276,7 @@
   <ItemGroup>
     <ClInclude Include="src\actions\MRActionFactory.h" />
     <ClInclude Include="src\actions\DroneEyeRotateAction.h" />
-    <ClInclude Include="src\actions\MyAction.h" />
+    <ClInclude Include="src\actions\ButtonInteraction.h" />
     <ClInclude Include="src\components\PistolWeaponComponent.h" />
     <ClInclude Include="src\cutScenes\CutSceneDiscoverTreasure.h" />
     <ClInclude Include="src\cutScenes\MRCutSceneFactory.h" />

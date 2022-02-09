@@ -43,6 +43,7 @@ namespace TraitTag {
 	inline constexpr int gui = 5;
 	inline constexpr int navigation = 6;
 	inline constexpr int abstract = 7;
+	inline constexpr int interactive = 8;
 
 }
 
@@ -233,10 +234,11 @@ inline constexpr int ACTION_ROTATE = 2;
 inline constexpr int ACTION_USE = 3;
 inline constexpr int ACTION_USAGE = 4;
 inline constexpr int ACTION_INTERACT = 5;
-inline constexpr int ACTION_ON_HOVER = 6;
-inline constexpr int ACTION_ON_CLICK = 7;
-inline constexpr int ACTION_ON_HOVER_OUT = 8;
-inline constexpr int ACTION_ON_TRIGGER = 9;
+inline constexpr int ACTION_INTERACTION = 6;
+inline constexpr int ACTION_ON_HOVER = 7;
+inline constexpr int ACTION_ON_CLICK = 8;
+inline constexpr int ACTION_ON_HOVER_OUT = 9;
+inline constexpr int ACTION_ON_TRIGGER = 10;
 
 //GameSpace Types
 inline constexpr int GAMESPACE_INTRO = 0;

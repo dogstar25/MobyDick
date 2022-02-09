@@ -1,5 +1,6 @@
 #pragma once
 #include "Action.h"
+
 class InteractAction : public Action
 {
 
@@ -14,7 +15,7 @@ public:
         m_params = params;
     }
 
-    void perform(GameObject* gameObject){};
+    void perform(GameObject* gameObject);
 
 protected:
     std::tuple<std::string, int, float> m_params;

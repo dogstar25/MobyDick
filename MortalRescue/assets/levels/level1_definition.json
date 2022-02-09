@@ -39,10 +39,15 @@
             "cameraFollow": false
         },
         {
+            "id": "LOC_0022_0005",
+            "gameObjectId": "WALL_BUTTON",
+            "name": "Button1"
+        },
+        {
             "id": "LOC_0033_0002",
             "gameObjectId": "SURVIVOR",
             "cameraFollow": false,
-            "name": "Frank"
+            "name": "Button1_TARGET"
         },
         {
             "id": "LOC_0002_0012",

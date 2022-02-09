@@ -138,6 +138,21 @@ void ActionComponent::performInteractAction(std::tuple<std::string, int, float> 
 	action->perform(m_parentGameObject);
 }
 
+void ActionComponent::performInteractionAction()
+{
+	std::shared_ptr<Action> action;
+
+	if (m_actions[ACTION_INTERACTION]) {
+		action = m_actions[ACTION_INTERACTION];
+	}
+	else {
+		action = std::make_shared<NoAction>();
+	}
+
+	assert(action != nullptr && "Usage Action is null!");
+	action->perform(m_parentGameObject);
+}
+
 void ActionComponent::performOnHoverAction()
 {
 	std::shared_ptr<Action> action;

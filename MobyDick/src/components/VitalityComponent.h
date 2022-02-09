@@ -24,7 +24,6 @@ public:
 	~VitalityComponent();
 
 	void update() override;
-	void inflictDamage(float damage);
 	bool testResistance(float force);
 
 	float resistance() { return m_resistance; }
@@ -35,10 +34,6 @@ public:
 	void setSpeed(float speed) { m_speed = speed; }
 	void setHealth(float health) { m_health = health; }
 	float health() { return m_health; }
-	bool isBroken() { return m_isBroken; }
-	void setIsBroken(bool isBroken) { m_isBroken = isBroken; }
-	bool isDestroyed() { return m_isDestroyed; }
-	void setIsDestroyed(bool isDestroyed) { m_isDestroyed = isDestroyed; }
 	float rotateSpeed() { return m_rotationSpeed; }
 
 	bool isLifetimeAlphaFade() { return m_isLifetimeAlphaFade; }
@@ -57,8 +52,6 @@ private:
 
 	//Regenerative
 	bool	m_isRegenerative{ false };
-	bool	m_isBroken{ false };
-	bool	m_isDestroyed{false};
 	float	m_regenSpeed{ 0 };
 	int		m_currentLevel{ 0 };
 	int		m_maxLevels{ 0 };

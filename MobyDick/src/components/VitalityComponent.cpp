@@ -74,7 +74,7 @@ void VitalityComponent::_levelUp()
 
 		m_currentLevel++;
 		auto& level = m_regenLevels[(uint_fast64_t)m_currentLevel - 1];
-		m_isBroken = false;
+		parent()->enable();
 		parent()->resetCollisionTag();
 		m_resistance = level.resistance;
 		
@@ -114,34 +114,10 @@ void VitalityComponent::_updateFiniteLifetime()
 void VitalityComponent::_updateRegeneration()
 {
 
-	//If the broken flag was set in the contact listener, then set the collision tag to FREE
-	if (m_isBroken == true) {
-		parent()->setCollisionTag(CollisionTag::GENERAL_FREE);
-	}
-	
 	//If this gameObject is considered broken and we have met the regen time, then level up the piece
-	if (m_isBroken == true && m_regenTimer.hasMetTargetDuration()) {
+	if (parent()->disabled() == true && m_regenTimer.hasMetTargetDuration()) {
 
 		_levelUp();
-
-	}
-
-}
-
-
-void VitalityComponent::inflictDamage(float damage)
-{
-
-	m_health -= damage;
-	if (m_health <= 0) {
-
-		if (m_isRegenerative == false) {
-			m_isDestroyed = true;
-		}
-		else {
-			m_isBroken = true;
-			m_regenTimer = Timer(m_regenSpeed);
-		}
 
 	}
 
@@ -152,12 +128,12 @@ bool VitalityComponent::testResistance(float force)
 
 	if (force >= m_resistance) {
 		if (m_isRegenerative == false) {
-			m_isDestroyed = true;
 			parent()->setRemoveFromWorld(true);
 		}
 		else {
 
-			m_isBroken = true;
+			parent()->disable(false);
+			parent()->setCollisionTag(CollisionTag::GENERAL_FREE);
 			m_regenTimer = Timer(m_regenSpeed);
 		}
 		return false;

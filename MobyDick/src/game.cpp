@@ -1,5 +1,5 @@
 #include "Game.h"
-
+#include "SceneManager.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 
@@ -120,4 +120,27 @@ void Game::_displayLoadingMsg()
 	m_renderer->present();
 	SDL_DestroyTexture(sdlTexture);
 
+}
+
+GameObject* Game::getGameObject(std::string name)
+{
+	std::optional<GameObject*> foundGameObject{};
+
+	Scene& currentScene = SceneManager::instance().currentScene();
+
+	for (auto& layer : currentScene.gameObjects()) {
+
+		for (auto& gameObject : layer) {
+
+			if (gameObject->name() == name) {
+
+				foundGameObject = gameObject.get();
+				break;
+			}
+		}
+	}
+
+	assert(foundGameObject.has_value() && "GameObject wasnt found!");
+
+	return foundGameObject.value();
 }

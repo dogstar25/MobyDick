@@ -51,6 +51,7 @@ public:
 	Scene& pushScene(std::string sceneId);
 	Timer& gameTimer() { return m_gameTimer; }
 	void testIMGUI();
+	Scene& currentScene() { return m_scenes.back(); }
 
 	std::optional<SceneAction> getSceneKeyAction(SDL_Keycode);
 

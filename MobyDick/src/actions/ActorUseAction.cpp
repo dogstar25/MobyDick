@@ -15,7 +15,7 @@ ActorUseAction::~ActorUseAction()
 }
 
 /*
-The Actores UseAction is usually to Perform the UseAction of the Actor's activeItem from his inventory
+The Actors UseAction is usually to Perform the UseAction of the Actor's activeItem from his inventory
 */
 void ActorUseAction::perform(GameObject* gameObject)
 {
