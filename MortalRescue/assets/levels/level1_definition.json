@@ -34,6 +34,11 @@
             "cameraFollow": false
         },
         {
+            "id": "LOC_0014_0020",
+            "gameObjectId": "TURRET",
+            "cameraFollow": false
+        },
+        {
             "id": "LOC_0028_0041",
             "gameObjectId": "SURVIVOR",
             "cameraFollow": false

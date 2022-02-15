@@ -9,6 +9,8 @@
 
 #include <SDL2/SDL_mixer.h>
 
+
+
 class SoundManager
 {
 
@@ -18,6 +20,8 @@ public:
 	void playSound(std::string id);
 	void playMusic(std::string id, int loopTimes);
 
+	float test;
+	
 
 private:
 	SoundManager();

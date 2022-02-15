@@ -393,7 +393,20 @@
                 "height": 32
             }
 
+        },
+        {
+            "id": "TX_TURRET_IDLE",
+            "description": "Turret Idle",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 262,
+                "y": 880,
+                "width": 128,
+                "height": 128
+            }
+
         }
+
 
 
     ],
@@ -401,7 +414,17 @@
         {
             "id": "FONT_ARIAL_REG",
             "description": "Arial Regular",
-            "filename": "assets/arial.ttf"
+            "filename": "assets/fonts/arial.ttf"
+        },
+        {
+            "id": "FONT_DROID_SANS",
+            "description": "Droid Sans",
+            "filename": "assets/fonts/DroidSans.ttf"
+        },
+        {
+            "id": "FONT_CONTHRAX",
+            "description": "Droid Sans",
+            "filename": "assets/fonts/conthrax-sb.ttf"
         }
     ]
 

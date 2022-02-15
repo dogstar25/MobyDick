@@ -24,6 +24,7 @@ public:
 	~VitalityComponent();
 
 	void update() override;
+	void render();
 	bool testResistance(float force);
 
 	float resistance() { return m_resistance; }
@@ -66,6 +67,9 @@ private:
 	void _levelUp();
 	void _updateFiniteLifetime();
 	void _updateRegeneration();
+
+
+	float* IG_Speed() { return &m_speed; }
 
 };
 

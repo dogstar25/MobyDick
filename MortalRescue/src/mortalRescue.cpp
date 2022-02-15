@@ -7,6 +7,7 @@
 #include "MRComponentFactory.h"
 #include "cutScenes/MRCutSceneFactory.h"
 #include "actions/MRActionFactory.h"
+#include "IMGui/MR_IMGuiFactory.h"
 #include "particleEffects/MRParticleEffectsFactory.h"
 #include "MRStatusManager.h"
 
@@ -21,8 +22,9 @@ int main(int argc, char* args[])
 		new MRContactFilter(),
 		new MRComponentFactory(), 
 		new MRActionFactory(), 
-		new MRParticleEffectsFactory,
-		new MRCutSceneFactory,
+		new MRParticleEffectsFactory(),
+		new MRCutSceneFactory(),
+		new MR_IMGuiFactory(),
 		new MRStatusManager()
 	);
 

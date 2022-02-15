@@ -297,10 +297,19 @@
     <ClCompile Include="src\actions\ActionSettingsClick.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\IMGui\IMGuiExample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IMGui\IMGuiFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\IMGui\IMGuiItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\IMGui\IMGuiSettingsMenu.cpp">
+    <ClCompile Include="src\IMGui\IMGuiText.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IMGui\IMGuiUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -602,10 +611,19 @@
     <ClInclude Include="src\actions\ActionSettingsClick.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\IMGui\IMGuiExample.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IMGui\IMGuiFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\IMGui\IMGuiItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\IMGui\IMGuiSettingsMenu.h">
+    <ClInclude Include="src\IMGui\IMGuiText.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IMGui\IMGuiUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

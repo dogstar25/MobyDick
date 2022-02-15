@@ -155,6 +155,12 @@ void GameObject::render()
 			getComponent<HudComponent>(ComponentTypes::HUD_COMPONENT)->render();
 		}
 
+		//If you have a vitality component, then render the vitality items
+		if (hasComponent(ComponentTypes::VITALITY_COMPONENT)) {
+
+			getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT)->render();
+		}
+
 		//If you have a IMGui component, then render it
 		if (hasComponent(ComponentTypes::IMGUI_COMPONENT)) {
 

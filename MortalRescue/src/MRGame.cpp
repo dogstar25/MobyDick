@@ -10,14 +10,15 @@
 #include "ContactFilter.h"
 #include "ContactListener.h"
 #include "components/DroneBrainComponent.h"
-#include "particleEffects/GameParticleEffects.h"
+#include "IMGui/IMGuiUtil.h"
 
 #include "EnumMaps.h"
 
 
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
-//#include "imgui_impl_sdlrenderer.h"
+#include "imgui_impl_sdlrenderer.h"
+
 
 using namespace std::chrono_literals;
 
@@ -29,7 +30,7 @@ MRGame::MRGame()
 
 MRGame::~MRGame()
 {
-	
+
 }
 
 /*
@@ -37,13 +38,13 @@ Initialize Game
 */
 bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter, 
 	ComponentFactory* componentFactory, ActionFactory* actionFactory, ParticleEffectsFactory* particleEffectsFactory, 
-	CutSceneFactory* cutSceneFactory, StatusManager* statusManager)
+	CutSceneFactory* cutSceneFactory, IMGuiFactory* iMGuiFactory, StatusManager* statusManager)
 {
 
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
 
-	Game::init(contactListener, contactFilter, componentFactory, actionFactory, particleEffectsFactory, cutSceneFactory, statusManager);
+	Game::init(contactListener, contactFilter, componentFactory, actionFactory, particleEffectsFactory, cutSceneFactory, iMGuiFactory, statusManager);
 
 	std::cout << "Mortal Rescue Begins\n";
 
@@ -86,7 +87,30 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 
 		//Test for IMGUI
-		testIMGUI_GL_Init();
+		ImGui::MobyDickInit(this);
+
+		//////////////////////////////////////////////////////
+		//ImGui::CreateContext();
+
+		//ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+		//ImGui::StyleColorsDark();
+
+		//auto gl_context = SDL_GL_GetCurrentContext();
+		//const char* glsl_version = "#version 130";
+
+		//// Setup Platform/Renderer backends
+		//if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
+
+		//	ImGui_ImplSDL2_InitForOpenGL(window(), gl_context);
+		//	ImGui_ImplOpenGL3_Init(glsl_version);
+		//}
+		//else {
+		//	ImGui_ImplSDL2_InitForSDLRenderer(window());
+		//	ImGui_ImplSDLRenderer_Init(renderer()->sdlRenderer());
+		//}
+
+		///////////////////////////////////////////
 
 
 		TextureManager::instance().init();
@@ -96,9 +120,6 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		SceneManager::instance().init();
 		SceneManager::instance().load("gameScenes");
 
-		float x, y;
-		SDL_RenderGetScale(m_renderer.get()->sdlRenderer(), &x, &y);
-		//SDL_RenderSetScale(m_renderer.get()->sdlRenderer(), 1.58, 1.45);
 
 		//_displayLoadingMsg();
 
@@ -144,6 +165,32 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		scene.addGameObject("BOWMAN", LAYER_MENU, 3, 3);
 
 		
+		//{
+		//	ImFont* m_font = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 22.0f);
+		//	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+		//	io.ConfigFlags |= ImGuiConfigFlags_NavEnableSetMousePos;
+
+		//	//io.Fonts->Build();
+
+			//if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
+			//	ImGui_ImplOpenGL3_CreateFontsTexture();
+			//}
+			//else {
+			//	ImGui_ImplSDLRenderer_CreateFontsTexture();
+			//}
+
+			//if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
+			//	ImGui_ImplOpenGL3_NewFrame();
+			//	ImGui_ImplSDL2_NewFrame();
+			//}
+			//else {
+			//	ImGui_ImplSDLRenderer_NewFrame();
+			//	ImGui_ImplSDL2_NewFrame();
+			//}
+			//ImGui::NewFrame();
+
+		//}
+
 
 	}
 
@@ -183,49 +230,3 @@ void MRGame::_addGameComponentTypes()
 }
 
 
-//void MRGame::testIMGUI_SDL_Init()
-//{
-//
-//	IMGUI_CHECKVERSION();
-//	ImGui::CreateContext();
-//	ImGuiIO& io = ImGui::GetIO(); (void)io;
-//	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-//	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-//
-//	// Setup Dear ImGui style
-//	ImGui::StyleColorsDark();
-//	//ImGui::StyleColorsClassic();
-//
-//	auto gl_context = SDL_GL_GetCurrentContext();
-//	const char* glsl_version = "#version 130";
-//
-//
-//	ImGui_ImplSDL2_InitForSDLRenderer(window());
-//	ImGui_ImplSDLRenderer_Init(renderer);
-//
-//
-//
-//}
-
-void MRGame::testIMGUI_GL_Init()
-{
-
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-
-	// Setup Dear ImGui style
-	ImGui::StyleColorsDark();
-	//ImGui::StyleColorsClassic();
-
-	auto gl_context = SDL_GL_GetCurrentContext();
-	const char* glsl_version = "#version 130";
-
-	// Setup Platform/Renderer backends
-	ImGui_ImplSDL2_InitForOpenGL(window(), gl_context);
-	ImGui_ImplOpenGL3_Init(glsl_version);
-
-
-}

@@ -55,6 +55,10 @@ VitalityComponent::~VitalityComponent()
 
 }
 
+void VitalityComponent::render()
+{
+}
+
 void VitalityComponent::update()
 {
 
@@ -65,6 +69,8 @@ void VitalityComponent::update()
 	if (m_isRegenerative) {
 		_updateRegeneration();
 	}
+
+
 }
 
 void VitalityComponent::_levelUp()

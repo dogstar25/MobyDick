@@ -11,7 +11,6 @@ public:
 	IMGuiComponent() {};
 	IMGuiComponent(Json::Value componentJSON);
 
-	void create(std::string IMGuiId);
 	void update() override;
 	void render();
 

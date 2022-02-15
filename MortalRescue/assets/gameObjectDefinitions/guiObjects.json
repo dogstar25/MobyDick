@@ -344,7 +344,25 @@
                 },
                 {
                     "id": "IMGUI_COMPONENT",
-                    "imguiId": "IMGuiSettingsMenu"
+                    "imguiId": "IMGuiSettings"
+                }
+            ]
+
+        },
+        {
+            "id": "PLAYER_LABEL_2",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "IMGUI_COMPONENT",
+                    "imguiId": "IMGuiText"
                 }
             ]
 
