@@ -22,6 +22,7 @@
 #include "ComponentFactory.h"
 #include "actions/ActionFactory.h"
 #include "particleEffects/ParticleEffectsFactory.h"
+#include "IMGui/IMGuiFactory.h"
 #include "StatusManager.h"
 
 /*
@@ -36,10 +37,7 @@ public:
 
 	bool init() override { return true; }
 	bool init(ContactListener*, ContactFilter*, ComponentFactory*, ActionFactory*, ParticleEffectsFactory*, 
-		CutSceneFactory*, StatusManager* ) override;
-
-	void testIMGUI_GL_Init();
-	void testIMGUI_SDL_Init();
+		CutSceneFactory*, IMGuiFactory*, StatusManager* ) override;
 
 private:
 

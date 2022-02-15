@@ -93,7 +93,7 @@
         },
         {
             "id": "SCENE_PAUSE_MENU",
-            "inputControlMode": "CONTROL_MODE_SELECT",
+            "inputControlMode": "CONTROL_MODE_IMGUI",
             "maxObjects": 24,
             "tags": [
                 "SCENETAG_MENU"
@@ -133,6 +133,7 @@
                     }
                 }
 
+
             ],
             "keyActions": [
                 {
@@ -146,11 +147,8 @@
         },
         {
             "id": "SCENE_SETTINGS_MENU",
-            "inputControlMode": "CONTROL_MODE_SELECT",
+            "inputControlMode": "CONTROL_MODE_IMGUI",
             "maxObjects": 4,
-            "tags": [
-                "SCENETAG_MENU"
-            ],
             "gameObjects": [
                 {
                     "gameObjectId": "IMGUI_SETTINGS_PANEL",

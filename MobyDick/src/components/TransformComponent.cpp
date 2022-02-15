@@ -48,6 +48,8 @@ TransformComponent::~TransformComponent()
 
 void TransformComponent::update()
 {
+
+
 }
 
 SDL_FRect TransformComponent::getPositionRect()

@@ -21,6 +21,7 @@
 #include "ComponentFactory.h"
 #include "cutScenes/CutSceneFactory.h"
 #include "actions/ActionFactory.h"
+#include "IMGui/IMGuiFactory.h"
 #include "particleEffects/ParticleEffectsFactory.h"
 #include "ContactListener.h"
 #include "ContactFilter.h"
@@ -39,7 +40,8 @@ public:
 	~Game();
 
 	virtual bool init();
-	virtual bool init(ContactListener*, ContactFilter*,	ComponentFactory*, ActionFactory*, ParticleEffectsFactory*, CutSceneFactory*, StatusManager*) = 0;
+	virtual bool init(ContactListener*, ContactFilter*,	ComponentFactory*, ActionFactory*, ParticleEffectsFactory*, 
+		CutSceneFactory*, IMGuiFactory*, StatusManager*) = 0;
 	virtual void play();
 	virtual void _displayLoadingMsg();
 	GameObject* getGameObject(std::string name);
@@ -90,6 +92,9 @@ public:
 	std::shared_ptr<ParticleEffectsFactory> particleEffectsFactory() {
 		return m_particleEffectsFactory;
 	}
+	std::shared_ptr<IMGuiFactory> iMGUIFactory() {
+		return m_iMGUIFactory;
+	}
 
 	Renderer* renderer() { return m_renderer.get(); }
 
@@ -107,6 +112,7 @@ protected:
 	std::shared_ptr<CutSceneFactory> m_cutSceneFactory{};
 	std::shared_ptr<StatusManager> m_statusMananger{};
 	std::shared_ptr<ParticleEffectsFactory> m_particleEffectsFactory{};
+	std::shared_ptr<IMGuiFactory> m_iMGUIFactory{};
 
 	std::shared_ptr<Renderer> m_renderer;
 

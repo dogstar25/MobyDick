@@ -7,9 +7,12 @@
 Game::~Game()
 {
 
+	ImGui::DestroyContext();
+
+	// These shutdowns no longer needed?
 	//ImGui_ImplOpenGL3_Shutdown();
 	//ImGui_ImplSDL2_Shutdown();
-	//ImGui::DestroyContext();
+
 }
 
 bool Game::init()
@@ -21,7 +24,7 @@ bool Game::init()
 
 bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter, 
 	ComponentFactory* componentFactory, ActionFactory* actionFactory, ParticleEffectsFactory* particleEffectsFactory, 
-	CutSceneFactory* cutSceneFactory, StatusManager* statusManager)
+	CutSceneFactory* cutSceneFactory, IMGuiFactory* iMGuiFactory, StatusManager* statusManager)
 {
 	m_contactListener = std::shared_ptr<ContactListener>(contactListener);
 	m_contactFilter = std::shared_ptr<ContactFilter>(contactFilter);
@@ -30,6 +33,7 @@ bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter,
 	m_particleEffectsFactory = std::shared_ptr<ParticleEffectsFactory>(particleEffectsFactory);
 	m_cutSceneFactory = std::shared_ptr<CutSceneFactory>(cutSceneFactory);
 	m_statusMananger = std::shared_ptr<StatusManager>(statusManager);
+	m_iMGUIFactory = std::shared_ptr<IMGuiFactory>(iMGuiFactory);
 
 	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 

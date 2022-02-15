@@ -227,8 +227,11 @@
     <ClCompile Include="src\hud\HudStatusText.cpp" />
     <ClCompile Include="src\hud\HudItem.cpp" />
     <ClCompile Include="src\HudManager.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiExample.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiFactory.cpp" />
     <ClCompile Include="src\IMGui\IMGuiItem.cpp" />
-    <ClCompile Include="src\IMGui\IMGuiSettingsMenu.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiText.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiUtil.cpp" />
     <ClCompile Include="src\opengl\LineDrawBatch.cpp" />
     <ClCompile Include="src\opengl\SpriteDrawBatch.cpp" />
     <ClCompile Include="src\opengl\GLDebugCallback.cpp" />
@@ -325,8 +328,11 @@
     <ClInclude Include="src\hud\HudStatusText.h" />
     <ClInclude Include="src\hud\HudItem.h" />
     <ClInclude Include="src\HudManager.h" />
+    <ClInclude Include="src\IMGui\IMGuiExample.h" />
+    <ClInclude Include="src\IMGui\IMGuiFactory.h" />
     <ClInclude Include="src\IMGui\IMGuiItem.h" />
-    <ClInclude Include="src\IMGui\IMGuiSettingsMenu.h" />
+    <ClInclude Include="src\IMGui\IMGuiText.h" />
+    <ClInclude Include="src\IMGui\IMGuiUtil.h" />
     <ClInclude Include="src\opengl\LineDrawBatch.h" />
     <ClInclude Include="src\opengl\shaderCode.h" />
     <ClInclude Include="src\opengl\SpriteDrawBatch.h" />

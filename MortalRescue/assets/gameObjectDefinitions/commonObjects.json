@@ -62,6 +62,7 @@
                             "gameObjectId": "PLAYER_LABEL",
                             "locationSlot": 1
                         }
+
                     ]
                 },
                 {
@@ -296,7 +297,7 @@
                     "id": "TEXT_COMPONENT",
                     "value": "Player 1",
                     "dynamic": false,
-                    "font": "FONT_ARIAL_REG",
+                    "font": "FONT_DROID_SANS",
                     "fontSize": 12
                 }
             ]
@@ -324,7 +325,7 @@
                     "id": "TEXT_COMPONENT",
                     "dynamic": true,
                     "statusValueId": "FPS_VALUE",
-                    "font": "FONT_ARIAL_REG",
+                    "font": "FONT_DROID_SANS",
                     "fontSize": 16
                 }
             ]
@@ -815,6 +816,73 @@
             ]
 
 
+        },
+        {
+            "id": "TURRET",
+            "collisionTag": "CollisionTag::GENERAL_SOLID",
+            "traitTags": [ ],
+            "description": "Turret",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_DRONE_BRAIN_64",
+                    "color": {
+                        "red": 8,
+                        "green": 242,
+                        "blue": 250,
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "centeredPositioning": false
+                },
+                //{
+                //    "id": "ANIMATION_COMPONENT",
+                //    "defaultState": "ANIMATION_IDLE",
+                //    "frameSize": {
+                //        "width": 128,
+                //        "height": 128
+                //    },
+                //    "animations": [
+                //        {
+                //            "state": "ANIMATION_IDLE",
+                //            "textureId": "TX_TURRET_IDLE",
+                //            "speed": 0.05,
+                //            "frames": 1
+                //        }
+                //    ]
+                //},
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "collisionShape": "B2_BOX",
+                    "density": 0.1,
+                    "anchorPoint": {
+                        "x": 0.0,
+                        "y": 0.0
+                    }
+                },
+                {
+                    "id": "ATTACHMENTS_COMPONENT",
+                    "attachments": [
+                        {
+                            "gameObjectId": "PISTOL",
+                            "attachLocation": {
+                                "x": 0.6,
+                                "y": 0.0
+                            },
+                            "attachB2JointType": "B2_WELD"
+                        }
+                    ]
+                }
+
+
+            ]
         }
     ]
 }

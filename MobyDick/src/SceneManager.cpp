@@ -1,10 +1,9 @@
 #include "SceneManager.h"
 
 #include <fstream>
-#include "imgui_impl_opengl3.h"
-#include "imgui_impl_sdl.h"
 
 #include "game.h"
+#include "IMGui/IMGuiUtil.h"
 
 
 extern std::unique_ptr<Game> game;
@@ -60,13 +59,12 @@ void SceneManager::run()
 	//Only update and render if we have passed the 60 fps time passage
 	if (m_gameTimer.hasMetTargetDuration() == true)
 	{
-		//Calculate and display the FPS
-		m_frameCount++;
-		float fps = m_gameTimer.calculateFPS(m_frameCount);
+		//Start a new IMGui Frame that will allow for any new windows to be created throughout 
+		//the main loop
+		ImGui::MobyDickNewFrame();
 
-		if (fps > 0) {
-			game->statusMananger()->setValue("FPS_VALUE", fps);
-		}
+		//IMGui framerate calc - R.I.P MobyDick Framerate code 2018 - 2022
+		ImGui::MobyDickFPSFrame();
 
 		//Run update for every active scene
 		for (auto& scene : m_scenes) {
@@ -84,16 +82,15 @@ void SceneManager::run()
 			scene.render();
 		}
 
-
-
-		//test
-//		testIMGUI();
-
+		//Render any IMGui frames that were updated in this loop
+		ImGui::MobyDickRenderFrame();
 
 		//Display all rendered objects
 		game->renderer()->present();
 
 	}
+
+
 
 }
 
@@ -111,9 +108,9 @@ std::optional<SceneAction> SceneManager::pollEvents()
 	//input related so staore it for later
 	while (SDL_PollEvent(&event) && sceneAction.has_value() == false)
 	{
-		/*if (game->IMGuiControlled == true) {
+		if (game->IMGuiControlled == true) {
 			ImGui_ImplSDL2_ProcessEvent(&event);
-		}*/
+		}
 
 		switch (event.type)
 		{
@@ -301,7 +298,7 @@ void SceneManager::testIMGUI()
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
-	ImGui_ImplOpenGL3_NewFrame();
+	//ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 

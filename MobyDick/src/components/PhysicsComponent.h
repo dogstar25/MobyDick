@@ -1,4 +1,4 @@
-	#ifndef PHYSICS_COMPONENT_H
+#ifndef PHYSICS_COMPONENT_H
 #define PHYSICS_COMPONENT_H
 
 #include <optional>

@@ -55,6 +55,7 @@ EnumMap::EnumMap()
 	//Mouse Modes
 	m_enumMap["CONTROL_MODE_SELECT"] = CONTROL_MODE_SELECT;
 	m_enumMap["CONTROL_MODE_PLAY"] = CONTROL_MODE_PLAY;
+	m_enumMap["CONTROL_MODE_IMGUI"] = CONTROL_MODE_IMGUI;
 
 	//Renderer Types
 	m_enumMap["RendererType::SDL"] = (int)RendererType::SDL;

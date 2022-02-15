@@ -188,6 +188,8 @@
     <ClCompile Include="src\components\PistolWeaponComponent.cpp" />
     <ClCompile Include="src\cutScenes\CutSceneDiscoverTreasure.cpp" />
     <ClCompile Include="src\cutScenes\MRCutSceneFactory.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiSettings.cpp" />
+    <ClCompile Include="src\IMGui\MR_IMGuiFactory.cpp" />
     <ClCompile Include="src\mortalRescue.cpp" />
     <ClCompile Include="src\MRContactFilter.cpp" />
     <ClCompile Include="src\MRContactListener.cpp" />
@@ -271,7 +273,7 @@
     <Media Include="assets\sound\weapon_laser_004.wav" />
   </ItemGroup>
   <ItemGroup>
-    <Font Include="assets\arial.ttf" />
+    <Font Include="assets\fonts\arial.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\actions\MRActionFactory.h" />
@@ -280,6 +282,8 @@
     <ClInclude Include="src\components\PistolWeaponComponent.h" />
     <ClInclude Include="src\cutScenes\CutSceneDiscoverTreasure.h" />
     <ClInclude Include="src\cutScenes\MRCutSceneFactory.h" />
+    <ClInclude Include="src\IMGui\IMGuiSettings.h" />
+    <ClInclude Include="src\IMGui\MR_IMGuiFactory.h" />
     <ClInclude Include="src\MRComponentFactory.h" />
     <ClInclude Include="src\components\DroneBrainComponent.h" />
     <ClInclude Include="src\MRContactFilter.h" />

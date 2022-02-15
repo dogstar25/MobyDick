@@ -24,6 +24,7 @@ inline constexpr int MOUSE_CLICKED = 3;
 //Mouse Modes
 inline constexpr int CONTROL_MODE_SELECT = 0;
 inline constexpr int CONTROL_MODE_PLAY = 1;
+inline constexpr int CONTROL_MODE_IMGUI = 2;
 
 //Game Object Collision Tags
 namespace CollisionTag {

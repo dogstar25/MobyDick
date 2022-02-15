@@ -44,6 +44,7 @@ void PlayerControlComponent::update()
 		handleMovement();
 	}
 
+
 }
 
 void PlayerControlComponent::handleActions()

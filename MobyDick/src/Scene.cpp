@@ -71,9 +71,7 @@ Scene::Scene(std::string sceneId)
 		m_physicsWorld->SetDebugDraw(&DebugDraw::instance());
 	}
 
-
 }
-
 
 Scene::~Scene()
 {
@@ -81,7 +79,6 @@ Scene::~Scene()
 	clear();
 
 }
-
 
 void Scene::loadLevel(std::string levelId)
 {
@@ -236,7 +233,6 @@ void Scene::render() {
 
 
 
-
 }
 
 
@@ -385,10 +381,17 @@ void Scene::setInputControlMode(int inputControlMode)
 	if (inputControlMode == CONTROL_MODE_PLAY) {
 		SDL_ShowCursor(false);
 		SDL_SetRelativeMouseMode(SDL_TRUE);
+		game->IMGuiControlled = false;
 	}
 	else if (inputControlMode == CONTROL_MODE_SELECT) {
 		SDL_ShowCursor(true);
 		SDL_SetRelativeMouseMode(SDL_FALSE);
+		game->IMGuiControlled = false;
+	}
+	else if (inputControlMode == CONTROL_MODE_IMGUI) {
+		SDL_ShowCursor(true);
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+		game->IMGuiControlled = true;
 	}
 
 }
