@@ -70,7 +70,8 @@ public:
 	void setPosition(b2Vec2 position, float angle);
 	void setPosition(float x, float y);
 	void setPosition(SDL_FPoint position);
-
+	
+	b2Vec2 getSize();
 	SDL_FPoint getCenterPosition();
 	SDL_FPoint getTopLeftPosition();
 	

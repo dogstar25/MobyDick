@@ -332,7 +332,7 @@
             ]
         },
         {
-            "id": "IMGUI_SETTINGS_PANEL",
+            "id": "IMGUI_EXAMPLE_PANEL",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "components": [
@@ -344,7 +344,7 @@
                 },
                 {
                     "id": "IMGUI_COMPONENT",
-                    "imguiId": "IMGuiSettings"
+                    "imguiType": "IMGuiExample"
                 }
             ]
 
@@ -352,7 +352,7 @@
         {
             "id": "PLAYER_LABEL_2",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
+            "traitTags": [ "abstract" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT"
@@ -362,7 +362,40 @@
                 },
                 {
                     "id": "IMGUI_COMPONENT",
-                    "imguiId": "IMGuiText"
+                    "imguiType": "IMGuiText",
+                    "parms": {
+                        "label": "Player 1"
+                    }
+
+                }
+            ]
+
+        },
+        {
+            "id": "IMGUI_PAUSE_WINDOW",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 176,
+                        "height": 155
+                    },
+                    "absolutePositioning": true
+
+                },
+                {
+                    "id": "IMGUI_COMPONENT",
+                    //"imguiType": "IMGuiExample",
+                    "imguiType": "IMGuiPauseWindow",
+                    "parms": {
+                        "test": "something"
+                    }
+
                 }
             ]
 

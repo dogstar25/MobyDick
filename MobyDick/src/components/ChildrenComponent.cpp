@@ -183,7 +183,7 @@ b2Vec2 ChildrenComponent::_calcChildPosition(b2Vec2 childSize, int childCount, C
 	SDL_FPoint childCenterPosition{ x, y };
 
 	//Adjust the position if there are multiple children in the same position
-	if (m_childSlotCount[location.slot-1] > 0)
+	if (m_childSlotCount[location.slot-1] > 1)
 	{
 		float oddEvenadjustValue = 0;
 		int stepCount = 0;

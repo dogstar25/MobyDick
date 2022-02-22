@@ -5,56 +5,50 @@
 #include "../Scene.h"
 #include "../game.h"
 #include <SDL2/SDL.h>
+#include "IMGuiUtil.h"
+
 
 
 extern std::unique_ptr<Game> game;
 
 
-IMGuiText::IMGuiText()
+IMGuiText::IMGuiText(Json::Value params, std::string windowName):
+	IMGuiItem(params, windowName)
 {
+
+	m_label = params["label"].asString();
+
+	m_flags = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs | 
+		ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoBackground;
 
 }
 
-void IMGuiText::run()
+glm::vec2 IMGuiText::render(SDL_FRect destRect)
 {
+	//reference to io
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableSetMousePos;
 
+	//Set style for a textItem
+	ImGuiStyle& style = ImGui::GetStyle();
+	style.WindowMinSize = ImVec2{ 12,12 };
+	style.WindowPadding = ImVec2{ 8,8 };
+	
+	///
+	/// BEGIN ImGui Window
+	///
+	ImGui::Begin(m_name.c_str(), nullptr, m_flags);
 
-	//ImFont* m_font = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 22.0f);
+	ImGui::SetWindowPos(ImVec2{ destRect.x, destRect.y });
 
+	ImGui::Text(m_label.c_str());
 
-	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplSDL2_NewFrame();
-	}
-	else {
-		ImGui_ImplSDLRenderer_NewFrame();
-		ImGui_ImplSDL2_NewFrame();
-	}
-
-	ImGui::NewFrame();
-
-	ImGui::Begin("test", nullptr, ImGuiWindowFlags_NoTitleBar);
-
-	ImGui::Text("Player Shazam");
-
-	static float testz;
-	ImGui::SliderFloat("Sound", &SoundManager::instance().test, 0.0f, 10.0f, "ratio = %.3f");
-
+	glm::vec2 windowSize{ ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
 	ImGui::End();
+	///
+	/// END ImGui Window
+	///
 
-
-
-	// Rendering
-	ImGui::Render();
-	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	}
-	else {
-		ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
-	}
+	return windowSize;
 
 
 }

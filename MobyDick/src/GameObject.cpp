@@ -52,7 +52,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 		int componentType = EnumMap::instance().toEnum(componentJSON["id"].asString());
 
-		component = game->componentFactory()->create(definitionJSON, gameObjectId, parentScene, xMapPos, yMapPos, angleAdjust, componentType);
+		component = game->componentFactory()->create(definitionJSON, m_name, gameObjectId, parentScene, xMapPos, yMapPos, angleAdjust, componentType);
 		component->setParent(this);
 		addComponent(component, componentType);
 
@@ -284,6 +284,14 @@ SDL_FPoint GameObject::getCenterPosition()
 
 	const auto& transformComponent = getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	return(transformComponent->getCenterPosition());
+
+}
+
+b2Vec2 GameObject::getSize()
+{
+
+	const auto& transformComponent = getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	return(transformComponent->size());
 
 }
 

@@ -1,22 +1,15 @@
 #pragma once
 #include "IMGuiExample.h"
-#include "../SoundManager.h"
 #include "../TextureManager.h"
-#include "../Scene.h"
 #include "../game.h"
 #include <SDL2/SDL.h>
 
 extern std::unique_ptr<Game> game;
 
-IMGuiExample::IMGuiExample()
-{
-}
-
-void IMGuiExample::run()
+glm::vec2 IMGuiExample::render(SDL_FRect destRect)
 {
 
-	bool show_demo_window = true;
-	ImGui::ShowDemoWindow(&show_demo_window);
+	ImGui::ShowDemoWindow();
 
 	//OpenGl Version of displaying an image
 	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
@@ -31,6 +24,10 @@ void IMGuiExample::run()
 		ImGui::Image((void*)(SDL_Texture*)sdlTexture, ImVec2(132, 132), ImVec2(.00122, .000122), ImVec2(.00244, .00244));
 
 	}
+
+	glm::vec2 windowSize{ ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
+	return windowSize;
+
 
 }
 

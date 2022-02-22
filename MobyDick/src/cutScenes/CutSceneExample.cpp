@@ -123,7 +123,7 @@ GameObject* CutSceneExample::_startFrank()
 
 	const auto& brainComponent =
 		std::static_pointer_cast<BrainComponent>(
-			game->componentFactory()->create(componentsDefinition, "SURVIVOR", currentScene, 0, 0, 0, ComponentTypes::BRAIN_COMPONENT)
+			game->componentFactory()->create(componentsDefinition, "Frank", "SURVIVOR", currentScene, 0, 0, 0, ComponentTypes::BRAIN_COMPONENT)
 			);
 	brainComponent->setParent(frank);
 	frank->addComponent(brainComponent, ComponentTypes::BRAIN_COMPONENT);

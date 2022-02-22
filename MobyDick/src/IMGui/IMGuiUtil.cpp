@@ -9,10 +9,13 @@ namespace ImGui
 
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 
+		io.IniFilename = NULL;
+
 		ImGui::StyleColorsDark();
 
-		//Font
-		ImFont* m_font = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 22.0f);
+		//Fonts
+		font22 = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 22.0f);
+		font12 = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 12.0f);
 
 		auto gl_context = SDL_GL_GetCurrentContext();
 		const char* glsl_version = "#version 130";
@@ -61,12 +64,24 @@ namespace ImGui
 
 	void MobyDickFPSFrame()
 	{
+		ImGuiStyle& style = ImGui::GetStyle();
+		style.WindowMinSize = ImVec2{ 12,12 };
+		style.WindowPadding = ImVec2{ 0,0 };
 
-		ImGui::Begin("FrameRate");
-		int dwWidth = GameConfig::instance().windowWidth() / 2;
-		ImGui::SetWindowPos(ImVec2(dwWidth, 0));
+		ImGuiWindowFlags flags = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs;
+		flags |= ImGuiWindowFlags_AlwaysAutoResize;
+		ImGui::Begin("FrameRate", nullptr, flags);
+		
+		auto size = ImGui::GetWindowSize();
 		auto frate = ImGui::GetIO().Framerate;
 		ImGui::Value("FPS", frate);
+
+		ImGui::PushFont(ImGui::font12);
+		ImGui::Text("Todd");
+		ImGui::PopFont();
+		int dwWidth = GameConfig::instance().windowWidth() / 2;
+		ImGui::SetWindowPos(ImVec2(dwWidth, 0));
+		//ImGui::SetWindowSize(ImVec2{ 132,132 });
 		ImGui::End();
 
 	}

@@ -9,6 +9,7 @@
 
 std::shared_ptr<Component> MRComponentFactory::create(
 	Json::Value definitionJSON,
+	std::string gameObjectName,
 	std::string textComponentGameObjectid,
 	Scene* scene,
 	float xMapPos,
@@ -32,6 +33,7 @@ std::shared_ptr<Component> MRComponentFactory::create(
 	else {
 		component = ComponentFactory::create(
 			definitionJSON,
+			gameObjectName,
 			textComponentGameObjectid,
 			scene,
 			xMapPos,

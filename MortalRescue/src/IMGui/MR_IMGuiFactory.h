@@ -9,7 +9,7 @@ class MR_IMGuiFactory : public IMGuiFactory
 public:
 	MR_IMGuiFactory();
 
-	std::shared_ptr<IMGuiItem> create(std::string) override;
+	std::shared_ptr<IMGuiItem> create(std::string, std::string gameObjectName, Json::Value parms ) override;
 
 private:
 

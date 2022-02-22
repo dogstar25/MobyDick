@@ -10,11 +10,12 @@
 extern std::unique_ptr<Game> game;
 
 
-IMGuiSettings::IMGuiSettings()
+IMGuiSettings::IMGuiSettings(Json::Value params, std::string windowName) :
+	IMGuiItem(params, windowName)
 {
 }
 
-void IMGuiSettings::run()
+glm::vec2 IMGuiSettings::render(SDL_FRect destRect)
 {
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	io.ConfigFlags |= io.WantCaptureMouse;
@@ -45,7 +46,12 @@ void IMGuiSettings::run()
 		ImGui::Image((void*)(SDL_Texture*)sdlTexture, ImVec2(132, 132), ImVec2(.00122, .000122), ImVec2(.00244, .00244));
 	}
 
+	glm::vec2 windowSize{ ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
+
 	ImGui::End();
+
+	return windowSize;
+
 
 }
 

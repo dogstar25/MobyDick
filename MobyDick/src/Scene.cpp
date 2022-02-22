@@ -282,60 +282,62 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, PositionAl
 		definitionJSON = GameObjectManager::instance().getDefinition("DEBUG_ITEM")->definitionJSON();
 	}
 
-	Json::Value transformComponentJSON = definitionJSON["transformComponent"];
 
-	auto objectWidth = transformComponentJSON["size"]["width"].asFloat();
-	auto objectHeight = transformComponentJSON["size"]["height"].asFloat();
+	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, -5, -5, angle, this, cameraFollow));
 
+	auto objectWidth = gameObject->getSize().x;
+	auto objectHeight = gameObject->getSize().y;
 
 	if (windowPosition == PositionAlignment::CENTER) {
 
-		xMapPos = (float)GameConfig::instance().windowWidth() / game->worldTileWidth() / 2;
-		yMapPos = (float)GameConfig::instance().windowHeight() / game->worldTileHeight() / 2;
+		xMapPos = (float)GameConfig::instance().windowWidth() / 2;
+		yMapPos = (float)GameConfig::instance().windowHeight() / 2;
 
 	}
 	else if (windowPosition == PositionAlignment::TOP_CENTER) {
 
-		xMapPos = (float)GameConfig::instance().windowWidth() / game->worldTileWidth() / 2;
-		yMapPos = 0;
+		xMapPos = (float)GameConfig::instance().windowWidth() / 2 ;
+		yMapPos = (objectHeight / 2);
 	}
 	else if (windowPosition == PositionAlignment::TOP_LEFT) {
 
-		xMapPos = 0;
-		yMapPos = 0;
+		xMapPos = (objectWidth / 2);
+		yMapPos = (objectHeight / 2);
 	}
 	else if (windowPosition == PositionAlignment::TOP_RIGHT) {
 
-		xMapPos = (float)(GameConfig::instance().windowWidth() - objectWidth) / game->worldTileWidth();
-		yMapPos = 0;
+		xMapPos = (float)(GameConfig::instance().windowWidth() - (objectWidth/2)) ;
+		yMapPos = (objectHeight / 2);
 	}
 	else if (windowPosition == PositionAlignment::CENTER_LEFT) {
 
-		xMapPos = 0;
-		yMapPos = (float)GameConfig::instance().windowHeight() / game->worldTileHeight() / 2;
+		xMapPos = (objectWidth / 2);
+		yMapPos = (float)GameConfig::instance().windowHeight() / 2;
 	}
 	else if (windowPosition == PositionAlignment::CENTER_RIGHT) {
 
-		xMapPos = (float)(GameConfig::instance().windowWidth() - objectWidth) / game->worldTileWidth();
-		yMapPos = (float)GameConfig::instance().windowHeight() / game->worldTileHeight() / 2;
+		xMapPos = (float)(GameConfig::instance().windowWidth() - (objectWidth / 2));
+		yMapPos = (float)GameConfig::instance().windowHeight() / 2;
 	}
 	else if (windowPosition == PositionAlignment::BOTTOM_LEFT) {
 
-		xMapPos = 0;
-		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight) / game->worldTileHeight();
+		xMapPos = (objectWidth / 2);
+		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight);
 	}
 	else if (windowPosition == PositionAlignment::BOTTOM_CENTER) {
 
-		xMapPos = (float)GameConfig::instance().windowWidth() / game->worldTileWidth() / 2;
-		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight) / game->worldTileHeight();
+		xMapPos = (float)(GameConfig::instance().windowWidth()/2 );
+		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight);
 	}
 	else if (windowPosition == PositionAlignment::BOTTOM_RIGHT) {
 
-		xMapPos = (float)(GameConfig::instance().windowWidth() - objectWidth) / game->worldTileWidth();
-		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight) / game->worldTileHeight();
+		xMapPos = (float)(GameConfig::instance().windowWidth() - (objectWidth / 2));
+		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight);
 	}
 
-	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this, cameraFollow));
+	
+
+	gameObject->setPosition(xMapPos, yMapPos);
 
 	return gameObject.get();
 
