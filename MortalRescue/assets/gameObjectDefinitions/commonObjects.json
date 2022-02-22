@@ -59,7 +59,7 @@
                     "childPositionRelative": false,
                     "childObjects": [
                         {
-                            "gameObjectId": "PLAYER_LABEL",
+                            "gameObjectId": "PLAYER_LABEL_2",
                             "locationSlot": 1
                         }
 

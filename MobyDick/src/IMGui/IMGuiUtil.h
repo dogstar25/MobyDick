@@ -10,5 +10,8 @@ namespace ImGui
 	void MobyDickNewFrame();
 	void MobyDickRenderFrame();
 	void MobyDickFPSFrame();
-	
+
+
+	static ImFont* font12;
+	static ImFont* font22;
 }

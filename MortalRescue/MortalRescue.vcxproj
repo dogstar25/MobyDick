@@ -188,6 +188,7 @@
     <ClCompile Include="src\components\PistolWeaponComponent.cpp" />
     <ClCompile Include="src\cutScenes\CutSceneDiscoverTreasure.cpp" />
     <ClCompile Include="src\cutScenes\MRCutSceneFactory.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiPauseWindow.cpp" />
     <ClCompile Include="src\IMGui\IMGuiSettings.cpp" />
     <ClCompile Include="src\IMGui\MR_IMGuiFactory.cpp" />
     <ClCompile Include="src\mortalRescue.cpp" />
@@ -282,6 +283,7 @@
     <ClInclude Include="src\components\PistolWeaponComponent.h" />
     <ClInclude Include="src\cutScenes\CutSceneDiscoverTreasure.h" />
     <ClInclude Include="src\cutScenes\MRCutSceneFactory.h" />
+    <ClInclude Include="src\IMGui\IMGuiPauseWindow.h" />
     <ClInclude Include="src\IMGui\IMGuiSettings.h" />
     <ClInclude Include="src\IMGui\MR_IMGuiFactory.h" />
     <ClInclude Include="src\MRComponentFactory.h" />

@@ -4,7 +4,8 @@
 
 std::shared_ptr<Component> ComponentFactory::create(
 	Json::Value definitionJSON,
-	std::string textComponentGameObjectid,
+	std::string name,
+	std::string gameObjectid,
 	Scene* scene,
 	float xMapPos,
 	float yMapPos,
@@ -52,7 +53,7 @@ std::shared_ptr<Component> ComponentFactory::create(
 			break;
 		case ComponentTypes::IMGUI_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::IMGUI_COMPONENT);
-			component = std::make_shared<IMGuiComponent>(componentJSON);
+			component = std::make_shared<IMGuiComponent>(componentJSON, name);
 			break;
 		case ComponentTypes::NAVIGATION_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::NAVIGATION_COMPONENT);
@@ -86,7 +87,7 @@ std::shared_ptr<Component> ComponentFactory::create(
 			break;
 		case ComponentTypes::TEXT_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::TEXT_COMPONENT);
-			component = std::make_shared<TextComponent>(textComponentGameObjectid, componentJSON);
+			component = std::make_shared<TextComponent>(gameObjectid, componentJSON);
 			break;
 		case ComponentTypes::TRANSFORM_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::TRANSFORM_COMPONENT);

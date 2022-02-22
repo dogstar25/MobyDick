@@ -1,19 +1,18 @@
 #pragma once
+#include "../GameObject.h"
 #include "IMGuiItem.h"
-#include "imgui_impl_sdl.h"
-#include "imgui_impl_sdlrenderer.h"
 
 #include <memory>
 
 class IMGuiText : public IMGuiItem
 {
 public:
-	IMGuiText();
-	void run() override;
-
-	ImFont* m_font{};
+	IMGuiText() = default;
+	IMGuiText(Json::Value params, std::string windowName);
+	glm::vec2 render(SDL_FRect destRect) override;
 
 private:
-	bool show_another_window = true;
+
+	std::string m_label;
 
 };

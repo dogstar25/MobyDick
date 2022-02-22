@@ -1,21 +1,22 @@
 #pragma once
 #include "Component.h"
 #include <json/json.h>
+#include <memory>
 
-#include "../IMGui/IMGuiItem.h"
+class IMGuiItem;
 
 class IMGuiComponent : public Component {
 
 
 public:
-	IMGuiComponent() {};
-	IMGuiComponent(Json::Value componentJSON);
+	IMGuiComponent() = default;
+	IMGuiComponent(Json::Value componentJSON, std::string gameObjectId);
 
 	void update() override;
 	void render();
 
 private:
 
-	std::shared_ptr<IMGuiItem>m_IMGuiItem{};
+	std::shared_ptr<IMGuiItem> m_IMGuiItem;
 	
 };

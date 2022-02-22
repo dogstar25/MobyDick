@@ -24,6 +24,7 @@ public:
 	//Create version that has ALL possible inputs
 	virtual std::shared_ptr<Component> create(
 		Json::Value definitionJSON,
+		std::string gameObjectName,
 		std::string textComponentGameObjectid,
 		Scene* scene,
 		float xMapPos,

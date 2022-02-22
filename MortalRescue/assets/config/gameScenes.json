@@ -14,7 +14,14 @@
                     "gameObjectId": "HUD_STATUS_TOP",
                     "layer": "LAYER_MENU",
                     "location": {
-                        "windowPosition": "PositionAlignment::TOP_CENTER"
+                        "windowPosition": "PositionAlignment::CENTER"
+                    }
+                },
+                {
+                    "gameObjectId": "BOWMAN",
+                    "layer": "LAYER_MAIN",
+                    "location": {
+                        "windowPosition": "PositionAlignment::CENTER"
                     }
                 }
             ],
@@ -95,63 +102,10 @@
             "id": "SCENE_PAUSE_MENU",
             "inputControlMode": "CONTROL_MODE_IMGUI",
             "maxObjects": 24,
-            "tags": [
-                "SCENETAG_MENU"
-            ],
-            "gameObjectPools": [
-                {
-                    "id": "SMOKE1_POOL",
-                    "gameObjectId": "PARTICLE_SMOKE_1",
-                    "lifetime": 2.25,
-                    "maxItems": 250
-                }
-            ],
-            "physics": {
-                "gravity": {
-                    "x": 0.0,
-                    "y": 8.0
-                },
-                "b2DebugDrawMode": false,
-                "timeStep": 0.016, // 1/60 or 1/30
-                "velocityIterations": 6,
-                "positionIterations": 2
-            },
+            "tags": ["gui"],
             "gameObjects": [
                 {
-                    "gameObjectId": "GUI_PAUSE_PANEL",
-                    "layer": "LAYER_MENU",
-                    "location": {
-                        "windowPosition": "PositionAlignment::CENTER"
-                    }
-                },
-                {
-                    "gameObjectId": "PARTICLE_EMITTER_SPARK",
-                    "layer": "LAYER_MAIN",
-                    "location": {
-                        "x": 12,
-                        "y": 12
-                    }
-                }
-
-
-            ],
-            "keyActions": [
-                {
-                    "keyCode": "SDLK_ESCAPE",
-                    "sceneAction": {
-                        "action": "SCENE_ACTION_EXIT"
-                    }
-
-                }
-            ]
-        },
-        {
-            "id": "SCENE_SETTINGS_MENU",
-            "inputControlMode": "CONTROL_MODE_IMGUI",
-            "maxObjects": 4,
-            "gameObjects": [
-                {
-                    "gameObjectId": "IMGUI_SETTINGS_PANEL",
+                    "gameObjectId": "IMGUI_PAUSE_WINDOW",
                     "layer": "LAYER_MENU",
                     "location": {
                         "windowPosition": "PositionAlignment::CENTER"

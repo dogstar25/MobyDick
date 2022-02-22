@@ -1,5 +1,6 @@
 #include "MR_IMGuiFactory.h"
 #include "IMGuiSettings.h"
+#include "IMGuiPauseWindow.h"
 
 
 MR_IMGuiFactory::MR_IMGuiFactory()
@@ -9,7 +10,7 @@ MR_IMGuiFactory::MR_IMGuiFactory()
 }
 
 
-std::shared_ptr<IMGuiItem> MR_IMGuiFactory::create(std::string iMGuiItemType)
+std::shared_ptr<IMGuiItem> MR_IMGuiFactory::create(std::string iMGuiItemType, std::string gameObjectName, Json::Value parms)
 {
 	std::shared_ptr<IMGuiItem> iMGuiItem;
 
@@ -17,9 +18,12 @@ std::shared_ptr<IMGuiItem> MR_IMGuiFactory::create(std::string iMGuiItemType)
 
 		iMGuiItem = std::make_shared<IMGuiSettings>();
 	}
+	if (iMGuiItemType == "IMGuiPauseWindow") {
+		iMGuiItem = std::make_shared<IMGuiPauseWindow>(parms, gameObjectName);
+	}
 	else {
 
-		iMGuiItem = IMGuiFactory::create(iMGuiItemType);
+		iMGuiItem = IMGuiFactory::create(iMGuiItemType, gameObjectName, parms);
 
 	}
 
