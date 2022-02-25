@@ -18,6 +18,13 @@
                     }
                 },
                 {
+                    "gameObjectId": "IMGUI_HUD_TOP",
+                    "layer": "LAYER_MENU",
+                    "location": {
+                        "windowPosition": "PositionAlignment::TOP_CENTER"
+                    }
+                },
+                {
                     "gameObjectId": "BOWMAN",
                     "layer": "LAYER_MAIN",
                     "location": {

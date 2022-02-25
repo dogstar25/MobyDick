@@ -399,6 +399,34 @@
                 }
             ]
 
+        },
+        {
+            "id": "IMGUI_HUD_TOP",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 255,
+                        "height": 100
+                    },
+                    "absolutePositioning": true
+
+                },
+                {
+                    "id": "IMGUI_COMPONENT",
+                    "imguiType": "IMGuiTopHud",
+                    "parms": {
+                        "test": "something"
+                    }
+
+                }
+            ]
+
         }
 
     ]
