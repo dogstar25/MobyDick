@@ -6,6 +6,12 @@
 
 namespace ImGui
 {
+	namespace settings {
+
+
+	}
+
+
 	void MobyDickInit(Game*);
 	void MobyDickNewFrame();
 	void MobyDickRenderFrame();

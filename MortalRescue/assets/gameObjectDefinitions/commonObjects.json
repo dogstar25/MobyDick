@@ -825,7 +825,7 @@
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "textureId": "TX_DRONE_BRAIN_64",
+                    "textureId": "TX_GLOW_EXAMPLE1",
                     "color": {
                         "red": 8,
                         "green": 242,
@@ -866,21 +866,7 @@
                         "x": 0.0,
                         "y": 0.0
                     }
-                },
-                {
-                    "id": "ATTACHMENTS_COMPONENT",
-                    "attachments": [
-                        {
-                            "gameObjectId": "PISTOL",
-                            "attachLocation": {
-                                "x": 0.6,
-                                "y": 0.0
-                            },
-                            "attachB2JointType": "B2_WELD"
-                        }
-                    ]
                 }
-
 
             ]
         }

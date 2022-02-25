@@ -190,6 +190,8 @@
     <ClCompile Include="src\cutScenes\MRCutSceneFactory.cpp" />
     <ClCompile Include="src\IMGui\IMGuiPauseWindow.cpp" />
     <ClCompile Include="src\IMGui\IMGuiSettings.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiTopHud.cpp" />
+    <ClCompile Include="src\IMGui\MR_IMGuiUtil.cpp" />
     <ClCompile Include="src\IMGui\MR_IMGuiFactory.cpp" />
     <ClCompile Include="src\mortalRescue.cpp" />
     <ClCompile Include="src\MRContactFilter.cpp" />
@@ -285,7 +287,9 @@
     <ClInclude Include="src\cutScenes\MRCutSceneFactory.h" />
     <ClInclude Include="src\IMGui\IMGuiPauseWindow.h" />
     <ClInclude Include="src\IMGui\IMGuiSettings.h" />
+    <ClInclude Include="src\IMGui\MR_IMGuiUtil.h" />
     <ClInclude Include="src\IMGui\MR_IMGuiFactory.h" />
+    <ClInclude Include="src\IMGui\IMGuiTopHud.h" />
     <ClInclude Include="src\MRComponentFactory.h" />
     <ClInclude Include="src\components\DroneBrainComponent.h" />
     <ClInclude Include="src\MRContactFilter.h" />

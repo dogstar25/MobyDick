@@ -5,6 +5,15 @@
 #include "GameObject.h"
 #include <memory>
 
+
+struct settings {
+
+	ImVec4 ButtonColor{ 0.1,0.2,0.1,0.5 };
+
+};
+
+
+
 class IMGuiPauseWindow : public IMGuiItem
 {
 public:
@@ -19,6 +28,7 @@ public:
 
 private:
 	ImVec2 m_settingsModalSize{ 768,384 };
-	ImGuiWindowFlags m_SettingsModalflags{ ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings };
+	//ImGuiWindowFlags m_SettingsModalflags{ ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings };
+	ImGuiWindowFlags m_SettingsModalflags{ ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove };
 
 };

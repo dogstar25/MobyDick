@@ -1,6 +1,7 @@
 #include "MR_IMGuiFactory.h"
 #include "IMGuiSettings.h"
 #include "IMGuiPauseWindow.h"
+#include "IMGuiTopHud.h"
 
 
 MR_IMGuiFactory::MR_IMGuiFactory()
@@ -18,9 +19,13 @@ std::shared_ptr<IMGuiItem> MR_IMGuiFactory::create(std::string iMGuiItemType, st
 
 		iMGuiItem = std::make_shared<IMGuiSettings>();
 	}
-	if (iMGuiItemType == "IMGuiPauseWindow") {
+	else if (iMGuiItemType == "IMGuiPauseWindow") {
 		iMGuiItem = std::make_shared<IMGuiPauseWindow>(parms, gameObjectName);
 	}
+	else if (iMGuiItemType == "IMGuiTopHud") {
+		iMGuiItem = std::make_shared<IMGuiTopHud>(parms, gameObjectName);
+	}
+	
 	else {
 
 		iMGuiItem = IMGuiFactory::create(iMGuiItemType, gameObjectName, parms);
