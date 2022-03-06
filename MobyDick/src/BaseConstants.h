@@ -6,7 +6,7 @@
 
 inline constexpr int CHILD_POSITIONS = 9;
 inline constexpr int MAX_VITALITY_LEVELS = 5;
-inline constexpr int MAX_ANIMATION_STATES = 5;
+inline constexpr int MAX_ANIMATION_STATES = 12;
 inline constexpr int DESTINATION_DISTANCE_TOLERANCE = 10;
 inline constexpr int PARTICLE_EMITTER_FORCE_ADJ = 50;
 inline constexpr int PRACTICLE_MOVE_SPEED_ADJ = 50;
@@ -68,6 +68,8 @@ namespace BrainState {
 	inline constexpr auto PURSUE = 4;
 	inline constexpr auto ENGAGE = 5;
 	inline constexpr auto FLEE = 6;
+	inline constexpr auto DEPLOY = 7;
+	inline constexpr auto UNDEPLOY = 8;
 
 }
 
@@ -217,6 +219,8 @@ inline constexpr int ANIMATION_IDLE = 0;
 inline constexpr int ANIMATION_RUN = 1;
 inline constexpr int ANIMATION_ACTIVE = 2;
 inline constexpr int ANIMATION_ACTION = 3;
+inline constexpr int ANIMATION_DEPLOY = 4;
+inline constexpr int ANIMATION_UNDEPLOY = 5;
 
 //Animation Modes
 inline constexpr int ANIMATE_ONE_TIME = 0;

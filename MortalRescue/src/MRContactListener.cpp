@@ -63,7 +63,9 @@ void MRContactListener::_bullet_wall(GameObject* contact1, GameObject* contact2,
 	GameObject* bullet;
 	GameObject* wall;
 
-	if (contact1->collisionTag() == CollisionTag::PLAYER_BULLET) {
+	if (contact1->collisionTag() == CollisionTag::PLAYER_BULLET || 
+		contact1->collisionTag() == CollisionTag::ENEMY_BULLET) {
+
 		bullet = contact1;
 		wall = contact2;
 	}
@@ -236,6 +238,16 @@ void MRContactListener::handleContact(GameObject* contact1, GameObject* contact2
 	//////////////////////////////////
 	if ((category1 == CollisionTag::PLAYER_BULLET && category2 == CollisionTag::WALL) ||
 		(category2 == CollisionTag::PLAYER_BULLET && category1 == CollisionTag::WALL)) {
+
+		_bullet_wall(contact1, contact2, contactPoint);
+
+	}
+
+	////////////////////////////////////
+	// Enemy Bullet -  Wall Contact
+	//////////////////////////////////
+	if ((category1 == CollisionTag::ENEMY_BULLET && category2 == CollisionTag::WALL) ||
+		(category2 == CollisionTag::ENEMY_BULLET && category1 == CollisionTag::WALL)) {
 
 		_bullet_wall(contact1, contact2, contactPoint);
 

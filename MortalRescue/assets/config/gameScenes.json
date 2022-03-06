@@ -11,13 +11,6 @@
             "maxObjects": 5000,
             "gameObjects": [
                 {
-                    "gameObjectId": "HUD_STATUS_TOP",
-                    "layer": "LAYER_MENU",
-                    "location": {
-                        "windowPosition": "PositionAlignment::CENTER"
-                    }
-                },
-                {
                     "gameObjectId": "IMGUI_HUD_TOP",
                     "layer": "LAYER_MENU",
                     "location": {
@@ -61,6 +54,12 @@
                     "gameObjectId": "BULLET1",
                     "lifetime": 1.25,
                     "maxItems": 10
+                },
+                {
+                    "id": "BULLET2_POOL",
+                    "gameObjectId": "BULLET2",
+                    "lifetime": 1.25,
+                    "maxItems": 50
                 },
                 {
                     "id": "DEFLECT1_POOL",

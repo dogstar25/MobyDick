@@ -155,7 +155,6 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//scene.addGameObject("GINA_64", LAYER_MENU, 8, 8);
 		
 		//scene.addGameObject("HUD_STATUS", LAYER_MENU, 16, 1);
-		scene.addGameObject("FPS_VALUE", LAYER_MENU, 16, 1);
 		//scene.addGameObject("HUD_STATUS_TOP", LAYER_MENU, 2, 2);
 		//scene.addGameObject("HUD_TEST_LABEL", LAYER_MENU, 2, 2);
 
@@ -227,6 +226,7 @@ void MRGame::_addGameComponentTypes()
 {
 	EnumMap::instance().addEnumItem("BRAIN_DRONE_COMPONENT", ComponentTypes::BRAIN_DRONE_COMPONENT);
 	EnumMap::instance().addEnumItem("WEAPON_PISTOL_COMPONENT", ComponentTypes::WEAPON_PISTOL_COMPONENT);
+	EnumMap::instance().addEnumItem("TURRET_BRAIN_COMPONENT", ComponentTypes::TURRET_BRAIN_COMPONENT);
 }
 
 

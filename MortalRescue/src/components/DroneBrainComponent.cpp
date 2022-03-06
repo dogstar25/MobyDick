@@ -216,21 +216,11 @@ GameObject* DroneBrainComponent::getNextPatrolDestination()
 }
 
 
-
-
 void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCenter, GameObject* gameObject)
 {
 
 	auto physicsComponent = gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 	auto currentAngle = physicsComponent->angle();
-
-	auto dronePosition = std::format("{:.1f},  {:.1f}", 
-		rotationCenter.x,
-		rotationCenter.y);
-
-	auto eyePosition = std::format("{:.1f},   {:.1f}",
-		rotationCenter.x,
-		rotationCenter.y);
 
 	auto desiredAngle = atan2f(
 		(targetPoint.y - rotationCenter.y),
@@ -239,9 +229,6 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 
 	auto desiredAngleDegrees = util::radiansToDegrees(desiredAngle);
 	auto objectAngleDegrees = util::radiansToDegrees(currentAngle);
-
-	//DebugPanel::instance().addItem("Object Angle", objectAngleDegrees, 2);
-	//DebugPanel::instance().addItem("Desired Angle", desiredAngleDegrees, 2);
 
 	float rotationVelocity{ 0 };
 
@@ -261,7 +248,6 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 	}
 
 	auto difference = abs(desiredAngle - currentAngle);
-	//DebugPanel::instance().addItem("Angle Diff in Radians", difference, 2);
 
 	//Once the angle is very close then set the angle directly
 	if (difference < 0.1) {
@@ -271,8 +257,6 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 		
 		action->performRotateAction(rotationVelocity);
 	}
-	
-
 
 }
 

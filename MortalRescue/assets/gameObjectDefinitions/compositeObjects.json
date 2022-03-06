@@ -239,7 +239,7 @@
                                 "blue": 0,
                                 "alpha": 255
                             },
-                            "bulletPoolId": "BULLET1_POOL"
+                            "bulletPoolId": "BULLET2_POOL"
                         }
                     ]
                 }

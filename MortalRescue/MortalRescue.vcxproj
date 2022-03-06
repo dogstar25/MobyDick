@@ -185,7 +185,9 @@
   <ItemGroup>
     <ClCompile Include="src\actions\MRActionFactory.cpp" />
     <ClCompile Include="src\actions\DroneEyeRotateAction.cpp" />
+    <ClCompile Include="src\actions\TurretFireAction.cpp" />
     <ClCompile Include="src\components\PistolWeaponComponent.cpp" />
+    <ClCompile Include="src\components\TurretBrainComponent.cpp" />
     <ClCompile Include="src\cutScenes\CutSceneDiscoverTreasure.cpp" />
     <ClCompile Include="src\cutScenes\MRCutSceneFactory.cpp" />
     <ClCompile Include="src\IMGui\IMGuiPauseWindow.cpp" />
@@ -282,7 +284,9 @@
     <ClInclude Include="src\actions\MRActionFactory.h" />
     <ClInclude Include="src\actions\DroneEyeRotateAction.h" />
     <ClInclude Include="src\actions\ButtonInteraction.h" />
+    <ClInclude Include="src\actions\TurretFireAction.h" />
     <ClInclude Include="src\components\PistolWeaponComponent.h" />
+    <ClInclude Include="src\components\TurretBrainComponent.h" />
     <ClInclude Include="src\cutScenes\CutSceneDiscoverTreasure.h" />
     <ClInclude Include="src\cutScenes\MRCutSceneFactory.h" />
     <ClInclude Include="src\IMGui\IMGuiPauseWindow.h" />

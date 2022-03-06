@@ -151,14 +151,14 @@ void BrainComponent::_updateSensorInput()
 	botRight -= glm::vec2{ Camera::instance().frame().x, Camera::instance().frame().y };
 	botLeft -= glm::vec2{ Camera::instance().frame().x, Camera::instance().frame().y };
 
-	//top
-	game->renderer()->addLine(topLeft, topRight, lineColor);
-	//right
-	game->renderer()->addLine(topRight, botRight, lineColor);
-	//bottom
-	game->renderer()->addLine(botRight, botLeft, lineColor);
-	//left
-	game->renderer()->addLine(botLeft, topLeft, lineColor);
+	////top
+	//game->renderer()->addLine(topLeft, topRight, lineColor);
+	////right
+	//game->renderer()->addLine(topRight, botRight, lineColor);
+	////bottom
+	//game->renderer()->addLine(botRight, botLeft, lineColor);
+	////left
+	//game->renderer()->addLine(botLeft, topLeft, lineColor);
 
 	//Make the AABB query
 	parent()->parentScene()->physicsWorld()->QueryAABB(&BrainAABBCallback::instance(), aabb);
@@ -225,7 +225,8 @@ bool BrainComponent::_hasLineOfSight(BrainAABBFoundObject& detectedObject)
 
 		for (BrainRayCastFoundItem rayHitObject : RayCastCallBack::instance().intersectionItems()) {
 
-			if (rayHitObject.gameObject->hasTrait(TraitTag::barrier)) {
+			//Is this a barrier and also NOT its own body
+			if (rayHitObject.gameObject->hasTrait(TraitTag::barrier) && rayHitObject.gameObject != parent()) {
 				clearPath = false;
 				break;
 			}
@@ -307,9 +308,18 @@ void BrainComponent::executeMove()
 void BrainComponent::stopMovement()
 {
 	b2Vec2 trajectory{ 0,0 };
+	float angularVelocity{ 0. };
 
 	auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-	action->performMoveAction(trajectory);
+
+	if (action->getAction(ACTION_MOVE)) {
+		action->performMoveAction(trajectory);
+	}
+
+	if (action->getAction(ACTION_ROTATE)) {
+		action->performRotateAction(angularVelocity);
+	}
+
 
 }
 

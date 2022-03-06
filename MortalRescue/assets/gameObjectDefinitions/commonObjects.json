@@ -24,7 +24,7 @@
                     "friction": 0.00,
                     "restitution": 0.0,
                     "density": 50.5,
-                    "linearDamping": 0.5,
+                    "linearDamping": 0.0,
                     "angularDamping": 3.0,
                     "anchorPoint": { // starts from centered 0,0 position
                         "x": 0.8,
@@ -519,6 +519,43 @@
             ]
         },
         {
+            "id": "BULLET2",
+            "collisionTag": "CollisionTag::ENEMY_BULLET",
+            "traitTags": [],
+            "description": "Bullet 2",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 7,
+                        "height": 4
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "collisionShape": "B2_BOX",
+                    "friction": 0.0,
+                    "density": 0.1,
+                    "restitution": 0.3,
+                    "linearDamping": 0.0,
+                    "angularDamping": 0.0
+                },
+                {
+                    "id": "POOL_COMPONENT"
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 90,
+                    "lifetime": 1.0,
+                    "lifetimeAlphaFade": true
+                }
+            ]
+        },
+        {
             "id": "PARTICLE_X_EMITTER",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "abstract" ],
@@ -724,7 +761,13 @@
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "textureId": "TX_STUBB"
+                    "textureId": "TX_SURVIVOR",
+                    "color": {
+                        "red": 255,
+                        "green": 234,
+                        "blue": 0,
+                        "alpha": 255
+                    }
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
@@ -758,13 +801,6 @@
                         }
                     ]
                 }
-                //{
-                //    "id": "BRAIN_COMPONENT",
-                //    //"sensorLength": 550,
-                //    //"sensorOffset": 0,
-                //    //"sensorCount": 250,
-                //    "sightSensorSize": 25
-                //}
             ]
         },
         {
@@ -820,12 +856,11 @@
         {
             "id": "TURRET",
             "collisionTag": "CollisionTag::GENERAL_SOLID",
-            "traitTags": [ ],
+            "traitTags": ["barrier"],
             "description": "Turret",
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "textureId": "TX_GLOW_EXAMPLE1",
                     "color": {
                         "red": 8,
                         "green": 242,
@@ -841,33 +876,94 @@
                     },
                     "centeredPositioning": false
                 },
-                //{
-                //    "id": "ANIMATION_COMPONENT",
-                //    "defaultState": "ANIMATION_IDLE",
-                //    "frameSize": {
-                //        "width": 128,
-                //        "height": 128
-                //    },
-                //    "animations": [
-                //        {
-                //            "state": "ANIMATION_IDLE",
-                //            "textureId": "TX_TURRET_IDLE",
-                //            "speed": 0.05,
-                //            "frames": 1
-                //        }
-                //    ]
-                //},
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_DEPLOY",
+                    "frameSize": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_TURRET_IDLE",
+                            "speed": 0.95,
+                            "frames": 1
+                        },
+                        {
+                            "state": "ANIMATION_DEPLOY",
+                            "textureId": "TX_TURRET_DEPLOY",
+                            "speed": 0.05,
+                            "frames": 4
+                        },
+                        {
+                            "state": "ANIMATION_UNDEPLOY",
+                            "textureId": "TX_TURRET_UNDEPLOY",
+                            "speed": 0.05,
+                            "frames": 4
+                        },
+                        {
+                            "state": "ANIMATION_ACTIVE",
+                            "textureId": "TX_TURRET_ACTIVE",
+                            "speed": 0.15,
+                            "frames": 1
+                        }
+                    ]
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "rotationSpeed": 20
+                },
+                {
+                    "id": "TURRET_BRAIN_COMPONENT",
+                    "sensorLength": 5,
+                    "sensorOffset": 0,
+                    "sensorCount": 250,
+                    "sightSensorSize": 7
+                },
                 {
                     "id": "PHYSICS_COMPONENT",
-                    "type": "B2_STATIC",
+                    "type": "B2_KINEMATIC",
                     "collisionShape": "B2_BOX",
-                    "density": 0.1,
+                    "density": 10.1,
+                    "linearDamping": 0.0,
+                    "angularDamping": 20.0,
                     "anchorPoint": {
                         "x": 0.0,
                         "y": 0.0
                     }
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_ROTATE",
+                            "actionClass": "DefaultRotate"
+                        },
+                        {
+                            "actionId": "ACTION_USAGE",
+                            "actionClass": "TurretFire"
+                        }
+                    ]
+                },
+                {
+                    "id": "WEAPON_COMPONENT",
+                    "fireOffset": -1.0,
+                    "weaponLevels": [
+                        {
+                            "level": 1,
+                            "force": 1,
+                            "levelUpTarget": 25,
+                            "color": {
+                                "red": 255,
+                                "green": 0,
+                                "blue": 0,
+                                "alpha": 255
+                            },
+                            "bulletPoolId": "BULLET2_POOL"
+                        }
+                    ]
                 }
-
             ]
         }
     ]

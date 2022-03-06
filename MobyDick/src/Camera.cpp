@@ -83,9 +83,13 @@ void Camera::update()
 
 void Camera::setFramePosition(float x, float y)
 {
-	//set position
-	m_frame.x = x;
-	m_frame.y = y;
+	//set position - round to nearest 1 decimal place
+	//m_frame.x = std::ceil(x * 10.0) / 10.0;
+	//m_frame.y = std::ceil(y * 10.0) / 10.0;
+
+	//Trunc to fix micro screen jittering on camera moving
+	m_frame.x = trunc(x);
+	m_frame.y = trunc(y);
 
 }
 

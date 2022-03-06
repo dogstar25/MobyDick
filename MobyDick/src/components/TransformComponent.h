@@ -34,6 +34,7 @@ public:
 	b2Vec2 size() { return m_size; }
 	b2Vec2 position() {	return m_position; }
 	b2Vec2 originalPosition() {	return m_originalPosition; }
+	float originalAngle() { return m_originalAngle; }
 	float angle() {	return m_angle;	}
 	bool absolutePositioning() { return m_absolutePositioning; }
 	bool centeredPositioning() { return m_centeredPositioning; }
@@ -46,7 +47,8 @@ public:
 
 private:
 	float
-		m_angle;
+		m_angle,
+		m_originalAngle{};
 	b2Vec2
 		m_position,
 		m_size,

@@ -9,7 +9,7 @@ TransformComponent::TransformComponent()
 
 TransformComponent::TransformComponent(Json::Value componentJSON, float xMapPos, float yMapPos, float angleAdjust)
 {
-		m_angle = angleAdjust;
+		m_angle = m_originalAngle = angleAdjust;
 
 		auto objectWidth = componentJSON["size"]["width"].asFloat();
 		auto objectHeight = componentJSON["size"]["height"].asFloat();

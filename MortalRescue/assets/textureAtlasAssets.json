@@ -207,6 +207,17 @@
             }
         },
         {
+            "id": "TX_BULLET2",
+            "description": "Bullet 2",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 4,
+                "y": 8,
+                "width": 7,
+                "height": 4
+            }
+        },
+        {
             "id": "TX_SMOKE_PARTICLE_1",
             "description": "Smoke particle",
             "atlas": "TEXTURE_ATLAS_0",
@@ -395,56 +406,61 @@
 
         },
         {
-            "id": "TX_TURRET_IDLE",
-            "description": "Turret Idle",
-            "atlas": "TEXTURE_ATLAS_0",
-            "quadPosition": {
-                "x": 262,
-                "y": 880,
-                "width": 128,
-                "height": 128
-            }
-
-        },
-        {
-            "id": "TX_TURRET2_IDLE",
-            "description": "Turret Idle",
+            "id": "TX_TURRET_DEPLOY",
+            "description": "Turret Deploy",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 134,
                 "y": 268,
-                "width": 64,
+                "width": 256,
                 "height": 64
             }
 
         },
         {
-            "id": "TX_GLOW_EXAMPLE1",
-            "description": "Glow Example 1",
+            "id": "TX_TURRET_IDLE",
+            "description": "Turret Idle",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 199,
+                "x": 69,
                 "y": 268,
                 "width": 64,
                 "height": 64
             }
-
         },
         {
-            "id": "TX_GLOW_EXAMPLE2",
-            "description": "Glow Example 2",
+            "id": "TX_TURRET_UNDEPLOY",
+            "description": "Turret UnDeploy",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 264,
+                "x": 134,
+                "y": 336,
+                "width": 256,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_TURRET_ACTIVE",
+            "description": "Turret Active",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 391,
                 "y": 268,
                 "width": 64,
                 "height": 64
             }
-
+        },
+        {
+            "id": "TX_SURVIVOR",
+            "description": "Survivor",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2589,
+                "y": 200,
+                "width": 64,
+                "height": 64
+            }
         }
-
-
-
     ],
     "fonts": [
         {
