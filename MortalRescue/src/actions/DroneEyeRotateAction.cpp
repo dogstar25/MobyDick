@@ -26,7 +26,6 @@ DroneEyeRotateAction::~DroneEyeRotateAction()
 void DroneEyeRotateAction::perform(GameObject* gameObject)
 {
 	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
-	const auto& animationComponent = gameObject->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 
 	//
 	if (m_angularVelocity == 0) {

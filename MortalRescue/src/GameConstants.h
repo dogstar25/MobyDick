@@ -43,5 +43,6 @@ namespace ComponentTypes {
 
 	inline constexpr int BRAIN_DRONE_COMPONENT = 22;
 	inline constexpr int WEAPON_PISTOL_COMPONENT = 23;
+	inline constexpr int TURRET_BRAIN_COMPONENT = 24;
 
 }

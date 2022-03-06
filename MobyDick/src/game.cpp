@@ -54,6 +54,7 @@ void Game::play()
 {
 	while (m_gameState != GameState::QUIT) {
 
+
 		std::optional<SceneAction> action = SceneManager::instance().pollEvents();
 
 		if (action.has_value()) {
