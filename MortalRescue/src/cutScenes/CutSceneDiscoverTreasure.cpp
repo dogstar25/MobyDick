@@ -44,7 +44,7 @@ void CutSceneDiscoverTreasure::start()
 		_frank->dispatch({ 5400,900 });
 		Camera::instance().setFollowMe(_frank);
 
-		scene1Timer = Timer(15);
+		scene1Timer = Timer(1500);
 
 	}
 	else if (m_currentAct == 2) {

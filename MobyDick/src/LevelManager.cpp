@@ -87,7 +87,7 @@ void LevelManager::_loadDefinition(std::string levelId)
 	m_levelBounds.x = 0;
 	m_levelBounds.y = 0;
 	m_levelBounds.w = m_width * m_tileWidth;
-	m_levelBounds.h = m_height * m_tileHeight;
+	m_levelBounds.h = (m_height * m_tileHeight) + m_tileHeight + 8;
 
 	//Initialize World bounds
 	game->setWorldParams(m_levelBounds, m_tileWidth, m_tileHeight);

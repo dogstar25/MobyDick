@@ -14,14 +14,11 @@
 
 #include "EnumMaps.h"
 
-
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_sdlrenderer.h"
 
-
 using namespace std::chrono_literals;
-
 
 MRGame::MRGame()
 {
@@ -81,37 +78,11 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//Initialize the texture manager
 		m_renderer->init(m_window);
 
-		
 		//Display basic loading message
 		//_displayLoadingMsg();
 
-
 		//Test for IMGUI
 		ImGui::MobyDickInit(this);
-
-		//////////////////////////////////////////////////////
-		//ImGui::CreateContext();
-
-		//ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-		//ImGui::StyleColorsDark();
-
-		//auto gl_context = SDL_GL_GetCurrentContext();
-		//const char* glsl_version = "#version 130";
-
-		//// Setup Platform/Renderer backends
-		//if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
-
-		//	ImGui_ImplSDL2_InitForOpenGL(window(), gl_context);
-		//	ImGui_ImplOpenGL3_Init(glsl_version);
-		//}
-		//else {
-		//	ImGui_ImplSDL2_InitForSDLRenderer(window());
-		//	ImGui_ImplSDLRenderer_Init(renderer()->sdlRenderer());
-		//}
-
-		///////////////////////////////////////////
-
 
 		TextureManager::instance().init();
 		TextureManager::instance().load("textureAtlasAssets");
@@ -119,7 +90,6 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//Initialize the SceneManager
 		SceneManager::instance().init();
 		SceneManager::instance().load("gameScenes");
-
 
 		//_displayLoadingMsg();
 
@@ -136,8 +106,6 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
 		scene.loadLevel("level1");
 
-		//scene.addHudItemValue("hudId", &MRStatusManager::level());
-
 		//_displayLoadingMsg();
 
 		//Initialize the sound manager
@@ -147,49 +115,8 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//Initialize the clock object
 		Clock::instance().init();
 
-		
-		
-		//scene.addGameObject("WALL1_CORNER", LAYER_MENU, 5, 5);
-		//scene.addGameObject("STUBB", LAYER_MENU, 1, 1);
-
-		//scene.addGameObject("GINA_64", LAYER_MENU, 8, 8);
-		
-		//scene.addGameObject("HUD_STATUS", LAYER_MENU, 16, 1);
-		//scene.addGameObject("HUD_STATUS_TOP", LAYER_MENU, 2, 2);
-		//scene.addGameObject("HUD_TEST_LABEL", LAYER_MENU, 2, 2);
-
-		scene.addGameObject("GLOW_TRIANGLE", LAYER_MENU, 3, 3);
 		scene.addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MENU, 13, 13);
-		//scene.addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MENU, 1, 1);
-		scene.addGameObject("BOWMAN", LAYER_MENU, 3, 3);
-
-		
-		//{
-		//	ImFont* m_font = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 22.0f);
-		//	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-		//	io.ConfigFlags |= ImGuiConfigFlags_NavEnableSetMousePos;
-
-		//	//io.Fonts->Build();
-
-			//if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
-			//	ImGui_ImplOpenGL3_CreateFontsTexture();
-			//}
-			//else {
-			//	ImGui_ImplSDLRenderer_CreateFontsTexture();
-			//}
-
-			//if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
-			//	ImGui_ImplOpenGL3_NewFrame();
-			//	ImGui_ImplSDL2_NewFrame();
-			//}
-			//else {
-			//	ImGui_ImplSDLRenderer_NewFrame();
-			//	ImGui_ImplSDL2_NewFrame();
-			//}
-			//ImGui::NewFrame();
-
-		//}
-
+		//scene.addGameObject("BOWMAN", LAYER_MENU, 3, 3);
 
 	}
 
@@ -217,8 +144,6 @@ void MRGame::_addGameCollisionTags()
 	EnumMap::instance().addEnumItem("CollisionTag::MEDKIT", CollisionTag::MEDKIT);
 	EnumMap::instance().addEnumItem("CollisionTag::WALL", CollisionTag::WALL);
 	EnumMap::instance().addEnumItem("CollisionTag::WEAPON_PICKUP", CollisionTag::WEAPON_PICKUP);
-
-
 
 }
 

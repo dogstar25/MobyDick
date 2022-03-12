@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31512.422
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32126.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MobyDick", "MobyDick\MobyDick.vcxproj", "{5BC96C69-A864-419D-96C6-BC3507DE7D1B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MortalRescue", "MortalRescue\MortalRescue.vcxproj", "{ECB447EE-121A-4BCD-ACB3-29A8760F43ED}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Stubb", "Stubb\Stubb.vcxproj", "{33855863-F6C4-4429-8505-31C8D1D98BF7}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MortalRescueSetup", "MortalRescueSetup\MortalRescueSetup.vdproj", "{AD31C071-677C-4E8C-AEC1-D7BC13E8FCA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,11 @@ Global
 		{33855863-F6C4-4429-8505-31C8D1D98BF7}.Release|x64.Build.0 = Release|x64
 		{33855863-F6C4-4429-8505-31C8D1D98BF7}.Release|x86.ActiveCfg = Release|Win32
 		{33855863-F6C4-4429-8505-31C8D1D98BF7}.Release|x86.Build.0 = Release|Win32
+		{AD31C071-677C-4E8C-AEC1-D7BC13E8FCA7}.Debug|x64.ActiveCfg = Debug
+		{AD31C071-677C-4E8C-AEC1-D7BC13E8FCA7}.Debug|x64.Build.0 = Debug
+		{AD31C071-677C-4E8C-AEC1-D7BC13E8FCA7}.Debug|x86.ActiveCfg = Debug
+		{AD31C071-677C-4E8C-AEC1-D7BC13E8FCA7}.Release|x64.ActiveCfg = Release
+		{AD31C071-677C-4E8C-AEC1-D7BC13E8FCA7}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
