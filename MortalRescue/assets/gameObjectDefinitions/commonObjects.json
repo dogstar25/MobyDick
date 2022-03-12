@@ -281,91 +281,20 @@
             ]
         },
         {
-            "id": "PLAYER_LABEL",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
-            "description": "Player Label",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "absolutePositioning": false
-                },
-                {
-                    "id": "TEXT_COMPONENT",
-                    "value": "Player 1",
-                    "dynamic": false,
-                    "font": "FONT_DROID_SANS",
-                    "fontSize": 12
-                }
-            ]
-        },
-        {
-            "id": "FPS_VALUE",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
-            "description": "FPS",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "color": {
-                        "red": 255,
-                        "green": 255,
-                        "blue": 255,
-                        "alpha": 255
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "absolutePositioning": true
-                },
-                {
-                    "id": "TEXT_COMPONENT",
-                    "dynamic": true,
-                    "statusValueId": "FPS_VALUE",
-                    "font": "FONT_DROID_SANS",
-                    "fontSize": 16
-                }
-            ]
-        },
-        {
-            "id": "DEBUG_ITEM",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
-            "description": "Debug Item",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "color": {
-                        "red": 255,
-                        "green": 255,
-                        "blue": 255,
-                        "alpha": 255
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "absolutePositioning": true
-                },
-                {
-                    "id": "TEXT_COMPONENT",
-                    "value": "default",
-                    "dynamic": true,
-                    "font": "FONT_ARIAL_REG",
-                    "fontSize": 12
-                }
-            ]
-        },
-        {
             "id": "PISTOL",
             "collisionTag": "CollisionTag::WEAPON_PICKUP",
             "traitTags": [ "collectable", "weapon" ],
             "description": "Weapon 1",
             "components": [
                 {
-                    "id": "RENDER_COMPONENT"
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_WEAPON1_IDLE",
+                    "color": {
+                        "red": 0,
+                        "blue": 250,
+                        "green": 0,
+                        "alpha": 255
+                    }
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
@@ -390,27 +319,6 @@
                     }
                 },
                 {
-                    "id": "ANIMATION_COMPONENT",
-                    "frameSize": {
-                        "width": 16,
-                        "height": 16
-                    },
-                    "animations": [
-                        {
-                            "state": "ANIMATION_IDLE",
-                            "textureId": "TX_WEAPON1_IDLE",
-                            "speed": 0.5,
-                            "frames": 3
-                        },
-                        {
-                            "state": "ANIMATION_ACTION",
-                            "textureId": "TX_WEAPON1_FIRE",
-                            "speed": 0.1,
-                            "frames": 3
-                        }
-                    ]
-                },
-                {
                     "id": "ACTION_COMPONENT",
                     "actions": [
                         {
@@ -418,7 +326,6 @@
                             "actionClass": "PistolFire"
                         }
                     ]
-
                 },
                 {
                     "id": "WEAPON_COMPONENT",
@@ -476,8 +383,8 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 6,
-                        "height": 3
+                        "width": 5,
+                        "height": 1
                     }
                 },
                 {
@@ -490,22 +397,6 @@
                     "restitution": 0.3,
                     "linearDamping": 0.0,
                     "angularDamping": 0.0
-                },
-                {
-                    "id": "ANIMATION_COMPONENT",
-                    "frameSize": {
-                        "width": 6,
-                        "height": 3
-                    },
-                    "defaultState": "ANIMATION_ACTIVE",
-                    "animations": [
-                        {
-                            "state": "ANIMATION_ACTIVE",
-                            "textureId": "TX_BULLET1",
-                            "speed": 0.02,
-                            "frames": 4
-                        }
-                    ]
                 },
                 {
                     "id": "POOL_COMPONENT"
@@ -800,31 +691,6 @@
                             "actionClass": "DroneMove"
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "id": "GLOW_TRIANGLE",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_WHITE_QUAD",
-                    "color": {
-                        "red": 8,
-                        "green": 242,
-                        "blue": 250,
-                        "alpha": 100
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 256,
-                        "height": 256
-                    },
-                    "absolutePositioning": false
                 }
             ]
         },

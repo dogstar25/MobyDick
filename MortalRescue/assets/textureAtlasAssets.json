@@ -202,8 +202,8 @@
             "quadPosition": {
                 "x": 4,
                 "y": 4,
-                "width": 24,
-                "height": 3
+                "width": 5,
+                "height": 1
             }
         },
         {
@@ -323,19 +323,8 @@
             "quadPosition": {
                 "x": 21,
                 "y": 16,
-                "width": 256,
-                "height": 64
-            }
-        },
-        {
-            "id": "TX_WEAPON1_FIRE",
-            "description": "Weapon 1 Fire",
-            "atlas": "TEXTURE_ATLAS_0",
-            "quadPosition": {
-                "x": 70,
-                "y": 16,
-                "width": 256,
-                "height": 64
+                "width": 16,
+                "height": 16
             }
         },
         {
