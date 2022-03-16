@@ -4,6 +4,7 @@
 #include "EnumMaps.h"
 
 #include "GameObjectManager.h"
+#include "SoundManager.h"
 #include "game.h"
 
 
@@ -162,6 +163,7 @@ void Scene::update() {
 	}
 
 	Camera::instance().update();
+	SoundManager::instance().update();
 
 	// Remove all objects that should be removed in first pass
 	for (auto& gameObjects : m_gameObjects)	{

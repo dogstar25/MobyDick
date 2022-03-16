@@ -252,7 +252,7 @@
     <ClCompile Include="src\hud\HudItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\StatusManager.cpp">
+    <ClCompile Include="src\ContextManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\hud\HudStatusText.cpp">
@@ -569,7 +569,7 @@
     <ClInclude Include="src\hud\HudItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\StatusManager.h">
+    <ClInclude Include="src\ContextManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\hud\HudStatusText.h">

@@ -69,7 +69,7 @@ void HudStatusSeries::update(GameObject* parentGameObject)
 	float hudWidth{};
 
 	//Width - Label size plus the status object repeated
-	float statusValue = game->statusMananger()->getValue(m_statusValueId);
+	float statusValue = game->contextMananger()->getValue(m_statusValueId);
 	hudWidth = labelWidth + (statusObjectWidth * statusValue);
 
 	const auto& parentTransformComponent = parentGameObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
@@ -90,7 +90,7 @@ void HudStatusSeries::render(GameObject* parentGameObject)
 
 	m_statusObject->render();
 
-	float statusValue = game->statusMananger()->getValue(m_statusValueId);
+	float statusValue = game->contextMananger()->getValue(m_statusValueId);
 
 	for (int x = 0; x < statusValue;x++) {
 		positionRect = statusRenderComponent->getRenderDestRect();

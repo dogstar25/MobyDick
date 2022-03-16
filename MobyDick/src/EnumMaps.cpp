@@ -105,6 +105,7 @@ EnumMap::EnumMap()
 	//Keys
 	m_enumMap["SDLK_ESCAPE"] = SDLK_ESCAPE;
 	m_enumMap["SDLK_F1"] = SDLK_F1;
+	m_enumMap["SDLK_F2"] = SDLK_F2;
 
 	//Scene Action Codes
 	m_enumMap["SCENE_ACTION_QUIT"] = SCENE_ACTION_QUIT;

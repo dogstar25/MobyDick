@@ -25,7 +25,7 @@
 #include "particleEffects/ParticleEffectsFactory.h"
 #include "ContactListener.h"
 #include "ContactFilter.h"
-#include "StatusManager.h"
+#include "ContextManager.h"
 #include "Renderer.h"
 
 
@@ -41,7 +41,7 @@ public:
 
 	virtual bool init();
 	virtual bool init(ContactListener*, ContactFilter*,	ComponentFactory*, ActionFactory*, ParticleEffectsFactory*, 
-		CutSceneFactory*, IMGuiFactory*, StatusManager*) = 0;
+		CutSceneFactory*, IMGuiFactory*, ContextManager*) = 0;
 	virtual void play();
 	virtual void _displayLoadingMsg();
 	GameObject* getGameObject(std::string name);
@@ -86,8 +86,8 @@ public:
 	std::shared_ptr<CutSceneFactory> cutSceneFactory() {
 		return m_cutSceneFactory;
 	}
-	std::shared_ptr<StatusManager> statusMananger() {
-		return m_statusMananger;
+	std::shared_ptr<ContextManager> contextMananger() {
+		return m_contextMananger;
 	}
 	std::shared_ptr<ParticleEffectsFactory> particleEffectsFactory() {
 		return m_particleEffectsFactory;
@@ -110,7 +110,7 @@ protected:
 	std::shared_ptr<ComponentFactory> m_componentFactory{};
 	std::shared_ptr<ActionFactory> m_actionFactory{};
 	std::shared_ptr<CutSceneFactory> m_cutSceneFactory{};
-	std::shared_ptr<StatusManager> m_statusMananger{};
+	std::shared_ptr<ContextManager> m_contextMananger{};
 	std::shared_ptr<ParticleEffectsFactory> m_particleEffectsFactory{};
 	std::shared_ptr<IMGuiFactory> m_iMGUIFactory{};
 

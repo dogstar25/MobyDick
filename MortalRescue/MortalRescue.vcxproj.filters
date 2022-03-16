@@ -42,7 +42,7 @@
     <ClCompile Include="src\components\PistolWeaponComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MRStatusManager.cpp">
+    <ClCompile Include="src\MRContextManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\actions\MRActionFactory.cpp">
@@ -270,7 +270,7 @@
     <ClInclude Include="src\components\PistolWeaponComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\MRStatusManager.h">
+    <ClInclude Include="src\MRContextManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\actions\MRActionFactory.h">

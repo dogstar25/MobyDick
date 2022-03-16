@@ -17,8 +17,10 @@ class SoundManager
 public:
 	static SoundManager& instance();
 	void initSound();
+	void update();
 	void playSound(std::string id);
 	void playMusic(std::string id, int loopTimes);
+	void setVolume(int volume);
 
 	float test;
 	

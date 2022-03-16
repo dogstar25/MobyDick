@@ -24,7 +24,7 @@ bool Game::init()
 
 bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter, 
 	ComponentFactory* componentFactory, ActionFactory* actionFactory, ParticleEffectsFactory* particleEffectsFactory, 
-	CutSceneFactory* cutSceneFactory, IMGuiFactory* iMGuiFactory, StatusManager* statusManager)
+	CutSceneFactory* cutSceneFactory, IMGuiFactory* iMGuiFactory, ContextManager* contextManager)
 {
 	m_contactListener = std::shared_ptr<ContactListener>(contactListener);
 	m_contactFilter = std::shared_ptr<ContactFilter>(contactFilter);
@@ -32,7 +32,7 @@ bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter,
 	m_actionFactory = std::shared_ptr<ActionFactory>(actionFactory);
 	m_particleEffectsFactory = std::shared_ptr<ParticleEffectsFactory>(particleEffectsFactory);
 	m_cutSceneFactory = std::shared_ptr<CutSceneFactory>(cutSceneFactory);
-	m_statusMananger = std::shared_ptr<StatusManager>(statusManager);
+	m_contextMananger = std::shared_ptr<ContextManager>(contextManager);
 	m_iMGUIFactory = std::shared_ptr<IMGuiFactory>(iMGuiFactory);
 
 	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
@@ -52,6 +52,7 @@ bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter,
 
 void Game::play()
 {
+
 	while (m_gameState != GameState::QUIT) {
 
 

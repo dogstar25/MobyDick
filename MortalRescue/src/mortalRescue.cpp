@@ -9,7 +9,7 @@
 #include "actions/MRActionFactory.h"
 #include "IMGui/MR_IMGuiFactory.h"
 #include "particleEffects/MRParticleEffectsFactory.h"
-#include "MRStatusManager.h"
+#include "MRContextManager.h"
 
 std::unique_ptr<Game> game;
 
@@ -25,7 +25,7 @@ int main(int argc, char* args[])
 		new MRParticleEffectsFactory(),
 		new MRCutSceneFactory(),
 		new MR_IMGuiFactory(),
-		new MRStatusManager()
+		new MRContextManager()
 	);
 
 	while (game->gameState() != GameState::QUIT)

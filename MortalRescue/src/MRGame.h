@@ -23,7 +23,7 @@
 #include "actions/ActionFactory.h"
 #include "particleEffects/ParticleEffectsFactory.h"
 #include "IMGui/IMGuiFactory.h"
-#include "StatusManager.h"
+#include "ContextManager.h"
 
 /*
 	Main Game Class
@@ -37,7 +37,7 @@ public:
 
 	bool init() override { return true; }
 	bool init(ContactListener*, ContactFilter*, ComponentFactory*, ActionFactory*, ParticleEffectsFactory*, 
-		CutSceneFactory*, IMGuiFactory*, StatusManager* ) override;
+		CutSceneFactory*, IMGuiFactory*, ContextManager* ) override;
 
 private:
 

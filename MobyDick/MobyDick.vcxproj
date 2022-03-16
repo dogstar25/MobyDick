@@ -312,7 +312,7 @@
     <ClCompile Include="src\triggers\Trigger.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\opengl\Vertex.cpp" />
-    <ClCompile Include="src\StatusManager.cpp" />
+    <ClCompile Include="src\ContextManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\actions\ActionFactory.h" />
@@ -418,7 +418,7 @@
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\Renderer.h" />
     <ClInclude Include="src\opengl\Vertex.h" />
-    <ClInclude Include="src\StatusManager.h" />
+    <ClInclude Include="src\ContextManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="ExtraLibs\SDL2main.lib" />
