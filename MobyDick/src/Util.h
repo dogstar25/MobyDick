@@ -49,6 +49,7 @@ namespace util
 	Json::Value getComponentConfig(Json::Value definitionJSON, int);
 	float calculateDistance(SDL_FPoint location1, SDL_FPoint location2);
 	float calculateDistance(glm::vec2 location1, glm::vec2 location2);
+	bool fileExists(const std::string& filename);
 
 	b2Vec2 matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float);
 

@@ -23,11 +23,12 @@ public:
 	void sendSceneCloseEvent();
 	void settingsModal();
 	void sendQuitEvent();
+	void apply(int mouseSensitivity, int soundVolume);
 
 	ImFont* m_font{};
 
 private:
-	ImVec2 m_settingsModalSize{ 768,384 };
+	ImVec2 m_settingsModalSize{ 616,384 };
 	//ImGuiWindowFlags m_SettingsModalflags{ ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings };
 	ImGuiWindowFlags m_SettingsModalflags{ ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove };
 

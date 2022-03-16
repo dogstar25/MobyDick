@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "MRStatusManager.h"
+#include "MRContextManager.h"
 #include "game.h"
 #include "GameConstants.h"
 #include "SoundManager.h"
@@ -160,7 +160,7 @@ void MRContactListener::_player_shieldScrap(GameObject* contact1, GameObject* co
 
 	//Update the status Manager
 	//static_cast<MRStatusManager*>(game->statusMananger())->hudValueMap()["HUD_SCRAP_VALUE"].adjust(1);
-	game->statusMananger()->adjustValue("SCRAP_COUNT", 1);
+	game->contextMananger()->adjustValue("SCRAP_COUNT", 1);
 
 	//Check to see if this upgrades the players weapon
 	auto pistol = inventoryComponent->getItem(TraitTag::weapon);

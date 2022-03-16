@@ -3,8 +3,9 @@
 
 #include "../SceneManager.h"
 #include "../EnumMaps.h"
+#include "../game.h"
 
-
+extern std::unique_ptr<Game> game;
 
 PlayerControlComponent::PlayerControlComponent()
 {
@@ -134,7 +135,7 @@ void PlayerControlComponent::handleMovement()
 
 	//Handle Mouse related movement
 	const uint32_t currentMouseStates = SDL_GetRelativeMouseState(&mouseX, &mouseY);
-	float angularVelocity = mouseX * GameConfig::instance().mouseSensitivity();
+	float angularVelocity = mouseX * game->contextMananger()->getMouseSensitivity();
 
 	//TEST
 	//runtimeParms.clear();

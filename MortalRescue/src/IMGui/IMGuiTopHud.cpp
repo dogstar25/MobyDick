@@ -1,6 +1,6 @@
 #include "IMGuiTopHud.h"
 
-#include "StatusManager.h"
+#include "ContextManager.h"
 #include "Util.h"
 #include "game.h"
 #include <memory>
@@ -57,7 +57,7 @@ glm::vec2 IMGuiTopHud::render(SDL_FRect destRect)
 void IMGuiTopHud::hudScrapCount()
 {
 
-	ImGui::Text("%s  %d", "ScrapCount", (int)game->statusMananger()->getValue("SCRAP_COUNT"));
+	ImGui::Text("%s  %d", "ScrapCount", (int)game->contextMananger()->getValue("SCRAP_COUNT"));
 
 }
 
@@ -74,7 +74,7 @@ void IMGuiTopHud::hudScrapBar()
 	glm::vec2 topLeft = util::glNormalizeTextureCoords({ 37,92 }, { 4096, 4096 });
 	glm::vec2 bottomRight = util::glNormalizeTextureCoords({ 68,123 }, { 4096, 4096 });
 
-	for (int i = 0; i < game->statusMananger()->getValue("SCRAP_COUNT"); i++) {
+	for (int i = 0; i < game->contextMananger()->getValue("SCRAP_COUNT"); i++) {
 
 		if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 

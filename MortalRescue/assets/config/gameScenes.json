@@ -16,13 +16,6 @@
                     "location": {
                         "windowPosition": "PositionAlignment::TOP_CENTER"
                     }
-                },
-                {
-                    "gameObjectId": "BOWMAN",
-                    "layer": "LAYER_MAIN",
-                    "location": {
-                        "windowPosition": "PositionAlignment::CENTER"
-                    }
                 }
             ],
             "keyActions": [

@@ -351,6 +351,8 @@ std::optional<GameObject*> BrainComponent::getNextinterimDestination()
 
 		for (auto& navPoint : interimNavComponent->accessibleNavObjects()) {
 
+			//we store previously visited nav points when navigating to a destination point so that we do not get stuck between 2 nav points
+			//it forces us the move ahead. Certain weird map layouts coudl cause this situation
 			if (_existsInAlreadyVistedNavList(navPoint.get()) == false) {
 				const auto& navPointTemp = navPoint;
 				const auto& navPointTransformComponent = navPointTemp->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);

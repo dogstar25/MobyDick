@@ -5,7 +5,9 @@
 #include <json/json.h>
 
 #include "GameConfig.h"
+#include "game.h"
 
+extern std::unique_ptr<Game>game;
 
 
 SoundManager::SoundManager()
@@ -29,9 +31,20 @@ SoundManager& SoundManager::instance()
 void SoundManager::initSound()
 {
 	Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 512);
+
+	auto volume = game->contextMananger()->getSoundVolume();
+	Mix_Volume(-1, volume);
 	
 	loadSounds();
 	allocateChannels();
+
+}
+
+void SoundManager::update()
+{
+
+	auto volume = game->contextMananger()->getSoundVolume();
+	Mix_Volume(-1, volume);
 
 }
 
@@ -92,3 +105,9 @@ void SoundManager::allocateChannels()
 	Mix_AllocateChannels(soundChannels);
 
 }
+
+void SoundManager::setVolume(int volume)
+{
+	Mix_Volume(-1, volume);
+}
+

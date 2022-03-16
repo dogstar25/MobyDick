@@ -4,7 +4,7 @@
 #include "GameObjectManager.h"
 #include "SoundManager.h"
 #include "LevelManager.h"
-#include "MRStatusManager.h"
+#include "MRContextManager.h"
 #include "Camera.h"
 #include "Clock.h"
 #include "ContactFilter.h"
@@ -35,13 +35,13 @@ Initialize Game
 */
 bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter, 
 	ComponentFactory* componentFactory, ActionFactory* actionFactory, ParticleEffectsFactory* particleEffectsFactory, 
-	CutSceneFactory* cutSceneFactory, IMGuiFactory* iMGuiFactory, StatusManager* statusManager)
+	CutSceneFactory* cutSceneFactory, IMGuiFactory* iMGuiFactory, ContextManager* contextManager)
 {
 
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
 
-	Game::init(contactListener, contactFilter, componentFactory, actionFactory, particleEffectsFactory, cutSceneFactory, iMGuiFactory, statusManager);
+	Game::init(contactListener, contactFilter, componentFactory, actionFactory, particleEffectsFactory, cutSceneFactory, iMGuiFactory, contextManager);
 
 	std::cout << "Mortal Rescue Begins\n";
 
@@ -109,14 +109,15 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//_displayLoadingMsg();
 
 		//Initialize the sound manager
-		//SoundManager::instance().initSound();
-		//SoundManager::instance().playMusic("music_ambience_1", -1);
+		SoundManager::instance().initSound();
+		SoundManager::instance().playMusic("music_ambience_1", -1);
 
 		//Initialize the clock object
 		Clock::instance().init();
 
 		scene.addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MENU, 13, 13);
 		//scene.addGameObject("BOWMAN", LAYER_MENU, 3, 3);
+
 
 	}
 

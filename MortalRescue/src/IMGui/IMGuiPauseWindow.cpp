@@ -1,10 +1,10 @@
 #include "IMGuiPauseWindow.h"
 
 #include "Scene.h"
-#include "game.h"
 #include <SDL2/SDL.h>
 #include "MR_IMGuiUtil.h"
 #include "../GameConstants.h"
+#include "../MRContextManager.h"
 
 
 extern std::unique_ptr<Game> game;
@@ -38,42 +38,45 @@ glm::vec2 IMGuiPauseWindow::render(SDL_FRect destRect)
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::MRSettings::ButtonHoverColor);
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImGui::MRSettings::ButtonActiveColor);
 
-		ImGui::Spacing();
-		ImGui::Spacing();
-		ImGui::Spacing();
-		ImGui::SameLine((destRect.w / 2) - (buttonSize.x / 2));
-		if (ImGui::Button("Continue", buttonSize)) {
+		//top window spacing
+		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
+
+		ImGui::SameLine((destRect.w - ImGui::MRSettings::button1Size.x) / 2);
+		ImGui::BeginGroup();
+
+		//Continue Button
+		if (ImGui::Button("Continue", ImGui::MRSettings::button1Size)) {
 			sendSceneCloseEvent();
 		}
-		ImGui::Spacing();
-		ImGui::Spacing();
-		ImGui::Spacing();
 
-		ImGui::SameLine((destRect.w / 2) - (buttonSize.x / 2));
+		//spacing
+		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
-		if (ImGui::Button("Settings", buttonSize)) {
-			ImGui::OpenPopup("Settings1");
+		//Settings Button
+		if (ImGui::Button("Settings", ImGui::MRSettings::button1Size)) {
+			ImGui::OpenPopup("SettingsModal");
 		}
 
-		if (ImGui::BeginPopupModal("Settings1", nullptr, m_SettingsModalflags)) {
+		if (ImGui::BeginPopupModal("SettingsModal", nullptr, m_SettingsModalflags)) {
 			settingsModal();
 		}
 
-		ImGui::Spacing();
-		ImGui::Spacing();
-		ImGui::Spacing();
+		//spacing
+		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
-		ImGui::SameLine((destRect.w / 2) - (buttonSize.x / 2));
-		if (ImGui::Button("Quit", buttonSize)) {
+		//Quit Button
+		if (ImGui::Button("Quit", ImGui::MRSettings::button1Size)) {
 			sendQuitEvent();
 		}
-		ImGui::Spacing();
-		ImGui::Spacing();
-		ImGui::Spacing();
+
+		//spacing
+		ImGui::Spacing(); ImGui::Spacing();	ImGui::Spacing(); ImGui::Spacing();	ImGui::Spacing();
 
 		ImGui::PopStyleColor();
 		ImGui::PopStyleColor();
 		ImGui::PopStyleColor();
+
+		ImGui::EndGroup();
 
 		windowSize = { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
 
@@ -84,6 +87,60 @@ glm::vec2 IMGuiPauseWindow::render(SDL_FRect destRect)
 
 }
 
+void IMGuiPauseWindow::settingsModal()
+{
+
+	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
+	ImGui::SetWindowPos(ImVec2{ center.x - m_settingsModalSize.x / 2, center.y - m_settingsModalSize.y / 2 });
+	ImGui::SetWindowSize(m_settingsModalSize);
+
+	//Button Style
+	ImGui::PushStyleColor(ImGuiCol_Button, MRColors::green1);
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, MRColors::green2);
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, MRColors::green1);
+
+	ImGui::SameLine(24);
+	ImGui::BeginGroup();
+
+	//Spacing
+	ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
+
+	// Mouse sensitivity setting slider
+	ImGui::Text("Mouse Sensitivity");
+	static int mouseSensitivity = game->contextMananger()->getMouseSensitivityForGui();
+	ImGui::SliderInt("##mouseSensitivity", &mouseSensitivity, 0, 100);
+
+	//Spacing
+	ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
+
+	// Sounds Level setting slider
+	static int soundvolume = game->contextMananger()->getSoundVolumeForGui();
+	ImGui::Text("Sound Volume");
+	ImGui::SliderInt("##soundvolume", &soundvolume, 0, 100);
+
+	//Spacing
+	ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
+
+	//Buttons
+	if (ImGui::Button("Ok", ImGui::MRSettings::button1Size)) {
+		apply(mouseSensitivity, soundvolume);
+		ImGui::CloseCurrentPopup();
+	}
+
+	ImGui::SameLine(156);
+	if (ImGui::Button("Cancel", ImGui::MRSettings::button1Size)) {
+		ImGui::CloseCurrentPopup();
+	}
+	ImGui::EndGroup();
+
+
+	ImGui::PopStyleColor();
+	ImGui::PopStyleColor();
+	ImGui::PopStyleColor();
+
+	ImGui::EndPopup();
+
+}
 void IMGuiPauseWindow::sendSceneCloseEvent()
 {
 
@@ -116,41 +173,20 @@ void IMGuiPauseWindow::sendQuitEvent()
 
 }
 
-void IMGuiPauseWindow::settingsModal()
+void IMGuiPauseWindow::apply(int mouseSensitivity, int soundVolume)
 {
 
-	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
-	ImGui::SetWindowPos(ImVec2{ center.x - m_settingsModalSize.x / 2, center.y - m_settingsModalSize.y / 2 });
-	ImGui::SetWindowSize(m_settingsModalSize);
+	SaveFileData saveFileData{};
 
-	ImGui::Value("Width", ImGui::GetWindowSize().x);
-	ImGui::Value("Height", ImGui::GetWindowSize().y);
+	//First load whats currently on file
+	std::dynamic_pointer_cast<MRContextManager>(game->contextMananger())->loadGame(saveFileData);
 
+	saveFileData.mouseSensitivity = mouseSensitivity;
+	saveFileData.soundLevel = soundVolume;
 
-
-
-	static float colorR, colorG, colorB, colorA;
-
-
-	ImGui::SliderFloat("Red", &colorR, 0, 1);
-	ImGui::SliderFloat("Green", &colorG, 0, 1);
-	ImGui::SliderFloat("Blue", &colorB, 0, 1);
-	ImGui::SliderFloat("Alpha", &colorA, 0, 1);
-
-
-
-	ImGui::PushStyleColor(ImGuiCol_Button, MRColors::green1);
-	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, MRColors::green2);
-	ImGui::PushStyleColor(ImGuiCol_ButtonActive, { colorR , colorG, colorB, colorA });
-
-	ImGui::Button("Settings", ImVec2{ 128,32 });
-
-	ImGui::PopStyleColor();
-	ImGui::PopStyleColor();
-	ImGui::PopStyleColor();
-
-
-	ImGui::EndPopup();
+	std::dynamic_pointer_cast<MRContextManager>(game->contextMananger())->saveGame(saveFileData);
 
 }
+
+
 
