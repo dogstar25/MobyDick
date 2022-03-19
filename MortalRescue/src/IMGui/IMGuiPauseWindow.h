@@ -28,7 +28,7 @@ public:
 	ImFont* m_font{};
 
 private:
-	ImVec2 m_settingsModalSize{ 616,384 };
+	ImVec2 m_settingsModalSize{ 332,240 };
 	//ImGuiWindowFlags m_SettingsModalflags{ ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings };
 	ImGuiWindowFlags m_SettingsModalflags{ ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove };
 

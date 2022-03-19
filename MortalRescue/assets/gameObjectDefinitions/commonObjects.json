@@ -41,13 +41,13 @@
                     "animations": [
                         {
                             "state": "ANIMATION_IDLE",
-                            "textureId": "TX_GINA_64_REDUX_IDLE",
+                            "textureId": "TX_GINA_64_REDUX2_IDLE",
                             "speed": 0.1,
                             "frames": 1
                         },
                         {
                             "state": "ANIMATION_RUN",
-                            "textureId": "TX_GINA_64_REDUX_RUN",
+                            "textureId": "TX_GINA_64_REDUX2_RUN",
                             "speed": 0.06,
                             "frames": 4
                         }

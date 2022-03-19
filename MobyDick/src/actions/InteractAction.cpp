@@ -14,11 +14,11 @@ void InteractAction::perform(GameObject* gameObject)
 		if (contact->IsTouching()) {
 			GameObject* contactGameObject = reinterpret_cast<GameObject*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
 
-			if (contactGameObject->hasComponent(ComponentTypes::ACTION_COMPONENT)) {
+			if (contactGameObject->hasTrait(TraitTag::interactive)) {
 
 				contactGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT)->performInteractionAction();
 
-				const auto& actionComponent = contactGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+				//const auto& actionComponent = contactGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 				//Json::Value runtimeParms(Json::objectValue);
 				//runtimeParms["???"] = "what";
 				//auto interactionAction = actionComponent->getAction(ACTION_INTERACTION);

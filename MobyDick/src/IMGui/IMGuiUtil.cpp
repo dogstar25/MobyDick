@@ -31,6 +31,9 @@ namespace ImGui
 			ImGui_ImplSDLRenderer_Init(mobyDickGame->renderer()->sdlRenderer());
 		}
 
+
+		//io.KeyMap[] = 'p';
+
 	}
 	void MobyDickNewFrame()
 	{
@@ -65,14 +68,13 @@ namespace ImGui
 	void MobyDickFPSFrame()
 	{
 		ImGuiStyle& style = ImGui::GetStyle();
-		style.WindowMinSize = ImVec2{ 12,12 };
+		style.WindowMinSize = ImVec2{ 4,4 };
 		style.WindowPadding = ImVec2{ 0,0 };
 
 		ImGuiWindowFlags flags = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs;
 		flags |= ImGuiWindowFlags_AlwaysAutoResize;
 		ImGui::Begin("FrameRate", nullptr, flags);
 		
-		auto size = ImGui::GetWindowSize();
 		auto frate = ImGui::GetIO().Framerate;
 		ImGui::Value("FPS", frate);
 
@@ -81,7 +83,6 @@ namespace ImGui
 		ImGui::PopFont();
 		int dwWidth = GameConfig::instance().windowWidth() / 2;
 		ImGui::SetWindowPos(ImVec2(0, 0));
-		//ImGui::SetWindowSize(ImVec2{ 132,132 });
 		ImGui::End();
 
 	}

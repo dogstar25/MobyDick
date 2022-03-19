@@ -120,7 +120,7 @@ void VitalityComponent::_updateFiniteLifetime()
 void VitalityComponent::_updateRegeneration()
 {
 
-	//If this gameObject is considered broken and we have met the regen time, then level up the piece
+	//If this gameObject is considered broken and we have met the regen time, then regenerate and level up the piece
 	if (parent()->disabled() == true && m_regenTimer.hasMetTargetDuration()) {
 
 		_levelUp();
