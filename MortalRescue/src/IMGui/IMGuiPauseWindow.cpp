@@ -119,17 +119,24 @@ void IMGuiPauseWindow::settingsModal()
 	ImGui::SliderInt("##soundvolume", &soundvolume, 0, 100);
 
 	//Spacing
-	ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
+	ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
+
+
+	if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Space))) {
+
+	}
 
 	//Buttons
 	if (ImGui::Button("Ok", ImGui::MRSettings::button1Size)) {
 		apply(mouseSensitivity, soundvolume);
-		ImGui::CloseCurrentPopup();
+		//ImGui::CloseCurrentPopup();
+		sendSceneCloseEvent();
 	}
 
 	ImGui::SameLine(156);
 	if (ImGui::Button("Cancel", ImGui::MRSettings::button1Size)) {
-		ImGui::CloseCurrentPopup();
+		//ImGui::CloseCurrentPopup();
+		sendSceneCloseEvent();
 	}
 	ImGui::EndGroup();
 
