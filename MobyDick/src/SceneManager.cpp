@@ -4,6 +4,10 @@
 
 #include "game.h"
 #include "IMGui/IMGuiUtil.h"
+#include "imgui_impl_sdl.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_sdlrenderer.h"
+
 
 
 extern std::unique_ptr<Game> game;
@@ -108,15 +112,17 @@ std::optional<SceneAction> SceneManager::pollEvents()
 	//input related so staore it for later
 	while (SDL_PollEvent(&event) && sceneAction.has_value() == false)
 	{
-		if (game->IMGuiControlled == true) {
-			ImGui_ImplSDL2_ProcessEvent(&event);
-		}
+
+		//Pass this event along to IMGUI so that all IMGUI windows can detect mouse and keyboard events
+		ImGui_ImplSDL2_ProcessEvent(&event);
 
 		switch (event.type)
 		{
+
 			case SDL_KEYUP:
 			case SDL_KEYDOWN:
 			{
+
 				keyCode = event.key.keysym.sym;
 
 				/*

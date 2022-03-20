@@ -27,12 +27,13 @@ namespace ImGui
 			ImGui_ImplOpenGL3_Init(glsl_version);
 		}
 		else {
-			ImGui_ImplSDL2_InitForSDLRenderer(mobyDickGame->window());
+			ImGui_ImplSDL2_InitForSDLRenderer(mobyDickGame->window(), mobyDickGame->renderer()->sdlRenderer());
 			ImGui_ImplSDLRenderer_Init(mobyDickGame->renderer()->sdlRenderer());
 		}
 
 
-		//io.KeyMap[] = 'p';
+		//io.AddKeyEvent(ImGuiKey_XXX, true);
+
 
 	}
 	void MobyDickNewFrame()
