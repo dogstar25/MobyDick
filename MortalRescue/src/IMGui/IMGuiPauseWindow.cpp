@@ -121,11 +121,6 @@ void IMGuiPauseWindow::settingsModal()
 	//Spacing
 	ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
-
-	if (ImGui::IsKeyPressed(ImGui::GetKeyIndex(ImGuiKey_Space))) {
-
-	}
-
 	//Buttons
 	if (ImGui::Button("Ok", ImGui::MRSettings::button1Size)) {
 		apply(mouseSensitivity, soundvolume);
@@ -144,6 +139,11 @@ void IMGuiPauseWindow::settingsModal()
 	ImGui::PopStyleColor();
 	ImGui::PopStyleColor();
 	ImGui::PopStyleColor();
+
+
+	if (ImGui::IsKeyPressed(ImGuiKey_G)) {
+		std::cout << "Settings Modal Key Pressed" << "\n";
+	}
 
 	ImGui::EndPopup();
 

@@ -41,6 +41,7 @@ glm::vec2 IMGuiTopHud::render(SDL_FRect destRect)
 	hudScrapBar();
 
 
+
 	glm::vec2 windowSize{ ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
 
 	ImGui::PopStyleColor();
@@ -90,6 +91,12 @@ void IMGuiTopHud::hudScrapBar()
 		}
 
 	}
+
+	if (ImGui::IsKeyPressed(ImGuiKey_G)) {
+		std::cout << "Top Hud Key Pressed" << "\n";
+	}
+
+
 
 	ImGui::PopStyleColor();
 }
