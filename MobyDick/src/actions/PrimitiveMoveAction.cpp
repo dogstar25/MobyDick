@@ -3,13 +3,17 @@
 #include "../SceneManager.h"
 
 
-PrimitiveMoveAction::PrimitiveMoveAction() :
-	MoveAction(0,0)
+void PrimitiveMoveAction::perform(GameObject* gameObject, Json::Value actionParms)
 {
 
-}
-void PrimitiveMoveAction::perform(SDL_FRect* gameObjectRect)
-{
+	assert(actionParms.isMember("trajectoryX") && "TrajectoryX value is required");
+	assert(actionParms.isMember("trajectoryY") && "TrajectoryY value is required");
+	assert(actionParms.isMember("force") && "Force value is required");
+
+	//Get action paramters
+	auto trajectoryX = actionParms["trajectoryX"].asFloat();
+	auto trajectoryY = actionParms["trajectoryY"].asFloat();
+	auto force = actionParms["force"].asFloat();
 
 
 	float timeFactor{ GameConfig::instance().gameLoopStep() };
@@ -17,12 +21,8 @@ void PrimitiveMoveAction::perform(SDL_FRect* gameObjectRect)
 		timeFactor = SceneManager::instance().gameTimer().timeRemaining().count();
 	}
 
-	//float angle{};
-	//float xVelocity = cos(angle) * (m_force * 50);
-	//float yVelocity = sin(angle) * (m_force * 50);
-
-	gameObjectRect->x += m_trajectory.x * m_force * timeFactor;
-	gameObjectRect->y += m_trajectory.y * m_force * timeFactor;
+	auto newPositionX = gameObject->getCenterPosition().x + trajectoryX * force * timeFactor;
+	auto newPositionY = gameObject->getCenterPosition().y + trajectoryY * force * timeFactor;
 
 
 }

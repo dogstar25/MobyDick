@@ -288,13 +288,19 @@ void BrainComponent::executeMove()
 	GameObject* interim = m_interimDestination.value();
 	const auto& interimNavComponent = interim->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	b2Vec2 trajectory{};
+	Json::Value actionParms{};
+
 	trajectory.x = interimNavComponent->getCenterPosition().x - parent()->getCenterPosition().x;
 	trajectory.y = interimNavComponent->getCenterPosition().y - parent()->getCenterPosition().y;
 
 	trajectory.Normalize();
 
-	auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-	action->performMoveAction(trajectory);
+	auto actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+
+	actionParms["trajectoryX"] = trajectory.x;
+	actionParms["trajectoryY"] = trajectory.y;
+	auto moveAction = actionComponent->getAction(ACTION_MOVE);
+	moveAction->perform(parent(), actionParms);
 
 	//Possibly adjust movement with small impulse moves to avoid brushing obstacles
 	//_applyAvoidanceMovement();
@@ -307,19 +313,25 @@ void BrainComponent::executeMove()
 
 void BrainComponent::stopMovement()
 {
+	Json::Value actionParms{};
+
 	b2Vec2 trajectory{ 0,0 };
 	float angularVelocity{ 0. };
 
-	auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+	auto actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 
-	if (action->getAction(ACTION_MOVE)) {
-		action->performMoveAction(trajectory);
+	if (actionComponent->getAction(ACTION_MOVE)) {
+		actionParms["trajectoryX"] = trajectory.x;
+		actionParms["trajectoryY"] = trajectory.y;
+		auto moveAction = actionComponent->getAction(ACTION_MOVE);
+		moveAction->perform(parent(), actionParms);
 	}
 
-	if (action->getAction(ACTION_ROTATE)) {
-		action->performRotateAction(angularVelocity);
+	if (actionComponent->getAction(ACTION_ROTATE)) {
+		actionParms["angularVelocity"] = angularVelocity;
+		auto rotateAction = actionComponent->getAction(ACTION_ROTATE);
+		rotateAction->perform(parent(), actionParms);
 	}
-
 
 }
 

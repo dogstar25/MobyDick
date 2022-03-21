@@ -3,8 +3,7 @@
 class PistolFireAction : public Action
 {
 public:
-	PistolFireAction();
-	~PistolFireAction();
+	PistolFireAction() = default;
 
 	void perform(GameObject* gameObject) override;
 

@@ -2,16 +2,14 @@
 #define Actor_USE_ACTION_H
 
 #include "Action.h"
-#include "UseAction.h"
 
 class GameObject;
 
-class ActorUseAction : public UseAction
+class ActorUseAction : public Action
 {
 public:
 
-	ActorUseAction();
-	~ActorUseAction();
+	ActorUseAction() = default;
 
 	void perform(GameObject* gameObject) override;
 

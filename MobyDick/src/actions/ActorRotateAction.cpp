@@ -4,35 +4,22 @@
 #include "../GameObject.h"
 
 
-
-ActorRotateAction::ActorRotateAction() :
-	RotateAction(0)
+void ActorRotateAction::perform(GameObject* gameObject, Json::Value actionParms)
 {
 
-}
+	assert(actionParms.isMember("angularVelocity") && "AngularVelocity value is required");
 
-ActorRotateAction::ActorRotateAction(float angularVelocity) :
-	RotateAction(angularVelocity)
-{
+	//Get action paramters
+	float angularVelocity = actionParms["angularVelocity"].asFloat();
 
-}
-
-ActorRotateAction::~ActorRotateAction()
-{
-
-
-}
-
-void ActorRotateAction::perform(GameObject* gameObject)
-{
 	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 	const auto& animationComponent = gameObject->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 
-	physicsComponent->applyRotation(m_angularVelocity);
+	physicsComponent->applyRotation(angularVelocity);
 
 	if (animationComponent)
 	{
-		if (m_angularVelocity != 0) {
+		if (angularVelocity != 0) {
 			animationComponent->animate(ANIMATION_RUN, ANIMATE_ONE_TIME);
 		}
 	}

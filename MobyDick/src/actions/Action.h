@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <json/json.h>
 
 class GameObject;
 
@@ -11,6 +12,7 @@ public:
 	~Action();
 	virtual void perform() {};
 	virtual void perform(GameObject*) {};
+	virtual void perform(GameObject*, Json::Value actionParms) {};
 
 };
 

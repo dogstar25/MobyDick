@@ -4,28 +4,19 @@
 #include "../GameObject.h"
 
 
-DefaultMoveAction::DefaultMoveAction() :
-	MoveAction(0, 0)
+void DefaultMoveAction::perform(GameObject* gameObject, Json::Value actionParms)
 {
 
-}
+	assert(actionParms.isMember("direction") && "Direction value is required");
+	assert(actionParms.isMember("strafe") && "Strafe value is required");
 
-DefaultMoveAction::DefaultMoveAction(int direction, int strafe) :
-	MoveAction(direction, strafe)
-{
+	//Get action paramters
+	auto direction = actionParms["direction"].asInt();
+	auto strafe = actionParms["strafe"].asInt();
 
-}
-
-DefaultMoveAction::~DefaultMoveAction()
-{
-
-}
-
-void DefaultMoveAction::perform(GameObject* gameObject)
-{
 	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 	const auto& vitalityComponent = gameObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
-	physicsComponent->applyMovement(vitalityComponent->speed(), m_direction, m_strafe);
+	physicsComponent->applyMovement(vitalityComponent->speed(), direction, strafe);
 
 }

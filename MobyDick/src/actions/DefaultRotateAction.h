@@ -1,14 +1,12 @@
 #pragma once
-#include "RotateAction.h"
-class DefaultRotateAction : public RotateAction
+#include "Action.h"
+class DefaultRotateAction : public Action
 {
 
 public:
-	DefaultRotateAction();
-	DefaultRotateAction(float angularVelocity);
-	~DefaultRotateAction();
+	DefaultRotateAction() = default;
 
-	void perform(GameObject* gameObject) override;
+	void perform(GameObject* gameObject, Json::Value actionParms) override;
 
 };
 

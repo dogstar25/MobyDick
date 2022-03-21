@@ -1,12 +1,12 @@
 #pragma once
-#include "MoveAction.h"
+#include "Action.h"
 
-class ActorMoveAction : public MoveAction
+class ActorMoveAction : public Action
 {
 
 public:
-	ActorMoveAction();
+	ActorMoveAction() = default;
 
-	void perform(GameObject* gameObject) override;
+	void perform(GameObject* gameObject,Json::Value actionParms) override;
 
 };

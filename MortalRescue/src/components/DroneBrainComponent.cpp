@@ -153,8 +153,9 @@ void DroneBrainComponent::_doEngage()
 
 	//Fire eye/weapon
 	if (m_eyeFireDelayTimer.hasMetTargetDuration()) {
-		auto action = eyeGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-		action->performUsageAction();
+		auto actionComponent = eyeGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+		auto usageAction = actionComponent->getAction(ACTION_USAGE);
+		usageAction->perform(parent());
 	}
 
 	//Navigate towards target location, unless you are already there
@@ -233,29 +234,32 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 	float rotationVelocity{ 0 };
 
 	//Get the objects action and vitality components
-	auto action = gameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-	auto vitality = gameObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
-
+	auto actionComponent = gameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+	auto vitalityComponent = gameObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
 	//TODO: save the last ABS of the difference and compare and adjust forward
 	//or back based on that to zero-in on target
 
 	if ((desiredAngle - currentAngle) < 0.0) {
-		rotationVelocity = vitality->rotateSpeed() * -1;
+		rotationVelocity = vitalityComponent->rotateSpeed() * -1;
 	}
 	else {
-		rotationVelocity = vitality->rotateSpeed();
+		rotationVelocity = vitalityComponent->rotateSpeed();
 	}
 
 	auto difference = abs(desiredAngle - currentAngle);
 
+	Json::Value actionParms{};
+	auto rotateAction = actionComponent->getAction(ACTION_ROTATE);
+
 	//Once the angle is very close then set the angle directly
 	if (difference < 0.1) {
-		action->performRotateAction(0);
+		actionParms["angularVelocity"] = 0;
+		rotateAction->perform(parent(), actionParms);
 	}
 	else {
-		
-		action->performRotateAction(rotationVelocity);
+		actionParms["angularVelocity"] = rotationVelocity;
+		rotateAction->perform(parent(), actionParms);
 	}
 
 }

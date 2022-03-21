@@ -49,10 +49,13 @@ void UIControlComponent::update()
 
 	//Handle OnHover
 	if (mouseIsOnGameObject) {
-		actionComponent->performOnHoverAction();
+
+		auto onHoverAction = actionComponent->getAction(ACTION_ON_HOVER);
+		onHoverAction->perform(parent());
 	}
 	else {
-		actionComponent->performOnHoverOutAction();
+		auto onHoverOutAction = actionComponent->getAction(ACTION_ON_HOVER_OUT);
+		onHoverOutAction->perform(parent());
 	}
 
 	for (auto& inputEvent : SceneManager::instance().playerInputEvents())
@@ -63,7 +66,8 @@ void UIControlComponent::update()
 			{
 				SDL_Point mouseClick[1] = { inputEvent.event.button.x , inputEvent.event.button.y };
 				if (SDL_PointInRect(mouseClick, &gameObjectPosition)) {
-					actionComponent->performOnClickAction();
+					auto onClickAction = actionComponent->getAction(ACTION_ON_CLICK);
+					onClickAction->perform();
 				}
 			}
 

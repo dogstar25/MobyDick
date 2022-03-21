@@ -8,7 +8,7 @@ public:
 	QuitGameAction();
 	~QuitGameAction();
 
-	void perform(GameObject* gameObject) override;
+	void perform() override;
 
 private:
 

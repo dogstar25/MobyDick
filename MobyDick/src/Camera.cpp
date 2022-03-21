@@ -69,8 +69,7 @@ void Camera::update()
 			trajectory.y = m_currentDestination.y - getCenterPosition().y;
 			trajectory = glm::normalize(trajectory);
 
-			m_moveAction->setMoveParms(trajectory, speed * PRACTICLE_MOVE_SPEED_ADJ);
-			m_moveAction->perform(&m_frame);
+			_move(trajectory, speed * PRACTICLE_MOVE_SPEED_ADJ);
 
 		}
 
@@ -78,6 +77,19 @@ void Camera::update()
 
 	//Correct the camera position if it ran beyound the edges of the level
 	correctPosition(m_frame.x, m_frame.y);
+
+}
+
+void Camera::_move( glm::vec2 trajectory, float force)
+{
+
+	float timeFactor{ GameConfig::instance().gameLoopStep() };
+	if (SceneManager::instance().gameTimer().timeRemaining().count() > 0) {
+		timeFactor = SceneManager::instance().gameTimer().timeRemaining().count();
+	}
+
+	m_frame.x += trajectory.x * force * timeFactor;
+	m_frame.y += trajectory.y * force * timeFactor;
 
 }
 

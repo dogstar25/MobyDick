@@ -3,7 +3,7 @@
 #include "../components/PhysicsComponent.h"
 #include <memory>
 
-void InteractAction::perform(GameObject* gameObject)
+void InteractAction::perform(GameObject* gameObject, Json::Value actionParms)
 {
 	const std::shared_ptr<PhysicsComponent> physicsComponent = gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 
@@ -16,7 +16,6 @@ void InteractAction::perform(GameObject* gameObject)
 
 			if (contactGameObject->hasTrait(TraitTag::interactive)) {
 
-				contactGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT)->performInteractionAction();
 
 				//const auto& actionComponent = contactGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 				//Json::Value runtimeParms(Json::objectValue);

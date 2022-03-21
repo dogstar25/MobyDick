@@ -165,8 +165,9 @@ void TurretBrainComponent::_doEngage()
 
 	if (m_fireDelayTimer.hasMetTargetDuration() && enemyTargeted == true) {
 
-		auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-		action->performUsageAction();
+		auto actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+		auto usageAction = actionComponent->getAction(ACTION_USAGE);
+		usageAction->perform(parent());
 
 	}
 
@@ -195,7 +196,7 @@ bool TurretBrainComponent::_rotateTowards(b2Vec2 targetPoint)
 	float rotationVelocity{ 0 };
 
 	//Get the objects action and vitality components
-	auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+	auto actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 	auto vitality = parent()->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
 	if ((desiredAngle - currentAngle) < 0.0) {
@@ -207,9 +208,14 @@ bool TurretBrainComponent::_rotateTowards(b2Vec2 targetPoint)
 
 	auto difference = abs(desiredAngle - currentAngle);
 
+
+	Json::Value actionParms{};
+	auto rotateAction = actionComponent->getAction(ACTION_ROTATE);
+
 	//Once the angle is very close then set the angle directly
 	if (difference < 0.19) {
-		action->performRotateAction(0);
+		actionParms["angularVelocity"] = 0;
+		rotateAction->perform(parent(), actionParms);
 		onTarget = true;
 
 		//This next code makes the aim dead on balls accurate - may be too hard
@@ -220,7 +226,9 @@ bool TurretBrainComponent::_rotateTowards(b2Vec2 targetPoint)
 	}
 	else {
 
-		action->performRotateAction(rotationVelocity);
+		actionParms["angularVelocity"] = rotationVelocity;
+		rotateAction->perform(parent(), actionParms);
+
 	}
 
 	return onTarget;

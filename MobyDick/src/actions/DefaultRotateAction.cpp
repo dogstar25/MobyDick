@@ -6,28 +6,16 @@
 
 
 
-DefaultRotateAction::DefaultRotateAction() :
-	RotateAction(0)
+void DefaultRotateAction::perform(GameObject* gameObject, Json::Value actionParms)
 {
 
-}
+	assert(actionParms.isMember("angularVelocity") && "AngularVelocity value is required");
 
-DefaultRotateAction::DefaultRotateAction(float angularVelocity) :
-	RotateAction(angularVelocity)
-{
+	//Get action paramters
+	float angularVelocity = actionParms["angularVelocity"].asFloat();
 
-}
-
-DefaultRotateAction::~DefaultRotateAction()
-{
-
-
-}
-
-void DefaultRotateAction::perform(GameObject* gameObject)
-{
 	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 
-	physicsComponent->applyRotation(m_angularVelocity);
+	physicsComponent->applyRotation(angularVelocity);
 
 }

@@ -4,37 +4,27 @@
 #include "../GameObject.h"
 
 
-DroneMoveAction::DroneMoveAction() :
-	MoveAction(b2Vec2{})
+void DroneMoveAction::perform(GameObject* gameObject, Json::Value actionParms)
 {
 
-}
+	assert(actionParms.isMember("trajectoryX") && "TrajectoryX value is required");
+	assert(actionParms.isMember("trajectoryY") && "TrajectoryY value is required");
 
-DroneMoveAction::DroneMoveAction(b2Vec2 trajectory) :
-	MoveAction(trajectory)
-{
+	//Get action paramters
+	auto trajectoryX = actionParms["trajectoryX"].asFloat();
+	auto trajectoryY = actionParms["trajectoryY"].asFloat();
 
-}
-
-DroneMoveAction::~DroneMoveAction()
-{
-
-
-}
-
-void DroneMoveAction::perform(GameObject* gameObject)
-{
 	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 	const auto& animationComponent = gameObject->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 	const auto& vitalityComponent = gameObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
-	physicsComponent->applyMovement(vitalityComponent->speed(), m_trajectory);
-
+	b2Vec2 trajectory{ trajectoryX , trajectoryY };
+	physicsComponent->applyMovement(vitalityComponent->speed(), trajectory);
 
 	if (animationComponent)
 	{
 
-		if (m_trajectory.Length() != 0)
+		if (trajectory.Length() != 0)
 		{
 			animationComponent->animate(ANIMATION_RUN, ANIMATE_ONE_TIME);
 		}

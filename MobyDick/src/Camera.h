@@ -52,6 +52,7 @@ private:
 	glm::vec2 m_currentDestination{};
 	std::shared_ptr<MoveAction> m_moveAction{};
 
+	void _move(glm::vec2 trajectory, float force);
 
 
 };

@@ -51,6 +51,7 @@ void PlayerControlComponent::update()
 
 void PlayerControlComponent::handleActions()
 {
+	Json::Value actionParms{};
 
 	if (SceneManager::instance().playerInputEvents().empty() == false) {
 		//convenience reference to outside component(s)
@@ -74,11 +75,13 @@ void PlayerControlComponent::handleActions()
 					if (keyStates[SDL_SCANCODE_G])
 					{
 						std::cout << "Dropped Weapon" << "\n";
-						//ImGui::GetIO().AddKeyEvent(ImGuiKey_G, false);
 					}
 					if (keyStates[SDL_SCANCODE_E])
 					{
-						actionComponent->performInteractAction({"test", 5.0, 1});
+
+						actionParms.clear();
+						auto rotateAction = actionComponent->getAction(ACTION_INTERACT);
+						rotateAction->perform(parent(), actionParms);
 					}
 
 					break;
@@ -86,7 +89,9 @@ void PlayerControlComponent::handleActions()
 
 					if (m_controls.test(INPUT_CONTROL_USE))
 					{
-						actionComponent->performUseAction();
+						actionParms.clear();
+						auto fireAction = actionComponent->getAction(ACTION_USE);
+						fireAction->perform(parent());
 					}
 
 					break;
@@ -104,6 +109,7 @@ void PlayerControlComponent::handleMovement()
 {
 	int mouseX=0, mouseY=0;
 	int direction = 0, strafe = 0;
+	Json::Value actionParms{};
 
 	//convenience reference to outside component(s)
 	const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
@@ -129,25 +135,21 @@ void PlayerControlComponent::handleMovement()
 	}
 
 	//Keyboard movement
-	//Json::Value runtimeParms(Json::objectValue);
-	//runtimeParms["direction"] = direction;
-	//runtimeParms["strafe"] = strafe;
+	actionParms["direction"] = direction;
+	actionParms["strafe"] = strafe;
 
-	actionComponent->performMoveAction(direction, strafe);
+	auto moveAction = actionComponent->getAction(ACTION_MOVE);
+	moveAction->perform(parent(), actionParms);
 
 	//Handle Mouse related movement
 	const uint32_t currentMouseStates = SDL_GetRelativeMouseState(&mouseX, &mouseY);
 	float angularVelocity = mouseX * game->contextMananger()->getMouseSensitivity();
 
-	//TEST
-	//runtimeParms.clear();
-	//runtimeParms["angularVelocity"] = angularVelocity;
-	////auto rotateAction = actionComponent->getAction(ACTION_ROTATE);
-	////rotateAction->perform(parent(), runtimeParms);
-	//auto test = runtimeParms["angularVelocity"].asFloat();
-
-	actionComponent->performRotateAction(angularVelocity);
-	//actionComponent->performRotateAction(angularVelocity, runtimeParms);
+	//Perform rotate action
+	actionParms.clear();
+	actionParms["angularVelocity"] = angularVelocity;
+	auto rotateAction = actionComponent->getAction(ACTION_ROTATE);
+	rotateAction->perform(parent(), actionParms);
 
 }
 

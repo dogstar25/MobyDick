@@ -13,7 +13,7 @@ QuitGameAction::~QuitGameAction()
 
 }
 
-void QuitGameAction::perform(GameObject* gameObject)
+void QuitGameAction::perform()
 {
 
 	SDL_Event event;
