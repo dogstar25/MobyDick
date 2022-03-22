@@ -3,16 +3,6 @@
 
 #include "../Scene.h"
 
-QuitGameAction::QuitGameAction()
-{
-
-}
-
-QuitGameAction::~QuitGameAction()
-{
-
-}
-
 void QuitGameAction::perform(GameObject* gameObject)
 {
 

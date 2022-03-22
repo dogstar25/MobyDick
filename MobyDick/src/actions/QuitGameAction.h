@@ -5,8 +5,7 @@ class QuitGameAction : public Action
 
 public:
 
-	QuitGameAction();
-	~QuitGameAction();
+	QuitGameAction() = default;
 
 	void perform(GameObject* gameObject) override;
 

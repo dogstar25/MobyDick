@@ -3,17 +3,6 @@
 
 #include "../components/InventoryComponent.h"
 
-ActorUseAction::ActorUseAction()
-{
-
-}
-
-ActorUseAction::~ActorUseAction()
-{
-
-
-}
-
 /*
 The Actors UseAction is usually to Perform the UseAction of the Actor's activeItem from his inventory
 */
@@ -26,7 +15,9 @@ void ActorUseAction::perform(GameObject* gameObject)
 	if (const auto item = inventoryComponent->getActiveItem())
 	{
 		//Perform the UseAction of this item
-		item->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT)->performUsageAction();
+		const auto& itemActionComponent = item->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+		const auto&  action = itemActionComponent->getAction(ACTION_USAGE);
+		action->perform(item);
 	}
 
 

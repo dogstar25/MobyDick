@@ -5,34 +5,15 @@
 
 
 
-DroneEyeRotateAction::DroneEyeRotateAction() :
-	RotateAction(0)
-{
-
-}
-
-DroneEyeRotateAction::DroneEyeRotateAction(float angularVelocity) :
-	RotateAction(angularVelocity)
-{
-
-}
-
-DroneEyeRotateAction::~DroneEyeRotateAction()
-{
-
-
-}
-
-void DroneEyeRotateAction::perform(GameObject* gameObject)
+void DroneEyeRotateAction::perform(GameObject* gameObject, float angularVelocity)
 {
 	const auto& physicsComponent = gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 
-	//
-	if (m_angularVelocity == 0) {
+	if (angularVelocity == 0) {
 		physicsComponent->setLinearVelocity({ 0, 0 });
 	}
 	else {
-		physicsComponent->applyTorque(m_angularVelocity);
+		physicsComponent->applyTorque(angularVelocity);
 	}
 	
 

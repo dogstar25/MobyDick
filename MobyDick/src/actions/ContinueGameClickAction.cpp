@@ -3,17 +3,7 @@
 
 #include "../Scene.h"
 
-ContinueGameClickAction::ContinueGameClickAction()
-{
-
-}
-
-ContinueGameClickAction::~ContinueGameClickAction()
-{
-
-}
-
-void ContinueGameClickAction::perform(GameObject* gameObject)
+void ContinueGameClickAction::perform()
 {
 
 	SDL_Event event;

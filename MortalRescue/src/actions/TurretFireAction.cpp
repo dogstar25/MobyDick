@@ -4,16 +4,6 @@
 #include "GameObject.h"
 #include "SoundManager.h"
 
-TurretFireAction::TurretFireAction()
-{
-
-}
-
-TurretFireAction::~TurretFireAction()
-{
-
-}
-
 void TurretFireAction::perform(GameObject* gameObject)
 {
 

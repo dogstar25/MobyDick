@@ -4,16 +4,6 @@
 #include "../GameObject.h"
 #include "../SoundManager.h"
 
-PistolFireAction::PistolFireAction()
-{
-
-}
-
-PistolFireAction::~PistolFireAction()
-{
-
-}
-
 void PistolFireAction::perform(GameObject* gameObject)
 {
 

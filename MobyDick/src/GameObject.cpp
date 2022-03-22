@@ -166,6 +166,13 @@ void GameObject::render()
 
 			getComponent<IMGuiComponent>(ComponentTypes::IMGUI_COMPONENT)->render();
 		}
+
+		//If you have aa Action component, then render possible interaction hints
+		if (hasComponent(ComponentTypes::ACTION_COMPONENT)) {
+
+			getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT)->render();
+		}
+
 	}
 }
 

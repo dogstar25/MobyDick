@@ -78,7 +78,9 @@ void PlayerControlComponent::handleActions()
 					}
 					if (keyStates[SDL_SCANCODE_E])
 					{
-						actionComponent->performInteractAction({"test", 5.0, 1});
+						const auto& action = actionComponent->getAction(ACTION_INTERACT);
+						action->perform(parent());
+
 					}
 
 					break;
@@ -86,7 +88,8 @@ void PlayerControlComponent::handleActions()
 
 					if (m_controls.test(INPUT_CONTROL_USE))
 					{
-						actionComponent->performUseAction();
+						const auto& action = actionComponent->getAction(ACTION_USE);
+						action->perform(parent());
 					}
 
 					break;
@@ -128,26 +131,15 @@ void PlayerControlComponent::handleMovement()
 		strafe = 1;
 	}
 
-	//Keyboard movement
-	//Json::Value runtimeParms(Json::objectValue);
-	//runtimeParms["direction"] = direction;
-	//runtimeParms["strafe"] = strafe;
-
-	actionComponent->performMoveAction(direction, strafe);
+	const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
+	moveAction->perform(parent(), direction, strafe);
 
 	//Handle Mouse related movement
 	const uint32_t currentMouseStates = SDL_GetRelativeMouseState(&mouseX, &mouseY);
 	float angularVelocity = mouseX * game->contextMananger()->getMouseSensitivity();
 
-	//TEST
-	//runtimeParms.clear();
-	//runtimeParms["angularVelocity"] = angularVelocity;
-	////auto rotateAction = actionComponent->getAction(ACTION_ROTATE);
-	////rotateAction->perform(parent(), runtimeParms);
-	//auto test = runtimeParms["angularVelocity"].asFloat();
-
-	actionComponent->performRotateAction(angularVelocity);
-	//actionComponent->performRotateAction(angularVelocity, runtimeParms);
+	const auto& rotateAction = actionComponent->getAction(ACTION_ROTATE);
+	rotateAction->perform(parent(), angularVelocity);
 
 }
 

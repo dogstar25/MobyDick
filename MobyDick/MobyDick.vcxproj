@@ -264,9 +264,6 @@
     <ClCompile Include="src\actions\ContinueGameClickAction.cpp" />
     <ClCompile Include="src\actions\DefaultOnHoverAction.cpp" />
     <ClCompile Include="src\actions\InteractAction.cpp" />
-    <ClCompile Include="src\actions\MoveAction.cpp" />
-    <ClCompile Include="src\actions\RotateAction.cpp" />
-    <ClCompile Include="src\actions\ItemUsageAction.cpp" />
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\actions\NoAction.cpp" />
@@ -364,9 +361,6 @@
     <ClInclude Include="src\actions\ContinueGameClickAction.h" />
     <ClInclude Include="src\actions\DefaultOnHoverAction.h" />
     <ClInclude Include="src\actions\InteractAction.h" />
-    <ClInclude Include="src\actions\MoveAction.h" />
-    <ClInclude Include="src\actions\RotateAction.h" />
-    <ClInclude Include="src\actions\ItemUsageAction.h" />
     <ClInclude Include="src\particleEffects\BaseParticleEffects.h" />
     <ClInclude Include="src\ContactFilter.h" />
     <ClInclude Include="src\ContactListener.h" />

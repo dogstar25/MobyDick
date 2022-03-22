@@ -7,18 +7,10 @@ class InteractAction : public Action
 
 public:
 
-    InteractAction() {};
-    InteractAction(std::tuple<std::string, int, float> params) :
-        m_params(params) {}
-
-    void setParams(std::tuple<std::string, int, float> params) {
-        m_params = params;
-    }
+    InteractAction() = default;
 
     void perform(GameObject* gameObject);
 
-protected:
-    std::tuple<std::string, int, float> m_params;
 
 };
 

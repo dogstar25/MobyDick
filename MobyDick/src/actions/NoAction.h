@@ -5,8 +5,7 @@
 class NoAction :   public Action
 {
 public:
-	NoAction() {};
-	~NoAction() {};
+	NoAction() = default;
 
 	void perform(GameObject* gameObject) override {};
 

@@ -16,7 +16,12 @@ void InteractAction::perform(GameObject* gameObject)
 
 			if (contactGameObject->hasTrait(TraitTag::interactive)) {
 
-				contactGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT)->performInteractionAction();
+				const auto& contactActionComponent = contactGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+
+				const auto& action = contactActionComponent->getAction(ACTION_INTERACTION);
+				action->perform();
+
+
 
 				//const auto& actionComponent = contactGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 				//Json::Value runtimeParms(Json::objectValue);

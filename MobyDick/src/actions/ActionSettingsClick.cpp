@@ -2,16 +2,6 @@
 
 #include "../Scene.h"
 
-ActionSettingsClick::ActionSettingsClick()
-{
-
-}
-
-ActionSettingsClick::~ActionSettingsClick()
-{
-
-}
-
 void ActionSettingsClick::perform(GameObject* gameObject)
 {
 

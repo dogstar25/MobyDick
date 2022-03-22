@@ -1,14 +1,12 @@
 #pragma once
-#include "MoveAction.h"
-class DefaultMoveAction : public MoveAction
+#include "Action.h"
+class DefaultMoveAction : public Action
 {
 
 
 public:
-	DefaultMoveAction();
-	DefaultMoveAction(int direction, int strafe);
-	~DefaultMoveAction();
+	DefaultMoveAction() = default;
 
-	void perform(GameObject* gameObject) override;
+	void perform(GameObject* gameObject, int direction, int strafe) override;
 };
 

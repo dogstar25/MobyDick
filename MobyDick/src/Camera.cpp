@@ -8,7 +8,7 @@ extern std::unique_ptr<Game> game;
 Camera::Camera()
 {
 	//Get the move action that does not require a physics component
-	m_moveAction = std::dynamic_pointer_cast<MoveAction>(game->actionFactory()->create("PrimitiveMove"));
+	m_moveAction = std::dynamic_pointer_cast<Action>(game->actionFactory()->create("PrimitiveMove"));
 
 }
 
@@ -69,8 +69,7 @@ void Camera::update()
 			trajectory.y = m_currentDestination.y - getCenterPosition().y;
 			trajectory = glm::normalize(trajectory);
 
-			m_moveAction->setMoveParms(trajectory, speed * PRACTICLE_MOVE_SPEED_ADJ);
-			m_moveAction->perform(&m_frame);
+			m_moveAction->perform(&m_frame, trajectory, speed * PRACTICLE_MOVE_SPEED_ADJ);
 
 		}
 

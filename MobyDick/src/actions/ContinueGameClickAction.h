@@ -4,10 +4,9 @@ class ContinueGameClickAction :  public Action
 {
 public:
 
-	ContinueGameClickAction();
-	~ContinueGameClickAction();
+	ContinueGameClickAction() = default;
 
-	void perform(GameObject* gameObject) override;
+	void perform() override;
 
 private:
 

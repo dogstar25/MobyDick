@@ -10,8 +10,7 @@ class ActorUseAction : public UseAction
 {
 public:
 
-	ActorUseAction();
-	~ActorUseAction();
+	ActorUseAction() = default;
 
 	void perform(GameObject* gameObject) override;
 
