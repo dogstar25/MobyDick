@@ -1,15 +1,13 @@
 #pragma once
-#include "MoveAction.h"
+#include "Action.h"
 #include <SDL2/SDL.h>
 
-class PrimitiveMoveAction : public MoveAction
+class PrimitiveMoveAction : public Action
 {
 
 public:
-	PrimitiveMoveAction();
-	//ActorMoveAction(int direction, int strafe);
-	~PrimitiveMoveAction() {};
+	PrimitiveMoveAction() = default;
 
-	void perform(SDL_FRect* gameObjectRect) override;
+	void perform(SDL_FRect* gameObjectRect, glm::vec2, float force) override;
 
 };

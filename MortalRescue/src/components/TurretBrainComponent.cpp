@@ -165,8 +165,10 @@ void TurretBrainComponent::_doEngage()
 
 	if (m_fireDelayTimer.hasMetTargetDuration() && enemyTargeted == true) {
 
-		auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-		action->performUsageAction();
+		auto actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+
+		const auto& action = actionComponent->getAction(ACTION_USAGE);
+		action->perform(parent());
 
 	}
 
@@ -195,7 +197,7 @@ bool TurretBrainComponent::_rotateTowards(b2Vec2 targetPoint)
 	float rotationVelocity{ 0 };
 
 	//Get the objects action and vitality components
-	auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+	auto actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 	auto vitality = parent()->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
 	if ((desiredAngle - currentAngle) < 0.0) {
@@ -209,7 +211,9 @@ bool TurretBrainComponent::_rotateTowards(b2Vec2 targetPoint)
 
 	//Once the angle is very close then set the angle directly
 	if (difference < 0.19) {
-		action->performRotateAction(0);
+
+		const auto& action = actionComponent->getAction(ACTION_ROTATE);
+		action->perform(parent(), 0);
 		onTarget = true;
 
 		//This next code makes the aim dead on balls accurate - may be too hard
@@ -219,8 +223,8 @@ bool TurretBrainComponent::_rotateTowards(b2Vec2 targetPoint)
 
 	}
 	else {
-
-		action->performRotateAction(rotationVelocity);
+		const auto& action = actionComponent->getAction(ACTION_ROTATE);
+		action->perform(parent(), rotationVelocity);
 	}
 
 	return onTarget;

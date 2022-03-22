@@ -5,8 +5,7 @@ class UseAction : public Action
 
 public:
 
-    UseAction();
-    ~UseAction();
+    UseAction() = default;
 
     virtual void perform(GameObject* gameObject) {};
 

@@ -110,7 +110,7 @@ void GLDrawer::draw(const std::vector<SpriteVertex>& spriteVertices, const std::
 	//auto indexBufferSize = sizeof(glm::uint) * m_indexes.size();
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexBufferSize, &spriteVertexIndexes[0], GL_DYNAMIC_DRAW);
 
-	glDrawElements(GL_TRIANGLES, spriteVertexIndexes.size(), GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, (GLsizei)spriteVertexIndexes.size(), GL_UNSIGNED_INT, 0);
 
 }
 

@@ -3,12 +3,7 @@
 #include "../SceneManager.h"
 
 
-PrimitiveMoveAction::PrimitiveMoveAction() :
-	MoveAction(0,0)
-{
-
-}
-void PrimitiveMoveAction::perform(SDL_FRect* gameObjectRect)
+void PrimitiveMoveAction::perform(SDL_FRect* gameObjectRect, glm::vec2 trajectory, float force)
 {
 
 
@@ -21,8 +16,8 @@ void PrimitiveMoveAction::perform(SDL_FRect* gameObjectRect)
 	//float xVelocity = cos(angle) * (m_force * 50);
 	//float yVelocity = sin(angle) * (m_force * 50);
 
-	gameObjectRect->x += m_trajectory.x * m_force * timeFactor;
-	gameObjectRect->y += m_trajectory.y * m_force * timeFactor;
+	gameObjectRect->x += trajectory.x * force * timeFactor;
+	gameObjectRect->y += trajectory.y * force * timeFactor;
 
 
 }

@@ -4,8 +4,7 @@ class DefaultOnHoverOutAction : public Action
 {
 
 public:
-	DefaultOnHoverOutAction();
-	~DefaultOnHoverOutAction();
+	DefaultOnHoverOutAction() = default;
 
 	void perform(GameObject* gameObject) override;
 

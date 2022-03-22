@@ -5,8 +5,7 @@ class DefaultOnHoverAction : public Action
 {
 
 public:
-	DefaultOnHoverAction();
-	~DefaultOnHoverAction();
+	DefaultOnHoverAction() = default;
 
 	void perform(GameObject* gameObject) override;
 

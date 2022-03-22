@@ -3,8 +3,7 @@
 class TurretFireAction : public Action
 {
 public:
-	TurretFireAction();
-	~TurretFireAction();
+	TurretFireAction() = default;
 
 	void perform(GameObject* gameObject) override;
 

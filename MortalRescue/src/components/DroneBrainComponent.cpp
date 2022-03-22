@@ -153,8 +153,10 @@ void DroneBrainComponent::_doEngage()
 
 	//Fire eye/weapon
 	if (m_eyeFireDelayTimer.hasMetTargetDuration()) {
-		auto action = eyeGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-		action->performUsageAction();
+		auto actionComponent = eyeGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+
+		const auto& action = actionComponent->getAction(ACTION_USAGE);
+		action->perform(eyeGameObject.get());
 	}
 
 	//Navigate towards target location, unless you are already there
@@ -233,7 +235,7 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 	float rotationVelocity{ 0 };
 
 	//Get the objects action and vitality components
-	auto action = gameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+	auto actionComponent = gameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 	auto vitality = gameObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
 
@@ -249,13 +251,18 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 
 	auto difference = abs(desiredAngle - currentAngle);
 
+	const auto& action = actionComponent->getAction(ACTION_ROTATE);
+
 	//Once the angle is very close then set the angle directly
 	if (difference < 0.1) {
-		action->performRotateAction(0);
+
+		action->perform(gameObject, 0.);
+
 	}
 	else {
 		
-		action->performRotateAction(rotationVelocity);
+		action->perform(gameObject, rotationVelocity);
+
 	}
 
 }

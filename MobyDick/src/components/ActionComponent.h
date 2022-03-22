@@ -11,8 +11,6 @@
 #include <box2d/box2d.h>
 
 #include "../actions/Action.h"
-#include "../actions/MoveAction.h"
-#include "../actions/RotateAction.h"
 #include "../actions/InteractAction.h"
 #include "../actions/UseAction.h"
 #include "../actions/NoAction.h"
@@ -29,19 +27,8 @@ public:
 	ActionComponent(Json::Value definitionJSON);
 	~ActionComponent();
 
-	void update();
-
-	void performMoveAction(int direction, int strafe);
-	void performMoveAction(b2Vec2 trajectory);
-	void performRotateAction(float angularVelocity);
-	void performUseAction();
-	void performUsageAction();
-	void performInteractAction(std::tuple<std::string, int, float> params);
-	void performInteractionAction();
-	void performOnHoverAction();
-	void performOnHoverOutAction();
-	void performOnClickAction();
-	void performTriggerAction();
+	void update() override;
+	void render();
 
 	std::shared_ptr<Action> getAction(int actionId);
 

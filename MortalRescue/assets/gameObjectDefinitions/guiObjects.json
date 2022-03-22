@@ -390,8 +390,8 @@
                 },
                 {
                     "id": "IMGUI_COMPONENT",
-                    //"imguiType": "IMGuiExample",
-                    "imguiType": "IMGuiPauseWindow",
+                    "imguiType": "IMGuiExample",
+                    //"imguiType": "IMGuiPauseWindow",
                     "parms": {
                         "test": "something"
                     }
@@ -426,6 +426,35 @@
 
                 }
             ]
+
+        },
+        {
+            "id": "INTERACTIVE_HINT_BASIC",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "gui" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 255,
+                        "height": 100
+                    },
+                    "absolutePositioning": true
+
+                },
+                {
+                    "id": "IMGUI_COMPONENT",
+                    "imguiType": "IMGuiTopHud",
+                    "parms": {
+                        "test": "something"
+                    }
+
+                }
+            ]
+
 
         }
 

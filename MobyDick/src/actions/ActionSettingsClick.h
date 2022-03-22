@@ -6,8 +6,7 @@ class ActionSettingsClick : public Action
 
 public:
 
-	ActionSettingsClick();
-	~ActionSettingsClick();
+	ActionSettingsClick() = default;
 
 	void perform(GameObject* gameObject) override;
 

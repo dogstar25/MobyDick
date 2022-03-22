@@ -3,15 +3,6 @@
 
 #include "../GameObject.h"
 
-DefaultOnHoverOutAction::DefaultOnHoverOutAction()
-{
-
-}
-
-DefaultOnHoverOutAction::~DefaultOnHoverOutAction()
-{
-
-}
 
 void DefaultOnHoverOutAction::perform(GameObject* gameObject)
 {

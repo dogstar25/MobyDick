@@ -188,6 +188,7 @@
                 },
                 {
                     "id": "ACTION_COMPONENT",
+                    "interactiveHintObject": "INTERACTIVE_HINT_BASIC",
                     "actions": [
                         {
                             "actionId": "ACTION_INTERACTION",

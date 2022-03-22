@@ -293,8 +293,9 @@ void BrainComponent::executeMove()
 
 	trajectory.Normalize();
 
-	auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-	action->performMoveAction(trajectory);
+	const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+	const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
+	moveAction->perform(parent(), trajectory);
 
 	//Possibly adjust movement with small impulse moves to avoid brushing obstacles
 	//_applyAvoidanceMovement();
@@ -310,14 +311,16 @@ void BrainComponent::stopMovement()
 	b2Vec2 trajectory{ 0,0 };
 	float angularVelocity{ 0. };
 
-	auto action = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+	auto actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 
-	if (action->getAction(ACTION_MOVE)) {
-		action->performMoveAction(trajectory);
+	if (actionComponent->getAction(ACTION_MOVE)) {
+		const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
+		moveAction->perform(parent(), trajectory);
 	}
 
-	if (action->getAction(ACTION_ROTATE)) {
-		action->performRotateAction(angularVelocity);
+	if (actionComponent->getAction(ACTION_ROTATE)) {
+		const auto& moveAction = actionComponent->getAction(ACTION_ROTATE);
+		moveAction->perform(parent(), angularVelocity);
 	}
 
 

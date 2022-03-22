@@ -1,15 +1,13 @@
 #pragma once
-#include "actions/RotateAction.h"
+#include "actions/Action.h"
 
-class DroneEyeRotateAction : public RotateAction
+class DroneEyeRotateAction : public Action
 {
 
 public:
-	DroneEyeRotateAction();
-	DroneEyeRotateAction(float angularVelocity);
-	~DroneEyeRotateAction();
+	DroneEyeRotateAction() = default;
 
-	void perform(GameObject* gameObject) override;
+	void perform(GameObject* gameObject, float angularVelocity) override;
 
 
 };

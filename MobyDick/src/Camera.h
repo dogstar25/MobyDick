@@ -50,7 +50,7 @@ private:
 	float m_speed{};
 	int m_currentState{ CameraState::IDLE };
 	glm::vec2 m_currentDestination{};
-	std::shared_ptr<MoveAction> m_moveAction{};
+	std::shared_ptr<Action> m_moveAction{};
 
 
 

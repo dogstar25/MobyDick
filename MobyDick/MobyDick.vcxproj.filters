@@ -132,16 +132,7 @@
     <ClCompile Include="src\actions\ActorUseAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\actions\ItemUsageAction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\actions\InteractAction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\actions\MoveAction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\actions\RotateAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\actions\UseAction.cpp">
@@ -434,16 +425,7 @@
     <ClInclude Include="src\actions\ActorUseAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\actions\ItemUsageAction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\actions\InteractAction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\actions\MoveAction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\actions\RotateAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\actions\UseAction.h">
