@@ -19,26 +19,19 @@ IMGuiPauseWindow::IMGuiPauseWindow(std::string gameObjectId, b2Vec2 padding, ImV
 
 glm::vec2 IMGuiPauseWindow::render(GameObject* parentGameObject)
 {
-	glm::vec2 windowSize{ 1,1 };
-
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	const auto& renderComponent = parentGameObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
-
-	ImGuiStyle& style = ImGui::GetStyle();
-	style.WindowPadding = ImVec2{ 24,24 };
-
 	ImVec2 buttonSize{ ImGui::MRSettings::button1Size};
+	glm::vec2 windowSize{};
 
-	//For ImGui objects that are AutoSized by ImGui,  we need this fucked up "firstTime" flag so that ImGui behaves properly 
-	if (renderComponent->getRenderDestRect().w == 0) {
-		ImGui::SetNextWindowPos(ImVec2{ renderComponent->getRenderDestRect().x, renderComponent->getRenderDestRect().y }, ImGuiCond_FirstUseEver);
-	}
-	else {
-		ImGui::SetNextWindowPos(ImVec2{ renderComponent->getRenderDestRect().x, renderComponent->getRenderDestRect().y }, ImGuiCond_Appearing);
-	}
-	
+	const auto& renderComponent = parentGameObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	setWindowProperties(parentGameObject);
+
+	//Set Color
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, m_color);
+
+	ImGui::Begin(m_gameObjectId.c_str(), nullptr, m_flags);
 	{
-		ImGui::Begin(m_gameObjectId.c_str(), nullptr, m_flags);
 
 		ImGui::PushStyleColor(ImGuiCol_Button, ImGui::MRSettings::ButtonColor);
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::MRSettings::ButtonHoverColor);
@@ -79,10 +72,14 @@ glm::vec2 IMGuiPauseWindow::render(GameObject* parentGameObject)
 		ImGui::PopStyleColor();
 		ImGui::PopStyleColor();
 
+
 		windowSize = { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
 
-		ImGui::End();
 	}
+
+	ImGui::End();
+
+	ImGui::PopStyleColor();
 
 	return windowSize;
 
@@ -96,9 +93,9 @@ void IMGuiPauseWindow::settingsModal()
 	ImGui::SetWindowSize(m_settingsModalSize);
 
 	//Button Style
-	ImGui::PushStyleColor(ImGuiCol_Button, util::SDLColorToImVec4( MRColors::green1));
-	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, util::SDLColorToImVec4(MRColors::green2));
-	ImGui::PushStyleColor(ImGuiCol_ButtonActive, util::SDLColorToImVec4(MRColors::green1));
+	ImGui::PushStyleColor(ImGuiCol_Button, util::SDLColorToImVec4( MRColors::FOREST));
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, util::SDLColorToImVec4(MRColors::EMERALD));
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, util::SDLColorToImVec4(MRColors::FOREST));
 
 	ImGui::SameLine(24);
 	ImGui::BeginGroup();

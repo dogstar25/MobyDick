@@ -30,16 +30,13 @@ glm::vec2 IMGuiTopHud::render(GameObject* parentGameObject)
 	//Set Color
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, m_color);
 
-
 	ImGui::Begin(m_gameObjectId.c_str(), nullptr, m_flags);
 	{
-
-		//ImGui::SetWindowPos(ImVec2{ renderComponent->getRenderDestRect().x, renderComponent->getRenderDestRect().y });
 
 		hudScrapCount();
 		hudScrapBar();
 
-		glm::vec2 windowSize{ ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
+		windowSize = { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
 		
 	}
 	ImGui::End();

@@ -2,6 +2,7 @@
 #ifndef BASE_CONSTANTS_H
 #define BASE_CONSTANTS_H
 
+#include <SDL2/SDL.h>
 
 
 inline constexpr int CHILD_POSITIONS = 9;
@@ -25,6 +26,17 @@ inline constexpr int MOUSE_CLICKED = 3;
 inline constexpr int CONTROL_MODE_SELECT = 0;
 inline constexpr int CONTROL_MODE_PLAY = 1;
 inline constexpr int CONTROL_MODE_IMGUI = 2;
+
+
+namespace MRColors {
+
+	inline SDL_Color RED = { 255, 0, 0, 255 };
+	inline SDL_Color GREEN = { 0, 255, 0, 255 };
+	inline SDL_Color BLUE = { 0, 0, 255, 255 };
+	
+}
+
+
 
 //Game Object Collision Tags
 namespace CollisionTag {

@@ -9,9 +9,9 @@ namespace ImGui
 {
 	namespace MRSettings {
 
-		inline static ImVec4 ButtonColor{ util::SDLColorToImVec4(MRColors::grey2) };
-		inline static ImVec4 ButtonHoverColor{ util::SDLColorToImVec4(MRColors::grey1) };
-		inline static ImVec4 ButtonActiveColor{ util::SDLColorToImVec4(MRColors::green1) };
+		inline static ImVec4 ButtonColor{ util::SDLColorToImVec4(MRColors::MIRKWOOD) };
+		inline static ImVec4 ButtonHoverColor{ util::SDLColorToImVec4(MRColors::CHARCOAL) };
+		inline static ImVec4 ButtonActiveColor{ util::SDLColorToImVec4(MRColors::FOREST) };
 
 		inline static ImVec2 button1Size{ 128,32 };
 

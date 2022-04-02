@@ -62,6 +62,7 @@ void IMGuiItem::setWindowProperties(GameObject* parentGameObject)
 	//If this is NOT autosized, then set the size as defined by the component
 	else {
 		ImGui::SetNextWindowSize(ImVec2{ renderComponent->getRenderDestRect().w, renderComponent->getRenderDestRect().h });
+		ImGui::SetNextWindowPos(ImVec2{ renderComponent->getRenderDestRect().x, renderComponent->getRenderDestRect().y });
 	}
 
 	//Set window padding

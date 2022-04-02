@@ -57,22 +57,33 @@
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 175,
+                        "height": 200
+                    },
                     "absolutePositioning": true
                 },
                 {
                     "id": "IMGUI_COMPONENT",
-                    "imguiType": "IMGuiTopHud",
+                    "imguiType": "IMGuiPauseWindow",
+                    "color": {
+                        "background": "Palette::lime",
+                        "text": "Palette::sunlight",
+                        "button": "Palette::sunlight",
+                        "buttonHover": "Palette::sunlight",
+                        "buttonActive": "Palette::sunlight"
+                    },
                     "padding": {
                         "x": 24,
                         "y": 24
                     },
-                    "color": {
-                        "red": 255,
-                        "green": 0,
-                        "blue": 0,
-                        "alpha": 255
-                    },
-                    "autoSize": true
+                    //"color": {
+                    //    "red": 39,
+                    //    "green": 52,
+                    //    "blue": 39,
+                    //    "alpha": 225
+                    //},
+                    "autoSize": false
 
                 }
             ]

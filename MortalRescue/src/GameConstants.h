@@ -4,12 +4,21 @@
 
 namespace MRColors {
 
-	inline SDL_Color green1 = { 10, 75, 10, 255 };
-	inline SDL_Color green2 = { 10, 125, 10, 255 };
-	inline SDL_Color grey1 = { 25, 25, 25, 255 };
-	inline SDL_Color grey2 = { 39, 52, 39, 255 };
-}
+	//green
+	inline SDL_Color FOREST = { 10, 75, 10, 255 };
+	inline SDL_Color EMERALD = { 10, 125, 10, 255 };
 
+	//grey / dark
+	inline SDL_Color CHARCOAL = { 25, 25, 25, 255 };
+	inline SDL_Color MIRKWOOD = { 39, 52, 39, 255 };
+
+	inline int ALPHA25 = { 64 };
+	inline int ALPHA50 = { 128 };
+	inline int ALPHA65 = { 167 };
+	inline int ALPHA75 = { 192 };
+	inline int ALPHA85 = { 218 };
+	inline int ALPHA100 = { 256 };
+}
 
 namespace CollisionTag {
 	
