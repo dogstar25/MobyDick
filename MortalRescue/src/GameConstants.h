@@ -1,16 +1,24 @@
  #pragma once
 #include "BaseConstants.h"
-#include "imgui_impl_sdl.h"
-#include "imgui_impl_sdlrenderer.h"
+#include "imgui.h"
 
 namespace MRColors {
 
-	inline ImVec4 green1 = { 0.039, 0.29, 0.039, 0.80 };
-	inline ImVec4 green2 = { 0.039, 0.49, 0.039, 0.50 };
-	inline ImVec4 grey1 = { 0.1, 0.1, 0.1, 0.5 };
-	inline ImVec4 grey2 = { 0.15, 0.2, 0.15, 0.5 };
-}
+	//green
+	inline SDL_Color FOREST = { 10, 75, 10, 255 };
+	inline SDL_Color EMERALD = { 10, 125, 10, 255 };
 
+	//grey / dark
+	inline SDL_Color CHARCOAL = { 25, 25, 25, 255 };
+	inline SDL_Color MIRKWOOD = { 39, 52, 39, 255 };
+
+	inline int ALPHA25 = { 64 };
+	inline int ALPHA50 = { 128 };
+	inline int ALPHA65 = { 167 };
+	inline int ALPHA75 = { 192 };
+	inline int ALPHA85 = { 218 };
+	inline int ALPHA100 = { 256 };
+}
 
 namespace CollisionTag {
 	

@@ -10,29 +10,28 @@
 extern std::unique_ptr<Game> game;
 
 
-IMGuiPauseWindow::IMGuiPauseWindow(Json::Value params, std::string windowName) :
-	IMGuiItem(params, windowName)
+IMGuiPauseWindow::IMGuiPauseWindow(std::string gameObjectId, b2Vec2 padding, ImVec4 color, bool autoSize) :
+	IMGuiItem(gameObjectId, padding, color, autoSize)
 {
-	m_flags = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
+	m_flags = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize;
 
 }
 
-glm::vec2 IMGuiPauseWindow::render(SDL_FRect destRect)
+glm::vec2 IMGuiPauseWindow::render(GameObject* parentGameObject)
 {
-	glm::vec2 windowSize{ 1,1 };
-
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	
 	ImVec2 buttonSize{ ImGui::MRSettings::button1Size};
+	glm::vec2 windowSize{};
 
-	//Window Size
-	ImGui::SetNextWindowSize(ImVec2{ destRect.w, destRect.h });
+	const auto& renderComponent = parentGameObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-	bool show = true;
+	setWindowProperties(parentGameObject);
+
+	//Set Color
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, m_color);
+
+	ImGui::Begin(m_gameObjectId.c_str(), nullptr, m_flags);
 	{
-		ImGui::Begin(m_name.c_str(), &show, m_flags);
-
-		ImGui::SetWindowPos(ImVec2{ destRect.x, destRect.y });
 
 		ImGui::PushStyleColor(ImGuiCol_Button, ImGui::MRSettings::ButtonColor);
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::MRSettings::ButtonHoverColor);
@@ -40,9 +39,6 @@ glm::vec2 IMGuiPauseWindow::render(SDL_FRect destRect)
 
 		//top window spacing
 		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
-
-		ImGui::SameLine((destRect.w - ImGui::MRSettings::button1Size.x) / 2);
-		ImGui::BeginGroup();
 
 		//Continue Button
 		if (ImGui::Button("Continue", ImGui::MRSettings::button1Size)) {
@@ -76,12 +72,14 @@ glm::vec2 IMGuiPauseWindow::render(SDL_FRect destRect)
 		ImGui::PopStyleColor();
 		ImGui::PopStyleColor();
 
-		ImGui::EndGroup();
 
 		windowSize = { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
 
-		ImGui::End();
 	}
+
+	ImGui::End();
+
+	ImGui::PopStyleColor();
 
 	return windowSize;
 
@@ -95,9 +93,9 @@ void IMGuiPauseWindow::settingsModal()
 	ImGui::SetWindowSize(m_settingsModalSize);
 
 	//Button Style
-	ImGui::PushStyleColor(ImGuiCol_Button, MRColors::green1);
-	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, MRColors::green2);
-	ImGui::PushStyleColor(ImGuiCol_ButtonActive, MRColors::green1);
+	ImGui::PushStyleColor(ImGuiCol_Button, util::SDLColorToImVec4( MRColors::FOREST));
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, util::SDLColorToImVec4(MRColors::EMERALD));
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, util::SDLColorToImVec4(MRColors::FOREST));
 
 	ImGui::SameLine(24);
 	ImGui::BeginGroup();

@@ -191,7 +191,6 @@
     <ClCompile Include="src\cutScenes\CutSceneDiscoverTreasure.cpp" />
     <ClCompile Include="src\cutScenes\MRCutSceneFactory.cpp" />
     <ClCompile Include="src\IMGui\IMGuiPauseWindow.cpp" />
-    <ClCompile Include="src\IMGui\IMGuiSettings.cpp" />
     <ClCompile Include="src\IMGui\IMGuiTopHud.cpp" />
     <ClCompile Include="src\IMGui\MR_IMGuiUtil.cpp" />
     <ClCompile Include="src\IMGui\MR_IMGuiFactory.cpp" />
@@ -279,6 +278,11 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\arial.ttf" />
+    <Font Include="assets\fonts\AtariFontFullVersion-ZJ23.ttf" />
+    <Font Include="assets\fonts\conthrax-sb.ttf" />
+    <Font Include="assets\fonts\DroidSans.ttf" />
+    <Font Include="assets\fonts\ProggyClean.ttf" />
+    <Font Include="assets\fonts\Roboto-Medium.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\actions\MRActionFactory.h" />
@@ -290,7 +294,6 @@
     <ClInclude Include="src\cutScenes\CutSceneDiscoverTreasure.h" />
     <ClInclude Include="src\cutScenes\MRCutSceneFactory.h" />
     <ClInclude Include="src\IMGui\IMGuiPauseWindow.h" />
-    <ClInclude Include="src\IMGui\IMGuiSettings.h" />
     <ClInclude Include="src\IMGui\MR_IMGuiUtil.h" />
     <ClInclude Include="src\IMGui\MR_IMGuiFactory.h" />
     <ClInclude Include="src\IMGui\IMGuiTopHud.h" />

@@ -1,337 +1,6 @@
 {
     "gameObjects": [
         {
-            "id": "GUI_PAUSE_PANEL",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_WHITE_QUAD",
-                    "color": {
-                        "red": 0,
-                        "green": 0,
-                        "blue": 0,
-                        "alpha": 255
-                    },
-                    "outline": {
-                        "thickness": 1,
-                        "color": {
-                            "red": 255,
-                            "green": 255,
-                            "blue": 255,
-                            "alpha": 255
-                        }
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 176,
-                        "height": 164
-                    },
-                    "absolutePositioning": true,
-                    "centeredPositioning": true
-                },
-                {
-                    "id": "CHILDREN_COMPONENT",
-                    "childPadding": 8,
-                    "childPositionRelative": false,
-                    "childObjects": [
-                        {
-                            "gameObjectId": "CONTINUE_BUTTON",
-                            "locationSlot": 5
-                        },
-                        {
-                            "gameObjectId": "QUIT_BUTTON",
-                            "locationSlot": 5
-                        },
-                        {
-                            "gameObjectId": "SETTINGS_BUTTON",
-                            "locationSlot": 5
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "id": "CONTINUE_BUTTON",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_WHITE_QUAD",
-                    "color": {
-                        "red": 0,
-                        "green": 0,
-                        "blue": 0,
-                        "alpha": 255
-                    },
-                    "outline": {
-                        "thickness": 1,
-                        "color": {
-                            "red": 255,
-                            "green": 255,
-                            "blue": 255,
-                            "alpha": 255
-                        }
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 128,
-                        "height": 32
-                    },
-                    "absolutePositioning": true
-                },
-                {
-                    "id": "CHILDREN_COMPONENT",
-                    "childObjects": [
-                        {
-                            "gameObjectId": "CONTINUE_LABEL",
-                            "locationSlot": 5
-                        }
-                    ]
-                },
-                {
-                    "id": "UICONTROL_COMPONENT",
-                    "controls": [
-                        "INPUT_CONTROL_HOVER",
-                        "INPUT_CONTROL_CLICK"
-                    ]
-                },
-                {
-                    "id": "ACTION_COMPONENT",
-                    "actions": [
-                        {
-                            "actionId": "ACTION_ON_HOVER",
-                            "actionClass": "DefaultHover"
-                        },
-                        {
-                            "actionId": "ACTION_ON_HOVER_OUT",
-                            "actionClass": "DefaultHoverOut"
-                        },
-                        {
-                            "actionId": "ACTION_ON_CLICK",
-                            "actionClass": "ContinueClick"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "id": "QUIT_BUTTON",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_WHITE_QUAD",
-                    "color": {
-                        "red": 0,
-                        "green": 0,
-                        "blue": 0,
-                        "alpha": 255
-                    },
-                    "outline": {
-                        "thickness": 1,
-                        "color": {
-                            "red": 255,
-                            "green": 255,
-                            "blue": 255,
-                            "alpha": 255
-                        }
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 128,
-                        "height": 32
-                    },
-                    "absolutePositioning": true
-                },
-                {
-                    "id": "CHILDREN_COMPONENT",
-                    "childObjects": [
-                        {
-                            "gameObjectId": "QUIT_LABEL",
-                            "locationSlot": 5
-                        }
-                    ]
-                },
-                {
-                    "id": "UICONTROL_COMPONENT",
-                    "controls": [
-                        "INPUT_CONTROL_HOVER",
-                        "INPUT_CONTROL_CLICK"
-                    ]
-                },
-                {
-                    "id": "ACTION_COMPONENT",
-                    "actions": [
-                        {
-                            "actionId": "ACTION_ON_HOVER",
-                            "actionClass": "DefaultHover"
-                        },
-                        {
-                            "actionId": "ACTION_ON_HOVER_OUT",
-                            "actionClass": "DefaultHoverOut"
-                        },
-                        {
-                            "actionId": "ACTION_ON_CLICK",
-                            "actionClass": "QuitClick"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "id": "SETTINGS_BUTTON",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_WHITE_QUAD",
-                    "color": {
-                        "red": 0,
-                        "green": 0,
-                        "blue": 0,
-                        "alpha": 255
-                    },
-                    "outline": {
-                        "thickness": 1,
-                        "color": {
-                            "red": 255,
-                            "green": 255,
-                            "blue": 255,
-                            "alpha": 255
-                        }
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 128,
-                        "height": 32
-                    },
-                    "absolutePositioning": true
-                },
-                {
-                    "id": "CHILDREN_COMPONENT",
-                    "childObjects": [
-                        {
-                            "gameObjectId": "SETTINGS_LABEL",
-                            "locationSlot": 5
-                        }
-                    ]
-                },
-                {
-                    "id": "UICONTROL_COMPONENT",
-                    "controls": [
-                        "INPUT_CONTROL_HOVER",
-                        "INPUT_CONTROL_CLICK"
-                    ]
-                },
-                {
-                    "id": "ACTION_COMPONENT",
-                    "actions": [
-                        {
-                            "actionId": "ACTION_ON_CLICK",
-                            "actionClass": "SettingsClick"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "id": "CONTINUE_LABEL",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "absolutePositioning": true
-                },
-                {
-                    "id": "TEXT_COMPONENT",
-                    "value": "Continue",
-                    "dynamic": false,
-                    "font": "FONT_ARIAL_REG",
-                    "fontSize": 22
-                }
-            ]
-        },
-        {
-            "id": "QUIT_LABEL",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "absolutePositioning": true
-                },
-                {
-                    "id": "TEXT_COMPONENT",
-                    "value": "Quit",
-                    "dynamic": false,
-                    "font": "FONT_ARIAL_REG",
-                    "fontSize": 22
-                }
-            ]
-        },
-        {
-            "id": "SETTINGS_LABEL",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "absolutePositioning": true
-                },
-                {
-                    "id": "TEXT_COMPONENT",
-                    "value": "Settings",
-                    "dynamic": false,
-                    "font": "FONT_ARIAL_REG",
-                    "fontSize": 22
-                }
-            ]
-        },
-        {
-            "id": "PLAYERDEATH_LABEL",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "absolutePositioning": true
-                },
-                {
-                    "id": "TEXT_COMPONENT",
-                    "value": "Player Has Died!",
-                    "dynamic": false,
-                    "font": "FONT_ARIAL_REG",
-                    "fontSize": 22
-                }
-            ]
-        },
-        {
             "id": "IMGUI_EXAMPLE_PANEL",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
@@ -363,13 +32,20 @@
                 {
                     "id": "IMGUI_COMPONENT",
                     "imguiType": "IMGuiText",
-                    "parms": {
-                        "label": "Player 1"
+                    "staticText": "Player 1",
+                    "autoSize": true,
+                    "color": {
+                        "red": 255,
+                        "green": 0,
+                        "blue": 0,
+                        "alpha": 255
+                    },
+                    "padding": {
+                        "x": 8,
+                        "y": 8
                     }
-
                 }
             ]
-
         },
         {
             "id": "IMGUI_PAUSE_WINDOW",
@@ -382,19 +58,32 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 176,
-                        "height": 156
+                        "width": 175,
+                        "height": 200
                     },
                     "absolutePositioning": true
-
                 },
                 {
                     "id": "IMGUI_COMPONENT",
-                    "imguiType": "IMGuiExample",
-                    //"imguiType": "IMGuiPauseWindow",
-                    "parms": {
-                        "test": "something"
-                    }
+                    "imguiType": "IMGuiPauseWindow",
+                    "color": {
+                        "background": "Palette::lime",
+                        "text": "Palette::sunlight",
+                        "button": "Palette::sunlight",
+                        "buttonHover": "Palette::sunlight",
+                        "buttonActive": "Palette::sunlight"
+                    },
+                    "padding": {
+                        "x": 24,
+                        "y": 24
+                    },
+                    //"color": {
+                    //    "red": 39,
+                    //    "green": 52,
+                    //    "blue": 39,
+                    //    "alpha": 225
+                    //},
+                    "autoSize": false
 
                 }
             ]
@@ -412,7 +101,7 @@
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
                         "width": 255,
-                        "height": 100
+                        "height": 112
                     },
                     "absolutePositioning": true
 
@@ -420,9 +109,17 @@
                 {
                     "id": "IMGUI_COMPONENT",
                     "imguiType": "IMGuiTopHud",
-                    "parms": {
-                        "test": "something"
-                    }
+                    "padding": {
+                        "x": 24,
+                        "y": 24
+                    },
+                    "color": {
+                        "red": 10,
+                        "green": 75,
+                        "blue": 10,
+                        "alpha": 255
+                    },
+                    "autoSize": false
 
                 }
             ]
@@ -431,25 +128,27 @@
         {
             "id": "INTERACTIVE_HINT_BASIC",
             "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
+            "traitTags": [ "abstract" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 255,
-                        "height": 100
-                    },
                     "absolutePositioning": true
-
                 },
                 {
                     "id": "IMGUI_COMPONENT",
-                    "imguiType": "IMGuiTopHud",
-                    "parms": {
-                        "test": "something"
+                    "imguiType": "IMGuiHintBasic",
+                    "padding": {
+                        "x": 4,
+                        "y": 4
+                    },
+                    "color": {
+                        "red": 0,
+                        "green": 0,
+                        "blue": 0,
+                        "alpha": 200
                     }
 
                 }

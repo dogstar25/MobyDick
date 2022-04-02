@@ -12,11 +12,7 @@ class IMGuiExample : public IMGuiItem
 {
 public:
 	IMGuiExample() = default;
-	IMGuiExample(Json::Value params, std::string windowName) :
-		IMGuiItem(params, windowName) {};
-	glm::vec2 render(SDL_FRect destRect) override;
-
-	ImFont* m_font{};
+	glm::vec2 render(GameObject* parentGameObject) override;
 
 private:
 	bool show_another_window = true;

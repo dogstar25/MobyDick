@@ -12,8 +12,8 @@ class IMGuiTopHud : public IMGuiItem{
 
 public:
 	IMGuiTopHud() = default;
-	IMGuiTopHud(Json::Value params, std::string windowName);
-	glm::vec2 render(SDL_FRect destRect) override;
+	IMGuiTopHud(std::string gameObjectId, b2Vec2 padding, ImVec4 color, bool autoSize);
+	glm::vec2 render(GameObject* parentGameObject) override;
 
 private:
 

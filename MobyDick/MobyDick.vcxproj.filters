@@ -303,6 +303,9 @@
     <ClCompile Include="src\IMGui\IMGuiUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\IMGui\IMGuiHintBasic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation.h">
@@ -606,6 +609,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\IMGui\IMGuiUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IMGui\IMGuiHintBasic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

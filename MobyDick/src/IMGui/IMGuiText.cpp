@@ -12,41 +12,41 @@
 extern std::unique_ptr<Game> game;
 
 
-IMGuiText::IMGuiText(Json::Value params, std::string windowName):
-	IMGuiItem(params, windowName)
+IMGuiText::IMGuiText(std::string gameObjectId, b2Vec2 padding, ImVec4 color, bool autoSize, std::string staticTextValue):
+	IMGuiItem(gameObjectId, padding, color, autoSize)
 {
 
-	m_label = params["label"].asString();
+	m_staticTextValue = staticTextValue;
 
-	m_flags = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs | 
-		ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoBackground;
+	m_flags = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_NoBackground;
 
 }
 
-glm::vec2 IMGuiText::render(SDL_FRect destRect)
+glm::vec2 IMGuiText::render(GameObject* parentGameObject)
 {
-	//reference to io
+	glm::vec2 windowSize{};
+
+	const auto& renderComponent = parentGameObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-	//Set style for a textItem
-	ImGuiStyle& style = ImGui::GetStyle();
-	style.WindowMinSize = ImVec2{ 12,12 };
-	style.WindowPadding = ImVec2{ 8,8 };
-	
-	///
-	/// BEGIN ImGui Window
-	///
-	ImGui::Begin(m_name.c_str(), nullptr, m_flags);
+	setWindowProperties(parentGameObject);
 
-	ImGui::SetWindowPos(ImVec2{ destRect.x, destRect.y });
+	//Set color
+	ImGui::PushStyleColor(ImGuiCol_Text, m_color);
 
-	ImGui::Text(m_label.c_str());
+	//Build the window
+	ImGui::Begin(m_gameObjectId.c_str(), nullptr, m_flags);
+	{
+		ImGui::SetWindowPos(ImVec2{ renderComponent->getRenderDestRect().x, renderComponent->getRenderDestRect().y });
 
-	glm::vec2 windowSize{ ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
+		ImGui::Text(m_staticTextValue.c_str());
+
+		windowSize = { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
+	}
 	ImGui::End();
-	///
-	/// END ImGui Window
-	///
+
+	//pop color style
+	ImGui::PopStyleColor();
 
 	return windowSize;
 

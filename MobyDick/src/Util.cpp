@@ -1,7 +1,6 @@
 #include "Util.h"
 
 #include "EnumMaps.h"
-
 #include <random>
 #include <format>
 
@@ -102,13 +101,34 @@ namespace util
 
 	}
 
-	const SDL_Color JsonToColor(Json::Value JsonColor) {
+	const SDL_Color JsonToColor(Json::Value JsonColor) 
+	{
 
 		SDL_Color color;
 		color.r = JsonColor["red"].asInt();
 		color.b= JsonColor["blue"].asInt();
 		color.g = JsonColor["green"].asInt();
 		color.a = JsonColor["alpha"].asInt();
+
+		return color;
+
+	}
+
+	const ImVec4 JsonToImVec4Color(Json::Value JsonColor) 
+	{
+
+		SDL_Color sdlColor = JsonToColor(JsonColor);
+
+		ImVec4 color = { (float)sdlColor.r / 255, (float)sdlColor.g / 255, (float)sdlColor.b / 255, (float)sdlColor.a / 255 };
+
+		return color;
+
+	}
+
+	const ImVec4 SDLColorToImVec4(SDL_Color sdlColor) 
+	{
+
+		ImVec4 color = { (float)sdlColor.r / 255, (float)sdlColor.g / 255, (float)sdlColor.b / 255, (float)sdlColor.a / 255 };
 
 		return color;
 

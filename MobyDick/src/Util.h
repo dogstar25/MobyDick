@@ -9,6 +9,11 @@
 #include <box2d/box2d.h>
 #include "glm/glm.hpp"
 #include <glm/gtc/matrix_transform.hpp>
+#include "imgui_impl_sdl.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_sdlrenderer.h"
+
+
 
 /*
 Overloaded operators used throught the game
@@ -43,6 +48,8 @@ namespace util
 	glm::vec2 glNormalizeTextureCoords(glm::vec2 textureCoords, glm::vec2 textureSize);
 	glm::vec4 glNormalizeColor(const SDL_Color& color);
 	glm::vec4 glNormalizeColor(const glm::uvec4& color);
+	const ImVec4 JsonToImVec4Color(Json::Value JsonColor);
+	const ImVec4 SDLColorToImVec4(SDL_Color sdlColor);
 	b2Vec2& toBox2dPoint(b2Vec2& point);
 	b2Vec2& toRenderPoint(b2Vec2& point);
 	glm::vec2& toRenderPoint(glm::vec2& point);

@@ -5,14 +5,16 @@
 
 void InteractAction::perform(GameObject* gameObject)
 {
+
 	const std::shared_ptr<PhysicsComponent> physicsComponent = gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 
 	for (b2ContactEdge* edge = physicsComponent->physicsBody()->GetContactList(); edge; edge = edge->next)
 	{
 		b2Contact* contact = edge->contact;
+		GameObject* contactGameObject = reinterpret_cast<GameObject*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
 
 		if (contact->IsTouching()) {
-			GameObject* contactGameObject = reinterpret_cast<GameObject*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
+			
 
 			if (contactGameObject->hasTrait(TraitTag::interactive)) {
 
