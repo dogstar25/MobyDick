@@ -50,6 +50,7 @@ public:
 
 	void addLine(glm::vec2 pointA, glm::vec2 pointB, glm::uvec4 color);
 	void addLine(PrimitiveLine line);
+	void drawPoints(std::vector<SDL_FPoint> points, SDL_Color color = { 255,255,255,255 });
 	
 
 	//SDL Specific stuff

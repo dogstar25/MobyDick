@@ -8,11 +8,11 @@ class IMGuiText : public IMGuiItem
 {
 public:
 	IMGuiText() = default;
-	IMGuiText(Json::Value params, std::string windowName);
-	glm::vec2 render(SDL_FRect destRect) override;
+	IMGuiText(std::string gameObjectId, b2Vec2 padding, ImVec4 color, bool autoSize, std::string staticTextValue);
+	glm::vec2 render(GameObject* parentGameObject) override;
 
 private:
 
-	std::string m_label;
+	std::string m_staticTextValue{};
 
 };

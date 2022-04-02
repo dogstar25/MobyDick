@@ -6,6 +6,9 @@
 #include "game.h"
 #include "EnumMaps.h"
 
+#include "imgui_impl_sdl.h"
+#include "imgui_impl_sdlrenderer.h"
+
 
 extern std::unique_ptr<Game> game;
 
@@ -93,6 +96,66 @@ void GameObject::setPosition(b2Vec2 position, float angle)
 
 }
 
+
+void GameObject::setPosition(PositionAlignment windowPosition)
+{
+	float xMapPos{};
+	float yMapPos{};
+
+	auto objectWidth = getSize().x;
+	auto objectHeight = getSize().y;
+
+	if (windowPosition == PositionAlignment::CENTER) {
+
+		xMapPos = (float)GameConfig::instance().windowWidth() / 2;
+		yMapPos = (float)GameConfig::instance().windowHeight() / 2;
+
+	}
+	else if (windowPosition == PositionAlignment::TOP_CENTER) {
+
+		xMapPos = (float)GameConfig::instance().windowWidth() / 2;
+		yMapPos = (objectHeight / 2);
+	}
+	else if (windowPosition == PositionAlignment::TOP_LEFT) {
+
+		xMapPos = (objectWidth / 2);
+		yMapPos = (objectHeight / 2);
+	}
+	else if (windowPosition == PositionAlignment::TOP_RIGHT) {
+
+		xMapPos = (float)(GameConfig::instance().windowWidth() - (objectWidth / 2));
+		yMapPos = (objectHeight / 2);
+	}
+	else if (windowPosition == PositionAlignment::CENTER_LEFT) {
+
+		xMapPos = (objectWidth / 2);
+		yMapPos = (float)GameConfig::instance().windowHeight() / 2;
+	}
+	else if (windowPosition == PositionAlignment::CENTER_RIGHT) {
+
+		xMapPos = (float)(GameConfig::instance().windowWidth() - (objectWidth / 2));
+		yMapPos = (float)GameConfig::instance().windowHeight() / 2;
+	}
+	else if (windowPosition == PositionAlignment::BOTTOM_LEFT) {
+
+		xMapPos = (objectWidth / 2);
+		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight);
+	}
+	else if (windowPosition == PositionAlignment::BOTTOM_CENTER) {
+
+		xMapPos = (float)(GameConfig::instance().windowWidth() / 2);
+		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight);
+	}
+	else if (windowPosition == PositionAlignment::BOTTOM_RIGHT) {
+
+		xMapPos = (float)(GameConfig::instance().windowWidth() - (objectWidth / 2));
+		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight);
+	}
+
+	setPosition(xMapPos, yMapPos);
+
+
+}
 
 void GameObject::update()
 {
@@ -317,6 +380,39 @@ std::string GameObject::_buildName(std::string id, float xMapPos, float yMapPos,
 	return name;
 
 }
+
+bool GameObject::isPointingAt(SDL_FPoint gameObjectPosition)
+{
+
+	const std::shared_ptr<PhysicsComponent> physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	//const std::shared_ptr<PhysicsComponent> referenceObjectPhysicsComponent = gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+
+	ImGui::Begin("debug");
+
+	float hostAngleDegrees = util::radiansToDegrees(physicsComponent->angle());
+	ImGui::Value("PlayerAngle", hostAngleDegrees);
+	
+	float orientationAngle = atan2(getCenterPosition().y - gameObjectPosition.y, getCenterPosition().x - gameObjectPosition.x);
+	float orientationAngleDegrees = util::radiansToDegrees(orientationAngle);
+
+	ImGui::Value("Orientation Angle", orientationAngleDegrees);
+	ImGui::Value("Is Pointing calc", hostAngleDegrees - orientationAngleDegrees);
+
+	ImGui::End();
+
+
+	if ((hostAngleDegrees - orientationAngleDegrees) >= 140 &&
+		(hostAngleDegrees - orientationAngleDegrees) <= 220) {
+
+		return true;
+	}
+	else {
+		return false;
+	}
+
+
+}
+
 
 void GameObject::dispatch(SDL_FPoint destination)
 {

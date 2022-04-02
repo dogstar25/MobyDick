@@ -229,6 +229,7 @@
     <ClCompile Include="src\HudManager.cpp" />
     <ClCompile Include="src\IMGui\IMGuiExample.cpp" />
     <ClCompile Include="src\IMGui\IMGuiFactory.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiHintBasic.cpp" />
     <ClCompile Include="src\IMGui\IMGuiItem.cpp" />
     <ClCompile Include="src\IMGui\IMGuiText.cpp" />
     <ClCompile Include="src\IMGui\IMGuiUtil.cpp" />
@@ -327,6 +328,7 @@
     <ClInclude Include="src\HudManager.h" />
     <ClInclude Include="src\IMGui\IMGuiExample.h" />
     <ClInclude Include="src\IMGui\IMGuiFactory.h" />
+    <ClInclude Include="src\IMGui\IMGuiHintBasic.h" />
     <ClInclude Include="src\IMGui\IMGuiItem.h" />
     <ClInclude Include="src\IMGui\IMGuiText.h" />
     <ClInclude Include="src\IMGui\IMGuiUtil.h" />

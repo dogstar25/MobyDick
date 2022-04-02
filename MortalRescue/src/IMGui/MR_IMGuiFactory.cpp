@@ -1,5 +1,4 @@
 #include "MR_IMGuiFactory.h"
-#include "IMGuiSettings.h"
 #include "IMGuiPauseWindow.h"
 #include "IMGuiTopHud.h"
 
@@ -11,24 +10,20 @@ MR_IMGuiFactory::MR_IMGuiFactory()
 }
 
 
-std::shared_ptr<IMGuiItem> MR_IMGuiFactory::create(std::string iMGuiItemType, std::string gameObjectName, Json::Value parms)
+std::shared_ptr<IMGuiItem> MR_IMGuiFactory::create(std::string iMGuiItemType, std::string gameObjectId, b2Vec2 padding, ImVec4 color, bool autoSize, std::string staticTextValue)
 {
 	std::shared_ptr<IMGuiItem> iMGuiItem;
 
-	if (iMGuiItemType == "IMGuiSettings") {
-
-		iMGuiItem = std::make_shared<IMGuiSettings>();
-	}
-	else if (iMGuiItemType == "IMGuiPauseWindow") {
-		iMGuiItem = std::make_shared<IMGuiPauseWindow>(parms, gameObjectName);
+	if (iMGuiItemType == "IMGuiPauseWindow") {
+		iMGuiItem = std::make_shared<IMGuiPauseWindow>(gameObjectId, padding, color, autoSize);
 	}
 	else if (iMGuiItemType == "IMGuiTopHud") {
-		iMGuiItem = std::make_shared<IMGuiTopHud>(parms, gameObjectName);
+		iMGuiItem = std::make_shared<IMGuiTopHud>(gameObjectId, padding, color, autoSize);
 	}
 	
 	else {
 
-		iMGuiItem = IMGuiFactory::create(iMGuiItemType, gameObjectName, parms);
+		iMGuiItem = IMGuiFactory::create(iMGuiItemType, gameObjectId, padding, color, autoSize, staticTextValue);
 
 	}
 

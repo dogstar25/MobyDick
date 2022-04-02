@@ -18,8 +18,8 @@ class IMGuiPauseWindow : public IMGuiItem
 {
 public:
 	IMGuiPauseWindow() = default;
-	IMGuiPauseWindow(Json::Value params, std::string windowName);
-	glm::vec2 render(SDL_FRect destRect) override;
+	IMGuiPauseWindow(std::string gameObjectId, b2Vec2 padding, ImVec4 color, bool autoSize);
+	glm::vec2 render(GameObject* parentGameObject) override;
 	void sendSceneCloseEvent();
 	void settingsModal();
 	void sendQuitEvent();

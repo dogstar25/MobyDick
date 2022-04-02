@@ -25,7 +25,7 @@ std::shared_ptr<Component> ComponentFactory::create(
 			break;
 		case ComponentTypes::ACTION_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::ACTION_COMPONENT);
-			component = std::make_shared<ActionComponent>(componentJSON);
+			component = std::make_shared<ActionComponent>(componentJSON, scene);
 			break;
 		case ComponentTypes::ATTACHMENTS_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::ATTACHMENTS_COMPONENT);

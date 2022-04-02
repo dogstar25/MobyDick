@@ -57,9 +57,6 @@
     <ClCompile Include="src\cutScenes\CutSceneDiscoverTreasure.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\IMGui\IMGuiSettings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\IMGui\MR_IMGuiFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -238,6 +235,11 @@
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\arial.ttf" />
+    <Font Include="assets\fonts\AtariFontFullVersion-ZJ23.ttf" />
+    <Font Include="assets\fonts\conthrax-sb.ttf" />
+    <Font Include="assets\fonts\DroidSans.ttf" />
+    <Font Include="assets\fonts\ProggyClean.ttf" />
+    <Font Include="assets\fonts\Roboto-Medium.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\components\DroneBrainComponent.h">
@@ -283,9 +285,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\cutScenes\CutSceneDiscoverTreasure.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\IMGui\IMGuiSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\IMGui\MR_IMGuiFactory.h">

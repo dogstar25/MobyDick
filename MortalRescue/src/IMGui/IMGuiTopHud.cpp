@@ -8,47 +8,44 @@
 
 extern std::unique_ptr<Game> game;
 
-IMGuiTopHud::IMGuiTopHud(Json::Value params, std::string windowName):
-	IMGuiItem(params, windowName)
+IMGuiTopHud::IMGuiTopHud(std::string gameObjectId, b2Vec2 padding, ImVec4 color, bool autoSize) :
+	IMGuiItem(gameObjectId, padding, color, autoSize)
 {
 
 	m_flags = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
 
 }
 
-glm::vec2 IMGuiTopHud::render(SDL_FRect destRect)
+glm::vec2 IMGuiTopHud::render(GameObject* parentGameObject)
 {
 
 
+	glm::vec2 windowSize{};
+
+	const auto& renderComponent = parentGameObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-	ImGui::SetNextWindowSize(ImVec2{ destRect.w, destRect.h });
+	setWindowProperties(parentGameObject);
 
 	//Set Color
-	//ImVec4 green1 = {0.039, 0.29, 0.039, 0.78};
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, MRColors::green1);
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, m_color);
 
 
-	bool show = true;
-	ImGui::Begin(m_name.c_str(), &show, m_flags);
+	ImGui::Begin(m_gameObjectId.c_str(), nullptr, m_flags);
+	{
 
+		//ImGui::SetWindowPos(ImVec2{ renderComponent->getRenderDestRect().x, renderComponent->getRenderDestRect().y });
 
+		hudScrapCount();
+		hudScrapBar();
 
-	ImGui::SetWindowPos(ImVec2{ destRect.x, destRect.y });
-
-
-	hudScrapCount();
-	hudScrapBar();
-
-
-
-	glm::vec2 windowSize{ ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
-
-	ImGui::PopStyleColor();
-
+		glm::vec2 windowSize{ ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
+		
+	}
 	ImGui::End();
 
-
+	//pop color style
+	ImGui::PopStyleColor();
 
 	return windowSize;
 

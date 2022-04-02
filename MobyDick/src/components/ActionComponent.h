@@ -20,20 +20,26 @@
 
 
 class GameObject;
+class Scene;
 
 class ActionComponent : public Component
 {
 public:
-	ActionComponent(Json::Value definitionJSON);
+	ActionComponent(Json::Value definitionJSON, Scene* parentScene);
 	~ActionComponent();
 
 	void update() override;
 	void render();
 
 	std::shared_ptr<Action> getAction(int actionId);
+	std::shared_ptr<GameObject> interactiveHintObject() {
+		return m_interactiveHintObject;
+	}
+	SDL_FPoint determineInteractionMenuLocation(GameObject* interactingObject, GameObject* contactGameObject, GameObject* hintMenuObject);
 
 private:
 	std::vector<std::shared_ptr<Action>>m_actions;
+	std::shared_ptr<GameObject> m_interactiveHintObject{};
 
 };
 

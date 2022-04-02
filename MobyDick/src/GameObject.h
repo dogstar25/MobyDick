@@ -70,6 +70,9 @@ public:
 	void setPosition(b2Vec2 position, float angle);
 	void setPosition(float x, float y);
 	void setPosition(SDL_FPoint position);
+	void setPosition(PositionAlignment windowPosition);
+
+	bool isPointingAt(SDL_FPoint gameObject);
 	
 	b2Vec2 getSize();
 	SDL_FPoint getCenterPosition();

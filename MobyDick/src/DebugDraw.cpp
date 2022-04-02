@@ -21,7 +21,8 @@ void DebugDraw::DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2C
 void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 {
 
-	SDL_FPoint *points = new SDL_FPoint[vertexCount + 1];
+	std::vector< SDL_FPoint> points;
+	//SDL_FPoint *points = new SDL_FPoint[vertexCount + 1];
 
 	SDL_FPoint firstPoint;
 	bool firstFound = false;
@@ -46,16 +47,17 @@ void DebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, cons
 		}
 
 		//Add point to point array
-		points[i] = point;
+		//points[i] = point;
+		points.push_back(point);
 	}
 
 	//Add the first point to the end to complete closed shape
-	points[vertexCount] = firstPoint;
+	points.push_back(firstPoint);
 
 	SDL_Color sdlColor = { 255,255,255,255 };
+	game->renderer()->drawPoints(points);
 	//RendererSDL::instance().drawPoints(points, sdlColor);
 
-	delete[] points;
 }
 
 void DebugDraw::DrawCircle(const b2Vec2& center, float radius, const b2Color& color)

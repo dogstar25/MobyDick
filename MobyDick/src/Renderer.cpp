@@ -42,3 +42,21 @@ void Renderer::outlineObject(SDL_FRect quad, SDL_Color color)
 
 }
 
+void Renderer::drawPoints(std::vector<SDL_FPoint> points, SDL_Color color)
+{
+	glm::vec2 pointB{};
+
+	for (int i = 0; i < points.size()-1;i++) {
+
+		glm::vec2 pointA = { points[i].x, points[i].y };
+
+		//If
+		glm::vec2 pointB = { points[i+1].x, points[i+1].y };
+
+		addLine(pointA, pointB, {color.r, color.g, color.b, color.a});
+
+	}
+
+
+}
+

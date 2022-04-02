@@ -287,59 +287,7 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, PositionAl
 
 	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, -5, -5, angle, this, cameraFollow));
 
-	auto objectWidth = gameObject->getSize().x;
-	auto objectHeight = gameObject->getSize().y;
-
-	if (windowPosition == PositionAlignment::CENTER) {
-
-		xMapPos = (float)GameConfig::instance().windowWidth() / 2;
-		yMapPos = (float)GameConfig::instance().windowHeight() / 2;
-
-	}
-	else if (windowPosition == PositionAlignment::TOP_CENTER) {
-
-		xMapPos = (float)GameConfig::instance().windowWidth() / 2 ;
-		yMapPos = (objectHeight / 2);
-	}
-	else if (windowPosition == PositionAlignment::TOP_LEFT) {
-
-		xMapPos = (objectWidth / 2);
-		yMapPos = (objectHeight / 2);
-	}
-	else if (windowPosition == PositionAlignment::TOP_RIGHT) {
-
-		xMapPos = (float)(GameConfig::instance().windowWidth() - (objectWidth/2)) ;
-		yMapPos = (objectHeight / 2);
-	}
-	else if (windowPosition == PositionAlignment::CENTER_LEFT) {
-
-		xMapPos = (objectWidth / 2);
-		yMapPos = (float)GameConfig::instance().windowHeight() / 2;
-	}
-	else if (windowPosition == PositionAlignment::CENTER_RIGHT) {
-
-		xMapPos = (float)(GameConfig::instance().windowWidth() - (objectWidth / 2));
-		yMapPos = (float)GameConfig::instance().windowHeight() / 2;
-	}
-	else if (windowPosition == PositionAlignment::BOTTOM_LEFT) {
-
-		xMapPos = (objectWidth / 2);
-		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight);
-	}
-	else if (windowPosition == PositionAlignment::BOTTOM_CENTER) {
-
-		xMapPos = (float)(GameConfig::instance().windowWidth()/2 );
-		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight);
-	}
-	else if (windowPosition == PositionAlignment::BOTTOM_RIGHT) {
-
-		xMapPos = (float)(GameConfig::instance().windowWidth() - (objectWidth / 2));
-		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight);
-	}
-
-	
-
-	gameObject->setPosition(xMapPos, yMapPos);
+	gameObject->setPosition(windowPosition);
 
 	return gameObject.get();
 

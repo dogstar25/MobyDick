@@ -1,14 +1,13 @@
  #pragma once
 #include "BaseConstants.h"
-#include "imgui_impl_sdl.h"
-#include "imgui_impl_sdlrenderer.h"
+#include "imgui.h"
 
 namespace MRColors {
 
-	inline ImVec4 green1 = { 0.039, 0.29, 0.039, 0.80 };
-	inline ImVec4 green2 = { 0.039, 0.49, 0.039, 0.50 };
-	inline ImVec4 grey1 = { 0.1, 0.1, 0.1, 0.5 };
-	inline ImVec4 grey2 = { 0.15, 0.2, 0.15, 0.5 };
+	inline SDL_Color green1 = { 10, 75, 10, 255 };
+	inline SDL_Color green2 = { 10, 125, 10, 255 };
+	inline SDL_Color grey1 = { 25, 25, 25, 255 };
+	inline SDL_Color grey2 = { 39, 52, 39, 255 };
 }
 
 

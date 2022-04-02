@@ -74,7 +74,6 @@ void PlayerControlComponent::handleActions()
 					if (keyStates[SDL_SCANCODE_G])
 					{
 						std::cout << "Dropped Weapon" << "\n";
-						//ImGui::GetIO().AddKeyEvent(ImGuiKey_G, false);
 					}
 					if (keyStates[SDL_SCANCODE_E])
 					{
