@@ -2,7 +2,9 @@
 
 
 #include "../EnumMaps.h"
+#include "../ColorMap.h"
 #include "../game.h"
+#include "../BaseConstants.h"
 
 
 extern std::unique_ptr<Game> game;
@@ -18,11 +20,25 @@ RenderComponent::RenderComponent(Json::Value componentJSON)
 
 	if (componentJSON.isMember("color"))
 	{
-		m_color = util::JsonToColor(componentJSON["color"]);
+		m_color = ColorMap::instance().toSDLColor(componentJSON["color"]["tint"].asString());
+
+		if (componentJSON["color"].isMember("alpha")) {
+			util::colorApplyAlpha(m_color, componentJSON["color"]["alpha"].asInt());
+		}
+		else {
+			util::colorApplyAlpha(m_color, 255);
+		}
 	}
 	else
 	{
-		setColor(255, 255, 255, 255);
+		setColor(Colors::WHITE);
+		if (componentJSON["color"].isMember("alpha")) {
+			util::colorApplyAlpha(m_color, componentJSON["color"]["alpha"].asInt());
+		}
+		else {
+			util::colorApplyAlpha(m_color, 255);
+		}
+
 	}
 
 	m_textureId = componentJSON["textureId"].asString();

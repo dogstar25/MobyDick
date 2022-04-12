@@ -11,7 +11,8 @@ class MR_IMGuiFactory : public IMGuiFactory
 public:
 	MR_IMGuiFactory();
 
-	std::shared_ptr<IMGuiItem> create(std::string iMGuiItemType, std::string gameObjectId, b2Vec2 padding, ImVec4 color, bool autoSize, std::string staticTextValue) override;
+	std::shared_ptr<IMGuiItem> create(std::string iMGuiItemType, std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor,
+		ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize, std::string staticTextValue) override;
 
 private:
 

@@ -3,7 +3,7 @@
 
 extern std::unique_ptr<Game> game;
 
-IMGuiItem::IMGuiItem(std::string gameObjectId, b2Vec2 padding, ImVec4 color, bool autoSize)
+IMGuiItem::IMGuiItem(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor, ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize)
 {
 	
 	ImGuiIO& io = ImGui::GetIO();
@@ -11,8 +11,12 @@ IMGuiItem::IMGuiItem(std::string gameObjectId, b2Vec2 padding, ImVec4 color, boo
 
 	m_gameObjectId = gameObjectId;
 	m_autoSize = autoSize;
-	m_color = color;
 	m_padding = padding;
+	m_backgroundColor = backgroundColor;
+	m_textColor = textColor;
+	m_buttonColor = buttonColor;
+	m_buttonHoverColor = buttonHoverColor;
+	m_buttonActiveColor = buttonActiveColor;
 
 	//Fonts - these are static so only initialize if they are null
 

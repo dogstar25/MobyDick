@@ -10,8 +10,9 @@
 extern std::unique_ptr<Game> game;
 
 
-IMGuiPauseWindow::IMGuiPauseWindow(std::string gameObjectId, b2Vec2 padding, ImVec4 color, bool autoSize) :
-	IMGuiItem(gameObjectId, padding, color, autoSize)
+IMGuiPauseWindow::IMGuiPauseWindow(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor,
+	ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize) :
+	IMGuiItem(gameObjectId, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize)
 {
 	m_flags = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize;
 
@@ -28,14 +29,14 @@ glm::vec2 IMGuiPauseWindow::render(GameObject* parentGameObject)
 	setWindowProperties(parentGameObject);
 
 	//Set Color
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, m_color);
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, m_backgroundColor);
 
 	ImGui::Begin(m_gameObjectId.c_str(), nullptr, m_flags);
 	{
 
-		ImGui::PushStyleColor(ImGuiCol_Button, ImGui::MRSettings::ButtonColor);
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImGui::MRSettings::ButtonHoverColor);
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImGui::MRSettings::ButtonActiveColor);
+		ImGui::PushStyleColor(ImGuiCol_Button, m_buttonColor);
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, m_buttonHoverColor);
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, m_buttonActiveColor);
 
 		//top window spacing
 		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
@@ -93,9 +94,9 @@ void IMGuiPauseWindow::settingsModal()
 	ImGui::SetWindowSize(m_settingsModalSize);
 
 	//Button Style
-	ImGui::PushStyleColor(ImGuiCol_Button, util::SDLColorToImVec4( MRColors::FOREST));
-	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, util::SDLColorToImVec4(MRColors::EMERALD));
-	ImGui::PushStyleColor(ImGuiCol_ButtonActive, util::SDLColorToImVec4(MRColors::FOREST));
+	ImGui::PushStyleColor(ImGuiCol_Button, m_buttonColor);
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, m_buttonHoverColor);
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, m_buttonActiveColor);
 
 	ImGui::SameLine(24);
 	ImGui::BeginGroup();

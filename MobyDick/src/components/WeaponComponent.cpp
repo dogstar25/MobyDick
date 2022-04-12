@@ -1,6 +1,7 @@
 #include "WeaponComponent.h"
 
 #include "../game.h"
+#include "../ColorMap.h"
 
 WeaponComponent::WeaponComponent()
 {
@@ -23,10 +24,9 @@ WeaponComponent::WeaponComponent(Json::Value componentJSON)
 		weaponLevelDetail.level = itrWeaponLevel["level"].asInt();
 		weaponLevelDetail.levelUpTarget = itrWeaponLevel["levelUpTarget"].asInt();
 		weaponLevelDetail.force = itrWeaponLevel["force"].asFloat();
-		weaponLevelDetail.color.r = itrWeaponLevel["color"]["red"].asUInt();
-		weaponLevelDetail.color.g = itrWeaponLevel["color"]["green"].asUInt();
-		weaponLevelDetail.color.b = itrWeaponLevel["color"]["blue"].asUInt();
-		weaponLevelDetail.color.a = itrWeaponLevel["color"]["alpha"].asUInt();
+		if (itrWeaponLevel.isMember("color")) {
+			weaponLevelDetail.color = ColorMap::instance().toSDLColor(itrWeaponLevel["color"].asString());
+		}
 		weaponLevelDetail.bulletPoolId = itrWeaponLevel["bulletPoolId"].asString();
 		m_weaponLevelDetails.emplace(level, std::move(weaponLevelDetail));
 

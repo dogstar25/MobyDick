@@ -1,4 +1,5 @@
 #include "CompositeComponent.h"
+#include "../ColorMap.h"
 
 
 
@@ -17,7 +18,7 @@ CompositeComponent::CompositeComponent(Json::Value componentJSON, Scene* parentS
 		auto& legendItem = m_blueprint.legend.emplace_back();
 		legendItem.gameObjectId = itrlegend["gameObjectId"].asString();
 
-		legendItem.color = util::JsonToColor(itrlegend["color"]);
+		legendItem.color = ColorMap::instance().toSDLColor(itrlegend["color"].asString());
 
 	}
 

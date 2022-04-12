@@ -18,7 +18,8 @@ class IMGuiPauseWindow : public IMGuiItem
 {
 public:
 	IMGuiPauseWindow() = default;
-	IMGuiPauseWindow(std::string gameObjectId, b2Vec2 padding, ImVec4 color, bool autoSize);
+	IMGuiPauseWindow(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor, ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, 
+		bool autoSize);
 	glm::vec2 render(GameObject* parentGameObject) override;
 	void sendSceneCloseEvent();
 	void settingsModal();

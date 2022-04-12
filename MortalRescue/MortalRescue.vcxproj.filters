@@ -202,7 +202,6 @@
     <None Include="assets\textureAtlasAssets.json" />
     <None Include="assets\gameObjectDefinitions\guiObjects.json" />
     <None Include="assets\gameObjectDefinitions\hudObjects.json" />
-    <None Include="assets\gameObjectDefinitions\TEST.JSON" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav">
