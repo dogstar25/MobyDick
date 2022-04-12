@@ -105,6 +105,7 @@
             "gameObjects": [
                 {
                     "gameObjectId": "IMGUI_PAUSE_WINDOW",
+                    //"gameObjectId": "IMGUI_EXAMPLE_PANEL",
                     "layer": "LAYER_MENU",
                     "location": {
                         "windowPosition": "PositionAlignment::CENTER"

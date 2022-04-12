@@ -28,14 +28,28 @@ inline constexpr int CONTROL_MODE_PLAY = 1;
 inline constexpr int CONTROL_MODE_IMGUI = 2;
 
 
-namespace MRColors {
+namespace Colors {
 
+	inline SDL_Color WHITE = { 255, 255, 255, 255 };
+	inline SDL_Color BLACK = { 0, 0, 0, 255 };
 	inline SDL_Color RED = { 255, 0, 0, 255 };
 	inline SDL_Color GREEN = { 0, 255, 0, 255 };
 	inline SDL_Color BLUE = { 0, 0, 255, 255 };
-	
+	inline SDL_Color YELLOW = { 255, 255, 0, 255 };
+	inline SDL_Color PURPLE = { 255, 0, 255, 255 };
+
 }
 
+namespace Alpha {
+
+	inline int ALPHA25 = { 64 };
+	inline int ALPHA50 = { 128 };
+	inline int ALPHA65 = { 167 };
+	inline int ALPHA75 = { 192 };
+	inline int ALPHA85 = { 218 };
+	inline int ALPHA100 = { 256 };
+
+}
 
 
 //Game Object Collision Tags

@@ -2,22 +2,30 @@
 #include "BaseConstants.h"
 #include "imgui.h"
 
-namespace MRColors {
+namespace Colors {
+
+	inline SDL_Color NOCOLOR = { 0, 0, 0, 0 };
 
 	//green
 	inline SDL_Color FOREST = { 10, 75, 10, 255 };
 	inline SDL_Color EMERALD = { 10, 125, 10, 255 };
+	inline SDL_Color PARAKEET = { 38, 195, 15, 255 };
+	
+	//red
+	inline SDL_Color WINE = { 127, 6, 34, 255 };
+
+	//yellow
+	inline SDL_Color GOLD = { 173, 167, 54, 255 };
+
+	//blue
+	inline SDL_Color CYAN = { 8, 242, 250, 255 };
+	inline SDL_Color MARINE = { 50, 147, 196, 255 };
+	inline SDL_Color SAPPHIRE = { 113, 197, 219, 255 };
 
 	//grey / dark
 	inline SDL_Color CHARCOAL = { 25, 25, 25, 255 };
 	inline SDL_Color MIRKWOOD = { 39, 52, 39, 255 };
 
-	inline int ALPHA25 = { 64 };
-	inline int ALPHA50 = { 128 };
-	inline int ALPHA65 = { 167 };
-	inline int ALPHA75 = { 192 };
-	inline int ALPHA85 = { 218 };
-	inline int ALPHA100 = { 256 };
 }
 
 namespace CollisionTag {

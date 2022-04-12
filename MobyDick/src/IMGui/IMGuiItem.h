@@ -10,7 +10,8 @@ class IMGuiItem
 {
 public:
 	IMGuiItem() {};
-	IMGuiItem(std::string gameObjectId, b2Vec2 padding, ImVec4 color, bool autoSize);
+	IMGuiItem(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor, ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize);
+	//IMGuiItem(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor, bool autoSize);
 	
 	virtual glm::vec2 render(GameObject* parentGameObject) = 0;
 	std::string staticText() { return m_staticText; }
@@ -19,7 +20,12 @@ public:
 
 protected:
 
-	ImVec4 m_color{};
+	ImVec4 m_backgroundColor;
+	ImVec4 m_textColor; 
+	ImVec4 m_buttonColor; 
+	ImVec4 m_buttonHoverColor; 
+	ImVec4 m_buttonActiveColor;
+
 	bool m_autoSize{};
 	b2Vec2 m_padding{};
 	ImGuiWindowFlags m_flags{};

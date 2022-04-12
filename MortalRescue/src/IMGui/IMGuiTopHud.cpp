@@ -8,8 +8,9 @@
 
 extern std::unique_ptr<Game> game;
 
-IMGuiTopHud::IMGuiTopHud(std::string gameObjectId, b2Vec2 padding, ImVec4 color, bool autoSize) :
-	IMGuiItem(gameObjectId, padding, color, autoSize)
+IMGuiTopHud::IMGuiTopHud(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor,
+	ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize) :
+	IMGuiItem(gameObjectId, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize)
 {
 
 	m_flags = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
@@ -28,7 +29,8 @@ glm::vec2 IMGuiTopHud::render(GameObject* parentGameObject)
 	setWindowProperties(parentGameObject);
 
 	//Set Color
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, m_color);
+	
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, m_backgroundColor);
 
 	ImGui::Begin(m_gameObjectId.c_str(), nullptr, m_flags);
 	{
@@ -74,7 +76,9 @@ void IMGuiTopHud::hudScrapBar()
 		if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 
 			GLuint textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::MAIN_TEXTURE_ATLAS);
-			ImGui::Image((void*)(int*)textureAtlasId, ImVec2(2, 32), ImVec2(.00122, .000122), ImVec2(.00244, .00244));
+			//ImGui::Image((void*)(int*)textureAtlasId, ImVec2(2, 32), ImVec2(.00122, .000122), ImVec2(.00244, .00244));
+			ImGui::Image((void*)(int*)textureAtlasId, ImVec2(2, 32), ImVec2(bottomRight.x, bottomRight.y), ImVec2(topLeft.x, topLeft.y), red1);
+			ImGui::SameLine(0.0f, 0);
 		}
 		else {
 

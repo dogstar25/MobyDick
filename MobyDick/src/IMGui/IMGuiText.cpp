@@ -12,8 +12,8 @@
 extern std::unique_ptr<Game> game;
 
 
-IMGuiText::IMGuiText(std::string gameObjectId, b2Vec2 padding, ImVec4 color, bool autoSize, std::string staticTextValue):
-	IMGuiItem(gameObjectId, padding, color, autoSize)
+IMGuiText::IMGuiText(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor, ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize, std::string staticTextValue):
+	IMGuiItem(gameObjectId, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize)
 {
 
 	m_staticTextValue = staticTextValue;
@@ -32,7 +32,7 @@ glm::vec2 IMGuiText::render(GameObject* parentGameObject)
 	setWindowProperties(parentGameObject);
 
 	//Set color
-	ImGui::PushStyleColor(ImGuiCol_Text, m_color);
+	ImGui::PushStyleColor(ImGuiCol_Text, m_textColor);
 
 	//Build the window
 	ImGui::Begin(m_gameObjectId.c_str(), nullptr, m_flags);

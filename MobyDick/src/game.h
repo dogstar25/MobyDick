@@ -40,12 +40,12 @@ public:
 	~Game();
 
 	virtual bool init();
-	virtual bool init(ContactListener*, ContactFilter*,	ComponentFactory*, ActionFactory*, ParticleEffectsFactory*, 
+	virtual bool init(ContactListener*, ContactFilter*, ComponentFactory*, ActionFactory*, ParticleEffectsFactory*,
 		CutSceneFactory*, IMGuiFactory*, ContextManager*) = 0;
 	virtual void play();
 	virtual void _displayLoadingMsg();
 	GameObject* getGameObject(std::string name);
-	
+
 	void setGameState(GameState state) {
 		m_gameState = state;
 	}
@@ -59,7 +59,7 @@ public:
 	SDL_Window* window() {
 		return m_window;
 	}
-	GameState gameState(){
+	GameState gameState() {
 		return m_gameState;
 	}
 	SDL_Rect worldBounds() {
@@ -98,7 +98,7 @@ public:
 
 	Renderer* renderer() { return m_renderer.get(); }
 
-	bool IMGuiControlled=false;
+	bool IMGuiControlled = false;
 
 protected:
 
@@ -121,6 +121,7 @@ protected:
 
 	virtual void _addGameCollisionTags() {};
 	virtual void _addGameComponentTypes() {};
+	virtual void _addGameColors() {};
 
 	
 	

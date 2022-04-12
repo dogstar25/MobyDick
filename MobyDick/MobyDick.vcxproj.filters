@@ -306,6 +306,9 @@
     <ClCompile Include="src\IMGui\IMGuiHintBasic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ColorMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Animation.h">
@@ -612,6 +615,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\IMGui\IMGuiHintBasic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ColorMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

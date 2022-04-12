@@ -13,6 +13,7 @@
 #include "IMGui/IMGuiUtil.h"
 
 #include "EnumMaps.h"
+#include "ColorMap.h"
 
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
@@ -50,6 +51,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 	//Add Game Specific stuff
 	_addGameCollisionTags();
 	_addGameComponentTypes();
+	_addGameColors();
 
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
@@ -153,6 +155,33 @@ void MRGame::_addGameComponentTypes()
 	EnumMap::instance().addEnumItem("BRAIN_DRONE_COMPONENT", ComponentTypes::BRAIN_DRONE_COMPONENT);
 	EnumMap::instance().addEnumItem("WEAPON_PISTOL_COMPONENT", ComponentTypes::WEAPON_PISTOL_COMPONENT);
 	EnumMap::instance().addEnumItem("TURRET_BRAIN_COMPONENT", ComponentTypes::TURRET_BRAIN_COMPONENT);
+}
+
+void MRGame::_addGameColors()
+{
+
+	//greens
+	ColorMap::instance().addColor("Colors::FOREST", Colors::FOREST);
+	ColorMap::instance().addColor("Colors::EMERALD", Colors::EMERALD);
+	ColorMap::instance().addColor("Colors::PARAKEET", Colors::PARAKEET);
+
+	//reds
+	ColorMap::instance().addColor("Colors::WINE", Colors::WINE);
+
+	//yellows
+	ColorMap::instance().addColor("Colors::GOLD", Colors::GOLD);
+
+	//blues
+	ColorMap::instance().addColor("Colors::CYAN", Colors::CYAN);
+	ColorMap::instance().addColor("Colors::MARINE", Colors::MARINE);
+	ColorMap::instance().addColor("Colors::SAPPHIRE", Colors::SAPPHIRE);
+
+	//Dark
+	ColorMap::instance().addColor("Colors::CHARCOAL", Colors::CHARCOAL);
+	ColorMap::instance().addColor("Colors::MIRKWOOD", Colors::MIRKWOOD);
+
+
+
 }
 
 

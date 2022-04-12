@@ -217,6 +217,7 @@
     <ClCompile Include="src\actions\ActionFactory.cpp" />
     <ClCompile Include="src\actions\ActionSettingsClick.cpp" />
     <ClCompile Include="src\actions\PrimitiveMoveAction.cpp" />
+    <ClCompile Include="src\ColorMap.cpp" />
     <ClCompile Include="src\components\IMGuiComponent.cpp" />
     <ClCompile Include="src\cutScenes\CutScene.cpp" />
     <ClCompile Include="src\cutScenes\CutSceneExample.cpp" />
@@ -316,6 +317,7 @@
     <ClInclude Include="src\actions\ActionFactory.h" />
     <ClInclude Include="src\actions\ActionSettingsClick.h" />
     <ClInclude Include="src\actions\PrimitiveMoveAction.h" />
+    <ClInclude Include="src\ColorMap.h" />
     <ClInclude Include="src\components\IMGuiComponent.h" />
     <ClInclude Include="src\cutScenes\CutScene.h" />
     <ClInclude Include="src\cutScenes\CutSceneExample.h" />

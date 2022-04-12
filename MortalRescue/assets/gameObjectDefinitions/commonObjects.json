@@ -140,10 +140,8 @@
                 {
                     "id": "RENDER_COMPONENT",
                     "color": {
-                        "red": 254,
-                        "green": 0,
-                        "blue": 0,
-                        "alpha": 255
+                        "tint": "Colors::RED",
+                        "alpha": 85
                     }
                 },
                 {
@@ -264,9 +262,7 @@
                     "id": "RENDER_COMPONENT",
                     "textureId": "TX_STUBB",
                     "color": {
-                        "red": 255,
-                        "green": 255,
-                        "blue": 255,
+                        "tint": "Colors::WHITE",
                         "alpha": 127
                     }
                 },
@@ -291,10 +287,8 @@
                     "id": "RENDER_COMPONENT",
                     "textureId": "TX_WEAPON1_IDLE",
                     "color": {
-                        "red": 0,
-                        "blue": 250,
-                        "green": 0,
-                        "alpha": 255
+                        "tint": "Colors::BLUE",
+                        "alpha": 127
                     }
                 },
                 {
@@ -336,36 +330,21 @@
                             "level": 1,
                             "force": 1,
                             "levelUpTarget": 25,
-                            "color": {
-                                "red": 255,
-                                "green": 0,
-                                "blue": 0,
-                                "alpha": 255
-                            },
+                            "color": "Colors::RED",
                             "bulletPoolId": "BULLET1_POOL"
                         },
                         {
                             "level": 2,
                             "force": 2,
                             "levelUpTarget": 50,
-                            "color": {
-                                "red": 0,
-                                "green": 255,
-                                "blue": 0,
-                                "alpha": 255
-                            },
+                            "color": "Colors::GREEN",
                             "bulletPoolId": "BULLET1_POOL"
                         },
                         {
                             "level": 3,
                             "force": 5,
                             "levelUpTarget": 75,
-                            "color": {
-                                "red": 255,
-                                "green": 255,
-                                "blue": 255,
-                                "alpha": 255
-                            },
+                            "color": "Colors::WHITE",
                             "bulletPoolId": "BULLET1_POOL"
                         }
                     ]
@@ -606,10 +585,8 @@
             "renderComponent": {
                 "textureId": "TX_WHITE_QUAD",
                 "color": {
-                    "red": 0,
-                    "green": 0,
-                    "blue": 0,
-                    "alpha": 255
+                    "tint": "Colors::WHITE",
+                    "alpha": 127
                 },
                 "outline": {
                     "thickness": 1,
@@ -655,10 +632,8 @@
                     "id": "RENDER_COMPONENT",
                     "textureId": "TX_SURVIVOR",
                     "color": {
-                        "red": 255,
-                        "green": 234,
-                        "blue": 0,
-                        "alpha": 255
+                        "tint": "Colors::YELLOW",
+                        "alpha": 127
                     }
                 },
                 {
@@ -729,9 +704,7 @@
                 {
                     "id": "RENDER_COMPONENT",
                     "color": {
-                        "red": 8,
-                        "green": 242,
-                        "blue": 250,
+                        "tint": "Colors::CYAN",
                         "alpha": 255
                     }
                 },
@@ -821,12 +794,6 @@
                             "level": 1,
                             "force": 1,
                             "levelUpTarget": 25,
-                            "color": {
-                                "red": 255,
-                                "green": 0,
-                                "blue": 0,
-                                "alpha": 255
-                            },
                             "bulletPoolId": "BULLET2_POOL"
                         }
                     ]

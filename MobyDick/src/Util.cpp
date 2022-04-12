@@ -114,6 +114,16 @@ namespace util
 
 	}
 
+	void colorApplyAlpha(SDL_Color& color, int alpha)
+	{
+		color.a = alpha;
+	}
+
+	void colorApplyAlpha(ImVec4& color, int alpha)
+	{
+		color.w = ((float)alpha/255);
+	}
+
 	const ImVec4 JsonToImVec4Color(Json::Value JsonColor) 
 	{
 
