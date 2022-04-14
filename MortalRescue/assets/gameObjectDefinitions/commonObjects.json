@@ -396,7 +396,9 @@
             "description": "Bullet 2",
             "components": [
                 {
-                    "id": "RENDER_COMPONENT"
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_BULLET2",
+                    "color": "Colors::YELLOW"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
@@ -570,59 +572,6 @@
             ]
         },
         {
-            "id": "GUI_PLAYERDEATH_PANEL",
-            "type": "GameObjectType::RECTANGLE",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [ "gui" ],
-            "transformComponent": {
-                "size": {
-                    "width": 256,
-                    "height": 64
-                },
-                "absolutePositioning": true,
-                "centeredPositioning": true
-            },
-            "renderComponent": {
-                "textureId": "TX_WHITE_QUAD",
-                "color": {
-                    "tint": "Colors::WHITE",
-                    "alpha": 127
-                },
-                "outline": {
-                    "thickness": 1,
-                    "color": {
-                        "red": 255,
-                        "green": 255,
-                        "blue": 255,
-                        "alpha": 255
-                    }
-                }
-            },
-            "childrenComponent": {
-                "childObjects": [
-                    {
-                        "gameObjectId": "PLAYERDEATH_LABEL",
-                        "locationSlot": 5
-                    }
-                ]
-            },
-            "UIControlComponent": {
-                "controls": [
-                    "INPUT_CONTROL_HOVER",
-                    "INPUT_CONTROL_CLICK"
-                ]
-            },
-            "actionComponent": {
-                "actions": [
-                    {
-                        "actionId": "ACTION_ON_CLICK",
-                        "actionClass": "QuitClick"
-                    }
-
-                ]
-            }
-        },
-        {
             "id": "SURVIVOR",
             "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::SURVIVOR",
@@ -793,6 +742,7 @@
                         {
                             "level": 1,
                             "force": 1,
+                            "color": "Colors::RED",
                             "levelUpTarget": 25,
                             "bulletPoolId": "BULLET2_POOL"
                         }

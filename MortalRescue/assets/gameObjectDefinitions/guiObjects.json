@@ -125,12 +125,12 @@
                     "id": "RENDER_COMPONENT"
                 },
                 {
-                    "id": "TRANSFORM_COMPONENT",
-                    "absolutePositioning": true
+                    "id": "TRANSFORM_COMPONENT"
                 },
                 {
                     "id": "IMGUI_COMPONENT",
                     "imguiType": "IMGuiHintBasic",
+                    "autoSize": true,
                     "padding": {
                         "x": 4,
                         "y": 4

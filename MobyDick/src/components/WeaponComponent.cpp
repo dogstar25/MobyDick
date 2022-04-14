@@ -27,6 +27,9 @@ WeaponComponent::WeaponComponent(Json::Value componentJSON)
 		if (itrWeaponLevel.isMember("color")) {
 			weaponLevelDetail.color = ColorMap::instance().toSDLColor(itrWeaponLevel["color"].asString());
 		}
+		else {
+			weaponLevelDetail.color = Colors::WHITE;
+		}
 		weaponLevelDetail.bulletPoolId = itrWeaponLevel["bulletPoolId"].asString();
 		m_weaponLevelDetails.emplace(level, std::move(weaponLevelDetail));
 

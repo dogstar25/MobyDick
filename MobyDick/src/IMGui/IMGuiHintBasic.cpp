@@ -29,6 +29,10 @@ glm::vec2 IMGuiHintBasic::render(GameObject* parentGameObject)
 
 	//Set color
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, m_backgroundColor);
+	ImGui::PushStyleColor(ImGuiCol_Button, m_buttonColor);
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, m_buttonHoverColor);
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, m_buttonActiveColor);
+
 
 	ImGui::Begin(m_gameObjectId.c_str(), nullptr, m_flags);
 	{
@@ -41,11 +45,14 @@ glm::vec2 IMGuiHintBasic::render(GameObject* parentGameObject)
 		ImGui::PopFont();
 		ImGui::SameLine();
 
-		glm::vec2 windowSize{ ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
+		windowSize = { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
 	}
 	ImGui::End();
 
 	//pop color style
+	ImGui::PopStyleColor();
+	ImGui::PopStyleColor();
+	ImGui::PopStyleColor();
 	ImGui::PopStyleColor();
 
 	return windowSize;
