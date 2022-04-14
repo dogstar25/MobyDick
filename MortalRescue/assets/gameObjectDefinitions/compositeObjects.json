@@ -260,30 +260,15 @@
                             },
                             {
                                 "resistance": 2,
-                                "color": {//purple
-                                    "red": 200,
-                                    "green": 200,
-                                    "blue": 22,
-                                    "alpha": 255
-                                }
+                                "color": "Colors::CYAN"
                             },
                             {
                                 "resistance": 3,
-                                "color": {
-                                    "red": 17,
-                                    "green": 218,
-                                    "blue": 224,
-                                    "alpha": 255
-                                }
+                                "color": "Colors::GREEN"
                             },
                             {
                                 "resistance": 25,
-                                "color": {
-                                    "red": 22,
-                                    "green": 206,
-                                    "blue": 211,
-                                    "alpha": 255
-                                }
+                                "color": "Colors::RED"
                             }
                         ]
                     }
@@ -338,30 +323,15 @@
                             },
                             {
                                 "resistance": 2,
-                                "color": {
-                                    "red": 20,
-                                    "green": 200,
-                                    "blue": 237,
-                                    "alpha": 255
-                                }
+                                "color": "Colors::CYAN"
                             },
                             {
                                 "resistance": 3,
-                                "color": {
-                                    "red": 17,
-                                    "green": 218,
-                                    "blue": 224,
-                                    "alpha": 255
-                                }
+                                "color": "Colors::GREEN"
                             },
                             {
                                 "resistance": 25,
-                                "color": {
-                                    "red": 22,
-                                    "green": 206,
-                                    "blue": 211,
-                                    "alpha": 255
-                                }
+                                "color": "Colors::RED"
                             }
                         ]
                     }
@@ -416,30 +386,15 @@
                             },
                             {
                                 "resistance": 2,
-                                "color": {
-                                    "red": 20,
-                                    "green": 200,
-                                    "blue": 237,
-                                    "alpha": 255
-                                }
+                                "color": "Colors::CYAN"
                             },
                             {
                                 "resistance": 3,
-                                "color": {
-                                    "red": 17,
-                                    "green": 218,
-                                    "blue": 224,
-                                    "alpha": 255
-                                }
+                                "color": "Colors::GREEN"
                             },
                             {
                                 "resistance": 25,
-                                "color": {
-                                    "red": 22,
-                                    "green": 206,
-                                    "blue": 211,
-                                    "alpha": 255
-                                }
+                                "color": "Colors::RED"
                             }
                         ]
                     }
@@ -494,30 +449,15 @@
                             },
                             {
                                 "resistance": 2,
-                                "color": {
-                                    "red": 20,
-                                    "green": 200,
-                                    "blue": 237,
-                                    "alpha": 255
-                                }
+                                "color": "Colors::CYAN"
                             },
                             {
                                 "resistance": 3,
-                                "color": {
-                                    "red": 17,
-                                    "green": 218,
-                                    "blue": 224,
-                                    "alpha": 255
-                                }
+                                "color": "Colors::GREEN"
                             },
                             {
                                 "resistance": 25,
-                                "color": {
-                                    "red": 22,
-                                    "green": 206,
-                                    "blue": 211,
-                                    "alpha": 255
-                                }
+                                "color": "Colors::RED"
                             }
                         ]
                     }
@@ -572,30 +512,15 @@
                             },
                             {
                                 "resistance": 2,
-                                "color": {
-                                    "red": 20,
-                                    "green": 200,
-                                    "blue": 237,
-                                    "alpha": 255
-                                }
+                                "color": "Colors::CYAN"
                             },
                             {
                                 "resistance": 3,
-                                "color": {
-                                    "red": 17,
-                                    "green": 218,
-                                    "blue": 224,
-                                    "alpha": 255
-                                }
+                                "color": "Colors::GREEN"
                             },
                             {
                                 "resistance": 25,
-                                "color": {
-                                    "red": 22,
-                                    "green": 206,
-                                    "blue": 211,
-                                    "alpha": 255
-                                }
+                                "color": "Colors::RED"
                             }
                         ]
                     }

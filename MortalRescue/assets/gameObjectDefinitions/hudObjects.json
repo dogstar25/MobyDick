@@ -8,12 +8,7 @@
                 {
                     "id": "RENDER_COMPONENT",
                     "textureId": "TX_WHITE_QUAD",
-                    "color": {
-                        "red": 10,
-                        "green": 75,
-                        "blue": 10,
-                        "alpha": 200
-                    },
+                    "color": "Colors::EMERALD",
                     "outline": {
                         "thickness": 1,
                         "color": {
@@ -84,12 +79,7 @@
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "color": {
-                        "red": 255,
-                        "green": 255,
-                        "blue": 255,
-                        "alpha": 255
-                    }
+                    "color": "Colors::WHITE"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT"
@@ -111,12 +101,7 @@
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "color": {
-                        "red": 255,
-                        "green": 255,
-                        "blue": 255,
-                        "alpha": 255
-                    }
+                    "color": "Colors::WHITE"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT"
@@ -161,12 +146,7 @@
                 {
                     "id": "RENDER_COMPONENT",
                     "textureId": "TX_WHITE_QUAD",
-                    "color": {
-                        "red": 255,
-                        "green": 0,
-                        "blue": 0,
-                        "alpha": 255
-                    }
+                    "color": "Colors::RED"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",

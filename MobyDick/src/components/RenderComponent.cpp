@@ -9,23 +9,27 @@
 
 extern std::unique_ptr<Game> game;
 
-RenderComponent::RenderComponent()
-{
-
-}
-
-
 RenderComponent::RenderComponent(Json::Value componentJSON)
 {
 
 	if (componentJSON.isMember("color"))
 	{
-		m_color = ColorMap::instance().toSDLColor(componentJSON["color"]["tint"].asString());
 
-		if (componentJSON["color"].isMember("alpha")) {
-			util::colorApplyAlpha(m_color, componentJSON["color"]["alpha"].asInt());
+		if (componentJSON["color"].isObject() && componentJSON["color"].isMember("tint")) {
+
+			m_color = ColorMap::instance().toSDLColor(componentJSON["color"]["tint"].asString());
+
+			if (componentJSON["color"].isMember("alpha")) {
+				util::colorApplyAlpha(m_color, componentJSON["color"]["alpha"].asInt());
+			}
+			else {
+				util::colorApplyAlpha(m_color, 255);
+			}
+
 		}
+		//Simple color define
 		else {
+			m_color = ColorMap::instance().toSDLColor(componentJSON["color"].asString());
 			util::colorApplyAlpha(m_color, 255);
 		}
 	}

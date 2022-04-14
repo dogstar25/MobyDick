@@ -20,7 +20,7 @@ class RenderComponent : public Component
 {
 
 public:
-	RenderComponent();
+	RenderComponent() = default;
 	RenderComponent(Json::Value componentJSON);
 	~RenderComponent();
 
