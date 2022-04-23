@@ -249,7 +249,7 @@ std::optional<LevelObject> LevelManager::_determineLocationObject(int x, int y, 
 				levelObject->name = locationItemJSON["name"].asString();
 			}
 			if (locationItemJSON.isMember("angle")) {
-				levelObject->angleAdjustment = locationItemJSON["angle"].asFloat();
+				levelObject->angleAdjustment = locationItemJSON["angle"].asInt();
 			}
 
 			break;

@@ -303,7 +303,7 @@
     <ClCompile Include="src\IMGui\IMGuiUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\IMGui\IMGuiHintBasic.cpp">
+    <ClCompile Include="src\IMGui\IMGuiInteractiveMenuBasic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ColorMap.cpp">
@@ -614,7 +614,7 @@
     <ClInclude Include="src\IMGui\IMGuiUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\IMGui\IMGuiHintBasic.h">
+    <ClInclude Include="src\IMGui\IMGuiInteractiveMenuBasic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ColorMap.h">
@@ -633,5 +633,6 @@
     <None Include="vcpkg.json_old" />
     <None Include="src\opengl\shaders\basic.glsl" />
     <None Include="src\opengl\shaders\uberShader.glsl" />
+    <None Include="readme.md" />
   </ItemGroup>
 </Project>

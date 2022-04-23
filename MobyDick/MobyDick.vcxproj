@@ -40,13 +40,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -230,7 +230,7 @@
     <ClCompile Include="src\HudManager.cpp" />
     <ClCompile Include="src\IMGui\IMGuiExample.cpp" />
     <ClCompile Include="src\IMGui\IMGuiFactory.cpp" />
-    <ClCompile Include="src\IMGui\IMGuiHintBasic.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiInteractiveMenuBasic.cpp" />
     <ClCompile Include="src\IMGui\IMGuiItem.cpp" />
     <ClCompile Include="src\IMGui\IMGuiText.cpp" />
     <ClCompile Include="src\IMGui\IMGuiUtil.cpp" />
@@ -330,7 +330,7 @@
     <ClInclude Include="src\HudManager.h" />
     <ClInclude Include="src\IMGui\IMGuiExample.h" />
     <ClInclude Include="src\IMGui\IMGuiFactory.h" />
-    <ClInclude Include="src\IMGui\IMGuiHintBasic.h" />
+    <ClInclude Include="src\IMGui\IMGuiInteractiveMenuBasic.h" />
     <ClInclude Include="src\IMGui\IMGuiItem.h" />
     <ClInclude Include="src\IMGui\IMGuiText.h" />
     <ClInclude Include="src\IMGui\IMGuiUtil.h" />
@@ -425,6 +425,7 @@
     <ResourceCompile Include="MobyDick.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="readme.md" />
     <None Include="src\opengl\shaders\basic.glsl" />
     <None Include="src\opengl\shaders\uberShader.glsl" />
     <None Include="vcpkg.json_old" />

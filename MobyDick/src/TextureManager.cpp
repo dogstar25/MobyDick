@@ -107,7 +107,6 @@ bool TextureManager::load(std::string texturesAssetsFile)
 	std::string  id, imageFilename;
 	bool retainSurface = false;
 
-	SDL_Surface* surface;
 	SDL_Texture* sdlTexture;
 	Texture* textureObject;
 

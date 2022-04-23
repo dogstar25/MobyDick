@@ -332,8 +332,6 @@ Find the accessible iterim point that is the closest to the current target
 */
 std::optional<GameObject*> BrainComponent::getNextinterimDestination()
 {
-	GameObject* foundNavGameObject;
-
 	const auto& target = m_targetDestination.value();
 	const auto& targetTransformComponent = target->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 

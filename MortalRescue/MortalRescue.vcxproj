@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -190,6 +190,7 @@
     <ClCompile Include="src\components\TurretBrainComponent.cpp" />
     <ClCompile Include="src\cutScenes\CutSceneDiscoverTreasure.cpp" />
     <ClCompile Include="src\cutScenes\MRCutSceneFactory.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiInteractiveMenuSurvivor.cpp" />
     <ClCompile Include="src\IMGui\IMGuiPauseWindow.cpp" />
     <ClCompile Include="src\IMGui\IMGuiTopHud.cpp" />
     <ClCompile Include="src\IMGui\MR_IMGuiUtil.cpp" />
@@ -292,6 +293,7 @@
     <ClInclude Include="src\components\TurretBrainComponent.h" />
     <ClInclude Include="src\cutScenes\CutSceneDiscoverTreasure.h" />
     <ClInclude Include="src\cutScenes\MRCutSceneFactory.h" />
+    <ClInclude Include="src\IMGui\IMGuiInteractiveMenuSurvivor.h" />
     <ClInclude Include="src\IMGui\IMGuiPauseWindow.h" />
     <ClInclude Include="src\IMGui\MR_IMGuiUtil.h" />
     <ClInclude Include="src\IMGui\MR_IMGuiFactory.h" />

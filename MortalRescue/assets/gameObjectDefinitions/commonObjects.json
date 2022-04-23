@@ -29,6 +29,12 @@
                     "anchorPoint": { // starts from centered 0,0 position
                         "x": 0.8,
                         "y": 0.0
+                    },
+                    "auxSensor": {
+                        "collisionShape": "B2_CIRCLE",
+                        "size": {
+                            "radius": 2.64
+                        }
                     }
                 },
                 {
@@ -133,7 +139,7 @@
         },
         {
             "id": "WALL_BUTTON",
-            "collisionTag": "CollisionTag::GENERAL_SOLID",
+            "collisionTag": "CollisionTag::BUTTON",
             "traitTags": [ "interactive" ],
             "description": "Wall button",
             "components": [
@@ -141,7 +147,7 @@
                     "id": "RENDER_COMPONENT",
                     "color": {
                         "tint": "Colors::RED",
-                        "alpha": 85
+                        "alpha": 185
                     }
                 },
                 {
@@ -178,15 +184,11 @@
                     "type": "B2_DYNAMIC",
                     "collisionShape": "B2_BOX",
                     "density": 0.1,
-                    "isSensor": true,
-                    "anchorPoint": {
-                        "x": 0.0,
-                        "y": 0.0
-                    }
+                    "isSensor": true
                 },
                 {
                     "id": "ACTION_COMPONENT",
-                    "interactiveHintObject": "INTERACTIVE_HINT_BASIC",
+                    "interactiveMenuObject": "INTERACTIVE_MENU_BASIC",
                     "actions": [
                         {
                             "actionId": "ACTION_INTERACTION",
@@ -575,7 +577,7 @@
             "id": "SURVIVOR",
             "type": "GameObjectType::SPRITE",
             "collisionTag": "CollisionTag::SURVIVOR",
-            "traitTags": [],
+            "traitTags": ["interactive"],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -605,15 +607,21 @@
                     "friction": 0.00,
                     "restitution": 0.0,
                     "density": 50.5,
-                    "linearDamping": 0.2,
-                    "angularDamping": 3.0
+                    "linearDamping": 50.2,
+                    "angularDamping": 3.0,
+                    "isSensor": true
                 },
                 {
                     "id": "ACTION_COMPONENT",
+                    "interactiveMenuObject": "INTERACTIVE_MENU_SURVIVOR",
                     "actions": [
                         {
                             "actionId": "ACTION_MOVE",
                             "actionClass": "DroneMove"
+                        },
+                        {
+                            "actionId": "ACTION_INTERACTION",
+                            "actionClass": "ButtonInteraction"
                         }
                     ]
                 }

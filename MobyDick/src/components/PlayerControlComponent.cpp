@@ -75,12 +75,12 @@ void PlayerControlComponent::handleActions()
 					{
 						std::cout << "Dropped Weapon" << "\n";
 					}
-					if (keyStates[SDL_SCANCODE_E])
-					{
-						const auto& action = actionComponent->getAction(ACTION_INTERACT);
-						action->perform(parent());
+					//if (keyStates[SDL_SCANCODE_E])
+					//{
+					//	const auto& action = actionComponent->getAction(ACTION_INTERACT);
+					//	action->perform(parent());
 
-					}
+					//}
 
 					break;
 				case SDL_MOUSEBUTTONDOWN:

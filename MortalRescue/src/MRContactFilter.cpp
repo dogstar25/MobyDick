@@ -65,6 +65,7 @@ MRContactFilter::MRContactFilter()
 	m_collisionMasks[PLAYER].set(DRONE_FRAME);
 	//m_collisionMasks[PLAYER].set(ENEMY_BULLET);
 	m_collisionMasks[PLAYER].set(WALL);
+	m_collisionMasks[PLAYER].set(BUTTON);
 
 	//PLAYER_BULLET
 	m_collisionMasks[PLAYER_BULLET].reset();
@@ -79,6 +80,7 @@ MRContactFilter::MRContactFilter()
 
 	//SURVIVOR
 	m_collisionMasks[SURVIVOR].reset();
+	m_collisionMasks[SURVIVOR].set(PLAYER);
 	m_collisionMasks[SURVIVOR].set(WALL);
 
 	//WALL
@@ -92,6 +94,11 @@ MRContactFilter::MRContactFilter()
 	m_collisionMasks[WALL].set(SHIELD_SCRAP);
 	m_collisionMasks[WALL].set(SURVIVOR);
 	m_collisionMasks[WALL].set(ENEMY_BULLET);
+
+	//BUTTONS
+	m_collisionMasks[BUTTON].reset();
+	m_collisionMasks[BUTTON].set(GENERAL_SOLID);
+	m_collisionMasks[BUTTON].set(PLAYER);
 
 }
 

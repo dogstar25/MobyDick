@@ -167,6 +167,9 @@ void GameObject::update()
 		}
 	}
 
+	//Update touching GameObject
+	_updateTouchingObjects();
+
 }
 
 /*
@@ -230,7 +233,7 @@ void GameObject::render()
 			getComponent<IMGuiComponent>(ComponentTypes::IMGUI_COMPONENT)->render();
 		}
 
-		//If you have aa Action component, then render possible interaction hints
+		//If you have aa Action component, then render possible interaction menus
 		if (hasComponent(ComponentTypes::ACTION_COMPONENT)) {
 
 			getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT)->render();
@@ -297,7 +300,7 @@ void GameObject::setAngleInDegrees(float angle)
 }
 
 /*
-The postInit function allows for initialization that requires all objects to be 'already' instantiated 
+The postInit function allows for initialization that requires all objects in the game to be 'already' instantiated 
 ex. The brainComponent needs all navigation related gameObjects to be built first
 OR
 For at least all components of a gameObject to be instantiated
@@ -312,35 +315,6 @@ void GameObject::postInit()
 			components()[i]->postInit();
 		}
 	}
-
-
-	////GameObjects with a NavigationComponent need to build a navigation array based on the location of 
-	////other navigation objects
-	//if (hasComponent(ComponentTypes::NAVIGATION_COMPONENT)) {
-	//	const auto navigationComponent = getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
-	//	navigationComponent->postInit();
-	//}
-
-	////The BrainComponent needs to gather and store all of the waypoint nav points and
-	////interim nav points for its navigating logic
-	//if (hasComponent(ComponentTypes::BRAIN_COMPONENT)) {
-	//	const auto brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
-	//	brainComponent->postInit();
-	//}
-
-	////The CompositeComponent needs to weld on its composite pieces if the weld flag is turned on
-	//if (hasComponent(ComponentTypes::COMPOSITE_COMPONENT)) {
-	//	const auto compositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
-	//	compositeComponent->postInit();
-	//}
-
-	////The Attachments component needs to weld on attachment objects as well as potentially add the 
-	//// attachement object to the inventory component
-	//if (hasComponent(ComponentTypes::ATTACHMENTS_COMPONENT)) {
-	//	const auto attachmentsComponent = getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
-	//	attachmentsComponent->postInit();
-	//}
-
 
 }
 
@@ -454,5 +428,40 @@ void GameObject::enable()
 		}
 
 	}
+
+}
+
+void GameObject::_updateTouchingObjects()
+{
+
+	m_touchingGameObjects.clear();
+
+	//If this is a physics GameObject then capture a list of every object that it or its aux sensor is currently touching
+	if (this->hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
+
+		const std::shared_ptr<PhysicsComponent> physicsComponent = this->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+
+		for (b2ContactEdge* edge = physicsComponent->physicsBody()->GetContactList(); edge; edge = edge->next)
+		{
+			b2Contact* contact = edge->contact;
+
+			//One of these fixtures being reported as a contact is the object itself, so we dont care about that one. 
+			// We only care about the objects are are not this object itself
+			GameObject* contactGameObject = reinterpret_cast<GameObject*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
+			GameObject* contactGameObject2 = reinterpret_cast<GameObject*>(contact->GetFixtureB()->GetBody()->GetUserData().pointer);
+
+			if (contact->IsTouching()) {
+
+				if (contactGameObject != this) {
+					this->addTouchingObject(contactGameObject);
+				}
+				if (contactGameObject2 != this) {
+					this->addTouchingObject(contactGameObject2);
+				}
+
+			}
+		}
+	}
+
 
 }
