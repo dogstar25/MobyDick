@@ -215,13 +215,13 @@ void MRContactListener::handleContact(GameObject* contact1, GameObject* contact2
 
 
 	////////////////////////////////
-	// Player Usuable Object Contact
+	// Player Usuable Object Contact // being done differently because contact only fires off once
 	////////////////////////////////
-	if ((category1 == CollisionTag::PLAYER && contact2->hasTrait(TraitTag::interactive)) ||
-		(category2 == CollisionTag::PLAYER && contact1->hasTrait(TraitTag::interactive))) {
+	//if ((category1 == CollisionTag::PLAYER && contact2->hasTrait(TraitTag::interactive)) ||
+	//	(category2 == CollisionTag::PLAYER && contact1->hasTrait(TraitTag::interactive))) {
 
-		_player_interactive(contact1, contact2, contactPoint);
-	}
+	//	_player_interactive(contact1, contact2, contactPoint);
+	//}
 
 	/////////////////////////
 	// Player Wall Contact

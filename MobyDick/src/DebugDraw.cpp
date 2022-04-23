@@ -98,6 +98,12 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2
 		
 		//SDL_Color sdlColor = { 255,255,255,255 };
 		SDL_Color sdlColor = { (Uint8)color.r,(Uint8)color.b,(Uint8)color.g,(Uint8)color.a };
+
+
+		glm::vec2 startPoint = {start.x, start.y};
+		glm::vec2 endPoint = { end.x, end.y };
+		glm::uvec4 color = { 255,255,255,255 };
+		game->renderer()->addLine(startPoint, endPoint, color);
 		//game->renderer()->drawLine(start, end, sdlColor);
 	}
 

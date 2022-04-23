@@ -117,7 +117,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//Initialize the clock object
 		Clock::instance().init();
 
-		scene.addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MENU, 13, 13);
+		//scene.addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MENU, 13, 13);
 		//scene.addGameObject("BOWMAN", LAYER_MENU, 3, 3);
 
 
@@ -131,6 +131,7 @@ void MRGame::_addGameCollisionTags()
 {
 
 	//Add all game specific enum traslations needed
+	EnumMap::instance().addEnumItem("CollisionTag::BUTTON", CollisionTag::BUTTON);
 	EnumMap::instance().addEnumItem("CollisionTag::DEFLECT_EFFECT", CollisionTag::DEFLECT_EFFECT);
 	EnumMap::instance().addEnumItem("CollisionTag::DRONE_BRAIN", CollisionTag::DRONE_BRAIN);
 	EnumMap::instance().addEnumItem("CollisionTag::DRONE_SHIELD", CollisionTag::DRONE_SHIELD);

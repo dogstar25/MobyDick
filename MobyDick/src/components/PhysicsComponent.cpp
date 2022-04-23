@@ -50,6 +50,7 @@ PhysicsComponent::~PhysicsComponent()
 
 void PhysicsComponent::postInit()
 {
+
 	
 }
 
@@ -161,11 +162,6 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 	fixtureDef.restitution = m_restitution;
 	fixtureDef.isSensor = m_isSensor;
 	
-	//collision category
-	//fixtureDef.filter.categoryBits = m_collisionCategory;
-	//uint16 mask = CollisionManager::instance().getCollisionMask(m_collisionCategory);
-	//fixtureDef.filter.maskBits = mask;
-
 	// Add the shape to the body.
 	body->CreateFixture(&fixtureDef);
 
@@ -173,8 +169,47 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 	body->SetAngularDamping(m_angularDamping);
 	body->SetGravityScale(m_gravityScale);
 
-	//body->SetUserData(m_parentGameObject.get());
-	//this->box2dBodyCount++;
+
+	////////////////////////////////////////////////////////////
+	//Test - if this is object has an auxillery sensor then build it too
+	
+	if (physicsComponentJSON.isMember("auxSensor")) {
+
+		auto auxSensorShape = EnumMap::instance().toEnum(physicsComponentJSON["auxSensor"]["collisionShape"].asString());
+
+		//Collision shape - will default to a rectangle
+		if (auxSensorShape == b2Shape::e_circle)
+		{
+			auto auxSensorRadius = physicsComponentJSON["auxSensor"]["size"]["radius"].asFloat();
+			shape->m_radius = auxSensorRadius;
+			shape = &circle;
+		}
+		else
+		{
+			//Box Shape
+			//Divide by 2 because box2d needs center position
+			box.SetAsBox(
+				transformComponentJSON["auxSensor"]["size"]["width"].asFloat() / GameConfig::instance().scaleFactor() / 2,
+				transformComponentJSON["auxSensor"]["size"]["height"].asFloat() / GameConfig::instance().scaleFactor() / 2);
+			shape = &box;
+		}
+		
+		fixtureDef.shape = shape;
+		fixtureDef.isSensor = true;
+
+		// Add the shape to the body.
+		body->CreateFixture(&fixtureDef);
+	}
+
+
+
+
+
+
+
+
+
+
 	return body;
 
 }

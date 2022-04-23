@@ -23,6 +23,8 @@ void InteractAction::perform(GameObject* gameObject)
 				const auto& action = contactActionComponent->getAction(ACTION_INTERACTION);
 				action->perform();
 
+				break;
+
 
 
 				//const auto& actionComponent = contactGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);

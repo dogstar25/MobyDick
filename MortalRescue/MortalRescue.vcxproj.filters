@@ -75,6 +75,9 @@
     <ClCompile Include="src\actions\TurretFireAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\IMGui\IMGuiInteractiveMenuSurvivor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\blueprints\drone1_blueprint.png">
@@ -302,6 +305,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\actions\TurretFireAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IMGui\IMGuiInteractiveMenuSurvivor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,7 @@
 #include "IMGuiFactory.h"
 #include "IMGuiExample.h"
 #include "IMGuiText.h"
-#include "IMGuiHintBasic.h"
+#include "IMGuiInteractiveMenuBasic.h"
 
 
 
@@ -19,9 +19,9 @@ std::shared_ptr<IMGuiItem> IMGuiFactory::create(std::string iMGuiItemType, std::
 
 		iMGuiItem = std::make_shared<IMGuiText>(gameObjectId, padding, backgroundColor, textColor, colorNA, colorNA, colorNA, autoSize, staticTextValue);
 	}
-	else if (iMGuiItemType == "IMGuiHintBasic") {
+	else if (iMGuiItemType == "IMGuiInteractiveMenuBasic") {
 
-		iMGuiItem = std::make_shared<IMGuiHintBasic>(gameObjectId, padding, backgroundColor, textColor,	buttonColor, buttonHoverColor, buttonActiveColor, autoSize);
+		iMGuiItem = std::make_shared<IMGuiInteractiveMenuBasic>(gameObjectId, padding, backgroundColor, textColor,	buttonColor, buttonHoverColor, buttonActiveColor, autoSize);
 	}
 
 	else {

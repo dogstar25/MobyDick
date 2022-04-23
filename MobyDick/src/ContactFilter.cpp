@@ -37,6 +37,7 @@ bool ContactFilter::ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB)
 
 	if (gameObjectAMask.test(gameObjectB->collisionTag()) &&
 		gameObjectBMask.test(gameObjectA->collisionTag())) {
+
 		return true;
 	}
 	else {

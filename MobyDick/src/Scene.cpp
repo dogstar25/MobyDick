@@ -192,7 +192,6 @@ void Scene::update() {
 	//Update each gameObject in all layers
 	for (auto& gameObjects : m_gameObjects)
 	{
-
 		for (int i = 0; i < gameObjects.size(); i++)
 		{
 			gameObjects[i]->update();

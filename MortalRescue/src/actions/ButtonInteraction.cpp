@@ -4,7 +4,7 @@
 
 extern std::unique_ptr<Game> game;
 
-void ButtonInteraction::perform(GameObject* gameObject)
+void ButtonInteraction::perform(GameObject* gameObject, SDL_Scancode keyScanCode)
 {
 	std::string buttonTargetObjectName = gameObject->name() + "_TARGET";
 	GameObject* bottonTargetObject = game->getGameObject(buttonTargetObjectName);

@@ -48,6 +48,7 @@ namespace CollisionTag {
 	inline constexpr int SURVIVOR = 20;
 	inline constexpr int MEDKIT = 21;
 	inline constexpr int WEAPON_PICKUP = 22;
+	inline constexpr int BUTTON = 23;
 
 }
 

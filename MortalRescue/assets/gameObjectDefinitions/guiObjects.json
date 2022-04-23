@@ -117,7 +117,7 @@
 
         },
         {
-            "id": "INTERACTIVE_HINT_BASIC",
+            "id": "INTERACTIVE_MENU_BASIC",
             "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "abstract" ],
             "components": [
@@ -129,7 +129,7 @@
                 },
                 {
                     "id": "IMGUI_COMPONENT",
-                    "imguiType": "IMGuiHintBasic",
+                    "imguiType": "IMGuiInteractiveMenuBasic",
                     "autoSize": true,
                     "padding": {
                         "x": 4,
@@ -140,6 +140,39 @@
                         "backgroundAlpha": 172,
                         "text": "Colors::WHITE",
                         "button": "Colors::BLUE",
+                        "buttonHover": "Colors::MIRKWOOD",
+                        "buttonActive": "Colors::YELLOW"
+                    }
+
+                }
+            ]
+
+
+        },
+        {
+            "id": "INTERACTIVE_MENU_SURVIVOR",
+            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "IMGUI_COMPONENT",
+                    "imguiType": "IMGuiInteractiveMenuSurvivor",
+                    "autoSize": true,
+                    "padding": {
+                        "x": 4,
+                        "y": 4
+                    },
+                    "color": {
+                        "background": "Colors::CHARCOAL",
+                        "backgroundAlpha": 172,
+                        "text": "Colors::WHITE",
+                        "button": "Colors::MIRKWOOD",
                         "buttonHover": "Colors::MIRKWOOD",
                         "buttonActive": "Colors::YELLOW"
                     }
