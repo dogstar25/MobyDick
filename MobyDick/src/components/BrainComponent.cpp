@@ -18,9 +18,9 @@ BrainComponent::BrainComponent(Json::Value componentJSON)
 	test << componentJSON.toStyledString();
 	std::cout << test.str();
 
-	m_sensorLength = componentJSON["sensorLength"].asInt();
-	m_sensorOffset = componentJSON["sensorOffset"].asInt();
-	m_sensorCount = componentJSON["sensorCount"].asInt();
+	//m_sensorLength = componentJSON["sensorLength"].asInt();
+	//m_sensorOffset = componentJSON["sensorOffset"].asInt();
+	//m_sensorCount = componentJSON["sensorCount"].asInt();
 	m_sightSensorSize = componentJSON["sightSensorSize"].asInt();
 
 }

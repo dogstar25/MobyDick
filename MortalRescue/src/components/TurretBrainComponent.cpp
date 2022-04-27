@@ -16,30 +16,6 @@ TurretBrainComponent::TurretBrainComponent(Json::Value definitionJSON)
 
 }
 
-//void TurretBrainComponent::postInit()
-//{
-//	//Call base brain postinit
-//	BrainComponent::postInit();
-//
-//	//Get all WayPoints
-//	for (const auto& gameObject : parent()->parentScene()->gameObjects()[LAYER_ABSTRACT]) {
-//
-//		if (gameObject->hasTrait(TraitTag::navigation)) {
-//
-//			const auto& navComponent = gameObject->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
-//			if (navComponent->type() == NavigationObjectType::WAYPOINT) {
-//				m_wayPoints.push_back(gameObject.get());
-//			}
-//
-//		}
-//	}
-//
-//	//Do an random sort of the waypoints order
-//	unsigned seed = static_cast<unsigned>(std::chrono::system_clock::now().time_since_epoch().count());
-//	std::shuffle(m_wayPoints.begin(), m_wayPoints.end(), std::default_random_engine(seed));
-//
-//}
-
 void TurretBrainComponent::update()
 {
 

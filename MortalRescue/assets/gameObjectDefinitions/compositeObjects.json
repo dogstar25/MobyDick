@@ -99,9 +99,6 @@
                 },
                 {
                     "id": "BRAIN_DRONE_COMPONENT",
-                    "sensorLength": 550,
-                    "sensorOffset": 0,
-                    "sensorCount": 250,
                     "sightSensorSize": 25
                 },
                 {

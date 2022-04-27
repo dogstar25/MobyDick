@@ -6,6 +6,7 @@
 #include "components/DroneBrainComponent.h"
 #include "components/PistolWeaponComponent.h"
 #include "components/TurretBrainComponent.h"
+#include "components//SurvivorBrainComponent.h"
 
 
 std::shared_ptr<Component> MRComponentFactory::create(
@@ -35,7 +36,10 @@ std::shared_ptr<Component> MRComponentFactory::create(
 		componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::TURRET_BRAIN_COMPONENT);
 		component = std::make_shared<TurretBrainComponent>(componentJSON);
 	}
-
+	else if (componentType == ComponentTypes::SURVIVOR_BRAIN_COMPONENT) {
+		componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::SURVIVOR_BRAIN_COMPONENT);
+		component = std::make_shared<SurvivorBrainComponent>(componentJSON);
+	}
 	else {
 		component = ComponentFactory::create(
 			definitionJSON,

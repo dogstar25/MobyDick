@@ -1,6 +1,8 @@
 #include "VitalityComponent.h"
 
 #include "../GameObject.h"
+#include "../ColorMap.h"
+
 
 
 VitalityComponent::VitalityComponent()
@@ -35,7 +37,15 @@ VitalityComponent::VitalityComponent(Json::Value componentJSON)
 				LevelDefinition levelItem = {};
 				levelItem.levelNum = itrlevel["level"].asInt();
 				levelItem.resistance = itrlevel["resistance"].asInt();
-				levelItem.color = util::JsonToColor(itrlevel["color"]);
+
+				if (itrlevel.isMember("color")) {
+					levelItem.color = ColorMap::instance().toSDLColor(itrlevel["color"].asString());
+					util::colorApplyAlpha(levelItem.color, 255);
+				}
+				else {
+					levelItem.color = Colors::WHITE;
+					util::colorApplyAlpha(levelItem.color, 255);
+				}
 
 				m_regenLevels[level] = levelItem;
 				level++;
