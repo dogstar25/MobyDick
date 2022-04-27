@@ -19,8 +19,8 @@ public:
 		return m_interactionObject;
 	}
 
-	void setInteractionObjectActionComponent(std::shared_ptr<GameObject> interactionObjectActionComponent) {
-		m_interactionObject = interactionObjectActionComponent;
+	void setInteractionObject(std::shared_ptr<GameObject> interactionObject) {
+		m_interactionObject = interactionObject;
 	}
 
 private:

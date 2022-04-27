@@ -65,8 +65,18 @@ IMGuiComponent::IMGuiComponent(Json::Value componentJSON, std::string gameObject
 
 void IMGuiComponent::update()
 {
+	////////////////////////////////
+	////NEW TEST TEST
+	//const auto& interactActionComponent = getInteractionObject()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+	//const auto& interactAction = interactActionComponent->getAction(ACTION_INTERACTION);
 
-
+	//if (ImGui::IsKeyPressed(ImGuiKey_E)) {
+	//	interactAction->perform(getInteractionObject().get(), SDL_SCANCODE_E);
+	//}
+	//if (ImGui::IsKeyPressed(ImGuiKey_R)) {
+	//	interactAction->perform(getInteractionObject().get(), SDL_SCANCODE_R);
+	//}
+	/////////////////////////////////////
 }
 
 void IMGuiComponent::render()

@@ -63,22 +63,19 @@ void ActionComponent::render()
 	//If this an interactiveObject and a playerObject is touching it, then display its interactive menu, if one exists
 	if (parent()->hasTrait(TraitTag::interactive)) {
 
-		GameObject* interactiveObject = parent();
 		for (const auto& touchingObject : parent()->getTouchingObjects()) {
 
 			if(touchingObject.second->hasTrait(TraitTag::player)) {
 
 				GameObject* player = touchingObject.second;
 				//Is the player pointing at this interactive object?
-				if (player->isPointingAt(interactiveObject->getCenterPosition())) {
+				if (player->isPointingAt(parent()->getCenterPosition())) {
 
-					const std::shared_ptr<ActionComponent> actionComponent = interactiveObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-
-					if (actionComponent->interactiveMenuObject()) {
-						SDL_FPoint position = determineInteractionMenuLocation(player, interactiveObject, actionComponent->interactiveMenuObject().get());
-
-						actionComponent->interactiveMenuObject()->setPosition(position);
-						actionComponent->interactiveMenuObject()->render();
+					if (m_interactiveMenuObject) {
+						SDL_FPoint position = determineInteractionMenuLocation(player, parent(), m_interactiveMenuObject.get());
+						m_interactiveMenuObject->setPosition(position);
+						setInteractingObject(player);
+						m_interactiveMenuObject->render();
 					}
 
 				}
@@ -209,7 +206,7 @@ void ActionComponent::postInit()
 
 					//Get the menu objects ImGui component
 					const auto& menuObjectImGuiComponent = interactiveMenuObject->getComponent<IMGuiComponent>(ComponentTypes::IMGUI_COMPONENT);
-					menuObjectImGuiComponent->setInteractionObjectActionComponent(gameObject);
+					menuObjectImGuiComponent->setInteractionObject(gameObject);
 
 
 				}

@@ -621,10 +621,37 @@
                         },
                         {
                             "actionId": "ACTION_INTERACTION",
-                            "actionClass": "ButtonInteraction"
+                            "actionClass": "SurvivorInteraction"
                         }
                     ]
+                },
+                {
+                    "id": "SURVIVOR_BRAIN_COMPONENT",
+                    "sensorLength": 5,
+                    "sensorOffset": 0,
+                    "sensorCount": 250,
+                    "sightSensorSize": 7
                 }
+                //{
+                //    "id": "INTERACTION_COMPONENT",
+                //    {
+                //        "imguiType": "IMGuiInteractiveMenuSurvivor",
+                //        "autoSize": true,
+                //        "padding": {
+                //            "x": 4,
+                //            "y": 4
+                //        },
+                //        "color": {
+                //            "background": "Colors::CHARCOAL",
+                //            "backgroundAlpha": 172,
+                //            "text": "Colors::WHITE",
+                //            "button": "Colors::MIRKWOOD",
+                //            "buttonHover": "Colors::MIRKWOOD",
+                //            "buttonActive": "Colors::YELLOW"
+                //        }
+
+                //    }
+                //}
             ]
         },
         {
@@ -713,9 +740,6 @@
                 },
                 {
                     "id": "TURRET_BRAIN_COMPONENT",
-                    "sensorLength": 5,
-                    "sensorOffset": 0,
-                    "sensorCount": 250,
                     "sightSensorSize": 7
                 },
                 {

@@ -31,6 +31,12 @@ public:
 	void update() override;
 	void render();
 	void postInit() override;
+	void setInteractingObject(GameObject* gameObject) {
+		m_interactingObject = gameObject;
+	}
+	GameObject* getInteractingObject() {
+		return m_interactingObject;
+	}
 
 	std::shared_ptr<Action> getAction(int actionId);
 	std::shared_ptr<GameObject> interactiveMenuObject() {
@@ -41,6 +47,7 @@ public:
 private:
 	std::vector<std::shared_ptr<Action>>m_actions;
 	std::shared_ptr<GameObject> m_interactiveMenuObject{};
+	GameObject* m_interactingObject{};
 
 };
 

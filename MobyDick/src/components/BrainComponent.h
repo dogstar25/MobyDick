@@ -24,9 +24,9 @@ public:
     void dispatch();
     int state() { return m_currentState; }
 
-    int sensorLength() { return m_sensorLength; }
-    int sensorOffset() { return m_sensorOffset; }
-    int sensorCount() { return m_sensorCount; }
+    //int sensorLength() { return m_sensorLength; }
+    //int sensorOffset() { return m_sensorOffset; }
+    //int sensorCount() { return m_sensorCount; }
     int sightSensorSize() { return m_sightSensorSize; }
 
     std::vector<BrainAABBFoundObject> seenObjects() { return m_seenObjects; }
@@ -42,9 +42,9 @@ protected:
     std::optional<GameObject*> m_targetDestination{};
     std::optional<GameObject*> m_interimDestination{};
 
-    int m_sensorLength{};
-    int m_sensorOffset{};
-    int m_sensorCount{};
+    //int m_sensorLength{};
+    //int m_sensorOffset{};
+    //int m_sensorCount{};
     int m_currentSensorIteration{1};
 
     int m_sightSensorSize{};
