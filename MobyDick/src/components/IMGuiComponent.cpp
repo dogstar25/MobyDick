@@ -63,6 +63,17 @@ IMGuiComponent::IMGuiComponent(Json::Value componentJSON, std::string gameObject
 	m_IMGuiItem = game->iMGUIFactory()->create(imguiType, gameObjectId, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize, staticText);
 }
 
+void IMGuiComponent::setParent(GameObject* parentObject)
+{
+	//Call base component setParent
+	Component::setParent(parentObject);
+
+	//Parent for the IMGuiItem that lives under the interactiveMenuObject
+	m_IMGuiItem->setParent(parentObject);
+
+
+}
+
 void IMGuiComponent::update()
 {
 	////////////////////////////////
@@ -83,7 +94,7 @@ void IMGuiComponent::render()
 {
 	const auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
-	glm::vec2 imGuiWindowSize = m_IMGuiItem->render(parent());
+	glm::vec2 imGuiWindowSize = m_IMGuiItem->render();
 	transform->setSize(b2Vec2{ imGuiWindowSize.x,imGuiWindowSize.y });
 
 

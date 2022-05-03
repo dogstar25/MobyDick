@@ -9,6 +9,7 @@
 #include "../actions/DefaultRotateAction.h"
 #include "../actions/DefaultOnHoverAction.h"
 #include "../actions/DefaultOnHoverOutAction.h"
+#include "../IMGui/IMGuiItem.h"
 
 extern std::unique_ptr<Game> game;
 
@@ -67,14 +68,16 @@ void ActionComponent::render()
 
 			if(touchingObject.second->hasTrait(TraitTag::player)) {
 
-				GameObject* player = touchingObject.second;
-				//Is the player pointing at this interactive object?
-				if (player->isPointingAt(parent()->getCenterPosition())) {
+				GameObject* interactingObject = touchingObject.second;
+				//Is the interactingObject(player) pointing at this interactive object?
+				if (interactingObject->isPointingAt(parent()->getCenterPosition())) {
 
 					if (m_interactiveMenuObject) {
-						SDL_FPoint position = determineInteractionMenuLocation(player, parent(), m_interactiveMenuObject.get());
+						SDL_FPoint position = determineInteractionMenuLocation(interactingObject, parent(), m_interactiveMenuObject.get());
 						m_interactiveMenuObject->setPosition(position);
-						setInteractingObject(player);
+
+
+						setInteractingObject(interactingObject);
 						m_interactiveMenuObject->render();
 					}
 
@@ -85,65 +88,6 @@ void ActionComponent::render()
 	}
 
 
-
-
-	//If this is a player object then see if it is touching a interactive object and display that interactives objects interactionMenu if it is
-	//if (parent()->hasTrait(TraitTag::player)) {
-	//	const std::shared_ptr<PhysicsComponent> physicsComponent = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
-
-	//	for (b2ContactEdge* edge = physicsComponent->physicsBody()->GetContactList(); edge; edge = edge->next)
-	//	{
-	//		b2Contact* contact = edge->contact;
-	//		GameObject* contactGameObject = reinterpret_cast<GameObject*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
-
-	//		if (contactGameObject->hasTrait(TraitTag::interactive)) {
-
-	//			if (contact->IsTouching() && parent()->isPointingAt(contactGameObject->getCenterPosition())) {
-
-	//				const std::shared_ptr<ActionComponent> actionComponent = contactGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-
-	//				if (actionComponent->interactiveMenuObject()) {
-	//					SDL_FPoint position = determineInteractionMenuLocation(parent(), contactGameObject, actionComponent->interactiveMenuObject().get());
-	//					
-	//					actionComponent->interactiveMenuObject()->setPosition(position);
-	//					actionComponent->interactiveMenuObject()->render();
-	//					//we need to break because the player has an extra sensor for touching things which triggers this 
-	//					//menu showing twice
-	//					break;
-	//				}
-	//			}
-	//		}
-	//	}
-
-	//}
-
-	////If this is an interactive object then see if it is touching a player object and display that interactives objects interactionMenu if it is
-	//if (parent()->hasTrait(TraitTag::interactive)) {
-	//	const std::shared_ptr<PhysicsComponent> physicsComponent = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
-
-	//	for (b2ContactEdge* edge = physicsComponent->physicsBody()->GetContactList(); edge; edge = edge->next)
-	//	{
-	//		b2Contact* contact = edge->contact;
-	//		GameObject* contactGameObject = reinterpret_cast<GameObject*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
-
-	//		if (contactGameObject->hasTrait(TraitTag::player)) {
-
-	//			if (contact->IsTouching() && parent()->isPointingAt(contactGameObject->getCenterPosition())) {
-
-	//				if (this->interactiveMenuObject()) {
-	//					SDL_FPoint position = determineInteractionMenuLocation(parent(), contactGameObject, this->interactiveMenuObject().get());
-
-	//					this->interactiveMenuObject()->setPosition(position);
-	//					this->interactiveMenuObject()->render();
-	//					//we need to break because the player has an extra sensor for touching things which triggers this 
-	//					//menu showing twice
-	//					break;
-	//				}
-	//			}
-	//		}
-	//	}
-
-	//}
 
 }
 
@@ -182,6 +126,25 @@ SDL_FPoint ActionComponent::determineInteractionMenuLocation(GameObject* interac
 
 }
 
+void ActionComponent::setParent(GameObject* gameObject)
+{
+	//Call base component setParent
+	Component::setParent(gameObject);
+
+	//Parent for this interactionMenuObject if it exists
+	if (m_interactiveMenuObject) {
+		m_interactiveMenuObject->setParent(gameObject);
+
+		//const auto& interactiveMenueObjectImGuiComponent =
+		//	m_interactiveMenuObject->getComponent<IMGuiComponent>(ComponentTypes::IMGUI_COMPONENT);
+
+		////Parent for the IMGuiItem that lives under the interactiveMenuObject
+		//interactiveMenueObjectImGuiComponent->getIMGuiItem()->setParent(gameObject);
+	}
+
+
+}
+
 std::shared_ptr<Action> ActionComponent::getAction(int actionId)
 {
 
@@ -193,29 +156,29 @@ void ActionComponent::postInit()
 
 	//For any interactive object that has an interactiveMenuObject, we need to give that interactiveMenuObject a pointer
 	//to the interactive object. Otherwise, it doesnt know what GameObject it controls
-	for (auto& layer : parent()->parentScene()->gameObjects()) {
+	//for (auto& layer : parent()->parentScene()->gameObjects()) {
 
-		for (auto& gameObject : layer) {
+	//	for (auto& gameObject : layer) {
 
-			if (gameObject->hasTrait(TraitTag::interactive)) {
+	//		if (gameObject->hasTrait(TraitTag::interactive)) {
 
-				const auto& interactiveObjectActionComponent = gameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-				if (interactiveObjectActionComponent->interactiveMenuObject()) {
+	//			const auto& interactiveObjectActionComponent = gameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+	//			if (interactiveObjectActionComponent->interactiveMenuObject()) {
 
-					auto interactiveMenuObject = interactiveObjectActionComponent->interactiveMenuObject();
+	//				auto interactiveMenuObject = interactiveObjectActionComponent->interactiveMenuObject();
 
-					//Get the menu objects ImGui component
-					const auto& menuObjectImGuiComponent = interactiveMenuObject->getComponent<IMGuiComponent>(ComponentTypes::IMGUI_COMPONENT);
-					menuObjectImGuiComponent->setInteractionObject(gameObject);
-
-
-				}
-
-			}
+	//				//Get the menu objects ImGui component
+	//				const auto& menuObjectImGuiComponent = interactiveMenuObject->getComponent<IMGuiComponent>(ComponentTypes::IMGUI_COMPONENT);
+	//				menuObjectImGuiComponent->setInteractionObject(gameObject);
 
 
-		}
-	}
+	//			}
+
+	//		}
+
+
+	//	}
+	//}
 }
 
 

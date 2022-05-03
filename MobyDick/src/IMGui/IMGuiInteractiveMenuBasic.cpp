@@ -17,19 +17,19 @@ IMGuiInteractiveMenuBasic::IMGuiInteractiveMenuBasic(std::string gameObjectId, b
 
 }
 
-glm::vec2 IMGuiInteractiveMenuBasic::render(GameObject* parentGameObject)
+glm::vec2 IMGuiInteractiveMenuBasic::render()
 {
 
 	glm::vec2 windowSize{};
 
-	const auto& parentImGuiComponent = parentGameObject->getComponent<IMGuiComponent>(ComponentTypes::IMGUI_COMPONENT);
-	const auto& interactActionComponent = parentImGuiComponent->getInteractionObject()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-	const auto& interactAction = interactActionComponent->getAction(ACTION_INTERACTION);
+	const auto& baseGameObject = parent()->parent().value();
+	const auto& baseObjectActionComponent = baseGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+	const auto& interactAction = baseObjectActionComponent->getAction(ACTION_INTERACTION);
 
-	const auto& renderComponent = parentGameObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
+	const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-	setWindowProperties(parentGameObject);
+	setWindowProperties(parent());
 
 	//Set color
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, m_backgroundColor);
@@ -62,7 +62,7 @@ glm::vec2 IMGuiInteractiveMenuBasic::render(GameObject* parentGameObject)
 	ImGui::PopStyleVar();
 
 	if (ImGui::IsKeyPressed(ImGuiKey_E)) {
-		interactAction->perform(parentImGuiComponent->getInteractionObject().get(), SDL_SCANCODE_E);
+		interactAction->perform(parent()->parent().value(), SDL_SCANCODE_E);
 	}
 
 	return windowSize;

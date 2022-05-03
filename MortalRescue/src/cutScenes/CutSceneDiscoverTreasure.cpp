@@ -41,7 +41,10 @@ void CutSceneDiscoverTreasure::start()
 
 		//Get Frank, give Frank a brain, and dispatch Frank to a destination
 		_frank = _startFrank();
-		_frank->dispatch({ 5400,900 });
+		//_frank->dispatch({ 5400,900 });
+		const auto& brainComponent = _frank->getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+		brainComponent->dispatch({ 5400,900 });
+
 		Camera::instance().setFollowMe(_frank);
 
 		scene1Timer = Timer(1500);
@@ -49,7 +52,10 @@ void CutSceneDiscoverTreasure::start()
 	}
 	else if (m_currentAct == 2) {
 
-		_frank->dispatch({ 1,1 });
+		//_frank->dispatch({ 1,1 });
+		const auto& brainComponent = _frank->getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+		brainComponent->dispatch({ 5400,900 });
+
 		Camera::instance().dispatch({ 4000,900 });
 	}
 
@@ -58,15 +64,18 @@ void CutSceneDiscoverTreasure::start()
 void CutSceneDiscoverTreasure::update()
 {
 
+	const auto& brainComponent = _frank->getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+	auto franksBrainState = brainComponent->state();
+
 	if (m_currentAct == 1) {
-		if (_frank->brainState() == BrainState::IDLE &&
+		if (franksBrainState == BrainState::IDLE &&
 			scene1Timer.hasMetTargetDuration() == true) {
 			currentState = cutSceneState::IDLE;
 			m_currentAct += 1;
 		}
 	}
 	else if (m_currentAct == 2) {
-		if (_frank->brainState() == BrainState::IDLE &&
+		if (franksBrainState == BrainState::IDLE &&
 			Camera::instance().state() == CameraState::IDLE) {
 			currentState = cutSceneState::IDLE;
 			m_currentAct += 1;
@@ -120,16 +129,16 @@ GameObject* CutSceneDiscoverTreasure::_startFrank()
 	GameObject* frank = currentScene->getGameObject("Frank");
 
 	//Give Frank a brain
-	brainDefinition["id"] = "BRAIN_COMPONENT";
-	brainDefinition["sightSensorSize"] = 25;
-	componentsDefinition["components"].append(brainDefinition);
+	//brainDefinition["id"] = "BRAIN_COMPONENT";
+	//brainDefinition["sightSensorSize"] = 25;
+	//componentsDefinition["components"].append(brainDefinition);
 
-	const auto& brainComponent =
-		std::static_pointer_cast<BrainComponent>(
-			game->componentFactory()->create(componentsDefinition, "Frank","SURVIVOR", currentScene, 0, 0, 0, ComponentTypes::BRAIN_COMPONENT)
-			);
-	brainComponent->setParent(frank);
-	frank->addComponent(brainComponent, ComponentTypes::BRAIN_COMPONENT);
+	//const auto& brainComponent =
+	//	std::static_pointer_cast<BrainComponent>(
+	//		game->componentFactory()->create(componentsDefinition, "Frank","SURVIVOR", currentScene, 0, 0, 0, ComponentTypes::BRAIN_COMPONENT)
+	//		);
+	//brainComponent->setParent(frank);
+	//frank->addComponent(brainComponent, ComponentTypes::BRAIN_COMPONENT);
 
 	return frank;
 

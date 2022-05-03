@@ -17,16 +17,16 @@ IMGuiTopHud::IMGuiTopHud(std::string gameObjectId, b2Vec2 padding, ImVec4 backgr
 
 }
 
-glm::vec2 IMGuiTopHud::render(GameObject* parentGameObject)
+glm::vec2 IMGuiTopHud::render()
 {
 
 
 	glm::vec2 windowSize{};
 
-	const auto& renderComponent = parentGameObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
+	const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-	setWindowProperties(parentGameObject);
+	setWindowProperties(parent());
 
 	//Set Color
 	

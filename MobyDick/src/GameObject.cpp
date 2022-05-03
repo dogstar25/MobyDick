@@ -68,6 +68,22 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 }
 
+void GameObject::addTouchingObject(GameObject* touchingObject) 
+{
+
+	m_touchingGameObjects[touchingObject->name()] = touchingObject;
+
+}
+
+void GameObject::setParent(GameObject* parentObject)
+{
+
+	m_parentObject = parentObject;
+
+}
+
+
+
 void GameObject::setPosition(float x, float y)
 {
 
@@ -388,18 +404,18 @@ bool GameObject::isPointingAt(SDL_FPoint gameObjectPosition)
 }
 
 
-void GameObject::dispatch(SDL_FPoint destination)
-{
-	const auto& brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
-	brainComponent->dispatch(destination);
-}
-
-int GameObject::brainState()
-{
-	const auto& brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
-
-	return brainComponent->state();
-}
+//void GameObject::dispatch(SDL_FPoint destination)
+//{
+//	const auto& brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+//	brainComponent->dispatch(destination);
+//}
+//
+//int GameObject::brainState()
+//{
+//	const auto& brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+//
+//	return brainComponent->state();
+//}
 
 void GameObject::disable(bool disablePhysicsBody)
 {

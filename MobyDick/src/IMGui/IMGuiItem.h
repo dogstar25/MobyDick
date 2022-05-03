@@ -13,10 +13,12 @@ public:
 	IMGuiItem(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor, ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize);
 	//IMGuiItem(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor, bool autoSize);
 	
-	virtual glm::vec2 render(GameObject* parentGameObject) = 0;
+	virtual glm::vec2 render() = 0;
 	std::string staticText() { return m_staticText; }
 
 	void setWindowProperties(GameObject* parentGameObject);
+	GameObject* parent() { return m_parent; }
+	void setParent(GameObject* gameObject) { m_parent = gameObject; }
 
 protected:
 
@@ -37,6 +39,9 @@ protected:
 	inline static ImFont* m_normalFont;
 	inline static ImFont* m_mediumFont;
 	inline static ImFont* m_largeFont;
+
+	//GameObject that owns this IMGuiItem
+	GameObject* m_parent{};
 
 		
 };

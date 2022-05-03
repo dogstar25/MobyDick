@@ -36,6 +36,7 @@ public:
 	void update() override;
 	void render();
 	void postInit() override;
+	void setParent(GameObject* parentObject) override;
 
 	const std::optional<Attachment> getAttachment(std::string id);
 

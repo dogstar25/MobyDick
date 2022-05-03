@@ -251,7 +251,32 @@
                     },
                     "absolutePositioning": false
 
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 10
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "collisionShape": "B2_CIRCLE",
+                    "collisionRadius": 0.64,
+                    "friction": 0.00,
+                    "restitution": 0.0,
+                    "density": 50.5,
+                    "linearDamping": 2.2,
+                    "angularDamping": 3.0
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_MOVE",
+                            "actionClass": "DroneMove"
+                        }
+                    ]
                 }
+
 
             ]
         },
@@ -627,10 +652,7 @@
                 },
                 {
                     "id": "SURVIVOR_BRAIN_COMPONENT",
-                    "sensorLength": 5,
-                    "sensorOffset": 0,
-                    "sensorCount": 250,
-                    "sightSensorSize": 7
+                    "sightSensorSize": 25
                 }
                 //{
                 //    "id": "INTERACTION_COMPONENT",
@@ -653,31 +675,6 @@
                 //    }
                 //}
             ]
-        },
-        {
-            "id": "USE_HINT",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
-            "traitTags": [],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_USE_HINT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 16,
-                        "height": 16
-                    }
-                },
-                {
-                    "id": "VITALITY_COMPONENT",
-                    "lifetime": 1.0,
-                    "lifetimeAlphaFade": true
-                }
-            ]
-
-
         },
         {
             "id": "TURRET",

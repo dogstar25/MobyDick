@@ -12,7 +12,7 @@ class IMGuiExample : public IMGuiItem
 {
 public:
 	IMGuiExample() = default;
-	glm::vec2 render(GameObject* parentGameObject) override;
+	glm::vec2 render() override;
 
 private:
 	bool show_another_window = true;

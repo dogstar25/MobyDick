@@ -86,8 +86,6 @@ int TurretBrainComponent::_determineState()
 			if (animationComponent->currentAnimationState() == ANIMATION_IDLE) {
 				state = BrainState::IDLE;
 			}
-
-
 		}
 	}
 
@@ -147,8 +145,6 @@ void TurretBrainComponent::_doEngage()
 		action->perform(parent());
 
 	}
-
-	
 
 }
 

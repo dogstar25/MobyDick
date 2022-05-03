@@ -22,14 +22,14 @@ IMGuiText::IMGuiText(std::string gameObjectId, b2Vec2 padding, ImVec4 background
 
 }
 
-glm::vec2 IMGuiText::render(GameObject* parentGameObject)
+glm::vec2 IMGuiText::render()
 {
 	glm::vec2 windowSize{};
 
-	const auto& renderComponent = parentGameObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
+	const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-	setWindowProperties(parentGameObject);
+	setWindowProperties(parent());
 
 	//Set color
 	ImGui::PushStyleColor(ImGuiCol_Text, m_textColor);
