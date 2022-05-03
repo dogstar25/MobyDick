@@ -158,6 +158,7 @@ void Scene::clear()
 void Scene::update() {
 
 	//Direct the scne if it has a cutScene assigned
+
 	if (m_cutScene.has_value() == true) {
 		direct();
 	}

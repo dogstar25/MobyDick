@@ -108,11 +108,9 @@ public:
 	void reset();
 	void addInventoryItem(GameObject* gameObject);
 	std::vector<GameObject> getTouchingByTrait(const int);
-	void addTouchingObject(GameObject* touchingObject) {
-
-		m_touchingGameObjects[touchingObject->name()] = touchingObject;
-
-	}
+	void addTouchingObject(GameObject* touchingObject);
+	void setParent(GameObject* parentObject);
+	std::optional<GameObject*> parent() { return m_parentObject; }
 
 	const std::unordered_map<std::string, GameObject*>& getTouchingObjects() {
 		return m_touchingGameObjects;
@@ -176,7 +174,8 @@ public:
 
 
 private:
-	
+
+	std::optional<GameObject*> m_parentObject{};
 	std::string m_name;
 	int m_collisionTag{ 0 };
 	int m_originalCollisionTag{ 0 };
@@ -185,8 +184,6 @@ private:
 	std::bitset<32> m_traitTags{};
 	bool m_disabled{};
 	std::unordered_map<std::string, GameObject*> m_touchingGameObjects{};
-
-
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 
 	//Components
@@ -196,7 +193,6 @@ private:
 	std::string _buildName(std::string id, float xMapPos, float yMapPos, Scene* parentScene);
 	void _updateTouchingObjects();
 
-	void _init(std::string gameObjectId, Json::Value definitionJSON, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, int layer, bool cameraFollow = false);
 };
 
 #endif

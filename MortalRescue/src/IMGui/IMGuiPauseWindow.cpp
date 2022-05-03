@@ -18,15 +18,15 @@ IMGuiPauseWindow::IMGuiPauseWindow(std::string gameObjectId, b2Vec2 padding, ImV
 
 }
 
-glm::vec2 IMGuiPauseWindow::render(GameObject* parentGameObject)
+glm::vec2 IMGuiPauseWindow::render()
 {
 	ImVec2 buttonSize{ ImGui::MRSettings::button1Size};
 	glm::vec2 windowSize{};
 
-	const auto& renderComponent = parentGameObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
+	const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-	setWindowProperties(parentGameObject);
+	setWindowProperties(parent());
 
 	//Set Color
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, m_backgroundColor);

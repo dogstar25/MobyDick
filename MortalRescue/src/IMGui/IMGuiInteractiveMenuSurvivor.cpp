@@ -17,20 +17,20 @@ IMGuiInteractiveMenuSurvivor::IMGuiInteractiveMenuSurvivor(std::string gameObjec
 
 }
 
-glm::vec2 IMGuiInteractiveMenuSurvivor::render(GameObject* parentGameObject)
+glm::vec2 IMGuiInteractiveMenuSurvivor::render()
 {
 
 	glm::vec2 windowSize{};
 
-	const auto& parentImGuiComponent = parentGameObject->getComponent<IMGuiComponent>(ComponentTypes::IMGUI_COMPONENT);
-	const auto& interactActionComponent = parentImGuiComponent->getInteractionObject()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-	const auto& interactAction = interactActionComponent->getAction(ACTION_INTERACTION);
-	const auto& interactingObject = interactActionComponent->getInteractingObject();
+	const auto& baseGameObject = parent()->parent().value();
+	const auto& baseObjectActionComponent = baseGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+	const auto& interactAction = baseObjectActionComponent->getAction(ACTION_INTERACTION);
+	const auto& interactingObject = baseObjectActionComponent->getInteractingObject();
 
-	const auto& renderComponent = parentGameObject->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
+	const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 
-	setWindowProperties(parentGameObject);
+	setWindowProperties(parent());
 
 	//Set color
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, m_backgroundColor);
@@ -67,10 +67,10 @@ glm::vec2 IMGuiInteractiveMenuSurvivor::render(GameObject* parentGameObject)
 	ImGui::PopStyleVar();
 
 	if (ImGui::IsKeyPressed(ImGuiKey_E)) {
-		interactAction->perform(interactingObject, parentImGuiComponent->getInteractionObject().get(), SDL_SCANCODE_E);
+		interactAction->perform(interactingObject, parent()->parent().value(), SDL_SCANCODE_E);
 	}
 	if (ImGui::IsKeyPressed(ImGuiKey_R)) {
-		interactAction->perform(interactingObject, parentImGuiComponent->getInteractionObject().get(), SDL_SCANCODE_R);
+		interactAction->perform(interactingObject, parent()->parent().value(), SDL_SCANCODE_R);
 	}
 
 	return windowSize;

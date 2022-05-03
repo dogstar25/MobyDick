@@ -6,7 +6,7 @@
 
 extern std::unique_ptr<Game> game;
 
-glm::vec2 IMGuiExample::render(GameObject* parentGameObject)
+glm::vec2 IMGuiExample::render()
 {
 
 	ImGui::ShowDemoWindow();

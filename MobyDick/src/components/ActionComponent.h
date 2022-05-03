@@ -43,6 +43,7 @@ public:
 		return m_interactiveMenuObject;
 	}
 	SDL_FPoint determineInteractionMenuLocation(GameObject* interactingObject, GameObject* contactGameObject, GameObject* menuObject);
+	void setParent(GameObject* gameObject) override;
 
 private:
 	std::vector<std::shared_ptr<Action>>m_actions;

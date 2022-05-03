@@ -82,3 +82,17 @@ const std::optional<Attachment> AttachmentsComponent::getAttachment(std::string 
 	return foundAttachment;
 
 }
+
+void AttachmentsComponent::setParent(GameObject* parentObject)
+{
+	//Call base setParent
+	Component::setParent(parentObject);
+
+	for (auto& attachment : m_attachments) {
+
+		attachment.gameObject->setParent(parentObject);
+
+	}
+
+
+}
