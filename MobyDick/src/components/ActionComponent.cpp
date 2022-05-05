@@ -53,14 +53,6 @@ void ActionComponent::update()
 void ActionComponent::render()
 {
 
-	//Need to approach the "touching" logic from both the perspective of the player AND
-	//the perspective of the interactive object because, because of box2d oddness, only one object or the other will
-	//have the contact information
-
-	if (parent()->hasTrait(TraitTag::interactive)) {
-		int todd = 1;
-	}
-
 	//If this an interactiveObject and a playerObject is touching it, then display its interactive menu, if one exists
 	if (parent()->hasTrait(TraitTag::interactive)) {
 
@@ -135,13 +127,7 @@ void ActionComponent::setParent(GameObject* gameObject)
 	if (m_interactiveMenuObject) {
 		m_interactiveMenuObject->setParent(gameObject);
 
-		//const auto& interactiveMenueObjectImGuiComponent =
-		//	m_interactiveMenuObject->getComponent<IMGuiComponent>(ComponentTypes::IMGUI_COMPONENT);
-
-		////Parent for the IMGuiItem that lives under the interactiveMenuObject
-		//interactiveMenueObjectImGuiComponent->getIMGuiItem()->setParent(gameObject);
 	}
-
 
 }
 
@@ -151,35 +137,6 @@ std::shared_ptr<Action> ActionComponent::getAction(int actionId)
 	return m_actions[actionId];
 }
 
-void ActionComponent::postInit()
-{
-
-	//For any interactive object that has an interactiveMenuObject, we need to give that interactiveMenuObject a pointer
-	//to the interactive object. Otherwise, it doesnt know what GameObject it controls
-	//for (auto& layer : parent()->parentScene()->gameObjects()) {
-
-	//	for (auto& gameObject : layer) {
-
-	//		if (gameObject->hasTrait(TraitTag::interactive)) {
-
-	//			const auto& interactiveObjectActionComponent = gameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-	//			if (interactiveObjectActionComponent->interactiveMenuObject()) {
-
-	//				auto interactiveMenuObject = interactiveObjectActionComponent->interactiveMenuObject();
-
-	//				//Get the menu objects ImGui component
-	//				const auto& menuObjectImGuiComponent = interactiveMenuObject->getComponent<IMGuiComponent>(ComponentTypes::IMGUI_COMPONENT);
-	//				menuObjectImGuiComponent->setInteractionObject(gameObject);
-
-
-	//			}
-
-	//		}
-
-
-	//	}
-	//}
-}
 
 
 

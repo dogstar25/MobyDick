@@ -81,6 +81,7 @@ MRContactFilter::MRContactFilter()
 	//SURVIVOR
 	m_collisionMasks[SURVIVOR].reset();
 	m_collisionMasks[SURVIVOR].set(PLAYER);
+	m_collisionMasks[SURVIVOR].set(SURVIVOR);
 	m_collisionMasks[SURVIVOR].set(WALL);
 
 	//WALL

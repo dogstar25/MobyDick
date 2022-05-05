@@ -3,9 +3,11 @@
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdlrenderer.h"
+#include "game.h"
 
 #include "../GameConstants.h"
 
+extern std::unique_ptr<Game> game;
 
 
 SurvivorBrainComponent::SurvivorBrainComponent(Json::Value definitionJSON)
@@ -41,9 +43,14 @@ void SurvivorBrainComponent::followMe(GameObject* gameObjectToFollow) {
 	m_gameObjectToFollow = gameObjectToFollow;
 	m_currentState = BrainState::FOLLOW;
 
-
 }
 
+void SurvivorBrainComponent::stay() {
+
+	m_gameObjectToFollow = nullptr;
+	m_currentState = BrainState::IDLE;
+
+}
 
 
 int SurvivorBrainComponent::_determineState()
@@ -102,7 +109,98 @@ int SurvivorBrainComponent::_determineState()
 void SurvivorBrainComponent::_doFollow()
 {
 
+	b2Vec2 trajectory{};
 
+	//If we are not closeenough to the object we're following then move to within tolerance
+	if (util::calculateDistance(parent()->getCenterPosition(), m_gameObjectToFollow->getCenterPosition())
+		> SURVIVOR_FOLLOW_TOLERANCE) {
+
+		trajectory.x = m_gameObjectToFollow->getCenterPosition().x - parent()->getCenterPosition().x;
+		trajectory.y = m_gameObjectToFollow->getCenterPosition().y - parent()->getCenterPosition().y;
+
+		trajectory.Normalize();
+
+		const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+		const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
+		moveAction->perform(parent(), trajectory);
+
+	}
+
+	//Stay behind the object you are following
+	const auto& gameObjectToFollowPhysicsComponent = m_gameObjectToFollow->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	const auto& gameObjectToFollowTransformComponent = m_gameObjectToFollow->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+
+	ImGui::SetNextWindowPos(ImVec2{ 350, 0 });
+	ImGui::Begin("Survivor Stay Behind");
+
+	float gameObjectAngleDegrees = util::radiansToDegrees(gameObjectToFollowPhysicsComponent->angle());
+	float orientationAngle = atan2(
+		parent()->getCenterPosition().y - m_gameObjectToFollow->getCenterPosition().y,
+		parent()->getCenterPosition().x - m_gameObjectToFollow->getCenterPosition().x
+	);
+
+	float orientationAngleDegrees = util::radiansToDegrees(orientationAngle);
+
+	float difference = gameObjectAngleDegrees - orientationAngleDegrees;
+	//Shooting in the dark here
+	if (!((difference > 90 && difference < 270) ||
+		(difference > -180 && difference < -90))) {
+
+		ImGui::Text("GET BEHIND!");
+
+		//Rotate to the left or the right based on the position
+		int sinDirection{};
+		int cosDirection{};
+		if (difference < 90) {
+			sinDirection = 1;
+			cosDirection = -1;
+		}
+		else {
+			sinDirection = -1;
+			cosDirection = 1;
+		}
+
+		//Rotate myself around the object im following until im behind
+		trajectory.x = (sin(orientationAngle) * 200 * sinDirection) + (m_gameObjectToFollow->getCenterPosition().x - parent()->getCenterPosition().x);
+		trajectory.y = (cos(orientationAngle) * 200 * cosDirection) + (m_gameObjectToFollow->getCenterPosition().y - parent()->getCenterPosition().y);
+		trajectory.Normalize();
+
+		const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+		const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
+		moveAction->perform(parent(), trajectory);
+
+	}
+
+	SDL_FPoint destination{};
+	destination.x = m_gameObjectToFollow->getCenterPosition().x + (64 * cos(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(135)));
+	destination.y = m_gameObjectToFollow->getCenterPosition().y + (64 * sin(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(135)));
+
+	SDL_FPoint destination2{};
+	destination2.x = m_gameObjectToFollow->getCenterPosition().x + (64 * cos(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(180)));
+	destination2.y = m_gameObjectToFollow->getCenterPosition().y + (64 * sin(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(180)));
+
+	SDL_FPoint destination3{};
+	destination3.x = m_gameObjectToFollow->getCenterPosition().x + (64 * cos(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(225)));
+	destination3.y = m_gameObjectToFollow->getCenterPosition().y + (64 * sin(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(225)));
+
+
+	glm::vec2 start{ m_gameObjectToFollow->getCenterPosition().x , m_gameObjectToFollow->getCenterPosition().y };
+	glm::vec2 stop{ destination.x , destination.y };
+	game->renderer()->addLine(start, stop, { 255,255,255,255 });
+	start = { m_gameObjectToFollow->getCenterPosition().x , m_gameObjectToFollow->getCenterPosition().y };
+	stop = { destination2.x , destination2.y };
+	game->renderer()->addLine(start, stop, { 255,255,255,255 });
+	start = { m_gameObjectToFollow->getCenterPosition().x , m_gameObjectToFollow->getCenterPosition().y };
+	stop = { destination3.x , destination3.y };
+	game->renderer()->addLine(start, stop, { 255,255,255,255 });
+
+
+
+	ImGui::Value("gameObjectAngleDegrees", gameObjectAngleDegrees);
+	ImGui::Value("Orientation Angle", orientationAngleDegrees);
+	ImGui::Value("Difference", difference);
+
+	ImGui::End();
 
 
 }
