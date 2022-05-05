@@ -10,8 +10,12 @@ void SurvivorInteractionAction::perform(GameObject* interactingObject, GameObjec
 {
 	const auto& brainComponent = interactionObject->getComponent<SurvivorBrainComponent>(ComponentTypes::SURVIVOR_BRAIN_COMPONENT);
 
-	brainComponent->followMe(interactingObject);
+	if (keyScanCode == SDL_SCANCODE_E) {
+		brainComponent->followMe(interactingObject);
+	}
+	if (keyScanCode == SDL_SCANCODE_R) {
+		brainComponent->stay();
+	}
 
-	std::cout << "do brain action " << keyScanCode << std::endl;
 
 }

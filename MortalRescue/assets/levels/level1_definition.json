@@ -86,7 +86,11 @@
         },
         {
             "id": "LOC_0002_0012",
-            "gameObjectId": "SWORDLADY"
+            "gameObjectId": "SURVIVOR"
+        },
+        {
+            "id": "LOC_0017_0003",
+            "gameObjectId": "SURVIVOR"
         },
         {
             "id": "LOC_0002_0002",

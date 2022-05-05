@@ -11,12 +11,17 @@
 class SurvivorBrainComponent : public BrainComponent
 {
 
+	
+
 public:
 	SurvivorBrainComponent(Json::Value definitionJSON);
 
+
 	void update() override;
 	void followMe(GameObject* gameObjectToFollow);
-	//void postInit() override;
+	void stay();
+
+	const int SURVIVOR_FOLLOW_TOLERANCE = 90;
 
 private:
 

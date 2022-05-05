@@ -30,7 +30,6 @@ public:
 
 	void update() override;
 	void render();
-	void postInit() override;
 	void setInteractingObject(GameObject* gameObject) {
 		m_interactingObject = gameObject;
 	}

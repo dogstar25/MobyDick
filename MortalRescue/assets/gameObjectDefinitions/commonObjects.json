@@ -622,7 +622,7 @@
                 },
                 {
                     "id": "VITALITY_COMPONENT",
-                    "speed": 10
+                    "speed": 25
                 },
                 {
                     "id": "PHYSICS_COMPONENT",
@@ -633,8 +633,7 @@
                     "restitution": 0.0,
                     "density": 50.5,
                     "linearDamping": 50.2,
-                    "angularDamping": 3.0,
-                    "isSensor": true
+                    "angularDamping": 3.0
                 },
                 {
                     "id": "ACTION_COMPONENT",
@@ -654,26 +653,6 @@
                     "id": "SURVIVOR_BRAIN_COMPONENT",
                     "sightSensorSize": 25
                 }
-                //{
-                //    "id": "INTERACTION_COMPONENT",
-                //    {
-                //        "imguiType": "IMGuiInteractiveMenuSurvivor",
-                //        "autoSize": true,
-                //        "padding": {
-                //            "x": 4,
-                //            "y": 4
-                //        },
-                //        "color": {
-                //            "background": "Colors::CHARCOAL",
-                //            "backgroundAlpha": 172,
-                //            "text": "Colors::WHITE",
-                //            "button": "Colors::MIRKWOOD",
-                //            "buttonHover": "Colors::MIRKWOOD",
-                //            "buttonActive": "Colors::YELLOW"
-                //        }
-
-                //    }
-                //}
             ]
         },
         {
