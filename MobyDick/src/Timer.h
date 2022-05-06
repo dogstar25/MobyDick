@@ -9,6 +9,7 @@ public:
 	Timer() = default;
 	Timer(float targetDuration);
 
+	bool firstTime{ true };
 	bool infiniteLifetime() { return m_infiniteLifetime; }
 	bool hasMetTargetDuration();
 	std::chrono::duration<float> timeElapsed();

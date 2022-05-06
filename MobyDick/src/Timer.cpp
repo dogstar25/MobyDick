@@ -6,6 +6,8 @@ Timer::Timer(float targetDuration) : m_targetDuration(targetDuration)
     if (targetDuration == 0.) {
         m_infiniteLifetime = true;
     }
+
+    firstTime = false;
 }
 
 std::chrono::duration<float> Timer::timeElapsed() 

@@ -9,9 +9,6 @@
 
 extern std::unique_ptr<Game> game;
 
-static const SDL_Color WHITE = { 255,255,255 };
-static const SDL_Color BLACK = { 0,0,0 };
-
 static const unsigned char wallOnLeft = 0b0001;
 static const unsigned char wallOnRight = 0b0010;
 static const unsigned char wallOnTop = 0b0100;
@@ -201,7 +198,7 @@ std::optional<LevelObject> LevelManager::_determineTile(int x, int y, SDL_Surfac
 	SDL_Color leftColor, rightColor, topColor, bottomColor;
 	unsigned int borderWalls = 0;
 
-	leftColor = rightColor = topColor = bottomColor = WHITE;
+	leftColor = rightColor = topColor = bottomColor = Colors::WHITE;
 
 	//get the pixel at this location
 	Uint8* currentPixel = (Uint8*)surface->pixels + y * surface->pitch + x * bpp;
@@ -211,10 +208,10 @@ std::optional<LevelObject> LevelManager::_determineTile(int x, int y, SDL_Surfac
 	SDL_Color currentPixelcolor = { red, green, blue };
 
 	//If this is a wall, determine the wall object, otherwise lookup the object in the level definition file
-	if (currentPixelcolor == BLACK)	{
+	if (currentPixelcolor == Colors::BLACK)	{
 		levelObject = _determineWallObject(x,y,surface);
 	}
-	else if (currentPixelcolor != WHITE) {
+	else if (currentPixelcolor != Colors::WHITE) {
 		levelObject = _determineLocationObject(x, y, surface);
 	}
 
@@ -296,16 +293,16 @@ LevelObject LevelManager::_determineWallObject(int x, int y, SDL_Surface* bluePr
 	}
 
 	//Set the bit mask to match which walls exist where
-	if (leftColor == BLACK) {
+	if (leftColor == Colors::BLACK) {
 		borderWalls |= wallOnLeft;
 	}
-	if (rightColor == BLACK) {
+	if (rightColor == Colors::BLACK) {
 		borderWalls |= wallOnRight;
 	}
-	if (topColor == BLACK) {
+	if (topColor == Colors::BLACK) {
 		borderWalls |= wallOnTop;
 	}
-	if (bottomColor == BLACK) {
+	if (bottomColor == Colors::BLACK) {
 		borderWalls |= wallOnBottom;
 	}
 

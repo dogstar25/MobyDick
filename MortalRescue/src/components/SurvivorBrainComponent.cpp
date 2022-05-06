@@ -31,6 +31,9 @@ void SurvivorBrainComponent::update()
 	case BrainState::FOLLOW:
 		_doFollow();
 		break;
+	case BrainState::LOST:
+		_doLost();
+		break;
 	default:
 		_doIdle();
 		break;
@@ -58,53 +61,97 @@ int SurvivorBrainComponent::_determineState()
 
 	int state{ m_currentState };
 
-	////Can we see the enemy/player?
-	//std::optional<SDL_FPoint> playerLocation = _detectPlayer();
-	//if (playerLocation.has_value()) {
+	ImGui::SetNextWindowPos({ 250,50 });
+	ImGui::Begin("Lostwindow");
+	ImGui::Value("value", 7);
 
-	//	if (m_currentState == BrainState::IDLE) {
-	//		state = BrainState::DEPLOY;
-	//	}
-	//	else if (m_currentState == BrainState::DEPLOY) {
+		if (m_currentState == BrainState::FOLLOW) {
+			ImGui::Text("I'm Good!");
+			//If we have lost site of the object we're following then change to lost state
+			if (_detectFollowedObject() == false) {
 
-	//		const auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
-	//		//If animation state is ANIMATION_ACTIVE then it has finished the deploy animation
-	//		if (animationComponent->currentAnimationState() == ANIMATION_ACTIVE) {
-	//			state = BrainState::ENGAGE;
-	//		}
-	//	}
-	//	else if (m_currentState == BrainState::UNDEPLOY) {
+				if (m_lostTimer.firstTime) {
+					m_lostTimer = Timer(3);
+				}
+				else if (m_lostTimer.hasMetTargetDuration()) {
+					state = BrainState::LOST;
+				}
+			}
+		}
+		if (m_currentState == BrainState::LOST) {
 
-	//		const auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
-	//		state = BrainState::DEPLOY;
+			ImGui::Text("I'm Lost!");
+			if (_detectFollowedObject() == true) {
+				m_interimDestination.reset();
+				state = BrainState::FOLLOW;
+				m_lostTimer = {};
+				
+			}
+		}
 
-	//	}
-	//	else if (m_currentState == BrainState::ENGAGE) {
-
-	//		//stay engage?
-
-	//	}
-
-	//}
-	//else {
-	//	if (m_currentState == BrainState::DEPLOY || m_currentState == BrainState::ENGAGE) {
-	//		state = BrainState::UNDEPLOY;
-	//	}
-	//	else if (m_currentState == BrainState::UNDEPLOY) {
-
-	//		//If the undeploy animation is done, then set the brain to IDLE
-	//		const auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
-	//		if (animationComponent->currentAnimationState() == ANIMATION_IDLE) {
-	//			state = BrainState::IDLE;
-	//		}
-
-
-	//	}
-	//}
+	ImGui::End();
 
 	return state;
 
 }
+
+void SurvivorBrainComponent::_doLost()
+{
+	//_determineTargetLocation(); - add this once all nav points are in place. Set targetDestination to the nearest nav point that 
+	//can see the followed object
+	setTargetDestination(m_gameObjectToFollow->getCenterPosition());
+	navigate();
+	m_tempVisitedNavPoints.clear();
+
+}
+
+void SurvivorBrainComponent::_stayBehindFollowedObject()
+{
+
+	const auto& gameObjectToFollowPhysicsComponent = m_gameObjectToFollow->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	const auto& gameObjectToFollowTransformComponent = m_gameObjectToFollow->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+
+
+	float gameObjectAngleDegrees = util::radiansToDegrees(gameObjectToFollowPhysicsComponent->angle());
+	float orientationAngle = atan2(
+		parent()->getCenterPosition().y - m_gameObjectToFollow->getCenterPosition().y,
+		parent()->getCenterPosition().x - m_gameObjectToFollow->getCenterPosition().x
+	);
+
+
+	float orientationAngleDegrees = util::radiansToDegrees(orientationAngle);
+
+	float difference = gameObjectAngleDegrees - orientationAngleDegrees;
+
+	if (!((difference > 90 && difference < 270) ||
+		(difference > -180 && difference < -90))) {
+
+		//Rotate to the left or the right based on the position
+		int sinDirection{};
+		int cosDirection{};
+		if (difference < 90) {
+			sinDirection = 1;
+			cosDirection = -1;
+		}
+		else {
+			sinDirection = -1;
+			cosDirection = 1;
+		}
+
+		//Rotate myself around the object im following until im behind
+		b2Vec2 trajectory{};
+		trajectory.x = (sin(orientationAngle) * 200 * sinDirection) + (m_gameObjectToFollow->getCenterPosition().x - parent()->getCenterPosition().x);
+		trajectory.y = (cos(orientationAngle) * 200 * cosDirection) + (m_gameObjectToFollow->getCenterPosition().y - parent()->getCenterPosition().y);
+		trajectory.Normalize();
+
+		const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+		const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
+		moveAction->perform(parent(), trajectory);
+
+	}
+
+}
+
 
 void SurvivorBrainComponent::_doFollow()
 {
@@ -127,49 +174,18 @@ void SurvivorBrainComponent::_doFollow()
 	}
 
 	//Stay behind the object you are following
+	//If we are touching a wall, then stay put. This shoudl help player tell me to stay instead of always
+	//moving out of his way
+	if (!_isTouchingBarrier()) {
+		_stayBehindFollowedObject();
+	}
+
+
+	//
+	//DeBug stuff - draw some helper lines
+	//
 	const auto& gameObjectToFollowPhysicsComponent = m_gameObjectToFollow->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 	const auto& gameObjectToFollowTransformComponent = m_gameObjectToFollow->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-
-	ImGui::SetNextWindowPos(ImVec2{ 350, 0 });
-	ImGui::Begin("Survivor Stay Behind");
-
-	float gameObjectAngleDegrees = util::radiansToDegrees(gameObjectToFollowPhysicsComponent->angle());
-	float orientationAngle = atan2(
-		parent()->getCenterPosition().y - m_gameObjectToFollow->getCenterPosition().y,
-		parent()->getCenterPosition().x - m_gameObjectToFollow->getCenterPosition().x
-	);
-
-	float orientationAngleDegrees = util::radiansToDegrees(orientationAngle);
-
-	float difference = gameObjectAngleDegrees - orientationAngleDegrees;
-	//Shooting in the dark here
-	if (!((difference > 90 && difference < 270) ||
-		(difference > -180 && difference < -90))) {
-
-		ImGui::Text("GET BEHIND!");
-
-		//Rotate to the left or the right based on the position
-		int sinDirection{};
-		int cosDirection{};
-		if (difference < 90) {
-			sinDirection = 1;
-			cosDirection = -1;
-		}
-		else {
-			sinDirection = -1;
-			cosDirection = 1;
-		}
-
-		//Rotate myself around the object im following until im behind
-		trajectory.x = (sin(orientationAngle) * 200 * sinDirection) + (m_gameObjectToFollow->getCenterPosition().x - parent()->getCenterPosition().x);
-		trajectory.y = (cos(orientationAngle) * 200 * cosDirection) + (m_gameObjectToFollow->getCenterPosition().y - parent()->getCenterPosition().y);
-		trajectory.Normalize();
-
-		const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-		const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
-		moveAction->perform(parent(), trajectory);
-
-	}
 
 	SDL_FPoint destination{};
 	destination.x = m_gameObjectToFollow->getCenterPosition().x + (64 * cos(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(135)));
@@ -183,7 +199,6 @@ void SurvivorBrainComponent::_doFollow()
 	destination3.x = m_gameObjectToFollow->getCenterPosition().x + (64 * cos(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(225)));
 	destination3.y = m_gameObjectToFollow->getCenterPosition().y + (64 * sin(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(225)));
 
-
 	glm::vec2 start{ m_gameObjectToFollow->getCenterPosition().x , m_gameObjectToFollow->getCenterPosition().y };
 	glm::vec2 stop{ destination.x , destination.y };
 	game->renderer()->addLine(start, stop, { 255,255,255,255 });
@@ -195,16 +210,37 @@ void SurvivorBrainComponent::_doFollow()
 	game->renderer()->addLine(start, stop, { 255,255,255,255 });
 
 
+}
 
-	ImGui::Value("gameObjectAngleDegrees", gameObjectAngleDegrees);
-	ImGui::Value("Orientation Angle", orientationAngleDegrees);
-	ImGui::Value("Difference", difference);
+bool SurvivorBrainComponent::_detectFollowedObject()
+{
 
-	ImGui::End();
+	std::optional<SDL_FPoint> playerPosition{};
 
+	for (auto& seenObject : m_seenObjects) {
+
+		if (seenObject.gameObject == m_gameObjectToFollow) {
+
+			return true;
+		}
+	}
+
+	return false;
 
 }
 
+bool SurvivorBrainComponent::_isTouchingBarrier()
+{
+
+	for (const auto& touchingObject : parent()->getTouchingObjects()) {
+
+		if (touchingObject.second->hasTrait(TraitTag::barrier)) {
+			return true;
+		}
+	}
+
+	return false;
+}
 
 
 void SurvivorBrainComponent::_doIdle()
