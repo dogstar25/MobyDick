@@ -68,5 +68,6 @@ namespace ComponentTypes {
 namespace BrainState {
 
 	inline constexpr auto FOLLOW = 20;
+	inline constexpr auto LOST = 21;
 
 }

@@ -27,12 +27,16 @@ private:
 
 	int _determineState();
 	void _doFollow();
-	void _doEngage();
+	void _doLost();
 	void _doIdle();
 	bool _rotateTowards(b2Vec2 targetPoint);
 	std::optional<SDL_FPoint> _detectPlayer();
+	bool _detectFollowedObject();
+	void _stayBehindFollowedObject();
+	bool _isTouchingBarrier();
 
 	GameObject* m_gameObjectToFollow{};
+	Timer m_lostTimer;
 
 
 
