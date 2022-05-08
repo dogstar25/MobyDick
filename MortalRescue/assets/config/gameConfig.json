@@ -13,7 +13,7 @@
     },
     "rendererType": "RendererType::SDL",
     //"rendererType": "RendererType::OPENGL",
-    //"openGLBatching": false,
+    //"openGLBatching": true,
     "mouseSensitivity": 0.5, //higher the mmore sensitive
     "gameLoopStep": 0.016,
     "physics": {

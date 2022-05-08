@@ -71,6 +71,7 @@ namespace TraitTag {
 	inline constexpr int navigation = 6;
 	inline constexpr int abstract = 7;
 	inline constexpr int interactive = 8;
+	inline constexpr int debug = 9;
 
 }
 

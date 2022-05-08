@@ -194,6 +194,9 @@
     <Image Include="assets\textureAtlas00.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\textureAtlasImGui.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\config\gameConfig.json" />

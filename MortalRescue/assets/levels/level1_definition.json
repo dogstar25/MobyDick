@@ -28,11 +28,11 @@
             "layer": "LAYER_MAIN",
             "name": "PlayerGina"
         },
-        //{
-        //    "id": "LOC_0016_0013",
-        //    "gameObjectId": "DRONE",
-        //    "cameraFollow": false
-        //},
+        {
+            "id": "LOC_0016_0013",
+            "gameObjectId": "DRONE",
+            "cameraFollow": false
+        },
         {
             "id": "LOC_0014_0020",
             "gameObjectId": "TURRET"

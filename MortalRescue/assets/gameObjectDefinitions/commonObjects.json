@@ -419,13 +419,13 @@
         {
             "id": "BULLET2",
             "collisionTag": "CollisionTag::ENEMY_BULLET",
-            "traitTags": [],
+            "traitTags": [ "debug" ],
             "description": "Bullet 2",
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
                     "textureId": "TX_BULLET2",
-                    "color": "Colors::YELLOW"
+                    "color": "Colors::GREEN"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",

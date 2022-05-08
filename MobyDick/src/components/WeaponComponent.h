@@ -2,23 +2,21 @@
 #define WEAPON_COMPONENT_H
 
 #include<string>
-#pragma warning(push,0)
 #include <box2d/box2d.h>
 #include <json/json.h>
-#pragma warning(pop)
 #include <SDL2/SDL.h>
-
+#include <optional>
 #include "Component.h"
 
 class GameObject;
 
 struct WeaponLevelDetail {
 
-	int level;
-	float force;
-	int levelUpTarget;
-	SDL_Color color;
-	std::string bulletPoolId;
+	int level{};
+	float force{};
+	int levelUpTarget{};
+	std::optional<SDL_Color> color{};
+	std::string bulletPoolId{};
 };
 
 class WeaponComponent : public Component

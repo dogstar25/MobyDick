@@ -1,6 +1,7 @@
 #include "EnumMaps.h"
 #include "hud/HudItemFactory.h"
 #include "Renderer.h"
+#include "opengl/GLRenderer.h"
 
 
 EnumMap& EnumMap::instance()
@@ -152,6 +153,10 @@ EnumMap::EnumMap()
 	m_enumMap["NavigationObjectType::TRANSIT_POINT"] = NavigationObjectType::TRANSIT_POINT;
 	m_enumMap["NavigationObjectType::WAYPOINT"] = NavigationObjectType::WAYPOINT;
 
+	//OpenGL Texture Index values
+	m_enumMap["GL_TextureIndexType::MAIN_TEXTURE_ATLAS"] = (int)GL_TextureIndexType::MAIN_TEXTURE_ATLAS;
+	m_enumMap["GL_TextureIndexType::IMGUI_TEXTURE_ATLAS"] = (int)GL_TextureIndexType::IMGUI_TEXTURE_ATLAS;
+	
 	//Texure Blend Modes
 	//m_enumMap["SDL_BLENDMODE_BLEND"] = SDL_BLENDMODE_BLEND;
 	//m_enumMap["SDL_BLENDMODE_ADD"] = SDL_BLENDMODE_ADD;
@@ -173,6 +178,7 @@ EnumMap::EnumMap()
 	m_enumMap["navigation"] = TraitTag::navigation;
 	m_enumMap["abstract"] = TraitTag::abstract;
 	m_enumMap["interactive"] = TraitTag::interactive;
+	m_enumMap["debug"] = TraitTag::debug;
 
 	//Hud Item Types
 	m_enumMap["HudItemTypes::STATUS_SINGLE"] = (int)HudItemTypes::STATUS_SINGLE;

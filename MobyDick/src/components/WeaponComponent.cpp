@@ -27,9 +27,6 @@ WeaponComponent::WeaponComponent(Json::Value componentJSON)
 		if (itrWeaponLevel.isMember("color")) {
 			weaponLevelDetail.color = ColorMap::instance().toSDLColor(itrWeaponLevel["color"].asString());
 		}
-		else {
-			weaponLevelDetail.color = Colors::WHITE;
-		}
 		weaponLevelDetail.bulletPoolId = itrWeaponLevel["bulletPoolId"].asString();
 		m_weaponLevelDetails.emplace(level, std::move(weaponLevelDetail));
 
@@ -62,7 +59,6 @@ void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 		const auto& physicsComponent = bullet.value()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 		const auto& renderComponent = bullet.value()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 
-		SDL_Color color = m_weaponLevelDetails.at(m_currentLevel).color;
 		float force = m_weaponLevelDetails.at(m_currentLevel).force;
 
 		//Calculate the origin of the bullet
@@ -90,7 +86,11 @@ void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 		physicsComponent->setLinearVelocity(velocityVector);
 		physicsComponent->setBullet(true);
 
-		renderComponent->setColor(color);
+		//Only set the bullets color if one was defined in the weapons config
+		//otherwise leave bullet whatever color it is
+		if (m_weaponLevelDetails.at(m_currentLevel).color.has_value()) {
+			renderComponent->setColor(m_weaponLevelDetails.at(m_currentLevel).color.value());
+		}
 
 		//Add the bullet object to the main gameObject collection
 		parent()->parentScene()->addGameObject(bullet.value(), LAYER_MAIN);
