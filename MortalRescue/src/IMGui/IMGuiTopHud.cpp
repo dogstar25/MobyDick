@@ -64,27 +64,32 @@ void IMGuiTopHud::hudScrapBar()
 	ImGui::Text("Scrap");
 	ImGui::SameLine();
 	//ImGui::BeginGroup();
-	ImVec4 red1 = { 1.0, 0.0, 0.0, 0.78 };
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, red1);
+	SDL_Color red = Colors::RED;
+	util::colorApplyAlpha(red, 255);
+	ImVec4 vec4Red = util::SDLColorToImVec4(red);
+	SDL_Color white = Colors::WHITE;
+	util::colorApplyAlpha(white, 255);
+	ImVec4 vec4White = util::SDLColorToImVec4(white);
 
-	//Calculate the texture Atlas source rectangle (normalized)
-	glm::vec2 topLeft = util::glNormalizeTextureCoords({ 37,92 }, { 4096, 4096 });
-	glm::vec2 bottomRight = util::glNormalizeTextureCoords({ 68,123 }, { 4096, 4096 });
+	//ImGui::PushStyleColor(ImGuiCol_WindowBg, vec4Red);
+
+	//TextureAtlas Coordinates
+	glm::vec2 topLeft = util::glNormalizeTextureCoords({ 0,0 }, { 256, 256 });
+	glm::vec2 bottomRight = util::glNormalizeTextureCoords({ 4,16 }, { 256, 256 });
 
 	for (int i = 0; i < game->contextMananger()->getValue("SCRAP_COUNT"); i++) {
 
 		if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 
-			GLuint textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::MAIN_TEXTURE_ATLAS);
-			//ImGui::Image((void*)(int*)textureAtlasId, ImVec2(2, 32), ImVec2(.00122, .000122), ImVec2(.00244, .00244));
-			ImGui::Image((void*)(int*)textureAtlasId, ImVec2(2, 32), ImVec2(bottomRight.x, bottomRight.y), ImVec2(topLeft.x, topLeft.y), red1);
+			GLuint textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::IMGUI_TEXTURE_ATLAS);
+			ImGui::Image((void*)(int*)textureAtlasId, ImVec2(2, 32), ImVec2(bottomRight.x, bottomRight.y), ImVec2(topLeft.x, topLeft.y), vec4Red);
 			ImGui::SameLine(0.0f, 0);
 		}
 		else {
 
 			//SDL2 Texture void* is the SDL_Texture*
-			SDL_Texture* sdlTexture = TextureManager::instance().getTexture("TEXTURE_ATLAS_0")->sdlTexture;
-			ImGui::Image((void*)(SDL_Texture*)sdlTexture, ImVec2(2, 32), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), red1);
+			SDL_Texture* sdlTexture = TextureManager::instance().getTexture("TEXTURE_IMGUI")->sdlTexture;
+			ImGui::Image((void*)(SDL_Texture*)sdlTexture, ImVec2(2, 32), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), vec4Red);
 			ImGui::SameLine(0.0f, 0);
 		}
 
@@ -96,6 +101,6 @@ void IMGuiTopHud::hudScrapBar()
 
 
 
-	ImGui::PopStyleColor();
+	//ImGui::PopStyleColor();
 }
 

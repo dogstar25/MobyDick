@@ -61,35 +61,27 @@ int SurvivorBrainComponent::_determineState()
 
 	int state{ m_currentState };
 
-	ImGui::SetNextWindowPos({ 250,50 });
-	ImGui::Begin("Lostwindow");
-	ImGui::Value("value", 7);
+	if (m_currentState == BrainState::FOLLOW) {
+		//If we have lost site of the object we're following then change to lost state
+		if (_detectFollowedObject() == false) {
 
-		if (m_currentState == BrainState::FOLLOW) {
-			ImGui::Text("I'm Good!");
-			//If we have lost site of the object we're following then change to lost state
-			if (_detectFollowedObject() == false) {
-
-				if (m_lostTimer.firstTime) {
-					m_lostTimer = Timer(3);
-				}
-				else if (m_lostTimer.hasMetTargetDuration()) {
-					state = BrainState::LOST;
-				}
+			if (m_lostTimer.firstTime) {
+				m_lostTimer = Timer(3);
+			}
+			else if (m_lostTimer.hasMetTargetDuration()) {
+				state = BrainState::LOST;
 			}
 		}
-		if (m_currentState == BrainState::LOST) {
+	}
+	if (m_currentState == BrainState::LOST) {
 
-			ImGui::Text("I'm Lost!");
-			if (_detectFollowedObject() == true) {
-				m_interimDestination.reset();
-				state = BrainState::FOLLOW;
-				m_lostTimer = {};
+		if (_detectFollowedObject() == true) {
+			m_interimDestination.reset();
+			state = BrainState::FOLLOW;
+			m_lostTimer = {};
 				
-			}
 		}
-
-	ImGui::End();
+	}
 
 	return state;
 

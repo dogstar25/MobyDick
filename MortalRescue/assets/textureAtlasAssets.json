@@ -2,9 +2,17 @@
     "textureAtlas": [
         {
             "id": "TEXTURE_ATLAS_0",
-            "description": "Texture atlas 1",
+            "description": "Texture atlas 0",
+            "openglTextureIndex": "GL_TextureIndexType::MAIN_TEXTURE_ATLAS",
             "filename": "assets/textureAtlas00.png"
+        },
+        {
+            "id": "TEXTURE_IMGUI_ATLAS",
+            "description": "Texture For IMGUI stuff",
+            "openglTextureIndex": "GL_TextureIndexType::IMGUI_TEXTURE_ATLAS",
+            "filename": "assets/textureAtlasImGui.png"
         }
+
     ],
     "textureBlueprints": [
         {
@@ -52,6 +60,17 @@
                 "height": 32
             }
         },
+        //{
+        //    "id": "TX_WHITE_BAR",
+        //    "description": "White Bar",
+        //    "atlas": "TEXTURE_IMGUI",
+        //    "quadPosition": {
+        //        "x": 0,
+        //        "y": 0,
+        //        "width": 1,
+        //        "height": 8
+        //    }
+        //},
         {
             "id": "TX_BOWMAN1",
             "description": "Single bowman image",

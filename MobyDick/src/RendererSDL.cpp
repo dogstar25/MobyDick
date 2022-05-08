@@ -74,7 +74,7 @@ void RendererSDL::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* textu
 	else if (textureBlendMode == RenderBlendMode::ADD) {
 		SDL_SetTextureBlendMode(texture->sdlTexture, SDL_BLENDMODE_ADD);
 	}
-	else if (textureBlendMode == RenderBlendMode::NONE) {
+	else{
 		SDL_SetTextureBlendMode(texture->sdlTexture, SDL_BLENDMODE_NONE);
 	}
 

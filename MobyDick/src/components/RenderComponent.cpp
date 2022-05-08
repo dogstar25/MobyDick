@@ -35,6 +35,7 @@ RenderComponent::RenderComponent(Json::Value componentJSON)
 	}
 	else
 	{
+
 		setColor(Colors::WHITE);
 		if (componentJSON["color"].isMember("alpha")) {
 			util::colorApplyAlpha(m_color, componentJSON["color"]["alpha"].asInt());
@@ -180,7 +181,7 @@ void RenderComponent::render()
 	if (parent()->hasTrait(TraitTag::abstract) == true) {
 		return;
 	}
-		
+
 	const auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	SDL_FRect destQuad = { getRenderDestRect() };
 
