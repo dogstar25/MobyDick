@@ -170,12 +170,11 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 	body->SetGravityScale(m_gravityScale);
 
 
-	////////////////////////////////////////////////////////////
-	//Test - if this is object has an auxillery sensor then build it too
-	
+	//If this object has an auxillery sensor then build it too
 	if (physicsComponentJSON.isMember("auxSensor")) {
 
 		auto auxSensorShape = EnumMap::instance().toEnum(physicsComponentJSON["auxSensor"]["collisionShape"].asString());
+		auto shouldSensorCollide = physicsComponentJSON["auxSensor"]["shouldCollide"].asBool();
 
 		//Collision shape - will default to a rectangle
 		if (auxSensorShape == b2Shape::e_circle)
@@ -196,6 +195,7 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 		
 		fixtureDef.shape = shape;
 		fixtureDef.isSensor = true;
+		//fixtureDef.userData.pointer = static_cast<bool>(shouldSensorCollide);
 
 		// Add the shape to the body.
 		body->CreateFixture(&fixtureDef);

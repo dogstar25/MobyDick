@@ -18,6 +18,7 @@ public:
 	void adjust(float adjustValue);
 	float value() { return m_value; }
 	void setValue(float newValue) { m_value = newValue; }
+	float maxValue() { return m_maximumValue; }
 
 	void reset();
 
@@ -47,6 +48,7 @@ public:
 	float getValue(std::string valudId);
 	void adjustValue(std::string valudId, float adjustmentValue);
 	void setValue(std::string valudId, float newValue);
+	StatusItem& getStatusItem(std::string valueId);
 
 	void setMouseSensitivity(int mouseSensitivity);
 	void setSoundVolume(int volume);

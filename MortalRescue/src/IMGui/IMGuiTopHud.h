@@ -20,5 +20,9 @@ private:
 
 	void hudScrapCount();
 	void hudScrapBar();
+	void hudLives();
+
+	ImVec4 m_hudRed{};
+	ImVec4 m_hudWhite{};
 
 };

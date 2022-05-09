@@ -34,7 +34,8 @@
                         "collisionShape": "B2_CIRCLE",
                         "size": {
                             "radius": 2.64
-                        }
+                        },
+                        "shouldCollide": true
                     }
                 },
                 {

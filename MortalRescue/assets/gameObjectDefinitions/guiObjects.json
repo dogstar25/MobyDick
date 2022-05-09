@@ -107,7 +107,7 @@
                     },
                     "color": {
                         "background": "Colors::EMERALD",
-                        "backgroundAlpha": 172,
+                        "backgroundAlpha": 120,
                         "text": "Colors::WHITE"
                     },
                     "autoSize": false

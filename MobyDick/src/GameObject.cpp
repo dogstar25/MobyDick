@@ -183,6 +183,10 @@ void GameObject::update()
 		}
 	}
 
+	if (this->hasTrait(TraitTag::player)) {
+		int todd = 1;
+	}
+
 	//Update touching GameObject
 	_updateTouchingObjects();
 
