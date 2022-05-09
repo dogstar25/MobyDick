@@ -175,6 +175,29 @@ void MRContactListener::_player_shieldScrap(GameObject* contact1, GameObject* co
 
 }
 
+void MRContactListener::_bullet_player(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+{
+
+	GameObject* player;
+	GameObject* bullet;
+
+	if (contact1->collisionTag() == CollisionTag::PLAYER) {
+		player = contact1;
+		bullet = contact2;
+	}
+	else {
+		bullet = contact1;
+		player = contact2;
+	}
+
+	//Update the status Manager
+	game->contextMananger()->adjustValue("LIVES_COUNT", -1);
+
+	//flag the scrap item to be removed from the game and play a sound effect
+	bullet->setRemoveFromWorld(true);
+	SoundManager::instance().playSound("SFX_PICKUP_2");
+
+}
 void MRContactListener::BeginContact(b2Contact* contact) {
 
 
@@ -211,7 +234,6 @@ void MRContactListener::handleContact(GameObject* contact1, GameObject* contact2
 	auto category2 = contact2->collisionTag();
 	auto traits1 = contact1->traits();
 	auto traits2 = contact2->traits();
-	std::string collisionActionClass = {};
 
 
 	////////////////////////////////
@@ -270,6 +292,16 @@ void MRContactListener::handleContact(GameObject* contact1, GameObject* contact2
 		(category2 == CollisionTag::PLAYER && category1 == CollisionTag::SHIELD_SCRAP)) {
 
 		_player_shieldScrap(contact1, contact2, contactPoint);
+
+	}
+
+	///////////////////////////////////
+	// Enemy Bullet - Player
+	///////////////////////////////////
+	if ((category1 == CollisionTag::PLAYER && category2 == CollisionTag::ENEMY_BULLET) ||
+		(category2 == CollisionTag::PLAYER && category1 == CollisionTag::ENEMY_BULLET)) {
+
+		_bullet_player(contact1, contact2, contactPoint);
 
 	}
 

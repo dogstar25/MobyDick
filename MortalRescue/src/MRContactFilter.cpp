@@ -63,7 +63,7 @@ MRContactFilter::MRContactFilter()
 	m_collisionMasks[PLAYER].set(SHIELD_SCRAP);
 	m_collisionMasks[PLAYER].set(SURVIVOR);
 	m_collisionMasks[PLAYER].set(DRONE_FRAME);
-	//m_collisionMasks[PLAYER].set(ENEMY_BULLET);
+	m_collisionMasks[PLAYER].set(ENEMY_BULLET);
 	m_collisionMasks[PLAYER].set(WALL);
 	m_collisionMasks[PLAYER].set(BUTTON);
 

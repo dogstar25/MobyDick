@@ -32,6 +32,7 @@ private:
 	void _playerBullet_droneShield(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
 	void _player_shieldScrap(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
 	void _player_interactive(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
+	void _bullet_player(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
 };
 
 #endif

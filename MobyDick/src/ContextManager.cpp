@@ -20,7 +20,7 @@ ContextManager::ContextManager()
 
 void StatusItem::adjust(float adjustValue)
 {
-    if (m_value < m_maximumValue) {
+    if (m_value < m_maximumValue || m_value > 0) {
         m_value += adjustValue;
     }
 }
@@ -103,5 +103,15 @@ float ContextManager::getMouseSensitivity()
 int ContextManager::getSoundVolume()
 {
 	return  (int)(m_userSettings.soundLevel * 1.28);
+
+}
+
+StatusItem& ContextManager::getStatusItem(std::string valueId)
+{
+
+    assert(m_statusValueMap.find(valueId) != m_statusValueMap.end() && "ValueId Name wasnt found in StatusValueMap");
+
+    return m_statusValueMap[valueId];
+
 
 }
