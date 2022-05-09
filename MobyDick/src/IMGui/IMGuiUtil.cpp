@@ -31,10 +31,6 @@ namespace ImGui
 			ImGui_ImplSDLRenderer_Init(mobyDickGame->renderer()->sdlRenderer());
 		}
 
-
-		//io.AddKeyEvent(ImGuiKey_XXX, true);
-
-
 	}
 	void MobyDickNewFrame()
 	{

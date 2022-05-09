@@ -80,11 +80,11 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//Initialize the texture manager
 		m_renderer->init(m_window);
 
-		//Display basic loading message
-		//_displayLoadingMsg();
-
 		//Test for IMGUI
 		ImGui::MobyDickInit(this);
+
+		//Display basic loading message
+		_displayLoadingMsg();
 
 		TextureManager::instance().init();
 		TextureManager::instance().load("textureAtlasAssets");
@@ -93,7 +93,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		SceneManager::instance().init();
 		SceneManager::instance().load("gameScenes");
 
-		//_displayLoadingMsg();
+		_displayLoadingMsg();
 
 		//Initialize the Game Object Manager
 		GameObjectManager::instance().init();
@@ -104,11 +104,11 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		GameObjectManager::instance().load("gameObjectDefinitions/guiObjects");
 		GameObjectManager::instance().load("gameObjectDefinitions/hudObjects");
 
+		_displayLoadingMsg();
+
 		//Load a first scene
 		Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
 		scene.loadLevel("level1");
-
-		//_displayLoadingMsg();
 
 		//Initialize the sound manager
 		SoundManager::instance().initSound();

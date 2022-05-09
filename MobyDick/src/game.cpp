@@ -1,7 +1,10 @@
 #include "Game.h"
 #include "SceneManager.h"
+#include "GameObject.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
+#include "IMGui/IMGuiUtil.h"
+#include <memory>
 
 
 Game::~Game()
@@ -89,20 +92,18 @@ void Game::play()
 
 void Game::_displayLoadingMsg()
 {
-	//temp
-	//
-	return;
 
 	static int statusDots{};
-	std::string statusMsg{"Loading"};
+	std::string statusMsg{ "Loading" };
 	Texture texture{};
+	SDL_Texture* sdlTexture{};
 
 	statusDots++;
 	if (statusDots > 4) {
 		statusDots = 1;
 	}
 
-	for (int x = 0; x < statusDots;x++) {
+	for (int x = 0; x < statusDots; x++) {
 
 		statusMsg += ".";
 	}
@@ -110,21 +111,45 @@ void Game::_displayLoadingMsg()
 	//Assume nothing has been initialzed yet except for the renderer so build and render a text item in
 	//a very crude and manual way
 	m_renderer->clear();
-	TTF_Font* m_fontObject = TTF_OpenFont("assets/arial.ttf", 32);
+	TTF_Font* m_fontObject = TTF_OpenFont("assets/fonts/arial.ttf", 32);
+
+	//Create the surface
 	SDL_Surface* tempSurface = TTF_RenderText_Blended(m_fontObject, statusMsg.c_str(), SDL_Color(255, 255, 255, 255));
-	SDL_Texture* sdlTexture = m_renderer->createTextureFromSurface(tempSurface);
+	texture.surface = tempSurface;
+
+	//Do different stuff based on if we're using SDL or direct OpenGL to render
+	if (GameConfig::instance().rendererType() == RendererType::SDL) {
+		sdlTexture = SDL_CreateTextureFromSurface(m_renderer->sdlRenderer(), tempSurface);
+		texture.sdlTexture = sdlTexture;
+	}
+	else if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
+		GL_TextureIndexType textureIndex = GL_TextureIndexType::DYNAMICALLY_LOADED;
+		GLuint textureAtlasId = static_cast<GLRenderer*>(renderer())->getTextureId(textureIndex);
+		glActiveTexture((int)textureIndex);
+		glBindTexture(GL_TEXTURE_2D, textureAtlasId);
+		texture.openglTextureIndex = textureIndex;
+	}
+
+	SDL_Rect quad = { 0 , 0, tempSurface->w, tempSurface->h };
+	texture.textureAtlasQuad = std::move(quad);
+	texture.sdlTexture = sdlTexture;
+	texture.surface = tempSurface;
+
 	TTF_CloseFont(m_fontObject);
 	SDL_FRect dest = {
 		GameConfig::instance().windowWidth() / (float)2 - (float)100,
 		GameConfig::instance().windowHeight() / (float)2 - (float)42,
 		(float)tempSurface->w, (float)tempSurface->h };
 
-	texture.sdlTexture = sdlTexture;
-	texture.surface = tempSurface;
-
-	m_renderer->drawSprite(dest, SDL_Color{ 255,255,255,255 }, &texture, nullptr, 0, false, SDL_Color{}, RenderBlendMode::BLEND);
+	m_renderer->drawSprite(dest, SDL_Color{ 255,255,255,255 }, &texture, &texture.textureAtlasQuad, 0, false, SDL_Color{}, RenderBlendMode::BLEND);
 	m_renderer->present();
-	SDL_DestroyTexture(sdlTexture);
+
+	if (texture.surface != nullptr) {
+		SDL_FreeSurface(texture.surface);
+	}
+	if (texture.sdlTexture != nullptr) {
+		SDL_DestroyTexture(texture.sdlTexture);
+	}
 
 }
 

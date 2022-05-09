@@ -7,8 +7,6 @@
 #include "SoundManager.h"
 #include "game.h"
 
-
-
 extern std::unique_ptr<Game> game;
 
 Scene::Scene(std::string sceneId)

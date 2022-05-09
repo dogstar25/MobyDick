@@ -88,7 +88,7 @@ void IMGuiTopHud::hudScrapBar()
 		else {
 
 			//SDL2 Texture void* is the SDL_Texture*
-			SDL_Texture* sdlTexture = TextureManager::instance().getTexture("TEXTURE_IMGUI")->sdlTexture;
+			SDL_Texture* sdlTexture = TextureManager::instance().getTexture("TEXTURE_IMGUI_ATLAS")->sdlTexture;
 			ImGui::Image((void*)(SDL_Texture*)sdlTexture, ImVec2(2, 32), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), vec4Red);
 			ImGui::SameLine(0.0f, 0);
 		}
