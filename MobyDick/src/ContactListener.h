@@ -21,7 +21,8 @@ public:
 	void virtual BeginContact(b2Contact*) override;
 	void virtual EndContact(b2Contact*) override;
 
-	void virtual handleContact(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
+	void virtual handleBeginContact(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
+	void virtual handleEndContact(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
 
 private:
 	

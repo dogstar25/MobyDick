@@ -75,6 +75,13 @@ void GameObject::addTouchingObject(GameObject* touchingObject)
 
 }
 
+void GameObject::removeTouchingObject(GameObject* touchingObject)
+{
+
+	m_touchingGameObjects.erase(touchingObject->name());
+
+}
+
 void GameObject::setParent(GameObject* parentObject)
 {
 
@@ -186,9 +193,6 @@ void GameObject::update()
 	if (this->hasTrait(TraitTag::player)) {
 		int todd = 1;
 	}
-
-	//Update touching GameObject
-	_updateTouchingObjects();
 
 }
 
@@ -448,40 +452,5 @@ void GameObject::enable()
 		}
 
 	}
-
-}
-
-void GameObject::_updateTouchingObjects()
-{
-
-	m_touchingGameObjects.clear();
-
-	//If this is a physics GameObject then capture a list of every object that it or its aux sensor is currently touching
-	if (this->hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
-
-		const std::shared_ptr<PhysicsComponent> physicsComponent = this->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
-
-		for (b2ContactEdge* edge = physicsComponent->physicsBody()->GetContactList(); edge; edge = edge->next)
-		{
-			b2Contact* contact = edge->contact;
-
-			//One of these fixtures being reported as a contact is the object itself, so we dont care about that one. 
-			// We only care about the objects are are not this object itself
-			GameObject* contactGameObject = reinterpret_cast<GameObject*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
-			GameObject* contactGameObject2 = reinterpret_cast<GameObject*>(contact->GetFixtureB()->GetBody()->GetUserData().pointer);
-
-			if (contact->IsTouching()) {
-
-				if (contactGameObject != this) {
-					this->addTouchingObject(contactGameObject);
-				}
-				if (contactGameObject2 != this) {
-					this->addTouchingObject(contactGameObject2);
-				}
-
-			}
-		}
-	}
-
 
 }

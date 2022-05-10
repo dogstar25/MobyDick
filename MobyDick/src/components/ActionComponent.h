@@ -36,17 +36,19 @@ public:
 	GameObject* getInteractingObject() {
 		return m_interactingObject;
 	}
-
-	std::shared_ptr<Action> getAction(int actionId);
 	std::shared_ptr<GameObject> interactiveMenuObject() {
 		return m_interactiveMenuObject;
 	}
+	std::shared_ptr<Action> getAction(int actionId);
 	SDL_FPoint determineInteractionMenuLocation(GameObject* interactingObject, GameObject* contactGameObject, GameObject* menuObject);
 	void setParent(GameObject* gameObject) override;
 
 private:
 	std::vector<std::shared_ptr<Action>>m_actions;
 	std::shared_ptr<GameObject> m_interactiveMenuObject{};
+
+
+
 	GameObject* m_interactingObject{};
 
 };

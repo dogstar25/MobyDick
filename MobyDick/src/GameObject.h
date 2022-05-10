@@ -109,6 +109,7 @@ public:
 	void addInventoryItem(GameObject* gameObject);
 	std::vector<GameObject> getTouchingByTrait(const int trait);
 	void addTouchingObject(GameObject* touchingObject);
+	void removeTouchingObject(GameObject* touchingObject);
 	void setParent(GameObject* parentObject);
 	std::optional<GameObject*> parent() { return m_parentObject; }
 

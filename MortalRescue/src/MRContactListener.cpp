@@ -46,14 +46,45 @@ void MRContactListener::_player_interactive(GameObject* contact1, GameObject* co
 		interactiveObject = contact1;
 	}
 
+	//Get the interactive objects menu
+	auto interactiveActionComponent = interactiveObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 
 	//Put the usuable indicator somewhere in the area
-	auto interactiveIndicator = SceneManager::instance().addGameObject("USE_HINT", LAYER_MAIN, -1, -1);
+	auto interactionMenuObject = interactiveActionComponent->interactiveMenuObject();
+	interactionMenuObject->setPosition(interactiveObject->getCenterPosition().x, interactiveObject->getCenterPosition().y);
+	interactionMenuObject->enable();
 
-	//Convert from box2d to gameWorld coordinates
-	//contactPoint.x *= GameConfig::instance().scaleFactor();
-	//contactPoint.y *= GameConfig::instance().scaleFactor();
-	interactiveIndicator->setPosition(interactiveObject->getCenterPosition().x, interactiveObject->getCenterPosition().y);
+
+}
+
+void MRContactListener::_player_interactive_end(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+{
+
+	GameObject* player;
+	GameObject* interactiveObject;
+
+	if (contact1->collisionTag() == CollisionTag::PLAYER) {
+		player = contact1;
+		interactiveObject = contact2;
+	}
+	else {
+		player = contact2;
+		interactiveObject = contact1;
+	}
+
+	//Get the interactive objects menu
+	auto interactiveActionComponent = interactiveObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+
+	//Put the usuable indicator somewhere in the area
+	auto interactionMenuObject = interactiveActionComponent->interactiveMenuObject();
+	interactionMenuObject->disable(false);
+
+
+
+
+
+
+
 
 
 }
@@ -214,7 +245,7 @@ void MRContactListener::BeginContact(b2Contact* contact) {
 
 	if (gameObjectA != nullptr && gameObjectB != nullptr)
 	{
-		handleContact(gameObjectA, gameObjectB, contactPoint);
+		handleBeginContact(gameObjectA, gameObjectB, contactPoint);
 	}
 
 }
@@ -223,27 +254,45 @@ void MRContactListener::BeginContact(b2Contact* contact) {
 void MRContactListener::EndContact(b2Contact* contact)
 {
 
+	//Get the 2 object pointers
+	GameObject* gameObjectA = reinterpret_cast<GameObject*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
+	GameObject* gameObjectB = reinterpret_cast<GameObject*>(contact->GetFixtureB()->GetBody()->GetUserData().pointer);
+
+	float x = 0;
+	float y = 0;
+	b2WorldManifold worldManifold;
+
+	contact->GetWorldManifold(&worldManifold);
+	b2Vec2 contactPoint = worldManifold.points[0];
+
+	if (gameObjectA != nullptr && gameObjectB != nullptr)
+	{
+		handleEndContact(gameObjectA, gameObjectB, contactPoint);
+	}
+
 
 }
 
 
 
-void MRContactListener::handleContact(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+void MRContactListener::handleBeginContact(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
 {
+
+	ContactListener::handleBeginContact(contact1, contact2, contactPoint);
+
 	auto category1 = contact1->collisionTag();
 	auto category2 = contact2->collisionTag();
 	auto traits1 = contact1->traits();
 	auto traits2 = contact2->traits();
 
-
 	////////////////////////////////
-	// Player Usuable Object Contact // being done differently because contact only fires off once
+	// Player Usuable Object Contact 
 	////////////////////////////////
-	//if ((category1 == CollisionTag::PLAYER && contact2->hasTrait(TraitTag::interactive)) ||
-	//	(category2 == CollisionTag::PLAYER && contact1->hasTrait(TraitTag::interactive))) {
+	if ((category1 == CollisionTag::PLAYER && contact2->hasTrait(TraitTag::interactive)) ||
+		(category2 == CollisionTag::PLAYER && contact1->hasTrait(TraitTag::interactive))) {
 
-	//	_player_interactive(contact1, contact2, contactPoint);
-	//}
+		//_player_interactive(contact1, contact2, contactPoint);
+	}
 
 	/////////////////////////
 	// Player Wall Contact
@@ -303,6 +352,30 @@ void MRContactListener::handleContact(GameObject* contact1, GameObject* contact2
 
 		_bullet_player(contact1, contact2, contactPoint);
 
+	}
+
+}
+
+
+
+
+void MRContactListener::handleEndContact(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+{
+
+	ContactListener::handleEndContact(contact1, contact2, contactPoint);
+
+	auto category1 = contact1->collisionTag();
+	auto category2 = contact2->collisionTag();
+	auto traits1 = contact1->traits();
+	auto traits2 = contact2->traits();
+
+	////////////////////////////////
+	// Player Usuable Object Contact 
+	////////////////////////////////
+	if ((category1 == CollisionTag::PLAYER && contact2->hasTrait(TraitTag::interactive)) ||
+		(category2 == CollisionTag::PLAYER && contact1->hasTrait(TraitTag::interactive))) {
+
+		//_player_interactive_end(contact1, contact2, contactPoint);
 	}
 
 }

@@ -24,7 +24,8 @@ public:
 	void BeginContact(b2Contact*) override;
 	void EndContact(b2Contact*) override;
 
-	void virtual handleContact(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
+	void virtual handleBeginContact(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint) override;
+	void virtual handleEndContact(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint) override;
 
 private:
 	void _player_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
@@ -32,6 +33,7 @@ private:
 	void _playerBullet_droneShield(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
 	void _player_shieldScrap(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
 	void _player_interactive(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
+	void _player_interactive_end(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
 	void _bullet_player(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint);
 };
 

@@ -28,11 +28,11 @@ ActionComponent::ActionComponent(Json::Value componentJSON, Scene* parentScene)
 
 	}
 
-	//Interactive object if exists
+	//Interactive objectId if exists
 	if (componentJSON.isMember("interactiveMenuObject")) {
 		auto interactiveMenuObjectId = componentJSON["interactiveMenuObject"].asString();
 		m_interactiveMenuObject = std::make_shared<GameObject>(interactiveMenuObjectId, -5.f, -5.f, 0.f, parentScene);
-
+		//m_interactiveMenuObject->disable(false);
 	}
 
 }
@@ -52,6 +52,12 @@ void ActionComponent::update()
 
 void ActionComponent::render()
 {
+
+	//if (parent()->hasTrait(TraitTag::interactive)) {
+	//	if (m_interactiveMenuObject) {
+	//		m_interactiveMenuObject->render();
+	//	}
+	//}
 
 	//If this an interactiveObject and a playerObject is touching it, then display its interactive menu, if one exists
 	if (parent()->hasTrait(TraitTag::interactive)) {
