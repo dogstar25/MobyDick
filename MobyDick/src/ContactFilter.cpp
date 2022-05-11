@@ -1,6 +1,7 @@
 #include "ContactFilter.h"
 
 #include "GameObject.h"
+#include "components/PhysicsComponent.h"
 
 ContactFilter::ContactFilter()
 {
@@ -20,16 +21,6 @@ ContactFilter::ContactFilter()
 
 bool ContactFilter::ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB)
 {
-
-	//If this is an objects auxillery sensor and we dont want to register a collision, then 
-	//FALSE will be stored in this sensor/fixture userData
-	//NOTE - the sensor/fixture will still register "touching", just not a collision
-	//bool isCollidableAuxSensorA = static_cast<bool>(fixtureA->GetUserData().pointer);
-	//bool isCollidableAuxSensorB = static_cast<bool>(fixtureB->GetUserData().pointer);
-
-	if (fixtureA == nullptr || fixtureB == nullptr ) {
-		return false;
-	}
 
 	GameObject* gameObjectA = reinterpret_cast<GameObject*>(fixtureA->GetBody()->GetUserData().pointer);
 	GameObject* gameObjectB = reinterpret_cast<GameObject*>(fixtureB->GetBody()->GetUserData().pointer);

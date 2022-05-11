@@ -11,6 +11,12 @@
 class TransformComponent;
 
 
+struct FixtureInfo {
+
+	bool isSensor{};
+	bool shouldSensorCollide{};
+};
+
 class PhysicsComponent : public Component
 {
 
