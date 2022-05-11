@@ -212,6 +212,27 @@ void MRContactListener::BeginContact(b2Contact* contact) {
 	contact->GetWorldManifold(&worldManifold);
 	b2Vec2 contactPoint = worldManifold.points[0];
 
+	//if (gameObjectA->hasTrait(TraitTag::player) || gameObjectB->hasTrait(TraitTag::player)) {
+	//	int todd = 1;
+	//}
+
+	//check contact->GetFixtureA() and contact->GetFixtureB() somehow
+	FixtureInfo* fixtureInfoA = reinterpret_cast<FixtureInfo*>(contact->GetFixtureA()->GetUserData().pointer);
+	FixtureInfo* fixtureInfoB = reinterpret_cast<FixtureInfo*>(contact->GetFixtureB()->GetUserData().pointer);
+
+	//If this is an objects auxillery sensor and we dont want to register a collision, then 
+	//NOTE - the sensor/fixture will still register "touching", just not a collision
+	bool ignoreSensorCollision =
+		((fixtureInfoA->isSensor == true && fixtureInfoA->shouldSensorCollide == false) ||
+			(fixtureInfoB->isSensor == true && fixtureInfoB->shouldSensorCollide == false));
+
+	if (ignoreSensorCollision) {
+		return;
+	}
+
+	//ToDo; Pass in both fixtures into the handleContact so that each specific handleContact
+	 //can check what kind of fixture we're dealing with to decide what and how we handle the contact
+	 //for example, a touchingSensor fixture vs a hitbox, vs main collision fixture
 	if (gameObjectA != nullptr && gameObjectB != nullptr)
 	{
 		handleContact(gameObjectA, gameObjectB, contactPoint);

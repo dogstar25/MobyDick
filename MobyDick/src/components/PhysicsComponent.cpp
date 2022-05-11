@@ -46,6 +46,15 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, Scene* parentScen
 PhysicsComponent::~PhysicsComponent()
 {
 
+	//while (auto fixture = m_physicsBody->GetFixtureList()) {
+
+	//	auto& userData = fixture->GetUserData();
+	//	if (userData.pointer) {
+	//		delete& userData.pointer;
+	//	}
+
+	//}
+
 }
 
 void PhysicsComponent::postInit()
@@ -162,6 +171,12 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 	fixtureDef.restitution = m_restitution;
 	fixtureDef.isSensor = m_isSensor;
 	
+	//MobyDick specific data
+	FixtureInfo* fixtureInfo = new FixtureInfo();
+	fixtureInfo->isSensor = fixtureDef.isSensor;
+	fixtureInfo->shouldSensorCollide = true;
+	fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(fixtureInfo);
+
 	// Add the shape to the body.
 	body->CreateFixture(&fixtureDef);
 
@@ -195,20 +210,16 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 		
 		fixtureDef.shape = shape;
 		fixtureDef.isSensor = true;
-		//fixtureDef.userData.pointer = static_cast<bool>(shouldSensorCollide);
+
+		//MobyDick specific data
+		FixtureInfo* fixtureInfo = new FixtureInfo();
+		fixtureInfo->isSensor = fixtureDef.isSensor;
+		fixtureInfo->shouldSensorCollide = shouldSensorCollide;
+		fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(fixtureInfo);
 
 		// Add the shape to the body.
 		body->CreateFixture(&fixtureDef);
 	}
-
-
-
-
-
-
-
-
-
 
 	return body;
 
