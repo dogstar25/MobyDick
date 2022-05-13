@@ -6,35 +6,30 @@
 ContactFilter::ContactFilter()
 {
 
-	using namespace CollisionTag;
+	using namespace ContactTag;
 
-	m_collisionMasks.resize(CollisionTag::MAX_OBJECT_CATEGORIES);
+	m_contactMasks.resize(ContactTag::MAX_OBJECT_CATEGORIES);
 
 	//General_solid - set all to collide
-	m_collisionMasks[GENERAL_SOLID].reset();
-	m_collisionMasks[GENERAL_SOLID].flip();
+	m_contactMasks[GENERAL_SOLID].reset();
+	m_contactMasks[GENERAL_SOLID].flip();
 
 	//General_free - set all to NOT collide
-	m_collisionMasks[GENERAL_FREE].reset();
+	m_contactMasks[GENERAL_FREE].reset();
 
 }
 
 bool ContactFilter::ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB)
 {
 
-	GameObject* gameObjectA = reinterpret_cast<GameObject*>(fixtureA->GetBody()->GetUserData().pointer);
-	GameObject* gameObjectB = reinterpret_cast<GameObject*>(fixtureB->GetBody()->GetUserData().pointer);
+	int contactTagA = static_cast<int>(fixtureA->GetUserData().pointer);
+	int contactTagB = static_cast<int>(fixtureB->GetUserData().pointer);
 
-	if (gameObjectA == nullptr || gameObjectB == nullptr) {
-		return false;
-	}
+	auto& contactAMask = m_contactMasks[contactTagA];
+	auto& contactBMask = m_contactMasks[contactTagB];
 
-	auto gameObjectAMask = m_collisionMasks[gameObjectA->collisionTag()];
-	auto gameObjectBMask = m_collisionMasks[gameObjectB->collisionTag()];
-
-	if (gameObjectAMask.test(gameObjectB->collisionTag()) &&
-		gameObjectBMask.test(gameObjectA->collisionTag())) {
-
+	if (contactAMask.test(contactTagB) &&
+		contactBMask.test(contactTagA)) {
 		return true;
 	}
 	else {

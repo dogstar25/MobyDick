@@ -2,7 +2,6 @@
     "gameObjects": [
         {
             "id": "PARTICLE_SMOKE_1",
-            "collisionTag": "CollisionTag::HEAVY_PARTICLE",
             "traitTags": [],
             "description": "Smoke Particle 1",
             "components": [
@@ -21,13 +20,15 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_BOX",
-                    "collisionRadius": 0.16,
-                    "friction": 0.0,
-                    "density": 5.1,
-                    "restitution": 0.3,
-                    "linearDamping": 0.0,
-                    "angularDamping": 0.0
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::HEAVY_PARTICLE",
+                            "collisionShape": "B2_BOX",
+                            "density": 5.1,
+                            "restitution": 0.3
+                        }
+                    ]
+
                 },
                 {
                     "id": "VITALITY_COMPONENT",
@@ -43,11 +44,8 @@
         },
         {
             "id": "DEFLECT1",
-            "type": "GameObjectType::SPRITE",
-            "collisionTag": "CollisionTag::DEFLECT_EFFECT",
             "traitTags": [],
             "description": "Deflect 1",
-
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -66,12 +64,15 @@
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
                     "collisionShape": "B2_BOX",
-                    "collisionRadius": 0.16,
-                    "friction": 0.0,
-                    "density": 0.1,
-                    "restitution": 0.3,
-                    "linearDamping": 0.0,
-                    "angularDamping": 12.0
+                    "angularDamping": 12.0,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::DEFLECT_EFFECT",
+                            "collisionShape": "B2_BOX",
+                            "density": 0.1,
+                            "restitution": 0.3
+                        }
+                    ]
                 },
                 {
                     "id": "VITALITY_COMPONENT",
@@ -103,10 +104,7 @@
         },
         {
             "id": "SCRAP_PIECE",
-            "type": "GameObjectType::SPRITE",
-            "collisionTag": "CollisionTag::SHIELD_SCRAP",
             "traitTags": [],
-
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -125,16 +123,17 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_BOX",
-                    "friction": 0.0,
-                    "restitution": 1.5,
-                    "density": 1.1,
                     "linearDamping": 5.0,
                     "angularDamping": 5.0,
-                    "anchorPoint": {
-                        "x": 0.0,
-                        "y": 0.0
-                    }
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::SHIELD_SCRAP",
+                            "collisionShape": "B2_BOX",
+                            "density": 1.1,
+                            "restitution": 1.5
+                        }
+                    ]
+
                 },
                 {
                     "id": "VITALITY_COMPONENT",

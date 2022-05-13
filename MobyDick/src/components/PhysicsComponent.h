@@ -11,12 +11,6 @@
 class TransformComponent;
 
 
-struct FixtureInfo {
-
-	bool isSensor{};
-	bool shouldSensorCollide{};
-};
-
 class PhysicsComponent : public Component
 {
 
@@ -58,17 +52,17 @@ private:
 
 	b2Body* m_physicsBody{ nullptr };
 
-	float m_friction{ 0 };
-	float m_restitution{ 0 };
-	float m_density{ 0.1 };
-	float m_linearDamping{ 0 };
-	float m_collisionRadius{ 0 };
-	float m_angularDamping{ 0 };
-	float m_gravityScale{ 0 };
-	bool m_isSensor{};
+	//float m_friction{ 0 };
+	//float m_restitution{ 0 };
+	//float m_density{ 0.1 };
+	//float m_linearDamping{ 0 };
+	//float m_collisionRadius{ 0 };
+	//float m_angularDamping{ 0 };
+	//float m_gravityScale{ 0 };
+	//bool m_isSensor{};
 
-	uint16 m_collisionCategory{ 0 };
-	uint16 m_collisionShape{ 0 };
+	//uint16 m_collisionCategory{ 0 };
+	//uint16 m_collisionShape{ 0 };
 	uint16 m_physicsType{ 0 };
 
 	b2Vec2 m_objectAnchorPoint{ 0 , 0 };

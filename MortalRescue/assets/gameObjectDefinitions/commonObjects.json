@@ -2,7 +2,6 @@
     "gameObjects": [
         {
             "id": "GINA_64",
-            "collisionTag": "CollisionTag::PLAYER",
             "traitTags": [ "player" ],
             "components": [
                 {
@@ -19,23 +18,37 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_CIRCLE",
-                    "collisionRadius": 1.32,
-                    "friction": 0.00,
-                    "restitution": 0.0,
-                    "density": 50.5,
                     "linearDamping": 0.0,
                     "angularDamping": 3.0,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::PLAYER_COLLISION",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 1.32,
+                            "friction": 0.00,
+                            "restitution": 0.0,
+                            "density": 50.5,
+                            "isSensor": false
+                        },
+                        {
+                            "contactTag": "ContactTag::PLAYER_TOUCH",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 2.64,
+                            "isSensor": true
+                        },
+                        {
+                            "contactTag": "ContactTag::PLAYER_HITBOX",
+                            "collisionShape": "B2_BOX",
+                            "size": {
+                                "width": 12,
+                                "height": 12
+                            },
+                            "isSensor": false
+                        }
+                    ],
                     "anchorPoint": { // starts from centered 0,0 position
                         "x": 0.8,
                         "y": 0.0
-                    },
-                    "auxSensor": {
-                        "collisionShape": "B2_CIRCLE",
-                        "size": {
-                            "radius": 2.64
-                        },
-                        "shouldCollide": false
                     }
                 },
                 {
@@ -140,7 +153,6 @@
         },
         {
             "id": "WALL_BUTTON",
-            "collisionTag": "CollisionTag::BUTTON",
             "traitTags": [ "interactive" ],
             "description": "Wall button",
             "components": [
@@ -183,9 +195,13 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_BOX",
-                    "density": 0.1,
-                    "isSensor": true
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::BUTTON",
+                            "collisionShape": "B2_BOX",
+                            "isSensor": true
+                        }
+                    ]
                 },
                 {
                     "id": "ACTION_COMPONENT",
@@ -202,7 +218,6 @@
         },
         {
             "id": "SWORDLADY",
-            "collisionTag": "CollisionTag::GENERAL_SOLID",
             "traitTags": [],
             "description": "SwordLady",
             "components": [
@@ -237,7 +252,6 @@
         },
         {
             "id": "BOWMAN",
-            "collisionTag": "CollisionTag::GENERAL_SOLID",
             "traitTags": [],
             "components": [
                 {
@@ -260,13 +274,15 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_CIRCLE",
-                    "collisionRadius": 0.64,
-                    "friction": 0.00,
-                    "restitution": 0.0,
-                    "density": 50.5,
                     "linearDamping": 2.2,
-                    "angularDamping": 3.0
+                    "angularDamping": 3.0,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_SOLID",
+                            "collisionShape": "B2_BOX",
+                            "density": 50.5
+                        }
+                    ]
                 },
                 {
                     "id": "ACTION_COMPONENT",
@@ -283,7 +299,6 @@
         },
         {
             "id": "STUBB",
-            "collisionTag": "CollisionTag::GENERAL_SOLID",
             "traitTags": [],
             "components": [
                 {
@@ -307,7 +322,6 @@
         },
         {
             "id": "PISTOL",
-            "collisionTag": "CollisionTag::WEAPON_PICKUP",
             "traitTags": [ "collectable", "weapon" ],
             "description": "Weapon 1",
             "components": [
@@ -330,16 +344,20 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_BOX",
-                    "friction": 0.0,
-                    "restitution": 0.0,
-                    "density": 2.05,
                     "linearDamping": 3.0,
                     "angularDamping": 1.0,
                     "anchorPoint": {
                         "x": -0.2,
                         "y": 0.0
-                    }
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::WEAPON_PICKUP",
+                            "collisionShape": "B2_BOX",
+                            "density": 2.05
+                        }
+                    ]
+
                 },
                 {
                     "id": "ACTION_COMPONENT",
@@ -381,7 +399,6 @@
         },
         {
             "id": "BULLET1",
-            "collisionTag": "CollisionTag::PLAYER_BULLET",
             "traitTags": [],
             "description": "Bullet 1",
             "components": [
@@ -398,13 +415,15 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_BOX",
-                    "collisionRadius": 0.16,
-                    "friction": 0.0,
-                    "density": 0.1,
-                    "restitution": 0.3,
-                    "linearDamping": 0.0,
-                    "angularDamping": 0.0
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::PLAYER_BULLET",
+                            "collisionShape": "B2_BOX",
+                            "density": 0.1,
+                            "restitution": 0.3
+                        }
+                    ]
+
                 },
                 {
                     "id": "POOL_COMPONENT"
@@ -419,7 +438,6 @@
         },
         {
             "id": "BULLET2",
-            "collisionTag": "CollisionTag::ENEMY_BULLET",
             "traitTags": [ "debug" ],
             "description": "Bullet 2",
             "components": [
@@ -438,12 +456,15 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_BOX",
-                    "friction": 0.0,
-                    "density": 0.1,
-                    "restitution": 0.3,
-                    "linearDamping": 0.0,
-                    "angularDamping": 0.0
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::ENEMY_BULLET",
+                            "collisionShape": "B2_BOX",
+                            "density": 0.1,
+                            "restitution": 0.3
+                        }
+                    ]
+
                 },
                 {
                     "id": "POOL_COMPONENT"
@@ -458,7 +479,6 @@
         },
         {
             "id": "PARTICLE_X_EMITTER",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "abstract" ],
             "description": "Particle Emitter",
             "components": [
@@ -480,7 +500,6 @@
         },
         {
             "id": "PARTICLE_EMITTER",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "abstract" ],
             "description": "Particle Emitter",
             "components": [
@@ -498,7 +517,6 @@
         },
         {
             "id": "PARTICLE_EMITTER_SPARK",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "abstract" ],
             "description": "Particle Emitter",
             "components": [
@@ -524,7 +542,6 @@
         },
         {
             "id": "RAIN_EMITTER",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "abstract" ],
             "description": "Rain Emitter",
             "components": [
@@ -545,8 +562,6 @@
         },
         {
             "id": "NAVIGATION_TRANSIT_POINT",
-            "type": "GameObjectType::ABSTRACT",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "navigation", "abstract" ],
             "description": "Navigation Object",
             "components": [
@@ -563,7 +578,12 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_STATIC",
-                    "collisionShape": "B2_BOX"
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_BOX"
+                        }
+                    ]
                 },
                 {
                     "id": "NAVIGATION_COMPONENT",
@@ -573,8 +593,6 @@
         },
         {
             "id": "NAVIGATION_WAYPOINT",
-            "type": "GameObjectType::ABSTRACT",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "navigation", "abstract" ],
             "description": "Navigation Object",
             "components": [
@@ -591,7 +609,13 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_STATIC",
-                    "collisionShape": "B2_BOX"
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_BOX"
+                        }
+                    ]
+
                 },
                 {
                     "id": "NAVIGATION_COMPONENT",
@@ -601,8 +625,6 @@
         },
         {
             "id": "SURVIVOR",
-            "type": "GameObjectType::SPRITE",
-            "collisionTag": "CollisionTag::SURVIVOR",
             "traitTags": ["interactive"],
             "components": [
                 {
@@ -628,13 +650,17 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_CIRCLE",
-                    "collisionRadius": 0.64,
-                    "friction": 0.00,
-                    "restitution": 0.0,
-                    "density": 50.5,
                     "linearDamping": 50.2,
-                    "angularDamping": 3.0
+                    "angularDamping": 3.0,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::SURVIVOR",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 0.64,
+                            "density": 50.5
+                        }
+                    ]
+
                 },
                 {
                     "id": "ACTION_COMPONENT",
@@ -658,7 +684,6 @@
         },
         {
             "id": "TURRET",
-            "collisionTag": "CollisionTag::GENERAL_SOLID",
             "traitTags": ["barrier"],
             "description": "Turret",
             "components": [
@@ -722,14 +747,16 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_KINEMATIC",
-                    "collisionShape": "B2_BOX",
-                    "density": 10.1,
                     "linearDamping": 0.0,
                     "angularDamping": 20.0,
-                    "anchorPoint": {
-                        "x": 0.0,
-                        "y": 0.0
-                    }
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_SOLID",
+                            "collisionShape": "B2_BOX",
+                            "density": 10.1
+                        }
+                    ]
+
                 },
                 {
                     "id": "ACTION_COMPONENT",

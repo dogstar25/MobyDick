@@ -131,23 +131,25 @@ void MRGame::_addGameCollisionTags()
 {
 
 	//Add all game specific enum traslations needed
-	EnumMap::instance().addEnumItem("CollisionTag::BUTTON", CollisionTag::BUTTON);
-	EnumMap::instance().addEnumItem("CollisionTag::DEFLECT_EFFECT", CollisionTag::DEFLECT_EFFECT);
-	EnumMap::instance().addEnumItem("CollisionTag::DRONE_BRAIN", CollisionTag::DRONE_BRAIN);
-	EnumMap::instance().addEnumItem("CollisionTag::DRONE_SHIELD", CollisionTag::DRONE_SHIELD);
-	EnumMap::instance().addEnumItem("CollisionTag::DRONE_WEAPON", CollisionTag::DRONE_WEAPON);
-	EnumMap::instance().addEnumItem("CollisionTag::DRONE_FRAME", CollisionTag::DRONE_FRAME);
-	EnumMap::instance().addEnumItem("CollisionTag::ENEMY_BULLET", CollisionTag::ENEMY_BULLET);
-	EnumMap::instance().addEnumItem("CollisionTag::FRIENDLY_BULLET", CollisionTag::FRIENDLY_BULLET);
-	EnumMap::instance().addEnumItem("CollisionTag::HEAVY_PARTICLE", CollisionTag::HEAVY_PARTICLE);
-	EnumMap::instance().addEnumItem("CollisionTag::LIGHT_PARTICLE", CollisionTag::LIGHT_PARTICLE);
-	EnumMap::instance().addEnumItem("CollisionTag::PLAYER", CollisionTag::PLAYER);;
-	EnumMap::instance().addEnumItem("CollisionTag::PLAYER_BULLET", CollisionTag::PLAYER_BULLET);
-	EnumMap::instance().addEnumItem("CollisionTag::SHIELD_SCRAP", CollisionTag::SHIELD_SCRAP);
-	EnumMap::instance().addEnumItem("CollisionTag::SURVIVOR", CollisionTag::SURVIVOR);
-	EnumMap::instance().addEnumItem("CollisionTag::MEDKIT", CollisionTag::MEDKIT);
-	EnumMap::instance().addEnumItem("CollisionTag::WALL", CollisionTag::WALL);
-	EnumMap::instance().addEnumItem("CollisionTag::WEAPON_PICKUP", CollisionTag::WEAPON_PICKUP);
+	EnumMap::instance().addEnumItem("ContactTag::BUTTON", ContactTag::BUTTON);
+	EnumMap::instance().addEnumItem("ContactTag::DEFLECT_EFFECT", ContactTag::DEFLECT_EFFECT);
+	EnumMap::instance().addEnumItem("ContactTag::DRONE_BRAIN", ContactTag::DRONE_BRAIN);
+	EnumMap::instance().addEnumItem("ContactTag::DRONE_SHIELD", ContactTag::DRONE_SHIELD);
+	EnumMap::instance().addEnumItem("ContactTag::DRONE_WEAPON", ContactTag::DRONE_WEAPON);
+	EnumMap::instance().addEnumItem("ContactTag::DRONE_FRAME", ContactTag::DRONE_FRAME);
+	EnumMap::instance().addEnumItem("ContactTag::ENEMY_BULLET", ContactTag::ENEMY_BULLET);
+	EnumMap::instance().addEnumItem("ContactTag::FRIENDLY_BULLET", ContactTag::FRIENDLY_BULLET);
+	EnumMap::instance().addEnumItem("ContactTag::HEAVY_PARTICLE", ContactTag::HEAVY_PARTICLE);
+	EnumMap::instance().addEnumItem("ContactTag::LIGHT_PARTICLE", ContactTag::LIGHT_PARTICLE);
+	EnumMap::instance().addEnumItem("ContactTag::PLAYER_COLLISION", ContactTag::PLAYER_COLLISION);;
+	EnumMap::instance().addEnumItem("ContactTag::PLAYER_TOUCH", ContactTag::PLAYER_TOUCH);;
+	EnumMap::instance().addEnumItem("ContactTag::PLAYER_HITBOX", ContactTag::PLAYER_HITBOX);;
+	EnumMap::instance().addEnumItem("ContactTag::PLAYER_BULLET", ContactTag::PLAYER_BULLET);
+	EnumMap::instance().addEnumItem("ContactTag::SHIELD_SCRAP", ContactTag::SHIELD_SCRAP);
+	EnumMap::instance().addEnumItem("ContactTag::SURVIVOR", ContactTag::SURVIVOR);
+	EnumMap::instance().addEnumItem("ContactTag::MEDKIT", ContactTag::MEDKIT);
+	EnumMap::instance().addEnumItem("ContactTag::WALL", ContactTag::WALL);
+	EnumMap::instance().addEnumItem("ContactTag::WEAPON_PICKUP", ContactTag::WEAPON_PICKUP);
 
 }
 

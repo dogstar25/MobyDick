@@ -28,27 +28,29 @@ namespace Colors {
 
 }
 
-namespace CollisionTag {
+namespace ContactTag {
 	
 	inline constexpr int SMOKE_PARTICLE = 2;
 	inline constexpr int NAVIGATION_POINT = 3;
 	inline constexpr int HEAVY_PARTICLE = 4;
 	inline constexpr int LIGHT_PARTICLE = 5;
-	inline constexpr int PLAYER = 6;
-	inline constexpr int WALL = 7;
-	inline constexpr int DEFLECT_EFFECT = 11;
-	inline constexpr int DRONE_BRAIN = 12;
-	inline constexpr int DRONE_FRAME = 13;
-	inline constexpr int DRONE_SHIELD = 14;
-	inline constexpr int DRONE_WEAPON = 15;
-	inline constexpr int ENEMY_BULLET = 16;
-	inline constexpr int FRIENDLY_BULLET = 17;
-	inline constexpr int PLAYER_BULLET = 18;
-	inline constexpr int SHIELD_SCRAP = 19;
-	inline constexpr int SURVIVOR = 20;
-	inline constexpr int MEDKIT = 21;
-	inline constexpr int WEAPON_PICKUP = 22;
-	inline constexpr int BUTTON = 23;
+	inline constexpr int PLAYER_TOUCH = 6;
+	inline constexpr int PLAYER_COLLISION = 7;
+	inline constexpr int PLAYER_HITBOX = 8;
+	inline constexpr int WALL = 9;
+	inline constexpr int DEFLECT_EFFECT = 10;
+	inline constexpr int DRONE_BRAIN = 11;
+	inline constexpr int DRONE_FRAME = 12;
+	inline constexpr int DRONE_SHIELD = 13;
+	inline constexpr int DRONE_WEAPON = 14;
+	inline constexpr int ENEMY_BULLET = 15;
+	inline constexpr int FRIENDLY_BULLET = 16;
+	inline constexpr int PLAYER_BULLET = 17;
+	inline constexpr int SHIELD_SCRAP = 18;
+	inline constexpr int SURVIVOR = 19;
+	inline constexpr int MEDKIT = 20;
+	inline constexpr int WEAPON_PICKUP = 21;
+	inline constexpr int BUTTON = 22;
 
 }
 

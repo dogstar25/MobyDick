@@ -2,6 +2,7 @@
 #include "hud/HudItemFactory.h"
 #include "Renderer.h"
 #include "opengl/GLRenderer.h"
+#include "components/PhysicsComponent.h"
 
 
 EnumMap& EnumMap::instance()
@@ -63,8 +64,8 @@ EnumMap::EnumMap()
 	m_enumMap["RendererType::OPENGL"] = (int)RendererType::OPENGL;
 
 	//GameObject CollisionTags
-	m_enumMap["CollisionTag::GENERAL_SOLID"] = CollisionTag::GENERAL_SOLID;
-	m_enumMap["CollisionTag::GENERAL_FREE"] = CollisionTag::GENERAL_FREE;
+	m_enumMap["ContactTag::GENERAL_SOLID"] = ContactTag::GENERAL_SOLID;
+	m_enumMap["ContactTag::GENERAL_FREE"] = ContactTag::GENERAL_FREE;
 
 	//Box2d Related
 	m_enumMap["B2_STATIC"] = b2_staticBody;

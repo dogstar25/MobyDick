@@ -91,7 +91,7 @@ void VitalityComponent::_levelUp()
 		m_currentLevel++;
 		auto& level = m_regenLevels[(uint_fast64_t)m_currentLevel - 1];
 		parent()->enable();
-		parent()->resetCollisionTag();
+		//parent()->resetCollisionTag();
 		m_resistance = level.resistance;
 		
 		//Update the color based on the new level
@@ -149,7 +149,7 @@ bool VitalityComponent::testResistance(float force)
 		else {
 
 			parent()->disable(false);
-			parent()->setCollisionTag(CollisionTag::GENERAL_FREE);
+			//parent()->setCollisionTag(ContactTag::GENERAL_FREE);
 			m_regenTimer = Timer(m_regenSpeed);
 		}
 		return false;

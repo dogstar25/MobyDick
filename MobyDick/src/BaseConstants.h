@@ -53,7 +53,7 @@ namespace Alpha {
 
 
 //Game Object Collision Tags
-namespace CollisionTag {
+namespace ContactTag {
 	inline constexpr int MAX_OBJECT_CATEGORIES = 32;
 
 	//General

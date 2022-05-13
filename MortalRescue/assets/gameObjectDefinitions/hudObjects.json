@@ -2,7 +2,6 @@
     "gameObjects": [
         {
             "id": "HUD_STATUS_TOP",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "components": [
                 {
@@ -52,7 +51,6 @@
         },
         {
             "id": "HUD_SCRAP_COUNT",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui", "abstract" ],
             "description": "Hud Scrap Dynamic Text",
             "components": [
@@ -73,7 +71,6 @@
         },
         {
             "id": "HUD_SCRAP_LABEL",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "description": "Hud Level Label",
             "components": [
@@ -95,7 +92,6 @@
         },
         {
             "id": "HUD_SCRAP_VALUE",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "description": "Hud Level Value",
             "components": [
@@ -117,7 +113,6 @@
         },
         {
             "id": "HUD_SCRAP_BAR",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui", "abstract" ],
             "description": "Hud Level Dynamic Text",
             "components": [
@@ -139,7 +134,6 @@
         },
         {
             "id": "HUD_BAR",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "description": "Hud Bar rectangle image",
             "components": [

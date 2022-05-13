@@ -24,5 +24,6 @@ private:
 
 	ImVec4 m_hudRed{};
 	ImVec4 m_hudWhite{};
+	ImVec4 m_hudGreen{};
 
 };
