@@ -17,7 +17,7 @@ public:
 	bool virtual ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB) override;
 
 protected:
-	std::vector<std::bitset<CollisionTag::MAX_OBJECT_CATEGORIES>> m_collisionMasks;
+	std::vector<std::bitset<ContactTag::MAX_OBJECT_CATEGORIES>> m_contactMasks;
 
 };
 

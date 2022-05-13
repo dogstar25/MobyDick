@@ -2,7 +2,7 @@
     "gameObjects": [
         {
             "id": "LOADLEVEL_TRIGGER",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
+            "contactTag": "ContactTag::GENERAL_FREE",
             "traitTags": [ "trigger" ],
             "components": [
                 {

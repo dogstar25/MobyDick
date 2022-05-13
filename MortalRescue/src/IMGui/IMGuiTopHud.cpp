@@ -24,6 +24,9 @@ IMGuiTopHud::IMGuiTopHud(std::string gameObjectId, b2Vec2 padding, ImVec4 backgr
 	util::colorApplyAlpha(white, 255);
 	m_hudWhite = util::SDLColorToImVec4(white);
 
+	SDL_Color green = Colors::EMERALD;
+	util::colorApplyAlpha(green, 255);
+	m_hudGreen = util::SDLColorToImVec4(green);
 
 
 }
@@ -67,6 +70,7 @@ void IMGuiTopHud::hudLives()
 {
 	glm::vec2 topLeft{};
 	glm::vec2 bottomRight{};
+	ImVec4 heartColor{};
 
 	//TextureAtlas Coordinates
 	glm::vec2 topLeftFull = util::glNormalizeTextureCoords({ 65,33 }, { 256, 256 });
@@ -83,24 +87,25 @@ void IMGuiTopHud::hudLives()
 		if (life < livesStatusItem.value()) {
 			topLeft = topLeftFull;
 			bottomRight = bottomRightFull;
+			heartColor = m_hudRed;
 		}
 		else {
 			topLeft = topLeftDead;
 			bottomRight = bottomRightDead;
-
+			heartColor = m_hudRed;
 		}
 
 		if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 
 			GLuint textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::IMGUI_TEXTURE_ATLAS);
-			ImGui::Image((void*)(int*)textureAtlasId, ImVec2(32, 32), ImVec2(bottomRight.x, bottomRight.y), ImVec2(topLeft.x, topLeft.y), m_hudRed);
+			ImGui::Image((void*)(int*)textureAtlasId, ImVec2(32, 32), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), heartColor);
 			ImGui::SameLine(0.0f, 2);
 		}
 		else {
 
 			//SDL2 Texture void* is the SDL_Texture*
 			SDL_Texture* sdlTexture = TextureManager::instance().getTexture("TEXTURE_IMGUI_ATLAS")->sdlTexture;
-			ImGui::Image((void*)(SDL_Texture*)sdlTexture, ImVec2(32, 32), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), m_hudRed);
+			ImGui::Image((void*)(SDL_Texture*)sdlTexture, ImVec2(32, 32), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), heartColor);
 
 			ImGui::SameLine(0.0f, 2);
 		}

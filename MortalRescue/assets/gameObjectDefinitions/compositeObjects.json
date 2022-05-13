@@ -2,7 +2,6 @@
     "gameObjects": [
         {
             "id": "DRONE",
-            "collisionTag": "CollisionTag::DRONE_FRAME",
             "traitTags": [],
             "components": [
                 {
@@ -20,17 +19,18 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_CIRCLE",
-                    "collisionRadius": 2.56,
-                    "friction": 0.0,
-                    "restitution": 0.0,
-                    "density": 5000.5,
-                    "linearDamping": 0.0,
-                    "angularDamping": 0.0,
                     "anchorPoint": {
                         "x": 0.0,
                         "y": 0.0
-                    }
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::DRONE_FRAME",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 2.56,
+                            "density": 5000.5
+                        }
+                    ]
                 },
                 {
                     "id": "ATTACHMENTS_COMPONENT",
@@ -110,7 +110,6 @@
         },
         {
             "id": "DRONE_BRAIN",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [],
             "description": "Drone Brain",
             "components": [
@@ -132,22 +131,19 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_BOX",
-                    "friction": 0.0,
-                    "restitution": 0.0,
-                    "density": 1.0,
-                    "linearDamping": 0.0,
-                    "angularDamping": 0.0,
-                    "anchorPoint": {
-                        "x": 0.0,
-                        "y": 0.0
-                    }
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_BOX",
+                            "density": 1.0
+                        }
+                    ]
+
                 }
             ]
         },
         {
             "id": "DRONE_EYE",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [],
             "description": "Drone Eye",
             "components": [
@@ -167,16 +163,21 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_BOX",
-                    "friction": 1.0,
-                    "restitution": 0.0,
-                    "density": 5.0,
                     "linearDamping": 0.0,
                     "angularDamping": 10.0,
                     "anchorPoint": {
                         "x": -1.56,
                         "y": 0.0
-                    }
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_BOX",
+                            "friction": 1.0,
+                            "density": 5.0
+                        }
+                    ]
+
                 },
                 {
                     "id": "ACTION_COMPONENT",
@@ -211,7 +212,6 @@
         },
         {
             "id": "FULL_PIECE",
-            "collisionTag": "CollisionTag::DRONE_SHIELD",
             "traitTags": [],
             "components": [
                 {
@@ -235,16 +235,18 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_BOX",
-                    "friction": 1.0,
-                    "restitution": 0.0,
-                    "density": 0.1,
-                    "linearDamping": 0.0,
-                    "angularDamping": 0.0,
                     "anchorPoint": {
                         "x": 0.0,
                         "y": 0.0
-                    }
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::DRONE_SHIELD",
+                            "collisionShape": "B2_BOX",
+                            "friction": 1.0,
+                            "density": 0.1
+                        }
+                    ]
                 },
                 {
                     "id": "VITALITY_COMPONENT",
@@ -274,7 +276,6 @@
         },
         {
             "id": "ANGLE1_PIECE",
-            "collisionTag": "CollisionTag::DRONE_SHIELD",
             "traitTags": [],
             "components": [
                 {
@@ -298,16 +299,18 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_BOX",
-                    "friction": 1.0,
-                    "restitution": 0.0,
-                    "density": 0.1,
-                    "linearDamping": 0.0,
-                    "angularDamping": 0.0,
                     "anchorPoint": {
                         "x": 0.0,
                         "y": 0.0
-                    }
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::DRONE_SHIELD",
+                            "collisionShape": "B2_BOX",
+                            "friction": 1.0,
+                            "density": 0.1
+                        }
+                    ]
                 },
                 {
                     "id": "VITALITY_COMPONENT",
@@ -337,7 +340,6 @@
         },
         {
             "id": "ANGLE2_PIECE",
-            "collisionTag": "CollisionTag::DRONE_SHIELD",
             "traitTags": [],
             "components": [
                 {
@@ -361,16 +363,18 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_BOX",
-                    "friction": 1.0,
-                    "restitution": 0.0,
-                    "density": 0.1,
-                    "linearDamping": 0.0,
-                    "angularDamping": 0.0,
                     "anchorPoint": {
                         "x": 0.0,
                         "y": 0.0
-                    }
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::DRONE_SHIELD",
+                            "collisionShape": "B2_BOX",
+                            "friction": 1.0,
+                            "density": 0.1
+                        }
+                    ]
                 },
                 {
                     "id": "VITALITY_COMPONENT",
@@ -400,7 +404,6 @@
         },
         {
             "id": "ANGLE3_PIECE",
-            "collisionTag": "CollisionTag::DRONE_SHIELD",
             "traitTags": [],
             "components": [
                 {
@@ -424,16 +427,18 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_BOX",
-                    "friction": 1.0,
-                    "restitution": 0.0,
-                    "density": 0.1,
-                    "linearDamping": 0.0,
-                    "angularDamping": 0.0,
                     "anchorPoint": {
                         "x": 0.0,
                         "y": 0.0
-                    }
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::DRONE_SHIELD",
+                            "collisionShape": "B2_BOX",
+                            "friction": 1.0,
+                            "density": 0.1
+                        }
+                    ]
                 },
                 {
                     "id": "VITALITY_COMPONENT",
@@ -463,7 +468,6 @@
         },
         {
             "id": "ANGLE4_PIECE",
-            "collisionTag": "CollisionTag::DRONE_SHIELD",
             "traitTags": [],
             "components": [
                 {
@@ -487,16 +491,18 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "collisionShape": "B2_BOX",
-                    "friction": 1.0,
-                    "restitution": 0.0,
-                    "density": 0.1,
-                    "linearDamping": 0.0,
-                    "angularDamping": 0.0,
                     "anchorPoint": {
                         "x": 0.0,
                         "y": 0.0
-                    }
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::DRONE_SHIELD",
+                            "collisionShape": "B2_BOX",
+                            "friction": 1.0,
+                            "density": 0.1
+                        }
+                    ]
                 },
                 {
                     "id": "VITALITY_COMPONENT",

@@ -2,7 +2,6 @@
     "gameObjects": [
         {
             "id": "IMGUI_EXAMPLE_PANEL",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "gui" ],
             "components": [
                 {
@@ -20,7 +19,6 @@
         },
         {
             "id": "PLAYER_LABEL_2",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "abstract" ],
             "components": [
                 {
@@ -46,7 +44,6 @@
         },
         {
             "id": "IMGUI_PAUSE_WINDOW",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "abstract" ],
             "components": [
                 {
@@ -83,7 +80,6 @@
         },
         {
             "id": "IMGUI_HUD_TOP",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "abstract" ],
             "components": [
                 {
@@ -107,7 +103,7 @@
                     },
                     "color": {
                         "background": "Colors::EMERALD",
-                        "backgroundAlpha": 120,
+                        "backgroundAlpha": 200,
                         "text": "Colors::WHITE"
                     },
                     "autoSize": false
@@ -118,7 +114,6 @@
         },
         {
             "id": "INTERACTIVE_MENU_BASIC",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "abstract" ],
             "components": [
                 {
@@ -151,7 +146,6 @@
         },
         {
             "id": "INTERACTIVE_MENU_SURVIVOR",
-            "collisionTag": "CollisionTag::GENERAL_FREE",
             "traitTags": [ "abstract" ],
             "components": [
                 {

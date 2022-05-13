@@ -2,7 +2,6 @@
     "gameObjects": [
         {
             "id": "WALL1_OPEN",
-            "collisionTag": "CollisionTag::WALL",
             "traitTags": [ "barrier" ],
             "description": "WALL1_OPEN",
             "components": [
@@ -25,14 +24,19 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_STATIC",
-                    "collisionShape": "B2_BOX",
-                    "friction": 0.3
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::WALL",
+                            "collisionShape": "B2_BOX",
+                            "friction": 0.3
+                        }
+                    ]
+
                 }
             ]
         },
         {
             "id": "WALL1_COLUMN",
-            "collisionTag": "CollisionTag::WALL",
             "traitTags": [ "barrier" ],
             "description": "WALL1_COLUMN",
             "components": [
@@ -55,14 +59,18 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_STATIC",
-                    "collisionShape": "B2_BOX",
-                    "friction": 0.3
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::WALL",
+                            "collisionShape": "B2_BOX",
+                            "friction": 0.3
+                        }
+                    ]
                 }
             ]
         },
         {
             "id": "WALL1_CORNER",
-            "collisionTag": "CollisionTag::WALL",
             "traitTags": [ "barrier" ],
             "description": "WALL1_CORNER",
             "components": [
@@ -85,14 +93,18 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_STATIC",
-                    "collisionShape": "B2_BOX",
-                    "friction": 0.3
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::WALL",
+                            "collisionShape": "B2_BOX",
+                            "friction": 0.3
+                        }
+                    ]
                 }
             ]
         },
         {
             "id": "WALL1_END",
-            "collisionTag": "CollisionTag::WALL",
             "traitTags": [ "barrier" ],
             "description": "WALL1_END",
             "components": [
@@ -115,15 +127,18 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_STATIC",
-                    "collisionShape": "B2_BOX",
-                    "friction": 0.3
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::WALL",
+                            "collisionShape": "B2_BOX",
+                            "friction": 0.3
+                        }
+                    ]
                 }
             ]
         },
         {
             "id": "WALL1_HALL",
-            "type": "GameObjectType::SPRITE",
-            "collisionTag": "CollisionTag::WALL",
             "traitTags": [ "barrier" ],
             "description": "WALL1_HALL",
             "components": [
@@ -146,14 +161,18 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_STATIC",
-                    "collisionShape": "B2_BOX",
-                    "friction": 0.3
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::WALL",
+                            "collisionShape": "B2_BOX",
+                            "friction": 0.3
+                        }
+                    ]
                 }
             ]
         },
         {
             "id": "WALL1_WALL",
-            "collisionTag": "CollisionTag::WALL",
             "traitTags": [ "barrier" ],
             "description": "WALL1_WALL",
             "components": [
@@ -176,8 +195,13 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_STATIC",
-                    "collisionShape": "B2_BOX",
-                    "friction": 0.3
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::WALL",
+                            "collisionShape": "B2_BOX",
+                            "friction": 0.3
+                        }
+                    ]
                 }
             ]
         }

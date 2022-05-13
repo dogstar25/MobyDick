@@ -13,15 +13,6 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, Scene* parentScen
 	Json::Value transformComponentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::TRANSFORM_COMPONENT);
 
 	m_physicsType = EnumMap::instance().toEnum(physicsComponentJSON["type"].asString());
-	m_collisionShape = EnumMap::instance().toEnum(physicsComponentJSON["collisionShape"].asString());
-	m_collisionRadius = physicsComponentJSON["collisionRadius"].asFloat();
-	m_friction = physicsComponentJSON["friction"].asFloat();
-	m_density = physicsComponentJSON["density"].asFloat();
-	m_restitution = physicsComponentJSON["restitution"].asFloat();
-	m_linearDamping = physicsComponentJSON["linearDamping"].asFloat();
-	m_angularDamping = physicsComponentJSON["angularDamping"].asFloat();
-	m_gravityScale = physicsComponentJSON["gravityScale"].asFloat();
-	m_isSensor = physicsComponentJSON["isSensor"].asBool();
 
 	m_objectAnchorPoint.Set(physicsComponentJSON["anchorPoint"]["x"].asFloat(),
 		physicsComponentJSON["anchorPoint"]["y"].asFloat());
@@ -127,98 +118,64 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 	bodyDef.allowSleep = true;
 	b2Body* body = physicsWorld->CreateBody(&bodyDef);
 
-	b2Shape* shape;
-	b2PolygonShape box;
-	b2CircleShape circle;
-	b2ChainShape chain;
+	if (physicsComponentJSON.isMember("linearDamping")) {
+		body->SetLinearDamping(physicsComponentJSON["linearDamping"].asFloat());
+	}
+	if (physicsComponentJSON.isMember("angularDamping")) {
+		body->SetAngularDamping(physicsComponentJSON["angularDamping"].asFloat());
+	}
+	if (physicsComponentJSON.isMember("gravityScale")) {
+		body->SetGravityScale(physicsComponentJSON["gravityScale"].asFloat());
+	}
 
-	//Collision shape - will default to a rectangle
-	if (m_collisionShape == b2Shape::e_circle)
-	{
-		circle.m_radius = m_collisionRadius;
-		shape = &circle;
-	}
-	else if (m_collisionShape == b2Shape::e_chain)
-	{
-		//temp test code
-		/*
-		b2Vec2 vs[4];
-		vs[0].Set(40, 40);
-		vs[1].Set(400,400);
-		vs[2].Set(50,500);
-		chain.CreateChain(vs, 3);
-		*/
-		shape = &chain;
-	}
-	else
-	{
-		//Box Shape
-		//Divide by 2 because box2d needs center position
-		box.SetAsBox(
-			transformComponentJSON["size"]["width"].asFloat() / GameConfig::instance().scaleFactor() / 2,
-			transformComponentJSON["size"]["height"].asFloat() / GameConfig::instance().scaleFactor() / 2/*,
-			b2Vec2(m_objectAnchorPoint.x, m_objectAnchorPoint.y), 0*/	);
+	//Build fixtures
+	for (const auto& fixtureJSON : physicsComponentJSON["fixtures"]) {
+
+		b2Shape* shape;
+		b2PolygonShape box;
+		b2CircleShape circle;
+		b2ChainShape chain;
+
+		auto collisionShape = EnumMap::instance().toEnum(fixtureJSON["collisionShape"].asString());
+
+		//default
 		shape = &box;
-	}
 
-	// Define the body fixture.
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = shape;
-
-	// Misc properties
-	fixtureDef.density = m_density;
-	fixtureDef.friction = m_friction;
-	fixtureDef.restitution = m_restitution;
-	fixtureDef.isSensor = m_isSensor;
-	
-	//MobyDick specific data
-	FixtureInfo* fixtureInfo = new FixtureInfo();
-	fixtureInfo->isSensor = fixtureDef.isSensor;
-	fixtureInfo->shouldSensorCollide = true;
-	fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(fixtureInfo);
-
-	// Add the shape to the body.
-	body->CreateFixture(&fixtureDef);
-
-	body->SetLinearDamping(m_linearDamping);
-	body->SetAngularDamping(m_angularDamping);
-	body->SetGravityScale(m_gravityScale);
-
-
-	//If this object has an auxillery sensor then build it too
-	if (physicsComponentJSON.isMember("auxSensor")) {
-
-		auto auxSensorShape = EnumMap::instance().toEnum(physicsComponentJSON["auxSensor"]["collisionShape"].asString());
-		auto shouldSensorCollide = physicsComponentJSON["auxSensor"]["shouldCollide"].asBool();
-
-		//Collision shape - will default to a rectangle
-		if (auxSensorShape == b2Shape::e_circle)
+		if (collisionShape == b2Shape::e_circle)
 		{
-			auto auxSensorRadius = physicsComponentJSON["auxSensor"]["size"]["radius"].asFloat();
-			shape->m_radius = auxSensorRadius;
+			circle.m_radius = fixtureJSON["collisionRadius"].asFloat();
 			shape = &circle;
 		}
-		else
-		{
-			//Box Shape
-			//Divide by 2 because box2d needs center position
-			box.SetAsBox(
-				transformComponentJSON["auxSensor"]["size"]["width"].asFloat() / GameConfig::instance().scaleFactor() / 2,
-				transformComponentJSON["auxSensor"]["size"]["height"].asFloat() / GameConfig::instance().scaleFactor() / 2);
+		else if (collisionShape == b2Shape::e_polygon) {
+
+			float sizeX{};
+			float sizeY{};
+			//If a size is not specified for the fixture then default to the transform size of the object
+			if (fixtureJSON.isMember("size")) {
+				sizeX = fixtureJSON["size"]["width"].asFloat() / GameConfig::instance().scaleFactor() / 2;
+				sizeY = fixtureJSON["size"]["width"].asFloat() / GameConfig::instance().scaleFactor() / 2;
+			}
+			else {
+				sizeX = transformComponentJSON["size"]["width"].asFloat() / GameConfig::instance().scaleFactor() / 2;
+				sizeY = transformComponentJSON["size"]["width"].asFloat() / GameConfig::instance().scaleFactor() / 2;
+			}
+			
+			box.SetAsBox(sizeX, sizeY);
 			shape = &box;
 		}
-		
+
+		b2FixtureDef fixtureDef;
 		fixtureDef.shape = shape;
-		fixtureDef.isSensor = true;
+		fixtureDef.friction = fixtureJSON["friction"].asFloat();
+		fixtureDef.density = fixtureJSON["density"].asFloat();
+		fixtureDef.restitution = fixtureJSON["restitution"].asFloat();
+		fixtureDef.isSensor = fixtureJSON["isSensor"].asFloat();
 
-		//MobyDick specific data
-		FixtureInfo* fixtureInfo = new FixtureInfo();
-		fixtureInfo->isSensor = fixtureDef.isSensor;
-		fixtureInfo->shouldSensorCollide = shouldSensorCollide;
-		fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(fixtureInfo);
+		auto contactTag = EnumMap::instance().toEnum(fixtureJSON["contactTag"].asString());
+		fixtureDef.userData.pointer = static_cast<int>(contactTag);
 
-		// Add the shape to the body.
 		body->CreateFixture(&fixtureDef);
+
 	}
 
 	return body;
@@ -386,11 +343,6 @@ void PhysicsComponent::attachItem(GameObject* attachObject, b2JointType jointTyp
 		revoluteJointDef->localAnchorA = anchorPoint;
 		revoluteJointDef->localAnchorB = attachObjectAnchorPoint;
 		
-		//test
-		//revoluteJointDef->enableMotor = true;
-		//revoluteJointDef->motorSpeed = 30;
-		//revoluteJointDef->maxMotorTorque = 30000;
-
 		jointDef = revoluteJointDef;
 	}
 

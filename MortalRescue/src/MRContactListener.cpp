@@ -13,66 +13,9 @@
 
 extern std::unique_ptr<Game> game;
 
-void MRContactListener::_player_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+
+void MRContactListener::_bullet_wall(GameObject* bullet, GameObject* wall, b2Vec2 contactPoint)
 {
-	GameObject* player;
-	GameObject* wall;
-
-	if (contact1->collisionTag() == CollisionTag::PLAYER) {
-		player = contact1;
-		wall = contact2;
-	}
-	else {
-		player = contact2;
-		wall = contact1;
-	}
-
-	//do What?
-
-
-}
-
-void MRContactListener::_player_interactive(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
-{
-	GameObject* player;
-	GameObject* interactiveObject;
-
-	if (contact1->collisionTag() == CollisionTag::PLAYER) {
-		player = contact1;
-		interactiveObject = contact2;
-	}
-	else {
-		player = contact2;
-		interactiveObject = contact1;
-	}
-
-
-	//Put the usuable indicator somewhere in the area
-	auto interactiveIndicator = SceneManager::instance().addGameObject("USE_HINT", LAYER_MAIN, -1, -1);
-
-	//Convert from box2d to gameWorld coordinates
-	//contactPoint.x *= GameConfig::instance().scaleFactor();
-	//contactPoint.y *= GameConfig::instance().scaleFactor();
-	interactiveIndicator->setPosition(interactiveObject->getCenterPosition().x, interactiveObject->getCenterPosition().y);
-
-
-}
-
-void MRContactListener::_bullet_wall(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
-{
-	GameObject* bullet;
-	GameObject* wall;
-
-	if (contact1->collisionTag() == CollisionTag::PLAYER_BULLET || 
-		contact1->collisionTag() == CollisionTag::ENEMY_BULLET) {
-
-		bullet = contact1;
-		wall = contact2;
-	}
-	else {
-		bullet = contact2;
-		wall = contact1;
-	}
 
 	//Build a One-Time particle emitter object
 	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
@@ -89,20 +32,8 @@ void MRContactListener::_bullet_wall(GameObject* contact1, GameObject* contact2,
 
 }
 
-void MRContactListener::_playerBullet_droneShield(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+void MRContactListener::_playerBullet_droneShield(GameObject* playerBullet, GameObject* droneShield, b2Vec2 contactPoint)
 {
-	GameObject* bullet;
-	GameObject* shield;
-
-	if (contact1->collisionTag() == CollisionTag::PLAYER_BULLET) {
-		bullet = contact1;
-		shield = contact2;
-	}
-	else {
-		bullet = contact2;
-		shield = contact1;
-	}
-
 
 	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
 	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
@@ -118,11 +49,11 @@ void MRContactListener::_playerBullet_droneShield(GameObject* contact1, GameObje
 	particleEmitterObject->setPosition(contactPoint.x, contactPoint.y);
 
 	//Set flag for removal for the Bullet
-	bullet->setRemoveFromWorld(true);
+	playerBullet->setRemoveFromWorld(true);
 
 	//Test if the bullet is strong enought to destroy the shield piece
-	auto bulletVitality = bullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
-	auto shieldVitality = shield->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	auto bulletVitality = playerBullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	auto shieldVitality = droneShield->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 	auto shieldHolds = shieldVitality->testResistance(bulletVitality->attackPower());
 	if (shieldHolds == false) {
 
@@ -139,20 +70,8 @@ void MRContactListener::_playerBullet_droneShield(GameObject* contact1, GameObje
 
 }
 
-void MRContactListener::_player_shieldScrap(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+void MRContactListener::_player_shieldScrap(GameObject* player, GameObject* shieldScrap, b2Vec2 contactPoint)
 {
-
-	GameObject* player;
-	GameObject* scrap;
-
-	if (contact1->collisionTag() == CollisionTag::PLAYER) {
-		player = contact1;
-		scrap = contact2;
-	}
-	else {
-		scrap = contact1;
-		player = contact2;
-	}
 
 	//Acknowledge the scrap collection
 	auto inventoryComponent = player->getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT);
@@ -170,25 +89,13 @@ void MRContactListener::_player_shieldScrap(GameObject* contact1, GameObject* co
 	}
 	
 	//flag the scrap item to be removed from the game and play a sound effect
-	scrap->setRemoveFromWorld(true);
+	shieldScrap->setRemoveFromWorld(true);
 	SoundManager::instance().playSound("SFX_PICKUP_2");
 
 }
 
-void MRContactListener::_bullet_player(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* player, b2Vec2 contactPoint)
 {
-
-	GameObject* player;
-	GameObject* bullet;
-
-	if (contact1->collisionTag() == CollisionTag::PLAYER) {
-		player = contact1;
-		bullet = contact2;
-	}
-	else {
-		bullet = contact1;
-		player = contact2;
-	}
 
 	//Update the status Manager
 	game->contextMananger()->adjustValue("LIVES_COUNT", -1);
@@ -200,43 +107,12 @@ void MRContactListener::_bullet_player(GameObject* contact1, GameObject* contact
 }
 void MRContactListener::BeginContact(b2Contact* contact) {
 
-
-	//Get the 2 object pointers
-	GameObject* gameObjectA = reinterpret_cast<GameObject*>(contact->GetFixtureA()->GetBody()->GetUserData().pointer);
-	GameObject* gameObjectB = reinterpret_cast<GameObject*>(contact->GetFixtureB()->GetBody()->GetUserData().pointer);
-
-	float x = 0;
-	float y = 0;
 	b2WorldManifold worldManifold;
 
 	contact->GetWorldManifold(&worldManifold);
 	b2Vec2 contactPoint = worldManifold.points[0];
 
-	//if (gameObjectA->hasTrait(TraitTag::player) || gameObjectB->hasTrait(TraitTag::player)) {
-	//	int todd = 1;
-	//}
-
-	//check contact->GetFixtureA() and contact->GetFixtureB() somehow
-	FixtureInfo* fixtureInfoA = reinterpret_cast<FixtureInfo*>(contact->GetFixtureA()->GetUserData().pointer);
-	FixtureInfo* fixtureInfoB = reinterpret_cast<FixtureInfo*>(contact->GetFixtureB()->GetUserData().pointer);
-
-	//If this is an objects auxillery sensor and we dont want to register a collision, then 
-	//NOTE - the sensor/fixture will still register "touching", just not a collision
-	bool ignoreSensorCollision =
-		((fixtureInfoA->isSensor == true && fixtureInfoA->shouldSensorCollide == false) ||
-			(fixtureInfoB->isSensor == true && fixtureInfoB->shouldSensorCollide == false));
-
-	if (ignoreSensorCollision) {
-		return;
-	}
-
-	//ToDo; Pass in both fixtures into the handleContact so that each specific handleContact
-	 //can check what kind of fixture we're dealing with to decide what and how we handle the contact
-	 //for example, a touchingSensor fixture vs a hitbox, vs main collision fixture
-	if (gameObjectA != nullptr && gameObjectB != nullptr)
-	{
-		handleContact(gameObjectA, gameObjectB, contactPoint);
-	}
+	handleContact(contact, contactPoint);
 
 }
 
@@ -249,80 +125,92 @@ void MRContactListener::EndContact(b2Contact* contact)
 
 
 
-void MRContactListener::handleContact(GameObject* contact1, GameObject* contact2, b2Vec2 contactPoint)
+void MRContactListener::handleContact(b2Contact* contact, b2Vec2 contactPoint)
 {
-	auto category1 = contact1->collisionTag();
-	auto category2 = contact2->collisionTag();
-	auto traits1 = contact1->traits();
-	auto traits2 = contact2->traits();
 
+	//Get fixtures
+	b2Fixture* fixture1 = contact->GetFixtureA();
+	b2Fixture* fixture2 = contact->GetFixtureB();
 
-	////////////////////////////////
-	// Player Usuable Object Contact // being done differently because contact only fires off once
-	////////////////////////////////
-	//if ((category1 == CollisionTag::PLAYER && contact2->hasTrait(TraitTag::interactive)) ||
-	//	(category2 == CollisionTag::PLAYER && contact1->hasTrait(TraitTag::interactive))) {
+	//Get the GameObjects attched to these fixtures
+	GameObject* contact1 = reinterpret_cast<GameObject*>(fixture1->GetBody()->GetUserData().pointer);
+	GameObject* contact2 = reinterpret_cast<GameObject*>(fixture2->GetBody()->GetUserData().pointer);
 
-	//	_player_interactive(contact1, contact2, contactPoint);
-	//}
-
-	/////////////////////////
-	// Player Wall Contact
-	////////////////////////
-	if ((category1 == CollisionTag::PLAYER && category2 == CollisionTag::WALL) ||
-		(category2 == CollisionTag::PLAYER && category1 == CollisionTag::WALL)) {
-
-		_player_wall(contact1, contact2, contactPoint);
-
-	}
+	//Get each fixtures' contactTag
+	int contactTag1 = static_cast<int>(fixture1->GetUserData().pointer);
+	int contactTag2 = static_cast<int>(fixture2->GetUserData().pointer);
 
 	////////////////////////////////////
 	// Player Bullet -  Wall Contact
 	//////////////////////////////////
-	if ((category1 == CollisionTag::PLAYER_BULLET && category2 == CollisionTag::WALL) ||
-		(category2 == CollisionTag::PLAYER_BULLET && category1 == CollisionTag::WALL)) {
+	if ((contactTag1 == ContactTag::PLAYER_BULLET && contactTag2 == ContactTag::WALL) ||
+		(contactTag2 == ContactTag::PLAYER_BULLET && contactTag1 == ContactTag::WALL)) {
 
-		_bullet_wall(contact1, contact2, contactPoint);
-
+		if (contactTag1 == ContactTag::PLAYER_BULLET) {
+			_bullet_wall(contact1, contact2, contactPoint);
+		}
+		else {
+			_bullet_wall(contact2, contact1, contactPoint);
+		}
 	}
 
 	////////////////////////////////////
 	// Enemy Bullet -  Wall Contact
 	//////////////////////////////////
-	if ((category1 == CollisionTag::ENEMY_BULLET && category2 == CollisionTag::WALL) ||
-		(category2 == CollisionTag::ENEMY_BULLET && category1 == CollisionTag::WALL)) {
+	if ((contactTag1 == ContactTag::ENEMY_BULLET && contactTag2 == ContactTag::WALL) ||
+		(contactTag2 == ContactTag::ENEMY_BULLET && contactTag1 == ContactTag::WALL)) {
 
-		_bullet_wall(contact1, contact2, contactPoint);
+		if (contactTag1 == ContactTag::ENEMY_BULLET) {
+			_bullet_wall(contact1, contact2, contactPoint);
+		}
+		else {
+			_bullet_wall(contact2, contact1, contactPoint);
+		}
 
 	}
 
 	///////////////////////////////////
 	// Player Bullet -  Drone Shield
 	///////////////////////////////////
-	if ((category1 == CollisionTag::PLAYER_BULLET && category2 == CollisionTag::DRONE_SHIELD) ||
-		(category2 == CollisionTag::PLAYER_BULLET && category1 == CollisionTag::DRONE_SHIELD)) {
+	if ((contactTag1 == ContactTag::PLAYER_BULLET && contactTag2 == ContactTag::DRONE_SHIELD) ||
+		(contactTag2 == ContactTag::PLAYER_BULLET && contactTag1 == ContactTag::DRONE_SHIELD)) {
 
-		_playerBullet_droneShield(contact1, contact2, contactPoint);
+		if (contactTag1 == ContactTag::PLAYER_BULLET) {
+			_playerBullet_droneShield(contact1, contact2, contactPoint);
+		}
+		else {
+			_playerBullet_droneShield(contact2, contact1, contactPoint);
+		}
 
 	}
 
 	///////////////////////////////////
 	// Player - Drone Scrap
 	///////////////////////////////////
-	if ((category1 == CollisionTag::PLAYER && category2 == CollisionTag::SHIELD_SCRAP) ||
-		(category2 == CollisionTag::PLAYER && category1 == CollisionTag::SHIELD_SCRAP)) {
+	if ((contactTag1 == ContactTag::PLAYER_COLLISION && contactTag2 == ContactTag::SHIELD_SCRAP) ||
+		(contactTag2 == ContactTag::PLAYER_COLLISION && contactTag1 == ContactTag::SHIELD_SCRAP)) {
 
-		_player_shieldScrap(contact1, contact2, contactPoint);
+		if (contactTag1 == ContactTag::PLAYER_COLLISION) {
+			_player_shieldScrap(contact1, contact2, contactPoint);
+		}
+		else {
+			_player_shieldScrap(contact2, contact1, contactPoint);
+		}
 
 	}
 
 	///////////////////////////////////
 	// Enemy Bullet - Player
 	///////////////////////////////////
-	if ((category1 == CollisionTag::PLAYER && category2 == CollisionTag::ENEMY_BULLET) ||
-		(category2 == CollisionTag::PLAYER && category1 == CollisionTag::ENEMY_BULLET)) {
+	if ((contactTag1 == ContactTag::PLAYER_HITBOX && contactTag2 == ContactTag::ENEMY_BULLET) ||
+		(contactTag2 == ContactTag::PLAYER_HITBOX && contactTag1 == ContactTag::ENEMY_BULLET)) {
 
-		_bullet_player(contact1, contact2, contactPoint);
+		if (contactTag1 == ContactTag::ENEMY_BULLET) {
+			_enemyBullet_player(contact1, contact2, contactPoint);
+		}
+		else {
+			_enemyBullet_player(contact2, contact1, contactPoint);
+		}
 
 	}
 

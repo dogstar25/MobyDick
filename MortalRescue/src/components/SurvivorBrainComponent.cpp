@@ -176,30 +176,30 @@ void SurvivorBrainComponent::_doFollow()
 	//
 	//DeBug stuff - draw some helper lines
 	//
-	const auto& gameObjectToFollowPhysicsComponent = m_gameObjectToFollow->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
-	const auto& gameObjectToFollowTransformComponent = m_gameObjectToFollow->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	//const auto& gameObjectToFollowPhysicsComponent = m_gameObjectToFollow->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	//const auto& gameObjectToFollowTransformComponent = m_gameObjectToFollow->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
-	SDL_FPoint destination{};
-	destination.x = m_gameObjectToFollow->getCenterPosition().x + (64 * cos(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(135)));
-	destination.y = m_gameObjectToFollow->getCenterPosition().y + (64 * sin(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(135)));
+	//SDL_FPoint destination{};
+	//destination.x = m_gameObjectToFollow->getCenterPosition().x + (64 * cos(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(135)));
+	//destination.y = m_gameObjectToFollow->getCenterPosition().y + (64 * sin(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(135)));
 
-	SDL_FPoint destination2{};
-	destination2.x = m_gameObjectToFollow->getCenterPosition().x + (64 * cos(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(180)));
-	destination2.y = m_gameObjectToFollow->getCenterPosition().y + (64 * sin(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(180)));
+	//SDL_FPoint destination2{};
+	//destination2.x = m_gameObjectToFollow->getCenterPosition().x + (64 * cos(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(180)));
+	//destination2.y = m_gameObjectToFollow->getCenterPosition().y + (64 * sin(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(180)));
 
-	SDL_FPoint destination3{};
-	destination3.x = m_gameObjectToFollow->getCenterPosition().x + (64 * cos(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(225)));
-	destination3.y = m_gameObjectToFollow->getCenterPosition().y + (64 * sin(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(225)));
+	//SDL_FPoint destination3{};
+	//destination3.x = m_gameObjectToFollow->getCenterPosition().x + (64 * cos(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(225)));
+	//destination3.y = m_gameObjectToFollow->getCenterPosition().y + (64 * sin(gameObjectToFollowPhysicsComponent->angle() + util::degreesToRadians(225)));
 
-	glm::vec2 start{ m_gameObjectToFollow->getCenterPosition().x , m_gameObjectToFollow->getCenterPosition().y };
-	glm::vec2 stop{ destination.x , destination.y };
-	game->renderer()->addLine(start, stop, { 255,255,255,255 });
-	start = { m_gameObjectToFollow->getCenterPosition().x , m_gameObjectToFollow->getCenterPosition().y };
-	stop = { destination2.x , destination2.y };
-	game->renderer()->addLine(start, stop, { 255,255,255,255 });
-	start = { m_gameObjectToFollow->getCenterPosition().x , m_gameObjectToFollow->getCenterPosition().y };
-	stop = { destination3.x , destination3.y };
-	game->renderer()->addLine(start, stop, { 255,255,255,255 });
+	//glm::vec2 start{ m_gameObjectToFollow->getCenterPosition().x , m_gameObjectToFollow->getCenterPosition().y };
+	//glm::vec2 stop{ destination.x , destination.y };
+	//game->renderer()->addLine(start, stop, { 255,255,255,255 });
+	//start = { m_gameObjectToFollow->getCenterPosition().x , m_gameObjectToFollow->getCenterPosition().y };
+	//stop = { destination2.x , destination2.y };
+	//game->renderer()->addLine(start, stop, { 255,255,255,255 });
+	//start = { m_gameObjectToFollow->getCenterPosition().x , m_gameObjectToFollow->getCenterPosition().y };
+	//stop = { destination3.x , destination3.y };
+	//game->renderer()->addLine(start, stop, { 255,255,255,255 });
 
 
 }
