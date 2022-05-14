@@ -6,7 +6,7 @@
 class ButtonInteraction : public Action
 {
 
-	void perform(GameObject*, SDL_Scancode) override;
+	void perform(GameObject* interactingObject, GameObject* interactionObject, SDL_Scancode keyCode) override;
 
 
 };
