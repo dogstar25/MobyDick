@@ -8,7 +8,7 @@ extern std::unique_ptr<Game> game;
 
 void SurvivorInteractionAction::perform(GameObject* interactingObject, GameObject* interactionObject, SDL_Scancode keyScanCode)
 {
-	const auto& brainComponent = interactionObject->getComponent<SurvivorBrainComponent>(ComponentTypes::SURVIVOR_BRAIN_COMPONENT);
+	const auto& brainComponent = interactionObject->getComponent<SurvivorBrainComponent>(ComponentTypes::BRAIN_COMPONENT);
 
 	if (keyScanCode == SDL_SCANCODE_E) {
 		brainComponent->followMe(interactingObject);

@@ -7,6 +7,7 @@ extern std::unique_ptr<Game> game;
 
 TextComponent::TextComponent(std::string gameObjectId, Json::Value componentJSON)
 {
+	m_componentType = ComponentTypes::TEXT_COMPONENT;
 
 	m_isDebugText = false;
 	m_isDynamic = componentJSON["dynamic"].asBool();

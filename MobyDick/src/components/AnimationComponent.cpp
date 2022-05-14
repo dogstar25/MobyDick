@@ -6,6 +6,7 @@
 
 AnimationComponent::AnimationComponent(Json::Value componentJSON)
 {
+	m_componentType = ComponentTypes::ANIMATION_COMPONENT;
 
 	if (componentJSON.isMember("defaultState")) {
 		m_defaultAnimationState = EnumMap::instance().toEnum(componentJSON["defaultState"].asString());

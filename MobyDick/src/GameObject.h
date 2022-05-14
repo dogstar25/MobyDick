@@ -122,10 +122,11 @@ public:
 		return std::static_pointer_cast<componentType>(m_components.at((int)componentTypeIndex));
 	}*/
 
-	inline std::shared_ptr<Component> addComponent(std::shared_ptr<Component> component, const int componentTypeIndex)
+	inline std::shared_ptr<Component> addComponent(std::shared_ptr<Component> component)
 	{
-		m_components[(int)componentTypeIndex] = std::move(component);
-		return m_components.at((int)componentTypeIndex);
+		auto componentType = component->componentType();
+		m_components[(int)componentType] = std::move(component);
+		return m_components.at((int)componentType);
 	}
 
 

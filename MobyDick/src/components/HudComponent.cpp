@@ -7,6 +7,7 @@
 
 HudComponent::HudComponent(Json::Value componentJSON, Scene* parentScene)
 {
+	m_componentType = ComponentTypes::HUD_COMPONENT;
 
 	std::string labelObjectId = componentJSON["labelObjectId"].asString();
 	std::string statusObjectId = componentJSON["statusObjectId"].asString();

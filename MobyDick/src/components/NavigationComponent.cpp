@@ -10,6 +10,7 @@ NavigationComponent::~NavigationComponent()
 
 NavigationComponent::NavigationComponent(Json::Value componentJSON)
 {
+	m_componentType = ComponentTypes::NAVIGATION_COMPONENT;
 
 	m_type = EnumMap::instance().toEnum(componentJSON["type"].asString());
 

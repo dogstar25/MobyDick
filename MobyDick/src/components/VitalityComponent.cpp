@@ -14,6 +14,8 @@ VitalityComponent::VitalityComponent()
 VitalityComponent::VitalityComponent(Json::Value componentJSON)
 {
 
+	m_componentType = ComponentTypes::VITALITY_COMPONENT;
+
 	m_speed = componentJSON["speed"].asFloat();
 	m_rotationSpeed = componentJSON["rotationSpeed"].asFloat();
 	m_lifetime = std::chrono::duration<float>(componentJSON["lifetime"].asFloat());

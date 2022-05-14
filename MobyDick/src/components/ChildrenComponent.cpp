@@ -10,6 +10,8 @@ ChildrenComponent::ChildrenComponent()
 ChildrenComponent::ChildrenComponent(Json::Value componentJSON, Scene* parentScene)
 {
 
+	m_componentType = ComponentTypes::CHILDREN_COMPONENT;
+
 	m_childPadding = componentJSON["childPadding"].asFloat();
 	m_childPositionRelative = componentJSON["childPositionRelative"].asBool();
 	std::optional<int> locationSlot{};
