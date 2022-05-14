@@ -14,6 +14,8 @@ BrainComponent::BrainComponent()
 BrainComponent::BrainComponent(Json::Value componentJSON)
 {
 
+	m_componentType = ComponentTypes::BRAIN_COMPONENT;
+
 	std::stringstream test; 
 	test << componentJSON.toStyledString();
 	std::cout << test.str();

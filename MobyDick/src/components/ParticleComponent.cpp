@@ -8,6 +8,8 @@ extern std::unique_ptr<Game> game;
 
 ParticleComponent::ParticleComponent(Json::Value componentJSON)
 {
+	m_componentType = ComponentTypes::PARTICLE_COMPONENT;
+
 	for (int i = 0; i < 300; i++) {
 
 		m_particles.emplace_back(Particle());

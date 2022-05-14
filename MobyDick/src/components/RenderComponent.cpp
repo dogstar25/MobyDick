@@ -12,6 +12,8 @@ extern std::unique_ptr<Game> game;
 RenderComponent::RenderComponent(Json::Value componentJSON)
 {
 
+	m_componentType = ComponentTypes::RENDER_COMPONENT;
+
 	if (componentJSON.isMember("color"))
 	{
 

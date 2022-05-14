@@ -15,6 +15,7 @@ PlayerControlComponent::PlayerControlComponent()
 
 PlayerControlComponent::PlayerControlComponent(Json::Value componentJSON)
 {
+	m_componentType = ComponentTypes::PLAYER_CONTROL_COMPONENT;
 
 	for (Json::Value itrControls : componentJSON["controls"])
 	{

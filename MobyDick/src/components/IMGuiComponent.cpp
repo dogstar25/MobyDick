@@ -13,6 +13,8 @@ extern std::unique_ptr<Game> game;
 
 IMGuiComponent::IMGuiComponent(Json::Value componentJSON, std::string gameObjectId)
 {
+	m_componentType = ComponentTypes::IMGUI_COMPONENT;
+
 	auto imguiType = componentJSON["imguiType"].asString();
 
 	ImVec4 color = { 1.0, 1.0, 1.0, 1.0 };

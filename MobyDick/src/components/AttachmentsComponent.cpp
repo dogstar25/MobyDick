@@ -9,6 +9,8 @@
 AttachmentsComponent::AttachmentsComponent(Json::Value componentJSON, Scene* parentScene)
 {
 
+	m_componentType = ComponentTypes::ATTACHMENTS_COMPONENT;
+
 	for (Json::Value itrItem : componentJSON["attachments"])
 	{
 		std::string gameObjectId = itrItem["gameObjectId"].asString();

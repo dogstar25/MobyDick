@@ -56,7 +56,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 		component = game->componentFactory()->create(definitionJSON, m_name, gameObjectId, parentScene, xMapPos, yMapPos, angleAdjust, componentType);
 		component->setParent(this);
-		addComponent(component, componentType);
+		addComponent(component);
 
 	}
 
@@ -396,18 +396,18 @@ bool GameObject::isPointingAt(SDL_FPoint gameObjectPosition)
 }
 
 
-//void GameObject::dispatch(SDL_FPoint destination)
-//{
-//	const auto& brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
-//	brainComponent->dispatch(destination);
-//}
-//
-//int GameObject::brainState()
-//{
-//	const auto& brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
-//
-//	return brainComponent->state();
-//}
+void GameObject::dispatch(SDL_FPoint destination)
+{
+	const auto& brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+	brainComponent->dispatch(destination);
+}
+
+int GameObject::brainState()
+{
+	const auto& brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+
+	return brainComponent->state();
+}
 
 void GameObject::disable(bool disablePhysicsBody)
 {

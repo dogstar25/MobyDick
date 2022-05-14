@@ -39,10 +39,7 @@ void CutSceneExample::start()
 
 		//Get Frank, give Frank a brain, and dispatch Frank to a destination
 		_frank = _startFrank();
-
-		const auto& brainComponent = _frank->getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
-		brainComponent->dispatch({ 5400,900 });
-
+		_frank->dispatch({ 5400,900 });
 
 		Camera::instance().setFollowMe(_frank);
 
@@ -60,9 +57,7 @@ void CutSceneExample::start()
 void CutSceneExample::update()
 {
 
-	const auto& brainComponent = _frank->getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
-	auto franksBrainState = brainComponent->state();
-
+	auto franksBrainState = _frank->brainState();
 
 	if (m_currentAct == 1) {
 		if (franksBrainState == BrainState::IDLE &&
@@ -134,7 +129,7 @@ GameObject* CutSceneExample::_startFrank()
 			game->componentFactory()->create(componentsDefinition, "Frank", "BOWMAN", currentScene, 0, 0, 0, ComponentTypes::BRAIN_COMPONENT)
 			);
 	brainComponent->setParent(frank);
-	frank->addComponent(brainComponent, ComponentTypes::BRAIN_COMPONENT);
+	frank->addComponent(brainComponent);
 
 	return frank;
 

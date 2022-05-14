@@ -9,6 +9,8 @@ InventoryComponent::InventoryComponent()
 InventoryComponent::InventoryComponent(Json::Value componentJSON, Scene* parentScene)
 {
 
+	m_componentType = ComponentTypes::INVENTORY_COMPONENT;
+
 	m_activeItem = 0;
 
 	//for (Json::Value itrItem : definitionComponentJSON["items"])

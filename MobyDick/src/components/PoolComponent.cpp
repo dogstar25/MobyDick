@@ -3,6 +3,8 @@
 
 PoolComponent::PoolComponent(Json::Value componentJSON)
 {
+	m_componentType = ComponentTypes::POOL_COMPONENT;
+
 	m_isAvailable = true;
 	m_isActive = false;
 }

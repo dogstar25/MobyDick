@@ -8,6 +8,7 @@ extern std::unique_ptr<Game> game;
 
 ParticleXComponent::ParticleXComponent(Json::Value componentJSON)
 {
+	m_componentType = ComponentTypes::PARTICLE_X_COMPONENT;
 
 	if (componentJSON.isMember("type")) {
 		m_type = EnumMap::instance().toEnum(componentJSON["type"].asString());

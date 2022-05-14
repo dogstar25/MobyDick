@@ -11,6 +11,8 @@ WeaponComponent::WeaponComponent()
 WeaponComponent::WeaponComponent(Json::Value componentJSON)
 {
 	
+	m_componentType = ComponentTypes::WEAPON_COMPONENT;
+
 	m_currentLevel = 1;
 
 	m_fireOffset = componentJSON["fireOffset"].asFloat();

@@ -17,6 +17,8 @@ UIControlComponent::~UIControlComponent()
 UIControlComponent::UIControlComponent(Json::Value componentJSON)
 {
 
+	m_componentType = ComponentTypes::UICONTROL_COMPONENT;
+
 	for (Json::Value itrControls : componentJSON["controls"])
 	{
 		/*int controlFlag = EnumMap::instance().toEnum(itrControls.asString());

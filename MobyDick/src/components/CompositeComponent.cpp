@@ -7,6 +7,9 @@
 
 CompositeComponent::CompositeComponent(Json::Value componentJSON, Scene* parentScene)
 {
+
+	m_componentType = ComponentTypes::COMPOSITE_COMPONENT;
+
 	Json::Value bluePrintJSON = componentJSON["blueprint"];
 
 	m_physicsWeldPiecesOn = componentJSON["physicsWeldPiecesOn"].asBool();
