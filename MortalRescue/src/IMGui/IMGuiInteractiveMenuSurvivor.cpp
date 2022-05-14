@@ -25,7 +25,6 @@ glm::vec2 IMGuiInteractiveMenuSurvivor::render()
 	const auto& baseGameObject = parent()->parent().value();
 	const auto& baseObjectActionComponent = baseGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 	const auto& interactAction = baseObjectActionComponent->getAction(ACTION_INTERACTION);
-	const auto& interactingObject = baseObjectActionComponent->getInteractingObject();
 
 	const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -66,12 +65,12 @@ glm::vec2 IMGuiInteractiveMenuSurvivor::render()
 	ImGui::PopStyleColor();
 	ImGui::PopStyleVar();
 
-	if (ImGui::IsKeyPressed(ImGuiKey_E)) {
-		interactAction->perform(interactingObject, parent()->parent().value(), SDL_SCANCODE_E);
-	}
-	if (ImGui::IsKeyPressed(ImGuiKey_R)) {
-		interactAction->perform(interactingObject, parent()->parent().value(), SDL_SCANCODE_R);
-	}
+	//if (ImGui::IsKeyPressed(ImGuiKey_E)) {
+	//	interactAction->perform(interactingObject, parent()->parent().value(), SDL_SCANCODE_E);
+	//}
+	//if (ImGui::IsKeyPressed(ImGuiKey_R)) {
+	//	interactAction->perform(interactingObject, parent()->parent().value(), SDL_SCANCODE_R);
+	//}
 
 	return windowSize;
 }

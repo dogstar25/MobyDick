@@ -4,11 +4,11 @@
 
 extern std::unique_ptr<Game> game;
 
-void ButtonInteraction::perform(GameObject* gameObject, SDL_Scancode keyScanCode)
+void ButtonInteraction::perform(GameObject* interactingObject, GameObject* interactionObject, SDL_Scancode keyCode)
 {
-	std::string buttonTargetObjectName = gameObject->name() + "_TARGET";
+	std::string buttonTargetObjectName = interactionObject->name() + "_TARGET";
 	GameObject* bottonTargetObject = game->getGameObject(buttonTargetObjectName);
-	const auto& animationComponent = gameObject->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
+	const auto& animationComponent = interactionObject->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 
 	if (bottonTargetObject->disabled() == true) {
 		bottonTargetObject->enable();

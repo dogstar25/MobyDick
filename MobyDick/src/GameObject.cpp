@@ -380,23 +380,12 @@ bool GameObject::isPointingAt(SDL_FPoint gameObjectPosition)
 	const std::shared_ptr<PhysicsComponent> physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 	//const std::shared_ptr<PhysicsComponent> referenceObjectPhysicsComponent = gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 
-	ImGui::Begin("debug");
-
 	float hostAngleDegrees = util::radiansToDegrees(physicsComponent->angle());
-	ImGui::Value("PlayerAngle", hostAngleDegrees);
-	
 	float orientationAngle = atan2(getCenterPosition().y - gameObjectPosition.y, getCenterPosition().x - gameObjectPosition.x);
 	float orientationAngleDegrees = util::radiansToDegrees(orientationAngle);
 
-	ImGui::Value("Orientation Angle", orientationAngleDegrees);
-	ImGui::Value("Is Pointing calc", hostAngleDegrees - orientationAngleDegrees);
-
-	ImGui::End();
-
-
 	if ((hostAngleDegrees - orientationAngleDegrees) >= 140 &&
 		(hostAngleDegrees - orientationAngleDegrees) <= 220) {
-
 		return true;
 	}
 	else {

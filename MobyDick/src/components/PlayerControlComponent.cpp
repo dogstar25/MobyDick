@@ -47,7 +47,7 @@ void PlayerControlComponent::update()
 	}
 
 
-}
+	}
 
 void PlayerControlComponent::handleActions()
 {
@@ -60,8 +60,9 @@ void PlayerControlComponent::handleActions()
 
 		for (auto& inputEvent : SceneManager::instance().playerInputEvents())
 		{
-			std::optional<Action> playerAction{};
+			//std::optional<Action> playerAction{};
 			keyStates = inputEvent.keyStates;
+			SDL_Scancode keyScanCode = SDL_GetScancodeFromKey(inputEvent.event.key.keysym.sym);
 
 			switch (inputEvent.event.type)
 			{
@@ -71,16 +72,18 @@ void PlayerControlComponent::handleActions()
 					//playerAction = getKeyAction(keyCode);
 					//playerAction.value()->perform();
 
+					//Special action
 					if (keyStates[SDL_SCANCODE_G])
 					{
 						std::cout << "Dropped Weapon" << "\n";
 					}
-					//if (keyStates[SDL_SCANCODE_E])
-					//{
-					//	const auto& action = actionComponent->getAction(ACTION_INTERACT);
-					//	action->perform(parent());
 
-					//}
+					//Interaction Keys
+					if (keyScanCode == SDL_SCANCODE_E || keyScanCode == SDL_SCANCODE_R)
+					{
+						const auto& action = actionComponent->getAction(ACTION_INTERACT);
+						action->perform(parent(), keyScanCode);
+					}
 
 					break;
 				case SDL_MOUSEBUTTONDOWN:

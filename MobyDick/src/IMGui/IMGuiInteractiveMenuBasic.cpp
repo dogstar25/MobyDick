@@ -61,9 +61,5 @@ glm::vec2 IMGuiInteractiveMenuBasic::render()
 	ImGui::PopStyleColor();
 	ImGui::PopStyleVar();
 
-	if (ImGui::IsKeyPressed(ImGuiKey_E)) {
-		interactAction->perform(parent()->parent().value(), SDL_SCANCODE_E);
-	}
-
 	return windowSize;
 }

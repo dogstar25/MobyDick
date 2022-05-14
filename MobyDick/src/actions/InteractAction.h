@@ -9,7 +9,7 @@ public:
 
     InteractAction() = default;
 
-    void perform(GameObject* gameObject);
+    void perform(GameObject* gameObject, SDL_Scancode keyScanCode) override;
 
 
 };

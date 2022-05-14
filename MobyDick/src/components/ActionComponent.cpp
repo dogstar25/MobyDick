@@ -67,9 +67,6 @@ void ActionComponent::render()
 					if (m_interactiveMenuObject) {
 						SDL_FPoint position = determineInteractionMenuLocation(interactingObject, parent(), m_interactiveMenuObject.get());
 						m_interactiveMenuObject->setPosition(position);
-
-
-						setInteractingObject(interactingObject);
 						m_interactiveMenuObject->render();
 					}
 
@@ -78,8 +75,6 @@ void ActionComponent::render()
 		}
 
 	}
-
-
 
 }
 
