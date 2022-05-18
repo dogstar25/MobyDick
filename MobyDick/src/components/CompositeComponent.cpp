@@ -38,7 +38,7 @@ CompositeComponent::~CompositeComponent()
 
 void CompositeComponent::update()
 {
-
+	_removeFromWorldPass();
 	_updatePieces();
 
 }
@@ -223,5 +223,25 @@ void CompositeComponent::_updatePiecePosition(GameObjectPiece& piece)
 	piecePhysicsComponent->setTransform(piecePosition, parentRadianAngle);
 
 	//piece.pieceObject->setPosition(piecePosition, parentTransformComponent->angle());
+
+}
+
+void CompositeComponent::_removeFromWorldPass()
+{
+	//First remove any pieces that were mared to be removed
+	auto it = m_pieces.begin();
+	while (it != m_pieces.end()) {
+
+		if (it->pieceObject->removeFromWorld() == true) {
+
+			//it->pieceObject->reset();
+			it = m_pieces.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
+
+	m_pieces.shrink_to_fit();
 
 }

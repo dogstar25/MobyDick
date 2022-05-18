@@ -31,6 +31,9 @@ private:
 	void _playerBullet_droneShield(GameObject* playerBullet, GameObject* droneShield, b2Vec2 contactPoint);
 	void _player_shieldScrap(GameObject* player, GameObject* shieldScrap, b2Vec2 contactPoint);
 	void _enemyBullet_player(GameObject* bullet, GameObject* player, b2Vec2 contactPoint);
+	void _survivor_escape(GameObject* bullet, GameObject* player, b2Vec2 contactPoint);
+	void _playerBullet_wallPiece(GameObject* playerBullet, GameObject* wallPiece, b2Vec2 contactPoint);
+	
 };
 
 #endif

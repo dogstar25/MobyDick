@@ -52,6 +52,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 	_addGameCollisionTags();
 	_addGameComponentTypes();
 	_addGameColors();
+	_addGameTraits();
 
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
@@ -150,6 +151,10 @@ void MRGame::_addGameCollisionTags()
 	EnumMap::instance().addEnumItem("ContactTag::MEDKIT", ContactTag::MEDKIT);
 	EnumMap::instance().addEnumItem("ContactTag::WALL", ContactTag::WALL);
 	EnumMap::instance().addEnumItem("ContactTag::WEAPON_PICKUP", ContactTag::WEAPON_PICKUP);
+	EnumMap::instance().addEnumItem("ContactTag::ESCAPE_STAIRS", ContactTag::ESCAPE_STAIRS);
+	EnumMap::instance().addEnumItem("ContactTag::WALL_PIECE", ContactTag::WALL_PIECE);
+
+
 
 }
 
@@ -159,6 +164,12 @@ void MRGame::_addGameComponentTypes()
 	EnumMap::instance().addEnumItem("WEAPON_PISTOL_COMPONENT", ComponentTypes::WEAPON_PISTOL_COMPONENT);
 	EnumMap::instance().addEnumItem("TURRET_BRAIN_COMPONENT", ComponentTypes::TURRET_BRAIN_COMPONENT);
 	EnumMap::instance().addEnumItem("SURVIVOR_BRAIN_COMPONENT", ComponentTypes::SURVIVOR_BRAIN_COMPONENT);
+}
+
+void MRGame::_addGameTraits()
+{
+	EnumMap::instance().addEnumItem("escape", TraitTag::escape);
+
 }
 
 void MRGame::_addGameColors()

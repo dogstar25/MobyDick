@@ -34,6 +34,11 @@
             "id": "TX_DRONE1_TEST",
             "description": "Drone 1 Test Blueprint",
             "filename": "assets/blueprints/drone1_test.png"
+        },
+        {
+            "id": "TX_BREAKABLE_WALL_BLUEPRINT",
+            "description": "Breakable Wall Blueprint",
+            "filename": "assets/blueprints/breakable_wall_blueprint.png"
         }
 
     ],
@@ -52,6 +57,28 @@
         {
             "id": "TX_WHITE_QUAD",
             "description": "White Quad",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 70,
+                "y": 92,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_CLEAR_QUAD",
+            "description": "Clear Quad",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 268,
+                "y": 56,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_STAIRS",
+            "description": "Stairs",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 37,

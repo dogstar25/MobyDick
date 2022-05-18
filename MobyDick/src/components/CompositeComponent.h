@@ -44,6 +44,7 @@ public:
 	void weldOnPieces();
 	void postInit();
 	bool physicsWeldPiecesOn() { return m_physicsWeldPiecesOn; }
+	
 
 private:
 	bool m_physicsWeldPiecesOn;
@@ -55,6 +56,8 @@ private:
 	void _buildComposite(Scene* parentScene);
 	void _updatePieceState(GameObjectPiece& piece);
 	void _updatePiecePosition(GameObjectPiece& piece);
+	void _removeFromWorldPass();
+	
 
 	std::vector<GameObjectPiece>m_pieces;
 

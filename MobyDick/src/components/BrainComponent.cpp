@@ -171,15 +171,10 @@ void BrainComponent::_updateSensorInput()
 
 		m_detectedObjects.push_back(detectedObject);
 
-		if (detectedObject.gameObject->hasTrait(TraitTag::player) ||
-			detectedObject.gameObject->hasTrait(TraitTag::navigation) ||
-			detectedObject.gameObject->hasTrait(TraitTag::navigation)) {
+		if (_hasLineOfSight(detectedObject) == true) {
 
-			if (_hasLineOfSight(detectedObject) == true) {
+			m_seenObjects.push_back(detectedObject);
 
-				m_seenObjects.push_back(detectedObject);
-
-			}
 		}
 	}
 

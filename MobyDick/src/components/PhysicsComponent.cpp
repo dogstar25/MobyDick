@@ -49,6 +49,8 @@ PhysicsComponent::~PhysicsComponent()
 
 	//}
 
+	parent()->parentScene()->physicsWorld()->DestroyBody(m_physicsBody);
+
 }
 
 void PhysicsComponent::postInit()
