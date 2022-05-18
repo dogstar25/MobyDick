@@ -51,6 +51,8 @@ namespace ContactTag {
 	inline constexpr int MEDKIT = 20;
 	inline constexpr int WEAPON_PICKUP = 21;
 	inline constexpr int BUTTON = 22;
+	inline constexpr int ESCAPE_STAIRS = 23;
+	inline constexpr int WALL_PIECE = 24;
 
 }
 
@@ -71,5 +73,11 @@ namespace BrainState {
 
 	inline constexpr auto FOLLOW = 20;
 	inline constexpr auto LOST = 21;
+	inline constexpr auto ESCAPE = 22;
 
+}
+
+namespace TraitTag {
+
+	inline constexpr int escape = 20;
 }

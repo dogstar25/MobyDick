@@ -115,6 +115,7 @@ private:
 	void _processGameObjectInterdependecies();
 	void _buildPhysicsWorld(Json::Value physicsJSON);
 	void _buildSceneGameObjects(Json::Value sceneJSON);
+	void _removeFromWorldPass();
 	
 
 };

@@ -165,24 +165,11 @@ void Scene::update() {
 	SoundManager::instance().update();
 
 	// Remove all objects that should be removed in first pass
-	for (auto& gameObjects : m_gameObjects)	{
-		
-		auto it = gameObjects.begin();
-		while(it != gameObjects.end()){
 
-			if (it->get()->removeFromWorld() == true) {
+	//rome all from here - 
 
-				it->get()->reset();
-				it = gameObjects.erase(it);
-			}
-			else {
-				++it;
-			}
-		}
 
-		gameObjects.shrink_to_fit();
-
-	}
+	_removeFromWorldPass();
 
 	if (hasPhysics()) {
 		stepB2PhysicsWorld();
@@ -474,4 +461,47 @@ GameObject* Scene::getGameObject(std::string name)
 
 	return foundGameObject.value();
 }
+
+
+void Scene::_removeFromWorldPass()
+{
+	//Loop through all layers and remove any gameObject that has been marked to remove
+	for (auto& gameObjects : m_gameObjects) {
+
+		auto it = gameObjects.begin();
+		while (it != gameObjects.end()) {
+
+			auto test = it->get();
+			//If this has a composite component then remove marked composite pieces
+			//if (it->get()->hasComponent(ComponentTypes::COMPOSITE_COMPONENT)) {
+			//	const auto& compositeComponent = it->get()->getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
+			//	compositeComponent->removeFromWorldPass();
+			//}
+
+			//Remove gameObject iteself it flagged
+			if (it->get()->removeFromWorld() == true) {
+
+				if (it->get()->hasTrait(TraitTag::pooled)) {
+					it->get()->reset();
+				}
+				it = gameObjects.erase(it);
+			}
+			else {
+				++it;
+			}
+		}
+
+		gameObjects.shrink_to_fit();
+
+	}
+
+
+
+
+
+
+}
+
+
+
 

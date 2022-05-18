@@ -64,12 +64,12 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_COLLISION].set(SURVIVOR);
 	m_contactMasks[PLAYER_COLLISION].set(DRONE_FRAME);
 	m_contactMasks[PLAYER_COLLISION].set(WALL);
+	m_contactMasks[PLAYER_COLLISION].set(WALL_PIECE);
 
 	//PLAYER_TOUCH
 	m_contactMasks[PLAYER_TOUCH].reset();
 	m_contactMasks[PLAYER_TOUCH].flip();
 	m_contactMasks[PLAYER_TOUCH].set(SURVIVOR);
-	
 
 	//PLAYER_HITBOX
 	m_contactMasks[PLAYER_HITBOX].reset();
@@ -79,6 +79,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_BULLET].reset();
 	m_contactMasks[PLAYER_BULLET].set(DRONE_SHIELD);
 	m_contactMasks[PLAYER_BULLET].set(WALL);
+	m_contactMasks[PLAYER_BULLET].set(WALL_PIECE);
 
 	//SHIELD_SCRAP
 	m_contactMasks[SHIELD_SCRAP].reset();
@@ -92,6 +93,8 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[SURVIVOR].set(PLAYER_TOUCH);
 	m_contactMasks[SURVIVOR].set(SURVIVOR);
 	m_contactMasks[SURVIVOR].set(WALL);
+	m_contactMasks[SURVIVOR].set(ESCAPE_STAIRS);
+	m_contactMasks[SURVIVOR].set(WALL_PIECE);
 
 	//WALL
 	m_contactMasks[WALL].reset();
@@ -109,6 +112,18 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[BUTTON].reset();
 	m_contactMasks[BUTTON].set(GENERAL_SOLID);
 	m_contactMasks[BUTTON].set(PLAYER_TOUCH);
+
+	//ESCAPE STAIRS
+	m_contactMasks[ESCAPE_STAIRS].reset();
+	m_contactMasks[ESCAPE_STAIRS].set(GENERAL_SOLID);
+	m_contactMasks[ESCAPE_STAIRS].set(SURVIVOR);
+
+	//Wall Piece
+	m_contactMasks[WALL_PIECE].reset();
+	m_contactMasks[WALL_PIECE].set(GENERAL_SOLID);
+	m_contactMasks[WALL_PIECE].set(SURVIVOR);
+	m_contactMasks[WALL_PIECE].set(PLAYER_COLLISION);
+	m_contactMasks[WALL_PIECE].set(PLAYER_BULLET);
 
 }
 

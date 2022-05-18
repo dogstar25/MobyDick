@@ -72,6 +72,7 @@ namespace TraitTag {
 	inline constexpr int abstract = 7;
 	inline constexpr int interactive = 8;
 	inline constexpr int debug = 9;
+	inline constexpr int pooled = 10;
 
 }
 

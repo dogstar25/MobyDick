@@ -529,6 +529,93 @@
                     }
                 }
             ]
+        },
+        {
+            "id": "BREAKABLE_WALL",
+            "traitTags": [ ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_CLEAR_QUAD"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_BOX",
+                            "density": 1.5
+                        }
+                    ]
+                },
+                {
+                    "id": "COMPOSITE_COMPONENT",
+                    "physicsWeldPiecesOn": false,
+                    "blueprint": {
+                        "texture": "TX_BREAKABLE_WALL_BLUEPRINT",
+                        "legend": [
+                            {
+                                "gameObjectId": "WALL_PIECE",
+                                "color": "Colors::BLUE"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "id": "WALL_PIECE",
+            "traitTags": ["barrier"],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_PIECE_FULL_8",
+                    "color": {
+                        "tint": "Colors::CYAN",
+                        "alpha": 255
+                    },
+                    "xRenderAdjustment": 0,
+                    "yRenderAdjustment": 0
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 8,
+                        "height": 8
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_KINEMATIC",
+                    "anchorPoint": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::WALL_PIECE",
+                            "collisionShape": "B2_BOX",
+                            "friction": 1.0,
+                            "density": 100.1,
+                            "restitution": 0.1
+                        }
+                    ]
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "resistance": 0
+                }
+            ]
         }
     ]
 }

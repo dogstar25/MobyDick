@@ -34,6 +34,9 @@ void SurvivorBrainComponent::update()
 	case BrainState::LOST:
 		_doLost();
 		break;
+	case BrainState::ESCAPE:
+		_doEscape();
+		break;
 	default:
 		_doIdle();
 		break;
@@ -55,11 +58,15 @@ void SurvivorBrainComponent::stay() {
 
 }
 
-
 int SurvivorBrainComponent::_determineState()
 {
 
 	int state{ m_currentState };
+
+	//regarless of current state, If we can see an escape location then set that as the destination and go
+	if (_detectEscapeLocation()) {
+		state = BrainState::ESCAPE;
+	}
 
 	if (m_currentState == BrainState::FOLLOW) {
 		//If we have lost site of the object we're following then change to lost state
@@ -73,6 +80,7 @@ int SurvivorBrainComponent::_determineState()
 			}
 		}
 	}
+
 	if (m_currentState == BrainState::LOST) {
 
 		if (_detectFollowedObject() == true) {
@@ -84,6 +92,28 @@ int SurvivorBrainComponent::_determineState()
 	}
 
 	return state;
+
+}
+
+void SurvivorBrainComponent::_doEscape()
+{
+
+	b2Vec2 trajectory{};
+
+	//If we are not closeenough to the object we're following then move to within tolerance
+	if (util::calculateDistance(parent()->getCenterPosition(), m_escapeLocation.value())
+		> DESTINATION_DISTANCE_TOLERANCE) {
+
+		trajectory.x = m_escapeLocation.value().x - parent()->getCenterPosition().x;
+		trajectory.y = m_escapeLocation.value().y - parent()->getCenterPosition().y;
+
+		trajectory.Normalize();
+
+		const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+		const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
+		moveAction->perform(parent(), trajectory);
+
+	}
 
 }
 
@@ -221,6 +251,23 @@ bool SurvivorBrainComponent::_detectFollowedObject()
 
 }
 
+bool SurvivorBrainComponent::_detectEscapeLocation()
+{
+
+	m_escapeLocation.reset();
+
+	for (auto& seenObject : m_seenObjects) {
+
+		if (seenObject.gameObject->id() == "ESCAPE_STAIRS") {
+
+			m_escapeLocation = seenObject.gameObject->getCenterPosition();
+			return true;
+		}
+	}
+
+	return false;
+
+}
 bool SurvivorBrainComponent::_isTouchingBarrier()
 {
 

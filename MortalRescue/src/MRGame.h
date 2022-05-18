@@ -44,6 +44,7 @@ private:
 	void _addGameCollisionTags() override;
 	void _addGameComponentTypes() override;
 	void _addGameColors() override;
+	void _addGameTraits() override;
 };
 
 

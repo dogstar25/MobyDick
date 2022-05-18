@@ -61,13 +61,13 @@
                     "animations": [
                         {
                             "state": "ANIMATION_IDLE",
-                            "textureId": "TX_GINA_64_REDUX2_IDLE",
+                            "textureId": "TX_GINA_64_REDUX_IDLE",
                             "speed": 0.1,
                             "frames": 1
                         },
                         {
                             "state": "ANIMATION_RUN",
-                            "textureId": "TX_GINA_64_REDUX2_RUN",
+                            "textureId": "TX_GINA_64_REDUX_RUN",
                             "speed": 0.06,
                             "frames": 4
                         }
@@ -298,6 +298,41 @@
             ]
         },
         {
+            "id": "ESCAPE_STAIRS",
+            "traitTags": ["escape"],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_STAIRS",
+                    "color": "Colors::PARAKEET"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::ESCAPE_STAIRS",
+                            "collisionShape": "B2_BOX",
+                            "size": {
+                                "width": 16,
+                                "height": 16
+                            }
+
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "id": "STUBB",
             "traitTags": [],
             "components": [
@@ -399,7 +434,7 @@
         },
         {
             "id": "BULLET1",
-            "traitTags": [],
+            "traitTags": ["pooled"],
             "description": "Bullet 1",
             "components": [
                 {
@@ -438,7 +473,7 @@
         },
         {
             "id": "BULLET2",
-            "traitTags": [ "debug" ],
+            "traitTags": [ "pooled" ],
             "description": "Bullet 2",
             "components": [
                 {
@@ -625,7 +660,7 @@
         },
         {
             "id": "SURVIVOR",
-            "traitTags": ["interactive"],
+            "traitTags": [ "interactive" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -684,7 +719,7 @@
         },
         {
             "id": "TURRET",
-            "traitTags": ["barrier"],
+            "traitTags": [ "barrier" ],
             "description": "Turret",
             "components": [
                 {

@@ -180,6 +180,7 @@ EnumMap::EnumMap()
 	m_enumMap["abstract"] = TraitTag::abstract;
 	m_enumMap["interactive"] = TraitTag::interactive;
 	m_enumMap["debug"] = TraitTag::debug;
+	m_enumMap["pooled"] = TraitTag::pooled;
 
 	//Hud Item Types
 	m_enumMap["HudItemTypes::STATUS_SINGLE"] = (int)HudItemTypes::STATUS_SINGLE;

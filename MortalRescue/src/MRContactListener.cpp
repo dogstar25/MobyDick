@@ -70,6 +70,42 @@ void MRContactListener::_playerBullet_droneShield(GameObject* playerBullet, Game
 
 }
 
+void MRContactListener::_playerBullet_wallPiece(GameObject* playerBullet, GameObject* wallPiece, b2Vec2 contactPoint)
+{
+
+	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
+	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+	//auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
+	//auto particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
+
+	particleComponent->setType(ParticleEmitterType::ONETIME);
+	//particleComponent->setType(ParticleEmitterType::CONTINUOUS);
+
+	//Convert from box2d to gameWorld coordinates
+	contactPoint.x *= GameConfig::instance().scaleFactor();
+	contactPoint.y *= GameConfig::instance().scaleFactor();
+	particleEmitterObject->setPosition(contactPoint.x, contactPoint.y);
+
+	//Set flag for removal for the Bullet
+	playerBullet->setRemoveFromWorld(true);
+
+	//Test if the bullet is strong enought to destroy the shield piece
+	auto bulletVitality = playerBullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	auto wallVitality = wallPiece->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	auto shieldHolds = wallVitality->testResistance(bulletVitality->attackPower());
+	if (shieldHolds == false) {
+
+		particleComponent->addParticleEffect(ParticleEffects::impactSmoke);
+		SoundManager::instance().playSound("SFX_IMPACT_1");
+
+	}
+	else {
+
+		particleComponent->addParticleEffect(ParticleEffects::deflect);
+		SoundManager::instance().playSound("SFX_IMPACT_3");
+	}
+
+}
 void MRContactListener::_player_shieldScrap(GameObject* player, GameObject* shieldScrap, b2Vec2 contactPoint)
 {
 
@@ -105,6 +141,20 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 	SoundManager::instance().playSound("SFX_PICKUP_2");
 
 }
+
+
+void MRContactListener::_survivor_escape(GameObject* survivor, GameObject* escape, b2Vec2 contactPoint)
+{
+
+
+	//flag the scrap item to be removed from the game and play a sound effect
+	survivor->setRemoveFromWorld(true);
+	SoundManager::instance().playSound("SFX_PICKUP_2");
+
+}
+
+
+
 void MRContactListener::BeginContact(b2Contact* contact) {
 
 	b2WorldManifold worldManifold;
@@ -139,6 +189,34 @@ void MRContactListener::handleContact(b2Contact* contact, b2Vec2 contactPoint)
 	//Get each fixtures' contactTag
 	int contactTag1 = static_cast<int>(fixture1->GetUserData().pointer);
 	int contactTag2 = static_cast<int>(fixture2->GetUserData().pointer);
+
+	////////////////////////////////////
+	// Survivor -  Escape Stairs
+	//////////////////////////////////
+	if ((contactTag1 == ContactTag::SURVIVOR && contactTag2 == ContactTag::ESCAPE_STAIRS) ||
+		(contactTag2 == ContactTag::SURVIVOR && contactTag1 == ContactTag::ESCAPE_STAIRS)) {
+
+		if (contactTag1 == ContactTag::SURVIVOR) {
+			_survivor_escape(contact1, contact2, contactPoint);
+		}
+		else {
+			_survivor_escape(contact2, contact1, contactPoint);
+		}
+	}
+
+	////////////////////////////////////
+	// Player Bullet -  WALL PIECE
+	//////////////////////////////////
+	if ((contactTag1 == ContactTag::PLAYER_BULLET && contactTag2 == ContactTag::WALL_PIECE) ||
+		(contactTag2 == ContactTag::PLAYER_BULLET && contactTag1 == ContactTag::WALL_PIECE)) {
+
+		if (contactTag1 == ContactTag::PLAYER_BULLET) {
+			_playerBullet_wallPiece(contact1, contact2, contactPoint);
+		}
+		else {
+			_playerBullet_wallPiece(contact2, contact1, contactPoint);
+		}
+	}
 
 	////////////////////////////////////
 	// Player Bullet -  Wall Contact

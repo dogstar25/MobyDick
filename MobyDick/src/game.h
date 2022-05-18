@@ -119,9 +119,10 @@ protected:
 	int m_WorldTileWidth{};
 	int m_WorldTileHeight{};
 
-	virtual void _addGameCollisionTags() {};
-	virtual void _addGameComponentTypes() {};
-	virtual void _addGameColors() {};
+	virtual void _addGameCollisionTags() = 0;
+	virtual void _addGameComponentTypes() = 0;
+	virtual void _addGameColors() = 0;
+	virtual void _addGameTraits() = 0;
 
 	
 	
