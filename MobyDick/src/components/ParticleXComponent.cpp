@@ -93,18 +93,22 @@ void ParticleXComponent::update()
 					//Calculate the emit angle/direction that the particle will travel in
 					//If this is a onetime emission, make each particles angle symetric with the whole
 					//otherwise, make each one random, but still within the angle range
-					float particleAngle = 0;
+					//float emitterAngle = util::radiansToDegrees(parent()->getAngle());
+					float emitterAngle = util::radiansToDegrees(parent()->getAngle());
+					float particleAngle{};
+
+
 					if (m_type == ParticleEmitterType::ONETIME) 
 					{
 						auto angleRange = effect.angleMax - effect.angleMin;
-						particleAngle = ((float)i / (float)particleCount) * angleRange;
+						particleAngle = emitterAngle + ((float)i / (float)particleCount) * angleRange;
 					}
 					else 
 					{
-						particleAngle = util::generateRandomNumber(effect.angleMin, effect.angleMax);
+						particleAngle = emitterAngle + util::generateRandomNumber(effect.angleMin, effect.angleMax);
 					}
 
-					particleAngle += effect.angleMin;
+					//particleAngle += effect.angleMin;
 					particleAngle = util::degreesToRadians(particleAngle);
 
 					//Calculate velocity vector

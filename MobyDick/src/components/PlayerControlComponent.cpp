@@ -48,8 +48,76 @@ void PlayerControlComponent::update()
 	}
 
 
+}
+
+void PlayerControlComponent::handleMovement()
+{
+	int mouseX = 0, mouseY = 0;
+	int direction = 0, strafe = 0;
+
+	//convenience reference to outside component(s)
+	const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+
+	//Handle Keyboard related movement
+	const uint8_t* currentKeyStates = SDL_GetKeyboardState(NULL);
+
+
+	//Are we boosting and boost timer is complete stop boosting
+	if (m_currentState == PlayerState::boosting && m_boostTimer.hasMetTargetDuration()) {
+
+		m_currentState = PlayerState::general;
+		_jetPackSwitch(false);
 	}
 
+
+	//Boost
+	if (currentKeyStates[SDL_SCANCODE_LSHIFT])
+	{
+		//If we're already boosting leave boot timer alone
+		if (m_currentState != PlayerState::boosting) {
+			_jetPackSwitch(true);
+			m_boostTimer = { 1.5 };
+		}
+
+		const auto& action = actionComponent->getAction(ACTION_SPRINT);
+		action->perform(parent());
+
+		m_currentState = PlayerState::boosting;
+
+	}
+
+
+	if (currentKeyStates[SDL_SCANCODE_W])
+	{
+		direction = -1;
+	}
+	if (currentKeyStates[SDL_SCANCODE_S])
+	{
+		direction = 1;
+	}
+	if (currentKeyStates[SDL_SCANCODE_A])
+	{
+		strafe = -1;
+	}
+	if (currentKeyStates[SDL_SCANCODE_D])
+	{
+		strafe = 1;
+	}
+
+	//Dont execute move stuff if we are in boosting state
+	if (m_currentState != PlayerState::boosting) {
+		const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
+		moveAction->perform(parent(), direction, strafe);
+	}
+
+	//Handle Mouse related movement
+	const uint32_t currentMouseStates = SDL_GetRelativeMouseState(&mouseX, &mouseY);
+	float angularVelocity = mouseX * game->contextMananger()->getMouseSensitivity();
+
+	const auto& rotateAction = actionComponent->getAction(ACTION_ROTATE);
+	rotateAction->perform(parent(), angularVelocity);
+
+}
 void PlayerControlComponent::handleActions()
 {
 
@@ -70,19 +138,11 @@ void PlayerControlComponent::handleActions()
 				//case SDL_KEYUP:
 				case SDL_KEYDOWN:
 
-					//playerAction = getKeyAction(keyCode);
-					//playerAction.value()->perform();
-
-					//Special action
-					if (keyStates[SDL_SCANCODE_G])
-					{
-						std::cout << "Dropped Weapon" << "\n";
-					}
-
 					//Interaction Keys
 					if (keyScanCode == SDL_SCANCODE_E || keyScanCode == SDL_SCANCODE_R)
 					{
 						const auto& action = actionComponent->getAction(ACTION_INTERACT);
+						
 						action->perform(parent(), keyScanCode);
 					}
 
@@ -104,48 +164,21 @@ void PlayerControlComponent::handleActions()
 	}
 }
 
-/*
-*/
-void PlayerControlComponent::handleMovement()
+
+void PlayerControlComponent::_jetPackSwitch(bool turnOn)
 {
-	int mouseX=0, mouseY=0;
-	int direction = 0, strafe = 0;
 
-	//convenience reference to outside component(s)
-	const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-
-	//Handle Keyboard related movement
-	const uint8_t* currentKeyStates = SDL_GetKeyboardState(NULL);
-
-	if (currentKeyStates[SDL_SCANCODE_W])
-	{
-		direction = -1;
+	const auto& attachmentsComponent = parent()->getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
+	auto& jetPack = attachmentsComponent->getAttachment("JETPACK");
+	const auto& jetPackParticleComponent = jetPack.value().gameObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+	if (turnOn) {
+		jetPackParticleComponent->enable();
 	}
-	if (currentKeyStates[SDL_SCANCODE_S])
-	{
-		direction = 1;
+	else {
+		jetPackParticleComponent->disable();
 	}
-	if (currentKeyStates[SDL_SCANCODE_A])
-	{
-		strafe = -1;
-	}
-	if (currentKeyStates[SDL_SCANCODE_D])
-	{
-		strafe = 1;
-	}
-
-	const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
-	moveAction->perform(parent(), direction, strafe);
-
-	//Handle Mouse related movement
-	const uint32_t currentMouseStates = SDL_GetRelativeMouseState(&mouseX, &mouseY);
-	float angularVelocity = mouseX * game->contextMananger()->getMouseSensitivity();
-
-	const auto& rotateAction = actionComponent->getAction(ACTION_ROTATE);
-	rotateAction->perform(parent(), angularVelocity);
 
 }
-
 
 /*
 Use this version of handleMovement when you are dealing with controlling multiple objects at the same time

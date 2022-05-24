@@ -79,5 +79,5 @@ namespace BrainState {
 
 namespace TraitTag {
 
-	inline constexpr int escape = 20;
+	//Custom traits
 }

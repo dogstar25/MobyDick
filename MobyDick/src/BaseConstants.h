@@ -73,6 +73,8 @@ namespace TraitTag {
 	inline constexpr int interactive = 8;
 	inline constexpr int debug = 9;
 	inline constexpr int pooled = 10;
+	inline constexpr int fragment = 11;
+	inline constexpr int objective = 12;
 
 }
 
@@ -272,6 +274,7 @@ inline constexpr int ACTION_ON_HOVER = 7;
 inline constexpr int ACTION_ON_CLICK = 8;
 inline constexpr int ACTION_ON_HOVER_OUT = 9;
 inline constexpr int ACTION_ON_TRIGGER = 10;
+inline constexpr int ACTION_SPRINT = 11;
 
 //GameSpace Types
 inline constexpr int GAMESPACE_INTRO = 0;

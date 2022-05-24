@@ -2,7 +2,7 @@
     "gameObjects": [
         {
             "id": "PARTICLE_SMOKE_1",
-            "traitTags": [ "pooled" ],
+            "traitTags": [ "pooled", "fragment" ],
             "description": "Smoke Particle 1",
             "components": [
                 {
@@ -44,7 +44,7 @@
         },
         {
             "id": "DEFLECT1",
-            "traitTags": [ "pooled" ],
+            "traitTags": [ "pooled", "fragment" ],
             "description": "Deflect 1",
             "components": [
                 {
@@ -104,7 +104,7 @@
         },
         {
             "id": "SCRAP_PIECE",
-            "traitTags": [ "pooled" ],
+            "traitTags": [ "pooled", "fragment" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
