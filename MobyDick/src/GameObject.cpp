@@ -175,19 +175,17 @@ void GameObject::setPosition(PositionAlignment windowPosition)
 void GameObject::update()
 {
 
-	for (auto& component : m_components)
-	{
-		if (component && component->isDisabled() == false) {
-			component->update();
+	if (this->disabled() == false) {
+		for (auto& component : m_components)
+		{
+			if (component && component->isDisabled() == false) {
+				component->update();
+			}
 		}
-	}
 
-	if (this->hasTrait(TraitTag::player)) {
-		int todd = 1;
+		//Update touching GameObject
+		_updateTouchingObjects();
 	}
-
-	//Update touching GameObject
-	_updateTouchingObjects();
 
 }
 
@@ -206,7 +204,7 @@ void GameObject::render(SDL_FRect destQuad)
 void GameObject::render()
 {
 
-	if (m_disabled == false) {
+	if (this->hidden() == false) {
 		//Render yourself
 		getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT)->render();
 
@@ -257,7 +255,6 @@ void GameObject::render()
 
 			getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT)->render();
 		}
-
 	}
 }
 
@@ -423,7 +420,9 @@ int GameObject::brainState()
 
 void GameObject::disable(bool disablePhysicsBody)
 {
-	m_disabled = true;
+
+	m_stateTags.set(StateTag::disabled, true);
+
 	if (disablePhysicsBody == true) {
 
 		if (hasComponent(ComponentTypes::PHYSICS_COMPONENT) == true) {
@@ -439,7 +438,8 @@ void GameObject::disable(bool disablePhysicsBody)
 
 void GameObject::enable()
 {
-	m_disabled = false;
+	m_stateTags.set(StateTag::disabled, false);
+
 	if (hasComponent(ComponentTypes::PHYSICS_COMPONENT) == true) {
 
 		const auto& physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);

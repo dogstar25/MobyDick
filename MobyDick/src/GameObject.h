@@ -86,14 +86,23 @@ public:
 	void setAngleInRadians(float angle);
 	bool hasTrait(int32_t trait) { return m_traitTags.test(trait); }
 	std::bitset<32> traits() {	return m_traitTags;	}
+	std::bitset<8> states() { return m_stateTags; }
 	void addTrait(int32_t trait) { m_traitTags.set(trait, true); }
 	void removeTrait(int32_t trait) { m_traitTags.set(trait, false); }
 	void dispatch(SDL_FPoint destination);
 	int brainState();
 
-	bool disabled() { return m_disabled; }
-	void disable(bool disablePhysicsBody);
+	bool disabled() { return m_stateTags.test(StateTag::disabled); }
+	bool hidden() { return m_stateTags.test(StateTag::hidden); }
+	bool broken() { return m_stateTags.test(StateTag::broken); }
+
+	void disable(bool alsoDisablePhysicsBody);
+	void hide() { m_stateTags.set(StateTag::hidden, true); }
+	void breaK() { m_stateTags.set(StateTag::broken, true); }
+
 	void enable();
+	void show() { m_stateTags.set(StateTag::hidden, false); }
+	void restore() { m_stateTags.set(StateTag::broken, false); }
 
 	//Accessor Functions
 	std::string name() { return m_name; }
@@ -179,11 +188,10 @@ private:
 	std::optional<GameObject*> m_parentObject{};
 	std::string m_name;
 	int m_contactTag{ 0 };
-	int m_originalCollisionTag{ 0 };
 	bool m_removeFromWorld{ false };
 	Scene* m_parentScene{nullptr};
 	std::bitset<32> m_traitTags{};
-	bool m_disabled{};
+	std::bitset<8> m_stateTags{};
 	std::unordered_map<std::string, GameObject*> m_touchingGameObjects{};
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 

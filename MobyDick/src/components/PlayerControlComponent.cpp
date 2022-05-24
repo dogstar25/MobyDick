@@ -170,12 +170,11 @@ void PlayerControlComponent::_jetPackSwitch(bool turnOn)
 
 	const auto& attachmentsComponent = parent()->getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
 	auto& jetPack = attachmentsComponent->getAttachment("JETPACK");
-	const auto& jetPackParticleComponent = jetPack.value().gameObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
 	if (turnOn) {
-		jetPackParticleComponent->enable();
+		jetPack->gameObject->enable();
 	}
 	else {
-		jetPackParticleComponent->disable();
+		jetPack->gameObject->disable(false);
 	}
 
 }

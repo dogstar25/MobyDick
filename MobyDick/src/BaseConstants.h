@@ -78,6 +78,13 @@ namespace TraitTag {
 
 }
 
+namespace StateTag {
+
+	inline constexpr int disabled = 1;
+	inline constexpr int hidden = 2;
+	inline constexpr int broken = 3;
+}
+
 namespace GameObjectType {
 
 	inline constexpr auto ABSTRACT = 0; // SOMETHING LIKE A NAVIGATION POINT THAT DOES NOT DISPLAY

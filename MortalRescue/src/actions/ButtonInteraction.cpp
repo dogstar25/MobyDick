@@ -12,10 +12,12 @@ void ButtonInteraction::perform(GameObject* interactingObject, GameObject* inter
 
 	if (bottonTargetObject->disabled() == true) {
 		bottonTargetObject->enable();
+		bottonTargetObject->show();
 		animationComponent->animate(ANIMATION_ACTIVE, ANIMATE_CONTINUOUS);
 	}
 	else {
 		bottonTargetObject->disable(true);
+		bottonTargetObject->hide();
 		animationComponent->animate(ANIMATION_IDLE, ANIMATE_CONTINUOUS);
 	}
 

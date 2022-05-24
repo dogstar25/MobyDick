@@ -151,7 +151,6 @@ bool VitalityComponent::testResistance(float force)
 		else {
 
 			parent()->disable(false);
-			//parent()->setCollisionTag(ContactTag::GENERAL_FREE);
 			m_regenTimer = Timer(m_regenSpeed);
 		}
 		return false;
