@@ -3,6 +3,7 @@
 
 #include "../game.h"
 #include "../RayCastCallBack.h"
+#include "../EnumMaps.h"
 
 
 extern std::unique_ptr<Game> game;
@@ -20,10 +21,14 @@ BrainComponent::BrainComponent(Json::Value componentJSON)
 	test << componentJSON.toStyledString();
 	std::cout << test.str();
 
-	//m_sensorLength = componentJSON["sensorLength"].asInt();
-	//m_sensorOffset = componentJSON["sensorOffset"].asInt();
-	//m_sensorCount = componentJSON["sensorCount"].asInt();
 	m_sightSensorSize = componentJSON["sightSensorSize"].asInt();
+
+	for (Json::Value traits : componentJSON["detectObjectTraits"])
+	{
+		uint32_t trait = EnumMap::instance().toEnum(traits.asString());
+		m_detectObjectTraits.set(trait);
+	}
+
 
 }
 
@@ -148,18 +153,18 @@ void BrainComponent::_updateSensorInput()
 	util::toRenderPoint(botRight);
 	util::toRenderPoint(botLeft);
 
-	topLeft -= glm::vec2{Camera::instance().frame().x, Camera::instance().frame().y};
-	topRight -= glm::vec2{ Camera::instance().frame().x, Camera::instance().frame().y };
-	botRight -= glm::vec2{ Camera::instance().frame().x, Camera::instance().frame().y };
-	botLeft -= glm::vec2{ Camera::instance().frame().x, Camera::instance().frame().y };
+	//topLeft -= glm::vec2{Camera::instance().frame().x, Camera::instance().frame().y};
+	//topRight -= glm::vec2{ Camera::instance().frame().x, Camera::instance().frame().y };
+	//botRight -= glm::vec2{ Camera::instance().frame().x, Camera::instance().frame().y };
+	//botLeft -= glm::vec2{ Camera::instance().frame().x, Camera::instance().frame().y };
 
-	////top
+	//////top
 	//game->renderer()->addLine(topLeft, topRight, lineColor);
-	////right
+	//////right
 	//game->renderer()->addLine(topRight, botRight, lineColor);
-	////bottom
+	//////bottom
 	//game->renderer()->addLine(botRight, botLeft, lineColor);
-	////left
+	//////left
 	//game->renderer()->addLine(botLeft, topLeft, lineColor);
 
 	//Make the AABB query
@@ -169,12 +174,22 @@ void BrainComponent::_updateSensorInput()
 	//of sight to
 	for (BrainAABBFoundObject detectedObject : BrainAABBCallback::instance().foundObjects()) {
 
-		m_detectedObjects.push_back(detectedObject);
+		if (parent()->id() == "SURVIVOR") {
+			int todd = 1;
+		}
+		for (auto i = 0; i < m_detectObjectTraits.size(); i++) {
 
-		if (_hasLineOfSight(detectedObject) == true) {
+			if (detectedObject.gameObject->traits()[i] && m_detectObjectTraits[i]) {
+				m_detectedObjects.push_back(detectedObject);
 
-			m_seenObjects.push_back(detectedObject);
+				if (_hasLineOfSight(detectedObject) == true) {
 
+					m_seenObjects.push_back(detectedObject);
+
+				}
+
+				break;
+			}
 		}
 	}
 

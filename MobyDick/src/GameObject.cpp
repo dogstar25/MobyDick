@@ -318,6 +318,18 @@ void GameObject::setAngleInDegrees(float angle)
 
 }
 
+float GameObject::getAngle()
+{
+
+	const auto& physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	if (physicsComponent) {
+
+		return physicsComponent->angle();
+	}
+
+	return 0;
+}
+
 /*
 The postInit function allows for initialization that requires all objects in the game to be 'already' instantiated 
 ex. The brainComponent needs all navigation related gameObjects to be built first

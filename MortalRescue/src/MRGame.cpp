@@ -168,7 +168,7 @@ void MRGame::_addGameComponentTypes()
 
 void MRGame::_addGameTraits()
 {
-	EnumMap::instance().addEnumItem("escape", TraitTag::escape);
+	
 
 }
 

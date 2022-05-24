@@ -81,6 +81,11 @@ void PhysicsComponent::setLinearVelocity(b2Vec2 velocityVector)
 	m_physicsBody->SetLinearVelocity(velocityVector);
 }
 
+void PhysicsComponent::setLinearDamping(float linearDamping)
+{
+	m_physicsBody->SetLinearDamping(linearDamping);
+}
+
 void PhysicsComponent::setAngle(float angle)
 {
 	auto normalizedAngle = util::normalizeRadians(angle);
@@ -202,7 +207,7 @@ void PhysicsComponent::applyImpulse(float force, b2Vec2 trajectory)
 	trajectory.x *= force;
 	trajectory.y *= force;
 
-	m_physicsBody->ApplyLinearImpulseToCenter(trajectory, true);
+	m_physicsBody->ApplyForceToCenter(trajectory, true);
 	//m_physicsBody->ApplyForceToCenter(trajectory, true);
 
 }

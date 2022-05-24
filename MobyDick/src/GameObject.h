@@ -75,6 +75,7 @@ public:
 	bool isPointingAt(SDL_FPoint gameObject);
 	
 	b2Vec2 getSize();
+	float getAngle();
 	SDL_FPoint getCenterPosition();
 	SDL_FPoint getTopLeftPosition();
 	

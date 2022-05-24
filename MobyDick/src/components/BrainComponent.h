@@ -35,6 +35,7 @@ public:
 protected:
 
     int m_currentState{ BrainState::PATROL };
+    std::bitset<32> m_detectObjectTraits{};
     
     std::vector<GameObject*> m_navPoints;
     std::vector<GameObject*> m_tempVisitedNavPoints;

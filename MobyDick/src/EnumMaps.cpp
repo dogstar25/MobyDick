@@ -103,6 +103,7 @@ EnumMap::EnumMap()
 	m_enumMap["ACTION_ON_HOVER"] = ACTION_ON_HOVER;
 	m_enumMap["ACTION_ON_HOVER_OUT"] = ACTION_ON_HOVER_OUT;
 	m_enumMap["ACTION_ON_CLICK"] = ACTION_ON_CLICK;
+	m_enumMap["ACTION_SPRINT"] = ACTION_SPRINT;
 
 	//Keys
 	m_enumMap["SDLK_ESCAPE"] = SDLK_ESCAPE;
@@ -181,6 +182,8 @@ EnumMap::EnumMap()
 	m_enumMap["interactive"] = TraitTag::interactive;
 	m_enumMap["debug"] = TraitTag::debug;
 	m_enumMap["pooled"] = TraitTag::pooled;
+	m_enumMap["fragment"] = TraitTag::fragment;
+	m_enumMap["objective"] = TraitTag::objective;
 
 	//Hud Item Types
 	m_enumMap["HudItemTypes::STATUS_SINGLE"] = (int)HudItemTypes::STATUS_SINGLE;

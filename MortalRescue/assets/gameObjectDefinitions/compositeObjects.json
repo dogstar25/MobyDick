@@ -99,7 +99,8 @@
                 },
                 {
                     "id": "BRAIN_DRONE_COMPONENT",
-                    "sightSensorSize": 25
+                    "sightSensorSize": 25,
+                    "detectObjectTraits": [ "player", "objective", "navigation" ]
                 },
                 {
                     "id": "VITALITY_COMPONENT",
@@ -212,7 +213,7 @@
         },
         {
             "id": "FULL_PIECE",
-            "traitTags": [],
+            "traitTags": [ "fragment" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -276,7 +277,7 @@
         },
         {
             "id": "ANGLE1_PIECE",
-            "traitTags": [],
+            "traitTags": [ "fragment" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -340,7 +341,7 @@
         },
         {
             "id": "ANGLE2_PIECE",
-            "traitTags": [],
+            "traitTags": [ "fragment" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -404,7 +405,7 @@
         },
         {
             "id": "ANGLE3_PIECE",
-            "traitTags": [],
+            "traitTags": [ "fragment" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -468,7 +469,7 @@
         },
         {
             "id": "ANGLE4_PIECE",
-            "traitTags": [],
+            "traitTags": [ "fragment" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -574,7 +575,7 @@
         },
         {
             "id": "WALL_PIECE",
-            "traitTags": ["barrier"],
+            "traitTags": ["fragment"],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",

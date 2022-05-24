@@ -71,6 +71,7 @@
                             "speed": 0.06,
                             "frames": 4
                         }
+
                     ]
                 },
                 {
@@ -96,7 +97,16 @@
                             },
                             "addToInventory": true,
                             "attachB2JointType": "B2_WELD"
+                        },
+                        {
+                            "gameObjectId": "JETPACK",
+                            "attachLocation": {
+                                "x": -0.8,
+                                "y": 0.0
+                            },
+                            "attachB2JointType": "B2_WELD"
                         }
+
                     ]
                 },
                 {
@@ -125,6 +135,10 @@
                         {
                             "actionId": "ACTION_ON_CLICK",
                             "actionClass": "ContinueClick"
+                        },
+                        {
+                            "actionId": "ACTION_SPRINT",
+                            "actionClass": "ActorBoost"
                         }
                     ]
                 },
@@ -149,6 +163,49 @@
                     "id": "VITALITY_COMPONENT",
                     "speed": 14
                 }
+            ]
+        },
+        {
+            "id": "JETPACK",
+            "traitTags": [ "abstract" ],
+            "description": "Jetpack Particle Emitter",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 4,
+                        "height": 4
+                    }
+                },
+                {
+                    "id": "PARTICLE_X_COMPONENT",
+                    "type": "ParticleEmitterType::CONTINUOUS",
+                    "emissionInterval": 0.1,
+                    "effects": [
+                        "jetpack_sparks",
+                        "jetpack"
+                    ]
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "anchorPoint": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_BOX",
+                            "density": 0.05
+                        }
+                    ]
+
+                }
+
             ]
         },
         {
@@ -299,7 +356,7 @@
         },
         {
             "id": "ESCAPE_STAIRS",
-            "traitTags": ["escape"],
+            "traitTags": [ "objective" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -434,7 +491,7 @@
         },
         {
             "id": "BULLET1",
-            "traitTags": ["pooled"],
+            "traitTags": [ "pooled" ],
             "description": "Bullet 1",
             "components": [
                 {
@@ -660,7 +717,7 @@
         },
         {
             "id": "SURVIVOR",
-            "traitTags": [ "interactive" ],
+            "traitTags": [ "interactive", "objective" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -685,7 +742,7 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "linearDamping": 50.2,
+                    "linearDamping": 50.0,
                     "angularDamping": 3.0,
                     "fixtures": [
                         {
@@ -713,7 +770,8 @@
                 },
                 {
                     "id": "SURVIVOR_BRAIN_COMPONENT",
-                    "sightSensorSize": 25
+                    "sightSensorSize": 15,
+                    "detectObjectTraits": ["player", "objective", "navigation"]
                 }
             ]
         },
@@ -777,7 +835,8 @@
                 },
                 {
                     "id": "TURRET_BRAIN_COMPONENT",
-                    "sightSensorSize": 7
+                    "sightSensorSize": 7,
+                    "detectObjectTraits": [ "player", "objective" ]
                 },
                 {
                     "id": "PHYSICS_COMPONENT",

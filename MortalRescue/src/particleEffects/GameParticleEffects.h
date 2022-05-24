@@ -79,6 +79,44 @@ namespace ParticleEffects {
 		.particleSpawnCountMax = 20
 	};
 
+	static const ParticleEffect jetpack = {
+		.poolId = "SMOKE1_POOL",
+		.originMin = {0,0},
+		.originMax = {0,0},
+		.forceMin = 0,
+		.forceMax = 4,
+		.lifetimeMin = 0.2F,
+		.lifetimeMax = 0.5F,
+		.alphaFade = true,
+		.angleMin = 180,
+		.angleMax = 180,
+		.particleSizeMin = 10.F,
+		.particleSizeMax = 20.F,
+		.colorRangeBegin = {0,0,0,255},
+		.colorRangeEnd = {255,0,0,255},
+		.particleSpawnCountMin = 2,
+		.particleSpawnCountMax = 4
+	};
+
+	static const ParticleEffect jetpack_sparks = {
+		.poolId = "SMOKE1_POOL",
+		.originMin = {0,0},
+		.originMax = {0,0},
+		.forceMin = 4,
+		.forceMax = 14,
+		.lifetimeMin = 0.2F,
+		.lifetimeMax = 0.5F,
+		.alphaFade = true,
+		.angleMin = 170,
+		.angleMax = 190,
+		.particleSizeMin = 5.F,
+		.particleSizeMax = 5.F,
+		.colorRangeBegin = {255,255,255,50},
+		.colorRangeEnd = {255,255,255,100},
+		.particleSpawnCountMin = 2,
+		.particleSpawnCountMax = 20
+	};
+
 	static const ParticleEffect impactSmoke = {
 		.poolId = "SMOKE1_POOL",
 		.originMin = {0,0},
