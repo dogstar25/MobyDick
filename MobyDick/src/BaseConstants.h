@@ -78,6 +78,14 @@ namespace TraitTag {
 
 }
 
+namespace StateTag {
+
+	inline constexpr int disabledUpdate = 1;
+	inline constexpr int disabledPhysics = 2;
+	inline constexpr int disabledRender = 3;
+	inline constexpr int disabledCollision = 3;
+}
+
 namespace GameObjectType {
 
 	inline constexpr auto ABSTRACT = 0; // SOMETHING LIKE A NAVIGATION POINT THAT DOES NOT DISPLAY

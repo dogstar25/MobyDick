@@ -40,8 +40,6 @@
 #include "components/UIControlComponent.h"
 #include "components/PoolComponent.h"
 
-//#include "Scene.h"
-
 class Scene;
 
 class GameObject
@@ -86,14 +84,27 @@ public:
 	void setAngleInRadians(float angle);
 	bool hasTrait(int32_t trait) { return m_traitTags.test(trait); }
 	std::bitset<32> traits() {	return m_traitTags;	}
+	std::bitset<8> states() { return m_stateTags; }
 	void addTrait(int32_t trait) { m_traitTags.set(trait, true); }
 	void removeTrait(int32_t trait) { m_traitTags.set(trait, false); }
 	void dispatch(SDL_FPoint destination);
 	int brainState();
 
-	bool disabled() { return m_disabled; }
-	void disable(bool disablePhysicsBody);
-	void enable();
+	void disableUpdate();
+	void enableUpdate();
+	bool updateDisabled() { return m_stateTags.test(StateTag::disabledUpdate); }
+
+	void disablePhysics();
+	void enablePhysics();
+	bool physicsDisabled() { return m_stateTags.test(StateTag::disabledPhysics); }
+
+	void disableRender();
+	void enableRender();
+	bool renderDisabled() { return m_stateTags.test(StateTag::disabledRender); }
+
+	void disableCollision();
+	void enableCollision();
+	bool collisionDisabled() { return m_stateTags.test(StateTag::disabledCollision); }
 
 	//Accessor Functions
 	std::string name() { return m_name; }
@@ -179,11 +190,10 @@ private:
 	std::optional<GameObject*> m_parentObject{};
 	std::string m_name;
 	int m_contactTag{ 0 };
-	int m_originalCollisionTag{ 0 };
 	bool m_removeFromWorld{ false };
 	Scene* m_parentScene{nullptr};
 	std::bitset<32> m_traitTags{};
-	bool m_disabled{};
+	std::bitset<8> m_stateTags{};
 	std::unordered_map<std::string, GameObject*> m_touchingGameObjects{};
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 

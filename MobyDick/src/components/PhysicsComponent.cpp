@@ -40,14 +40,17 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, Scene* parentScen
 PhysicsComponent::~PhysicsComponent()
 {
 
-	//while (auto fixture = m_physicsBody->GetFixtureList()) {
+	//We need to free the memory associated with our special object that we store in each fixture's userdata
+	//NOTE:this should be the only spot where we do not depend on smart pointers
+	for (auto fixture = m_physicsBody->GetFixtureList(); fixture != 0; fixture = fixture->GetNext())
+	{
 
-	//	auto& userData = fixture->GetUserData();
-	//	if (userData.pointer) {
-	//		delete& userData.pointer;
-	//	}
+		ContactDefinition* contactDefinition = reinterpret_cast<ContactDefinition*>(fixture->GetUserData().pointer);
+		if (contactDefinition) {
+			delete contactDefinition;
+		}
 
-	//}
+	}
 
 	parent()->parentScene()->physicsWorld()->DestroyBody(m_physicsBody);
 
@@ -181,8 +184,10 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 		fixtureDef.restitution = fixtureJSON["restitution"].asFloat();
 		fixtureDef.isSensor = fixtureJSON["isSensor"].asFloat();
 
-		auto contactTag = EnumMap::instance().toEnum(fixtureJSON["contactTag"].asString());
-		fixtureDef.userData.pointer = static_cast<int>(contactTag);
+		ContactDefinition* contactDefinition = new ContactDefinition();
+		contactDefinition->contactTag = EnumMap::instance().toEnum(fixtureJSON["contactTag"].asString());
+		contactDefinition->saveOriginalContactTag = EnumMap::instance().toEnum(fixtureJSON["contactTag"].asString());
+		fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(contactDefinition);
 
 		body->CreateFixture(&fixtureDef);
 

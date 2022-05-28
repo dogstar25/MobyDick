@@ -31,6 +31,9 @@ public:
 	~PlayerControlComponent();
 
 	void update() override;
+	void setState(PlayerState state) { m_currentState = state; }
+	PlayerState state() { return m_currentState; }
+	void boostReset();
 
 
 private:
@@ -44,6 +47,7 @@ private:
 	std::bitset<8> m_controls;
 
 	Timer m_boostTimer{};
+	Timer m_boostAgainTimer{};
 
 	void _jetPackSwitch(bool turnOn);
 };

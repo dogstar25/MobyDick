@@ -61,31 +61,26 @@ void PlayerControlComponent::handleMovement()
 	//Handle Keyboard related movement
 	const uint8_t* currentKeyStates = SDL_GetKeyboardState(NULL);
 
-
 	//Are we boosting and boost timer is complete stop boosting
 	if (m_currentState == PlayerState::boosting && m_boostTimer.hasMetTargetDuration()) {
 
-		m_currentState = PlayerState::general;
-		_jetPackSwitch(false);
+		boostReset();
 	}
-
 
 	//Boost
 	if (currentKeyStates[SDL_SCANCODE_LSHIFT])
 	{
 		//If we're already boosting leave boot timer alone
-		if (m_currentState != PlayerState::boosting) {
+		if (m_boostAgainTimer.hasMetTargetDuration() || m_boostAgainTimer.firstTime) {
+
 			_jetPackSwitch(true);
+			const auto& action = actionComponent->getAction(ACTION_SPRINT);
+			action->perform(parent());
 			m_boostTimer = { 1.5 };
+			m_currentState = PlayerState::boosting;
 		}
 
-		const auto& action = actionComponent->getAction(ACTION_SPRINT);
-		action->perform(parent());
-
-		m_currentState = PlayerState::boosting;
-
 	}
-
 
 	if (currentKeyStates[SDL_SCANCODE_W])
 	{
@@ -170,13 +165,23 @@ void PlayerControlComponent::_jetPackSwitch(bool turnOn)
 
 	const auto& attachmentsComponent = parent()->getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
 	auto& jetPack = attachmentsComponent->getAttachment("JETPACK");
-	const auto& jetPackParticleComponent = jetPack.value().gameObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
 	if (turnOn) {
-		jetPackParticleComponent->enable();
+		jetPack->gameObject->enableUpdate();
 	}
 	else {
-		jetPackParticleComponent->disable();
+		jetPack->gameObject->disableUpdate();
 	}
+
+}
+
+void PlayerControlComponent::boostReset()
+{
+
+	m_currentState = PlayerState::general;
+	_jetPackSwitch(false);
+
+	//Set a timer so that we cant boost again for a set time
+	m_boostAgainTimer = { 2 };
 
 }
 

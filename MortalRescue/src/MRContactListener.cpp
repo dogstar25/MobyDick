@@ -14,6 +14,15 @@
 extern std::unique_ptr<Game> game;
 
 
+void MRContactListener::_player_wall(GameObject* player, GameObject* wall, b2Vec2 contactPoint)
+{
+
+	//Build a One-Time particle emitter object
+	const auto& playerControlComponent = player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT);
+	playerControlComponent->boostReset();
+
+}
+
 void MRContactListener::_bullet_wall(GameObject* bullet, GameObject* wall, b2Vec2 contactPoint)
 {
 
@@ -32,8 +41,14 @@ void MRContactListener::_bullet_wall(GameObject* bullet, GameObject* wall, b2Vec
 
 }
 
+
 void MRContactListener::_playerBullet_droneShield(GameObject* playerBullet, GameObject* droneShield, b2Vec2 contactPoint)
 {
+
+	//IF the shield is broken, we dont want to do anything, but we still get this callback so just return 
+	//if (droneShield->broken() == true) {
+	//	return;
+	//}
 
 	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
 	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
@@ -186,9 +201,26 @@ void MRContactListener::handleContact(b2Contact* contact, b2Vec2 contactPoint)
 	GameObject* contact1 = reinterpret_cast<GameObject*>(fixture1->GetBody()->GetUserData().pointer);
 	GameObject* contact2 = reinterpret_cast<GameObject*>(fixture2->GetBody()->GetUserData().pointer);
 
-	//Get each fixtures' contactTag
-	int contactTag1 = static_cast<int>(fixture1->GetUserData().pointer);
-	int contactTag2 = static_cast<int>(fixture2->GetUserData().pointer);
+	ContactDefinition* contactDefinitionA = reinterpret_cast<ContactDefinition*>(fixture1->GetUserData().pointer);
+	ContactDefinition* contactDefinitionB = reinterpret_cast<ContactDefinition*>(fixture2->GetUserData().pointer);
+
+	int contactTag1 = contactDefinitionA->contactTag;
+	int contactTag2 = contactDefinitionB->contactTag;
+
+
+	////////////////////////////////////
+	// Player -  Wall
+	//////////////////////////////////
+	if ((contactTag1 == ContactTag::PLAYER_COLLISION && contactTag2 == ContactTag::WALL) ||
+		(contactTag2 == ContactTag::PLAYER_COLLISION && contactTag1 == ContactTag::WALL)) {
+
+		if (contactTag1 == ContactTag::PLAYER_COLLISION) {
+			_player_wall(contact1, contact2, contactPoint);
+		}
+		else {
+			_player_wall(contact2, contact1, contactPoint);
+		}
+	}
 
 	////////////////////////////////////
 	// Survivor -  Escape Stairs

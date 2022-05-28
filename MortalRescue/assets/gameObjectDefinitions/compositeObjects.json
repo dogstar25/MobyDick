@@ -254,6 +254,7 @@
                     "resistance": 0,
                     "regenerating": {
                         "regenerateSpeed": 1.8,
+                        "hideWhenBroken": true,
                         "levels": [
                             {
                                 "resistance": 1
@@ -318,6 +319,7 @@
                     "resistance": 0,
                     "regenerating": {
                         "regenerateSpeed": 1.8,
+                        "hideWhenBroken": true,
                         "levels": [
                             {
                                 "resistance": 1
@@ -382,6 +384,7 @@
                     "resistance": 0,
                     "regenerating": {
                         "regenerateSpeed": 1.8,
+                        "hideWhenBroken": true,
                         "levels": [
                             {
                                 "resistance": 1
@@ -446,6 +449,7 @@
                     "resistance": 0,
                     "regenerating": {
                         "regenerateSpeed": 1.8,
+                        "hideWhenBroken": true,
                         "levels": [
                             {
                                 "resistance": 1
@@ -510,6 +514,7 @@
                     "resistance": 0,
                     "regenerating": {
                         "regenerateSpeed": 1.8,
+                        "hideWhenBroken": true,
                         "levels": [
                             {
                                 "resistance": 1
