@@ -24,6 +24,7 @@ VitalityComponent::VitalityComponent(Json::Value componentJSON)
 	m_lifetimeTimer = Timer(lifetime);
 
 	m_isLifetimeAlphaFade = componentJSON["lifetimeAlphaFade"].asBool();
+	
 
 	//Regeneration related
 	if (componentJSON.isMember("regenerating")) {
@@ -32,6 +33,7 @@ VitalityComponent::VitalityComponent(Json::Value componentJSON)
 
 			m_regenSpeed = regenJSON["regenerateSpeed"].asFloat();
 			m_resistance = regenJSON["resistance"].asFloat();
+			m_hideWhenBroken = regenJSON["hideWhenBroken"].asBool();
 
 			auto level = 0;
 			for (Json::Value itrlevel : regenJSON["levels"]) {
@@ -92,8 +94,8 @@ void VitalityComponent::_levelUp()
 
 		m_currentLevel++;
 		auto& level = m_regenLevels[(uint_fast64_t)m_currentLevel - 1];
-		parent()->enable();
-		//parent()->resetCollisionTag();
+		parent()->enableCollision();
+		parent()->enableRender();
 		m_resistance = level.resistance;
 		
 		//Update the color based on the new level
@@ -132,11 +134,40 @@ void VitalityComponent::_updateFiniteLifetime()
 void VitalityComponent::_updateRegeneration()
 {
 
-	//If this gameObject is considered broken and we have met the regen time, then regenerate and level up the piece
-	if (parent()->disabled() == true && m_regenTimer.hasMetTargetDuration()) {
+	//If this gameObject is considered broken and we have met the regen time, then regenerate and level up if applicable
 
+	// we need a "broken" flag to represent what it means to be broken for
+	//the vitality component.
+	// physics
+
+
+
+	if (m_isBroken == true && m_regenTimer.hasMetTargetDuration()) {
+
+		//Restore the object and if we aslo hid it while it was brokwen then unhide it
+		m_isBroken = false;
+		_restore();
 		_levelUp();
 
+	}
+
+}
+
+void VitalityComponent::_breaK()
+{
+	m_isBroken = true;
+	parent()->disableCollision();
+	if (m_hideWhenBroken == true) {
+		parent()->disableRender();
+	}
+
+}
+
+void VitalityComponent::_restore()
+{
+	parent()->enableCollision();
+	if (m_hideWhenBroken == true) {
+		parent()->enableRender();
 	}
 
 }
@@ -150,7 +181,7 @@ bool VitalityComponent::testResistance(float force)
 		}
 		else {
 
-			parent()->disable(false);
+			_breaK();
 			m_regenTimer = Timer(m_regenSpeed);
 		}
 		return false;

@@ -80,9 +80,10 @@ namespace TraitTag {
 
 namespace StateTag {
 
-	inline constexpr int disabled = 1;
-	inline constexpr int hidden = 2;
-	inline constexpr int broken = 3;
+	inline constexpr int disabledUpdate = 1;
+	inline constexpr int disabledPhysics = 2;
+	inline constexpr int disabledRender = 3;
+	inline constexpr int disabledCollision = 3;
 }
 
 namespace GameObjectType {

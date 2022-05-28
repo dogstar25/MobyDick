@@ -27,6 +27,7 @@ public:
 	void virtual handleContact(b2Contact* contact, b2Vec2 contactPoint) override;
 
 private:
+	void _player_wall(GameObject* player, GameObject* wall, b2Vec2 contactPoint);
 	void _bullet_wall(GameObject* bullet, GameObject* wall, b2Vec2 contactPoint);
 	void _playerBullet_droneShield(GameObject* playerBullet, GameObject* droneShield, b2Vec2 contactPoint);
 	void _player_shieldScrap(GameObject* player, GameObject* shieldScrap, b2Vec2 contactPoint);

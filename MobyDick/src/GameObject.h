@@ -40,8 +40,6 @@
 #include "components/UIControlComponent.h"
 #include "components/PoolComponent.h"
 
-//#include "Scene.h"
-
 class Scene;
 
 class GameObject
@@ -92,17 +90,21 @@ public:
 	void dispatch(SDL_FPoint destination);
 	int brainState();
 
-	bool disabled() { return m_stateTags.test(StateTag::disabled); }
-	bool hidden() { return m_stateTags.test(StateTag::hidden); }
-	bool broken() { return m_stateTags.test(StateTag::broken); }
+	void disableUpdate();
+	void enableUpdate();
+	bool updateDisabled() { return m_stateTags.test(StateTag::disabledUpdate); }
 
-	void disable(bool alsoDisablePhysicsBody);
-	void hide() { m_stateTags.set(StateTag::hidden, true); }
-	void breaK() { m_stateTags.set(StateTag::broken, true); }
+	void disablePhysics();
+	void enablePhysics();
+	bool physicsDisabled() { return m_stateTags.test(StateTag::disabledPhysics); }
 
-	void enable();
-	void show() { m_stateTags.set(StateTag::hidden, false); }
-	void restore() { m_stateTags.set(StateTag::broken, false); }
+	void disableRender();
+	void enableRender();
+	bool renderDisabled() { return m_stateTags.test(StateTag::disabledRender); }
+
+	void disableCollision();
+	void enableCollision();
+	bool collisionDisabled() { return m_stateTags.test(StateTag::disabledCollision); }
 
 	//Accessor Functions
 	std::string name() { return m_name; }

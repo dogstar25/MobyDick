@@ -50,6 +50,8 @@ private:
 	float m_attackPower{ 0 };
 	float m_health{ 0 };
 	float m_resistance{ 0 };
+	bool m_hideWhenBroken{};
+	bool m_isBroken{ false };
 
 	//Regenerative
 	bool	m_isRegenerative{ false };
@@ -67,6 +69,9 @@ private:
 	void _levelUp();
 	void _updateFiniteLifetime();
 	void _updateRegeneration();
+	void _breaK();
+	void _restore();
+
 
 
 	float* IG_Speed() { return &m_speed; }

@@ -10,6 +10,10 @@
 
 class TransformComponent;
 
+struct ContactDefinition {
+	int contactTag{};
+	int saveOriginalContactTag{};
+};
 
 class PhysicsComponent : public Component
 {

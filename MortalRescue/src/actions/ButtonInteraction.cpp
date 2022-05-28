@@ -10,14 +10,14 @@ void ButtonInteraction::perform(GameObject* interactingObject, GameObject* inter
 	GameObject* bottonTargetObject = game->getGameObject(buttonTargetObjectName);
 	const auto& animationComponent = interactionObject->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 
-	if (bottonTargetObject->disabled() == true) {
-		bottonTargetObject->enable();
-		bottonTargetObject->show();
+	if (bottonTargetObject->renderDisabled() == true && bottonTargetObject->physicsDisabled() == true) {
+		bottonTargetObject->enableRender();
+		bottonTargetObject->enablePhysics();
 		animationComponent->animate(ANIMATION_ACTIVE, ANIMATE_CONTINUOUS);
 	}
 	else {
-		bottonTargetObject->disable(true);
-		bottonTargetObject->hide();
+		bottonTargetObject->disableRender();
+		bottonTargetObject->disablePhysics();
 		animationComponent->animate(ANIMATION_IDLE, ANIMATE_CONTINUOUS);
 	}
 
