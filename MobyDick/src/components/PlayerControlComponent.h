@@ -14,13 +14,6 @@ class PhysicsComponent;
 class TransformComponent;
 class VitalityComponent;
 
-enum class PlayerState {
-	general = 0,
-	boosting,
-	invulnerable,
-	dead
-};
-
 class PlayerControlComponent : public Component
 {
 public:
@@ -30,26 +23,10 @@ public:
 
 	~PlayerControlComponent();
 
-	void update() override;
-	void setState(PlayerState state) { m_currentState = state; }
-	PlayerState state() { return m_currentState; }
-	void boostReset();
+	virtual void update() {};
 
 
-private:
 
-	void init();
-	void handleMovement();
-	void handleActions();
-	//std::optional<Action> getKeyAction();
-
-	PlayerState m_currentState{ PlayerState::general};
-	std::bitset<8> m_controls;
-
-	Timer m_boostTimer{};
-	Timer m_boostAgainTimer{};
-
-	void _jetPackSwitch(bool turnOn);
 };
 
 

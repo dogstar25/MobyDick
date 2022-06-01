@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include "components\BrainComponent.h"
 
 #include <iostream>
