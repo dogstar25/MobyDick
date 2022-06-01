@@ -164,6 +164,7 @@ void MRGame::_addGameComponentTypes()
 	EnumMap::instance().addEnumItem("WEAPON_PISTOL_COMPONENT", ComponentTypes::WEAPON_PISTOL_COMPONENT);
 	EnumMap::instance().addEnumItem("TURRET_BRAIN_COMPONENT", ComponentTypes::TURRET_BRAIN_COMPONENT);
 	EnumMap::instance().addEnumItem("SURVIVOR_BRAIN_COMPONENT", ComponentTypes::SURVIVOR_BRAIN_COMPONENT);
+	EnumMap::instance().addEnumItem("GINA_PLAYER_CONTROL_COMPONENT", ComponentTypes::GINA_PLAYER_CONTROL_COMPONENT);
 }
 
 void MRGame::_addGameTraits()

@@ -189,6 +189,7 @@
     <ClCompile Include="src\actions\SurvivorInteractionAction.cpp" />
     <ClCompile Include="src\actions\TurretFireAction.cpp" />
     <ClCompile Include="src\components\PistolWeaponComponent.cpp" />
+    <ClCompile Include="src\components\GinaPlayerControlComponent.cpp" />
     <ClCompile Include="src\components\SurvivorBrainComponent.cpp" />
     <ClCompile Include="src\components\TurretBrainComponent.cpp" />
     <ClCompile Include="src\cutScenes\CutSceneDiscoverTreasure.cpp" />
@@ -296,6 +297,7 @@
     <ClInclude Include="src\actions\SurvivorInteractionAction.h" />
     <ClInclude Include="src\actions\TurretFireAction.h" />
     <ClInclude Include="src\components\PistolWeaponComponent.h" />
+    <ClInclude Include="src\components\GinaPlayerControlComponent.h" />
     <ClInclude Include="src\components\SurvivorBrainComponent.h" />
     <ClInclude Include="src\components\TurretBrainComponent.h" />
     <ClInclude Include="src\cutScenes\CutSceneDiscoverTreasure.h" />

@@ -153,11 +153,7 @@
                     ]
                 },
                 {
-                    "id": "PLAYER_CONTROL_COMPONENT",
-                    "controls": [
-                        "INPUT_CONTROL_MOVEMENT",
-                        "INPUT_CONTROL_USE"
-                    ]
+                    "id": "GINA_PLAYER_CONTROL_COMPONENT"
                 },
                 {
                     "id": "VITALITY_COMPONENT",

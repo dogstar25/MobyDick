@@ -10,6 +10,7 @@
 #include "particleEffects/GameParticleEffects.h"
 #include "components/InventoryComponent.h"
 #include "components/PistolWeaponComponent.h"
+#include "components/GinaPlayerControlComponent.h"
 
 extern std::unique_ptr<Game> game;
 
@@ -18,7 +19,7 @@ void MRContactListener::_player_wall(GameObject* player, GameObject* wall, b2Vec
 {
 
 	//Build a One-Time particle emitter object
-	const auto& playerControlComponent = player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT);
+	const auto& playerControlComponent = player->getComponent<GinaPlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT);
 	playerControlComponent->boostReset();
 
 }

@@ -87,6 +87,9 @@
     <ClCompile Include="src\actions\ActorBoostAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\components\GinaPlayerControlComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\blueprints\drone1_blueprint.png">
@@ -329,6 +332,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\actions\ActorBoostAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\components\GinaPlayerControlComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
