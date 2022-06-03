@@ -21,6 +21,8 @@ public:
 	void setType(int type) { m_type = type; }
 	std::vector < std::shared_ptr<GameObject>> accessibleNavObjects() { return m_accessibleNavObjects; }
 
+	void updateNavObjectsAccess();
+
 private:
 
 	int m_type{};

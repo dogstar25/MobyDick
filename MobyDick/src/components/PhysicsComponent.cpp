@@ -166,11 +166,11 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 			//If a size is not specified for the fixture then default to the transform size of the object
 			if (fixtureJSON.isMember("size")) {
 				sizeX = fixtureJSON["size"]["width"].asFloat() / GameConfig::instance().scaleFactor() / 2;
-				sizeY = fixtureJSON["size"]["width"].asFloat() / GameConfig::instance().scaleFactor() / 2;
+				sizeY = fixtureJSON["size"]["height"].asFloat() / GameConfig::instance().scaleFactor() / 2;
 			}
 			else {
 				sizeX = transformComponentJSON["size"]["width"].asFloat() / GameConfig::instance().scaleFactor() / 2;
-				sizeY = transformComponentJSON["size"]["width"].asFloat() / GameConfig::instance().scaleFactor() / 2;
+				sizeY = transformComponentJSON["size"]["height"].asFloat() / GameConfig::instance().scaleFactor() / 2;
 			}
 			
 			box.SetAsBox(sizeX, sizeY);

@@ -54,6 +54,7 @@ void GLRenderer::init(SDL_Window* window)
 	m_shaders[(int)GLShaderType::BASIC] = Shader(GLShaderType::BASIC);
 	m_shaders[(int)GLShaderType::UBER] = Shader(GLShaderType::UBER);
 	m_shaders[(int)GLShaderType::LINE] = Shader(GLShaderType::LINE);
+	m_shaders[(int)GLShaderType::GLOW] = Shader(GLShaderType::GLOW);
 
 	int flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
 	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
@@ -187,6 +188,7 @@ void GLRenderer::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* textur
 
 	//shader needs to be passed in
 	auto shadertype = GLShaderType::BASIC;
+	//auto shadertype = GLShaderType::GLOW;
 
 
 	if (GameConfig::instance().openGLBatching() == true) {

@@ -517,6 +517,17 @@
                 "width": 64,
                 "height": 64
             }
+        },
+        {
+            "id": "TX_GLOWWALL_352",
+            "description": "GlowWall 352",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 36,
+                "y": 128,
+                "width": 352,
+                "height": 32
+            }
         }
     ],
     "fonts": [

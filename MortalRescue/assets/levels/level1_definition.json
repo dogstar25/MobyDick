@@ -34,6 +34,11 @@
             "cameraFollow": false
         },
         {
+            "id": "LOC_0015_0023",
+            "gameObjectId": "GLOWWALL_352",
+            "name": "Button1_TARGET"
+        },
+        {
             "id": "LOC_0014_0020",
             "gameObjectId": "TURRET"
         },
@@ -94,8 +99,8 @@
         {
             "id": "LOC_0033_0002",
             "gameObjectId": "SURVIVOR",
-            "cameraFollow": false,
-            "name": "Button1_TARGET"
+            "cameraFollow": false
+            
         },
         {
             "id": "LOC_0028_0003",

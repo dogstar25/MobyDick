@@ -25,12 +25,17 @@ void NavigationComponent::postInit()
 {
 	//For this GameObject, find all other navigation gameobjects that have been created, 
 	// and initilaize the navigation data required
+	updateNavObjectsAccess();
 
-	auto location = parent()->getCenterPosition();
+}
+
+void NavigationComponent::updateNavObjectsAccess()
+{
+
+	m_accessibleNavObjects.clear();
 
 	for (auto& gameObject : parent()->parentScene()->gameObjects()[LAYER_ABSTRACT])
 	{
-
 		if (gameObject->hasComponent(ComponentTypes::NAVIGATION_COMPONENT)) {
 
 			//Ignore the gameObject in the world collection that IS this particular gameObject
@@ -49,18 +54,8 @@ void NavigationComponent::postInit()
 					m_accessibleNavObjects.push_back(gameObject);
 
 				}
-
-
 			}
-
-
-
 		}
-
-
-
 	}
-
-
 
 }

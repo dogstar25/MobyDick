@@ -17,6 +17,9 @@ public:
 	float percentTargetMet();
 	float calculateFPS(int& frameCount);
 	void reset();
+	bool isSet() {
+		return m_targetDuration > std::chrono::duration<float>{0};
+	};
 
 	/*Timer(Timer&& other) noexcept : m_targetDuration(other.m_targetDuration)
 	{

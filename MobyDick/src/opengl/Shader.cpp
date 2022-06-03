@@ -30,6 +30,11 @@ Shader::Shader(GLShaderType shaderType)
 		m_shaderSource = _parseShaderSource("../opengl/shaders/uberShader.glsl");
         //m_shaderSource.vertexSource = std::string(gonFrag1);
 	}
+	if (shaderType == GLShaderType::GLOW) {
+
+		m_shaderSource.vertexSource = std::string(glowShader::vertextShader);
+		m_shaderSource.fragmentSource = std::string(glowShader::fragmentShader);
+	}
 
     m_vertextShaderId = glCreateShader(GL_VERTEX_SHADER);
     m_fragmentShaderId = glCreateShader(GL_FRAGMENT_SHADER);
