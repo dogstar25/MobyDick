@@ -104,7 +104,7 @@ void BrainComponent::update()
 		break;
 	}
 
-
+	//m_previousPosition = (parent()->getCenterPosition();
 }
 
 void BrainComponent::postInit()
@@ -174,7 +174,7 @@ void BrainComponent::_updateSensorInput()
 	//of sight to
 	for (BrainAABBFoundObject detectedObject : BrainAABBCallback::instance().foundObjects()) {
 
-		if (parent()->id() == "SURVIVOR") {
+		if (parent()->id() == "DRONE") {
 			int todd = 1;
 		}
 		for (auto i = 0; i < m_detectObjectTraits.size(); i++) {
@@ -237,8 +237,9 @@ bool BrainComponent::_hasLineOfSight(BrainAABBFoundObject& detectedObject)
 
 		for (BrainRayCastFoundItem rayHitObject : RayCastCallBack::instance().intersectionItems()) {
 
-			//Is this a barrier and also NOT its own body
-			if (rayHitObject.gameObject->hasTrait(TraitTag::barrier) && rayHitObject.gameObject != parent()) {
+			//Is this a barrier and also NOT its own body and the object is not physicsdisabled
+			if (rayHitObject.gameObject->hasTrait(TraitTag::barrier) && 
+				rayHitObject.gameObject != parent() ) {
 				clearPath = false;
 				break;
 			}
@@ -250,7 +251,7 @@ bool BrainComponent::_hasLineOfSight(BrainAABBFoundObject& detectedObject)
 	return clearPath;
 }
 
-void BrainComponent::navigate()
+bool BrainComponent::navigate()
 {
 
 	//If we do not have an interim destination then we are off the nav path so get to the nearest one
@@ -270,7 +271,6 @@ void BrainComponent::navigate()
 
 		//Now that we have hit this interim nav point, add it to a list of visted nav points
 		//so that we can avoid these while trying to navigate to the ultimate target destination
-		//while in patrol mode
 		m_tempVisitedNavPoints.push_back(m_interimDestination.value());
 
 		//Looks for next interim destination. null_Opt is returned if we alerady are at the
@@ -292,6 +292,8 @@ void BrainComponent::navigate()
 	else {
 		executeMove();
 	}
+
+	return alreadyAtClosestInterimToTargetDestination;
 
 }
 
@@ -479,6 +481,7 @@ GameObject* BrainComponent::getClosestNavPoint(SDL_FPoint targetPosition, int na
 
 	return closestNavPoint;
 }
+
 
 //void BrainComponent::_updateSensorInput()
 //{

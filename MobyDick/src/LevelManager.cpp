@@ -405,3 +405,16 @@ void LevelManager::_buildLevelObjects(Scene* scene)
 	}
 }
 
+void LevelManager::refreshNavigationAccess(Scene* scene)
+{
+	for (auto& gameObject : scene->gameObjects()[LAYER_ABSTRACT])
+	{
+		if (gameObject->hasComponent(ComponentTypes::NAVIGATION_COMPONENT)) {
+
+			const auto& navComponent = gameObject->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
+			navComponent->updateNavObjectsAccess();
+		}
+	}
+
+
+}

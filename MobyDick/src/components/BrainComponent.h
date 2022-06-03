@@ -42,6 +42,7 @@ protected:
 
     std::optional<GameObject*> m_targetDestination{};
     std::optional<GameObject*> m_interimDestination{};
+    
 
     //int m_sensorLength{};
     //int m_sensorOffset{};
@@ -56,7 +57,7 @@ protected:
     GameObject* getClosestNavPoint(SDL_FPoint targetPosition, int navType);
     GameObject* getClosestSeenNavPoint(SDL_FPoint targetPosition, int navType);
     std::optional<GameObject*> getNextinterimDestination();
-    void navigate();
+    bool navigate();
     void executeMove();
     void stopMovement();
 

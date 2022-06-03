@@ -21,5 +21,9 @@ void ButtonInteraction::perform(GameObject* interactingObject, GameObject* inter
 		animationComponent->animate(ANIMATION_IDLE, ANIMATE_CONTINUOUS);
 	}
 
+	//Since we are disabling and enabling a wall that could affect navigation
+	//then refresh all navigation objects accessibility
+	LevelManager::instance().refreshNavigationAccess(bottonTargetObject->parentScene());
+
 	
 }

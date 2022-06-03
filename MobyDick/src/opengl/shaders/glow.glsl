@@ -1,118 +1,25 @@
-#pragma once
-
-namespace basicShader
-{
-    const char* vertextShader = R"(
-#version 450 core
+#shader vertex
+#version 330 core
 
 layout(location=0) in vec3 i_position;
 layout(location=1) in vec4 i_color;
 layout(location=2) in vec2 i_texCoord;
-layout(location=3) in float i_texIndex;
 
 uniform mat4 u_projection_matrix;
 out vec4 v_color;
 out vec2 v_texCoord;
-out float v_texIndex;
 
 void main() {
     v_color = i_color;
     v_texCoord = i_texCoord;
-    v_texIndex = i_texIndex;
     gl_Position = u_projection_matrix * vec4( i_position, 1.0 );
 };
 
-)";
+#shader fragment
+#version 330 core
 
-    const char* fragmentShader = R"(
-#version 450 core
-
-layout(location=0) out vec4 o_color;
-
-in vec4 v_color;
-in vec2 v_texCoord;
-in float v_texIndex;
-uniform sampler2D u_Texture;
-
-
-void main() {
-    vec4 texColor;
-
-    texColor = texture(u_Texture, v_texCoord );
-
-    o_color = texColor * v_color ;
-
-};
-
-)";
-
-}
-namespace lineShader
-{
-    const char* vertextShader = R"(
-#version 450 core
-
-layout(location=0) in vec3 i_position;
-layout(location=1) in vec4 i_color;
-
-uniform mat4 u_projection_matrix;
-out vec4 v_color;
-
-void main() {
-    v_color = i_color;
-    gl_Position = u_projection_matrix * vec4( i_position, 1.0 );
-};
-
-)";
-
-    const char* fragmentShader = R"(
-#version 450 core
-
-layout(location=0) out vec4 o_color;
-
-in vec4 v_color;
-
-
-void main() {
-
-    o_color = v_color ;
-
-};
-
-)";
-
-}
-
-namespace glowShader
-{
-	const char* vertextShader = R"(
-#version 450 core
-
-layout(location=0) in vec3 i_position;
-layout(location=1) in vec4 i_color;
-layout(location=2) in vec2 i_texCoord;
-layout(location=3) in float i_texIndex;
-
-uniform mat4 u_projection_matrix;
-out vec4 v_color;
-out vec2 v_texCoord;
-out float v_texIndex;
-
-void main() {
-    v_color = i_color;
-    v_texCoord = i_texCoord;
-    v_texIndex = i_texIndex;
-    gl_Position = u_projection_matrix * vec4( i_position, 1.0 );
-};
-
-
-)";
-
-	const char* fragmentShader = R"(
-#version 450 core
-
-const float blurSize = 1.0/2.0;
-const float intensity = 1.80;
+const float blurSize = 1.0/1024.0;
+const float intensity = 0.35;
 
 layout(location=0) out vec4 o_color;
 in vec4 v_color;
@@ -151,11 +58,6 @@ void main()
 
    //increase blur with intensity!
    //fragColor = sum*intensity + texture(iChannel0, texcoord); 
-
-   o_color = sum*intensity * v_color * texture(u_Texture, v_texCoord);
+   o_color = sum * v_color * texture(u_Texture, v_texCoord);
  
- };
-
-)";
-
-}
+ }

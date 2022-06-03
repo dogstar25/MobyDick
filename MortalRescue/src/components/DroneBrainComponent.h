@@ -29,6 +29,8 @@ private:
 	SDL_FPoint m_targetLocation{0,0};
 	Timer m_engageStateTimer{};
 	Timer m_eyeFireDelayTimer{};
+	Timer m_patrolStuckTimer{};
+	std::optional<SDL_FPoint> m_previousLocation{};
 
 
 	void _doPatrol();
@@ -44,7 +46,8 @@ private:
 	std::optional<SDL_FPoint> _detectPlayer();
 
 	//void navigatePatrol();
-	void navigateEngage();
+	void _navigateEngage();
+	bool _isStuck();
 
 };
 

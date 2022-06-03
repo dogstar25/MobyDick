@@ -42,6 +42,7 @@ public:
 
 	void addLevelObject(int xIndex, int yIndex, LevelObject levelObject);
 	void setLevelObjectArraySize(int width, int height);
+	void refreshNavigationAccess(Scene* scene);
 
 	//Accessor Functions
 	std::string description() {	return m_description; }

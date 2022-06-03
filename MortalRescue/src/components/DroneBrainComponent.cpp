@@ -104,7 +104,24 @@ void DroneBrainComponent::_doPatrol()
 
 	}
 
+	//Execute the base navigation logic
 	navigate();
+
+	//Catch all stuck and need to pick a new destination
+	if (_isStuck()) {
+		m_tempVisitedNavPoints.clear();
+		m_interimDestination.reset();
+		m_targetDestination = getNextPatrolDestination();
+	}
+
+	
+	//If we have reached the closest point to the target due to level blockages or whatever
+	//then pick a new waypoint and clear the tempNavPoints
+	//bool atClosestAsPossibleToTarget = navigate();
+	//if (atClosestAsPossibleToTarget) {
+	//	m_tempVisitedNavPoints.clear();
+	//	m_targetDestination = getNextPatrolDestination();
+	//}
 
 }
 
@@ -160,12 +177,12 @@ void DroneBrainComponent::_doEngage()
 	}
 
 	//Navigate towards target location, unless you are already there
-	navigateEngage();
+	_navigateEngage();
 
 
 }
 
-void DroneBrainComponent::navigateEngage()
+void DroneBrainComponent::_navigateEngage()
 {
 
 	//If we have reached the interim destination then find the next possible interim destination that gets us
@@ -359,6 +376,41 @@ std::optional<SDL_FPoint> DroneBrainComponent::_detectPlayer()
 
 	return playerPosition;
 
+}
+
+bool DroneBrainComponent::_isStuck()
+{
+	bool isStuck = {};
+
+	if (m_previousLocation.has_value() == false) {
+		m_previousLocation = {-50,-50};
+	}
+
+	//Check if we've moved from last iteration
+	if (util::calculateDistance(parent()->getCenterPosition(), m_previousLocation.value()) < HASMOVED_DISTANCE_TOLERANCE) {
+
+		if (m_patrolStuckTimer.isSet()) {
+
+			if (m_patrolStuckTimer.hasMetTargetDuration()) {
+				isStuck = true;
+			}
+			else {
+				isStuck =  false;
+			}
+		}
+		else {
+			m_patrolStuckTimer = { 3 };
+			isStuck =  false;
+		}
+
+	}
+	else {
+		m_patrolStuckTimer = { 0 };
+	}
+
+	m_previousLocation = parent()->getCenterPosition();
+
+	return isStuck;
 }
 
 
