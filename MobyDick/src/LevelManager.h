@@ -55,16 +55,18 @@ private:
 
 	std::string m_description;
 	std::string m_blueprintTexture;
-	Json::Value m_locationList;
+	Json::Value m_colorDefinedList;
+	Json::Value m_locationDefinedList;
 	std::vector<std::shared_ptr<Trigger>> m_levelTriggers;
 
 	std::vector< std::vector <LevelObject>> m_levelObjects;
 
 	std::optional<LevelObject> _determineTile(int x, int y, SDL_Surface* bluePrintSurface);
 	LevelObject _determineWallObject(int x, int y, SDL_Surface* bluePrintSurface);
-	std::optional<LevelObject> _determineLocationObject(int x, int y, SDL_Surface* bluePrintSurface);
+	std::optional<LevelObject> _determineLocationDefinedObject(int x, int y);
+	std::optional<LevelObject> _determineColorDefinedObject(SDL_Color color);
 	void _loadDefinition(std::string levelId);
 	void _buildLevelObjects(Scene* scene);
-
+	bool _isColorDefinedObject(SDL_Color color);
 };
 

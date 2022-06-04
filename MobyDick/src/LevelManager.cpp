@@ -6,6 +6,7 @@
 
 #include "EnumMaps.h"
 #include "Game.h"
+#include "ColorMap.h"
 
 extern std::unique_ptr<Game> game;
 
@@ -89,9 +90,14 @@ void LevelManager::_loadDefinition(std::string levelId)
 	//Initialize World bounds
 	game->setWorldParams(m_levelBounds, m_tileWidth, m_tileHeight);
 
+	//Save all color defined definitions
+	if (root.isMember("colorDefinedObjects")) {
+		m_colorDefinedList = root["colorDefinedObjects"];
+	}
+
 	//Save all locationobject definitions
-	if (root.isMember("locationObjects")) {
-		m_locationList = root["locationObjects"];
+	if (root.isMember("locationDefinedObjects")) {
+		m_locationDefinedList = root["locationDefinedObjects"];
 	}
 
 	//Get all trigger items
@@ -207,19 +213,63 @@ std::optional<LevelObject> LevelManager::_determineTile(int x, int y, SDL_Surfac
 	SDL_GetRGBA(*(Uint32*)currentPixel, surface->format, &red, &green, &blue, &alpha);
 	SDL_Color currentPixelcolor = { red, green, blue };
 
-	//If this is a wall, determine the wall object, otherwise lookup the object in the level definition file
+	//Black pixels are walls
 	if (currentPixelcolor == Colors::BLACK)	{
 		levelObject = _determineWallObject(x,y,surface);
 	}
+
+	//If this is NOT white, then its either a color defined object or a locationdefined object
+	//both are defined in the levelX_definition.json file
 	else if (currentPixelcolor != Colors::WHITE) {
-		levelObject = _determineLocationObject(x, y, surface);
+		if (_isColorDefinedObject(currentPixelcolor)) {
+			levelObject = _determineColorDefinedObject(currentPixelcolor);
+		}
+		else {
+			levelObject = _determineLocationDefinedObject(x, y);
+		}
 	}
 
 	return levelObject;
 
 }
 
-std::optional<LevelObject> LevelManager::_determineLocationObject(int x, int y, SDL_Surface* bluePrintSurface)
+std::optional<LevelObject> LevelManager::_determineColorDefinedObject(SDL_Color color)
+{
+
+	std::optional<LevelObject> levelObject{ };
+
+	//This location should have a location item defined for it 
+	for (Json::Value colorItemJSON : m_colorDefinedList) {
+
+		SDL_Color definedColor = ColorMap::instance().toSDLColor(colorItemJSON["color"].asString());
+		if (definedColor == color) {
+
+			levelObject = LevelObject();
+			levelObject->gameObjectId = colorItemJSON["gameObjectId"].asString();
+			if (colorItemJSON.isMember("layer")) {
+				levelObject->layer = EnumMap::instance().toEnum(colorItemJSON["layer"].asString());
+			}
+			if (colorItemJSON.isMember("cameraFollow")) {
+				levelObject->cameraFollow = colorItemJSON["cameraFollow"].asBool();
+			}
+			if (colorItemJSON.isMember("name")) {
+				levelObject->name = colorItemJSON["name"].asString();
+			}
+			if (colorItemJSON.isMember("angle")) {
+				levelObject->angleAdjustment = colorItemJSON["angle"].asInt();
+			}
+
+		}
+	}
+
+	if (levelObject.has_value() == false) {
+		std::cout << "WARNING: Color Defined Blueprint LevelObject found with no definition.\n";
+	}
+	
+	return levelObject;
+}
+
+std::optional<LevelObject> LevelManager::_determineLocationDefinedObject(int x, int y)
 {
 
 	std::stringstream levellocationObjectId;
@@ -229,7 +279,7 @@ std::optional<LevelObject> LevelManager::_determineLocationObject(int x, int y, 
 	std::optional<LevelObject> levelObject{ };
 
 	//This location should have a location item defined for it 
-	for (Json::Value locationItemJSON : m_locationList) {
+	for (Json::Value locationItemJSON : m_locationDefinedList) {
 
 		std::string id = locationItemJSON["id"].asString();
 		if (levelObjectId == id) {
@@ -256,10 +306,9 @@ std::optional<LevelObject> LevelManager::_determineLocationObject(int x, int y, 
 	if (levelObject.has_value() == false) {
 		std::cout << "WARNING: Blueprint LevelObject found at " << x << " " << y << " " << " found with no definition.\n";
 	}
-	
+
 	return levelObject;
 }
-
 
 LevelObject LevelManager::_determineWallObject(int x, int y, SDL_Surface* bluePrintSurface)
 {
@@ -385,6 +434,20 @@ LevelObject LevelManager::_determineWallObject(int x, int y, SDL_Surface* bluePr
 
 }
 
+bool LevelManager::_isColorDefinedObject(SDL_Color color)
+{
+
+	for (Json::Value colorItemJSON : m_colorDefinedList) {
+
+		SDL_Color definedColor = ColorMap::instance().toSDLColor(colorItemJSON["color"].asString());
+		if (definedColor == color) {
+			return true;
+		}
+	}
+
+	return false;
+
+}
 
 void LevelManager::_buildLevelObjects(Scene* scene)
 {
