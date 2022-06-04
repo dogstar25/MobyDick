@@ -20,7 +20,20 @@
         }
 
     ],
-    "locationObjects": [
+    "colorDefinedObjects": [
+        {
+            "color": "Colors::BLUE",
+            "gameObjectId": "NAVIGATION_WAYPOINT",
+            "layer": "LAYER_ABSTRACT"
+        },
+        {
+            "color": "Colors::CYAN",
+            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "layer": "LAYER_ABSTRACT"
+        }
+
+    ],
+    "locationDefinedObjects": [
         {
             "id": "LOC_0007_0005",
             "gameObjectId": "GINA_64",
@@ -115,86 +128,6 @@
         {
             "id": "LOC_0017_0003",
             "gameObjectId": "SURVIVOR"
-        },
-        {
-            "id": "LOC_0002_0002",
-            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
-            "layer": "LAYER_ABSTRACT"
-        },
-        {
-            "id": "LOC_0020_0016",
-            "gameObjectId": "NAVIGATION_WAYPOINT",
-            "layer": "LAYER_ABSTRACT"
-        },
-        {
-            "id": "LOC_0005_0027",
-            "gameObjectId": "NAVIGATION_WAYPOINT",
-            "layer": "LAYER_ABSTRACT"
-        },
-        {
-            "id": "LOC_0020_0027",
-            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
-            "layer": "LAYER_ABSTRACT"
-        },
-        {
-            "id": "LOC_0036_0027",
-            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
-            "layer": "LAYER_ABSTRACT"
-        },
-        {
-            "id": "LOC_0055_0027",
-            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
-            "layer": "LAYER_ABSTRACT"
-        },
-        {
-            "id": "LOC_0050_0027",
-            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
-            "layer": "LAYER_ABSTRACT"
-        },
-        {
-            "id": "LOC_0075_0027",
-            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
-            "layer": "LAYER_ABSTRACT"
-        },
-        {
-            "id": "LOC_0092_0027",
-            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
-            "layer": "LAYER_ABSTRACT"
-        },
-        {
-            "id": "LOC_0124_0027",
-            "gameObjectId": "NAVIGATION_WAYPOINT",
-            "layer": "LAYER_ABSTRACT"
-        },
-        {
-            "id": "LOC_0062_0013",
-            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
-            "layer": "LAYER_ABSTRACT"
-        },
-        {
-            "id": "LOC_0055_0004",
-            "gameObjectId": "NAVIGATION_WAYPOINT",
-            "layer": "LAYER_ABSTRACT"
-        },
-        {
-            "id": "LOC_0080_0015",
-            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
-            "layer": "LAYER_ABSTRACT"
-        },
-        {
-            "id": "LOC_0092_0015",
-            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
-            "layer": "LAYER_ABSTRACT"
-        },
-        {
-            "id": "LOC_0111_0014",
-            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
-            "layer": "LAYER_ABSTRACT"
-        },
-        {
-            "id": "LOC_0110_0003",
-            "gameObjectId": "NAVIGATION_WAYPOINT",
-            "layer": "LAYER_ABSTRACT"
         }
     ]
 }
