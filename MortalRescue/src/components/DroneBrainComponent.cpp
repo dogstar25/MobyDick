@@ -104,8 +104,14 @@ void DroneBrainComponent::_doPatrol()
 
 	}
 
+
 	//Execute the base navigation logic
 	navigate();
+	//bool atClosestAsPossibleToTarget = navigate();
+	//if (atClosestAsPossibleToTarget) {
+	//	m_tempVisitedNavPoints.clear();
+	//	m_targetDestination = getNextPatrolDestination();
+	//}
 
 	//Catch all stuck and need to pick a new destination
 	if (_isStuck()) {
@@ -113,15 +119,6 @@ void DroneBrainComponent::_doPatrol()
 		m_interimDestination.reset();
 		m_targetDestination = getNextPatrolDestination();
 	}
-
-	
-	//If we have reached the closest point to the target due to level blockages or whatever
-	//then pick a new waypoint and clear the tempNavPoints
-	//bool atClosestAsPossibleToTarget = navigate();
-	//if (atClosestAsPossibleToTarget) {
-	//	m_tempVisitedNavPoints.clear();
-	//	m_targetDestination = getNextPatrolDestination();
-	//}
 
 }
 

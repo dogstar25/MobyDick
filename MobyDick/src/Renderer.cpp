@@ -60,3 +60,16 @@ void Renderer::drawPoints(std::vector<SDL_FPoint> points, SDL_Color color)
 
 }
 
+void Renderer::initImGuiFonts(ImGuiIO& io)
+{
+
+	//first font loaded is the default
+	m_font22 = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 22.0f);
+
+	m_font12 = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 12.0f);
+	m_font64 = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 64.0f);
+	m_font32 = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 32.0f);
+
+
+}
+

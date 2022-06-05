@@ -14,7 +14,6 @@ struct WeaponLevelDetail {
 
 	int level{};
 	float force{};
-	int levelUpTarget{};
 	std::optional<SDL_Color> color{};
 	std::string bulletPoolId{};
 };
@@ -39,8 +38,13 @@ protected:
 	
 	int	m_maxLevel{ 1 };
 	int m_currentLevel{ 1 };
-	float
-		m_fireOffset;
+	float m_fireOffset{};
+	float m_currentLevelUpAccrual{};
+
+	//Even though the levelUpIncrement is the same for each level,
+	//Individual games can adjust the collection item value by a percentage to make each level different
+	//This woul dbe done at the individual games' contactlistener collision logic
+	float m_levelUpIncrement{};
 
 	std::map<int, WeaponLevelDetail> m_weaponLevelDetails;
 
