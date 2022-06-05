@@ -21,9 +21,13 @@ private:
 	void hudScrapCount();
 	void hudScrapBar();
 	void hudLives();
+	void weaponLevel();
+	void hudWeaponAccrualBar(ImVec4 color, float accrualValue);
+	void hudWeaponPistolImage(ImVec4 gunColor);
 
 	ImVec4 m_hudRed{};
 	ImVec4 m_hudWhite{};
 	ImVec4 m_hudGreen{};
+	ImVec4 m_hudBlue{};
 
 };

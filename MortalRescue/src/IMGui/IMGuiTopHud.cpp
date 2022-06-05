@@ -5,6 +5,8 @@
 #include "game.h"
 #include <memory>
 #include "../GameConstants.h"
+#include "imgui/IMGuiUtil.h"
+
 
 extern std::unique_ptr<Game> game;
 
@@ -28,6 +30,12 @@ IMGuiTopHud::IMGuiTopHud(std::string gameObjectId, b2Vec2 padding, ImVec4 backgr
 	util::colorApplyAlpha(green, 255);
 	m_hudGreen = util::SDLColorToImVec4(green);
 
+	SDL_Color blue = Colors::BLUE;
+	util::colorApplyAlpha(blue, 255);
+	m_hudBlue = util::SDLColorToImVec4(blue);
+
+
+
 
 }
 
@@ -50,8 +58,7 @@ glm::vec2 IMGuiTopHud::render()
 	{
 
 		hudLives();
-		hudScrapCount();
-		hudScrapBar();
+		weaponLevel();
 
 		windowSize = { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
 		
@@ -112,8 +119,6 @@ void IMGuiTopHud::hudLives()
 
 	}
 
-	ImGui::NewLine();
-
 }
 
 
@@ -121,6 +126,100 @@ void IMGuiTopHud::hudScrapCount()
 {
 
 	ImGui::Text("%s  %d", "ScrapCount", (int)game->contextMananger()->getValue("SCRAP_COUNT"));
+
+}
+
+void IMGuiTopHud::weaponLevel()
+{
+
+	ImGui::NewLine();
+
+	ImVec4 gunColor{};
+
+	//TextureAtlas Coordinates
+
+	//Get the value for the current player weapon levelup accrual
+	auto& levelUpAccrual = game->contextMananger()->getStatusItem("PLAYER_WEAPON_LEVEL_ACCRUAL");
+
+	//Determine color of weapon
+	auto& weaponLevel = game->contextMananger()->getStatusItem("PLAYER_WEAPON_LEVEL");
+	if (weaponLevel.value() == 1) {
+		gunColor = m_hudBlue;
+	}
+	else if (weaponLevel.value() == 2) {
+		gunColor = m_hudGreen;
+	}
+	else if (weaponLevel.value() == 3) {
+		gunColor = m_hudRed;
+	}
+
+	//Pistol image
+	hudWeaponPistolImage(gunColor);
+
+	//Level Text
+	std::stringstream levelTxtSS;
+	std::string levelTxt;
+	levelTxtSS << "LVL" << weaponLevel.value();
+	levelTxt = levelTxtSS.str();
+	ImGui::SameLine();
+	//ImGui::setFont64();
+	ImGui::PushFont(game->renderer()->font64());
+
+	//ImGui::Dummy(ImVec2(0.0f, 32.0f));
+	ImGui::Text(levelTxt.c_str());
+	ImGui::PopFont();
+	ImGui::NewLine();
+	//Bar grapgh showing the accrual level
+	hudWeaponAccrualBar(gunColor, levelUpAccrual.value());
+
+}
+
+void IMGuiTopHud::hudWeaponPistolImage(ImVec4 color)
+{
+	//TextureAtlas Coordinates for bar
+	glm::vec2 topLeft = util::glNormalizeTextureCoords({ 0,98 }, { 256, 256 });
+	glm::vec2 bottomRight = util::glNormalizeTextureCoords({ 63,161 }, { 256, 256 });
+
+	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
+
+		GLuint textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::IMGUI_TEXTURE_ATLAS);
+		ImGui::Image((void*)(int*)textureAtlasId, ImVec2(64, 64), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), color);
+	}
+	else {
+
+		//SDL2 Texture void* is the SDL_Texture*
+		SDL_Texture* sdlTexture = TextureManager::instance().getTexture("TEXTURE_IMGUI_ATLAS")->sdlTexture;
+		ImGui::Image((void*)(SDL_Texture*)sdlTexture, ImVec2(64, 64), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), color);
+	}
+
+}
+
+void IMGuiTopHud::hudWeaponAccrualBar(ImVec4 color, float accrualValue)
+{
+	//CurrLineTextBaseOffset
+	ImGui::SameLine();
+
+	//TextureAtlas Coordinates for bar
+	glm::vec2 topLeft = util::glNormalizeTextureCoords({ 33,0 }, { 256, 256 });
+	glm::vec2 bottomRight = util::glNormalizeTextureCoords({ 63,31 }, { 256, 256 });
+
+	for (int i = 0; i < accrualValue; i++) {
+
+		if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
+
+			GLuint textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::IMGUI_TEXTURE_ATLAS);
+			ImGui::Image((void*)(int*)textureAtlasId, ImVec2(2, 32), ImVec2(bottomRight.x, bottomRight.y), ImVec2(topLeft.x, topLeft.y), color);
+			ImGui::SameLine(0.0f, 0);
+		}
+		else {
+
+			//SDL2 Texture void* is the SDL_Texture*
+			SDL_Texture* sdlTexture = TextureManager::instance().getTexture("TEXTURE_IMGUI_ATLAS")->sdlTexture;
+			ImGui::Image((void*)(SDL_Texture*)sdlTexture, ImVec2(2, 32), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), color);
+			ImGui::SameLine(0.0f, 0);
+		}
+
+	}
 
 }
 

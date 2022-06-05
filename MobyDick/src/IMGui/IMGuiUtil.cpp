@@ -1,6 +1,9 @@
 #include "IMGuiUtil.h"
 #include "../GameConfig.h"
+#include "../Renderer.h"
+#include "../game.h"
 
+extern std::unique_ptr<Game> game;
 namespace ImGui
 {
 	void MobyDickInit(Game* mobyDickGame)
@@ -14,8 +17,7 @@ namespace ImGui
 		ImGui::StyleColorsDark();
 
 		//Fonts
-		font22 = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 22.0f);
-		font12 = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 12.0f);
+		game->renderer()->initImGuiFonts(io);
 
 		auto gl_context = SDL_GL_GetCurrentContext();
 		const char* glsl_version = "#version 130";
@@ -75,13 +77,19 @@ namespace ImGui
 		auto frate = ImGui::GetIO().Framerate;
 		ImGui::Value("FPS", frate);
 
-		ImGui::PushFont(ImGui::font12);
+		ImGui::PushFont(game->renderer()->font32());
 		ImGui::Text("Todd");
 		ImGui::PopFont();
 		ImGui::Text("Todd2");
 		int dwWidth = GameConfig::instance().windowWidth() / 2;
 		ImGui::SetWindowPos(ImVec2(0, 0));
 		ImGui::End();
+
+	}
+
+	void setFont64()
+	{
+		//ImGui::PushFont(ImGui::font64);
 
 	}
 

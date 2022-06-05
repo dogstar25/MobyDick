@@ -459,26 +459,24 @@
                 {
                     "id": "WEAPON_COMPONENT",
                     "fireOffset": -0.5,
+                    "levelUpIncrement": 50,
                     "weaponLevels": [
                         {
                             "level": 1,
                             "force": 1,
-                            "levelUpTarget": 25,
-                            "color": "Colors::RED",
+                            "color": "Colors::BLUE",
                             "bulletPoolId": "BULLET1_POOL"
                         },
                         {
                             "level": 2,
                             "force": 2,
-                            "levelUpTarget": 50,
                             "color": "Colors::GREEN",
                             "bulletPoolId": "BULLET1_POOL"
                         },
                         {
                             "level": 3,
                             "force": 5,
-                            "levelUpTarget": 75,
-                            "color": "Colors::WHITE",
+                            "color": "Colors::RED",
                             "bulletPoolId": "BULLET1_POOL"
                         }
                     ]

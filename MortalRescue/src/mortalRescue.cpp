@@ -15,8 +15,10 @@ std::unique_ptr<Game> game;
 
 int main(int argc, char* args[])
 {
+	//create game 
 	game = std::make_unique<MRGame>();
 
+	//init game
 	game->init(
 		new MRContactListener(), 
 		new MRContactFilter(),
@@ -28,10 +30,8 @@ int main(int argc, char* args[])
 		new MRContextManager()
 	);
 
-	while (game->gameState() != GameState::QUIT)
-	{
-		game->play();
-	}
+	//play game
+	game->play();
 
 	return 0;
 }

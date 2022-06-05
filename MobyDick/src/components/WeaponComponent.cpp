@@ -16,15 +16,14 @@ WeaponComponent::WeaponComponent(Json::Value componentJSON)
 	m_currentLevel = 1;
 
 	m_fireOffset = componentJSON["fireOffset"].asFloat();
+	m_levelUpIncrement = componentJSON["levelUpIncrement"].asInt();
 
 	for (Json::Value itrWeaponLevel : componentJSON["weaponLevels"])
 	{
 		int level = itrWeaponLevel["level"].asInt();
-
 		WeaponLevelDetail weaponLevelDetail;
 
 		weaponLevelDetail.level = itrWeaponLevel["level"].asInt();
-		weaponLevelDetail.levelUpTarget = itrWeaponLevel["levelUpTarget"].asInt();
 		weaponLevelDetail.force = itrWeaponLevel["force"].asFloat();
 		if (itrWeaponLevel.isMember("color")) {
 			weaponLevelDetail.color = ColorMap::instance().toSDLColor(itrWeaponLevel["color"].asString());
@@ -33,7 +32,6 @@ WeaponComponent::WeaponComponent(Json::Value componentJSON)
 		m_weaponLevelDetails.emplace(level, std::move(weaponLevelDetail));
 
 	}
-
 
 }
 
