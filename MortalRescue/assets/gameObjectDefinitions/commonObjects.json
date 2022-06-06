@@ -283,7 +283,7 @@
                         "width": 32,
                         "height": 32
                     },
-                    "absolutePositioning": false
+                    "absolutePositioning": true
                 },
                 {
                     "id": "ANIMATION_COMPONENT",

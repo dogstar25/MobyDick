@@ -10,7 +10,7 @@
 
 extern std::unique_ptr<Game> game;
 
-IMGuiTopHud::IMGuiTopHud(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor,
+IMGuiTopHud::IMGuiTopHud(std::string gameObjectId, b2Vec2 padding, Scene* parentScene, ImVec4 backgroundColor, ImVec4 textColor,
 	ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize) :
 	IMGuiItem(gameObjectId, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize)
 {
@@ -35,6 +35,7 @@ IMGuiTopHud::IMGuiTopHud(std::string gameObjectId, b2Vec2 padding, ImVec4 backgr
 	m_hudBlue = util::SDLColorToImVec4(blue);
 
 
+	testObject = std::make_shared<GameObject>("SWORDLADY", -1.0F, -1.0F, 0.F, parentScene);
 
 
 }
@@ -58,7 +59,10 @@ glm::vec2 IMGuiTopHud::render()
 	{
 
 		hudLives();
+		ImGui::NewLine();
 		weaponLevel();
+		ImGui::NewLine();
+		hudWeaponPistolImage(m_hudRed);
 
 		windowSize = { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
 		
@@ -176,6 +180,11 @@ void IMGuiTopHud::weaponLevel()
 
 void IMGuiTopHud::hudWeaponPistolImage(ImVec4 color)
 {
+
+	//const auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	//testObject->setPosition(transform->getTopLeftPosition());
+	//testObject->render();
+
 	//TextureAtlas Coordinates for bar
 	glm::vec2 topLeft = util::glNormalizeTextureCoords({ 0,98 }, { 256, 256 });
 	glm::vec2 bottomRight = util::glNormalizeTextureCoords({ 63,161 }, { 256, 256 });

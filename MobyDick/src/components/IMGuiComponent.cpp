@@ -7,11 +7,12 @@
 #include "imgui_impl_sdlrenderer.h"
 #include "../ColorMap.h"
 
+
 #include <memory>
 
 extern std::unique_ptr<Game> game;
 
-IMGuiComponent::IMGuiComponent(Json::Value componentJSON, std::string gameObjectId)
+IMGuiComponent::IMGuiComponent(Json::Value componentJSON, std::string gameObjectId, Scene* parentScene)
 {
 	m_componentType = ComponentTypes::IMGUI_COMPONENT;
 
@@ -62,7 +63,7 @@ IMGuiComponent::IMGuiComponent(Json::Value componentJSON, std::string gameObject
 	}
 
 
-	m_IMGuiItem = game->iMGUIFactory()->create(imguiType, gameObjectId, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize, staticText);
+	m_IMGuiItem = game->iMGUIFactory()->create(imguiType, gameObjectId, parentScene, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize, staticText);
 }
 
 void IMGuiComponent::setParent(GameObject* parentObject)

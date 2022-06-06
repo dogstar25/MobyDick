@@ -2,6 +2,7 @@
 #include "Component.h"
 #include <json/json.h>
 #include <memory>
+#include "../Scene.h"
 
 class IMGuiItem;
 
@@ -10,7 +11,7 @@ class IMGuiComponent : public Component {
 
 public:
 	IMGuiComponent() = default;
-	IMGuiComponent(Json::Value componentJSON, std::string gameObjectId);
+	IMGuiComponent(Json::Value componentJSON, std::string gameObjectId, Scene* parentScene);
 
 	void update() override;
 	void render();

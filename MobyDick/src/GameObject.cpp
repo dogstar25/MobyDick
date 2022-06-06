@@ -112,7 +112,7 @@ void GameObject::setPosition(b2Vec2 position, float angle)
 }
 
 
-void GameObject::setPosition(PositionAlignment windowPosition)
+void GameObject::setPosition(PositionAlignment windowPosition, float adjustX, float adjustY)
 {
 	float xMapPos{};
 	float yMapPos{};
@@ -166,6 +166,10 @@ void GameObject::setPosition(PositionAlignment windowPosition)
 		xMapPos = (float)(GameConfig::instance().windowWidth() - (objectWidth / 2));
 		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight);
 	}
+
+	//Add adjustments
+	xMapPos += adjustX;
+	yMapPos += adjustY;
 
 	setPosition(xMapPos, yMapPos);
 
