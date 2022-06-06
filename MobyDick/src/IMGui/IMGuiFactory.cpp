@@ -2,10 +2,11 @@
 #include "IMGuiExample.h"
 #include "IMGuiText.h"
 #include "IMGuiInteractiveMenuBasic.h"
+#include "../Scene.h"
 
 
 
-std::shared_ptr<IMGuiItem> IMGuiFactory::create(std::string iMGuiItemType, std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor, 
+std::shared_ptr<IMGuiItem> IMGuiFactory::create(std::string iMGuiItemType, std::string gameObjectId, Scene* parentScene, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor, 
 	ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize, std::string staticTextValue)
 {
 	std::shared_ptr<IMGuiItem> iMGuiItem;

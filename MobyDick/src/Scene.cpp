@@ -253,7 +253,7 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMap
 
 }
 
-GameObject* Scene::addGameObject(std::string gameObjectId, int layer, PositionAlignment windowPosition, float angle, bool cameraFollow)
+GameObject* Scene::addGameObject(std::string gameObjectId, int layer, PositionAlignment windowPosition, float adjustX, float adjustY, float angle, bool cameraFollow)
 {
 	float xMapPos{};
 	float yMapPos{};
@@ -272,7 +272,7 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, PositionAl
 
 	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, -5, -5, angle, this, cameraFollow));
 
-	gameObject->setPosition(windowPosition);
+	gameObject->setPosition(windowPosition, adjustX, adjustY);
 
 	return gameObject.get();
 
@@ -431,7 +431,17 @@ void Scene::_buildSceneGameObjects(Json::Value definitionJSON)
 		if (locationJSON.isMember("windowPosition")) {
 
 			PositionAlignment windowPosition = static_cast<PositionAlignment>(EnumMap::instance().toEnum(gameObjectJSON["location"]["windowPosition"].asString()));
-			addGameObject(id, layer, windowPosition, 0);
+
+			if (locationJSON.isMember("adjust")) {
+				auto adjustX = locationJSON["adjust"]["x"].asFloat();
+				auto adjustY = locationJSON["adjust"]["y"].asFloat();
+				addGameObject(id, layer, windowPosition, adjustX, adjustY);
+			}
+			else {
+				addGameObject(id, layer, windowPosition);
+			}
+
+			
 		}
 		else {
 			auto locationX = gameObjectJSON["location"]["x"].asFloat();
