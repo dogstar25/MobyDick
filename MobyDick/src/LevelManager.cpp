@@ -159,26 +159,25 @@ void LevelManager::load(std::string levelId, Scene* scene)
 			<<	m_width << "/" << m_height << "\n";
 	}
 
-		game->_displayLoadingMsg();
+	game->_displayLoadingMsg();
 
-		SDL_LockSurface(surface);
+	SDL_LockSurface(surface);
 
-		//Allocate the 2 dimentional vector
-		setLevelObjectArraySize(m_width, m_height);
+	//Allocate the 2 dimentional vector
+	setLevelObjectArraySize(m_width, m_height);
 
-		//Loop through entire image, top to bottom, left to right and build the
-		//2 dimensional array of tile objects
-		for (int y = 0; y < surface->h; y++)
+	//Loop through entire image, top to bottom, left to right and build the
+	//2 dimensional array of tile objects
+	for (int y = 0; y < surface->h; y++)
+	{
+		for (int x = 0; x < surface->w; x++)
 		{
-			for (int x = 0; x < surface->w; x++)
-			{
-			//determine what tile to build for current x,y location
-			auto levelObject = _determineTile(x, y, surface);
+		//determine what tile to build for current x,y location
+		auto levelObject = _determineTile(x, y, surface);
 
-			//If a valid gameObject was found at this location then store its Id
-			if (levelObject.has_value()) {
-				m_levelObjects[x][y] = levelObject.value();
-			}
+		//If a valid gameObject was found at this location then store its Id
+		if (levelObject.has_value()) {
+			m_levelObjects[x][y] = levelObject.value();
 		}
 	}
 

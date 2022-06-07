@@ -1,7 +1,9 @@
 #include "MR_IMGuiFactory.h"
 #include "IMGuiPauseWindow.h"
-#include "IMGuiTopHud.h"
 #include "IMGuiInteractiveMenuSurvivor.h"
+#include "IMGuiTopHud.h"
+#include "IMGuiTopLeftHud.h"
+#include "IMGuiTopRightHud.h"
 
 
 MR_IMGuiFactory::MR_IMGuiFactory()
@@ -21,6 +23,12 @@ std::shared_ptr<IMGuiItem> MR_IMGuiFactory::create(std::string iMGuiItemType, st
 	}
 	else if (iMGuiItemType == "IMGuiTopHud") {
 		iMGuiItem = std::make_shared<IMGuiTopHud>(gameObjectId, padding, parentScene, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize);
+	}
+	else if (iMGuiItemType == "IMGuiTopLeftHud") {
+		iMGuiItem = std::make_shared<IMGuiTopLeftHud>(gameObjectId, padding, parentScene, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize);
+	}
+	else if (iMGuiItemType == "IMGuiTopRightHud") {
+		iMGuiItem = std::make_shared<IMGuiTopRightHud>(gameObjectId, padding, parentScene, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize);
 	}
 	else if (iMGuiItemType == "IMGuiInteractiveMenuSurvivor") {
 		iMGuiItem = std::make_shared<IMGuiInteractiveMenuSurvivor>(gameObjectId, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize);

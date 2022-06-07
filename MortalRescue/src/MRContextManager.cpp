@@ -37,6 +37,7 @@ void MRContextManager::initMappings()
 	m_statusValueMap["SCRAP_COUNT"] = StatusItem{ 0, 50 };
 	m_statusValueMap["PLAYER_WEAPON_LEVEL"] = StatusItem{ 1, 3 };
 	m_statusValueMap["PLAYER_WEAPON_LEVEL_ACCRUAL"] = StatusItem{ 0, 50 };
+	m_statusValueMap["SURVIVORS_REMAINING"] = StatusItem{ 0, 50 };
 	
 
 }
