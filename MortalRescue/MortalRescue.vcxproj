@@ -197,6 +197,8 @@
     <ClCompile Include="src\IMGui\IMGuiInteractiveMenuSurvivor.cpp" />
     <ClCompile Include="src\IMGui\IMGuiPauseWindow.cpp" />
     <ClCompile Include="src\IMGui\IMGuiTopHud.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiTopLeftHud.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiTopRightHud.cpp" />
     <ClCompile Include="src\IMGui\MR_IMGuiUtil.cpp" />
     <ClCompile Include="src\IMGui\MR_IMGuiFactory.cpp" />
     <ClCompile Include="src\mortalRescue.cpp" />
@@ -304,6 +306,8 @@
     <ClInclude Include="src\cutScenes\MRCutSceneFactory.h" />
     <ClInclude Include="src\IMGui\IMGuiInteractiveMenuSurvivor.h" />
     <ClInclude Include="src\IMGui\IMGuiPauseWindow.h" />
+    <ClInclude Include="src\IMGui\IMGuiTopLeftHud.h" />
+    <ClInclude Include="src\IMGui\IMGuiTopRightHud.h" />
     <ClInclude Include="src\IMGui\MR_IMGuiUtil.h" />
     <ClInclude Include="src\IMGui\MR_IMGuiFactory.h" />
     <ClInclude Include="src\IMGui\IMGuiTopHud.h" />

@@ -79,7 +79,7 @@
 
         },
         {
-            "id": "IMGUI_HUD_TOP",
+            "id": "IMGUI_HUD_TOP_CENTER",
             "traitTags": [ "abstract" ],
             "components": [
                 {
@@ -89,7 +89,7 @@
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
                         "width": 255,
-                        "height": 250
+                        "height": 80
                     },
                     "absolutePositioning": true
 
@@ -103,7 +103,75 @@
                     },
                     "color": {
                         "background": "Colors::CHARCOAL",
-                        "backgroundAlpha": 100,
+                        "backgroundAlpha": 150,
+                        "text": "Colors::WHITE"
+                    },
+                    "autoSize": false
+
+                }
+            ]
+
+        },
+        {
+            "id": "IMGUI_HUD_TOP_LEFT",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 275,
+                        "height": 88
+                    },
+                    "absolutePositioning": true
+
+                },
+                {
+                    "id": "IMGUI_COMPONENT",
+                    "imguiType": "IMGuiTopLeftHud",
+                    "padding": {
+                        "x": 24,
+                        "y": 12
+                    },
+                    "color": {
+                        "background": "Colors::CHARCOAL",
+                        "backgroundAlpha": 150,
+                        "text": "Colors::WHITE"
+                    },
+                    "autoSize": false
+
+                }
+            ]
+
+        },
+        {
+            "id": "IMGUI_HUD_TOP_RIGHT",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 275,
+                        "height": 112
+                    },
+                    "absolutePositioning": true
+
+                },
+                {
+                    "id": "IMGUI_COMPONENT",
+                    "imguiType": "IMGuiTopRightHud",
+                    "padding": {
+                        "x": 24,
+                        "y": 24
+                    },
+                    "color": {
+                        "background": "Colors::CHARCOAL",
+                        "backgroundAlpha": 150,
                         "text": "Colors::WHITE"
                     },
                     "autoSize": false

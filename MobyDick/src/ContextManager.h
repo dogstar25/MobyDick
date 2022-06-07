@@ -19,6 +19,7 @@ public:
 	float value() { return m_value; }
 	void setValue(float newValue) { m_value = newValue; }
 	float maxValue() { return m_maximumValue; }
+	bool isAtMax() { return (m_value >= m_maximumValue); }
 
 	void reset();
 

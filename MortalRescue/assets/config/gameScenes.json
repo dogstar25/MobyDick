@@ -11,16 +11,40 @@
             "maxObjects": 5000,
             "gameObjects": [
                 {
-                    "gameObjectId": "IMGUI_HUD_TOP",
+                    "gameObjectId": "IMGUI_HUD_TOP_CENTER",
+                    "layer": "LAYER_MENU",
+                    "location": {
+                        "windowPosition": "PositionAlignment::TOP_CENTER",
+                        "adjust": {
+                            "x": 0,
+                            "y": 48
+                        }
+                    }
+                },
+                {
+                    "gameObjectId": "IMGUI_HUD_TOP_LEFT",
                     "layer": "LAYER_MENU",
                     "location": {
                         "windowPosition": "PositionAlignment::TOP_LEFT",
                         "adjust": {
-                            "x": 32,
-                            "y": 32
+                            "x": 48,
+                            "y": 48
+                        }
+                    }
+                },
+                {
+                    "gameObjectId": "IMGUI_HUD_TOP_RIGHT",
+                    "layer": "LAYER_MENU",
+                    "location": {
+                        "windowPosition": "PositionAlignment::TOP_RIGHT",
+                        "adjust": {
+                            "x": -48,
+                            "y": 48
                         }
                     }
                 }
+
+
             ],
             "keyActions": [
                 {

@@ -17,16 +17,9 @@ public:
 		ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize);
 	glm::vec2 render() override;
 
-	
-
 private:
 
-	void hudScrapCount();
-	void hudScrapBar();
 	void hudLives();
-	void weaponLevel();
-	void hudWeaponAccrualBar(ImVec4 color, float accrualValue);
-	void hudWeaponPistolImage(ImVec4 gunColor);
 
 	ImVec4 m_hudRed{};
 	ImVec4 m_hudWhite{};
