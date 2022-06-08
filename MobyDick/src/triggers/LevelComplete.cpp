@@ -1,31 +1,29 @@
 #include "LevelComplete.h"
 
 #include "../SceneManager.h"
+#include "../game.h"
+
+extern std::unique_ptr<Game> game;
 
 bool LevelComplete::hasMetCriteria()
 {
 
 	bool hasMet{ false };
 
-	Scene& scene = SceneManager::instance().scenes().back();
-	for (auto& gameObjects : scene.gameObjects())
-	{
 
-		for (int i = 0; i < gameObjects.size(); i++)
-		{
-			//assert(gameObject != nullptr && "GameObject is null");
-			if (gameObjects[i]->hasTrait(TraitTag::player)) {
+	//Loop through all of the objectives and see if they have been met
+	for (const auto& objective : LevelManager::instance().objectives()) {
 
-				//const auto& transformComponent = gameObjects[i]->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-				//if (transformComponent->getCenterPosition().x > 400) {
-				//	hasMet = true;
-				//}
-				break;
-			}
+		hasMet = true;
 
+		//Get the value that ties back to this objective from the contextManager
+		auto objectiveStatusValue = game->contextMananger()->getStatusItemValue(objective.contextManagerId);
+
+		if (objectiveStatusValue < objective.targetValue) {
+
+			hasMet = false;
+			break;
 		}
-
-
 	}
 
 	return hasMet;

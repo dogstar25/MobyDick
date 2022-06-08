@@ -131,7 +131,7 @@ void MRContactListener::_player_shieldScrap(GameObject* player, GameObject* shie
 
 	//Update the status Manager
 	//static_cast<MRStatusManager*>(game->statusMananger())->hudValueMap()["HUD_SCRAP_VALUE"].adjust(1);
-	game->contextMananger()->adjustValue("SCRAP_COUNT", 1);
+	game->contextMananger()->adjustStatusItemValue("SCRAP_COUNT", 1);
 
 	//Check to see if this upgrades the players weapon
 	auto pistol = inventoryComponent->getItem(TraitTag::weapon);
@@ -150,7 +150,7 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 {
 
 	//Update the status Manager
-	game->contextMananger()->adjustValue("LIVES_COUNT", -1);
+	game->contextMananger()->adjustStatusItemValue("LIVES_COUNT", -1);
 
 	//flag the scrap item to be removed from the game and play a sound effect
 	bullet->setRemoveFromWorld(true);
@@ -162,6 +162,8 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 void MRContactListener::_survivor_escape(GameObject* survivor, GameObject* escape, b2Vec2 contactPoint)
 {
 
+	//Update the status Manager
+	game->contextMananger()->adjustStatusItemValue("SURVIVORS_SAVED", 1);
 
 	//flag the scrap item to be removed from the game and play a sound effect
 	survivor->setRemoveFromWorld(true);

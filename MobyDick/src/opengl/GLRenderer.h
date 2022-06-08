@@ -57,7 +57,7 @@ public:
 	void renderPrimitives(int layerIndex);
 
 
-	const Shader& shader(GLShaderType shaderType) {
+	Shader& shader(GLShaderType shaderType) {
 		return m_shaders[(int)shaderType];
 	}
 

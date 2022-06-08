@@ -32,12 +32,15 @@ MRContextManager::MRContextManager()
 
 void MRContextManager::initMappings()
 {
-
+	//values of -1 indicate that they will be set by other objects that have the intimate details of the min and max values
 	m_statusValueMap["LIVES_COUNT"] = StatusItem{6, 6};
 	m_statusValueMap["SCRAP_COUNT"] = StatusItem{ 0, 50 };
-	m_statusValueMap["PLAYER_WEAPON_LEVEL"] = StatusItem{ 1, 3 };
-	m_statusValueMap["PLAYER_WEAPON_LEVEL_ACCRUAL"] = StatusItem{ 0, 50 };
-	m_statusValueMap["SURVIVORS_REMAINING"] = StatusItem{ 0, 50 };
+
+	//Min and max values are set by the player weapon component
+	m_statusValueMap["PLAYER_WEAPON_LEVEL"] = StatusItem{ 1, -1 };
+	m_statusValueMap["PLAYER_WEAPON_LEVEL_ACCRUAL"] = StatusItem{ 0, -1 };
+
+	m_statusValueMap["SURVIVORS_SAVED"] = StatusItem{ 0, -1 };
 	
 
 }

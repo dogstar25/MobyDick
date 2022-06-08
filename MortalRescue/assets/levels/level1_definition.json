@@ -9,6 +9,15 @@
         "tileHeight": 32
     },
     "tileSize": 32,
+    "objectives": [
+        {
+            "name": "Survivors",
+            "initialValue": 0,
+            "targetValue": 3,
+            "contextManagerId": "SURVIVORS_SAVED"
+        }
+
+    ],
     "levelTriggers": [
         {
             "description": "Player Death",
@@ -102,7 +111,6 @@
         {
             "id": "LOC_0028_0041",
             "gameObjectId": "SURVIVOR",
-            "cameraFollow": false
         },
         {
             "id": "LOC_0022_0005",
@@ -112,8 +120,7 @@
         {
             "id": "LOC_0033_0002",
             "gameObjectId": "SURVIVOR",
-            "cameraFollow": false
-            
+
         },
         {
             "id": "LOC_0028_0003",
@@ -123,11 +130,11 @@
         },
         {
             "id": "LOC_0002_0012",
-            "gameObjectId": "SURVIVOR"
+            "gameObjectId": "SURVIVOR",
         },
         {
             "id": "LOC_0017_0003",
-            "gameObjectId": "SURVIVOR"
+            "gameObjectId": "SURVIVOR",
         }
     ]
 }

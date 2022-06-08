@@ -25,6 +25,16 @@ struct LevelObject
 	std::string name{};
 };
 
+struct Objective
+{
+	std::string name{};
+	std::string contextManagerId{};
+	float initialValue{};
+	float targetValue{};
+	float currentValue{};
+
+};
+
 class LevelManager
 {
 public:
@@ -38,11 +48,11 @@ public:
 
 	void update(Scene* scene);
 	void load(std::string levelId, Scene* scene);
-	void clearTriggers();
 
 	void addLevelObject(int xIndex, int yIndex, LevelObject levelObject);
 	void setLevelObjectArraySize(int width, int height);
 	void refreshNavigationAccess(Scene* scene);
+	const std::vector<Objective>& objectives() { return m_objectives; }
 
 	//Accessor Functions
 	std::string description() {	return m_description; }
@@ -58,6 +68,7 @@ private:
 	Json::Value m_colorDefinedList;
 	Json::Value m_locationDefinedList;
 	std::vector<std::shared_ptr<Trigger>> m_levelTriggers;
+	std::vector<Objective> m_objectives{};
 
 	std::vector< std::vector <LevelObject>> m_levelObjects;
 

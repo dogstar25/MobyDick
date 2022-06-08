@@ -14,16 +14,24 @@ PistolWeaponComponent::PistolWeaponComponent(Json::Value definitionJSON)
 	: WeaponComponent(definitionJSON)
 {
 
+	//Give the contextManager the max level for this weapon - probably mainly for the HUD
+	auto maxLevel = m_weaponLevelDetails.size();
+	auto& pistolStatusItem = game->contextMananger()->getStatusItem("PLAYER_WEAPON_LEVEL");
+	pistolStatusItem.setMaxValue(maxLevel);
+
+	//Give the contextManager the upgrade interval value for the max for this weapon
+	auto maxIntervalValue = m_weaponLevelDetails.size();
+	auto& accrualStatusItem = game->contextMananger()->getStatusItem("PLAYER_WEAPON_LEVEL_ACCRUAL");
+	accrualStatusItem.setMaxValue(maxIntervalValue);
 
 }
-
 
 void PistolWeaponComponent::checkLevelUp(const int scrapCount)
 {
 
 	if (scrapCount >= (m_currentLevel * m_levelUpIncrement)) {
 		_levelUp();
-		game->contextMananger()->setValue("PLAYER_WEAPON_LEVEL", m_currentLevel);
+		game->contextMananger()->setStatusItemValue("PLAYER_WEAPON_LEVEL", m_currentLevel);
 	}
 
 	//Update the accrual amount used by things like the hud
@@ -34,6 +42,7 @@ void PistolWeaponComponent::checkLevelUp(const int scrapCount)
 	else {
 		m_currentLevelUpAccrual = 0;
 	}
-	game->contextMananger()->setValue("PLAYER_WEAPON_LEVEL_ACCRUAL", m_currentLevelUpAccrual);
+
+	game->contextMananger()->setStatusItemValue("PLAYER_WEAPON_LEVEL_ACCRUAL", m_currentLevelUpAccrual);
 
 }
