@@ -103,12 +103,36 @@ void LevelManager::_loadDefinition(std::string levelId)
 	//Get all trigger items
 	if (root.isMember("levelTriggers")) {
 
+		m_levelTriggers.clear();
 		for (Json::Value itrTrigger : root["levelTriggers"])
 		{
 			//Get the name of the class to be used as the action as a string
 			std::string triggerId = itrTrigger["triggerClass"].asString();
 			std::shared_ptr<Trigger> tempTrigger = TriggerMap::instance().getTrigger(triggerId);
 			m_levelTriggers.emplace_back(std::move(tempTrigger));
+
+		}
+
+	}
+
+	//Store Level Objectives
+	if (root.isMember("objectives")) {
+
+		m_objectives.clear();
+		for (Json::Value itrObjective : root["objectives"])
+		{
+			Objective objective{};
+			objective.name = itrObjective["name"].asString();
+			objective.initialValue = itrObjective["initialValue"].asFloat();
+			objective.targetValue = itrObjective["targetValue"].asFloat();
+			objective.contextManagerId = itrObjective["contextManagerId"].asString();
+			m_objectives.emplace_back(objective);
+
+			//Set the min and max values in the context Manager
+			std::string contextManagerId = itrObjective["contextManagerId"].asString();
+			auto& objectiveStatusItem = game->contextMananger()->getStatusItem(contextManagerId);
+			objectiveStatusItem.setOriginalValue(objective.initialValue);
+			objectiveStatusItem.setMaxValue(objective.targetValue);
 
 		}
 
@@ -125,16 +149,6 @@ void LevelManager::update(Scene* scene)
 			trigger->execute();
 		}
 	}
-
-}
-
-void LevelManager::clearTriggers()
-{
-
-	//Clear triggers
-	m_levelTriggers.clear();
-
-
 
 }
 
@@ -155,8 +169,8 @@ void LevelManager::load(std::string levelId, Scene* scene)
 	if (surfaceWidth != m_width ||
 		surfaceHeight != m_height)
 	{
-		std::cout << "WARNING: Blueprint " << m_id << " width/height: " << surfaceWidth << "/" << surfaceHeight << " does not match defined width/height of: " 
-			<<	m_width << "/" << m_height << "\n";
+		std::cout << "WARNING: Blueprint " << m_id << " width/height: " << surfaceWidth << "/" << surfaceHeight << " does not match defined width/height of: "
+			<< m_width << "/" << m_height << "\n";
 	}
 
 	game->_displayLoadingMsg();
@@ -172,12 +186,13 @@ void LevelManager::load(std::string levelId, Scene* scene)
 	{
 		for (int x = 0; x < surface->w; x++)
 		{
-		//determine what tile to build for current x,y location
-		auto levelObject = _determineTile(x, y, surface);
+			//determine what tile to build for current x,y location
+			auto levelObject = _determineTile(x, y, surface);
 
-		//If a valid gameObject was found at this location then store its Id
-		if (levelObject.has_value()) {
-			m_levelObjects[x][y] = levelObject.value();
+			//If a valid gameObject was found at this location then store its Id
+			if (levelObject.has_value()) {
+				m_levelObjects[x][y] = levelObject.value();
+			}
 		}
 	}
 

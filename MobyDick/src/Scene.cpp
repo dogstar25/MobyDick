@@ -145,8 +145,6 @@ void Scene::clear()
 		m_gameObjects[x].clear();
 	}
 
-	LevelManager::instance().clearTriggers();
-
 	if (m_hasPhysics) {
 		delete m_physicsWorld;
 	}

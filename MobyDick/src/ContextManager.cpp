@@ -34,7 +34,7 @@ void StatusItem::reset()
 
 }
 
-float ContextManager::getValue(std::string valueId)
+float ContextManager::getStatusItemValue(std::string valueId)
 {
 
     assert(m_statusValueMap.find(valueId) != m_statusValueMap.end() && "ValueId Name wasnt found in StatusValueMap");
@@ -45,7 +45,7 @@ float ContextManager::getValue(std::string valueId)
 
 }
 
-void ContextManager::adjustValue(std::string valueId, float adjustmentValue)
+void ContextManager::adjustStatusItemValue(std::string valueId, float adjustmentValue)
 {
     assert(m_statusValueMap.find(valueId) != m_statusValueMap.end() && "ValueId Name wasnt found in StatusValueMap");
 
@@ -53,7 +53,7 @@ void ContextManager::adjustValue(std::string valueId, float adjustmentValue)
 
 }
 
-void ContextManager::setValue(std::string valueId, float newValue)
+void ContextManager::setStatusItemValue(std::string valueId, float newValue)
 {
     assert(m_statusValueMap.find(valueId) != m_statusValueMap.end() && "ValueId Name wasnt found in StatusValueMap");
 

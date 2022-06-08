@@ -16,9 +16,13 @@ public:
 		m_maximumValue(maxValue) {}
 	StatusItem() = default;
 	void adjust(float adjustValue);
+
 	float value() { return m_value; }
 	void setValue(float newValue) { m_value = newValue; }
+
 	float maxValue() { return m_maximumValue; }
+	void setOriginalValue(float originalValue) { m_originalValue = originalValue; }
+	void setMaxValue(float maxValue) { m_maximumValue = maxValue; }
 	bool isAtMax() { return (m_value >= m_maximumValue); }
 
 	void reset();
@@ -46,9 +50,9 @@ public:
 	~ContextManager() = default;
 
 	std::map<std::string, StatusItem> statusValueMap() { return m_statusValueMap; }
-	float getValue(std::string valudId);
-	void adjustValue(std::string valudId, float adjustmentValue);
-	void setValue(std::string valudId, float newValue);
+	float getStatusItemValue(std::string valudId);
+	void adjustStatusItemValue(std::string valudId, float adjustmentValue);
+	void setStatusItemValue(std::string valudId, float newValue);
 	StatusItem& getStatusItem(std::string valueId);
 
 	void setMouseSensitivity(int mouseSensitivity);

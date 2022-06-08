@@ -85,10 +85,13 @@ void IMGuiTopRightHud::survivorCount()
 	//Survivor image
 	hudSurvivorImage(m_hudYellow);
 
+	auto survivorsSaved = game->contextMananger()->getStatusItem("SURVIVORS_SAVED").value();
+	auto survivorsTotal = game->contextMananger()->getStatusItem("SURVIVORS_SAVED").maxValue();
+
 	//Level Text
 	std::stringstream levelTxtSS;
 	std::string levelTxt;
-	levelTxtSS << "12" << " Left";
+	levelTxtSS << survivorsSaved << "/" << survivorsTotal;
 	levelTxt = levelTxtSS.str();
 	ImGui::SameLine();
 	//ImGui::setFont64();

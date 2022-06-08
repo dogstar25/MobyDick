@@ -457,7 +457,7 @@
                     ]
                 },
                 {
-                    "id": "WEAPON_COMPONENT",
+                    "id": "WEAPON_PISTOL_COMPONENT",
                     "fireOffset": -0.5,
                     "levelUpIncrement": 50,
                     "weaponLevels": [

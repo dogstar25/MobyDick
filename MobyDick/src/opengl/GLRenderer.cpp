@@ -195,7 +195,7 @@ void GLRenderer::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* textur
 		_addVertexBufferToBatch(spriteVertexBuffer, GLDrawerType::GLSPRITE, texture, shadertype, textureBlendMode);
 	}
 	else {
-		Shader shader = static_cast<GLRenderer*>(game->renderer())->shader(shadertype);
+		Shader& shader = static_cast<GLRenderer*>(game->renderer())->shader(shadertype);
 		m_spriteDrawer.draw(spriteVertexBuffer, spriteindexBuffer, shader, texture, textureBlendMode);
 
 	}
