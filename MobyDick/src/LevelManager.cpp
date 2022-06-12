@@ -1,12 +1,11 @@
 #include "LevelManager.h"
 
-#include "triggers/TriggerMap.h"
-
 #include <fstream>
 
 #include "EnumMaps.h"
 #include "Game.h"
 #include "ColorMap.h"
+#include <assert.h>
 
 extern std::unique_ptr<Game> game;
 
@@ -35,6 +34,16 @@ static const unsigned char column = 0b0000;
 
 LevelManager::LevelManager()
 {
+
+	Json::Value levelsJSON;
+	std::ifstream ifs("assets/levels/levels.json" );
+	ifs >> levelsJSON;
+
+	for (auto level : levelsJSON["levels"]) {
+		std::string levelName = level.asString();
+		m_levels.push_back(levelName);
+	}
+
 
 }
 
@@ -66,14 +75,17 @@ void LevelManager::setLevelObjectArraySize(int width, int height)
 void LevelManager::_loadDefinition(std::string levelId)
 {
 	//Read file and stream it to a JSON object
-	std::string filename = "assets/levels/" + levelId + "_definition.json";
+	std::stringstream filename;
+
+	filename << "assets/levels/" << levelId << "_definition.json";
 
 	Json::Value root;
-	std::ifstream ifs(filename);
+	std::ifstream ifs(filename.str());
 	ifs >> root;
+	m_levelDefinition = root;
 
 	//Level definition values
-	m_id = levelId;
+	//m_id = levelId;
 	m_description = root["description"].asString();
 	m_blueprintTexture = root["blueprint"].asString();
 
@@ -100,59 +112,41 @@ void LevelManager::_loadDefinition(std::string levelId)
 		m_locationDefinedList = root["locationDefinedObjects"];
 	}
 
-	//Get all trigger items
-	if (root.isMember("levelTriggers")) {
-
-		m_levelTriggers.clear();
-		for (Json::Value itrTrigger : root["levelTriggers"])
-		{
-			//Get the name of the class to be used as the action as a string
-			std::string triggerId = itrTrigger["triggerClass"].asString();
-			std::shared_ptr<Trigger> tempTrigger = TriggerMap::instance().getTrigger(triggerId);
-			m_levelTriggers.emplace_back(std::move(tempTrigger));
-
-		}
-
-	}
-
-	//Store Level Objectives
-	if (root.isMember("objectives")) {
-
-		m_objectives.clear();
-		for (Json::Value itrObjective : root["objectives"])
-		{
-			Objective objective{};
-			objective.name = itrObjective["name"].asString();
-			objective.initialValue = itrObjective["initialValue"].asFloat();
-			objective.targetValue = itrObjective["targetValue"].asFloat();
-			objective.contextManagerId = itrObjective["contextManagerId"].asString();
-			m_objectives.emplace_back(objective);
-
-			//Set the min and max values in the context Manager
-			std::string contextManagerId = itrObjective["contextManagerId"].asString();
-			auto& objectiveStatusItem = game->contextMananger()->getStatusItem(contextManagerId);
-			objectiveStatusItem.setOriginalValue(objective.initialValue);
-			objectiveStatusItem.setMaxValue(objective.targetValue);
-
-		}
-
-	}
 
 }
 
-void LevelManager::update(Scene* scene)
+void LevelManager::loadLevel(std::string levelId, std::string sceneId)
 {
 
-	for (const auto& trigger : m_levelTriggers) {
-
-		if (trigger->hasMetCriteria()) {
-			trigger->execute();
+	//Find the scene indicated
+	for (auto& scene : SceneManager::instance().scenes()) {
+		if (scene.id() == sceneId) {
+			scene.loadLevel(levelId);
 		}
 	}
+	
+	assert(false && "No Scene found for loading level");
 
 }
 
-void LevelManager::load(std::string levelId, Scene* scene)
+std::optional<std::string> LevelManager::getNextLevelId(std::string currentLevelId)
+{
+	std::optional<std::string> nextLevelId{};
+
+
+	auto it = m_levels.begin();
+	while (it != m_levels.end()) {
+
+		if (*it == currentLevelId && (it+1) != m_levels.end()) {
+			nextLevelId = *(it + 1);
+			break;
+		}
+	}
+
+	return nextLevelId;
+}
+
+void LevelManager::loadLevel(std::string levelId, Scene* scene)
 {
 
 	SDL_Surface* surface;
@@ -203,6 +197,12 @@ void LevelManager::load(std::string levelId, Scene* scene)
 	//Build all of the objects that make up this level and store them
 	//In the main gameObject collection
 	_buildLevelObjects(scene);
+
+	//Build the level objectives
+	_buildLevelObjectives(scene);
+
+	//Build the level triggers
+	_buildLevelTriggers(scene);
 
 	//Clear the level objects collection now that all gameObjects are built
 	m_levelObjects.clear();
@@ -493,5 +493,51 @@ void LevelManager::refreshNavigationAccess(Scene* scene)
 		}
 	}
 
+
+}
+
+void LevelManager::_buildLevelObjectives(Scene* scene)
+{
+
+
+	if (m_levelDefinition.isMember("objectives")) {
+
+		for (Json::Value itrObjective : m_levelDefinition["objectives"])
+		{
+			Objective objective{};
+			objective.name = itrObjective["name"].asString();
+			objective.initialValue = itrObjective["initialValue"].asFloat();
+			objective.targetValue = itrObjective["targetValue"].asFloat();
+			objective.contextManagerId = itrObjective["contextManagerId"].asString();
+			scene->addLevelObjective(objective);
+
+			//Set the min and max values in the context Manager
+			std::string contextManagerId = itrObjective["contextManagerId"].asString();
+			auto& objectiveStatusItem = game->contextMananger()->getStatusItem(contextManagerId);
+			objectiveStatusItem.setOriginalValue(objective.initialValue);
+			objectiveStatusItem.setMaxValue(objective.targetValue);
+
+		}
+
+	}
+
+}
+
+void LevelManager::_buildLevelTriggers(Scene* scene)
+{
+
+	//Get all trigger items
+	if (m_levelDefinition.isMember("levelTriggers")) {
+
+		for (Json::Value itrTrigger : m_levelDefinition["levelTriggers"])
+		{
+			//Get the name of the class to be used as the action as a string
+			std::string triggerId = itrTrigger["triggerClass"].asString();
+			std::shared_ptr<Trigger> trigger = game->triggerFactory()->create(triggerId);
+			scene->addLevelTrigger(std::move(trigger));
+
+		}
+
+	}
 
 }

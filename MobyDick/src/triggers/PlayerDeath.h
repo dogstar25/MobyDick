@@ -4,7 +4,8 @@ class PlayerDeath : public Trigger
 {
 
 public:
-	bool hasMetCriteria() override;
+	PlayerDeath();
+	bool hasMetCriteria(Scene* scene) override;
 	void execute() override;
 
 };

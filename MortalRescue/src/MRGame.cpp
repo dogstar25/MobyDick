@@ -36,13 +36,13 @@ Initialize Game
 */
 bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter, 
 	ComponentFactory* componentFactory, ActionFactory* actionFactory, ParticleEffectsFactory* particleEffectsFactory, 
-	CutSceneFactory* cutSceneFactory, IMGuiFactory* iMGuiFactory, ContextManager* contextManager)
+	CutSceneFactory* cutSceneFactory, IMGuiFactory* iMGuiFactory, TriggerFactory* triggerFactory, ContextManager* contextManager)
 {
 
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
 
-	Game::init(contactListener, contactFilter, componentFactory, actionFactory, particleEffectsFactory, cutSceneFactory, iMGuiFactory, contextManager);
+	Game::init(contactListener, contactFilter, componentFactory, actionFactory, particleEffectsFactory, cutSceneFactory, iMGuiFactory, triggerFactory, contextManager);
 
 	std::cout << "Mortal Rescue Begins\n";
 

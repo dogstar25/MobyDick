@@ -5,6 +5,7 @@
 #include "MRContactListener.h"
 #include "MRContactFilter.h"
 #include "MRComponentFactory.h"
+#include "triggers/MRTriggerFactory.h"
 #include "cutScenes/MRCutSceneFactory.h"
 #include "actions/MRActionFactory.h"
 #include "IMGui/MR_IMGuiFactory.h"
@@ -27,6 +28,7 @@ int main(int argc, char* args[])
 		new MRParticleEffectsFactory(),
 		new MRCutSceneFactory(),
 		new MR_IMGuiFactory(),
+		new MRTriggerFactory(),
 		new MRContextManager()
 	);
 

@@ -4,12 +4,12 @@
 #include "IMGuiTopHud.h"
 #include "IMGuiTopLeftHud.h"
 #include "IMGuiTopRightHud.h"
+#include "IMGuiLevelComplete.h"
 
 
 MR_IMGuiFactory::MR_IMGuiFactory()
 {
 
-	int todd = 1;
 }
 
 
@@ -33,6 +33,10 @@ std::shared_ptr<IMGuiItem> MR_IMGuiFactory::create(std::string iMGuiItemType, st
 	else if (iMGuiItemType == "IMGuiInteractiveMenuSurvivor") {
 		iMGuiItem = std::make_shared<IMGuiInteractiveMenuSurvivor>(gameObjectId, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize);
 	}
+	else if (iMGuiItemType == "IMGuiLevelComplete") {
+		iMGuiItem = std::make_shared<IMGuiLevelComplete>(gameObjectId, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize);
+	}
+
 	else {
 
 		iMGuiItem = IMGuiFactory::create(iMGuiItemType, gameObjectId, parentScene, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize, staticTextValue);

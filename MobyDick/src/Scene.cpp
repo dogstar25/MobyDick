@@ -6,6 +6,7 @@
 #include "GameObjectManager.h"
 #include "SoundManager.h"
 #include "game.h"
+#include "LevelManager.h"
 
 extern std::unique_ptr<Game> game;
 
@@ -82,15 +83,30 @@ Scene::~Scene()
 void Scene::loadLevel(std::string levelId)
 {
 
+	m_currentLevelId = levelId;
+
 	game->_displayLoadingMsg();
 
 	reset();
 
 	//Build all of the gameObjects from the level definition
-	LevelManager::instance().load(levelId, this);
+	LevelManager::instance().loadLevel(levelId, this);
 
 	//Run GameObject code that requires ALL gameObjects to be created first, for interdependency logic
 	_processGameObjectInterdependecies();
+
+}
+
+void Scene::loadNextLevel()
+{
+
+	std::optional<std::string> nextLevelId = LevelManager::instance().getNextLevelId(m_currentLevelId);
+	if (nextLevelId.has_value()) {
+		loadLevel(nextLevelId.value());
+	}
+	else {
+		assert(false && "We are already at the last level!");
+	}
 
 }
 
@@ -122,7 +138,6 @@ void Scene::reset()
 	m_objectPoolManager.init(sceneJSON, this);
 
 	//GameObjects that are defined at the scene level, not a level built scene
-	//GameObjects that are defined at the scene level, not a level built scene
 	_buildSceneGameObjects(sceneJSON);
 
 	//Debug Mode
@@ -139,6 +154,8 @@ void Scene::clear()
 
 	//Clear everything
 	m_objectPoolManager.clear();
+	m_levelTriggers.clear();
+	m_levelObjectives.clear();
 
 	for (int x = 0; x < MAX_GAMEOBJECT_LAYERS; x++)
 	{
@@ -154,7 +171,6 @@ void Scene::clear()
 void Scene::update() {
 
 	//Direct the scne if it has a cutScene assigned
-
 	if (m_cutScene.has_value() == true) {
 		direct();
 	}
@@ -163,10 +179,6 @@ void Scene::update() {
 	SoundManager::instance().update();
 
 	// Remove all objects that should be removed in first pass
-
-	//rome all from here - 
-
-
 	_removeFromWorldPass();
 
 	if (hasPhysics()) {
@@ -185,8 +197,14 @@ void Scene::update() {
 	//Clear all events
 	SceneManager::instance().playerInputEvents().clear();
 
-	//Level Manager update to handle level specific events
-	LevelManager::instance().update(this);
+	//Check all level triggers
+	for (const auto& trigger : m_levelTriggers) {
+
+		if (trigger->hasMetCriteria(this)) {
+			trigger->execute();
+		}
+	}
+
 }
 
 void Scene::render() {
@@ -438,7 +456,6 @@ void Scene::_buildSceneGameObjects(Json::Value definitionJSON)
 			else {
 				addGameObject(id, layer, windowPosition);
 			}
-
 			
 		}
 		else {
@@ -503,13 +520,17 @@ void Scene::_removeFromWorldPass()
 
 	}
 
-
-
-
-
-
 }
 
+void Scene::addLevelObjective(Objective objective)
+{
+	m_levelObjectives.emplace_back(objective);
+}
+
+void Scene::addLevelTrigger(std::shared_ptr<Trigger> trigger)
+{
+	m_levelTriggers.emplace_back(trigger);
+}
 
 
 

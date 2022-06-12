@@ -2,32 +2,42 @@
 
 #include "../SceneManager.h"
 
-bool PlayerDeath::hasMetCriteria()
+
+PlayerDeath::PlayerDeath() :
+	Trigger()
+{
+	m_triggerOnlyOnce = true;
+
+}
+
+bool PlayerDeath::hasMetCriteria(Scene* scene)
 {
 
 	bool hasMet{ false };
 
-	Scene& scene = SceneManager::instance().scenes().back();
-	for (auto& gameObjects : scene.gameObjects())
-	{
+	if (m_triggerOnlyOnce == false || (m_triggerOnlyOnce && m_hasTriggered == false)) {
 
-		for (int i = 0; i < gameObjects.size(); i++)
+		for (auto& gameObjects : scene->gameObjects())
 		{
-			//assert(gameObject != nullptr && "GameObject is null");
-			if (gameObjects[i]->hasTrait(TraitTag::player)) {
 
-				const auto& transformComponent = gameObjects[i]->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-				//dumb test to test
-				//this woudl check the vitality component for current health
-				//if (transformComponent->getCenterPosition().x > 400) {
-				//	hasMet = true;
-				//}
-				break;
+			for (int i = 0; i < gameObjects.size(); i++)
+			{
+				//assert(gameObject != nullptr && "GameObject is null");
+				if (gameObjects[i]->hasTrait(TraitTag::player)) {
+
+					const auto& transformComponent = gameObjects[i]->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+					//dumb test to test
+					//this woudl check the vitality component for current health
+					//if (transformComponent->getCenterPosition().x > 400) {
+					//	hasMet = true;
+					//}
+					break;
+				}
+
 			}
 
+
 		}
-
-
 	}
 
 	return hasMet;
@@ -47,6 +57,7 @@ void PlayerDeath::execute()
 	event.user.data1 = sceneAction;
 	SDL_PushEvent(&event);
 
+	m_hasTriggered = true;
 
 
 

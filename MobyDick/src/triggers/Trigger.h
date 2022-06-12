@@ -1,13 +1,18 @@
 #pragma once
+
+class Scene;
+
 class Trigger
 {
 
 public:
 	Trigger() {};
-	virtual bool hasMetCriteria() { return false; };
-	virtual void execute() {};
+	virtual bool hasMetCriteria(Scene* scene) = 0;
+	virtual void execute() = 0;
 
 protected:
+	bool m_triggerOnlyOnce{};
+	bool m_hasTriggered{};
 
 };
 

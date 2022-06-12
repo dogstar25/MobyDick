@@ -16,9 +16,6 @@ namespace ImGui
 
 		ImGui::StyleColorsDark();
 
-		//Fonts
-		game->renderer()->initImGuiFonts(io);
-
 		auto gl_context = SDL_GL_GetCurrentContext();
 		const char* glsl_version = "#version 130";
 
@@ -91,6 +88,21 @@ namespace ImGui
 	{
 		//ImGui::PushFont(ImGui::font64);
 
+	}
+
+	void textCentered(std::string text) {
+		auto windowWidth = ImGui::GetWindowSize().x;
+		auto textWidth = ImGui::CalcTextSize(text.c_str()).x;
+
+		ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
+		ImGui::Text(text.c_str());
+	}
+
+	void setCursorToCentered(float itemToCenterSize) {
+		auto windowWidth = ImGui::GetWindowSize().x;
+		auto textWidth = itemToCenterSize;
+
+		ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
 	}
 
 }

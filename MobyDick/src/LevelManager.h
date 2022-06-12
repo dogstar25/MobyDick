@@ -12,9 +12,9 @@
 #include "Util.h"
 #include "BaseConstants.h"
 #include "triggers/Trigger.h"
+#include "Scene.h"
 
-
-class Scene;
+//class Scene;
 
 struct LevelObject
 {
@@ -41,36 +41,37 @@ public:
 
 	static LevelManager& instance();
 
-	std::string m_id; //probably same as the textureId since the map is represented by a texture
-	int m_width, m_height; // in tile count
-	int m_tileWidth, m_tileHeight;
-	SDL_Rect m_levelBounds;
+	std::string m_id{}; //probably same as the textureId since the map is represented by a texture
+	int m_width{};
+	int m_height{}; // in tile count
+	int m_tileWidth{};
+	int m_tileHeight{};
+	SDL_Rect m_levelBounds{};
 
-	void update(Scene* scene);
-	void load(std::string levelId, Scene* scene);
+	void loadLevel(std::string levelId, Scene* scene);
+	void loadLevel(std::string levelId, std::string sceneId);
+	std::optional<std::string> getNextLevelId(std::string levelId);
 
 	void addLevelObject(int xIndex, int yIndex, LevelObject levelObject);
 	void setLevelObjectArraySize(int width, int height);
 	void refreshNavigationAccess(Scene* scene);
-	const std::vector<Objective>& objectives() { return m_objectives; }
 
 	//Accessor Functions
 	std::string description() {	return m_description; }
-	//const std::vector<Waypoint>& waypoints() { return m_waypoints; }
 
 private:
 
 	LevelManager();
 	~LevelManager();
 
-	std::string m_description;
-	std::string m_blueprintTexture;
-	Json::Value m_colorDefinedList;
-	Json::Value m_locationDefinedList;
-	std::vector<std::shared_ptr<Trigger>> m_levelTriggers;
-	std::vector<Objective> m_objectives{};
+	std::string m_description{};
+	std::string m_blueprintTexture{};
+	Json::Value m_colorDefinedList{};
+	Json::Value m_locationDefinedList{};
+	Json::Value m_levelDefinition{};
 
-	std::vector< std::vector <LevelObject>> m_levelObjects;
+	std::vector< std::vector <LevelObject>> m_levelObjects{};
+	std::vector<std::string> m_levels{};
 
 	std::optional<LevelObject> _determineTile(int x, int y, SDL_Surface* bluePrintSurface);
 	LevelObject _determineWallObject(int x, int y, SDL_Surface* bluePrintSurface);
@@ -78,6 +79,8 @@ private:
 	std::optional<LevelObject> _determineColorDefinedObject(SDL_Color color);
 	void _loadDefinition(std::string levelId);
 	void _buildLevelObjects(Scene* scene);
+	void _buildLevelObjectives(Scene* scene);
+	void _buildLevelTriggers(Scene* scene);
 	bool _isColorDefinedObject(SDL_Color color);
 };
 

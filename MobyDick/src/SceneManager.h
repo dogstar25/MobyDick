@@ -13,10 +13,6 @@
 #include "Timer.h"
 #include "Camera.h"
 
-
-
-
-
 inline constexpr int MAX_SCENES = 12;
 
 struct SceneSnapshot {
@@ -52,6 +48,9 @@ public:
 	Timer& gameTimer() { return m_gameTimer; }
 	void testIMGUI();
 	Scene& currentScene() { return m_scenes.back(); }
+	std::shared_ptr<Scene> getScene(std::string sceneId);
+	void loadLevel(std::string levelId);
+	void loadNextLevel();
 
 	std::optional<SceneAction> getSceneKeyAction(SDL_Keycode);
 

@@ -72,6 +72,13 @@
 
         },
         {
+            "id": "LOC_0014_0001",
+            "gameObjectId": "ESCAPE_STAIRS",
+            "layer": "LAYER_BACKGROUND_1",
+            "angle": 270
+
+        },
+        {
             "id": "LOC_0034_0031",
             "gameObjectId": "TURRET",
             "angle": 270
@@ -110,7 +117,7 @@
         },
         {
             "id": "LOC_0028_0041",
-            "gameObjectId": "SURVIVOR",
+            "gameObjectId": "SURVIVOR"
         },
         {
             "id": "LOC_0022_0005",
@@ -119,7 +126,7 @@
         },
         {
             "id": "LOC_0033_0002",
-            "gameObjectId": "SURVIVOR",
+            "gameObjectId": "SURVIVOR"
 
         },
         {
@@ -130,11 +137,11 @@
         },
         {
             "id": "LOC_0002_0012",
-            "gameObjectId": "SURVIVOR",
+            "gameObjectId": "SURVIVOR"
         },
         {
             "id": "LOC_0017_0003",
-            "gameObjectId": "SURVIVOR",
+            "gameObjectId": "SURVIVOR"
         }
     ]
 }
