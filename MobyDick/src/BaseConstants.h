@@ -301,8 +301,10 @@ inline constexpr int SCENE_ACTION_QUIT = 0;
 inline constexpr int SCENE_ACTION_ADD = 1;
 inline constexpr int SCENE_ACTION_REPLACE = 2;
 inline constexpr int SCENE_ACTION_EXIT = 3;
-inline constexpr int SCENE_ACTION_DIRECT = 4;
-inline constexpr int SCENE_ACTION_RELEASE_DIRECT = 5;
+inline constexpr int SCENE_ACTION_LOAD_LEVEL = 4;
+inline constexpr int SCENE_ACTION_LOAD_NEXTLEVEL = 5;
+inline constexpr int SCENE_ACTION_DIRECT = 6;
+inline constexpr int SCENE_ACTION_RELEASE_DIRECT = 7;
 
 //Scene Tags
 inline constexpr int SCENETAG_MENU = 1;

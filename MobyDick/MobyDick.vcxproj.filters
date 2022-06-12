@@ -189,9 +189,6 @@
     <ClCompile Include="src\triggers\PlayerDeath.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\triggers\TriggerMap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\triggers\LevelComplete.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -307,6 +304,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ColorMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\triggers\TriggerFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -509,9 +509,6 @@
     <ClInclude Include="src\triggers\PlayerDeath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\triggers\TriggerMap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\triggers\LevelComplete.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -618,6 +615,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ColorMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\triggers\TriggerFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

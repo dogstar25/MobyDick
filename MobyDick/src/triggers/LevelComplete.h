@@ -4,7 +4,8 @@ class LevelComplete :  public Trigger
 {
 
 public:
-	bool hasMetCriteria() override;
+	LevelComplete();
+	bool hasMetCriteria(Scene* scene) override;
 	void execute() override;
 
 };

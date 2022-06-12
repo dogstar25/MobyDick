@@ -27,7 +27,7 @@ bool Game::init()
 
 bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter, 
 	ComponentFactory* componentFactory, ActionFactory* actionFactory, ParticleEffectsFactory* particleEffectsFactory, 
-	CutSceneFactory* cutSceneFactory, IMGuiFactory* iMGuiFactory, ContextManager* contextManager)
+	CutSceneFactory* cutSceneFactory, IMGuiFactory* iMGuiFactory, TriggerFactory* triggerFactory, ContextManager* contextManager)
 {
 	m_contactListener = std::shared_ptr<ContactListener>(contactListener);
 	m_contactFilter = std::shared_ptr<ContactFilter>(contactFilter);
@@ -37,6 +37,7 @@ bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter,
 	m_cutSceneFactory = std::shared_ptr<CutSceneFactory>(cutSceneFactory);
 	m_contextMananger = std::shared_ptr<ContextManager>(contextManager);
 	m_iMGUIFactory = std::shared_ptr<IMGuiFactory>(iMGuiFactory);
+	m_triggerFactory = std::shared_ptr<TriggerFactory>(triggerFactory);
 
 	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 
@@ -75,6 +76,12 @@ void Game::play()
 			else if (action->actionCode == SCENE_ACTION_REPLACE) {
 				SceneManager::instance().popScene();
 				SceneManager::instance().pushScene(action->actionId);
+			}
+			else if (action->actionCode == SCENE_ACTION_LOAD_LEVEL) {
+				SceneManager::instance().loadLevel(action->actionId);
+			}
+			else if (action->actionCode == SCENE_ACTION_LOAD_NEXTLEVEL) {
+				SceneManager::instance().loadNextLevel();
 			}
 			else if (action->actionCode == SCENE_ACTION_DIRECT) {
 				SceneManager::instance().directScene(action->actionId);

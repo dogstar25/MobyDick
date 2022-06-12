@@ -11,10 +11,11 @@
 #include "BaseConstants.h"
 #include "GameObject.h"
 #include "GameConfig.h"
-//#include "cutScenes/CutScene.h"
-
 #include "ObjectPoolManager.h"
+#include "triggers/Trigger.h"
+
 class CutScene;
+struct Objective;
 
 struct SceneAction
 {
@@ -42,6 +43,7 @@ public:
 	~Scene();
 
 	void loadLevel(std::string levelId);
+	void loadNextLevel();
 	void reset();
 	void clear();
 	void render();
@@ -51,6 +53,8 @@ public:
 	GameObject* addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle = 0., bool cameraFollow = false,std::string name="");
 	GameObject* addGameObject(std::string gameObjectId, int layer, PositionAlignment windowPosition, float adjustX=0, float adjustY=0, float angle=0, bool cameraFollow=false);
 	GameObject* addGameObject(std::shared_ptr<GameObject> gameObject, int layer);
+	void addLevelObjective(Objective objective);
+	void addLevelTrigger(std::shared_ptr<Trigger> trigger);
 	void addKeyAction(SDL_Keycode, SceneAction);
 	void applyCurrentControlMode();
 	SDL_FPoint calcWindowPosition(int globalPosition);
@@ -71,6 +75,7 @@ public:
 	int parentSceneIndex() { return m_parentSceneIndex; }
 	b2World* physicsWorld() { return m_physicsWorld;	}
 	int inputControlMode() { return m_inputControlMode; }
+	const std::vector<Objective>& objectives() { return m_levelObjectives; }
 
 	void setState(SceneState state) { m_state = state; }
 	SceneState state() { return m_state; }
@@ -90,13 +95,13 @@ public:
 	void deleteCutScene();
 
 
-	void testIMGUI();
-
-
 	
 private:
 
 	std::string m_id;
+
+	std::string m_currentLevelId;
+
 	int m_gameObjectCount{};
 	int m_inputControlMode{};
 	int m_parentSceneIndex{};
@@ -109,6 +114,9 @@ private:
 	ObjectPoolManager m_objectPoolManager{};
 
 	std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> m_gameObjects;
+	std::vector<std::shared_ptr<Trigger>> m_levelTriggers;
+	std::vector<Objective> m_levelObjectives{};
+
 	std::bitset<8> m_sceneTags;
 	std::map<SDL_Keycode, SceneAction> m_sceneKeyActions;
 

@@ -35,6 +35,19 @@ void SceneManager::init()
 
 }
 
+std::shared_ptr<Scene> SceneManager::getScene(std::string sceneId)
+{
+	std::shared_ptr<Scene> foundScene{};
+
+	for (auto scene : m_scenes) {
+		if (scene.id() == sceneId) {
+			foundScene = std::make_shared<Scene>(scene);
+		}
+	}
+
+	return foundScene;
+}
+
 void SceneManager::load(std::string sceneDefinitionsFilename)
 {
 
@@ -105,12 +118,12 @@ std::optional<SceneAction> SceneManager::pollEvents()
 	//PlayerInputEvent* playerInputEvent = nullptr;
 	const Uint8* keyStates = nullptr;
 	std::optional<SceneAction> sceneAction;
+	sceneAction = std::nullopt;
 
-	//const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-
-	//Handle special events and everything else should be player control
-	//input related so staore it for later
-	while (SDL_PollEvent(&event) && sceneAction.has_value() == false)
+	//Poll events and as soon as we find a sceneReloated action, break and handle it in game.cpp
+	//The "sceneAction.has_value()" check HAS to happen first in the below while, otherwise, an event could be lost during 
+	// the SDL_PollEvent() call
+	while (sceneAction.has_value() == false && SDL_PollEvent(&event) )
 	{
 
 		//Pass this event along to IMGUI so that all IMGUI windows can detect mouse and keyboard events
@@ -155,14 +168,19 @@ std::optional<SceneAction> SceneManager::pollEvents()
 			case SDL_USEREVENT:
 			{
 
+				
 				int* type = static_cast<int*>(event.user.data1);
 				sceneAction = *(static_cast<std::optional<SceneAction>*>(event.user.data1));
 				delete event.user.data1;
+
+				std::stringstream ss;
+				ss << "user event " << sceneAction.value().actionCode << " " << std::endl;
+				std::cout << ss.str();
+
 				break;
 
 			}
 			case SDL_MOUSEBUTTONUP:
-			case SDL_MOUSEMOTION:
 			case SDL_MOUSEBUTTONDOWN:
 			{
 				PlayerInputEvent& playerInputEvent = m_PlayerInputEvents.emplace_back();
@@ -209,6 +227,17 @@ Scene& SceneManager::pushScene(std::string sceneId)
 	return scene;
 	
 }
+
+void SceneManager::loadLevel(std::string levelId)
+{
+	m_scenes.back().loadLevel(levelId);
+}
+
+void SceneManager::loadNextLevel()
+{
+	m_scenes.back().loadNextLevel();
+}
+
 
 void SceneManager::directScene(std::string cutSceneId)
 {

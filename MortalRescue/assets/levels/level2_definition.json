@@ -9,7 +9,7 @@
         "tileHeight": 32
     },
     "tileSize": 32,
-    "locationObjects": [
+    "locationDefinedObjects": [
         {
             "id": "LOC_0003_0003",
             "gameObjectId": "GINA_64",

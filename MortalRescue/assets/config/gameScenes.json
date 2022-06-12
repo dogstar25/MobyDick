@@ -112,6 +112,25 @@
             "maxObjects": 500
         },
         {
+            "id": "SCENE_LEVEL_COMPLETE",
+            "inputControlMode": "CONTROL_MODE_IMGUI",
+            "tags": [ "gui" ],
+            "maxObjects": 24,
+            "gameObjects": [
+                {
+                    "gameObjectId": "IMGUI_LEVEL_COMPLETE",
+                    "layer": "LAYER_MENU",
+                    "location": {
+                        "windowPosition": "PositionAlignment::CENTER",
+                        "adjust": {
+                            "x": 0,
+                            "y": 0
+                        }
+                    }
+                }
+            ]
+        },
+        {
             "id": "SCENE_PLAYER_DEATH",
             "inputControlMode": "CONTROL_MODE_SELECT",
             "maxObjects": 5,
@@ -129,7 +148,7 @@
             "id": "SCENE_PAUSE_MENU",
             "inputControlMode": "CONTROL_MODE_IMGUI",
             "maxObjects": 24,
-            "tags": ["gui"],
+            "tags": [ "gui" ],
             "gameObjects": [
                 {
                     "gameObjectId": "IMGUI_PAUSE_WINDOW",

@@ -34,11 +34,12 @@ protected:
 	std::string m_gameObjectId{};
 	std::string m_staticText{};
 
-	inline static ImFont* m_xsmallFont;
+	inline static ImFont* m_xSmallFont;
 	inline static ImFont* m_smallFont;
 	inline static ImFont* m_normalFont;
 	inline static ImFont* m_mediumFont;
 	inline static ImFont* m_largeFont;
+	inline static ImFont* m_xLargeFont;
 
 	//GameObject that owns this IMGuiItem
 	GameObject* m_parent{};

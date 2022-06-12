@@ -19,27 +19,26 @@ IMGuiItem::IMGuiItem(std::string gameObjectId, b2Vec2 padding, ImVec4 background
 	m_buttonActiveColor = buttonActiveColor;
 
 	//Fonts - these are static so only initialize if they are null
+	//First font loaded into ImGui defaults to the default font
+	if (!m_normalFont) {
+		m_normalFont = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 24.0f);
+	}
 
-	if (!m_xsmallFont) {
-		m_xsmallFont = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 8.0f);
+	if (!m_xSmallFont) {
+		m_xSmallFont = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 8.0f);
 	}
 	if (!m_smallFont) {
 		m_smallFont = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 16.0f);
-	}
-	if (!m_normalFont) {
-		m_normalFont = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 24.0f);
 	}
 	if (!m_mediumFont) {
 		m_mediumFont = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 32.0f);
 	}
 	if (!m_largeFont) {
-		m_largeFont = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 40.0f);
+		m_largeFont = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 48.0f);
 	}
-
-
-
-
-
+	if (!m_xLargeFont) {
+		m_xLargeFont = io.Fonts->AddFontFromFileTTF("assets/fonts/DroidSans.ttf", 64.0f);
+	}
 
 }
 

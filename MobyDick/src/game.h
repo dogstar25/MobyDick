@@ -22,6 +22,7 @@
 #include "cutScenes/CutSceneFactory.h"
 #include "actions/ActionFactory.h"
 #include "IMGui/IMGuiFactory.h"
+#include "triggers/TriggerFactory.h"
 #include "particleEffects/ParticleEffectsFactory.h"
 #include "ContactListener.h"
 #include "ContactFilter.h"
@@ -41,7 +42,7 @@ public:
 
 	virtual bool init();
 	virtual bool init(ContactListener*, ContactFilter*, ComponentFactory*, ActionFactory*, ParticleEffectsFactory*,
-		CutSceneFactory*, IMGuiFactory*, ContextManager*) = 0;
+		CutSceneFactory*, IMGuiFactory*, TriggerFactory*, ContextManager*) = 0;
 	virtual void play();
 	virtual void _displayLoadingMsg();
 	GameObject* getGameObject(std::string name);
@@ -95,6 +96,9 @@ public:
 	std::shared_ptr<IMGuiFactory> iMGUIFactory() {
 		return m_iMGUIFactory;
 	}
+	std::shared_ptr<TriggerFactory> triggerFactory() {
+		return m_triggerFactory;
+	}
 
 	Renderer* renderer() { return m_renderer.get(); }
 
@@ -113,6 +117,7 @@ protected:
 	std::shared_ptr<ContextManager> m_contextMananger{};
 	std::shared_ptr<ParticleEffectsFactory> m_particleEffectsFactory{};
 	std::shared_ptr<IMGuiFactory> m_iMGUIFactory{};
+	std::shared_ptr<TriggerFactory> m_triggerFactory{};
 
 	std::shared_ptr<Renderer> m_renderer;
 
@@ -123,8 +128,6 @@ protected:
 	virtual void _addGameComponentTypes() = 0;
 	virtual void _addGameColors() = 0;
 	virtual void _addGameTraits() = 0;
-
-	
 	
 
 };

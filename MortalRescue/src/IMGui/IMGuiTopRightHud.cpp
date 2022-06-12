@@ -95,7 +95,7 @@ void IMGuiTopRightHud::survivorCount()
 	levelTxt = levelTxtSS.str();
 	ImGui::SameLine();
 	//ImGui::setFont64();
-	ImGui::PushFont(game->renderer()->font64());
+	ImGui::PushFont(m_xLargeFont);
 
 	//ImGui::Dummy(ImVec2(0.0f, 32.0f));
 	ImGui::Text(levelTxt.c_str());
