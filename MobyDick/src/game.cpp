@@ -71,7 +71,10 @@ void Game::play()
 				SceneManager::instance().popScene();
 			}
 			else if (action->actionCode == SCENE_ACTION_ADD) {
-				SceneManager::instance().pushScene(action->actionId);
+				SceneManager::instance().pushScene(action->actionId, false);
+			}
+			else if (action->actionCode == SCENE_ACTION_ADD_AND_PAUSE) {
+				SceneManager::instance().pushScene(action->actionId, true);
 			}
 			else if (action->actionCode == SCENE_ACTION_REPLACE) {
 				SceneManager::instance().popScene();
@@ -82,6 +85,9 @@ void Game::play()
 			}
 			else if (action->actionCode == SCENE_ACTION_LOAD_NEXTLEVEL) {
 				SceneManager::instance().loadNextLevel();
+			}
+			else if (action->actionCode == SCENE_ACTION_RELOAD_CURRENTLEVEL) {
+				SceneManager::instance().reloadCurrentLevel();
 			}
 			else if (action->actionCode == SCENE_ACTION_DIRECT) {
 				SceneManager::instance().directScene(action->actionId);

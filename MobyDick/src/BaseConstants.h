@@ -299,12 +299,14 @@ inline constexpr int GAMESPACE_MENU = 3;
 //Scene Action Codes
 inline constexpr int SCENE_ACTION_QUIT = 0;
 inline constexpr int SCENE_ACTION_ADD = 1;
-inline constexpr int SCENE_ACTION_REPLACE = 2;
-inline constexpr int SCENE_ACTION_EXIT = 3;
-inline constexpr int SCENE_ACTION_LOAD_LEVEL = 4;
-inline constexpr int SCENE_ACTION_LOAD_NEXTLEVEL = 5;
-inline constexpr int SCENE_ACTION_DIRECT = 6;
-inline constexpr int SCENE_ACTION_RELEASE_DIRECT = 7;
+inline constexpr int SCENE_ACTION_ADD_AND_PAUSE = 2;
+inline constexpr int SCENE_ACTION_REPLACE = 3;
+inline constexpr int SCENE_ACTION_EXIT = 4;
+inline constexpr int SCENE_ACTION_LOAD_LEVEL = 5;
+inline constexpr int SCENE_ACTION_LOAD_NEXTLEVEL = 6;
+inline constexpr int SCENE_ACTION_RELOAD_CURRENTLEVEL = 7;
+inline constexpr int SCENE_ACTION_DIRECT = 8;
+inline constexpr int SCENE_ACTION_RELEASE_DIRECT = 9;
 
 //Scene Tags
 inline constexpr int SCENETAG_MENU = 1;

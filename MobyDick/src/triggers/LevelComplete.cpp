@@ -59,5 +59,10 @@ void LevelComplete::execute()
 	game->contextMananger()->initMappings();
 
 
+	auto _player = SceneManager::instance().currentScene().getGameObject("PlayerGina");
+	_player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
+
+
+
 
 }
