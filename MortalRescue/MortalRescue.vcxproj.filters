@@ -262,6 +262,24 @@
     <Media Include="assets\sound\weapon1_fire1.wav">
       <Filter>Resource Files</Filter>
     </Media>
+    <Media Include="assets\sound\voice_female_a_hurt_pain_16.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="assets\sound\voice_female_c_hurt_pain_12.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="assets\sound\weapon2_fire1.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="assets\sound\impact_metal_012.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="assets\sound\retro_impact_hit_05.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="assets\sound\retro_impact_hit_16.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\fonts\arial.ttf" />

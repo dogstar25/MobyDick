@@ -55,6 +55,9 @@ void LevelComplete::execute()
 
 	m_hasTriggered = true;
 
+	//Reset the players hearts and wepon level
+	game->contextMananger()->initMappings();
+
 
 
 }
