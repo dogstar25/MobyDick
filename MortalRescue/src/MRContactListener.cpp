@@ -81,7 +81,7 @@ void MRContactListener::_playerBullet_droneShield(GameObject* playerBullet, Game
 	else {
 
 		particleComponent->addParticleEffect(ParticleEffects::deflect);
-		SoundManager::instance().playSound("SFX_IMPACT_3");
+		SoundManager::instance().playSound("SFX_RETRO_IMPACT_DEFLECT_16");
 	}
 
 }
@@ -154,7 +154,9 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 
 	//flag the scrap item to be removed from the game and play a sound effect
 	bullet->setRemoveFromWorld(true);
-	SoundManager::instance().playSound("SFX_PICKUP_2");
+	SoundManager::instance().playSound("SFX_IMPACT_12");
+	SoundManager::instance().playSound("SFX_RETRO_IMPACT_5");
+
 
 }
 

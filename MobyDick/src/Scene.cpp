@@ -155,6 +155,15 @@ void Scene::clear()
 	//Clear everything
 	m_objectPoolManager.clear();
 	m_levelTriggers.clear();
+
+	//Clear the objective contextManager values as well as the objective items stored in the scene
+	//for (auto& objective : m_levelObjectives) {
+
+	//	auto& objectiveStatusItem = game->contextMananger()->getStatusItem(objective.contextManagerId);
+	//	objectiveStatusItem.setOriginalValue(0);
+	//	objectiveStatusItem.setMaxValue(0);
+	//	objectiveStatusItem.setValue(0);
+	//}
 	m_levelObjectives.clear();
 
 	for (int x = 0; x < MAX_GAMEOBJECT_LAYERS; x++)
