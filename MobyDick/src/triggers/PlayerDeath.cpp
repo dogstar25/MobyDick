@@ -1,7 +1,9 @@
 #include "PlayerDeath.h"
 
 #include "../SceneManager.h"
+#include "../game.h"
 
+extern std::unique_ptr<Game> game;
 
 PlayerDeath::PlayerDeath() :
 	Trigger()
@@ -17,27 +19,12 @@ bool PlayerDeath::hasMetCriteria(Scene* scene)
 
 	if (m_triggerOnlyOnce == false || (m_triggerOnlyOnce && m_hasTriggered == false)) {
 
-		for (auto& gameObjects : scene->gameObjects())
-		{
 
-			for (int i = 0; i < gameObjects.size(); i++)
-			{
-				//assert(gameObject != nullptr && "GameObject is null");
-				if (gameObjects[i]->hasTrait(TraitTag::player)) {
-
-					const auto& transformComponent = gameObjects[i]->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-					//dumb test to test
-					//this woudl check the vitality component for current health
-					//if (transformComponent->getCenterPosition().x > 400) {
-					//	hasMet = true;
-					//}
-					break;
-				}
-
-			}
-
-
+		auto objectiveStatusItem = game->contextMananger()->getStatusItem("LIVES_COUNT");
+		if (objectiveStatusItem.value() == 0) {
+			hasMet = true;
 		}
+
 	}
 
 	return hasMet;
@@ -59,9 +46,13 @@ void PlayerDeath::execute()
 
 	m_hasTriggered = true;
 
+	//Reset the players hearts and wepon level
+	game->contextMananger()->initMappings();
+
+	auto _player = SceneManager::instance().currentScene().getGameObject("PlayerGina");
+	_player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
 
 
-	//instead of this how about adding a "GUI_PLAYERDEATH_PANEL" gameObject to the current scene
 
 
 }

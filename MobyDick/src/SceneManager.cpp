@@ -212,15 +212,17 @@ void SceneManager::popScene()
 
 }
 
-Scene& SceneManager::pushScene(std::string sceneId)
+Scene& SceneManager::pushScene(std::string sceneId, bool pausePreviousScene)
 {
 	if (m_scenes.empty() == false) {
 
 		//Save the currect state and position of ket objects
 		_saveCurrentState(m_scenes.back().id());
 
-		//Pause the current Scene
-		m_scenes.back().setState(SceneState::PAUSE);
+		//Pause the current Scene if directed
+		if (pausePreviousScene) {
+			m_scenes.back().setState(SceneState::PAUSE);
+		}
 	}
 	Scene& scene = SceneManager::instance().scenes().emplace_back(sceneId);
 
@@ -238,6 +240,10 @@ void SceneManager::loadNextLevel()
 	m_scenes.back().loadNextLevel();
 }
 
+void SceneManager::reloadCurrentLevel()
+{
+	m_scenes.back().reloadCurrentLevel();
+}
 
 void SceneManager::directScene(std::string cutSceneId)
 {

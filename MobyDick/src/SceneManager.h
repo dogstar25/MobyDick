@@ -44,13 +44,14 @@ public:
 	void popScene();
 	void directScene(std::string cutSceneId);
 	void releaseDirectScene();
-	Scene& pushScene(std::string sceneId);
+	Scene& pushScene(std::string sceneId, bool pausePreviousScene = false);
 	Timer& gameTimer() { return m_gameTimer; }
 	void testIMGUI();
 	Scene& currentScene() { return m_scenes.back(); }
 	std::shared_ptr<Scene> getScene(std::string sceneId);
 	void loadLevel(std::string levelId);
 	void loadNextLevel();
+	void reloadCurrentLevel();
 
 	std::optional<SceneAction> getSceneKeyAction(SDL_Keycode);
 

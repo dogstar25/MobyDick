@@ -50,7 +50,7 @@
                 {
                     "keyCode": "SDLK_ESCAPE",
                     "sceneAction": {
-                        "action": "SCENE_ACTION_ADD",
+                        "action": "SCENE_ACTION_ADD_AND_PAUSE",
                         "newSceneId": "SCENE_PAUSE_MENU"
                     }
                 },
@@ -136,7 +136,7 @@
             "maxObjects": 5,
             "gameObjects": [
                 {
-                    "gameObjectId": "GUI_PLAYERDEATH_PANEL",
+                    "gameObjectId": "IMGUI_PLAYERDEATH_PANEL",
                     "layer": "LAYER_MAIN",
                     "location": {
                         "windowPosition": "PositionAlignment::CENTER"

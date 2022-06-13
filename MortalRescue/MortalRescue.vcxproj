@@ -197,6 +197,7 @@
     <ClCompile Include="src\IMGui\IMGuiInteractiveMenuSurvivor.cpp" />
     <ClCompile Include="src\IMGui\IMGuiLevelComplete.cpp" />
     <ClCompile Include="src\IMGui\IMGuiPauseWindow.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiPlayerDeath.cpp" />
     <ClCompile Include="src\IMGui\IMGuiTopHud.cpp" />
     <ClCompile Include="src\IMGui\IMGuiTopLeftHud.cpp" />
     <ClCompile Include="src\IMGui\IMGuiTopRightHud.cpp" />
@@ -316,6 +317,7 @@
     <ClInclude Include="src\IMGui\IMGuiInteractiveMenuSurvivor.h" />
     <ClInclude Include="src\IMGui\IMGuiLevelComplete.h" />
     <ClInclude Include="src\IMGui\IMGuiPauseWindow.h" />
+    <ClInclude Include="src\IMGui\IMGuiPlayerDeath.h" />
     <ClInclude Include="src\IMGui\IMGuiTopLeftHud.h" />
     <ClInclude Include="src\IMGui\IMGuiTopRightHud.h" />
     <ClInclude Include="src\IMGui\MR_IMGuiUtil.h" />

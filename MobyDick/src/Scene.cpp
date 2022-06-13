@@ -110,6 +110,13 @@ void Scene::loadNextLevel()
 
 }
 
+void Scene::reloadCurrentLevel()
+{
+
+	loadLevel(m_currentLevelId);
+
+}
+
 std::optional<SceneAction> Scene::getkeycodeAction(SDL_Keycode keycode) {
 	if (m_sceneKeyActions.find(keycode) != m_sceneKeyActions.end()) {
 		return m_sceneKeyActions.at(keycode);
