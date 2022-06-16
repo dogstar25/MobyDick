@@ -38,7 +38,15 @@ ParticleEffect MRParticleEffectsFactory::create(std::string particleType)
 
         particleEffect = ParticleEffects::jetpack_sparks;
     }
+	else if (particleType == "explosionSmoke") {
 
+		particleEffect = ParticleEffects::explosionSmoke;
+	}
+	else if (particleType == "turretScrap") {
+
+		particleEffect = ParticleEffects::turretScrap;
+	}
+    
     else {
         particleEffect = ParticleEffectsFactory::create(particleType);
     }

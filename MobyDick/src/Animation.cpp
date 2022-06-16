@@ -3,6 +3,8 @@
 
 #include "EnumMaps.h"
 #include "TextureManager.h"
+#include "ColorMap.h"
+#include "GameObject.h"
 
 
 Animation::Animation(Json::Value animationDetailsJSON, b2Vec2 frameSize) :
@@ -17,7 +19,7 @@ Animation::Animation(Json::Value animationDetailsJSON, b2Vec2 frameSize) :
 
 	m_frameCount = animationDetailsJSON["frames"].asInt();
 
-	//Get texture
+	//Get animation texture if this is NOT a color flash animation
 	std::string textureId = animationDetailsJSON["textureId"].asString();
 
 	m_texture = TextureManager::instance().getTexture(textureId);
@@ -31,9 +33,9 @@ Animation::Animation(Json::Value animationDetailsJSON, b2Vec2 frameSize) :
 	//Calculate top left corner of each animation frame
 	SDL_FPoint point;
 	int frameCount = 0;
-	for (int rowIdx = 0; rowIdx < rows; rowIdx++) 
+	for (int rowIdx = 0; rowIdx < rows; rowIdx++)
 	{
-		for (int colIdx = 0; colIdx < columns; colIdx++) 
+		for (int colIdx = 0; colIdx < columns; colIdx++)
 		{
 			point.x = m_texture->textureAtlasQuad.x + (colIdx * m_frameSize.x);
 			point.y = m_texture->textureAtlasQuad.y + (rowIdx * m_frameSize.y);
@@ -59,18 +61,18 @@ Animation::Animation(Json::Value animationDetailsJSON, b2Vec2 frameSize) :
 
 
 
-int Animation::animate()
+int Animation::animate(GameObject* parentGameObject)
 {
 	//check the clock and see if enough time as gone by
 
-	if (m_timer.hasMetTargetDuration() || m_currentTextureAnimationSrcRect == nullptr)
+	if (m_timer.hasMetTargetDuration())
 	{
 
 		//Increment animation frame counter and reset if it exceeds last one
 		if (m_frameCount > 1) {
 			this->m_currentAnimFrame += 1;
 		}
-		
+
 		if (this->m_currentAnimFrame >
 			m_frameCount - 1) {
 
@@ -87,7 +89,6 @@ int Animation::animate()
 		rect->h = (int)m_frameSize.y;
 
 		m_currentTextureAnimationSrcRect = rect;
-
 	}
 
 	return this->m_currentAnimFrame;

@@ -11,31 +11,6 @@
 #include "Renderer.h"
 #include "texture.h"
 
-
-struct displayOverlay
-{
-	std::optional<SDL_Color> color;
-	bool outlined;
-	SDL_Color outlineColor;
-	int outlineWidth;
-};
-
-namespace displayOverlays {
-
-	static const displayOverlay outline_GREEN1{
-
-		.color = std::nullopt,
-		.outlined = true,
-		.outlineColor = {0,255,0,255},
-		.outlineWidth = {1}
-	};
-
-	/*
-	....Add more displayOverlays here
-	*/
-}
-
-
 class RendererSDL : public Renderer
 {
 public:

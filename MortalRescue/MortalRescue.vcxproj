@@ -286,8 +286,10 @@
     <Media Include="assets\sound\pick_up_002.wav" />
     <Media Include="assets\sound\retro_impact_hit_05.wav" />
     <Media Include="assets\sound\retro_impact_hit_16.wav" />
-    <Media Include="assets\sound\voice_female_a_hurt_pain_16.wav" />
-    <Media Include="assets\sound\voice_female_c_hurt_pain_12.wav" />
+    <Media Include="assets\sound\retro_survivor_escapes.wav" />
+    <Media Include="assets\sound\sci-fi_explosion_04.wav" />
+    <Media Include="assets\sound\sci-fi_weapon_plasma_pistol_06.wav" />
+    <Media Include="assets\sound\turret deploy_1.wav" />
     <Media Include="assets\sound\weapon1_fire1.wav" />
     <Media Include="assets\sound\weapon2_fire1.wav" />
     <Media Include="assets\sound\weapon_laser_002.wav" />

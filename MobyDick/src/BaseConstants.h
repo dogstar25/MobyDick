@@ -88,7 +88,7 @@ namespace StateTag {
 	inline constexpr int disabledUpdate = 1;
 	inline constexpr int disabledPhysics = 2;
 	inline constexpr int disabledRender = 3;
-	inline constexpr int disabledCollision = 3;
+	inline constexpr int disabledCollision = 4;
 }
 
 namespace GameObjectType {

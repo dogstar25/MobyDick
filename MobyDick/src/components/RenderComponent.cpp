@@ -61,7 +61,6 @@ RenderComponent::RenderComponent(Json::Value componentJSON)
 
 	if (componentJSON.isMember("outline")) {
 		m_renderOutline = true;
-		m_outlineThickness = componentJSON["outline"]["thickness"].asInt();
 		m_outLineColor =  util::JsonToColor(componentJSON["outline"]["color"]);
 	}
 	else {
@@ -216,6 +215,7 @@ void RenderComponent::render(SDL_FRect destQuad)
 
 		bool outline{};
 		SDL_Color outlineColor{};
+		SDL_Color color = m_color;
 		float angle = transform->angle();
 
 		Texture* texture = getRenderTexture().get();
@@ -229,28 +229,52 @@ void RenderComponent::render(SDL_FRect destQuad)
 			SDL_Texture* sdlTexture = getRenderTexture()->sdlTexture;
 		}
 
-		//Outline the gameObject if defined to 
-		if (m_displayOverlay.has_value() && m_displayOverlay->outlined == true) {
+		//Alter the render variables if there is an Overlay applied!
+		if (m_displayOverlay.has_value()) {
 
-			outline = true;
-			outlineColor = m_displayOverlay->outlineColor;
+			//Main object color
+			if (m_displayOverlay.value().color.has_value()) {
+				color = m_displayOverlay.value().color.value();
+			}
+			//Outline
+			if (m_displayOverlay.value().outlined.has_value()) {
+				outline = true;
+				outlineColor = Colors::WHITE;
+			}
+			if (m_displayOverlay.value().outlineColor.has_value()) {
+				outlineColor = m_displayOverlay.value().outlineColor.value();
+			}
 		}
 		else {
 
+			color = m_color;
 			outline = m_renderOutline;
 			outlineColor = m_outLineColor;
-
 		}
 
-		game->renderer()->drawSprite(destQuad, m_color, texture, textureSourceQuad, angle, outline, outlineColor, m_textureBlendMode);
+		game->renderer()->drawSprite(destQuad, color, texture, textureSourceQuad, angle, outline, outlineColor, m_textureBlendMode);
 
 	}
 
 }
 
-void RenderComponent::applyDisplayOverlay(displayOverlay displayOverlay)
+void RenderComponent::applyDisplayOverlay(DisplayOverlay displayOverlay)
 {
+
+
 	m_displayOverlay = displayOverlay;
+
+	//if (displayOverlay.color.has_value()) {
+	//	m_displayOverlay.value().color = displayOverlay.color;
+	//}
+	//if (displayOverlay.outlined.has_value()) {
+	//	m_displayOverlay.value().outlined = displayOverlay.outlined;
+	//}
+	//if (displayOverlay.outlineColor.has_value()) {
+	//	m_displayOverlay.value().outlineColor = displayOverlay.outlineColor;
+	//}
+
+
 }
 
 void RenderComponent::removeDisplayOverlay()

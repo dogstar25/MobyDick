@@ -19,6 +19,10 @@ TurretBrainComponent::TurretBrainComponent(Json::Value definitionJSON)
 void TurretBrainComponent::update()
 {
 
+	//Default the collision to OFF, and then only set collision ON when
+	//the turret is fully deployed
+	parent()->disableCollision();
+
 	BrainComponent::update();
 
 	//Determine state
@@ -27,6 +31,7 @@ void TurretBrainComponent::update()
 	switch (m_currentState) {
 
 	case BrainState::ENGAGE:
+		parent()->enableCollision();
 		_doEngage();
 		break;
 	case BrainState::DEPLOY:

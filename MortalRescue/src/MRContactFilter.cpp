@@ -42,6 +42,8 @@ MRContactFilter::MRContactFilter()
 	//HEAVY_PARTICLE
 	m_contactMasks[HEAVY_PARTICLE].reset();
 	m_contactMasks[HEAVY_PARTICLE].set(WALL);
+	m_contactMasks[HEAVY_PARTICLE].set(DRONE_FRAME);
+	m_contactMasks[HEAVY_PARTICLE].set(PLAYER_COLLISION);
 
 	//LIGHT_PARTICLE
 	m_contactMasks[LIGHT_PARTICLE].reset();
@@ -55,6 +57,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[ENEMY_BULLET].reset();
 	m_contactMasks[ENEMY_BULLET].set(PLAYER_HITBOX);
 	m_contactMasks[ENEMY_BULLET].set(SURVIVOR);
+	m_contactMasks[ENEMY_BULLET].set(ENEMY_TURRET);
 	m_contactMasks[ENEMY_BULLET].set(WALL);
 
 	//PLAYER_COLLISION
@@ -65,6 +68,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_COLLISION].set(DRONE_FRAME);
 	m_contactMasks[PLAYER_COLLISION].set(WALL);
 	m_contactMasks[PLAYER_COLLISION].set(WALL_PIECE);
+	m_contactMasks[PLAYER_COLLISION].set(HEAVY_PARTICLE);
 
 	//PLAYER_TOUCH
 	m_contactMasks[PLAYER_TOUCH].reset();
@@ -74,17 +78,20 @@ MRContactFilter::MRContactFilter()
 	//PLAYER_HITBOX
 	m_contactMasks[PLAYER_HITBOX].reset();
 	m_contactMasks[PLAYER_HITBOX].set(ENEMY_BULLET);
+	m_contactMasks[PLAYER_HITBOX].set(ENEMY_TURRET);
 
 	//PLAYER_BULLET
 	m_contactMasks[PLAYER_BULLET].reset();
 	m_contactMasks[PLAYER_BULLET].set(DRONE_SHIELD);
 	m_contactMasks[PLAYER_BULLET].set(WALL);
 	m_contactMasks[PLAYER_BULLET].set(WALL_PIECE);
+	m_contactMasks[PLAYER_BULLET].set(ENEMY_TURRET);
 
 	//SHIELD_SCRAP
 	m_contactMasks[SHIELD_SCRAP].reset();
 	m_contactMasks[SHIELD_SCRAP].set(PLAYER_COLLISION);
 	m_contactMasks[SHIELD_SCRAP].set(DRONE_FRAME);
+	m_contactMasks[SHIELD_SCRAP].set(ENEMY_TURRET);
 	m_contactMasks[SHIELD_SCRAP].set(WALL);
 
 	//SURVIVOR
@@ -94,6 +101,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[SURVIVOR].set(SURVIVOR);
 	m_contactMasks[SURVIVOR].set(WALL);
 	m_contactMasks[SURVIVOR].set(ESCAPE_STAIRS);
+	m_contactMasks[SURVIVOR].set(ENEMY_TURRET);
 	m_contactMasks[SURVIVOR].set(WALL_PIECE);
 
 	//WALL
@@ -124,6 +132,12 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[WALL_PIECE].set(SURVIVOR);
 	m_contactMasks[WALL_PIECE].set(PLAYER_COLLISION);
 	m_contactMasks[WALL_PIECE].set(PLAYER_BULLET);
+
+	//Turret
+	m_contactMasks[ENEMY_TURRET].reset();
+	m_contactMasks[ENEMY_TURRET].set(SURVIVOR);
+	m_contactMasks[ENEMY_TURRET].set(SHIELD_SCRAP);
+	m_contactMasks[ENEMY_TURRET].set(PLAYER_BULLET);
 
 }
 

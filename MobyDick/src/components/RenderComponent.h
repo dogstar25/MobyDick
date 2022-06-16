@@ -34,8 +34,9 @@ public:
 
 	void outlineObject(SDL_Color color);
 	void setDependencyReferences(GameObject* gameObject);
-	void applyDisplayOverlay(displayOverlay);
+	void applyDisplayOverlay(DisplayOverlay displayOverlay);
 	void removeDisplayOverlay();
+
 
 	SDL_Rect* getRenderTextureRect(Texture& texture);
 	std::shared_ptr<Texture> getRenderTexture();
@@ -59,15 +60,11 @@ private:
 	SDL_Color                   m_outLineColor;
 	float                       m_xRenderAdjustment;
 	float                       m_yRenderAdjustment;
-	int                         m_outlineThickness;
 	bool                        m_renderOutline;
 	std::string	                m_textureId;
 	RenderBlendMode				m_textureBlendMode;
 
-	std::optional<displayOverlay> m_displayOverlay;
-
-	/*AnimationComponent*           m_animationComponent;
-	TransformComponent*           m_transformComponent;*/
+	std::optional<DisplayOverlay> m_displayOverlay;
 
 };
 

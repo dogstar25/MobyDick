@@ -525,6 +525,7 @@ void Scene::_removeFromWorldPass()
 				if (it->get()->hasTrait(TraitTag::pooled)) {
 					it->get()->reset();
 				}
+
 				it = gameObjects.erase(it);
 			}
 			else {

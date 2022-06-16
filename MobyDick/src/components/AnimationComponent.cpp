@@ -1,4 +1,6 @@
 #include "AnimationComponent.h"
+#include "RenderComponent.h"
+#include "../game.h"
 
 
 #include "../EnumMaps.h"
@@ -45,9 +47,7 @@ AnimationComponent::~AnimationComponent()
 void AnimationComponent::update()
 {
 
-	//std::cout << "Animating state " << m_currentAnimationState << "\n";
-	auto animationFrame = m_animations[m_currentAnimationState].animate();
-	//m_animations[m_currentAnimationState].animate();
+	auto animationFrame = m_animations[m_currentAnimationState].animate(parent());
 
 	//If this animation has completed and it was a one-time animate, then reset the current
 	//animation to the default, and put it in continuous mode (probably IDLE)
@@ -57,6 +57,49 @@ void AnimationComponent::update()
 			m_currentAnimationState = m_defaultAnimationState;
 			m_currentAnimationMode = ANIMATE_CONTINUOUS;
 		}
+	}
+
+	//Should we flash?
+	if (m_flashAnimation.has_value()) {
+
+		const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
+
+		//Have we flashed the correct number of times
+		if (m_flashAnimation.value().flashCount <= m_flashAnimation.value().flashTimes) {
+
+			//Flash at the defined speed
+			if (m_flashAnimation.value().speedTimer.hasMetTargetDuration()) {
+
+				//If the flashStatus is ON, then remove the color treatment, otherwise add it
+				if (m_flashAnimation.value().flashFlag == FlashFlag::flashOFF) {
+
+					//Build a render overlay to apply to the render component
+					DisplayOverlay displayOverlay{};
+					displayOverlay.color = m_flashAnimation.value().flashColor;
+					displayOverlay.color.value().a = m_flashAnimation.value().flashAlpha;
+
+					renderComponent->applyDisplayOverlay(displayOverlay);
+
+					m_flashAnimation.value().flashCount += 1;
+
+					m_flashAnimation.value().flashFlag = FlashFlag::flashON;
+
+				}
+				else {
+					renderComponent->removeDisplayOverlay();
+					m_flashAnimation.value().flashFlag = FlashFlag::flashOFF;
+				}
+
+				//reset flashTimer
+				m_flashAnimation.value().speedTimer.reset();
+			}
+
+		}
+		else {
+			renderComponent->removeDisplayOverlay();
+			m_flashAnimation.reset();
+		}
+
 	}
 
 }
@@ -91,6 +134,17 @@ std::shared_ptr<Texture> AnimationComponent::getCurrentAnimationTexture()
 void AnimationComponent::setDefaultAnimationState(int defaultAnimationState)
 {
 	m_defaultAnimationState = defaultAnimationState;
+}
+
+void AnimationComponent::setFlash(SDL_Color flashColor, float flashSpeed, int flashTimes)
+{
+	FlashAnimation flashAnimation;
+	flashAnimation.flashColor = flashColor;
+	flashAnimation.flashSpeed = flashSpeed;
+	flashAnimation.flashTimes = flashTimes;
+	flashAnimation.flashCount = 0;
+	flashAnimation.speedTimer = { flashSpeed };
+	m_flashAnimation = std::move(flashAnimation);
 }
 
 

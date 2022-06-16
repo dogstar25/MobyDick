@@ -153,6 +153,7 @@ void MRGame::_addGameCollisionTags()
 	EnumMap::instance().addEnumItem("ContactTag::WEAPON_PICKUP", ContactTag::WEAPON_PICKUP);
 	EnumMap::instance().addEnumItem("ContactTag::ESCAPE_STAIRS", ContactTag::ESCAPE_STAIRS);
 	EnumMap::instance().addEnumItem("ContactTag::WALL_PIECE", ContactTag::WALL_PIECE);
+	EnumMap::instance().addEnumItem("ContactTag::ENEMY_TURRET", ContactTag::ENEMY_TURRET);
 
 
 

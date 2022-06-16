@@ -93,7 +93,14 @@
                     "gameObjectId": "SCRAP_PIECE",
                     "lifetime": 0.0,
                     "maxItems": 500
+                },
+                {
+                    "id": "TURRET_SCRAP_POOL",
+                    "gameObjectId": "TURRET_SCRAP",
+                    "lifetime": 0.0,
+                    "maxItems": 25
                 }
+
             ],
             "physics": {
                 "gravity": {

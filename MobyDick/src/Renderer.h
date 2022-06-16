@@ -10,6 +10,28 @@
 #include "imgui.h"
 
 
+struct DisplayOverlay
+{
+	std::optional<SDL_Color> color;
+	std::optional<bool> outlined;
+	std::optional<SDL_Color> outlineColor;
+};
+
+namespace displayOverlays {
+
+	static const DisplayOverlay outline_GREEN1{
+
+		.color{},
+		.outlined{},
+		.outlineColor{}
+	};
+
+	/*
+	....Add more displayOverlays here
+	*/
+}
+
+
 enum class RenderBlendMode {
 
 	BLEND,

@@ -155,4 +155,42 @@ namespace ParticleEffects {
 		.particleSpawnCountMax = 200
 	};
 
+	static const ParticleEffect explosionSmoke = {
+		.poolId = "SMOKE1_POOL",
+		.originMin = {0,0},
+		.originMax = {0,0},
+		.forceMin = 15,
+		.forceMax = 40,
+		.lifetimeMin = 0.5F,
+		.lifetimeMax = 2.5F,
+		.alphaFade = true,
+		.angleMin = 0,
+		.angleMax = 360,
+		.particleSizeMin = 2.F,
+		.particleSizeMax = 18.F,
+		.colorRangeBegin = {200,0,0,150},
+		.colorRangeEnd = {255,0,0,255},
+		.particleSpawnCountMin = 20,
+		.particleSpawnCountMax = 35
+	};	
+
+	static const ParticleEffect turretScrap = {
+		.poolId = "TURRET_SCRAP_POOL",
+		.originMin = {0,0},
+		.originMax = {0,0},
+		.forceMin = 20,
+		.forceMax = 20,
+		.lifetimeMin = 4.0,
+		.lifetimeMax = 7.0,
+		.alphaFade = true,
+		.angleMin = 0,
+		.angleMax = 360,
+		.particleSizeMin = 16.F,
+		.particleSizeMax = 32.F,
+		.colorRangeBegin = { 0, 255, 255, 255 },
+		.colorRangeEnd = { 0, 255, 255, 255 },
+		.particleSpawnCountMin = 2,
+		.particleSpawnCountMax = 4
+	};
+
 }
