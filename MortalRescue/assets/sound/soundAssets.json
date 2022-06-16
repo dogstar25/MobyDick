@@ -9,59 +9,41 @@
             "id": "SFX_LASER_002",
             "description": "Laser 002",
             "filename": "weapon_laser_002.wav"
-
         },
         {
             "id": "SFX_LASER_004",
             "description": "Laser 004",
             "filename": "weapon_laser_004.wav"
-
         },
         {
             "id": "SFX_IMPACT_1",
             "description": "Imapct Fire Sound 1",
             "filename": "impact_metal_shell_001.wav"
-
         },
         {
             "id": "SFX_IMPACT_2",
             "description": "Imapct Fire Sound 2",
             "filename": "impact_metal_shell_002.wav"
-
         },
         {
             "id": "SFX_IMPACT_3",
             "description": "Imapct Fire Sound 3",
             "filename": "impact_metal_shell_003.wav"
-
         },
         {
             "id": "SFX_PICKUP_1",
             "description": "Pickup Item 1",
             "filename": "pick_up_001.wav"
-
         },
         {
             "id": "SFX_PICKUP_2",
             "description": "Pickup Item 2",
             "filename": "pick_up_002.wav"
-
         },
         {
             "id": "SFX_IMPACT_12",
             "description": "Impact Metal 12",
             "filename": "impact_metal_012.wav"
-
-        },
-        {
-            "id": "SFX_VOICE_HURT_12",
-            "description": "vOICE HURT 12 12",
-            "filename": "voice_female_c_hurt_pain_12.wav"
-        },
-        {
-            "id": "SFX_VOICE_HURT_16",
-            "description": "vOICE HURT 16",
-            "filename": "voice_female_a_hurt_pain_16.wav"
         },
         {
             "id": "SFX_RETRO_IMPACT_5",
@@ -72,8 +54,12 @@
             "id": "SFX_RETRO_IMPACT_DEFLECT_16",
             "description": "Retro Impact deflect 16",
             "filename": "retro_impact_hit_16.wav"
+        },
+        {
+            "id": "SFX_TURRET_EXPLODE_1",
+            "description": "",
+            "filename": "sci-fi_explosion_04.wav"
         }
-
     ],
   "music": [
     {

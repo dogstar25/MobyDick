@@ -15,10 +15,44 @@
 extern std::unique_ptr<Game> game;
 
 
+void MRContactListener::_playerBullet_enemyTurret(GameObject* player, GameObject* enemyTurret, b2Vec2 contactPoint)
+{
+
+
+	//Inflict damage to the turret
+	const auto& turretVitalityComponent = enemyTurret->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	bool turretDead = turretVitalityComponent->inflictDamage(1);
+	if (turretDead) {
+
+		enemyTurret->setRemoveFromWorld(true);
+
+		//Add a particle Emitter for the explosion
+		auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
+		auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+		particleComponent->setType(ParticleEmitterType::ONETIME);
+		contactPoint.x *= GameConfig::instance().scaleFactor();
+		contactPoint.y *= GameConfig::instance().scaleFactor();
+		particleEmitterObject->setPosition(contactPoint.x, contactPoint.y);
+		particleComponent->addParticleEffect(ParticleEffects::turretScrap);
+		particleComponent->addParticleEffect(ParticleEffects::explosionSmoke);
+
+		//sound
+		SoundManager::instance().playSound("SFX_TURRET_EXPLODE_1");
+	}
+	else {
+		SoundManager::instance().playSound("SFX_IMPACT_12");
+	}
+
+	//Do a color flash animate on the turret
+	const auto& turretAnimationComponent = enemyTurret->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
+	SDL_Color red = Colors::RED;
+	turretAnimationComponent->setFlash(Colors::RED, .05, 3);
+
+}
+
 void MRContactListener::_player_wall(GameObject* player, GameObject* wall, b2Vec2 contactPoint)
 {
 
-	//Build a One-Time particle emitter object
 	const auto& playerControlComponent = player->getComponent<GinaPlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT);
 	playerControlComponent->boostReset();
 
@@ -57,7 +91,6 @@ void MRContactListener::_playerBullet_droneShield(GameObject* playerBullet, Game
 	//auto particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
 
 	particleComponent->setType(ParticleEmitterType::ONETIME);
-	//particleComponent->setType(ParticleEmitterType::CONTINUOUS);
 
 	//Convert from box2d to gameWorld coordinates
 	contactPoint.x *= GameConfig::instance().scaleFactor();
@@ -150,12 +183,15 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 {
 
 	//Update the status Manager
-	game->contextMananger()->adjustStatusItemValue("LIVES_COUNT", -1);
+	//game->contextMananger()->adjustStatusItemValue("LIVES_COUNT", -1);
 
 	//flag the scrap item to be removed from the game and play a sound effect
 	bullet->setRemoveFromWorld(true);
-	SoundManager::instance().playSound("SFX_IMPACT_12");
 	SoundManager::instance().playSound("SFX_RETRO_IMPACT_5");
+
+	//Do a color flash animate on the turret
+	const auto& turretAnimationComponent = player->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
+	turretAnimationComponent->setFlash(Colors::YELLOW, .1, 3);
 
 
 }
@@ -212,6 +248,20 @@ void MRContactListener::handleContact(b2Contact* contact, b2Vec2 contactPoint)
 	int contactTag1 = contactDefinitionA->contactTag;
 	int contactTag2 = contactDefinitionB->contactTag;
 
+
+	////////////////////////////////////
+	// PlayerBullet -  Enemy Turret
+	//////////////////////////////////
+	if ((contactTag1 == ContactTag::PLAYER_BULLET && contactTag2 == ContactTag::ENEMY_TURRET) ||
+		(contactTag2 == ContactTag::PLAYER_BULLET && contactTag1 == ContactTag::ENEMY_TURRET)) {
+
+		if (contactTag1 == ContactTag::PLAYER_BULLET) {
+			_playerBullet_enemyTurret(contact1, contact2, contactPoint);
+		}
+		else {
+			_playerBullet_enemyTurret(contact2, contact1, contactPoint);
+		}
+	}
 
 	////////////////////////////////////
 	// Player -  Wall

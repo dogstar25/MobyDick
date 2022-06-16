@@ -14,6 +14,7 @@
 #include "texture.h"
 
 class GameObjectDefinition;
+class GameObject;
 
 class Animation
 {
@@ -23,7 +24,7 @@ public:
 	Animation() = default;
 	Animation(Json::Value animationDetailsJSON, b2Vec2 frameSize);
 
-	int animate();
+	int animate(GameObject* parentGameObject);
 
 	//Accessor Functions
 	std::shared_ptr<SDL_Rect> getCurrentTextureAnimationSrcRect() { return m_currentTextureAnimationSrcRect; }
@@ -36,8 +37,8 @@ private:
 	int     m_state{ ANIMATION_IDLE };
 	int     m_frameCount{ 0 };
 	int     m_currentAnimFrame{ 0 };
-
 	b2Vec2 	m_frameSize{ 0,0 };
+	SDL_Color m_flashColor{};
 
 	//a rectangle pointing to the animation textture of the animation frame to be displayed
 	std::shared_ptr<SDL_Rect> m_currentTextureAnimationSrcRect;

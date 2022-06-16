@@ -34,6 +34,7 @@ private:
 	void _enemyBullet_player(GameObject* bullet, GameObject* player, b2Vec2 contactPoint);
 	void _survivor_escape(GameObject* bullet, GameObject* player, b2Vec2 contactPoint);
 	void _playerBullet_wallPiece(GameObject* playerBullet, GameObject* wallPiece, b2Vec2 contactPoint);
+	void _playerBullet_enemyTurret(GameObject* playerBullet, GameObject* wallPiece, b2Vec2 contactPoint);
 	
 };
 

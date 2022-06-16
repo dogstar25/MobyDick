@@ -19,7 +19,7 @@ VitalityComponent::VitalityComponent(Json::Value componentJSON)
 	m_speed = componentJSON["speed"].asFloat();
 	m_rotationSpeed = componentJSON["rotationSpeed"].asFloat();
 	m_lifetime = std::chrono::duration<float>(componentJSON["lifetime"].asFloat());
-	
+	m_health = componentJSON["health"].asFloat();
 	float lifetime = componentJSON["lifetime"].asFloat();
 	m_lifetimeTimer = Timer(lifetime);
 
@@ -169,6 +169,19 @@ void VitalityComponent::_restore()
 	if (m_hideWhenBroken == true) {
 		parent()->enableRender();
 	}
+
+}
+
+bool VitalityComponent::inflictDamage(float damage)
+{
+	bool dead = false;
+
+	m_health -= damage;
+	if (m_health <= 0) {
+		dead = true;
+	}
+
+	return dead;
 
 }
 

@@ -43,6 +43,8 @@ public:
 	void setLifetimeTimer(float lifetime);
 	void resetLifetime();
 
+	bool inflictDamage(float damage);
+
 
 private:
 	float m_speed{ 0 };

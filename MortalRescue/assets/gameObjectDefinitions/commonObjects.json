@@ -464,7 +464,7 @@
                         {
                             "level": 1,
                             "force": 1,
-                            "color": "Colors::BLUE",
+                            "color": "Colors::WHITE",
                             "bulletPoolId": "BULLET1_POOL"
                         },
                         {
@@ -796,6 +796,11 @@
                         "width": 64,
                         "height": 64
                     },
+                    "flash": {
+                        "color": "Colors::RED",
+                        "alpha": "200",
+                        "speed": 0.15
+                    },
                     "animations": [
                         {
                             "state": "ANIMATION_IDLE",
@@ -821,11 +826,13 @@
                             "speed": 0.15,
                             "frames": 1
                         }
+
                     ]
                 },
                 {
                     "id": "VITALITY_COMPONENT",
-                    "rotationSpeed": 20
+                    "rotationSpeed": 20,
+                    "health": 3
                 },
                 {
                     "id": "TURRET_BRAIN_COMPONENT",
@@ -839,7 +846,7 @@
                     "angularDamping": 20.0,
                     "fixtures": [
                         {
-                            "contactTag": "ContactTag::GENERAL_SOLID",
+                            "contactTag": "ContactTag::ENEMY_TURRET",
                             "collisionShape": "B2_BOX",
                             "density": 10.1
                         }
@@ -871,6 +878,52 @@
                             "bulletPoolId": "BULLET2_POOL"
                         }
                     ]
+                }
+            ]
+        },
+        {
+            "id": "TURRET_SCRAP",
+            "traitTags": [ "pooled" ],
+            "description": "Turret Scrap",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_TURRET_SCRAP",
+                    "color": "Colors::CYAN"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 64
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "linearDamping": 4.0,
+                    "angularDamping": 1.0,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::HEAVY_PARTICLE",
+                            "collisionShape": "B2_BOX",
+                            "density": 5,
+                            "restitution": 0.3,
+                            "size": {
+                                "width": 32,
+                                "height": 32
+                            }
+                        }
+                    ]
+
+                },
+                {
+                    "id": "POOL_COMPONENT"
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "lifetime": 0.0,
+                    "lifetimeAlphaFade": true
                 }
             ]
         }

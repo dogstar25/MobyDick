@@ -260,9 +260,6 @@ void GameObject::render()
 			getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT)->render();
 		}
 	}
-	else {
-		int todd = 1;
-	}
 }
 
 void GameObject::reset()

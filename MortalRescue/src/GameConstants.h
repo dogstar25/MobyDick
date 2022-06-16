@@ -52,6 +52,7 @@ namespace ContactTag {
 	inline constexpr int BUTTON = 22;
 	inline constexpr int ESCAPE_STAIRS = 23;
 	inline constexpr int WALL_PIECE = 24;
+	inline constexpr int ENEMY_TURRET = 25;
 
 }
 

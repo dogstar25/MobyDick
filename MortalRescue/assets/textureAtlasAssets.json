@@ -528,7 +528,19 @@
                 "width": 352,
                 "height": 32
             }
+        },
+        {
+            "id": "TX_TURRET_SCRAP",
+            "description": "Turret Scrap",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 521,
+                "y": 268,
+                "width": 64,
+                "height": 64
+            }
         }
+
     ],
     "fonts": [
         {

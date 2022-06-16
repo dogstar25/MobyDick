@@ -56,7 +56,6 @@ public:
 	GLuint getTextureId(GL_TextureIndexType textureindex);
 	void renderPrimitives(int layerIndex);
 
-
 	Shader& shader(GLShaderType shaderType) {
 		return m_shaders[(int)shaderType];
 	}
