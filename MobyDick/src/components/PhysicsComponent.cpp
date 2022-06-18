@@ -140,6 +140,9 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 	if (physicsComponentJSON.isMember("gravityScale")) {
 		body->SetGravityScale(physicsComponentJSON["gravityScale"].asFloat());
 	}
+	if (physicsComponentJSON.isMember("isBullet")) {
+		body->SetBullet(physicsComponentJSON["isBullet"].asBool());
+	}
 
 	//Build fixtures
 	for (const auto& fixtureJSON : physicsComponentJSON["fixtures"]) {
@@ -304,6 +307,26 @@ void PhysicsComponent::setOffGrid()
 	m_physicsBody->SetTransform(positionVector, 0);
 	m_physicsBody->SetLinearVelocity(velocityVector);
 	m_physicsBody->SetEnabled(false);
+}
+
+void PhysicsComponent::deleteAllJoints()
+{
+	std::vector< b2JointEdge*> joints{};
+
+	//We need to store the joints in an array first , then delete them
+	//deleting them as you go will mess up the ->next
+	for (b2JointEdge* joint = physicsBody()->GetJointList(); joint; joint = joint->next)
+	{
+		joints.push_back(joint);
+	}
+
+	for (auto joint : joints) {
+
+		parent()->parentScene()->physicsWorld()->DestroyJoint(joint->joint);
+
+	}
+
+
 }
 
 void PhysicsComponent::attachItem(GameObject* attachObject, b2JointType jointType, std::optional<b2Vec2> attachLocation)

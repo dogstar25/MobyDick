@@ -501,6 +501,7 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
+                    "isBullet":  true,
                     "fixtures": [
                         {
                             "contactTag": "ContactTag::PLAYER_BULLET",
@@ -542,6 +543,7 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
+                    "isBullet": true,
                     "fixtures": [
                         {
                             "contactTag": "ContactTag::ENEMY_BULLET",

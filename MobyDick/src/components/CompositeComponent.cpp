@@ -39,6 +39,9 @@ CompositeComponent::~CompositeComponent()
 void CompositeComponent::update()
 {
 	_removeFromWorldPass();
+	if (m_detachAllPieces == true) {
+		_detachAllPieces();
+	}
 	_updatePieces();
 
 }
@@ -97,6 +100,17 @@ void CompositeComponent::weldOnPieces()
 
 }
 
+void CompositeComponent::_detachAllPieces()
+{
+
+	for (auto& piece : m_pieces) {
+
+		const auto& piecePhysicsComponent = piece.pieceObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+		piecePhysicsComponent->deleteAllJoints();
+
+	}
+
+}
 void CompositeComponent::_buildComposite(Scene* parentScene)
 {
 

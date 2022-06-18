@@ -43,6 +43,7 @@ public:
 	void setLinearDamping(float linearDamping);
 	
 	void attachItem(GameObject* inventoryObject, b2JointType jointType, std::optional<b2Vec2> attachLocation = std::nullopt);
+	void deleteAllJoints();
 
 	//Accessor functions
 	b2Vec2 objectAnchorPoint() { return m_objectAnchorPoint; }
