@@ -32,6 +32,7 @@ AttachmentsComponent::~AttachmentsComponent()
 
 void AttachmentsComponent::update()
 {
+	_removeFromWorldPass();
 
 	for (const auto& attachment: m_attachments) {
 
@@ -96,5 +97,42 @@ void AttachmentsComponent::setParent(GameObject* parentObject)
 
 	}
 
+
+}
+void AttachmentsComponent::_removeFromWorldPass()
+{
+	//First remove any pieces that were mared to be removed
+	auto it = m_attachments.begin();
+	while (it != m_attachments.end()) {
+
+		if (it->gameObject->removeFromWorld() == true) {
+
+			//it->pieceObject->reset();
+			it = m_attachments.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
+
+	m_attachments.shrink_to_fit();
+
+}
+
+void AttachmentsComponent::removeAllAttachments()
+{
+	for (auto& attachment : m_attachments) {
+		attachment.gameObject->setRemoveFromWorld(true);
+
+	}
+}
+
+void AttachmentsComponent::removeAttachment(std::string id)
+{
+
+	const auto& attachment = getAttachment(id);
+	auto& attachmentGameObject = attachment.value().gameObject;
+
+	attachmentGameObject->setRemoveFromWorld(true);
 
 }

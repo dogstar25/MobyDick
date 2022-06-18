@@ -14,6 +14,7 @@ MRContactFilter::MRContactFilter()
 	//DRONE_BRAIN
 	m_contactMasks[DRONE_BRAIN].reset();
 	m_contactMasks[DRONE_BRAIN].set(WALL);
+	m_contactMasks[DRONE_BRAIN].set(PLAYER_BULLET);
 
 	//DRONE_FRAME
 	m_contactMasks[DRONE_FRAME].reset();
@@ -44,6 +45,8 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[HEAVY_PARTICLE].set(WALL);
 	m_contactMasks[HEAVY_PARTICLE].set(DRONE_FRAME);
 	m_contactMasks[HEAVY_PARTICLE].set(PLAYER_COLLISION);
+	m_contactMasks[HEAVY_PARTICLE].set(DRONE_SHIELD);
+	m_contactMasks[HEAVY_PARTICLE].set(DRONE_SCRAP);
 
 	//LIGHT_PARTICLE
 	m_contactMasks[LIGHT_PARTICLE].reset();
@@ -69,6 +72,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_COLLISION].set(WALL);
 	m_contactMasks[PLAYER_COLLISION].set(WALL_PIECE);
 	m_contactMasks[PLAYER_COLLISION].set(HEAVY_PARTICLE);
+	m_contactMasks[PLAYER_COLLISION].set(DRONE_SCRAP);
 
 	//PLAYER_TOUCH
 	m_contactMasks[PLAYER_TOUCH].reset();
@@ -83,6 +87,7 @@ MRContactFilter::MRContactFilter()
 	//PLAYER_BULLET
 	m_contactMasks[PLAYER_BULLET].reset();
 	m_contactMasks[PLAYER_BULLET].set(DRONE_SHIELD);
+	m_contactMasks[PLAYER_BULLET].set(DRONE_BRAIN);
 	m_contactMasks[PLAYER_BULLET].set(WALL);
 	m_contactMasks[PLAYER_BULLET].set(WALL_PIECE);
 	m_contactMasks[PLAYER_BULLET].set(ENEMY_TURRET);
@@ -115,6 +120,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[WALL].set(SHIELD_SCRAP);
 	m_contactMasks[WALL].set(SURVIVOR);
 	m_contactMasks[WALL].set(ENEMY_BULLET);
+	m_contactMasks[WALL].set(DRONE_SCRAP);
 
 	//BUTTONS
 	m_contactMasks[BUTTON].reset();
@@ -138,6 +144,12 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[ENEMY_TURRET].set(SURVIVOR);
 	m_contactMasks[ENEMY_TURRET].set(SHIELD_SCRAP);
 	m_contactMasks[ENEMY_TURRET].set(PLAYER_BULLET);
+
+	//Drone Scrap
+	m_contactMasks[DRONE_SCRAP].reset();
+	m_contactMasks[DRONE_SCRAP].set(HEAVY_PARTICLE);
+	m_contactMasks[DRONE_SCRAP].set(PLAYER_COLLISION);
+	m_contactMasks[DRONE_SCRAP].set(WALL);
 
 }
 

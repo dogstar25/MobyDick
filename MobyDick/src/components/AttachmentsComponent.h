@@ -37,12 +37,15 @@ public:
 	void render();
 	void postInit() override;
 	void setParent(GameObject* parentObject) override;
+	void removeAllAttachments();
+	void removeAttachment(std::string id);
 
 	const std::optional<Attachment> getAttachment(std::string id);
 
 
 private:
 	std::vector<Attachment> m_attachments;
+	void _removeFromWorldPass();
 
 };
 

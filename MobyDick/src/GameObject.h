@@ -113,6 +113,7 @@ public:
 	auto const& gameObjectDefinition() { return m_gameObjectDefinition; }
 	auto& components() { return m_components; }
 	Scene* parentScene() { return m_parentScene; }
+	void setCollisionTag(int contactTag);
 	//void setCollisionTag(int contactTag) { m_contactTag = contactTag; }
 	//void resetCollisionTag() { m_contactTag = m_originalCollisionTag; }
 

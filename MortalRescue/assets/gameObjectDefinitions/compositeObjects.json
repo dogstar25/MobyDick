@@ -6,7 +6,7 @@
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "textureId": "TX_ENEMYFRAME1_128"
+                    "textureId": "TX_CLEAR_QUAD"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
@@ -134,12 +134,16 @@
                     "type": "B2_DYNAMIC",
                     "fixtures": [
                         {
-                            "contactTag": "ContactTag::GENERAL_FREE",
-                            "collisionShape": "B2_BOX",
+                            "contactTag": "ContactTag::DRONE_BRAIN",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 0.64,
                             "density": 1.0
                         }
                     ]
-
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "resistance": 1
                 }
             ]
         },
@@ -152,7 +156,8 @@
                     "id": "RENDER_COMPONENT",
                     "textureId": "TX_DRONE_EYE",
                     "xRenderAdjustment": 0,
-                    "yRenderAdjustment": 0
+                    "yRenderAdjustment": 0,
+                    "color": "Colors::YELLOW"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
@@ -236,6 +241,8 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
+                    "linearDamping": 2.0,
+                    "angularDamping": 2.0,
                     "anchorPoint": {
                         "x": 0.0,
                         "y": 0.0
@@ -268,7 +275,7 @@
                                 "color": "Colors::GREEN"
                             },
                             {
-                                "resistance": 25,
+                                "resistance": 4,
                                 "color": "Colors::RED"
                             }
                         ]
@@ -301,6 +308,8 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
+                    "linearDamping": 2.0,
+                    "angularDamping": 2.0,
                     "anchorPoint": {
                         "x": 0.0,
                         "y": 0.0
@@ -333,7 +342,7 @@
                                 "color": "Colors::GREEN"
                             },
                             {
-                                "resistance": 25,
+                                "resistance": 4,
                                 "color": "Colors::RED"
                             }
                         ]
@@ -366,6 +375,8 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
+                    "linearDamping": 2.0,
+                    "angularDamping": 2.0,
                     "anchorPoint": {
                         "x": 0.0,
                         "y": 0.0
@@ -398,7 +409,7 @@
                                 "color": "Colors::GREEN"
                             },
                             {
-                                "resistance": 25,
+                                "resistance": 4,
                                 "color": "Colors::RED"
                             }
                         ]
@@ -431,6 +442,8 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
+                    "linearDamping": 2.0,
+                    "angularDamping": 2.0,
                     "anchorPoint": {
                         "x": 0.0,
                         "y": 0.0
@@ -463,7 +476,7 @@
                                 "color": "Colors::GREEN"
                             },
                             {
-                                "resistance": 25,
+                                "resistance": 4,
                                 "color": "Colors::RED"
                             }
                         ]
@@ -496,6 +509,8 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
+                    "linearDamping": 2.0,
+                    "angularDamping": 2.0,
                     "anchorPoint": {
                         "x": 0.0,
                         "y": 0.0
@@ -528,7 +543,7 @@
                                 "color": "Colors::GREEN"
                             },
                             {
-                                "resistance": 25,
+                                "resistance": 4,
                                 "color": "Colors::RED"
                             }
                         ]

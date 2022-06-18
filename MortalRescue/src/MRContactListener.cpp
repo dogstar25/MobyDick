@@ -11,9 +11,100 @@
 #include "components/InventoryComponent.h"
 #include "components/PistolWeaponComponent.h"
 #include "components/GinaPlayerControlComponent.h"
+#include "components/DroneBrainComponent.h"
+#include "components/AttachmentsComponent.h"
 
 extern std::unique_ptr<Game> game;
 
+
+void MRContactListener::_playerBullet_droneBrain(GameObject* playerBullet, GameObject* droneBrain, b2Vec2 contactPoint)
+{
+
+	//Convert from box2d to gameWorld coordinates
+	contactPoint.x *= GameConfig::instance().scaleFactor();
+	contactPoint.y *= GameConfig::instance().scaleFactor();
+
+	//Create a physics emitter for the dynamic chunks in the explosion
+	auto particleXEmitter = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
+	auto particleXComponent = particleXEmitter->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+	//set the explosion origin as the ceneter of the brain thats exploding - not the contact point
+	particleXEmitter->setPosition(droneBrain->getCenterPosition());
+	particleXComponent->setType(ParticleEmitterType::ONETIME);
+
+	//Create a non-physics emitter for the extra smoke and stufff to exagerate the explosion
+	//auto particleEmitter = SceneManager::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
+	//auto particleComponent = particleEmitter->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
+	//particleEmitter->setPosition(contactPoint.x, contactPoint.y);
+	//particleComponent->setType(ParticleEmitterType::ONETIME);
+
+	//Set flag for removal for the Bullet
+	playerBullet->setRemoveFromWorld(true);
+	//droneBrain->setRemoveFromWorld(true);
+
+	//Test if the bullet is strong enought to destroy the object
+	auto bulletVitality = playerBullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	auto brainVitality = droneBrain->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	auto brainHolds = brainVitality->testResistance(bulletVitality->attackPower());
+	if (brainHolds == false) {
+
+		particleXComponent->addParticleEffect(ParticleEffects::impactSmoke);
+		particleXComponent->addParticleEffect(ParticleEffects::turretScrap);
+		particleXComponent->addParticleEffect(ParticleEffects::explosionSmoke);
+		SoundManager::instance().playSound("SFX_TURRET_EXPLODE_1");
+
+		//Get the Drone object
+		auto droneObject = droneBrain->parent();
+
+		//Hide the drone base and set it to dbe removed in 5 seconds
+		//droneObject.value()->disableRender();
+		droneObject.value()->disableCollision();
+		const auto& droneVitalityComponent = droneObject.value()->getComponent <VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+		droneVitalityComponent->setLifetimeTimer(10);
+		droneVitalityComponent->setIsLifetimeAlphaFade(true);
+
+		//Set the drones composite component to detach all of its pieces from its body
+		const auto& droneCompositeComponent = droneObject.value()->getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
+		droneCompositeComponent->setDetachAllPieces();
+
+		//remove the drones brain
+		const auto& droneBrainComponent = droneObject.value()->getComponent<DroneBrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+		droneBrainComponent->disable();
+
+		//remove the drones attachmenmts - physical brain and eye gun
+		const auto& droneAttachmentComponent = droneObject.value()->getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
+		//droneAttachmentComponent->removeAllAttachments();
+		droneAttachmentComponent->removeAttachment("DRONE_BRAIN");
+
+		//set all of the composite pieces to:
+		//		have a limited lifetime to fade out
+		//		detach them from their base so they can bump around
+		for (auto piece : droneCompositeComponent->pieces()) {
+
+			//Make all pieces collide
+			piece.pieceObject->setCollisionTag(ContactTag::DRONE_SCRAP);
+
+			//Make fade away
+			const auto& pieceVitalityComponent = piece.pieceObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+			pieceVitalityComponent->setIsLifetimeAlphaFade(true);
+			pieceVitalityComponent->setLifetimeTimer(10);
+
+
+
+
+		}
+
+
+
+
+
+	}
+	else {
+
+		particleXComponent->addParticleEffect(ParticleEffects::deflect);
+		SoundManager::instance().playSound("SFX_RETRO_IMPACT_DEFLECT_16");
+	}
+
+}
 
 void MRContactListener::_playerBullet_enemyTurret(GameObject* player, GameObject* enemyTurret, b2Vec2 contactPoint)
 {
@@ -248,6 +339,20 @@ void MRContactListener::handleContact(b2Contact* contact, b2Vec2 contactPoint)
 	int contactTag1 = contactDefinitionA->contactTag;
 	int contactTag2 = contactDefinitionB->contactTag;
 
+
+	////////////////////////////////////
+	// PlayerBullet -  Drone Brain
+	//////////////////////////////////
+	if ((contactTag1 == ContactTag::PLAYER_BULLET && contactTag2 == ContactTag::DRONE_BRAIN) ||
+		(contactTag2 == ContactTag::PLAYER_BULLET && contactTag1 == ContactTag::DRONE_BRAIN)) {
+
+		if (contactTag1 == ContactTag::PLAYER_BULLET) {
+			_playerBullet_droneBrain(contact1, contact2, contactPoint);
+		}
+		else {
+			_playerBullet_droneBrain(contact2, contact1, contactPoint);
+		}
+	}
 
 	////////////////////////////////////
 	// PlayerBullet -  Enemy Turret

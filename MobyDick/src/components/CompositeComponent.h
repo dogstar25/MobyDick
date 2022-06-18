@@ -44,6 +44,8 @@ public:
 	void weldOnPieces();
 	void postInit();
 	bool physicsWeldPiecesOn() { return m_physicsWeldPiecesOn; }
+	void setDetachAllPieces() { m_detachAllPieces = true; }
+	std::vector<GameObjectPiece>& pieces() { return m_pieces; };
 	
 
 private:
@@ -57,9 +59,11 @@ private:
 	void _updatePieceState(GameObjectPiece& piece);
 	void _updatePiecePosition(GameObjectPiece& piece);
 	void _removeFromWorldPass();
+	void _detachAllPieces();
 	
 
 	std::vector<GameObjectPiece>m_pieces;
+	bool m_detachAllPieces{false};
 
 };
 

@@ -24,7 +24,7 @@ VitalityComponent::VitalityComponent(Json::Value componentJSON)
 	m_lifetimeTimer = Timer(lifetime);
 
 	m_isLifetimeAlphaFade = componentJSON["lifetimeAlphaFade"].asBool();
-	
+	m_resistance = componentJSON["resistance"].asFloat();
 
 	//Regeneration related
 	if (componentJSON.isMember("regenerating")) {
@@ -90,19 +90,15 @@ void VitalityComponent::update()
 void VitalityComponent::_levelUp()
 {
 
-	if (m_currentLevel < m_maxLevels) {
-
-		m_currentLevel++;
-		auto& level = m_regenLevels[(uint_fast64_t)m_currentLevel - 1];
-		parent()->enableCollision();
-		parent()->enableRender();
-		m_resistance = level.resistance;
+	m_currentLevel++;
+	auto& level = m_regenLevels[(uint_fast64_t)m_currentLevel - 1];
+	parent()->enableCollision();
+	parent()->enableRender();
+	m_resistance = level.resistance;
 		
-		//Update the color based on the new level
-		const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
-		renderComponent->setColor(level.color);
-
-	}
+	//Update the color based on the new level
+	const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
+	renderComponent->setColor(level.color);
 
 }
 
@@ -144,11 +140,13 @@ void VitalityComponent::_updateRegeneration()
 
 	if (m_isBroken == true && m_regenTimer.hasMetTargetDuration()) {
 
-		//Restore the object and if we aslo hid it while it was brokwen then unhide it
-		m_isBroken = false;
-		_restore();
-		_levelUp();
+		if (m_currentLevel < m_maxLevels) {
 
+			//Restore the object and if we aslo hid it while it was brokwen then unhide it
+			m_isBroken = false;
+			_restore();
+			_levelUp();
+		}
 	}
 
 }

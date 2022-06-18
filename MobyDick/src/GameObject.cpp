@@ -500,6 +500,20 @@ void GameObject::enableCollision()
 
 }
 
+void GameObject::setCollisionTag( int contactTag)
+{
+
+	if (hasComponent(ComponentTypes::PHYSICS_COMPONENT) == true) {
+		const auto& physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+		for (auto fixture = physicsComponent->physicsBody()->GetFixtureList(); fixture != 0; fixture = fixture->GetNext())
+		{
+			ContactDefinition* contactDefinition = reinterpret_cast<ContactDefinition*>(fixture->GetUserData().pointer);
+			contactDefinition->contactTag = contactTag;
+		}
+	}
+
+}
+
 void GameObject::_updateTouchingObjects()
 {
 
