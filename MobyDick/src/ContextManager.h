@@ -34,7 +34,7 @@ private:
 
 };
 
-const std::string GAME_FILENAME = "../game.dat";
+const std::string GAME_FILENAME = "game.dat";
 
 struct UserSettings {
 
