@@ -220,9 +220,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\blueprints\breakable_wall_blueprint.png" />
     <Image Include="assets\blueprints\drone1_blueprint.png" />
     <Image Include="assets\blueprints\drone1_test.png" />
     <Image Include="assets\blueprints\levels\level1_blueprint.png" />
+    <Image Include="assets\blueprints\levels\level1_blueprint_sav.png" />
+    <Image Include="assets\blueprints\testDrone_blueprint.png" />
+    <Image Include="assets\blueprint_template.png" />
     <Image Include="assets\bowman1.png" />
     <Image Include="assets\bullet1.png" />
     <Image Include="assets\deflect1.png" />
@@ -260,6 +264,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\blueprints\levels\level1_blueprint.json" />
+    <None Include="assets\blueprints\testDrone_definition.json" />
     <None Include="assets\config\gameConfig.json" />
     <None Include="assets\config\gameScenes.json" />
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />
@@ -275,6 +280,7 @@
     <None Include="assets\levels\level_test_definition.json" />
     <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\textureAtlasAssets.json" />
+    <None Include="setup25.bat" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav" />

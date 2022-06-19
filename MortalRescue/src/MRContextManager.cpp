@@ -12,6 +12,7 @@ MRContextManager::MRContextManager()
 
 	SaveFileData saveFileData;
 
+
 	//Get the saved values from gameData file or create the gameData file for the first time
 	if (util::fileExists(GAME_FILENAME)) {
 
@@ -78,8 +79,8 @@ bool MRContextManager::saveGame(SaveFileData& saveFileData)
 		return false;
 	}
 
-	game->contextMananger()->setMouseSensitivity(saveFileData.mouseSensitivity);
-	game->contextMananger()->setSoundVolume(saveFileData.soundLevel);
+	setMouseSensitivity(saveFileData.mouseSensitivity);
+	setSoundVolume(saveFileData.soundLevel);
 
 	return true;
 }

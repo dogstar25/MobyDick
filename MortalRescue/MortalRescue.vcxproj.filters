@@ -218,6 +218,18 @@
     <Image Include="assets\textureAtlasImGui.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\blueprints\breakable_wall_blueprint.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprints\testDrone_blueprint.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprint_template.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprints\levels\level1_blueprint_sav.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\config\gameConfig.json" />
@@ -236,6 +248,10 @@
     <None Include="assets\gameObjectDefinitions\guiObjects.json" />
     <None Include="assets\gameObjectDefinitions\hudObjects.json" />
     <None Include="assets\levels\levels.json" />
+    <None Include="assets\blueprints\testDrone_definition.json" />
+    <None Include="setup25.bat">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav">
