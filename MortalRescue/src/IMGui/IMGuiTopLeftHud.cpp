@@ -76,10 +76,10 @@ void IMGuiTopLeftHud::weaponLevel()
 	//TextureAtlas Coordinates
 
 	//Get the value for the current player weapon levelup accrual
-	auto& levelUpAccrual = game->contextMananger()->getStatusItem("PLAYER_WEAPON_LEVEL_ACCRUAL");
+	auto& levelUpAccrual = game->contextMananger()->getStatusItem(StatusItemId::PLAYER_WEAPON_ACCRUAL);
 
 	//Determine color of weapon
-	auto& weaponLevel = game->contextMananger()->getStatusItem("PLAYER_WEAPON_LEVEL");
+	auto& weaponLevel = game->contextMananger()->getStatusItem(StatusItemId::PLAYER_WEAPON_LEVEL);
 	if (weaponLevel.value() == 1) {
 		gunColor = m_hudBlue;
 	}

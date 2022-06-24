@@ -38,8 +38,6 @@ IMGuiTopRightHud::IMGuiTopRightHud(std::string gameObjectId, b2Vec2 padding, Sce
 	util::colorApplyAlpha(yellow, 255);
 	m_hudYellow = util::SDLColorToImVec4(yellow);
 
-	
-
 }
 
 glm::vec2 IMGuiTopRightHud::render()
@@ -71,7 +69,6 @@ glm::vec2 IMGuiTopRightHud::render()
 
 	return windowSize;
 
-
 }
 
 void IMGuiTopRightHud::survivorCount()
@@ -79,14 +76,11 @@ void IMGuiTopRightHud::survivorCount()
 
 	ImVec4 gunColor{};
 
-	//Get the value for the current player weapon levelup accrual
-	auto& survivorCount = game->contextMananger()->getStatusItem("PLAYER_WEAPON_LEVEL_ACCRUAL");
-
 	//Survivor image
 	hudSurvivorImage(m_hudYellow);
 
-	auto survivorsSaved = game->contextMananger()->getStatusItem("SURVIVORS_SAVED").value();
-	auto survivorsTotal = game->contextMananger()->getStatusItem("SURVIVORS_SAVED").maxValue();
+	auto survivorsTotal = game->contextMananger()->getStatusItem(StatusItemId::SURVIVORS).maxValue();
+	auto survivorsSaved = game->contextMananger()->getStatusItem(StatusItemId::SURVIVORS).value();
 
 	//Level Text
 	std::stringstream levelTxtSS;
@@ -94,10 +88,7 @@ void IMGuiTopRightHud::survivorCount()
 	levelTxtSS << survivorsSaved << "/" << survivorsTotal;
 	levelTxt = levelTxtSS.str();
 	ImGui::SameLine();
-	//ImGui::setFont64();
 	ImGui::PushFont(m_xLargeFont);
-
-	//ImGui::Dummy(ImVec2(0.0f, 32.0f));
 	ImGui::Text(levelTxt.c_str());
 	ImGui::PopFont();
 	ImGui::NewLine();
@@ -106,10 +97,6 @@ void IMGuiTopRightHud::survivorCount()
 
 void IMGuiTopRightHud::hudSurvivorImage(ImVec4 color)
 {
-
-	//const auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-	//testObject->setPosition(transform->getTopLeftPosition());
-	//testObject->render();
 
 	//TextureAtlas Coordinates for bar
 	glm::vec2 topLeft = util::glNormalizeTextureCoords({ 65,98 }, { 256, 256 });
@@ -128,8 +115,4 @@ void IMGuiTopRightHud::hudSurvivorImage(ImVec4 color)
 	}
 
 }
-
-
-
-
 

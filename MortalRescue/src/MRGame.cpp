@@ -48,11 +48,12 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 	m_gameState = GameState::PLAY;
 
-	//Add Game Specific stuff
+	//Add Game Specific constants
 	_addGameCollisionTags();
 	_addGameComponentTypes();
 	_addGameColors();
 	_addGameTraits();
+	_addStatusItemTypes();
 
 	//Initialize world
 	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
@@ -166,6 +167,15 @@ void MRGame::_addGameComponentTypes()
 	EnumMap::instance().addEnumItem("TURRET_BRAIN_COMPONENT", ComponentTypes::TURRET_BRAIN_COMPONENT);
 	EnumMap::instance().addEnumItem("SURVIVOR_BRAIN_COMPONENT", ComponentTypes::SURVIVOR_BRAIN_COMPONENT);
 	EnumMap::instance().addEnumItem("GINA_PLAYER_CONTROL_COMPONENT", ComponentTypes::GINA_PLAYER_CONTROL_COMPONENT);
+}
+
+void MRGame::_addStatusItemTypes()
+{
+	EnumMap::instance().addEnumItem("StatusItemId::PLAYERS_HEART_COUNT", StatusItemId::PLAYERS_HEART_COUNT);
+	EnumMap::instance().addEnumItem("StatusItemId::PLAYER_WEAPON_LEVEL", StatusItemId::PLAYER_WEAPON_LEVEL);
+	EnumMap::instance().addEnumItem("StatusItemId::SCRAP_COUNT", StatusItemId::SCRAP_COUNT);
+	EnumMap::instance().addEnumItem("StatusItemId::PLAYER_WEAPON_ACCRUAL", StatusItemId::PLAYER_WEAPON_ACCRUAL);
+	EnumMap::instance().addEnumItem("StatusItemId::SURVIVORS", StatusItemId::SURVIVORS);
 }
 
 void MRGame::_addGameTraits()

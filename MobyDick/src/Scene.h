@@ -94,14 +94,10 @@ public:
 	void direct();
 	void setCutScene(std::shared_ptr<CutScene>cutScene);
 	void deleteCutScene();
-
-
 	
 private:
 
 	std::string m_id;
-
-	std::string m_currentLevelId;
 
 	int m_gameObjectCount{};
 	int m_inputControlMode{};
@@ -115,11 +111,13 @@ private:
 	ObjectPoolManager m_objectPoolManager{};
 
 	std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> m_gameObjects;
-	std::vector<std::shared_ptr<Trigger>> m_levelTriggers;
-	std::vector<Objective> m_levelObjectives{};
-
 	std::bitset<8> m_sceneTags;
 	std::map<SDL_Keycode, SceneAction> m_sceneKeyActions;
+
+	//Level related members
+	std::string m_currentLevelId;
+	std::vector<std::shared_ptr<Trigger>> m_levelTriggers;
+	std::vector<Objective> m_levelObjectives{};
 
 	void _processGameObjectInterdependecies();
 	void _buildPhysicsWorld(Json::Value physicsJSON);

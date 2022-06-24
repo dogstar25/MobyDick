@@ -139,7 +139,9 @@ std::shared_ptr<Texture> TextComponent::updateDynamicTextTexture()
 	{
 
 		//Build new texture
-		auto newTextValue = game->contextMananger()->getStatusItemValue(m_dynamicValueId);
+		//This was Depracated 
+		//auto newTextValue = game->contextMananger()->getStatusItemValue(m_dynamicValueId);
+		auto newTextValue = game->contextMananger()->getStatusItemValue(0);
 		std::stringstream ss;
 		ss << static_cast<float>(newTextValue);
 		m_textValue = ss.str();

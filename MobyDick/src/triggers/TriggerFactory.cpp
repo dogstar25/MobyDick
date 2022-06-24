@@ -1,6 +1,5 @@
 #include "TriggerFactory.h"
 #include "LevelComplete.h"
-#include "PlayerDeath.h"
 
 
 
@@ -11,10 +10,6 @@ std::shared_ptr<Trigger> TriggerFactory::create(std::string triggerType)
 	if (triggerType == "LevelComplete") {
 
 		trigger = std::make_shared<LevelComplete>();
-	}
-	else if (triggerType == "PlayerDeath") {
-
-		trigger = std::make_shared<PlayerDeath>();
 	}
 	else {
 

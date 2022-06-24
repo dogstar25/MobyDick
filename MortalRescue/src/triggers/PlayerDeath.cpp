@@ -1,7 +1,9 @@
 #include "PlayerDeath.h"
 
-#include "../SceneManager.h"
-#include "../game.h"
+#include "SceneManager.h"
+#include "game.h"
+#include "../GameConstants.h"
+#include "triggers/Trigger.h"
 
 extern std::unique_ptr<Game> game;
 
@@ -20,7 +22,7 @@ bool PlayerDeath::hasMetCriteria(Scene* scene)
 	if (m_triggerOnlyOnce == false || (m_triggerOnlyOnce && m_hasTriggered == false)) {
 
 
-		auto objectiveStatusItem = game->contextMananger()->getStatusItem("LIVES_COUNT");
+		auto objectiveStatusItem = game->contextMananger()->getStatusItem(StatusItemId::PLAYERS_HEART_COUNT);
 		if (objectiveStatusItem.value() == 0) {
 			hasMet = true;
 		}
@@ -45,9 +47,6 @@ void PlayerDeath::execute()
 	SDL_PushEvent(&event);
 
 	m_hasTriggered = true;
-
-	//Reset the players hearts and wepon level
-	game->contextMananger()->initMappings();
 
 	auto _player = SceneManager::instance().currentScene().getGameObject("PlayerGina");
 	_player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
