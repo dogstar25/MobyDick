@@ -330,4 +330,14 @@ inline constexpr int DISPLAY_UI_MODE_ONCLICK = 2;
 //Game Object Display Schemes
 inline constexpr int DEFAULT_HOVER_SCHEME = 0;
 
+namespace StatusItemId {
+
+	//Add base status item ids here
+
+	//Game specific values added to game specific contextManager
+
+};
+
+
+
 #endif

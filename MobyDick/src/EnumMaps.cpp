@@ -3,6 +3,7 @@
 #include "Renderer.h"
 #include "opengl/GLRenderer.h"
 #include "components/PhysicsComponent.h"
+#include "ContextManager.h"
 
 
 EnumMap& EnumMap::instance()
@@ -191,6 +192,7 @@ EnumMap::EnumMap()
 	//Hud Item Types
 	m_enumMap["HudItemTypes::STATUS_SINGLE"] = (int)HudItemTypes::STATUS_SINGLE;
 	m_enumMap["HudItemTypes::STATUS_SERIES"] = (int)HudItemTypes::STATUS_SERIES;
+
 
 }
 

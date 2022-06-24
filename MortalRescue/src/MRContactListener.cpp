@@ -88,14 +88,7 @@ void MRContactListener::_playerBullet_droneBrain(GameObject* playerBullet, GameO
 			pieceVitalityComponent->setIsLifetimeAlphaFade(true);
 			pieceVitalityComponent->setLifetimeTimer(10);
 
-
-
-
 		}
-
-
-
-
 
 	}
 	else {
@@ -254,8 +247,7 @@ void MRContactListener::_player_shieldScrap(GameObject* player, GameObject* shie
 	auto scrapCount = inventoryComponent->addCollectible(CollectibleTypes::DRONE_SCRAP, 1);
 
 	//Update the status Manager
-	//static_cast<MRStatusManager*>(game->statusMananger())->hudValueMap()["HUD_SCRAP_VALUE"].adjust(1);
-	game->contextMananger()->adjustStatusItemValue("SCRAP_COUNT", 1);
+	game->contextMananger()->adjustStatusItemValue(StatusItemId::SCRAP_COUNT, 1);
 
 	//Check to see if this upgrades the players weapon
 	auto pistol = inventoryComponent->getItem(TraitTag::weapon);
@@ -274,7 +266,7 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 {
 
 	//Update the status Manager
-	//game->contextMananger()->adjustStatusItemValue("LIVES_COUNT", -1);
+	//game->contextMananger()->adjustStatusItemValue("PLAYER_HEARTS_COUNT", -1);
 
 	//flag the scrap item to be removed from the game and play a sound effect
 	bullet->setRemoveFromWorld(true);
@@ -284,6 +276,13 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 	const auto& turretAnimationComponent = player->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 	turretAnimationComponent->setFlash(Colors::YELLOW, .1, 3);
 
+	//Inflict damage
+	const auto& playerVitalityComponent = player->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	const auto& bulletVitalityComponent = bullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+
+	playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
+	playerVitalityComponent->inflictDamage(1);
+
 
 }
 
@@ -292,7 +291,7 @@ void MRContactListener::_survivor_escape(GameObject* survivor, GameObject* escap
 {
 
 	//Update the status Manager
-	game->contextMananger()->adjustStatusItemValue("SURVIVORS_SAVED", 1);
+	game->contextMananger()->adjustStatusItemValue(StatusItemId::SURVIVORS, -1);
 
 	//flag the scrap item to be removed from the game and play a sound effect
 	survivor->setRemoveFromWorld(true);

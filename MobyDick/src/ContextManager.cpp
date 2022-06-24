@@ -1,40 +1,41 @@
 #include "ContextManager.h"
 #include "SoundManager.h"
+#include "BaseConstants.h"
 
 #include <assert.h>
 
 
-//StatusManager& StatusManager::instance()
-//{
-//	static StatusManager singletonInstance;
-//	return singletonInstance;
-//}
-
 ContextManager::ContextManager()
 {
-    
-    initMappings();
 
 
 }
 
 void StatusItem::adjust(float adjustValue)
 {
-    if (m_value < m_maximumValue || m_value > 0) {
+    if (m_value < m_maxValue || m_value > 0) {
         m_value += adjustValue;
     }
 }
 
-
-
-void StatusItem::reset()
+void ContextManager::clearStatusItems()
 {
+    m_statusValueMap.clear();
 
-    m_value = m_originalValue;
 
 }
 
-float ContextManager::getStatusItemValue(std::string valueId)
+void ContextManager::addStatusItem(int id, StatusItem& statusItem)
+{
+
+    //Add it if tis not already there
+    //There may be status items that shoudl retain their values across multiple levels and such
+    if (m_statusValueMap.find(id) == m_statusValueMap.end()) {
+        m_statusValueMap[id] = statusItem;
+    }
+}
+
+float ContextManager::getStatusItemValue(int valueId)
 {
 
     assert(m_statusValueMap.find(valueId) != m_statusValueMap.end() && "ValueId Name wasnt found in StatusValueMap");
@@ -45,7 +46,7 @@ float ContextManager::getStatusItemValue(std::string valueId)
 
 }
 
-void ContextManager::adjustStatusItemValue(std::string valueId, float adjustmentValue)
+void ContextManager::adjustStatusItemValue(int valueId, float adjustmentValue)
 {
     assert(m_statusValueMap.find(valueId) != m_statusValueMap.end() && "ValueId Name wasnt found in StatusValueMap");
 
@@ -53,18 +54,11 @@ void ContextManager::adjustStatusItemValue(std::string valueId, float adjustment
 
 }
 
-void ContextManager::setStatusItemValue(std::string valueId, float newValue)
+void ContextManager::setStatusItemValue(int valueId, float newValue)
 {
     assert(m_statusValueMap.find(valueId) != m_statusValueMap.end() && "ValueId Name wasnt found in StatusValueMap");
 
     m_statusValueMap[valueId].setValue(newValue);
-
-}
-
-void ContextManager::initMappings()
-{
-    m_statusValueMap["LEVEL_COUNT"] = StatusItem{ 0,10 };
-    m_statusValueMap["FPS_VALUE"] = StatusItem{0,60};
 
 }
 
@@ -106,7 +100,7 @@ int ContextManager::getSoundVolume()
 
 }
 
-StatusItem& ContextManager::getStatusItem(std::string valueId)
+StatusItem& ContextManager::getStatusItem(int valueId)
 {
 
     assert(m_statusValueMap.find(valueId) != m_statusValueMap.end() && "ValueId Name wasnt found in StatusValueMap");
@@ -115,3 +109,4 @@ StatusItem& ContextManager::getStatusItem(std::string valueId)
 
 
 }
+

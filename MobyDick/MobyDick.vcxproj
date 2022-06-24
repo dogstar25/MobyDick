@@ -251,7 +251,6 @@
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\triggers\LevelComplete.cpp" />
     <ClCompile Include="src\triggers\TriggerFactory.cpp" />
-    <ClCompile Include="src\triggers\PlayerDeath.cpp" />
     <ClCompile Include="src\actions\DroneMoveAction.cpp" />
     <ClCompile Include="src\components\NavigationComponent.cpp" />
     <ClCompile Include="src\RayCastCallBack.cpp" />
@@ -347,7 +346,6 @@
     <ClInclude Include="src\particleEffects\ParticleEffectsFactory.h" />
     <ClInclude Include="src\triggers\LevelComplete.h" />
     <ClInclude Include="src\triggers\TriggerFactory.h" />
-    <ClInclude Include="src\triggers\PlayerDeath.h" />
     <ClInclude Include="src\ComponentFactory.h" />
     <ClInclude Include="src\actions\DroneMoveAction.h" />
     <ClInclude Include="src\components\NavigationComponent.h" />

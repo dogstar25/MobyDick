@@ -46,6 +46,7 @@ private:
 	void _addGameComponentTypes() override;
 	void _addGameColors() override;
 	void _addGameTraits() override;
+	void _addStatusItemTypes() override;
 };
 
 

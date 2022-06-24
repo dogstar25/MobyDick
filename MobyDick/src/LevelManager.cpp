@@ -198,6 +198,9 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 	//In the main gameObject collection
 	_buildLevelObjects(scene);
 
+	//Build the level Status Items
+	_buildLevelStatusItems();
+
 	//Build the level objectives
 	_buildLevelObjectives(scene);
 
@@ -493,7 +496,6 @@ void LevelManager::refreshNavigationAccess(Scene* scene)
 		}
 	}
 
-
 }
 
 void LevelManager::_buildLevelObjectives(Scene* scene)
@@ -505,17 +507,36 @@ void LevelManager::_buildLevelObjectives(Scene* scene)
 		for (Json::Value itrObjective : m_levelDefinition["objectives"])
 		{
 			Objective objective{};
-			objective.name = itrObjective["name"].asString();
-			objective.initialValue = itrObjective["initialValue"].asFloat();
+			objective.id = EnumMap::instance().toEnum(itrObjective["id"].asString());
 			objective.targetValue = itrObjective["targetValue"].asFloat();
-			objective.contextManagerId = itrObjective["contextManagerId"].asString();
 			scene->addLevelObjective(objective);
 
-			//Set the min and max values in the context Manager
-			std::string contextManagerId = itrObjective["contextManagerId"].asString();
-			auto& objectiveStatusItem = game->contextMananger()->getStatusItem(contextManagerId);
-			objectiveStatusItem.setOriginalValue(objective.initialValue);
-			objectiveStatusItem.setMaxValue(objective.targetValue);
+		}
+
+	}
+
+}
+
+void LevelManager::_buildLevelStatusItems()
+{
+
+	//All statusItems should already exist in the contextManager
+	//We need to initilaize them here since each level can have different min and max, etc for each status item
+	if (m_levelDefinition.isMember("statusItems")) {
+
+		game->contextMananger()->clearStatusItems();
+
+		for (Json::Value itrObjective : m_levelDefinition["statusItems"])
+		{
+
+			
+			int statusItemId = EnumMap::instance().toEnum(itrObjective["id"].asString());
+			StatusItem statusItem(statusItemId);
+			statusItem.setValue(itrObjective["initialValue"].asFloat());
+			statusItem.setInitialValue(itrObjective["initialValue"].asFloat());
+			statusItem.setMinValue(itrObjective["minValue"].asFloat());
+			statusItem.setMaxValue(itrObjective["maxValue"].asFloat());
+			game->contextMananger()->addStatusItem(statusItemId, statusItem);
 
 		}
 

@@ -2,11 +2,9 @@
 
 #include "ContextManager.h"
 
-
-struct SaveFileData {
+class GameSaveFileData : public BaseSaveFileData {
+	public:
 	int16_t level;
-	int16_t soundLevel;
-	int16_t mouseSensitivity;
 };
 
 class MRContextManager : public ContextManager
@@ -15,11 +13,9 @@ class MRContextManager : public ContextManager
 public:
 	//static MRContextManager& instance();
 	MRContextManager();
-	~MRContextManager() = default;
 
-	void initMappings() override;
-	bool saveGame(SaveFileData& saveFileData);
-	bool loadGame(SaveFileData& saveFileData);
+	bool saveGame(BaseSaveFileData& saveFileData) override;
+	bool loadGame(BaseSaveFileData& saveFileData) override;
 
 
 

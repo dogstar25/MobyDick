@@ -27,11 +27,8 @@ struct LevelObject
 
 struct Objective
 {
-	std::string name{};
-	std::string contextManagerId{};
-	float initialValue{};
+	int id{};
 	float targetValue{};
-	float currentValue{};
 
 };
 
@@ -80,6 +77,7 @@ private:
 	void _loadDefinition(std::string levelId);
 	void _buildLevelObjects(Scene* scene);
 	void _buildLevelObjectives(Scene* scene);
+	void _buildLevelStatusItems();
 	void _buildLevelTriggers(Scene* scene);
 	bool _isColorDefinedObject(SDL_Color color);
 };

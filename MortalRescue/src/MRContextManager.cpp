@@ -2,51 +2,29 @@
 #include "SoundManager.h"
 #include "Util.h"
 #include "game.h"
+#include "GameConstants.h"
 
 extern std::unique_ptr<Game> game;
 
 MRContextManager::MRContextManager()
 	: ContextManager()
 {
-	initMappings();
-
-	SaveFileData saveFileData;
-
+	GameSaveFileData saveFileData;
 
 	//Get the saved values from gameData file or create the gameData file for the first time
 	if (util::fileExists(GAME_FILENAME)) {
-
 		loadGame(saveFileData);
-
 	}
 	else {
-
-		
 		saveFileData.level = 1;
 		saveFileData.mouseSensitivity = 50;
 		saveFileData.soundLevel = 50;
 		saveGame(saveFileData);
-
 	}
 
 }
 
-void MRContextManager::initMappings()
-{
-	//values of -1 indicate that they will be set by other objects that have the intimate details of the min and max values
-	m_statusValueMap["LIVES_COUNT"] = StatusItem{6, 6};
-	m_statusValueMap["SCRAP_COUNT"] = StatusItem{ 0, 50 };
-
-	//Min and max values are set by the player weapon component
-	m_statusValueMap["PLAYER_WEAPON_LEVEL"] = StatusItem{ 1, 0 };
-	m_statusValueMap["PLAYER_WEAPON_LEVEL_ACCRUAL"] = StatusItem{ 0, 0 };
-
-	m_statusValueMap["SURVIVORS_SAVED"] = StatusItem{ 0, 0 };
-	
-
-}
-
-bool MRContextManager::loadGame(SaveFileData& saveFileData)
+bool MRContextManager::loadGame(BaseSaveFileData& saveFileData)
 {
 	std::ifstream m_gameFile(GAME_FILENAME, std::ofstream::in);
 
@@ -66,7 +44,7 @@ bool MRContextManager::loadGame(SaveFileData& saveFileData)
 
 }
 
-bool MRContextManager::saveGame(SaveFileData& saveFileData)
+bool MRContextManager::saveGame(BaseSaveFileData& saveFileData)
 {
 
 	std::ofstream m_gameFile(GAME_FILENAME, std::ofstream::out);

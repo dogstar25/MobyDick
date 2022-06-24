@@ -128,6 +128,7 @@ protected:
 	virtual void _addGameComponentTypes() = 0;
 	virtual void _addGameColors() = 0;
 	virtual void _addGameTraits() = 0;
+	virtual void _addStatusItemTypes() = 0;
 	
 
 };

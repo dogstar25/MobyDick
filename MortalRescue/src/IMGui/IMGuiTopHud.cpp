@@ -86,7 +86,7 @@ void IMGuiTopHud::hudLives()
 	glm::vec2 topLeftDead = util::glNormalizeTextureCoords({ 130,33 }, { 256, 256 });
 	glm::vec2 bottomRightDead = util::glNormalizeTextureCoords({ 193,98 }, { 256, 256 });
 
-	auto& livesStatusItem = game->contextMananger()->getStatusItem("LIVES_COUNT");
+	auto& livesStatusItem = game->contextMananger()->getStatusItem(StatusItemId::PLAYERS_HEART_COUNT);
 
 	for (int life = 0; life < livesStatusItem.maxValue(); life++) {
 
