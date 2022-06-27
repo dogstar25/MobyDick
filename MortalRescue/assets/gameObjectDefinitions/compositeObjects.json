@@ -209,7 +209,7 @@
                         {
                             "level": 1,
                             "force": 1,
-                            "levelUpTarget": 25,
+                            "color": "Colors::RED",
                             "bulletPoolId": "BULLET2_POOL"
                         }
                     ]

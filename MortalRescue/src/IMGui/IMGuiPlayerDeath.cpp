@@ -47,14 +47,21 @@ glm::vec2 IMGuiPlayerDeath::render()
 		ImGui::Dummy({ 0,48 });
 		ImGui::PopFont();
 
-		//Continue Button
+		//Restart Button
 		ImGui::setCursorToCentered(ImGui::MRSettings::button1Size.x);
-		if (ImGui::Button("Continue", ImGui::MRSettings::button1Size)) {
+		if (ImGui::Button("Restart Level", ImGui::MRSettings::button1Size)) {
 			_sendNextLevelEvent();
 		}
 
 		//spacing
 		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
+
+		//Quit Button
+		ImGui::setCursorToCentered(ImGui::MRSettings::button1Size.x);
+		if (ImGui::Button("Quit", ImGui::MRSettings::button1Size)) {
+			ImGui::sendQuitEvent();
+		}
+
 
 		ImGui::PopStyleColor();
 		ImGui::PopStyleColor();

@@ -23,7 +23,7 @@ bool PlayerDeath::hasMetCriteria(Scene* scene)
 
 
 		auto objectiveStatusItem = game->contextMananger()->getStatusItem(StatusItemId::PLAYERS_HEART_COUNT);
-		if (objectiveStatusItem.value() == 0) {
+		if (objectiveStatusItem.value() <= 0) {
 			hasMet = true;
 		}
 

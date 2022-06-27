@@ -9,7 +9,7 @@ namespace ImGui
 {
 	namespace MRSettings {
 
-		inline static ImVec2 button1Size{ 128,32 };
+		inline static ImVec2 button1Size{ 145,36 };
 
 	};
 

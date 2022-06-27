@@ -28,7 +28,8 @@
                         {
                             "contactTag": "ContactTag::WALL",
                             "collisionShape": "B2_BOX",
-                            "friction": 0.3
+                            "restitution": 0.1,
+                            "friction": 0.0
                         }
                     ]
 
@@ -63,7 +64,8 @@
                         {
                             "contactTag": "ContactTag::WALL",
                             "collisionShape": "B2_BOX",
-                            "friction": 0.3
+                            "restitution": 0.1,
+                            "friction": 0.0
                         }
                     ]
                 }
@@ -97,7 +99,8 @@
                         {
                             "contactTag": "ContactTag::WALL",
                             "collisionShape": "B2_BOX",
-                            "friction": 0.3
+                            "restitution": 0.1,
+                            "friction": 0.0
                         }
                     ]
                 }
@@ -131,7 +134,8 @@
                         {
                             "contactTag": "ContactTag::WALL",
                             "collisionShape": "B2_BOX",
-                            "friction": 0.3
+                            "restitution": 0.1,
+                            "friction": 0.0
                         }
                     ]
                 }
@@ -165,7 +169,8 @@
                         {
                             "contactTag": "ContactTag::WALL",
                             "collisionShape": "B2_BOX",
-                            "friction": 0.3
+                            "restitution": 0.1,
+                            "friction": 0.0
                         }
                     ]
                 }
@@ -199,7 +204,8 @@
                         {
                             "contactTag": "ContactTag::WALL",
                             "collisionShape": "B2_BOX",
-                            "friction": 0.3
+                            "restitution": 0.1,
+                            "friction": 0.0
                         }
                     ]
                 }
@@ -230,6 +236,105 @@
                             "contactTag": "ContactTag::WALL",
                             "collisionShape": "B2_BOX",
                             "friction": 0.3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "GLOWWALL2_352",
+            "traitTags": [ "barrier" ],
+            "description": "Fog Box",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "tint": "Colors::PURPLE",
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_FORCE_WALL",
+                            "speed": 0.08,
+                            "frames": 2
+                        }
+
+                    ]
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 352,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::WALL",
+                            "collisionShape": "B2_BOX"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "GLOWWALL2_192",
+            "traitTags": [ "barrier" ],
+            "description": "Fog Box",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    //"textureId": "TX_FORCE_WALL",
+                    "color": {
+                        "tint": "Colors::PURPLE",
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_FORCE_WALL",
+                            "speed": 0.1,
+                            "frames": 2
+                        }
+
+                    ]
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 192,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::WALL",
+                            "collisionShape": "B2_BOX"
                         }
                     ]
                 }

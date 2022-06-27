@@ -12,9 +12,9 @@
     "statusItems": [
         {
             "id": "StatusItemId::PLAYERS_HEART_COUNT",
-            "initialValue": 3,
+            "initialValue": 6,
             "minValue": 0,
-            "maxValue": 3
+            "maxValue": 6
         },
         {
             "id": "StatusItemId::SURVIVORS",
@@ -88,8 +88,13 @@
         },
         {
             "id": "LOC_0015_0023",
-            "gameObjectId": "GLOWWALL_352",
+            "gameObjectId": "GLOWWALL2_352",
             "name": "Button1_TARGET"
+        },
+        {
+            "id": "LOC_0026_0025",
+            "gameObjectId": "GLOWWALL2_192",
+            "angle": 90
         },
         {
             "id": "LOC_0014_0020",
@@ -100,7 +105,6 @@
             "gameObjectId": "ESCAPE_STAIRS",
             "layer": "LAYER_BACKGROUND_1",
             "angle": 270
-
         },
         {
             "id": "LOC_0014_0001",

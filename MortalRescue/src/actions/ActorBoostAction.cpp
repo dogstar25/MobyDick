@@ -17,7 +17,7 @@ void ActorBoostAction::perform(GameObject* gameObject)
 	b2Vec2 trajectory{ cos(currentActorAngle) , sin(currentActorAngle)};
 	trajectory.Normalize();
 
-	physicsComponent->applyMovement(20, trajectory);
+	physicsComponent->applyMovement(30, trajectory);
 
 	animationComponent->animate(ANIMATION_IDLE, ANIMATE_CONTINUOUS);
 

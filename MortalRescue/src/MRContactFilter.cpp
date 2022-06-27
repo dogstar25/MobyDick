@@ -23,12 +23,10 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[DRONE_FRAME].set(SHIELD_SCRAP);
 	m_contactMasks[DRONE_FRAME].set(SURVIVOR);
 	m_contactMasks[DRONE_FRAME].set(WALL);
-	m_contactMasks[DRONE_FRAME].set(DRONE_FRAME);
 
 	//DRONE_SHIELD
 	m_contactMasks[DRONE_SHIELD].reset();
 	m_contactMasks[DRONE_SHIELD].set(HEAVY_PARTICLE);
-	m_contactMasks[DRONE_SHIELD].set(LIGHT_PARTICLE);
 	m_contactMasks[DRONE_SHIELD].set(PLAYER_BULLET);
 
 	//DRONE_WEAPON

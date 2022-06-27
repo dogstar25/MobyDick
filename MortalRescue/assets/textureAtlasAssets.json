@@ -539,8 +539,29 @@
                 "width": 64,
                 "height": 64
             }
+        },
+        {
+            "id": "TX_FOG_BOX",
+            "description": "Fog Box",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 103,
+                "y": 92,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_FORCE_WALL",
+            "description": "Force Wall",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 334,
+                "y": 56,
+                "width": 96,
+                "height": 32
+            }
         }
-
     ],
     "fonts": [
         {

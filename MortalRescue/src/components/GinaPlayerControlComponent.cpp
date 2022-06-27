@@ -24,13 +24,19 @@ GinaPlayerControlComponent::~GinaPlayerControlComponent()
 
 }
 
+void GinaPlayerControlComponent::postInit()
+{
+
+	_jetPackSwitch(false);
+
+}
+
 void GinaPlayerControlComponent::update()
 {
 
 	handleActions();
 
 	handleMovement();
-
 
 }
 
@@ -48,7 +54,7 @@ void GinaPlayerControlComponent::handleMovement()
 	//Are we boosting and boost timer is complete stop boosting
 	if (m_currentState == PlayerState::boosting && m_boostTimer.hasMetTargetDuration()) {
 
-		boostReset();
+		boostReset(true);
 	}
 
 	//Boost
@@ -155,14 +161,16 @@ void GinaPlayerControlComponent::_jetPackSwitch(bool turnOn)
 
 }
 
-void GinaPlayerControlComponent::boostReset()
+void GinaPlayerControlComponent::boostReset(bool boostTimerRest)
 {
 
 	m_currentState = PlayerState::general;
 	_jetPackSwitch(false);
 
 	//Set a timer so that we cant boost again for a set time
-	m_boostAgainTimer = { 2 };
+	if (boostTimerRest) {
+		m_boostAgainTimer = { 2 };
+	}
 
 }
 

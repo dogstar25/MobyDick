@@ -68,7 +68,8 @@ namespace ComponentTypes {
 	inline constexpr int TURRET_BRAIN_COMPONENT = 24;
 	inline constexpr int SURVIVOR_BRAIN_COMPONENT = 25;
 	inline constexpr int GINA_PLAYER_CONTROL_COMPONENT = 26;
-	
+	inline constexpr int GINA_VITALITY_COMPONENT = 27;
+
 
 }
 

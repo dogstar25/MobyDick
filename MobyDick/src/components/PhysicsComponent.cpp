@@ -24,16 +24,28 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, Scene* parentScen
 	m_physicsBody = _buildB2Body(physicsComponentJSON, transformComponentJSON, parentScene->physicsWorld());
 
 	//Calculate the spawn position
-	//Translate the pixel oriented position into box2d meter-oriented
-	b2Vec2* position = new b2Vec2
-	(  (xMapPos * game->worldTileWidth() + (transformComponentJSON["size"]["width"].asFloat() / 2)) / GameConfig::instance().scaleFactor(),
-		(yMapPos * game->worldTileHeight() + (transformComponentJSON["size"]["height"].asFloat() / 2)) / GameConfig::instance().scaleFactor());
+	b2Vec2 position{};
 
-	//Calculate the spawn Angle
+	//Get size of the object
+	float objectWidth = transformComponentJSON["size"]["width"].asFloat();
+	float objectHeight = transformComponentJSON["size"]["height"].asFloat();
+
+	//Angle adjustment if any in radians
 	float newAngle = util::degreesToRadians(angleAdjust);
 
+	//The width and height can change when a rectangle shape is rotated
+	float objectWidthAfterAngle = abs(sin(newAngle) * objectHeight + cos(newAngle) * objectWidth);
+	float objectHeightAfterAngle = abs(sin(newAngle) * objectWidth + cos(newAngle) * objectHeight);
+
+	//Get the pixel position of where we are placing the object. Divide by 2 to get the center
+	position.x = (xMapPos * game->worldTileWidth() + (objectWidthAfterAngle / 2));
+	position.y = (yMapPos * game->worldTileHeight() + (objectHeightAfterAngle / 2));
+
+	//Scale them to the box2d size
+	position = util::toBox2dPoint(position);
+
 	//Initial spawn position
-	m_physicsBody->SetTransform(*position, newAngle);
+	m_physicsBody->SetTransform(position, newAngle);
 
 }
 
