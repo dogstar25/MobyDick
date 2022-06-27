@@ -18,6 +18,7 @@ int main(int argc, char* args[])
 {
 	//create game 
 	game = std::make_unique<MRGame>();
+	std::cout << "Mortal Rescue Begins\n";
 
 	//init game
 	game->init(

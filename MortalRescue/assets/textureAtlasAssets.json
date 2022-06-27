@@ -31,11 +31,6 @@
             "filename": "assets/blueprints/drone1_blueprint.png"
         },
         {
-            "id": "TX_DRONE1_TEST",
-            "description": "Drone 1 Test Blueprint",
-            "filename": "assets/blueprints/drone1_test.png"
-        },
-        {
             "id": "TX_BREAKABLE_WALL_BLUEPRINT",
             "description": "Breakable Wall Blueprint",
             "filename": "assets/blueprints/breakable_wall_blueprint.png"
@@ -508,13 +503,24 @@
             }
         },
         {
-            "id": "TX_SURVIVOR",
-            "description": "Survivor",
+            "id": "TX_SURVIVOR_IDLE",
+            "description": "Survivor Idle",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 2589,
                 "y": 200,
                 "width": 64,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_SURVIVOR_RUN",
+            "description": "Survivor Run",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2332,
+                "y": 200,
+                "width": 256,
                 "height": 64
             }
         },

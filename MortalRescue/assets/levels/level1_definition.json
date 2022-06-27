@@ -96,6 +96,10 @@
             "gameObjectId": "GLOWWALL2_192",
             "angle": 90
         },
+        //{
+        //    "id": "LOC_0014_0001",
+        //    "gameObjectId": "ESCAPE_STAIRS"
+        //},
         {
             "id": "LOC_0014_0020",
             "gameObjectId": "TURRET"
@@ -106,13 +110,13 @@
             "layer": "LAYER_BACKGROUND_1",
             "angle": 270
         },
-        {
-            "id": "LOC_0014_0001",
-            "gameObjectId": "ESCAPE_STAIRS",
-            "layer": "LAYER_BACKGROUND_1",
-            "angle": 270
+        //{
+        //    "id": "LOC_0014_0001",
+        //    "gameObjectId": "ESCAPE_STAIRS",
+        //    "layer": "LAYER_BACKGROUND_1",
+        //    "angle": 270
 
-        },
+        //},
         {
             "id": "LOC_0034_0031",
             "gameObjectId": "TURRET",

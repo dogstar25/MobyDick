@@ -3,6 +3,7 @@
 #include "Util.h"
 #include "game.h"
 #include "GameConstants.h"
+#include <filesystem>
 
 extern std::unique_ptr<Game> game;
 
@@ -12,7 +13,8 @@ MRContextManager::MRContextManager()
 	GameSaveFileData saveFileData;
 
 	//Get the saved values from gameData file or create the gameData file for the first time
-	if (util::fileExists(GAME_FILENAME)) {
+	if (std::filesystem::exists(m_saveGamePath + GAME_FILENAME)) {
+	//if (util::fileExists(m_saveGamePath + GAME_FILENAME)) {
 		loadGame(saveFileData);
 	}
 	else {
@@ -26,7 +28,7 @@ MRContextManager::MRContextManager()
 
 bool MRContextManager::loadGame(BaseSaveFileData& saveFileData)
 {
-	std::ifstream m_gameFile(GAME_FILENAME, std::ofstream::in);
+	std::ifstream m_gameFile(m_saveGamePath + GAME_FILENAME, std::ofstream::in);
 
 	m_gameFile.read(reinterpret_cast<char*>(&saveFileData), sizeof(saveFileData));
 
@@ -47,7 +49,7 @@ bool MRContextManager::loadGame(BaseSaveFileData& saveFileData)
 bool MRContextManager::saveGame(BaseSaveFileData& saveFileData)
 {
 
-	std::ofstream m_gameFile(GAME_FILENAME, std::ofstream::out);
+	std::ofstream m_gameFile(m_saveGamePath + GAME_FILENAME, std::ofstream::out);
 
 	m_gameFile.write(reinterpret_cast<char*>(&saveFileData), sizeof(saveFileData));
 
