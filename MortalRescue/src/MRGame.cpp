@@ -39,12 +39,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 	CutSceneFactory* cutSceneFactory, IMGuiFactory* iMGuiFactory, TriggerFactory* triggerFactory, ContextManager* contextManager)
 {
 
-	//Get all of the configuration values
-	GameConfig::instance().init("gameConfig");
-
 	Game::init(contactListener, contactFilter, componentFactory, actionFactory, particleEffectsFactory, cutSceneFactory, iMGuiFactory, triggerFactory, contextManager);
-
-	std::cout << "Mortal Rescue Begins\n";
 
 	m_gameState = GameState::PLAY;
 
@@ -62,27 +57,10 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 		//Init font library
 		TTF_Init();
 
-		//Create the game window
-		uint16 windowFlags = 0 | SDL_WINDOW_OPENGL;
-		if (GameConfig::instance().windowFullscreen() == true) 
-		{
-			windowFlags = windowFlags | SDL_WINDOW_FULLSCREEN;
-		}
-		else
-		{
-			windowFlags = windowFlags | SDL_WINDOW_RESIZABLE;
-		}
-		m_window = SDL_CreateWindow(GameConfig::instance().gameTitle().c_str(),
-			SDL_WINDOWPOS_CENTERED,
-			SDL_WINDOWPOS_CENTERED,
-			GameConfig::instance().windowWidth(),
-			GameConfig::instance().windowHeight(),
-			windowFlags);
-
 		//Initialize the texture manager
 		m_renderer->init(m_window);
 
-		//Test for IMGUI
+		//Initialize IMGUI
 		ImGui::MobyDickInit(this);
 
 		//Display basic loading message

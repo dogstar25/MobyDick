@@ -720,7 +720,6 @@
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "textureId": "TX_SURVIVOR",
                     "color": {
                         "tint": "Colors::YELLOW",
                         "alpha": 127
@@ -735,8 +734,32 @@
                     "absolutePositioning": false
                 },
                 {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_SURVIVOR_IDLE",
+                            "speed": 0.1,
+                            "frames": 1
+                        },
+                        {
+                            "state": "ANIMATION_RUN",
+                            "textureId": "TX_SURVIVOR_RUN",
+                            "speed": 0.06,
+                            "frames": 4
+                        }
+
+                    ]
+                },
+                {
                     "id": "VITALITY_COMPONENT",
-                    "speed": 25
+                    "speed": 25,
+                    "rotationSpeed": 20
                 },
                 {
                     "id": "PHYSICS_COMPONENT",
@@ -764,13 +787,18 @@
                         {
                             "actionId": "ACTION_INTERACTION",
                             "actionClass": "SurvivorInteraction"
+                        },
+                        {
+                            "actionId": "ACTION_ROTATE",
+                            "actionClass": "DefaultRotate"
                         }
+
                     ]
                 },
                 {
                     "id": "SURVIVOR_BRAIN_COMPONENT",
                     "sightSensorSize": 15,
-                    "detectObjectTraits": ["player", "objective", "navigation"]
+                    "detectObjectTraits": [ "player", "objective", "navigation" ]
                 }
             ]
         },

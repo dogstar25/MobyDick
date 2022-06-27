@@ -107,11 +107,17 @@ void SurvivorBrainComponent::_doEscape()
 		trajectory.x = m_escapeLocation.value().x - parent()->getCenterPosition().x;
 		trajectory.y = m_escapeLocation.value().y - parent()->getCenterPosition().y;
 
+		_rotateTowards({ m_escapeLocation.value().x, m_escapeLocation.value().y});
 		trajectory.Normalize();
+
+		
 
 		const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 		const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
 		moveAction->perform(parent(), trajectory);
+
+
+		
 
 	}
 
@@ -164,12 +170,15 @@ void SurvivorBrainComponent::_stayBehindFollowedObject()
 		b2Vec2 trajectory{};
 		trajectory.x = (sin(orientationAngle) * 200 * sinDirection) + (m_gameObjectToFollow->getCenterPosition().x - parent()->getCenterPosition().x);
 		trajectory.y = (cos(orientationAngle) * 200 * cosDirection) + (m_gameObjectToFollow->getCenterPosition().y - parent()->getCenterPosition().y);
+
+		//_rotateTowards(trajectory);
+
 		trajectory.Normalize();
 
 		const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 		const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
 		moveAction->perform(parent(), trajectory);
-
+			
 	}
 
 }
@@ -187,11 +196,16 @@ void SurvivorBrainComponent::_doFollow()
 		trajectory.x = m_gameObjectToFollow->getCenterPosition().x - parent()->getCenterPosition().x;
 		trajectory.y = m_gameObjectToFollow->getCenterPosition().y - parent()->getCenterPosition().y;
 
+		_rotateTowards({ m_gameObjectToFollow->getCenterPosition().x , m_gameObjectToFollow->getCenterPosition().y });
+
 		trajectory.Normalize();
+
+		
 
 		const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 		const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
 		moveAction->perform(parent(), trajectory);
+		
 
 	}
 
@@ -284,8 +298,8 @@ bool SurvivorBrainComponent::_isTouchingBarrier()
 
 void SurvivorBrainComponent::_doIdle()
 {
-	//const auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
-	//animationComponent->setCurrentAnimationState(ANIMATION_IDLE);
+	const auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
+	animationComponent->setCurrentAnimationState(ANIMATION_IDLE);
 
 }
 

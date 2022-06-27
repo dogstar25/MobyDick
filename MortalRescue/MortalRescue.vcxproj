@@ -224,45 +224,15 @@
   <ItemGroup>
     <Image Include="assets\blueprints\breakable_wall_blueprint.png" />
     <Image Include="assets\blueprints\drone1_blueprint.png" />
-    <Image Include="assets\blueprints\drone1_test.png" />
     <Image Include="assets\blueprints\levels\level1_blueprint.png" />
     <Image Include="assets\blueprints\levels\level1_blueprint_sav.png" />
     <Image Include="assets\blueprints\testDrone_blueprint.png" />
     <Image Include="assets\blueprint_template.png" />
     <Image Include="assets\bowman1.png" />
-    <Image Include="assets\bullet1.png" />
-    <Image Include="assets\deflect1.png" />
-    <Image Include="assets\drone_eye.png" />
-    <Image Include="assets\enemyFrame1_128.png" />
-    <Image Include="assets\gina_Idle_64.png" />
-    <Image Include="assets\gina_Run_64.png" />
     <Image Include="assets\levels\level1_blueprint.png" />
     <Image Include="assets\levels\level2_blueprint.png" />
-    <Image Include="assets\levels\level_test_blueprint.png" />
-    <Image Include="assets\particle1.png" />
-    <Image Include="assets\particle2.png" />
-    <Image Include="assets\pieceAngle1_8.png" />
-    <Image Include="assets\pieceAngle2_8.png" />
-    <Image Include="assets\pieceAngle3_8.png" />
-    <Image Include="assets\pieceAngle4_8.png" />
-    <Image Include="assets\pieceFull_8.png" />
-    <Image Include="assets\pistolLady128_Run.png" />
-    <Image Include="assets\pistolLady64_Run.png" />
-    <Image Include="assets\spaceship1.png" />
-    <Image Include="assets\square_128.png" />
-    <Image Include="assets\swordLady64_Idle.png" />
     <Image Include="assets\textureAtlas00.png" />
     <Image Include="assets\textureAtlasImGui.png" />
-    <Image Include="assets\tile1.png" />
-    <Image Include="assets\wall1_column.png" />
-    <Image Include="assets\wall1_corner.png" />
-    <Image Include="assets\wall1_end.png" />
-    <Image Include="assets\wall1_hall.png" />
-    <Image Include="assets\wall1_open.png" />
-    <Image Include="assets\wall1_wall.png" />
-    <Image Include="assets\weapon1.png" />
-    <Image Include="assets\weapon1_FIRE.png" />
-    <Image Include="assets\weapon1_IDLE.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\blueprints\levels\level1_blueprint.json" />

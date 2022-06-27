@@ -264,8 +264,8 @@
                         {
                             "state": "ANIMATION_IDLE",
                             "textureId": "TX_FORCE_WALL",
-                            "speed": 0.08,
-                            "frames": 2
+                            "speed": 0.05,
+                            "frames": 3
                         }
 
                     ]
@@ -315,7 +315,7 @@
                             "state": "ANIMATION_IDLE",
                             "textureId": "TX_FORCE_WALL",
                             "speed": 0.1,
-                            "frames": 2
+                            "frames": 3
                         }
 
                     ]

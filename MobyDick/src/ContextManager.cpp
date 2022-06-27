@@ -1,13 +1,41 @@
 #include "ContextManager.h"
 #include "SoundManager.h"
 #include "BaseConstants.h"
-
+#include <iostream>
+#include <atlstr.h>
+#include <shlobj.h>
 #include <assert.h>
+#include <filesystem>
 
 
 ContextManager::ContextManager()
 {
 
+
+	PWSTR userFolderPath;
+	HRESULT result = SHGetKnownFolderPath(FOLDERID_Profile, 0, NULL, &userFolderPath);
+
+    assert(result == S_OK && "Error getting userdata directory for savegame file!");
+
+    m_saveGamePath = CString(userFolderPath);
+    m_saveGamePath += "\\MortalRescue";
+
+    if (!std::filesystem::is_directory(m_saveGamePath) || !std::filesystem::exists(m_saveGamePath)) {
+        if (std::filesystem::create_directory(m_saveGamePath) == false) {
+            assert(true && "Error creating save game directory!");
+        }
+    }
+
+    //if (CreateDirectory(m_saveGamePath.c_str(), NULL) ||
+    //    ERROR_ALREADY_EXISTS == GetLastError())
+    //{
+    //    ;
+    //}
+    //else {
+    //    assert(true && "Error creating save game directory!");
+    //}
+
+    CoTaskMemFree(static_cast<LPVOID>(userFolderPath));
 
 }
 

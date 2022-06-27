@@ -29,6 +29,28 @@ bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter,
 	ComponentFactory* componentFactory, ActionFactory* actionFactory, ParticleEffectsFactory* particleEffectsFactory, 
 	CutSceneFactory* cutSceneFactory, IMGuiFactory* iMGuiFactory, TriggerFactory* triggerFactory, ContextManager* contextManager)
 {
+
+	//Get all of the configuration values
+	GameConfig::instance().init("gameConfig");
+
+	//Create the game window
+	uint16 windowFlags = 0 | SDL_WINDOW_OPENGL;
+	if (GameConfig::instance().windowFullscreen() == true)
+	{
+		windowFlags = windowFlags | SDL_WINDOW_FULLSCREEN;
+	}
+	else
+	{
+		windowFlags = windowFlags | SDL_WINDOW_RESIZABLE;
+	}
+
+	m_window = SDL_CreateWindow(GameConfig::instance().gameTitle().c_str(),
+		SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED,
+		GameConfig::instance().windowWidth(),
+		GameConfig::instance().windowHeight(),
+		windowFlags);
+
 	m_contactListener = std::shared_ptr<ContactListener>(contactListener);
 	m_contactFilter = std::shared_ptr<ContactFilter>(contactFilter);
 	m_componentFactory = std::shared_ptr<ComponentFactory>(componentFactory);
