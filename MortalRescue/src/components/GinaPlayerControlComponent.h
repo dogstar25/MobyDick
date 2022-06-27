@@ -32,7 +32,8 @@ public:
 	void update() override;
 	void setState(PlayerState state) { m_currentState = state; }
 	PlayerState state() { return m_currentState; }
-	void boostReset();
+	void boostReset(bool boostTimerRest);
+	void postInit() override;
 
 
 private:

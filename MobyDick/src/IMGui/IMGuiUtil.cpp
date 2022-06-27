@@ -105,4 +105,39 @@ namespace ImGui
 		ImGui::SetCursorPosX((windowWidth - textWidth) * 0.5f);
 	}
 
+	void sendQuitEvent()
+	{
+
+		SDL_Event event;
+
+		SceneAction* sceneAction = new SceneAction();
+		sceneAction->actionCode = SCENE_ACTION_QUIT;
+		sceneAction->actionId = "";
+
+		event.type = SDL_USEREVENT;
+		event.user.data1 = sceneAction;
+		SDL_PushEvent(&event);
+
+
+	}
+
+	void sendSceneExitEvent()
+	{
+
+		SDL_Event event;
+
+		SceneAction* sceneAction = new SceneAction();
+		sceneAction->actionCode = SCENE_ACTION_EXIT;
+		sceneAction->actionId = "";
+
+		event.type = SDL_USEREVENT;
+		event.user.data1 = sceneAction;
+		SDL_PushEvent(&event);
+
+
+	}
+
+
+
+
 }

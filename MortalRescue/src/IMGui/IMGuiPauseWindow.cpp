@@ -3,6 +3,8 @@
 #include "Scene.h"
 #include <SDL2/SDL.h>
 #include "MR_IMGuiUtil.h"
+#include "IMGui/IMGuiUtil.h"
+
 #include "../GameConstants.h"
 #include "../MRContextManager.h"
 
@@ -43,7 +45,7 @@ glm::vec2 IMGuiPauseWindow::render()
 
 		//Continue Button
 		if (ImGui::Button("Continue", ImGui::MRSettings::button1Size)) {
-			sendSceneCloseEvent();
+			ImGui::sendSceneExitEvent();
 		}
 
 		//spacing
@@ -63,7 +65,7 @@ glm::vec2 IMGuiPauseWindow::render()
 
 		//Quit Button
 		if (ImGui::Button("Quit", ImGui::MRSettings::button1Size)) {
-			sendQuitEvent();
+			ImGui::sendQuitEvent();
 		}
 
 		//spacing
@@ -124,13 +126,13 @@ void IMGuiPauseWindow::settingsModal()
 	if (ImGui::Button("Ok", ImGui::MRSettings::button1Size)) {
 		apply(mouseSensitivity, soundvolume);
 		//ImGui::CloseCurrentPopup();
-		sendSceneCloseEvent();
+		ImGui::sendSceneExitEvent();
 	}
 
 	ImGui::SameLine(156);
 	if (ImGui::Button("Cancel", ImGui::MRSettings::button1Size)) {
 		//ImGui::CloseCurrentPopup();
-		sendSceneCloseEvent();
+		ImGui::sendSceneExitEvent();
 	}
 	ImGui::EndGroup();
 
@@ -147,37 +149,21 @@ void IMGuiPauseWindow::settingsModal()
 	ImGui::EndPopup();
 
 }
-void IMGuiPauseWindow::sendSceneCloseEvent()
-{
-
-	SDL_Event event;
-
-	SceneAction* sceneAction = new SceneAction();
-	sceneAction->actionCode = SCENE_ACTION_EXIT;
-	sceneAction->actionId = "";
-
-	event.type = SDL_USEREVENT;
-	event.user.data1 = sceneAction;
-	SDL_PushEvent(&event);
-
-
-}
-
-void IMGuiPauseWindow::sendQuitEvent()
-{
-
-	SDL_Event event;
-
-	SceneAction* sceneAction = new SceneAction();
-	sceneAction->actionCode = SCENE_ACTION_QUIT;
-	sceneAction->actionId = "";
-
-	event.type = SDL_USEREVENT;
-	event.user.data1 = sceneAction;
-	SDL_PushEvent(&event);
-
-
-}
+//void IMGuiPauseWindow::sendQuitEvent()
+//{
+//
+//	SDL_Event event;
+//
+//	SceneAction* sceneAction = new SceneAction();
+//	sceneAction->actionCode = SCENE_ACTION_QUIT;
+//	sceneAction->actionId = "";
+//
+//	event.type = SDL_USEREVENT;
+//	event.user.data1 = sceneAction;
+//	SDL_PushEvent(&event);
+//
+//
+//}
 
 void IMGuiPauseWindow::apply(int mouseSensitivity, int soundVolume)
 {

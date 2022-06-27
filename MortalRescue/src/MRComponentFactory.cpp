@@ -8,7 +8,7 @@
 #include "components/TurretBrainComponent.h"
 #include "components/SurvivorBrainComponent.h"
 #include "components/GinaPlayerControlComponent.h"
-
+#include "components/GinaVitalityComponent.h"
 
 std::shared_ptr<Component> MRComponentFactory::create(
 	Json::Value definitionJSON,
@@ -45,8 +45,10 @@ std::shared_ptr<Component> MRComponentFactory::create(
 		componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::GINA_PLAYER_CONTROL_COMPONENT);
 		component = std::make_shared<GinaPlayerControlComponent>(componentJSON);
 	}
-
-
+	else if (componentType == ComponentTypes::GINA_VITALITY_COMPONENT) {
+		componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::GINA_VITALITY_COMPONENT);
+		component = std::make_shared<GinaVitalityComponent>(componentJSON);
+	}
 	
 	else {
 		component = ComponentFactory::create(

@@ -3,7 +3,7 @@
 #include "EnumMaps.h"
 #include <random>
 #include <format>
-
+#include "GameConfig.h"
 #include <iostream>
 
 
@@ -225,8 +225,8 @@ namespace util
 
 	b2Vec2& toBox2dPoint(b2Vec2& point)
 	{
-		point.x /= (float)25;
-		point.y /= (float)25;
+		point.x /= (float)GameConfig::instance().scaleFactor();
+		point.y /= (float)GameConfig::instance().scaleFactor();
 
 		return point;
 	}

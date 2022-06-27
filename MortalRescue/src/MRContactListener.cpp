@@ -11,6 +11,7 @@
 #include "components/InventoryComponent.h"
 #include "components/PistolWeaponComponent.h"
 #include "components/GinaPlayerControlComponent.h"
+#include "components/GinaVitalityComponent.h"
 #include "components/DroneBrainComponent.h"
 #include "components/AttachmentsComponent.h"
 
@@ -137,8 +138,18 @@ void MRContactListener::_playerBullet_enemyTurret(GameObject* player, GameObject
 void MRContactListener::_player_wall(GameObject* player, GameObject* wall, b2Vec2 contactPoint)
 {
 
+	//If we are in the middle of boosting and we are touching a wall at pointing towards the wall, then stop boosting
+	//If we are not pointing at the wall then we are okay to slide/boost aganist it
 	const auto& playerControlComponent = player->getComponent<GinaPlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT);
-	playerControlComponent->boostReset();
+
+	if (playerControlComponent->state() == PlayerState::boosting) {
+
+		if (player->isPointingAt(wall->getCenterPosition())) {
+			playerControlComponent->boostReset(false);
+		}
+		
+	}
+	
 
 }
 
@@ -274,13 +285,13 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 
 	//Do a color flash animate on the turret
 	const auto& turretAnimationComponent = player->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
-	turretAnimationComponent->setFlash(Colors::YELLOW, .1, 3);
+	turretAnimationComponent->setFlash(Colors::YELLOW, .005, 2);
 
 	//Inflict damage
-	const auto& playerVitalityComponent = player->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	const auto& playerVitalityComponent = player->getComponent<GinaVitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 	const auto& bulletVitalityComponent = bullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
-	playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
+	//playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
 	playerVitalityComponent->inflictDamage(1);
 
 

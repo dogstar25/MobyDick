@@ -5,7 +5,8 @@
             "traitTags": [ "player" ],
             "components": [
                 {
-                    "id": "RENDER_COMPONENT"
+                    "id": "RENDER_COMPONENT",
+                    "color": "Colors::ORANGE"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
@@ -156,8 +157,9 @@
                     "id": "GINA_PLAYER_CONTROL_COMPONENT"
                 },
                 {
-                    "id": "VITALITY_COMPONENT",
-                    "speed": 14
+                    "id": "GINA_VITALITY_COMPONENT",
+                    "speed": 14,
+                    "health": 6
                 }
             ]
         },
@@ -464,7 +466,7 @@
                         {
                             "level": 1,
                             "force": 1,
-                            "color": "Colors::WHITE",
+                            "color": "Colors::GREEN",
                             "bulletPoolId": "BULLET1_POOL"
                         },
                         {
@@ -489,13 +491,14 @@
             "description": "Bullet 1",
             "components": [
                 {
-                    "id": "RENDER_COMPONENT"
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_BULLET2"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 5,
-                        "height": 1
+                        "width": 7,
+                        "height": 4
                     }
                 },
                 {
