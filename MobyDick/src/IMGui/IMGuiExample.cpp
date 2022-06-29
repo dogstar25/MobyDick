@@ -20,7 +20,7 @@ glm::vec2 IMGuiExample::render()
 
 		GLuint textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::MAIN_TEXTURE_ATLAS);
 		//ImGui::Image((void*)(int*)textureAtlasId, ImVec2(16, 16), ImVec2(.00122, .000122), ImVec2(.00244, .00244));
-		ImGui::Image((void*)(int*)textureAtlasId, ImVec2(64, 64), ImVec2(.0009765, .048828), ImVec2(.01635, .0642));
+		ImGui::Image((void*)(unsigned int*)textureAtlasId, ImVec2(64, 64), ImVec2(.0009765, .048828), ImVec2(.01635, .0642));
 	}
 	else {
 

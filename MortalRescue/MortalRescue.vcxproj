@@ -249,7 +249,6 @@
     <None Include="assets\levels\level1_definition.json" />
     <None Include="assets\levels\level2_definition.json" />
     <None Include="assets\levels\levels.json" />
-    <None Include="assets\levels\level_test_definition.json" />
     <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\textureAtlasAssets.json" />
     <None Include="setup25.bat" />

@@ -33,6 +33,19 @@ bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter,
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
 
+	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+	{
+		assert(true && "SDL_Init faled!");
+	}
+	
+	std::optional<SDL_Point> gameResolution = _determineScreenResolution();
+	if (gameResolution.has_value() == false){
+		assert(true && "No Supported screen resolution was detected!");
+	}
+	else {
+		m_gameScreenResolution = gameResolution.value();
+	}
+
 	//Create the game window
 	uint16 windowFlags = 0 | SDL_WINDOW_OPENGL;
 	if (GameConfig::instance().windowFullscreen() == true)
@@ -44,12 +57,15 @@ bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter,
 		windowFlags = windowFlags | SDL_WINDOW_RESIZABLE;
 	}
 
-	m_window = SDL_CreateWindow(GameConfig::instance().gameTitle().c_str(),
+	m_window = SDL_CreateWindow(
+		GameConfig::instance().gameTitle().c_str(),
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		GameConfig::instance().windowWidth(),
-		GameConfig::instance().windowHeight(),
+		m_gameScreenResolution.x,
+		m_gameScreenResolution.y,
 		windowFlags);
+
+
 
 	m_contactListener = std::shared_ptr<ContactListener>(contactListener);
 	m_contactFilter = std::shared_ptr<ContactFilter>(contactFilter);
@@ -73,6 +89,13 @@ bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter,
 	}
 
 	return true;
+}
+
+
+void Game::setWorldParams(SDL_Rect gameWorldBounds, SDL_Point gameTileSize)
+{
+	m_worldBounds = gameWorldBounds;
+	m_worldTileSize = gameTileSize;
 }
 
 
@@ -172,8 +195,8 @@ void Game::_displayLoadingMsg()
 
 	TTF_CloseFont(m_fontObject);
 	SDL_FRect dest = {
-		GameConfig::instance().windowWidth() / (float)2 - (float)100,
-		GameConfig::instance().windowHeight() / (float)2 - (float)42,
+		m_gameScreenResolution.x / (float)2 - (float)100,
+		m_gameScreenResolution.y / (float)2 - (float)42,
 		(float)tempSurface->w, (float)tempSurface->h };
 
 	m_renderer->drawSprite(dest, SDL_Color{ 255,255,255,255 }, &texture, &texture.textureAtlasQuad, 0, false, SDL_Color{}, RenderBlendMode::BLEND);
@@ -209,4 +232,49 @@ GameObject* Game::getGameObject(std::string name)
 	assert(foundGameObject.has_value() && "GameObject wasnt found!");
 
 	return foundGameObject.value();
+}
+
+std::optional<SDL_Point> Game::_determineScreenResolution()
+{
+
+	//GameConfig::instance().targetScreenResolution()
+
+	int numVideDisplays = SDL_GetNumVideoDisplays();
+	if (numVideDisplays < 1) {
+		assert(true && "SDL Video Display Detect failed!");
+	}
+
+	//We will default to the first display found
+	SDL_DisplayMode displayMode{};
+	int displayModes = SDL_GetNumDisplayModes(0);
+	bool targetScreenResolutionFound{};
+	bool fallbackScreenResolutionFound{};
+	for (int x = 0; x < displayModes; x++) {
+		SDL_GetDisplayMode(0, x, &displayMode);
+
+		//Do we have the target screen resolution?
+		if (displayMode.w == GameConfig::instance().targetScreenResolution().x &&
+			displayMode.h == GameConfig::instance().targetScreenResolution().y) {
+			targetScreenResolutionFound = true;
+			break;
+		}
+
+		//Do we have the fallback screen resolution?
+		if (displayMode.w == GameConfig::instance().fallbackScreenResolution().x &&
+			displayMode.h == GameConfig::instance().fallbackScreenResolution().y) {
+			fallbackScreenResolutionFound = true;
+		}
+
+	}
+
+	std::optional<SDL_Point> screenResolution{};
+	if (targetScreenResolutionFound == true) {
+		screenResolution = GameConfig::instance().targetScreenResolution();
+	}
+	else if(fallbackScreenResolutionFound == true){
+		screenResolution = GameConfig::instance().fallbackScreenResolution();
+	}
+
+	return screenResolution;
+
 }

@@ -38,8 +38,8 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, Scene* parentScen
 	float objectHeightAfterAngle = abs(sin(newAngle) * objectWidth + cos(newAngle) * objectHeight);
 
 	//Get the pixel position of where we are placing the object. Divide by 2 to get the center
-	position.x = (xMapPos * game->worldTileWidth() + (objectWidthAfterAngle / 2));
-	position.y = (yMapPos * game->worldTileHeight() + (objectHeightAfterAngle / 2));
+	position.x = (xMapPos * game->worldTileSize().x + (objectWidthAfterAngle / 2));
+	position.y = (yMapPos * game->worldTileSize().y + (objectHeightAfterAngle / 2));
 
 	//Scale them to the box2d size
 	position = util::toBox2dPoint(position);

@@ -46,16 +46,13 @@ public:
 	virtual void play();
 	virtual void _displayLoadingMsg();
 	GameObject* getGameObject(std::string name);
-
+	
 	void setGameState(GameState state) {
 		m_gameState = state;
 	}
-	void setWorldParams(SDL_Rect bounds, int worldTileWidth, int worldTileHeight)
-	{
-		m_WorldBounds = bounds;
-		m_WorldTileWidth = worldTileWidth;
-		m_WorldTileHeight = worldTileHeight;
-	}
+	void setWorldParams(SDL_Rect gameScreenResolution, SDL_Point gameTileSize);
+
+	SDL_Point gameScreenResolution() { return m_gameScreenResolution; }
 
 	SDL_Window* window() {
 		return m_window;
@@ -63,14 +60,8 @@ public:
 	GameState gameState() {
 		return m_gameState;
 	}
-	SDL_Rect worldBounds() {
-		return m_WorldBounds;
-	}
-	int worldTileWidth() {
-		return m_WorldTileWidth;
-	}
-	int worldTileHeight() {
-		return m_WorldTileHeight;
+	SDL_Point worldTileSize() {
+		return m_worldTileSize;
 	}
 	std::shared_ptr <ContactListener> contactListener() {
 		return m_contactListener;
@@ -108,7 +99,9 @@ protected:
 
 	SDL_Window* m_window{};
 	GameState m_gameState{};
-	SDL_Rect m_WorldBounds{};
+	SDL_Rect m_worldBounds{};
+	SDL_Point m_gameScreenResolution{};
+	SDL_Point m_worldTileSize{};
 	std::shared_ptr<ContactListener> m_contactListener{};
 	std::shared_ptr<ContactFilter> m_contactFilter{};
 	std::shared_ptr<ComponentFactory> m_componentFactory{};
@@ -121,14 +114,13 @@ protected:
 
 	std::shared_ptr<Renderer> m_renderer;
 
-	int m_WorldTileWidth{};
-	int m_WorldTileHeight{};
-
 	virtual void _addGameCollisionTags() = 0;
 	virtual void _addGameComponentTypes() = 0;
 	virtual void _addGameColors() = 0;
 	virtual void _addGameTraits() = 0;
 	virtual void _addStatusItemTypes() = 0;
+
+	std::optional<SDL_Point> _determineScreenResolution();
 	
 
 };

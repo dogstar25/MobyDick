@@ -249,7 +249,7 @@
                 {
                     "id": "RENDER_COMPONENT",
                     "color": {
-                        "tint": "Colors::PURPLE",
+                        "tint": "Colors::RED",
                         "alpha": 255
                     }
                 },
@@ -299,7 +299,7 @@
                     "id": "RENDER_COMPONENT",
                     //"textureId": "TX_FORCE_WALL",
                     "color": {
-                        "tint": "Colors::PURPLE",
+                        "tint": "Colors::CYAN",
                         "alpha": 255
                     }
                 },
@@ -314,7 +314,7 @@
                         {
                             "state": "ANIMATION_IDLE",
                             "textureId": "TX_FORCE_WALL",
-                            "speed": 0.1,
+                            "speed": 0.05,
                             "frames": 3
                         }
 

@@ -100,8 +100,9 @@ void LevelManager::_loadDefinition(std::string levelId)
 	m_levelBounds.h = (m_height * m_tileHeight) + m_tileHeight + 8;
 
 	//Initialize World bounds
-	game->setWorldParams(m_levelBounds, m_tileWidth, m_tileHeight);
+	game->setWorldParams(m_levelBounds, { m_tileWidth, m_tileHeight });
 
+	//Save a
 	//Save all color defined definitions
 	if (root.isMember("colorDefinedObjects")) {
 		m_colorDefinedList = root["colorDefinedObjects"];

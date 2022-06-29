@@ -118,7 +118,7 @@ Get the portion of the gameObject texture to render
 For animated objects, this is the portion of the texture that
 represents the current frame of animation
 */
-SDL_Rect* RenderComponent::getRenderTextureRect(Texture& texture)
+SDL_Rect* RenderComponent::getRenderTextureRect(std::shared_ptr<Texture> texture)
 {
 
 	SDL_Rect* textureSrcRect=nullptr;
@@ -129,7 +129,7 @@ SDL_Rect* RenderComponent::getRenderTextureRect(Texture& texture)
 		textureSrcRect = animationComponent->getCurrentAnimationTextureRect();
 	}
 	else {
-		textureSrcRect = &texture.textureAtlasQuad;
+		textureSrcRect = &texture->textureAtlasQuad;
 	}
 
 	return textureSrcRect;
@@ -203,8 +203,8 @@ void RenderComponent::render(SDL_FRect destQuad)
 	SDL_Rect gameObjectPosRect = { (int)positionRect.x, (int)positionRect.y, (int)positionRect.w, (int)positionRect.h };
 	SDL_Rect cameraRect = { (int)Camera::instance().frame().x,
 		(int)Camera::instance().frame().y,
-		(int)Camera::instance().frame().w + game->worldTileWidth(),
-		(int)Camera::instance().frame().h + game->worldTileHeight() };
+		(int)Camera::instance().frame().w + game->worldTileSize().x,
+		(int)Camera::instance().frame().h + game->worldTileSize().y };
 
 	/*
 	If this object is within the viewable are or if its absolute positioned and therefore is not dependent on the camera
@@ -218,10 +218,8 @@ void RenderComponent::render(SDL_FRect destQuad)
 		SDL_Color color = m_color;
 		float angle = transform->angle();
 
-		Texture* texture = getRenderTexture().get();
-
 		//SDL_FRect destQuad = getRenderDestRect();
-		SDL_Rect* textureSourceQuad = getRenderTextureRect(*texture);
+		SDL_Rect* textureSourceQuad = getRenderTextureRect(getRenderTexture());
 
 		//SDL Only Stuff
 		if (GameConfig::instance().rendererType() == RendererType::SDL) {
@@ -252,7 +250,7 @@ void RenderComponent::render(SDL_FRect destQuad)
 			outlineColor = m_outLineColor;
 		}
 
-		game->renderer()->drawSprite(destQuad, color, texture, textureSourceQuad, angle, outline, outlineColor, m_textureBlendMode);
+		game->renderer()->drawSprite(destQuad, color, getRenderTexture().get(), textureSourceQuad, angle, outline, outlineColor, m_textureBlendMode);
 
 	}
 

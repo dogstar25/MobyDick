@@ -153,7 +153,6 @@
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />
     <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
     <None Include="assets\gameObjectDefinitions\particleObjects.json" />
-    <None Include="assets\levels\level_test_definition.json" />
     <None Include="assets\levels\level1_definition.json" />
     <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\gameObjectDefinitions\triggerObjects.json" />

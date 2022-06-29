@@ -44,7 +44,7 @@ void GLRenderer::init(SDL_Window* window)
 	std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;
 	std::cout << "Version: " << glGetString(GL_VERSION) << std::endl;
 
-	m_projectionMatrix = glm::ortho(0.0f, (float)GameConfig::instance().windowWidth(), (float)GameConfig::instance().windowHeight(), 0.0f, 0.0f, 10.0f);
+	m_projectionMatrix = glm::ortho(0.0f, (float)game->gameScreenResolution().x, (float)game->gameScreenResolution().y, 0.0f, 0.0f, 10.0f);
 
 	//Create the different drawers
 	m_spriteDrawer = GLDrawer(GLDrawerType::GLSPRITE);

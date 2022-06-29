@@ -16,7 +16,7 @@ WeaponComponent::WeaponComponent(Json::Value componentJSON)
 	m_currentLevel = 1;
 
 	m_fireOffset = componentJSON["fireOffset"].asFloat();
-	m_levelUpIncrement = componentJSON["levelUpIncrement"].asInt();
+	m_levelUpIncrement = componentJSON["levelUpIncrement"].asFloat();
 
 	for (Json::Value itrWeaponLevel : componentJSON["weaponLevels"])
 	{

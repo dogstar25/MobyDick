@@ -78,7 +78,7 @@ namespace ImGui
 		//ImGui::Text("Todd");
 		//ImGui::PopFont();
 		//ImGui::Text("Todd2");
-		int dwWidth = GameConfig::instance().windowWidth() / 2;
+		int dwWidth = game->gameScreenResolution().x / 2;
 		ImGui::SetWindowPos(ImVec2(0, 0));
 		ImGui::End();
 
