@@ -38,13 +38,12 @@ bool GameConfig::init(std::string configFile)
 	m_rendererType = static_cast<RendererType>(EnumMap::instance().toEnum(root["rendererType"].asString()));
 	m_openGLBatching = root["openGLBatching"].asBool();
 
-	m_windowWidth = root["window"]["width"].asInt();
-	m_windowHeight = root["window"]["height"].asInt();
-	m_windowFullscreen = root["window"]["fullscreen"].asBool();
+	Json::Value windowJSON = root["window"];
+	m_defaultTileSize = { windowJSON["defaultTileSize"]["width"].asInt(), windowJSON["defaultTileSize"]["height"].asInt() };
+	m_targetScreenResolution = { windowJSON["targetScreenResolution"]["width"].asInt(), windowJSON["targetScreenResolution"]["height"].asInt() };
+	m_fallbackScreenResolution = { windowJSON["fallbackScreenResolution"]["width"].asInt(), windowJSON["fallbackScreenResolution"]["height"].asInt() };
 
-	//Global World sizes
-	SDL_Rect bounds = { m_windowWidth, m_windowHeight };
-	game->setWorldParams(bounds, 32, 32);
+	m_windowFullscreen = root["window"]["fullscreen"].asBool();
 
 	return true;
 }

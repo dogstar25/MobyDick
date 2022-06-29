@@ -21,15 +21,15 @@ TransformComponent::TransformComponent(Json::Value componentJSON, float xMapPos,
 		if (m_centeredPositioning == true) {
 
 			setPosition(
-				((xMapPos * game->worldTileWidth()) + objectWidth / 2) - (objectWidth  / 2),
-				((yMapPos * game->worldTileHeight()) + objectHeight / 2) - (objectHeight / 2)
+				((xMapPos * game->worldTileSize().x) + objectWidth / 2) - (objectWidth  / 2),
+				((yMapPos * game->worldTileSize().y) + objectHeight / 2) - (objectHeight / 2)
 			);
 		}
 		else {
 
 			setPosition(
-				(xMapPos * game->worldTileWidth()) + objectWidth / 2,
-				(yMapPos * game->worldTileHeight()) + objectHeight / 2
+				(xMapPos * game->worldTileSize().x) + objectWidth / 2,
+				(yMapPos * game->worldTileSize().y) + objectHeight / 2
 			);
 		}
 

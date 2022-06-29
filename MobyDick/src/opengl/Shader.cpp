@@ -146,7 +146,7 @@ GLint Shader::_compileShader(unsigned int shaderId, const std::string shaderSour
 {
     GLint status{};
 
-    const GLint len = strlen(shaderSource.c_str());
+    const GLint len = (GLint)strlen(shaderSource.c_str());
     const GLchar* src = shaderSource.c_str();
 
     glShaderSource(shaderId, 1, (const GLchar**)&src, &len);

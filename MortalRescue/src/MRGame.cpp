@@ -50,58 +50,52 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 	_addGameTraits();
 	_addStatusItemTypes();
 
-	//Initialize world
-	if (SDL_Init(SDL_INIT_EVERYTHING) == 0)
-	{
 
-		//Init font library
-		TTF_Init();
+	//Init font library
+	TTF_Init();
 
-		//Initialize the texture manager
-		m_renderer->init(m_window);
+	//Initialize the texture manager
+	m_renderer->init(m_window);
 
-		//Initialize IMGUI
-		ImGui::MobyDickInit(this);
+	//Initialize IMGUI
+	ImGui::MobyDickInit(this);
 
-		//Display basic loading message
-		_displayLoadingMsg();
+	//Display basic loading message
+	_displayLoadingMsg();
 
-		TextureManager::instance().init();
-		TextureManager::instance().load("textureAtlasAssets");
+	TextureManager::instance().init();
+	TextureManager::instance().load("textureAtlasAssets");
 
-		//Initialize the SceneManager
-		SceneManager::instance().init();
-		SceneManager::instance().load("gameScenes");
+	//Initialize the SceneManager
+	SceneManager::instance().init();
+	SceneManager::instance().load("gameScenes");
 
-		_displayLoadingMsg();
+	_displayLoadingMsg();
 
-		//Initialize the Game Object Manager
-		GameObjectManager::instance().init();
-		GameObjectManager::instance().load("gameObjectDefinitions/commonObjects");
-		GameObjectManager::instance().load("gameObjectDefinitions/wallObjects");
-		GameObjectManager::instance().load("gameObjectDefinitions/particleObjects");
-		GameObjectManager::instance().load("gameObjectDefinitions/compositeObjects");
-		GameObjectManager::instance().load("gameObjectDefinitions/guiObjects");
-		GameObjectManager::instance().load("gameObjectDefinitions/hudObjects");
+	//Initialize the Game Object Manager
+	GameObjectManager::instance().init();
+	GameObjectManager::instance().load("gameObjectDefinitions/commonObjects");
+	GameObjectManager::instance().load("gameObjectDefinitions/wallObjects");
+	GameObjectManager::instance().load("gameObjectDefinitions/particleObjects");
+	GameObjectManager::instance().load("gameObjectDefinitions/compositeObjects");
+	GameObjectManager::instance().load("gameObjectDefinitions/guiObjects");
+	GameObjectManager::instance().load("gameObjectDefinitions/hudObjects");
 
-		_displayLoadingMsg();
+	_displayLoadingMsg();
 
-		//Load a first scene
-		Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
-		scene.loadLevel("level1");
+	//Load a first scene
+	Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
+	scene.loadLevel("level1");
 
-		//Initialize the sound manager
-		SoundManager::instance().initSound();
-		SoundManager::instance().playMusic("music_ambience_1", -1);
+	//Initialize the sound manager
+	SoundManager::instance().initSound();
+	SoundManager::instance().playMusic("music_ambience_1", -1);
 
-		//Initialize the clock object
-		Clock::instance().init();
+	//Initialize the clock object
+	Clock::instance().init();
 
-		//scene.addGameObject("PARTICLE_EMITTER_SPARK", LAYER_MENU, 13, 13);
-		//scene.addGameObject("BOWMAN", LAYER_MENU, 3, 3);
-
-
-	}
+	//scene.addGameObject("RAIN_EMITTER", LAYER_MENU, 13, 13);
+	//scene.addGameObject("BOWMAN", LAYER_MENU, 3, 3);
 
 	return true;
 }

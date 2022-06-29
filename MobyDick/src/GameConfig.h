@@ -41,12 +41,6 @@ public:
 	float gameLoopStep() {
 		return m_gameLoopStep;
 	}
-	int windowWidth() {
-		return m_windowWidth;
-	}
-	int windowHeight() {
-		return m_windowHeight;
-	}
 	bool windowFullscreen() {
 		return m_windowFullscreen;
 	}
@@ -59,6 +53,15 @@ public:
 	bool openGLBatching() {
 		return m_openGLBatching;
 	}
+	SDL_Point targetScreenResolution() {
+		return m_targetScreenResolution;
+	}
+	SDL_Point fallbackScreenResolution() {
+		return m_fallbackScreenResolution;
+	}
+	SDL_Point defaultTileSize() {
+		return m_defaultTileSize;
+	}
 
 private:
 	GameConfig();
@@ -66,25 +69,22 @@ private:
 
 	RendererType m_rendererType;
 
-	float
-		m_mouseSensitivity,
-		m_dynamicTextRefreshDelay,
-		m_gameLoopStep;
-	bool
-		m_windowFullscreen,
-		m_openGLBatching,
-		m_debugPanel;
-	SDL_Point 
-		m_debugPanelLocation;
-	int
-		m_windowWidth,
-		m_windowHeight,
-		m_debugPanelFontSize,
-		m_soundChannels;
+	float m_mouseSensitivity{};
+	float m_dynamicTextRefreshDelay{};
+	float m_gameLoopStep{};
+	bool m_windowFullscreen{};
+	bool m_openGLBatching{};
+	bool m_debugPanel{};
+	SDL_Point m_debugPanelLocation{};
+	int	m_debugPanelFontSize{};
+	int m_soundChannels{};
 
-	std::string 
-		m_gameTitle;
+	std::string m_gameTitle;
 	float m_scaleFactor{};
+	SDL_Point m_screenResolution{};
+	SDL_Point m_targetScreenResolution{};
+	SDL_Point m_fallbackScreenResolution{};
+	SDL_Point m_defaultTileSize{};
 
 
 };

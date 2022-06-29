@@ -38,11 +38,7 @@ public:
 private:
 	Camera();
 	~Camera() = default;
-	SDL_FRect m_frame { 
-		0, 0, 
-		static_cast<float>(GameConfig::instance().windowWidth()), 
-		static_cast<float>(GameConfig::instance().windowHeight()) 
-	};
+	SDL_FRect m_frame;
 
 	bool m_atXLimit{};
 	bool m_atYLimit{};

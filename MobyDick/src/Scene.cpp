@@ -302,7 +302,7 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, PositionAl
 	}
 
 
-	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, -5, -5, angle, this, cameraFollow));
+	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, (float)-5, (float)-5, angle, this, cameraFollow));
 
 	gameObject->setPosition(windowPosition, adjustX, adjustY);
 

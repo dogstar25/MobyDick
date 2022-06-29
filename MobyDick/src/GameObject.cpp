@@ -120,15 +120,17 @@ void GameObject::setPosition(PositionAlignment windowPosition, float adjustX, fl
 	auto objectWidth = getSize().x;
 	auto objectHeight = getSize().y;
 
+	
+
 	if (windowPosition == PositionAlignment::CENTER) {
 
-		xMapPos = (float)GameConfig::instance().windowWidth() / 2;
-		yMapPos = (float)GameConfig::instance().windowHeight() / 2;
+		xMapPos = (float)game->gameScreenResolution().x / 2;
+		yMapPos = (float)game->gameScreenResolution().y / 2;
 
 	}
 	else if (windowPosition == PositionAlignment::TOP_CENTER) {
 
-		xMapPos = (float)GameConfig::instance().windowWidth() / 2;
+		xMapPos = (float)game->gameScreenResolution().x / 2;
 		yMapPos = (objectHeight / 2);
 	}
 	else if (windowPosition == PositionAlignment::TOP_LEFT) {
@@ -138,33 +140,33 @@ void GameObject::setPosition(PositionAlignment windowPosition, float adjustX, fl
 	}
 	else if (windowPosition == PositionAlignment::TOP_RIGHT) {
 
-		xMapPos = (float)(GameConfig::instance().windowWidth() - (objectWidth / 2));
+		xMapPos = (float)(game->gameScreenResolution().x - (objectWidth / 2));
 		yMapPos = (objectHeight / 2);
 	}
 	else if (windowPosition == PositionAlignment::CENTER_LEFT) {
 
 		xMapPos = (objectWidth / 2);
-		yMapPos = (float)GameConfig::instance().windowHeight() / 2;
+		yMapPos = (float)game->gameScreenResolution().y / 2;
 	}
 	else if (windowPosition == PositionAlignment::CENTER_RIGHT) {
 
-		xMapPos = (float)(GameConfig::instance().windowWidth() - (objectWidth / 2));
-		yMapPos = (float)GameConfig::instance().windowHeight() / 2;
+		xMapPos = (float)(game->gameScreenResolution().x - (objectWidth / 2));
+		yMapPos = (float)game->gameScreenResolution().y / 2;
 	}
 	else if (windowPosition == PositionAlignment::BOTTOM_LEFT) {
 
 		xMapPos = (objectWidth / 2);
-		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight);
+		yMapPos = (float)(game->gameScreenResolution().y - objectHeight);
 	}
 	else if (windowPosition == PositionAlignment::BOTTOM_CENTER) {
 
-		xMapPos = (float)(GameConfig::instance().windowWidth() / 2);
-		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight);
+		xMapPos = (float)(game->gameScreenResolution().x / 2);
+		yMapPos = (float)(game->gameScreenResolution().y - objectHeight);
 	}
 	else if (windowPosition == PositionAlignment::BOTTOM_RIGHT) {
 
-		xMapPos = (float)(GameConfig::instance().windowWidth() - (objectWidth / 2));
-		yMapPos = (float)(GameConfig::instance().windowHeight() - objectHeight);
+		xMapPos = (float)(game->gameScreenResolution().x - (objectWidth / 2));
+		yMapPos = (float)(game->gameScreenResolution().y - objectHeight);
 	}
 
 	//Add adjustments

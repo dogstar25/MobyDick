@@ -38,7 +38,7 @@ public:
 	void removeDisplayOverlay();
 
 
-	SDL_Rect* getRenderTextureRect(Texture& texture);
+	SDL_Rect* getRenderTextureRect(std::shared_ptr<Texture> texture);
 	std::shared_ptr<Texture> getRenderTexture();
 	SDL_Surface* getRenderSurface();
 	

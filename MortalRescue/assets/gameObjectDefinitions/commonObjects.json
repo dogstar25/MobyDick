@@ -643,8 +643,9 @@
                     "id": "TRANSFORM_COMPONENT"
                 },
                 {
-                    "id": "PARTICLE_COMPONENT",
+                    "id": "PARTICLE_X_COMPONENT",
                     "type": "ParticleEmitterType::CONTINUOUS",
+                    "emissionInterval": 0.2,
                     "effects": [
                         "rain"
                     ]

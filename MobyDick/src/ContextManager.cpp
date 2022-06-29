@@ -119,7 +119,7 @@ int ContextManager::getSoundVolumeForGui()
 
 float ContextManager::getMouseSensitivity()
 {
-	return  m_userSettings.mouseSensitivity * .01;
+	return  m_userSettings.mouseSensitivity * (float).01;
 
 }
 int ContextManager::getSoundVolume()
