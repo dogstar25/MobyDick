@@ -567,7 +567,41 @@
                 "width": 96,
                 "height": 32
             }
+        },
+        {
+            "id": "TX_HEALTH_STATION_IDLE",
+            "description": "Health Station",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 234,
+                "y": 92,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_HEALTH_STATION_ACTIVE",
+            "description": "Health Station",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 136,
+                "y": 92,
+                "width": 64,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_HEALTH_STATION_EMPTY",
+            "description": "Health Station",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 201,
+                "y": 92,
+                "width": 32,
+                "height": 32
+            }
         }
+
     ],
     "fonts": [
         {

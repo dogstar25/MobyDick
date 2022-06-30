@@ -81,11 +81,11 @@
             "layer": "LAYER_MAIN",
             "name": "PlayerGina"
         },
-        {
-            "id": "LOC_0016_0013",
-            "gameObjectId": "DRONE",
-            "cameraFollow": false
-        },
+        //{
+        //    "id": "LOC_0016_0013",
+        //    "gameObjectId": "DRONE",
+        //    "cameraFollow": false
+        //},
         {
             "id": "LOC_0015_0023",
             "gameObjectId": "GLOWWALL2_352",
@@ -181,6 +181,11 @@
         {
             "id": "LOC_0017_0003",
             "gameObjectId": "SURVIVOR"
-        }
+        },
+        {
+            "id": "LOC_0020_0007",
+            "gameObjectId": "HEALTH_STATION"
+        },
+        
     ]
 }
