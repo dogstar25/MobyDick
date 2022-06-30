@@ -184,6 +184,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\actions\ActorBoostAction.cpp" />
+    <ClCompile Include="src\actions\HealthStationInteraction.cpp" />
     <ClCompile Include="src\actions\MRActionFactory.cpp" />
     <ClCompile Include="src\actions\DroneEyeRotateAction.cpp" />
     <ClCompile Include="src\actions\SurvivorInteractionAction.cpp" />
@@ -282,6 +283,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\actions\ActorBoostAction.h" />
+    <ClInclude Include="src\actions\HealthStationInteraction.h" />
     <ClInclude Include="src\actions\MRActionFactory.h" />
     <ClInclude Include="src\actions\DroneEyeRotateAction.h" />
     <ClInclude Include="src\actions\ButtonInteraction.h" />

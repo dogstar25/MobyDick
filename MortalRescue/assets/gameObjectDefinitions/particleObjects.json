@@ -145,6 +145,44 @@
                     "id": "POOL_COMPONENT"
                 }
             ]
+        },
+        {
+            "id": "HEALTH_HEART",
+            "traitTags": [ "pooled", "fragment" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_PIECE_FULL_8",
+                    "xRenderAdjustment": 0,
+                    "yRenderAdjustment": 0
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 8,
+                        "height": 8
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "linearDamping": 0.0,
+                    "angularDamping": 0.0,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_SOLID",
+                            "collisionShape": "B2_BOX",
+                            "density": 5.1,
+                            "restitution": 1.0
+                        }
+                    ]
+
+                },
+                {
+                    "id": "POOL_COMPONENT"
+                }
+            ]
         }
     ]
 }
