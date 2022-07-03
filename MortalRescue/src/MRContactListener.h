@@ -36,6 +36,7 @@ private:
 	void _playerBullet_wallPiece(GameObject* playerBullet, GameObject* wallPiece, b2Vec2 contactPoint);
 	void _playerBullet_enemyTurret(GameObject* playerBullet, GameObject* enenmyTurret, b2Vec2 contactPoint);
 	void _playerBullet_droneBrain(GameObject* playerBullet, GameObject* droneBrain, b2Vec2 contactPoint);
+	void _player_heartPickup(GameObject* player, GameObject* heartPickup, b2Vec2 contactPoint);
 
 	
 	

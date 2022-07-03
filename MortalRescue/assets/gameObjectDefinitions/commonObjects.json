@@ -6,7 +6,7 @@
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "color": "Colors::ORANGE"
+                    "color": "Colors::YELLOW"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
@@ -47,7 +47,7 @@
                             "isSensor": false
                         }
                     ],
-                    "anchorPoint": { // starts from centered 0,0 position
+                    "anchorPoint": {
                         "x": 0.8,
                         "y": 0.0
                     }
@@ -103,6 +103,14 @@
                             "gameObjectId": "JETPACK",
                             "attachLocation": {
                                 "x": -0.8,
+                                "y": 0.0
+                            },
+                            "attachB2JointType": "B2_WELD"
+                        },
+                        {
+                            "gameObjectId": "PLAYER_HEART",
+                            "attachLocation": {
+                                "x": 0.0,
                                 "y": 0.0
                             },
                             "attachB2JointType": "B2_WELD"
@@ -774,7 +782,11 @@
                             "collisionRadius": 0.64,
                             "density": 50.5
                         }
-                    ]
+                    ],
+                    "anchorPoint": {
+                        "x": 0.8,
+                        "y": 0.0
+                    }
 
                 },
                 {
@@ -800,6 +812,20 @@
                     "id": "SURVIVOR_BRAIN_COMPONENT",
                     "sightSensorSize": 15,
                     "detectObjectTraits": [ "player", "objective", "navigation" ]
+                },
+                {
+                    "id": "ATTACHMENTS_COMPONENT",
+                    "attachments": [
+                        {
+                            "gameObjectId": "PLAYER_HEART",
+                            "attachLocation": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "attachB2JointType": "B2_WELD"
+                        }
+
+                    ]
                 }
             ]
         },
@@ -976,8 +1002,8 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 128,
-                        "height": 96
+                        "width": 64,
+                        "height": 64    
                     },
                     "centeredPositioning": false
                 },
@@ -997,25 +1023,31 @@
                         {
                             "state": "ANIMATION_ACTIVE",
                             "textureId": "TX_HEALTH_STATION_ACTIVE",
-                            "speed": 0.05,
-                            "frames": 1
-                        },
-                        {
-                            "state": "ANIMATION_DEAD",
-                            "textureId": "TX_WALL_BUTTON_DEAD",
                             "frames": 1
                         }
                     ]
                 },
                 {
                     "id": "PHYSICS_COMPONENT",
-                    "type": "B2_DYNAMIC",
+                    "type": "B2_STATIC",
                     "fixtures": [
                         {
-                            "contactTag": "ContactTag::BUTTON",
-                            "collisionShape": "B2_BOX",
-                            "isSensor": true
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_CHAIN",
+                            "physicsChainType": "PhysicsChainType::CW_REFLECT_OUT",
+                            "friction": 0.00,
+                            "restitution": 0.0,
+                            "density": 1.5
+                        },
+                        {
+                            "contactTag": "ContactTag::CONTAINER_INSIDE",
+                            "collisionShape": "B2_CHAIN",
+                            "physicsChainType": "PhysicsChainType::CCW_REFLECT_IN",
+                            "friction": 0.00,
+                            "restitution": 0.0,
+                            "density": 1.5
                         }
+
                     ]
                 },
                 {
@@ -1026,6 +1058,71 @@
                             "actionId": "ACTION_INTERACTION",
                             "actionClass": "HealthStationInteraction"
                         }
+                    ]
+                },
+                {
+                    "id": "CONTAINER_COMPONENT",
+                    "capacity": 20,
+                    "refillTimer": 10,
+                    "gameObjectId": "HEALTH_HEART",
+                    "count": 2,
+                    "spawnForce": 1,
+                    "layer": "LAYER_MAIN"
+                }
+            ]
+        },
+        {
+            "id": "PLAYER_HEART",
+            "traitTags": [],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "tint": "Colors::RED",
+                        "alpha": 100
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 6,
+                        "height": 6
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "linearDamping": 0.0,
+                    "angularDamping": 0.0,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_BOX",
+                            "density": 0.1,
+                            "restitution": 0.0
+                        }
+                    ],
+                    "anchorPoint": {
+                        "x": 0.1,
+                        "y": -0.05
+                    }
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_ACTIVE",
+                    "frameSize": {
+                        "width": 8,
+                        "height": 8
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_ACTIVE",
+                            "textureId": "TX_HEARTBEAT_ACTIVE",
+                            "speed": 0.1,
+                            "frames": 6
+                        }
+
                     ]
                 }
             ]

@@ -152,11 +152,13 @@ void GinaPlayerControlComponent::_jetPackSwitch(bool turnOn)
 
 	const auto& attachmentsComponent = parent()->getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
 	auto& jetPack = attachmentsComponent->getAttachment("JETPACK");
-	if (turnOn) {
-		jetPack->gameObject->enableUpdate();
-	}
-	else {
-		jetPack->gameObject->disableUpdate();
+	if (jetPack.has_value()) {
+		if (turnOn) {
+			jetPack->gameObject->enableUpdate();
+		}
+		else {
+			jetPack->gameObject->disableUpdate();
+		}
 	}
 
 }

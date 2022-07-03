@@ -573,7 +573,7 @@
             "description": "Health Station",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 234,
+                "x": 201,
                 "y": 92,
                 "width": 32,
                 "height": 32
@@ -584,21 +584,32 @@
             "description": "Health Station",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 136,
+                "x": 234,
                 "y": 92,
                 "width": 64,
                 "height": 32
             }
         },
         {
-            "id": "TX_HEALTH_STATION_EMPTY",
-            "description": "Health Station",
+            "id": "TX_HEARTBEAT_ACTIVE",
+            "description": "HeartBeat",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 201,
-                "y": 92,
-                "width": 32,
-                "height": 32
+                "x": 85,
+                "y": 4,
+                "width": 48,
+                "height": 8
+            }
+        },
+        {
+            "id": "TX_HEART_PICKUP",
+            "description": "Heart Pickup",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 134,
+                "y": 4,
+                "width": 8,
+                "height": 8
             }
         }
 

@@ -52,7 +52,7 @@ ChildrenComponent::ChildrenComponent(Json::Value componentJSON, Scene* parentSce
 			location.slot = locationSlot.value();
 			location.positionAlignment = positionAlignment;
 
-			m_childSlotCount[location.slot - 1] += 1;
+			m_childSlotCount[location.slot - (int)1] += 1;
 		}
 		else {
 			location.locationType = ChildLocationType::ABSOLUTE_POSITION;

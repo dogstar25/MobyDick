@@ -138,6 +138,8 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 
 	bodyDef.type = static_cast<b2BodyType>(m_physicsType);
 
+	
+
 	//Default the position to zero.
 	bodyDef.position.SetZero();
 	bodyDef.allowSleep = true;
@@ -163,9 +165,9 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 		b2PolygonShape box;
 		b2CircleShape circle;
 		b2ChainShape chain;
+		b2EdgeShape edge;
 
 		auto collisionShape = EnumMap::instance().toEnum(fixtureJSON["collisionShape"].asString());
-
 		//default
 		shape = &box;
 
@@ -190,6 +192,39 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 			
 			box.SetAsBox(sizeX, sizeY);
 			shape = &box;
+		}
+		else if (collisionShape == b2Shape::e_chain) {
+
+			PhysicsChainType physicsChainType = (PhysicsChainType)EnumMap::instance().toEnum(fixtureJSON["physicsChainType"].asString());
+
+			float sizeX{};
+			float sizeY{};
+			//If a size is not specified for the fixture then default to the transform size of the object
+			if (fixtureJSON.isMember("size")) {
+				sizeX = fixtureJSON["size"]["width"].asFloat() / GameConfig::instance().scaleFactor();
+				sizeY = fixtureJSON["size"]["height"].asFloat() / GameConfig::instance().scaleFactor();
+			}
+			else {
+				sizeX = transformComponentJSON["size"]["width"].asFloat() / GameConfig::instance().scaleFactor();
+				sizeY = transformComponentJSON["size"]["height"].asFloat() / GameConfig::instance().scaleFactor();
+			}
+
+			b2Vec2 chainVs[4];
+			if (physicsChainType == PhysicsChainType::CW_REFLECT_OUT) {
+				chainVs[0].Set(-sizeX/2, -sizeY/2);
+				chainVs[1].Set(sizeX/2 , -sizeY/2);
+				chainVs[2].Set(sizeX/2, sizeY/2);
+				chainVs[3].Set(-sizeX/2, sizeY/2);
+			}
+			else if (physicsChainType == PhysicsChainType::CCW_REFLECT_IN) {
+				chainVs[0].Set(-sizeX / 2, sizeY / 2);
+				chainVs[1].Set(sizeX / 2, sizeY / 2);
+				chainVs[2].Set(sizeX / 2, -sizeY / 2);
+				chainVs[3].Set(-sizeX / 2, -sizeY / 2);
+			}
+
+			chain.CreateLoop(chainVs, 4);
+			shape = &chain;
 		}
 
 		b2FixtureDef fixtureDef;

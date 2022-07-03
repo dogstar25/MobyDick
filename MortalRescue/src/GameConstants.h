@@ -54,6 +54,8 @@ namespace ContactTag {
 	inline constexpr int WALL_PIECE = 24;
 	inline constexpr int ENEMY_TURRET = 25;
 	inline constexpr int DRONE_SCRAP = 26;
+	inline constexpr int HEART_PICKUP = 27;
+	inline constexpr int CONTAINER_INSIDE = 28;
 
 }
 
@@ -63,12 +65,12 @@ namespace CollectibleTypes {
 
 namespace ComponentTypes {
 
-	inline constexpr int BRAIN_DRONE_COMPONENT = 22;
-	inline constexpr int WEAPON_PISTOL_COMPONENT = 23;
-	inline constexpr int TURRET_BRAIN_COMPONENT = 24;
-	inline constexpr int SURVIVOR_BRAIN_COMPONENT = 25;
-	inline constexpr int GINA_PLAYER_CONTROL_COMPONENT = 26;
-	inline constexpr int GINA_VITALITY_COMPONENT = 27;
+	inline constexpr int BRAIN_DRONE_COMPONENT = 24;
+	inline constexpr int WEAPON_PISTOL_COMPONENT = 25;
+	inline constexpr int TURRET_BRAIN_COMPONENT = 26;
+	inline constexpr int SURVIVOR_BRAIN_COMPONENT = 27;
+	inline constexpr int GINA_PLAYER_CONTROL_COMPONENT = 28;
+	inline constexpr int GINA_VITALITY_COMPONENT = 29;
 
 
 }

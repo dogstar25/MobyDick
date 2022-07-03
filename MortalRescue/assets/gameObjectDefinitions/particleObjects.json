@@ -147,14 +147,13 @@
             ]
         },
         {
-            "id": "HEALTH_HEART",
-            "traitTags": [ "pooled", "fragment" ],
+            "id": "HEALTH_HEART", 
+            "traitTags": [ "fragment" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "textureId": "TX_PIECE_FULL_8",
-                    "xRenderAdjustment": 0,
-                    "yRenderAdjustment": 0
+                    "textureId": "TX_HEART_PICKUP",
+                    "color": "Colors::RED"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
@@ -167,17 +166,17 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "linearDamping": 0.0,
-                    "angularDamping": 0.0,
+                    "linearDamping": 0,
+                    "angularDamping": 0,
                     "fixtures": [
                         {
-                            "contactTag": "ContactTag::GENERAL_SOLID",
-                            "collisionShape": "B2_BOX",
-                            "density": 5.1,
-                            "restitution": 1.0
+                            "contactTag": "ContactTag::HEART_PICKUP",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 0.16,
+                            "density": 1.0,
+                            "restitution": 0.9
                         }
                     ]
-
                 },
                 {
                     "id": "POOL_COMPONENT"

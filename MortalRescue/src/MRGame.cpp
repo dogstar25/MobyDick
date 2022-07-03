@@ -94,9 +94,9 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 	//Initialize the clock object
 	Clock::instance().init();
 
-	scene.addGameObject("HEALTH_HEART", LAYER_MAIN, 20, 7);
+	//scene.addGameObject("HEALTH_HEART", LAYER_MAIN, 16, 13);
 	//scene.addGameObject("HEALTH_HEART", LAYER_MAIN, 20, 7);
-	scene.addGameObject("HEALTH_HEART", LAYER_MAIN, 10, 5);
+	//scene.addGameObject("HEALTH_HEART", LAYER_MAIN, 10, 5);
 	//scene.addGameObject("BOWMAN", LAYER_MENU, 3, 3);
 
 	return true;
@@ -129,6 +129,8 @@ void MRGame::_addGameCollisionTags()
 	EnumMap::instance().addEnumItem("ContactTag::ESCAPE_STAIRS", ContactTag::ESCAPE_STAIRS);
 	EnumMap::instance().addEnumItem("ContactTag::WALL_PIECE", ContactTag::WALL_PIECE);
 	EnumMap::instance().addEnumItem("ContactTag::ENEMY_TURRET", ContactTag::ENEMY_TURRET);
+	EnumMap::instance().addEnumItem("ContactTag::HEART_PICKUP", ContactTag::HEART_PICKUP);
+	EnumMap::instance().addEnumItem("ContactTag::CONTAINER_INSIDE", ContactTag::CONTAINER_INSIDE);
 
 
 

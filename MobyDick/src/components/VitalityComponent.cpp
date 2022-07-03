@@ -19,7 +19,9 @@ VitalityComponent::VitalityComponent(Json::Value componentJSON)
 	m_speed = componentJSON["speed"].asFloat();
 	m_rotationSpeed = componentJSON["rotationSpeed"].asFloat();
 	m_lifetime = std::chrono::duration<float>(componentJSON["lifetime"].asFloat());
-	m_health = componentJSON["health"].asFloat();
+
+	m_health = m_maxHealth = componentJSON["health"].asFloat();
+
 	float lifetime = componentJSON["lifetime"].asFloat();
 	m_lifetimeTimer = Timer(lifetime);
 
@@ -181,6 +183,18 @@ bool VitalityComponent::inflictDamage(float damage)
 
 	return dead;
 
+}
+
+bool VitalityComponent::addHealth(float health)
+{
+
+	if (m_health + health <= m_maxHealth) {
+
+		m_health += health;
+		return true;
+	}
+
+	return false;
 }
 
 bool VitalityComponent::testResistance(float force)
