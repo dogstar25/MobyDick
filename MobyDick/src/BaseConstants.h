@@ -339,9 +339,8 @@ inline constexpr int DEFAULT_HOVER_SCHEME = 0;
 
 namespace StatusItemId {
 
-	//Add base status item ids here
+	inline constexpr int CURRENT_LEVEL = 1;
 
-	//Game specific values added to game specific contextManager
 
 };
 

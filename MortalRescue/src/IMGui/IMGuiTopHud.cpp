@@ -58,7 +58,9 @@ glm::vec2 IMGuiTopHud::render()
 	ImGui::Begin(m_gameObjectId.c_str(), nullptr, m_flags);
 	{
 
-		//hudLevel();
+		hudLevel();
+
+		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
 		hudLives();
 
@@ -132,7 +134,7 @@ void IMGuiTopHud::hudLevel()
 	std::stringstream levelTxtSS;
 	levelTxtSS << "Level " << level.value();
 
-	ImGui::PushFont(m_xLargeFont);
+	ImGui::PushFont(m_mediumFont);
 	ImGui::textCentered(levelTxtSS.str());
 	ImGui::PopFont();
 

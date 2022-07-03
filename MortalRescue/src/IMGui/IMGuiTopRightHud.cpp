@@ -88,7 +88,7 @@ void IMGuiTopRightHud::survivorCount()
 	levelTxtSS << survivorsSaved << "/" << survivorsTotal;
 	levelTxt = levelTxtSS.str();
 	ImGui::SameLine();
-	ImGui::PushFont(m_xLargeFont);
+	ImGui::PushFont(m_largeFont);
 	ImGui::Text(levelTxt.c_str());
 	ImGui::PopFont();
 	ImGui::NewLine();

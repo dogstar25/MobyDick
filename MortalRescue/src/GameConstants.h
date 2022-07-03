@@ -89,12 +89,12 @@ namespace TraitTag {
 }
 
 namespace StatusItemId {
-	inline constexpr int PLAYERS_HEART_COUNT = 1;
-	inline constexpr int PLAYER_WEAPON_LEVEL = 2;
-	inline constexpr int SCRAP_COUNT = 3;
-	inline constexpr int PLAYER_WEAPON_ACCRUAL = 4;
-	inline constexpr int SURVIVORS = 5;
-	inline constexpr int CURRENT_LEVEL = 6;
+	inline constexpr int PLAYERS_HEART_COUNT = 10;
+	inline constexpr int PLAYER_WEAPON_LEVEL = 11;
+	inline constexpr int SCRAP_COUNT = 12;
+	inline constexpr int PLAYER_WEAPON_ACCRUAL = 13;
+	inline constexpr int SURVIVORS = 14;
+	
 };
 
 

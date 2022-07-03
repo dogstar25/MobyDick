@@ -26,15 +26,6 @@ ContextManager::ContextManager()
         }
     }
 
-    //if (CreateDirectory(m_saveGamePath.c_str(), NULL) ||
-    //    ERROR_ALREADY_EXISTS == GetLastError())
-    //{
-    //    ;
-    //}
-    //else {
-    //    assert(true && "Error creating save game directory!");
-    //}
-
     CoTaskMemFree(static_cast<LPVOID>(userFolderPath));
 
 }
