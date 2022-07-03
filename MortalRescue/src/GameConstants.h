@@ -94,6 +94,7 @@ namespace StatusItemId {
 	inline constexpr int SCRAP_COUNT = 3;
 	inline constexpr int PLAYER_WEAPON_ACCRUAL = 4;
 	inline constexpr int SURVIVORS = 5;
+	inline constexpr int CURRENT_LEVEL = 6;
 };
 
 

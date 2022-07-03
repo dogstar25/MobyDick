@@ -147,7 +147,7 @@
             ]
         },
         {
-            "id": "HEALTH_HEART", 
+            "id": "HEALTH_HEART",
             "traitTags": [ "fragment" ],
             "components": [
                 {
@@ -171,10 +171,45 @@
                     "fixtures": [
                         {
                             "contactTag": "ContactTag::HEART_PICKUP",
-                            "collisionShape": "B2_CIRCLE",
-                            "collisionRadius": 0.16,
-                            "density": 1.0,
-                            "restitution": 0.9
+                            "collisionShape": "B2_BOX",
+                            "density": 0.5,
+                            "restitution": 1.0
+                        }
+                    ]
+                },
+                {
+                    "id": "POOL_COMPONENT"
+                }
+            ]
+        },
+        {
+            "id": "FORCE_WALL_SLIDER_32",
+            "traitTags": [ ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_FOG_BOX",
+                    "color": "Colors::RED"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 16,
+                        "height": 30
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "linearDamping": 0,
+                    "angularDamping": 0,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_SOLID",
+                            "collisionShape": "B2_BOX",
+                            "density": 1.5,
+                            "restitution": 1.0
                         }
                     ]
                 },

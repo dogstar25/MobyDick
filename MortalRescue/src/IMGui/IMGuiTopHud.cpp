@@ -58,6 +58,8 @@ glm::vec2 IMGuiTopHud::render()
 	ImGui::Begin(m_gameObjectId.c_str(), nullptr, m_flags);
 	{
 
+		//hudLevel();
+
 		hudLives();
 
 		windowSize = { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
@@ -118,6 +120,23 @@ void IMGuiTopHud::hudLives()
 		}
 
 	}
+
+}
+
+void IMGuiTopHud::hudLevel()
+{
+	//Get the value for the current player weapon levelup accrual
+	auto& level = game->contextMananger()->getStatusItem(StatusItemId::CURRENT_LEVEL);
+
+	//Level Text
+	std::stringstream levelTxtSS;
+	levelTxtSS << "Level " << level.value();
+
+	ImGui::PushFont(m_xLargeFont);
+	ImGui::textCentered(levelTxtSS.str());
+	ImGui::PopFont();
+
+
 
 }
 

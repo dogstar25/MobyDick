@@ -21,6 +21,15 @@
 
 using namespace std::chrono_literals;
 
+
+MRGame& MRGame::instance()
+{
+
+	static MRGame singletonInstance;
+	return singletonInstance;
+
+}
+
 MRGame::MRGame()
 {
 

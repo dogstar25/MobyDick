@@ -20,6 +20,7 @@ public:
 private:
 
 	void hudLives();
+	void hudLevel();
 
 	ImVec4 m_hudRed{};
 	ImVec4 m_hudWhite{};

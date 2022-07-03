@@ -91,14 +91,14 @@
         },
         {
             "id": "LOC_0015_0023",
-            "gameObjectId": "GLOWWALL2_352",
+            "gameObjectId": "GLOWWALL_352",
             "name": "Button1_TARGET"
         },
-        {
-            "id": "LOC_0026_0025",
-            "gameObjectId": "GLOWWALL2_192",
-            "angle": 90
-        },
+        //{
+        //    "id": "LOC_0026_0025",
+        //    "gameObjectId": "GLOWWALL_192",
+        //    "angle": 90
+        //},
         //{
         //    "id": "LOC_0014_0001",
         //    "gameObjectId": "ESCAPE_STAIRS"

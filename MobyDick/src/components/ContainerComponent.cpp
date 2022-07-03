@@ -43,7 +43,7 @@ ContainerComponent::~ContainerComponent()
 void ContainerComponent::postInit()
 {
 
-	const auto& containerTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	const auto containerTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	
 	for (auto& item : m_items) {
 
@@ -52,7 +52,7 @@ void ContainerComponent::postInit()
 		//Set the location in the middle of the container object
 		b2Vec2 containerCenter{ containerTransformComponent->getCenterPosition().x, containerTransformComponent->getCenterPosition().y };
 
-		_setPieceLocationAndForce(containerCenter, item);
+		_setPieceLocationAndForce(containerTransformComponent, item);
 
 
 	}
@@ -72,12 +72,15 @@ void ContainerComponent::update()
 	}
 
 	//Animation
-	const auto& animation = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
-	if (isEmpty()) {
+	if (parent()->hasComponent(ComponentTypes::ANIMATION_COMPONENT)) {
+		const auto& animation = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
+		if (isEmpty()) {
 
-		animation->setCurrentAnimationState(ANIMATION_IDLE);
-	}else{
-		animation->setCurrentAnimationState(ANIMATION_ACTIVE);
+			animation->setCurrentAnimationState(ANIMATION_IDLE);
+		}
+		else {
+			animation->setCurrentAnimationState(ANIMATION_ACTIVE);
+		}
 	}
 
 	//Refill
@@ -138,9 +141,9 @@ void ContainerComponent::addItem(std::string gameObjectId, float spawnForce, Sce
 	//If this is on the container construction we have to wait and let the postinit set the final destination
 	//otherwise we can set it now
 	if (onContainerConstruction == false) {
-		const auto& containerTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+		const auto containerTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 		b2Vec2 containerCenter{ containerTransformComponent->getCenterPosition().x, containerTransformComponent->getCenterPosition().y };
-		_setPieceLocationAndForce(containerCenter, containerItem);
+		_setPieceLocationAndForce(containerTransformComponent, containerItem);
 	}
 	
 	m_items.emplace_back(containerItem);
@@ -155,9 +158,17 @@ ContainerItem& ContainerComponent::removeItem()
 
 }
 
-void ContainerComponent::_setPieceLocationAndForce(b2Vec2 containerCenter, ContainerItem containerItem)
+void ContainerComponent::_setPieceLocationAndForce(const std::shared_ptr<TransformComponent> containerTransform, ContainerItem containerItem)
 {
-	b2Vec2 pieceLocation = util::toBox2dPoint(containerCenter);
+
+
+	float randomNumX = util::generateRandomNumber((float)1, containerTransform->getPositionRect().w / 2);
+	float randomNumY = util::generateRandomNumber((float)1, containerTransform->getPositionRect().h / 2);
+
+	//adjust to off center
+	b2Vec2 position = { containerTransform->getTopLeftPosition().x + randomNumX, containerTransform->getTopLeftPosition().y + randomNumY };
+
+	b2Vec2 pieceLocation = util::toBox2dPoint(position);
 
 	const auto& itemPhysicsComponent = containerItem.gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 	itemPhysicsComponent->setTransform(pieceLocation, (float)0);
@@ -165,8 +176,8 @@ void ContainerComponent::_setPieceLocationAndForce(b2Vec2 containerCenter, Conta
 	//Do we start the object out with a force so that it bounces around
 	if (containerItem.spawnForce > 0) {
 
-		float randomNum = util::generateRandomNumber(5, 20);
-		itemPhysicsComponent->applyImpulse(containerItem.spawnForce, { randomNum, randomNum });
+		
+		itemPhysicsComponent->applyImpulse(containerItem.spawnForce, { randomNumX, randomNumY });
 	}
 
 }

@@ -26,7 +26,7 @@ Blueprint::Blueprint(std::string blueprintName)
 	 int surfaceHeight = surface->h;
 
 	 //Build temporary location/color mapping map
-	 auto legendJSON = root["legend"];
+	 auto& legendJSON = root["legend"];
 
 	 auto colorLocationMap = _buildColorLocationMappingMap(legendJSON);
 	 

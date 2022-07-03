@@ -12,6 +12,8 @@
 #include "../GameObject.h"
 #include "../Scene.h"
 
+#include "TransformComponent.h"
+
 struct ContainerItem {
 
 	float spawnForce{};
@@ -48,6 +50,6 @@ private:
 	std::vector<ContainerItem> m_items{};
 
 	void _removeFromWorldPass();
-	void _setPieceLocationAndForce(b2Vec2 containerCenter, ContainerItem containerItem);
+	void _setPieceLocationAndForce(const std::shared_ptr<TransformComponent> containerTransform, ContainerItem containerItem);
 
 };
