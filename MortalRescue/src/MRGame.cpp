@@ -94,7 +94,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 
 	//Load a first scene
 	Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
-	scene.loadLevel("level1");
+	scene.loadLevel("1");
 
 	//Initialize the sound manager
 	SoundManager::instance().initSound();

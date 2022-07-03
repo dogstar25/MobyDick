@@ -77,7 +77,7 @@ private:
 	void _loadDefinition(std::string levelId);
 	void _buildLevelObjects(Scene* scene);
 	void _buildLevelObjectives(Scene* scene);
-	void _buildLevelStatusItems();
+	void _buildLevelStatusItems(std::string levelId);
 	void _buildLevelTriggers(Scene* scene);
 	bool _isColorDefinedObject(SDL_Color color);
 };

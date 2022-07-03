@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "ColorMap.h"
 #include <assert.h>
+#include "BaseConstants.h"
 
 extern std::unique_ptr<Game> game;
 
@@ -77,7 +78,7 @@ void LevelManager::_loadDefinition(std::string levelId)
 	//Read file and stream it to a JSON object
 	std::stringstream filename;
 
-	filename << "assets/levels/" << levelId << "_definition.json";
+	filename << "assets/levels/level" << levelId << "_definition.json";
 
 	Json::Value root;
 	std::ifstream ifs(filename.str());
@@ -200,7 +201,7 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 	_buildLevelObjects(scene);
 
 	//Build the level Status Items
-	_buildLevelStatusItems();
+	_buildLevelStatusItems(levelId);
 
 	//Build the level objectives
 	_buildLevelObjectives(scene);
@@ -518,7 +519,7 @@ void LevelManager::_buildLevelObjectives(Scene* scene)
 
 }
 
-void LevelManager::_buildLevelStatusItems()
+void LevelManager::_buildLevelStatusItems(std::string levelId)
 {
 
 	//All statusItems should already exist in the contextManager
@@ -542,6 +543,14 @@ void LevelManager::_buildLevelStatusItems()
 		}
 
 	}
+
+	//Update the context manager current Level - this is part of the base game
+	float level = std::stof(levelId);
+	StatusItem statusItem(StatusItemId::CURRENT_LEVEL);
+	statusItem.setValue(level);
+	game->contextMananger()->addStatusItem(StatusItemId::CURRENT_LEVEL, statusItem);
+	game->contextMananger()->setStatusItemValue(StatusItemId::CURRENT_LEVEL, level);
+
 
 }
 
