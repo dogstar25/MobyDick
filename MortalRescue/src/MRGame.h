@@ -36,6 +36,8 @@ public:
 	MRGame();
 	~MRGame();
 
+	static MRGame& instance();
+
 	bool init() override { return true; }
 	bool init(ContactListener*, ContactFilter*, ComponentFactory*, ActionFactory*, ParticleEffectsFactory*, 
 		CutSceneFactory*, IMGuiFactory*, TriggerFactory*, ContextManager* ) override;

@@ -562,9 +562,19 @@
             "description": "Force Wall",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 334,
-                "y": 56,
-                "width": 96,
+                "x": 37,
+                "y": 128,
+                "width": 288,
+                "height": 32
+            }
+        },        {
+            "id": "TX_FORCE_WALL2",
+            "description": "Force Wall",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 333,
+                "y": 92,
+                "width": 128,
                 "height": 32
             }
         },

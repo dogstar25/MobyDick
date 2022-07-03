@@ -214,11 +214,14 @@
         {
             "id": "GLOWWALL_352",
             "traitTags": [ "barrier" ],
-            "description": "GLOWWALL_352",
+            "description": "Fog Box",
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "textureId": "TX_GLOWWALL_352"
+                    "color": {
+                        "tint": "Colors::CYAN",
+                        "alpha": 255
+                    }
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
@@ -227,31 +230,6 @@
                         "height": 32
                     },
                     "absolutePositioning": false
-                },
-                {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_STATIC",
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::WALL",
-                            "collisionShape": "B2_BOX",
-                            "friction": 0.3
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "id": "GLOWWALL2_352",
-            "traitTags": [ "barrier" ],
-            "description": "Fog Box",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "color": {
-                        "tint": "Colors::RED",
-                        "alpha": 255
-                    }
                 },
                 {
                     "id": "ANIMATION_COMPONENT",
@@ -264,19 +242,10 @@
                         {
                             "state": "ANIMATION_IDLE",
                             "textureId": "TX_FORCE_WALL",
-                            "speed": 0.05,
-                            "frames": 3
+                            "speed": 0.2,
+                            "frames": 9
                         }
-
                     ]
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 352,
-                        "height": 32
-                    },
-                    "absolutePositioning": false
                 },
                 {
                     "id": "PHYSICS_COMPONENT",
@@ -291,13 +260,12 @@
             ]
         },
         {
-            "id": "GLOWWALL2_192",
+            "id": "GLOWWALL_192",
             "traitTags": [ "barrier" ],
             "description": "Fog Box",
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    //"textureId": "TX_FORCE_WALL",
                     "color": {
                         "tint": "Colors::CYAN",
                         "alpha": 255
@@ -314,8 +282,8 @@
                         {
                             "state": "ANIMATION_IDLE",
                             "textureId": "TX_FORCE_WALL",
-                            "speed": 0.05,
-                            "frames": 3
+                            "speed": 0.08,
+                            "frames": 9
                         }
 
                     ]
