@@ -44,6 +44,7 @@ public:
 	void resetLifetime();
 
 	bool inflictDamage(float damage);
+	bool addHealth(float damage);
 
 
 private:
@@ -51,6 +52,7 @@ private:
 	float m_rotationSpeed{};
 	float m_attackPower{ 0 };
 	float m_health{ 0 };
+	float m_maxHealth{ 0 };
 	float m_resistance{ 0 };
 	bool m_hideWhenBroken{};
 	bool m_isBroken{ false };

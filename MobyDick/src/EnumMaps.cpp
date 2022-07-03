@@ -23,6 +23,7 @@ EnumMap::EnumMap()
 	m_enumMap["BRAIN_COMPONENT"] = (int)ComponentTypes::BRAIN_COMPONENT;
 	m_enumMap["CHILDREN_COMPONENT"] = (int)ComponentTypes::CHILDREN_COMPONENT;
 	m_enumMap["COMPOSITE_COMPONENT"] = (int)ComponentTypes::COMPOSITE_COMPONENT;
+	m_enumMap["CONTAINER_COMPONENT"] = (int)ComponentTypes::CONTAINER_COMPONENT;
 	m_enumMap["HUD_COMPONENT"] = (int)ComponentTypes::HUD_COMPONENT;
 	m_enumMap["INVENTORY_COMPONENT"] = (int)ComponentTypes::INVENTORY_COMPONENT;
 	m_enumMap["IMGUI_COMPONENT"] = (int)ComponentTypes::IMGUI_COMPONENT;
@@ -75,9 +76,13 @@ EnumMap::EnumMap()
 	m_enumMap["B2_CIRCLE"] = b2Shape::e_circle;
 	m_enumMap["B2_BOX"] = b2Shape::e_polygon;
 	m_enumMap["B2_CHAIN"] = b2Shape::e_chain;
+	m_enumMap["B2_EDGE"] = b2Shape::e_edge;
 	m_enumMap["B2_WELD"] = b2JointType::e_weldJoint;
 	m_enumMap["B2_REVOLUTE"] = b2JointType::e_revoluteJoint;
 
+	//Physics chain winding order to reflec outwards or inwards
+	m_enumMap["PhysicsChainType::CCW_REFLECT_IN"] = (int)PhysicsChainType::CCW_REFLECT_IN;
+	m_enumMap["PhysicsChainType::CW_REFLECT_OUT"] = (int)PhysicsChainType::CW_REFLECT_OUT;
 
 	//Animation Statessdpssss
 	m_enumMap["ANIMATION_IDLE"] = ANIMATION_IDLE;

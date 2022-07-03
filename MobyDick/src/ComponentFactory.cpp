@@ -1,5 +1,4 @@
 #include "ComponentFactory.h"
-#include "components/BrainComponent.h"
 
 
 std::shared_ptr<Component> ComponentFactory::create(
@@ -42,6 +41,10 @@ std::shared_ptr<Component> ComponentFactory::create(
 		case ComponentTypes::COMPOSITE_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::COMPOSITE_COMPONENT);
 			component = std::make_shared<CompositeComponent>(componentJSON, scene);
+			break;
+		case ComponentTypes::CONTAINER_COMPONENT:
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::CONTAINER_COMPONENT);
+			component = std::make_shared<ContainerComponent>(componentJSON, scene);
 			break;
 		case ComponentTypes::HUD_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::HUD_COMPONENT);
@@ -106,7 +109,7 @@ std::shared_ptr<Component> ComponentFactory::create(
 			component = std::make_shared<WeaponComponent>(componentJSON);
 			break;
 		default:
-			std::cout << "This component type did not match any of the existing component types" << std::endl;
+			assert( true && "This component type did not match any of the existing component types!");
 
 	}
 

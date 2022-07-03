@@ -261,6 +261,13 @@ void GameObject::render()
 
 			getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT)->render();
 		}
+
+		//If you have a Container component, then render the container content items
+		if (hasComponent(ComponentTypes::CONTAINER_COMPONENT)) {
+
+			getComponent<ContainerComponent>(ComponentTypes::CONTAINER_COMPONENT)->render();
+		}
+
 	}
 }
 

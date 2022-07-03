@@ -1,5 +1,4 @@
-#ifndef COMPONENT_H
-#define COMPONENT_H
+#pragma once
 
 #include <memory>
 #include <bitset>
@@ -9,20 +8,6 @@
 #include "../BaseConstants.h"
 
 class GameObject;
-class AnimationComponent;
-class ActionComponent;
-class AttachmentsComponent;
-class ChildrenComponent;
-class CompositeComponent;
-class ParticleXComponent;
-class PhysicsComponent;
-class RenderComponent;
-class TextComponent;
-class TransformComponent;
-class VitalityComponent;
-class WeaponComponent;
-class PlayerControlComponent;
-class IMGuiComponent;
 
 class Component
 {
@@ -49,6 +34,4 @@ protected:
 
 
 };
-
-#endif
 

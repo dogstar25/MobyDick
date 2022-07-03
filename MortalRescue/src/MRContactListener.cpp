@@ -310,7 +310,18 @@ void MRContactListener::_survivor_escape(GameObject* survivor, GameObject* escap
 
 }
 
+void MRContactListener::_player_heartPickup(GameObject* player, GameObject* heartPickup, b2Vec2 contactPoint)
+{
 
+	//player vitality
+	const auto& playerVitality = player->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+
+	if (playerVitality->addHealth(1)) {
+		heartPickup->setRemoveFromWorld(true);
+	}
+
+
+}
 
 void MRContactListener::BeginContact(b2Contact* contact) {
 
@@ -349,6 +360,20 @@ void MRContactListener::handleContact(b2Contact* contact, b2Vec2 contactPoint)
 	int contactTag1 = contactDefinitionA->contactTag;
 	int contactTag2 = contactDefinitionB->contactTag;
 
+
+	////////////////////////////////////
+	// Player -  Heart Pickup
+	//////////////////////////////////
+	if ((contactTag1 == ContactTag::PLAYER_COLLISION && contactTag2 == ContactTag::HEART_PICKUP) ||
+		(contactTag2 == ContactTag::PLAYER_COLLISION && contactTag1 == ContactTag::HEART_PICKUP)) {
+
+		if (contactTag1 == ContactTag::PLAYER_COLLISION) {
+			_player_heartPickup(contact1, contact2, contactPoint);
+		}
+		else {
+			_player_heartPickup(contact2, contact1, contactPoint);
+		}
+	}
 
 	////////////////////////////////////
 	// PlayerBullet -  Drone Brain

@@ -112,8 +112,33 @@ void DebugDraw::DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2
 
 void DebugDraw::DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
 {
-	SDL_Color sdlColor = { 255,0,0,255 };
-	//game->renderer()->drawLine(p1, p2, sdlColor);
+	glm::vec2 startPoint = { p1.x, p1.y };
+	glm::vec2 endPoint = { p2.x, p2.y };
+	glm::uvec4 color2 = { 255,255,255,255 };
+
+	std::vector< SDL_FPoint> points;
+	SDL_FPoint point;
+
+	//1
+	//Adjust points based on Gamescale
+	point.x = startPoint.x * GameConfig::instance().scaleFactor();
+	point.y = startPoint.y * GameConfig::instance().scaleFactor();
+	//Adjust position based on current camera position - offset
+	point.x -= Camera::instance().frame().x;
+	point.y -= Camera::instance().frame().y;
+	points.push_back(point);
+
+	//2
+	//Adjust points based on Gamescale
+	point.x = endPoint.x * GameConfig::instance().scaleFactor();
+	point.y = endPoint.y * GameConfig::instance().scaleFactor();
+	//Adjust position based on current camera position - offset
+	point.x -= Camera::instance().frame().x;
+	point.y -= Camera::instance().frame().y;
+	points.push_back(point);
+
+	SDL_Color sdlColor = { 255,255,255,255 };
+	game->renderer()->drawPoints(points);
 
 }
 
