@@ -71,8 +71,13 @@
                             "textureId": "TX_GINA_64_REDUX_RUN",
                             "speed": 0.06,
                             "frames": 4
+                        },
+                        {
+                            "state": "ANIMATION_SPRINT",
+                            "textureId": "TX_SURVIVOR_RUN",
+                            "speed": 0.04,
+                            "frames": 4
                         }
-
                     ]
                 },
                 {
@@ -147,7 +152,7 @@
                         },
                         {
                             "actionId": "ACTION_SPRINT",
-                            "actionClass": "ActorBoost"
+                            "actionClass": "ActorSprintAction"
                         }
                     ]
                 },
