@@ -140,15 +140,15 @@ void MRContactListener::_player_wall(GameObject* player, GameObject* wall, b2Vec
 
 	//If we are in the middle of boosting and we are touching a wall at pointing towards the wall, then stop boosting
 	//If we are not pointing at the wall then we are okay to slide/boost aganist it
-	const auto& playerControlComponent = player->getComponent<GinaPlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT);
+	//const auto& playerControlComponent = player->getComponent<GinaPlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT);
 
-	if (playerControlComponent->state() == PlayerState::boosting) {
+	//if (playerControlComponent->state() == PlayerState::boosting) {
 
-		if (player->isPointingAt(wall->getCenterPosition())) {
-			playerControlComponent->boostReset(false);
-		}
-		
-	}
+	//	if (player->isPointingAt(wall->getCenterPosition())) {
+	//		playerControlComponent->boostReset(false);
+	//	}
+	//	
+	//}
 	
 
 }

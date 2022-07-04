@@ -51,27 +51,6 @@ void GinaPlayerControlComponent::handleMovement()
 	//Handle Keyboard related movement
 	const uint8_t* currentKeyStates = SDL_GetKeyboardState(NULL);
 
-	//Are we boosting and boost timer is complete stop boosting
-	if (m_currentState == PlayerState::boosting && m_boostTimer.hasMetTargetDuration()) {
-
-		boostReset(true);
-	}
-
-	//Boost
-	if (currentKeyStates[SDL_SCANCODE_LSHIFT])
-	{
-		//If we're already boosting leave boot timer alone
-		if (m_boostAgainTimer.hasMetTargetDuration() || m_boostAgainTimer.firstTime) {
-
-			_jetPackSwitch(true);
-			const auto& action = actionComponent->getAction(ACTION_SPRINT);
-			action->perform(parent());
-			m_boostTimer = { 1.5 };
-			m_currentState = PlayerState::boosting;
-		}
-
-	}
-
 	if (currentKeyStates[SDL_SCANCODE_W])
 	{
 		direction = -1;
@@ -89,10 +68,22 @@ void GinaPlayerControlComponent::handleMovement()
 		strafe = 1;
 	}
 
-	//Dont execute move stuff if we are in boosting state
-	if (m_currentState != PlayerState::boosting) {
+	//Sprint
+	if (currentKeyStates[SDL_SCANCODE_LSHIFT])
+	{
+		const auto& action = actionComponent->getAction(ACTION_SPRINT);
+		action->perform(parent(), direction, strafe);
+		m_currentState = PlayerState::boosting;
+		_jetPackSwitch(true);
+		_disableWeapon();
+	}
+	else {
+
 		const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
 		moveAction->perform(parent(), direction, strafe);
+		m_currentState = PlayerState::general;
+		_jetPackSwitch(false);
+		_enableWeapon();
 	}
 
 	//Handle Mouse related movement
@@ -119,6 +110,7 @@ void GinaPlayerControlComponent::handleActions()
 			keyStates = inputEvent.keyStates;
 			SDL_Scancode keyScanCode = SDL_GetScancodeFromKey(inputEvent.event.key.keysym.sym);
 
+			
 			switch (inputEvent.event.type)
 			{
 				//case SDL_KEYUP:
@@ -134,10 +126,12 @@ void GinaPlayerControlComponent::handleActions()
 					break;
 				case SDL_MOUSEBUTTONDOWN:
 
-					action = actionComponent->getAction(ACTION_USE);
-					action->perform(parent());
-
+					if(m_currentState != PlayerState::boosting){
+						action = actionComponent->getAction(ACTION_USE);
+						action->perform(parent());
+					}
 					break;
+
 				default:
 					break;
 			}
@@ -237,6 +231,25 @@ with PlayerControlComponent - Override with this version of PlayerControlCompone
 //}
 
 
+void GinaPlayerControlComponent::_disableWeapon()
+{
 
+	const auto& playerAttachmentComponent = parent()->getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
 
+	auto& pistol = playerAttachmentComponent->getAttachment("PISTOL");
+	pistol->gameObject->disableCollision();
+	pistol->gameObject->disableRender();
+
+}
+
+void GinaPlayerControlComponent::_enableWeapon()
+{
+
+	const auto& playerAttachmentComponent = parent()->getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
+
+	auto& pistol = playerAttachmentComponent->getAttachment("PISTOL");
+	pistol->gameObject->enableCollision();
+	pistol->gameObject->enableRender();
+
+}
 

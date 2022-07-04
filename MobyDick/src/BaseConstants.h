@@ -272,6 +272,7 @@ inline constexpr int ANIMATION_ACTION = 3;
 inline constexpr int ANIMATION_DEPLOY = 4;
 inline constexpr int ANIMATION_UNDEPLOY = 5;
 inline constexpr int ANIMATION_DEAD = 6;
+inline constexpr int ANIMATION_SPRINT = 7;
 
 //Animation Modes
 inline constexpr int ANIMATE_ONE_TIME = 0;

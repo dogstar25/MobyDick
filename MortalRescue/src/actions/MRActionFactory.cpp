@@ -7,6 +7,7 @@
 #include "TurretFireAction.h"
 #include "SurvivorInteractionAction.h"
 #include "ActorBoostAction.h"
+#include "ActorSprintAction.h"
 #include "HealthStationInteraction.h"
 
 
@@ -41,6 +42,12 @@ std::shared_ptr<Action> MRActionFactory::create(std::string actionType)
 
 		action = std::make_shared<HealthStationInteraction>();
 	}
+	else if (actionType == "ActorSprintAction") {
+
+		action = std::make_shared<ActorSprintAction>();
+	}
+
+	
 
     else {
         action = ActionFactory::create(actionType);

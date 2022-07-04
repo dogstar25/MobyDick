@@ -14,6 +14,14 @@ class PhysicsComponent;
 class TransformComponent;
 class VitalityComponent;
 
+namespace PlayerState {
+	inline constexpr int general = 0;
+	inline constexpr int boosting = 1;
+	inline constexpr int invulnerable = 2;
+	inline constexpr int dead = 3;
+
+}
+
 class PlayerControlComponent : public Component
 {
 public:
@@ -24,7 +32,11 @@ public:
 	~PlayerControlComponent();
 
 	virtual void update() {};
+	void setState(int state) { m_currentState = state; }
+	int state() { return m_currentState; }
 
+protected:
+	int m_currentState{ PlayerState::general };
 
 
 };
