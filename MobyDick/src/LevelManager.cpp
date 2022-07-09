@@ -74,7 +74,7 @@ void LevelManager::setLevelObjectArraySize(int width, int height)
 
 }
 
-void LevelManager::_loadDefinition(std::string levelId, Scene* scene)
+void LevelManager::_loadDefinition(std::string levelId)
 {
 	//Read file and stream it to a JSON object
 	std::stringstream filename;
@@ -113,21 +113,6 @@ void LevelManager::_loadDefinition(std::string levelId, Scene* scene)
 			tiledLayerDefinition.tileSize = { tiledLayer["tileSize"]["width"].asInt() , tiledLayer["tileSize"]["height"].asInt() };
 
 			m_tiledLayerDefinitions.emplace(tiledLayerDefinition.layerId, tiledLayerDefinition);
-		}
-
-	}
-
-	//Parallax
-	if (root.isMember("parallax")) {
-
-		for (auto& parallax : root["parallax"]) {
-
-			Parallax parallaxItem;
-
-			parallaxItem.layer = EnumMap::instance().toEnum(parallax["layer"].asString());
-			parallaxItem.rate = parallax["parallaxRate"].asFloat();
-
-			scene->addParallaxItem(parallaxItem);
 		}
 
 	}
@@ -186,7 +171,7 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 	SDL_Surface* surface;
 
 	//Load the Level definition
-	_loadDefinition(levelId, scene);
+	_loadDefinition(levelId);
 
 	//I am representing the level grid as a png image file 
 	surface = TextureManager::instance().getTexture(m_blueprintTexture)->surface;
@@ -255,7 +240,20 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 void LevelManager::_buildParallax(Scene* scene)
 {
 
+	//Parallax
+	if (m_levelDefinition.isMember("parallax")) {
 
+		for (auto& parallax : m_levelDefinition["parallax"]) {
+
+			Parallax parallaxItem;
+
+			parallaxItem.layer = EnumMap::instance().toEnum(parallax["layer"].asString());
+			parallaxItem.rate = parallax["parallaxRate"].asFloat() * .01;
+
+			scene->addParallaxItem(parallaxItem);
+		}
+
+	}
 
 
 
@@ -544,10 +542,18 @@ void LevelManager::_buildTiledLayers(Scene* scene)
 		auto widthCount = m_tileWidth * m_width / tiledLayer.second.tileSize.x;
 		auto heightCount = m_tileHeight * m_height / tiledLayer.second.tileSize.y;
 
+		//If we have parallax defined for this layer then we probably need to build extra tiles on the screen 
+		//so it doesnt show empty
+
+
+
 		//adjust the X and Y map position based on the size of our background tiles 
 		//and the size of all other tiles in the game
 		auto adjustX = tiledLayer.second.tileSize.x / m_tileWidth;
 		auto adjustY = tiledLayer.second.tileSize.y / m_tileHeight;
+
+
+
 
 		for (auto y = 0; y < heightCount; y++) {
 			for (auto x = 0; x < widthCount; x++) {

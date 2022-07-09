@@ -12,7 +12,7 @@
             "gameObjects": [
                 {
                     "gameObjectId": "IMGUI_HUD_TOP_CENTER",
-                    "layer": "GameLayer::MENU",
+                    "layer": "GameLayer::GUI",
                     "location": {
                         "windowPosition": "PositionAlignment::TOP_CENTER",
                         "adjust": {
@@ -23,7 +23,7 @@
                 },
                 {
                     "gameObjectId": "IMGUI_HUD_TOP_LEFT",
-                    "layer": "GameLayer::MENU",
+                    "layer": "GameLayer::GUI",
                     "location": {
                         "windowPosition": "PositionAlignment::TOP_LEFT",
                         "adjust": {
@@ -34,7 +34,7 @@
                 },
                 {
                     "gameObjectId": "IMGUI_HUD_TOP_RIGHT",
-                    "layer": "GameLayer::MENU",
+                    "layer": "GameLayer::GUI",
                     "location": {
                         "windowPosition": "PositionAlignment::TOP_RIGHT",
                         "adjust": {
@@ -126,7 +126,7 @@
             "gameObjects": [
                 {
                     "gameObjectId": "IMGUI_LEVEL_COMPLETE",
-                    "layer": "GameLayer::MENU",
+                    "layer": "GameLayer::GUI",
                     "location": {
                         "windowPosition": "PositionAlignment::CENTER",
                         "adjust": {
@@ -160,7 +160,7 @@
                 {
                     "gameObjectId": "IMGUI_PAUSE_WINDOW",
                     //"gameObjectId": "IMGUI_EXAMPLE_PANEL",
-                    "layer": "GameLayer::MENU",
+                    "layer": "GameLayer::GUI",
                     "location": {
                         "windowPosition": "PositionAlignment::CENTER"
                     }

@@ -47,6 +47,7 @@ public:
 
 	void update() override;
 	void render();
+	void postInit();
 
 	const auto& childObjects() { return m_childObjects; }
 

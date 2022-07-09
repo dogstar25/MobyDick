@@ -340,19 +340,6 @@
                     "speed": 10
                 },
                 {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_DYNAMIC",
-                    "linearDamping": 2.2,
-                    "angularDamping": 3.0,
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::GENERAL_SOLID",
-                            "collisionShape": "B2_BOX",
-                            "density": 50.5
-                        }
-                    ]
-                },
-                {
                     "id": "ACTION_COMPONENT",
                     "actions": [
                         {

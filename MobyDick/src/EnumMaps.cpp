@@ -149,7 +149,7 @@ EnumMap::EnumMap()
 	m_enumMap["GameLayer::MAIN"] = GameLayer::MAIN;
 	m_enumMap["GameLayer::FOREGROUND_1"] = GameLayer::FOREGROUND_1;
 	m_enumMap["GameLayer::FOREGROUND_2"] = GameLayer::FOREGROUND_2;
-	m_enumMap["GameLayer::MENU"] = GameLayer::MENU;
+	m_enumMap["GameLayer::GUI"] = GameLayer::GUI;
 	m_enumMap["GameLayer::ABSTRACT"] = GameLayer::ABSTRACT;
 
 	//Game Object Display Modes

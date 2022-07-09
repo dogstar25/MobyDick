@@ -328,7 +328,7 @@ namespace GameLayer {
 	inline constexpr int MAIN = 2;
 	inline constexpr int FOREGROUND_1 = 3;
 	inline constexpr int FOREGROUND_2 = 4;
-	inline constexpr int MENU = 5;
+	inline constexpr int GUI = 5;
 	inline constexpr int ABSTRACT = 6;
 }
 

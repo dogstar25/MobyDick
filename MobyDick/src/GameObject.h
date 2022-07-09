@@ -58,7 +58,7 @@ public:
 
 	//int m_gameObjectType{ GameObjectType::SPRITE };
 
-	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, bool cameraFollow=false, std::string name="");
+	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, int layer=GameLayer::MAIN, bool cameraFollow=false, std::string name="");
 
 	virtual void update();
 	virtual void render();
@@ -69,7 +69,7 @@ public:
 	void setPosition(float x, float y);
 	void setPosition(SDL_FPoint position);
 	void setPosition(PositionAlignment windowPosition, float adjustX=0., float adjustY=0.);
-
+	void setLayer(int layer) { m_layer = layer; }
 	bool isPointingAt(SDL_FPoint gameObject);
 	
 	b2Vec2 getSize();
@@ -114,6 +114,8 @@ public:
 	auto& components() { return m_components; }
 	Scene* parentScene() { return m_parentScene; }
 	void setCollisionTag(int contactTag);
+	int layer() { return m_layer; }
+
 	//void setCollisionTag(int contactTag) { m_contactTag = contactTag; }
 	//void resetCollisionTag() { m_contactTag = m_originalCollisionTag; }
 
@@ -197,6 +199,8 @@ private:
 	std::bitset<8> m_stateTags{};
 	std::unordered_map<std::string, GameObject*> m_touchingGameObjects{};
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
+
+	int m_layer;
 
 	//Components
 	//std::unordered_map<std::type_index, std::shared_ptr<Component>>m_components;

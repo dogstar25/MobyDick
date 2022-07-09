@@ -30,6 +30,7 @@ public:
 
 	void update() override;
 	void render();
+	void postInit();
 
 	std::shared_ptr<Action> getAction(int actionId);
 	std::shared_ptr<GameObject> interactiveMenuObject() {

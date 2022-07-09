@@ -27,6 +27,7 @@ public:
 	void update() override;
 	void render();
 	void render(SDL_FRect destQuad);
+	void postInit() override;
 
 	SDL_FRect  getRenderDestRect();
 	void setColor(int red, int green, int blue, int alpha);

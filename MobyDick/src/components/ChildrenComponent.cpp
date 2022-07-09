@@ -124,6 +124,17 @@ void ChildrenComponent::update()
 }
 
 
+void ChildrenComponent::postInit()
+{
+
+	//Set the layer for these pieces using the parents layer
+	for (auto& child : m_childObjects) {
+
+		child.gameObject->setLayer(parent()->layer());
+	}
+
+
+}
 
 void ChildrenComponent::render()
 {

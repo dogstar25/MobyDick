@@ -49,6 +49,12 @@ void CompositeComponent::update()
 void CompositeComponent::postInit()
 {
 
+	//Set the layer for these pieces using the parents layer
+	for (auto& piece : m_pieces) {
+
+		piece.pieceObject->setLayer(parent()->layer());
+	}
+
 	if (m_physicsWeldPiecesOn == true) {
 		weldOnPieces();
 	}

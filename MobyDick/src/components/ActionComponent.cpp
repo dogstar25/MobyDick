@@ -52,6 +52,15 @@ void ActionComponent::update()
 
 }
 
+void ActionComponent::postInit()
+{
+
+	if (m_interactiveMenuObject) {
+		m_interactiveMenuObject->setLayer(parent()->layer());
+	}
+
+}
+
 void ActionComponent::render()
 {
 

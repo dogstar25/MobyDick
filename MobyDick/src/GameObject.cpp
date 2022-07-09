@@ -17,7 +17,7 @@ GameObject::~GameObject()
 
 }
 
-GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, bool cameraFollow, std::string name)
+GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, int layer, bool cameraFollow, std::string name)
 {
 
 	Json::Value definitionJSON;
@@ -28,6 +28,9 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Category Id and Object Type
 	m_id = gameObjectId;
 	m_removeFromWorld = false;
+
+	//Layer
+	m_layer = layer;
 
 	//Build the unique name if a name wasnt given
 	if (name.empty()) {

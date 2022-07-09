@@ -283,7 +283,7 @@ void Scene::deleteCutScene()
 GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow,std::string name)
 {
 
-	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this, cameraFollow, name));
+	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this, layer, cameraFollow, name));
 
 	return gameObject.get();
 
@@ -292,7 +292,7 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMap
 GameObject* Scene::addGameObject(std::string gameObjectId, int layer, PositionAlignment windowPosition, float adjustX, float adjustY, float angle, bool cameraFollow)
 {
 
-	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, (float)-5, (float)-5, angle, this, cameraFollow));
+	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, (float)-5, (float)-5, angle, this, layer, cameraFollow));
 
 	gameObject->setPosition(windowPosition, adjustX, adjustY);
 
@@ -324,6 +324,19 @@ void Scene::applyCurrentControlMode()
 	setInputControlMode(m_inputControlMode);
 
 }
+
+std::optional<Parallax> Scene::getParallax(int layer)
+{
+
+	if (m_parallaxRates.find(layer) != m_parallaxRates.end()) {
+		return m_parallaxRates.at(layer);
+	}
+	else {
+		return std::nullopt;
+	}
+
+}
+
 
 void Scene::clearEvents()
 {
