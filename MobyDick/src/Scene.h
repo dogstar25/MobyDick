@@ -100,6 +100,7 @@ public:
 	void setCutScene(std::shared_ptr<CutScene>cutScene);
 	void deleteCutScene();
 	void addParallaxItem(Parallax& parallaxItem);
+	std::optional<Parallax> getParallax(int layer);
 	
 private:
 

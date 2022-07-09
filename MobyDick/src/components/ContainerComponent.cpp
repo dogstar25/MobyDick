@@ -49,6 +49,9 @@ void ContainerComponent::postInit()
 
 		const auto& itemPhysicsComponent = item.gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 
+		//Set the layer from the parent object
+		item.gameObject->setLayer(parent()->layer());
+
 		//Set the location in the middle of the container object
 		b2Vec2 containerCenter{ containerTransformComponent->getCenterPosition().x, containerTransformComponent->getCenterPosition().y };
 

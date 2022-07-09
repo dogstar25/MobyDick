@@ -24,8 +24,13 @@
     "parallax": [
         {
             "layer": "GameLayer::BACKGROUND_1",
-            "parallaxRate": 95
+            "parallaxRate": -10 // percent of normal scroll. negative value is slower. positive value is faster
+        },
+        {
+            "layer": "GameLayer::FOREGROUND_2",
+            "parallaxRate": 15
         }
+
     ],
     "statusItems": [
         {
@@ -103,15 +108,30 @@
             "id": "LOC_0022_0002",
             "gameObjectId": "PLAYER_HEART"
         },
-        //{
-        //    "id": "LOC_0016_0013",
-        //    "gameObjectId": "HEALTH_STATION"
-        //},
+        {
+            "id": "LOC_0016_0013",
+            "gameObjectId": "DRONE"
+        },
+        {
+            "id": "LOC_0016_0006",
+            "gameObjectId": "HEALTH_STATION"
+        },
         {
             "id": "LOC_0015_0023",
             "gameObjectId": "GLOWWALL_352",
             "name": "Button1_TARGET"
         },
+        {
+            "id": "LOC_0061_0027",
+            "gameObjectId": "BOWMAN",
+            "layer": "GameLayer::BACKGROUND_1"
+        },
+        {
+            "id": "LOC_0059_0029",
+            "gameObjectId": "STUBB",
+            "layer": "GameLayer::FOREGROUND_2"
+        },
+
         //{
         //    "id": "LOC_0026_0025",
         //    "gameObjectId": "GLOWWALL_192",

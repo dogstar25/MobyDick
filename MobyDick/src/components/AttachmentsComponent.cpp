@@ -61,6 +61,9 @@ void AttachmentsComponent::postInit()
 
 	for (auto& attachment : m_attachments) {
 
+		//set layer from parent
+		attachment.gameObject->setLayer(parent()->layer());
+
 		physicsComponent->attachItem(attachment.gameObject.get(), attachment.attachB2JointType, attachment.attachLocation);
 		if (attachment.addToInventory == true) {
 

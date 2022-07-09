@@ -1,5 +1,6 @@
 #include "RenderComponent.h"
 
+#include <algorithm> 
 
 #include "../EnumMaps.h"
 #include "../ColorMap.h"
@@ -80,6 +81,25 @@ RenderComponent::~RenderComponent()
 }
 
 
+void RenderComponent::postInit()
+{
+
+	//determine the parallax percent for this object
+	//if it is a physics object, we cannot parallax it because it will cause weird visual issues
+	//with how stuff collides
+
+	//if (parent()->hasComponent(ComponentTypes::PHYSICS_COMPONENT) == false) 
+	{
+
+		auto parallax = parent()->parentScene()->getParallax(parent()->layer());
+		if (parallax.has_value()) {
+			m_parallaxRate = parallax.value().rate;
+		}
+
+	}
+
+}
+
 void RenderComponent::update()
 {
 
@@ -103,21 +123,36 @@ SDL_FRect RenderComponent::getRenderDestRect()
 	destRect.w += m_xRenderAdjustment;
 	destRect.h += m_yRenderAdjustment;
 
+
+	if (parent()->id() == "ESCAPE_STAIRS") {
+		int todd = 1;
+	}
 	//Adjust position based on current camera position - offset
 	if (transform->absolutePositioning() == false)
 	{
-		float percent{1};
-		//Adjust for paralax
-		//if (layer == LAYER_BACKGROUND_1) {
-		//	percent = .90;
-		//}
+		//default to 100%
+		float parallaxRate{0};
 
-		destRect.x -= (Camera::instance().frame().x * percent);
-		destRect.y -= (Camera::instance().frame().y) * percent;
+		//Adjust for paralax if exists - could be negative or positive
+		if (m_parallaxRate.has_value()) {
+
+			parallaxRate = m_parallaxRate.value();
+		}
+
+		float camerAdjustX = Camera::instance().frame().x;
+		float camerAdjustY = Camera::instance().frame().y;
+
+		camerAdjustX = std::max((float)0, camerAdjustX + (camerAdjustX * parallaxRate));
+		camerAdjustY = std::max((float)0, camerAdjustY + (camerAdjustY * parallaxRate));
+
+		destRect.x -= camerAdjustX;
+		destRect.y -= camerAdjustY;
+
+		//destRect.x -= camerAdjustX + (camerAdjustX * parallaxRate);
+		//destRect.y -= camerAdjustY + (camerAdjustY * parallaxRate);
+
 
 	}
-
-
 
 
 	return destRect;
@@ -218,10 +253,11 @@ void RenderComponent::render(SDL_FRect destQuad)
 
 	/*
 	If this object is within the viewable are or if its absolute positioned and therefore is not dependent on the camera
-	then render it
+	or it is being parallaxed then render it
 	*/
 	if (SDL_HasIntersection(&gameObjectPosRect, &cameraRect) ||
-		transform->absolutePositioning() == true) {
+		transform->absolutePositioning() == true || m_parallaxRate.has_value() == true)
+	{
 
 		bool outline{};
 		SDL_Color outlineColor{};

@@ -85,7 +85,7 @@ private:
 	LevelObject _determineWallObject(int x, int y, SDL_Surface* bluePrintSurface);
 	std::optional<LevelObject> _determineLocationDefinedObject(int x, int y);
 	std::optional<LevelObject> _determineColorDefinedObject(SDL_Color color);
-	void _loadDefinition(std::string levelId, Scene* scene);
+	void _loadDefinition(std::string levelId);
 	void _buildLevelObjects(Scene* scene);
 	void _buildLevelObjectives(Scene* scene);
 	void _buildLevelStatusItems(std::string levelId);
