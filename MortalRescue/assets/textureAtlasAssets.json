@@ -160,28 +160,6 @@
             }
         },
         {
-            "id": "TX_GINA_64_REDUX2_RUN",
-            "description": "Pistol Lady Run 64px",
-            "atlas": "TEXTURE_ATLAS_0",
-            "quadPosition": {
-                "x": 2655,
-                "y": 200,
-                "width": 256,
-                "height": 64
-            }
-        },
-        {
-            "id": "TX_GINA_64_REDUX2_IDLE",
-            "description": "Pistol Lady Run 64px",
-            "atlas": "TEXTURE_ATLAS_0",
-            "quadPosition": {
-                "x": 2912,
-                "y": 200,
-                "width": 64,
-                "height": 64
-            }
-        },
-        {
             "id": "TX_GINA_64_REDUX_RUN",
             "description": "Pistol Lady Run 64px",
             "atlas": "TEXTURE_ATLAS_0",
@@ -189,6 +167,28 @@
                 "x": 2009,
                 "y": 200,
                 "width": 256,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_GINA_64_REDUX_BOOST",
+            "description": "Pistol Lady Run 64px",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2655,
+                "y": 200,
+                "width": 64,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_GINA_64_REDUX_BOOST2",
+            "description": "Pistol Lady Run 64px",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2721,
+                "y": 200,
+                "width": 64,
                 "height": 64
             }
         },

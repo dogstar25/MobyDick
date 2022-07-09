@@ -63,7 +63,6 @@
                         {
                             "state": "ANIMATION_IDLE",
                             "textureId": "TX_GINA_64_REDUX_IDLE",
-                            "speed": 0.1,
                             "frames": 1
                         },
                         {
@@ -74,9 +73,8 @@
                         },
                         {
                             "state": "ANIMATION_SPRINT",
-                            "textureId": "TX_SURVIVOR_RUN",
-                            "speed": 0.04,
-                            "frames": 4
+                            "textureId": "TX_GINA_64_REDUX_BOOST2",
+                            "frames": 1
                         }
                     ]
                 },
