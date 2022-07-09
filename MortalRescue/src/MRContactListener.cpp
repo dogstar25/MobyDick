@@ -26,14 +26,14 @@ void MRContactListener::_playerBullet_droneBrain(GameObject* playerBullet, GameO
 	contactPoint.y *= GameConfig::instance().scaleFactor();
 
 	//Create a physics emitter for the dynamic chunks in the explosion
-	auto particleXEmitter = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
+	auto particleXEmitter = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", GameLayer::MAIN, -1, -1);
 	auto particleXComponent = particleXEmitter->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
 	//set the explosion origin as the ceneter of the brain thats exploding - not the contact point
 	particleXEmitter->setPosition(droneBrain->getCenterPosition());
 	particleXComponent->setType(ParticleEmitterType::ONETIME);
 
 	//Create a non-physics emitter for the extra smoke and stufff to exagerate the explosion
-	//auto particleEmitter = SceneManager::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
+	//auto particleEmitter = SceneManager::instance().addGameObject("PARTICLE_EMITTER", GameLayer::MAIN, -1, -1);
 	//auto particleComponent = particleEmitter->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
 	//particleEmitter->setPosition(contactPoint.x, contactPoint.y);
 	//particleComponent->setType(ParticleEmitterType::ONETIME);
@@ -112,7 +112,7 @@ void MRContactListener::_playerBullet_enemyTurret(GameObject* player, GameObject
 		enemyTurret->setRemoveFromWorld(true);
 
 		//Add a particle Emitter for the explosion
-		auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
+		auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", GameLayer::MAIN, -1, -1);
 		auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
 		particleComponent->setType(ParticleEmitterType::ONETIME);
 		contactPoint.x *= GameConfig::instance().scaleFactor();
@@ -157,7 +157,7 @@ void MRContactListener::_bullet_wall(GameObject* bullet, GameObject* wall, b2Vec
 {
 
 	//Build a One-Time particle emitter object
-	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
+	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", GameLayer::MAIN, -1, -1);
 	const auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
 	particleComponent->addParticleEffect(ParticleEffects::ricochet);
 
@@ -180,9 +180,9 @@ void MRContactListener::_playerBullet_droneShield(GameObject* playerBullet, Game
 	//	return;
 	//}
 
-	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
+	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", GameLayer::MAIN, -1, -1);
 	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
-	//auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
+	//auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER", GameLayer::MAIN, -1, -1);
 	//auto particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
 
 	particleComponent->setType(ParticleEmitterType::ONETIME);
@@ -217,7 +217,7 @@ void MRContactListener::_playerBullet_droneShield(GameObject* playerBullet, Game
 void MRContactListener::_playerBullet_wallPiece(GameObject* playerBullet, GameObject* wallPiece, b2Vec2 contactPoint)
 {
 
-	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", LAYER_MAIN, -1, -1);
+	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", GameLayer::MAIN, -1, -1);
 	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
 	//auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
 	//auto particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);

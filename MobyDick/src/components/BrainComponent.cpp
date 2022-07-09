@@ -107,7 +107,7 @@ void BrainComponent::postInit()
 {
 
 	//Get all NavPoints
-	for (const auto& gameObject : parent()->parentScene()->gameObjects()[LAYER_ABSTRACT]) {
+	for (const auto& gameObject : parent()->parentScene()->gameObjects()[GameLayer::ABSTRACT]) {
 
 		if (gameObject->hasTrait(TraitTag::navigation)) {
 
@@ -452,7 +452,7 @@ GameObject* BrainComponent::getClosestNavPoint(SDL_FPoint targetPosition, int na
 	float shortest{};
 	GameObject* closestNavPoint{};
 
-	for (const auto& gameObject : parent()->parentScene()->gameObjects()[LAYER_ABSTRACT]) {
+	for (const auto& gameObject : parent()->parentScene()->gameObjects()[GameLayer::ABSTRACT]) {
 
 		if (gameObject->hasTrait(TraitTag::navigation)) {
 

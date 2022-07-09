@@ -34,7 +34,7 @@ void NavigationComponent::updateNavObjectsAccess()
 
 	m_accessibleNavObjects.clear();
 
-	for (auto& gameObject : parent()->parentScene()->gameObjects()[LAYER_ABSTRACT])
+	for (auto& gameObject : parent()->parentScene()->gameObjects()[GameLayer::ABSTRACT])
 	{
 		if (gameObject->hasComponent(ComponentTypes::NAVIGATION_COMPONENT)) {
 

@@ -106,9 +106,19 @@ SDL_FRect RenderComponent::getRenderDestRect()
 	//Adjust position based on current camera position - offset
 	if (transform->absolutePositioning() == false)
 	{
-		destRect.x -= Camera::instance().frame().x;
-		destRect.y -= Camera::instance().frame().y;
+		float percent{1};
+		//Adjust for paralax
+		//if (layer == LAYER_BACKGROUND_1) {
+		//	percent = .90;
+		//}
+
+		destRect.x -= (Camera::instance().frame().x * percent);
+		destRect.y -= (Camera::instance().frame().y) * percent;
+
 	}
+
+
+
 
 	return destRect;
 }

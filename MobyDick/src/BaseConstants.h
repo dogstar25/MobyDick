@@ -321,13 +321,16 @@ inline constexpr int SCENETAG_MENU = 1;
 
 //Game Layers
 inline constexpr int MAX_GAMEOBJECT_LAYERS = 7;
-inline constexpr int LAYER_BACKGROUND_1 = 0;
-inline constexpr int LAYER_BACKGROUND_2 = 1;
-inline constexpr int LAYER_MAIN = 2;
-inline constexpr int LAYER_FOREGROUND_1 = 3;
-inline constexpr int LAYER_FOREGROUND_2 = 4;
-inline constexpr int LAYER_MENU = 5;
-inline constexpr int LAYER_ABSTRACT = 6;
+
+namespace GameLayer {
+	inline constexpr int BACKGROUND_1 = 0;
+	inline constexpr int BACKGROUND_2 = 1;
+	inline constexpr int MAIN = 2;
+	inline constexpr int FOREGROUND_1 = 3;
+	inline constexpr int FOREGROUND_2 = 4;
+	inline constexpr int MENU = 5;
+	inline constexpr int ABSTRACT = 6;
+}
 
 //Game Object Display Modes
 inline constexpr int MAX_GAMEOBJECT_DISPLAY_UI_MODES = 3;
