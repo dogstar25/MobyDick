@@ -32,6 +32,11 @@ struct PhysicsConfig
 	bool b2DebugDrawMode{false};
 };
 
+struct Parallax
+{
+	int layer{};
+	float rate{1};
+};
 
 void _updatePhysics(b2World* physicsWorld);
 
@@ -94,6 +99,7 @@ public:
 	void direct();
 	void setCutScene(std::shared_ptr<CutScene>cutScene);
 	void deleteCutScene();
+	void addParallaxItem(Parallax& parallaxItem);
 	
 private:
 
@@ -118,6 +124,7 @@ private:
 	std::string m_currentLevelId;
 	std::vector<std::shared_ptr<Trigger>> m_levelTriggers;
 	std::vector<Objective> m_levelObjectives{};
+	std::map<int, Parallax>m_parallaxRates{};
 
 	void _processGameObjectInterdependecies();
 	void _buildPhysicsWorld(Json::Value physicsJSON);

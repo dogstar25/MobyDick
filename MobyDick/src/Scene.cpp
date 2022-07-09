@@ -231,6 +231,10 @@ void Scene::render() {
 	for (auto& gameLayer : m_gameObjects)
 	{
 
+		//USE THE LAYERiNDEX TO DETERMINE IF WE HAVE A PARALLAX and set a new filed on the gameObjects
+		//render component
+		//_setParallax();
+
 		//Render all of the GameObjects in this layer
 		for (auto& gameObject : gameLayer)
 		{
@@ -287,20 +291,6 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMap
 
 GameObject* Scene::addGameObject(std::string gameObjectId, int layer, PositionAlignment windowPosition, float adjustX, float adjustY, float angle, bool cameraFollow)
 {
-	float xMapPos{};
-	float yMapPos{};
-	Json::Value definitionJSON;
-
-	//Build components
-	if (gameObjectId.rfind("DEBUG_", 0) != 0)
-	{
-		definitionJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
-	}
-	else
-	{
-		definitionJSON = GameObjectManager::instance().getDefinition("DEBUG_ITEM")->definitionJSON();
-	}
-
 
 	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, (float)-5, (float)-5, angle, this, cameraFollow));
 
@@ -550,4 +540,9 @@ void Scene::addLevelTrigger(std::shared_ptr<Trigger> trigger)
 }
 
 
+void Scene::addParallaxItem(Parallax& parallaxItem)
+{
+	//we want to store these by index so they are retrieved on the render quickly
+	m_parallaxRates.emplace(parallaxItem.layer, parallaxItem);
 
+}

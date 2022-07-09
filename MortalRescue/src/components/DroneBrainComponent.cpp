@@ -30,7 +30,7 @@ void DroneBrainComponent::postInit()
 	BrainComponent::postInit();
 
 	//Get all WayPoints
-	for (const auto& gameObject : parent()->parentScene()->gameObjects()[LAYER_ABSTRACT]) {
+	for (const auto& gameObject : parent()->parentScene()->gameObjects()[GameLayer::ABSTRACT]) {
 
 		if (gameObject->hasTrait(TraitTag::navigation)) {
 
@@ -281,52 +281,6 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 
 }
 
-//void DroneBrainComponent::_applyAvoidanceMovement()
-//{
-//
-//	const auto& physics = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
-//
-//	//Check all sensor detected objects and see if any are close enough to prompt a movement adjustment
-//	DebugPanel::instance().addItem("Distance Hit: ", "");
-//	for (const auto& intersectionItem : m_seenObjects) {
-//
-//
-//		if (intersectionItem.fraction * 25 < 5) {
-//
-//			DebugPanel::instance().addItem("Seen Object Distance: ", intersectionItem.fraction * 25, 5);
-//			DebugPanel::instance().addItem("Distance Hit: ", "HIT");
-//
-//			DebugPanel::instance().addItem("PULSE: ", "");
-//			if (intersectionItem.gameObject->hasTrait(TraitTag::barrier)) {
-//				DebugPanel::instance().addItem("PULSE: ", "PULSE");
-//				DebugPanel::instance().addItem("TrajectoryX: ", intersectionItem.normal.x, 1);
-//				DebugPanel::instance().addItem("TrajectoryY: ", intersectionItem.normal.y, 1);
-//				auto trajectory = intersectionItem.normal;
-//				physics->applyImpulse(300000, trajectory);
-//
-//
-//
-//
-//				const auto& transform = intersectionItem.gameObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-//				b2Vec2 centerPosition = { transform->getCenterPosition().x , transform->getCenterPosition().y };
-//
-//				b2Vec2 begin = centerPosition;
-//				b2Vec2 end = trajectory;
-//
-//				auto lineObject = parent()->parentScene()->addGameObject("PRIMITIVE_LINE", LAYER_MAIN, -1, -1);
-//				auto lineTransform = lineObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-//				lineTransform->setLine(begin, end);
-//
-//
-//
-//
-//			}
-//
-//		}
-//
-//	}
-//
-//}
 
 
 int DroneBrainComponent::_determineState()

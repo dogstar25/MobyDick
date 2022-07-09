@@ -1072,7 +1072,7 @@
                     "gameObjectId": "HEALTH_HEART",
                     "count": 2,
                     "spawnForce": 1,
-                    "layer": "LAYER_MAIN"
+                    "layer": "GameLayer::MAIN"
                 }
             ]
         },
@@ -1129,6 +1129,28 @@
                         }
 
                     ]
+                }
+            ]
+        },
+        {
+            "id": "BACKGROUND_GRID_1",
+            "traitTags": [],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_BACKGROUND_1_512",
+                    "color": {
+                        "tint": "Colors::CYAN",
+                        "alpha": 100
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 512,
+                        "height": 512
+                    },
+                    "absolutePositioning": false
                 }
             ]
         }

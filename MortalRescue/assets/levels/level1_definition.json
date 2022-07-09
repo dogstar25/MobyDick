@@ -6,9 +6,27 @@
         "levelWidth": 128,
         "levelHeight": 64,
         "tileWidth": 32,
-        "tileHeight": 32
+        "tileHeight": 32,
+        "backgroundTileWidth": 512,
+        "backgroundTileHeight": 512
+
     },
-    "tileSize": 32,
+    "tiledLayers": [
+        {
+            "layer": "GameLayer::BACKGROUND_1",
+            "tiledObjectId": "BACKGROUND_GRID_1",
+            "tileSize": {
+                "width": 512,
+                "height": 512
+            }
+        }
+    ],
+    "parallax": [
+        {
+            "layer": "GameLayer::BACKGROUND_1",
+            "parallaxRate": 95
+        }
+    ],
     "statusItems": [
         {
             "id": "StatusItemId::PLAYERS_HEART_COUNT",
@@ -64,12 +82,12 @@
         {
             "color": "Colors::BLUE",
             "gameObjectId": "NAVIGATION_WAYPOINT",
-            "layer": "LAYER_ABSTRACT"
+            "layer": "GameLayer::ABSTRACT"
         },
         {
             "color": "Colors::CYAN",
             "gameObjectId": "NAVIGATION_TRANSIT_POINT",
-            "layer": "LAYER_ABSTRACT"
+            "layer": "GameLayer::ABSTRACT"
         }
 
     ],
@@ -78,17 +96,17 @@
             "id": "LOC_0007_0005",
             "gameObjectId": "GINA_64",
             "cameraFollow": true,
-            "layer": "LAYER_MAIN",
+            "layer": "GameLayer::MAIN",
             "name": "PlayerGina"
         },
         {
             "id": "LOC_0022_0002",
             "gameObjectId": "PLAYER_HEART"
         },
-        {
-            "id": "LOC_0016_0013",
-            "gameObjectId": "HEALTH_STATION"
-        },
+        //{
+        //    "id": "LOC_0016_0013",
+        //    "gameObjectId": "HEALTH_STATION"
+        //},
         {
             "id": "LOC_0015_0023",
             "gameObjectId": "GLOWWALL_352",
@@ -110,7 +128,7 @@
         {
             "id": "LOC_0016_0032",
             "gameObjectId": "ESCAPE_STAIRS",
-            "layer": "LAYER_BACKGROUND_1",
+            "layer": "GameLayer::BACKGROUND_2",
             "angle": 270
         },
         //{

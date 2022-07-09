@@ -103,10 +103,7 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 	//Initialize the clock object
 	Clock::instance().init();
 
-	//scene.addGameObject("HEALTH_HEART", LAYER_MAIN, 16, 13);
-	//scene.addGameObject("HEALTH_HEART", LAYER_MAIN, 20, 7);
-	//scene.addGameObject("HEALTH_HEART", LAYER_MAIN, 10, 5);
-	//scene.addGameObject("BOWMAN", LAYER_MENU, 3, 3);
+	//scene.addGameObject("BOWMAN", GameLayer::MENU, 3, 3);
 
 	return true;
 }

@@ -12,7 +12,7 @@
             "gameObjects": [
                 {
                     "gameObjectId": "IMGUI_HUD_TOP_CENTER",
-                    "layer": "LAYER_MENU",
+                    "layer": "GameLayer::MENU",
                     "location": {
                         "windowPosition": "PositionAlignment::TOP_CENTER",
                         "adjust": {
@@ -23,7 +23,7 @@
                 },
                 {
                     "gameObjectId": "IMGUI_HUD_TOP_LEFT",
-                    "layer": "LAYER_MENU",
+                    "layer": "GameLayer::MENU",
                     "location": {
                         "windowPosition": "PositionAlignment::TOP_LEFT",
                         "adjust": {
@@ -34,7 +34,7 @@
                 },
                 {
                     "gameObjectId": "IMGUI_HUD_TOP_RIGHT",
-                    "layer": "LAYER_MENU",
+                    "layer": "GameLayer::MENU",
                     "location": {
                         "windowPosition": "PositionAlignment::TOP_RIGHT",
                         "adjust": {
@@ -126,7 +126,7 @@
             "gameObjects": [
                 {
                     "gameObjectId": "IMGUI_LEVEL_COMPLETE",
-                    "layer": "LAYER_MENU",
+                    "layer": "GameLayer::MENU",
                     "location": {
                         "windowPosition": "PositionAlignment::CENTER",
                         "adjust": {
@@ -144,7 +144,7 @@
             "gameObjects": [
                 {
                     "gameObjectId": "IMGUI_PLAYERDEATH_PANEL",
-                    "layer": "LAYER_MAIN",
+                    "layer": "GameLayer::MAIN",
                     "location": {
                         "windowPosition": "PositionAlignment::CENTER"
                     }
@@ -160,7 +160,7 @@
                 {
                     "gameObjectId": "IMGUI_PAUSE_WINDOW",
                     //"gameObjectId": "IMGUI_EXAMPLE_PANEL",
-                    "layer": "LAYER_MENU",
+                    "layer": "GameLayer::MENU",
                     "location": {
                         "windowPosition": "PositionAlignment::CENTER"
                     }

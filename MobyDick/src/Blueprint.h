@@ -11,7 +11,7 @@
 struct PlanItem
 {
 	std::string gameObjectId{};
-	int layer{ LAYER_MAIN };
+	int layer{ 0 };
 	int angleAdjustment{};
 
 

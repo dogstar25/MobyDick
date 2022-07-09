@@ -8,6 +8,7 @@
 #include <assert.h>
 #include "BaseConstants.h"
 
+
 extern std::unique_ptr<Game> game;
 
 static const unsigned char wallOnLeft = 0b0001;
@@ -73,7 +74,7 @@ void LevelManager::setLevelObjectArraySize(int width, int height)
 
 }
 
-void LevelManager::_loadDefinition(std::string levelId)
+void LevelManager::_loadDefinition(std::string levelId, Scene* scene)
 {
 	//Read file and stream it to a JSON object
 	std::stringstream filename;
@@ -99,6 +100,37 @@ void LevelManager::_loadDefinition(std::string levelId)
 	m_levelBounds.y = 0;
 	m_levelBounds.w = m_width * m_tileWidth;
 	m_levelBounds.h = (m_height * m_tileHeight) + m_tileHeight + 8;
+
+	//Background tiles?
+	if (root.isMember("tiledLayers")){
+
+		for (auto& tiledLayer : root["tiledLayers"]) {
+
+			TiledLayerDefinition tiledLayerDefinition;
+
+			tiledLayerDefinition.layerId = EnumMap::instance().toEnum(tiledLayer["layer"].asString());
+			tiledLayerDefinition.tiledObjectId = tiledLayer["tiledObjectId"].asString();
+			tiledLayerDefinition.tileSize = { tiledLayer["tileSize"]["width"].asInt() , tiledLayer["tileSize"]["height"].asInt() };
+
+			m_tiledLayerDefinitions.emplace(tiledLayerDefinition.layerId, tiledLayerDefinition);
+		}
+
+	}
+
+	//Parallax
+	if (root.isMember("parallax")) {
+
+		for (auto& parallax : root["parallax"]) {
+
+			Parallax parallaxItem;
+
+			parallaxItem.layer = EnumMap::instance().toEnum(parallax["layer"].asString());
+			parallaxItem.rate = parallax["parallaxRate"].asFloat();
+
+			scene->addParallaxItem(parallaxItem);
+		}
+
+	}
 
 	//Initialize World bounds
 	game->setWorldParams(m_levelBounds, { m_tileWidth, m_tileHeight });
@@ -154,7 +186,7 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 	SDL_Surface* surface;
 
 	//Load the Level definition
-	_loadDefinition(levelId);
+	_loadDefinition(levelId, scene);
 
 	//I am representing the level grid as a png image file 
 	surface = TextureManager::instance().getTexture(m_blueprintTexture)->surface;
@@ -200,6 +232,9 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 	//In the main gameObject collection
 	_buildLevelObjects(scene);
 
+	//Build the background image/objects
+	_buildTiledLayers(scene);
+
 	//Build the level Status Items
 	_buildLevelStatusItems(levelId);
 
@@ -209,8 +244,20 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 	//Build the level triggers
 	_buildLevelTriggers(scene);
 
+	//Build Level Parallax values
+	_buildParallax(scene);
+
 	//Clear the level objects collection now that all gameObjects are built
 	m_levelObjects.clear();
+
+}
+
+void LevelManager::_buildParallax(Scene* scene)
+{
+
+
+
+
 
 }
 
@@ -482,14 +529,42 @@ void LevelManager::_buildLevelObjects(Scene* scene)
 					(float)x, (float)y, (float)levelObject->angleAdjustment, levelObject->cameraFollow, levelObject->name);
 
 			}
-
 		}
 	}
 }
 
+void LevelManager::_buildTiledLayers(Scene* scene)
+{
+
+
+	for (auto& tiledLayer : m_tiledLayerDefinitions) {
+
+
+		//Calculate the number of background tiles horizontal and vertical
+		auto widthCount = m_tileWidth * m_width / tiledLayer.second.tileSize.x;
+		auto heightCount = m_tileHeight * m_height / tiledLayer.second.tileSize.y;
+
+		//adjust the X and Y map position based on the size of our background tiles 
+		//and the size of all other tiles in the game
+		auto adjustX = tiledLayer.second.tileSize.x / m_tileWidth;
+		auto adjustY = tiledLayer.second.tileSize.y / m_tileHeight;
+
+		for (auto y = 0; y < heightCount; y++) {
+			for (auto x = 0; x < widthCount; x++) {
+
+				//adjust the X and Y map position based on the size of our background tiles
+				auto newBackgroundObject = scene->addGameObject(tiledLayer.second.tiledObjectId, GameLayer::BACKGROUND_1, (float)x * adjustX, (float)y * adjustY, (float)0);
+
+			}
+
+		}
+	}
+
+}
+
 void LevelManager::refreshNavigationAccess(Scene* scene)
 {
-	for (auto& gameObject : scene->gameObjects()[LAYER_ABSTRACT])
+	for (auto& gameObject : scene->gameObjects()[GameLayer::ABSTRACT])
 	{
 		if (gameObject->hasComponent(ComponentTypes::NAVIGATION_COMPONENT)) {
 

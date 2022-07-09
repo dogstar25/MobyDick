@@ -38,12 +38,12 @@
         {
             "id": "LEGEND_04",
             "gameObjectId": "NAVIGATION_WAYPOINT",
-            "layer": "LAYER_ABSTRACT"
+            "layer": "GameLayer::ABSTRACT"
         },
         {
             "id": "LEGEND_05",
             "gameObjectId": "NAVIGATION_TRANSIT_POINT",
-            "layer": "LAYER_ABSTRACT"
+            "layer": "GameLayer::ABSTRACT"
         },
         {
             "id": "LEGEND_06",
@@ -55,7 +55,7 @@
         {
             "id": "LOC_0007_0005",
             "cameraFollow": true,
-            "layer": "LAYER_BACKGROUND_1",
+            "layer": "GameLayer::BACKGROUND_1",
             "angle": 45
         },
         {

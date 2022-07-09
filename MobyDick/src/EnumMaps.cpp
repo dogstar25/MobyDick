@@ -144,13 +144,13 @@ EnumMap::EnumMap()
 	m_enumMap["PositionAlignment::BOTTOM_RIGHT"] = (int)PositionAlignment::BOTTOM_RIGHT;
 
 	//Game Layers
-	m_enumMap["LAYER_BACKGROUND_1"] = LAYER_BACKGROUND_1;
-	m_enumMap["LAYER_BACKGROUND_2"] = LAYER_BACKGROUND_2;
-	m_enumMap["LAYER_MAIN"] = LAYER_MAIN;
-	m_enumMap["LAYER_FOREGROUND_1"] = LAYER_FOREGROUND_1;
-	m_enumMap["LAYER_FOREGROUND_2"] = LAYER_FOREGROUND_2;
-	m_enumMap["LAYER_MENU"] = LAYER_MENU;
-	m_enumMap["LAYER_ABSTRACT"] = LAYER_ABSTRACT;
+	m_enumMap["GameLayer::BACKGROUND_1"] = GameLayer::BACKGROUND_1;
+	m_enumMap["GameLayer::BACKGROUND_2"] = GameLayer::BACKGROUND_2;
+	m_enumMap["GameLayer::MAIN"] = GameLayer::MAIN;
+	m_enumMap["GameLayer::FOREGROUND_1"] = GameLayer::FOREGROUND_1;
+	m_enumMap["GameLayer::FOREGROUND_2"] = GameLayer::FOREGROUND_2;
+	m_enumMap["GameLayer::MENU"] = GameLayer::MENU;
+	m_enumMap["GameLayer::ABSTRACT"] = GameLayer::ABSTRACT;
 
 	//Game Object Display Modes
 	m_enumMap["DISPLAY_UI_MODE_STANDARD"] = DISPLAY_UI_MODE_STANDARD;

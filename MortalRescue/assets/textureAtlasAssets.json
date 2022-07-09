@@ -567,7 +567,8 @@
                 "width": 288,
                 "height": 32
             }
-        },        {
+        },
+        {
             "id": "TX_FORCE_WALL2",
             "description": "Force Wall",
             "atlas": "TEXTURE_ATLAS_0",
@@ -620,6 +621,28 @@
                 "y": 4,
                 "width": 8,
                 "height": 8
+            }
+        },
+        {
+            "id": "TX_BACKGROUND_1",
+            "description": "Background 1",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 36,
+                "y": 164,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_BACKGROUND_1_512",
+            "description": "Background 1",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 4,
+                "y": 2320,
+                "width": 512,
+                "height": 512
             }
         }
 

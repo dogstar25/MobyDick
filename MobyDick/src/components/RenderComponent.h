@@ -42,27 +42,28 @@ public:
 	std::shared_ptr<Texture> getRenderTexture();
 	SDL_Surface* getRenderSurface();
 	
-
 	void setColor(SDL_Color color) { m_color = color; }
 	void setColorAlpha(int alpha) {	m_color.a = alpha; }
+
+	void setParallaxRate(float parallaxRate) { m_parallaxRate = parallaxRate; }
+	std::optional<float> parallaxRate() { return m_parallaxRate; }
 
 	//Accessors
 	SDL_Color color() {	return m_color;	}
 	std::shared_ptr<Texture> texture() { return m_texture; }
 	RenderBlendMode textureRenderMode() { return m_textureBlendMode; }
 	
-
-
 private:
 
-	std::shared_ptr<Texture>    m_texture;
-	SDL_Color                   m_color;
-	SDL_Color                   m_outLineColor;
-	float                       m_xRenderAdjustment;
-	float                       m_yRenderAdjustment;
-	bool                        m_renderOutline;
-	std::string	                m_textureId;
-	RenderBlendMode				m_textureBlendMode;
+	std::shared_ptr<Texture> m_texture;
+	SDL_Color m_color;
+	SDL_Color m_outLineColor;
+	float m_xRenderAdjustment;
+	float m_yRenderAdjustment;
+	bool m_renderOutline;
+	std::string	m_textureId;
+	RenderBlendMode	m_textureBlendMode;
+	std::optional<float> m_parallaxRate{};
 
 	std::optional<DisplayOverlay> m_displayOverlay;
 

@@ -19,7 +19,7 @@
 struct LevelObject
 {
 	std::string gameObjectId {};
-	int layer{ LAYER_MAIN };
+	int layer{ GameLayer::MAIN };
 	int angleAdjustment {};
 	bool cameraFollow{ false };
 	std::string name{};
@@ -31,6 +31,16 @@ struct Objective
 	float targetValue{};
 
 };
+
+struct TiledLayerDefinition
+{
+	int layerId{};
+	std::string tiledObjectId{};
+	SDL_Point tileSize{};
+
+};
+
+
 
 class LevelManager
 {
@@ -69,16 +79,19 @@ private:
 
 	std::vector< std::vector <LevelObject>> m_levelObjects{};
 	std::vector<std::string> m_levels{};
+	std::map<int, TiledLayerDefinition> m_tiledLayerDefinitions;
 
 	std::optional<LevelObject> _determineTile(int x, int y, SDL_Surface* bluePrintSurface);
 	LevelObject _determineWallObject(int x, int y, SDL_Surface* bluePrintSurface);
 	std::optional<LevelObject> _determineLocationDefinedObject(int x, int y);
 	std::optional<LevelObject> _determineColorDefinedObject(SDL_Color color);
-	void _loadDefinition(std::string levelId);
+	void _loadDefinition(std::string levelId, Scene* scene);
 	void _buildLevelObjects(Scene* scene);
 	void _buildLevelObjectives(Scene* scene);
 	void _buildLevelStatusItems(std::string levelId);
 	void _buildLevelTriggers(Scene* scene);
+	void _buildTiledLayers(Scene* scene);
+	void _buildParallax(Scene* scene);
 	bool _isColorDefinedObject(SDL_Color color);
 };
 

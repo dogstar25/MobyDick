@@ -93,7 +93,7 @@ void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 		}
 
 		//Add the bullet object to the main gameObject collection
-		parent()->parentScene()->addGameObject(bullet.value(), LAYER_MAIN);
+		parent()->parentScene()->addGameObject(bullet.value(), GameLayer::MAIN);
 	}
 	else {
 		std::cout << "No Bullet available" << std::endl;
