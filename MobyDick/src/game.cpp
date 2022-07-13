@@ -19,17 +19,21 @@ Game::~Game()
 
 }
 
-bool Game::init()
+bool Game::init(std::shared_ptr<ContactListener> contactListener, std::shared_ptr<ContactFilter> contactFilter,
+	std::shared_ptr<ComponentFactory> componentFactory, std::shared_ptr<ActionFactory> actionFactory, std::shared_ptr<ParticleEffectsFactory> particleEffectsFactory,
+	std::shared_ptr<CutSceneFactory> cutSceneFactory, std::shared_ptr<IMGuiFactory> iMGuiFactory, std::shared_ptr<TriggerFactory> triggerFactory, std::shared_ptr<ContextManager> contextManager)
 {
 
-	return true;
-}
-
-
-bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter, 
-	ComponentFactory* componentFactory, ActionFactory* actionFactory, ParticleEffectsFactory* particleEffectsFactory, 
-	CutSceneFactory* cutSceneFactory, IMGuiFactory* iMGuiFactory, TriggerFactory* triggerFactory, ContextManager* contextManager)
-{
+	//Set all of our game specific factories and managers
+	m_contactListener = contactListener;
+	m_contactFilter = contactFilter;
+	m_componentFactory = componentFactory;
+	m_actionFactory = actionFactory;
+	m_particleEffectsFactory = particleEffectsFactory;
+	m_cutSceneFactory = cutSceneFactory;
+	m_contextMananger = contextManager;
+	m_iMGUIFactory = iMGuiFactory;
+	m_triggerFactory = triggerFactory;
 
 	//Get all of the configuration values
 	GameConfig::instance().init("gameConfig");
@@ -66,17 +70,6 @@ bool Game::init(ContactListener* contactListener, ContactFilter* contactFilter,
 		m_gameScreenResolution.y,
 		windowFlags);
 
-
-
-	m_contactListener = std::shared_ptr<ContactListener>(contactListener);
-	m_contactFilter = std::shared_ptr<ContactFilter>(contactFilter);
-	m_componentFactory = std::shared_ptr<ComponentFactory>(componentFactory);
-	m_actionFactory = std::shared_ptr<ActionFactory>(actionFactory);
-	m_particleEffectsFactory = std::shared_ptr<ParticleEffectsFactory>(particleEffectsFactory);
-	m_cutSceneFactory = std::shared_ptr<CutSceneFactory>(cutSceneFactory);
-	m_contextMananger = std::shared_ptr<ContextManager>(contextManager);
-	m_iMGUIFactory = std::shared_ptr<IMGuiFactory>(iMGuiFactory);
-	m_triggerFactory = std::shared_ptr<TriggerFactory>(triggerFactory);
 
 	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 

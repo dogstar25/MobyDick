@@ -18,19 +18,20 @@ int main(int argc, char* args[])
 {
 	//create game 
 	game = std::make_unique<MRGame>();
+
 	std::cout << "Mortal Rescue Begins\n";
 
 	//init game
 	game->init(
-		new MRContactListener(), 
-		new MRContactFilter(),
-		new MRComponentFactory(), 
-		new MRActionFactory(), 
-		new MRParticleEffectsFactory(),
-		new MRCutSceneFactory(),
-		new MR_IMGuiFactory(),
-		new MRTriggerFactory(),
-		new MRContextManager()
+		std::make_shared<MRContactListener>(), 
+		std::make_shared<MRContactFilter>(),
+		std::make_shared<MRComponentFactory>(),
+		std::make_shared<MRActionFactory>(),
+		std::make_shared<MRParticleEffectsFactory>(),
+		std::make_shared<MRCutSceneFactory>(),
+		std::make_shared<MR_IMGuiFactory>(),
+		std::make_shared<MRTriggerFactory>(),
+		std::make_shared<MRContextManager>()
 	);
 
 	//play game
