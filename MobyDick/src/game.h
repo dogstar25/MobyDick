@@ -40,9 +40,10 @@ public:
 	Game() = default;
 	~Game();
 
-	virtual bool init();
-	virtual bool init(ContactListener*, ContactFilter*, ComponentFactory*, ActionFactory*, ParticleEffectsFactory*,
-		CutSceneFactory*, IMGuiFactory*, TriggerFactory*, ContextManager*) = 0;
+	virtual bool init(std::shared_ptr<ContactListener>, std::shared_ptr<ContactFilter>,
+		std::shared_ptr<ComponentFactory>, std::shared_ptr<ActionFactory>, std::shared_ptr<ParticleEffectsFactory>,
+		std::shared_ptr<CutSceneFactory>, std::shared_ptr<IMGuiFactory>, std::shared_ptr<TriggerFactory>, std::shared_ptr<ContextManager>) = 0;
+
 	virtual void play();
 	virtual void _displayLoadingMsg();
 	GameObject* getGameObject(std::string name);

@@ -22,30 +22,12 @@
 using namespace std::chrono_literals;
 
 
-MRGame& MRGame::instance()
-{
-
-	static MRGame singletonInstance;
-	return singletonInstance;
-
-}
-
-MRGame::MRGame()
-{
-
-}
-
-MRGame::~MRGame()
-{
-
-}
-
 /*
 Initialize Game
 */
-bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter, 
-	ComponentFactory* componentFactory, ActionFactory* actionFactory, ParticleEffectsFactory* particleEffectsFactory, 
-	CutSceneFactory* cutSceneFactory, IMGuiFactory* iMGuiFactory, TriggerFactory* triggerFactory, ContextManager* contextManager)
+bool MRGame::init(std::shared_ptr<ContactListener> contactListener, std::shared_ptr<ContactFilter> contactFilter,
+	std::shared_ptr<ComponentFactory> componentFactory, std::shared_ptr<ActionFactory> actionFactory, std::shared_ptr<ParticleEffectsFactory> particleEffectsFactory,
+	std::shared_ptr<CutSceneFactory> cutSceneFactory, std::shared_ptr<IMGuiFactory> iMGuiFactory, std::shared_ptr<TriggerFactory> triggerFactory, std::shared_ptr<ContextManager> contextManager)
 {
 
 	Game::init(contactListener, contactFilter, componentFactory, actionFactory, particleEffectsFactory, cutSceneFactory, iMGuiFactory, triggerFactory, contextManager);
