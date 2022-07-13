@@ -105,6 +105,32 @@ void RenderComponent::update()
 
 }
 
+SDL_FRect RenderComponent::getRenderDestRect(SDL_FRect& positionRect)
+{
+	SDL_FRect destRect{ positionRect };
+
+	//default to 100%
+	float parallaxRate{ 0 };
+
+	//Adjust for paralax if exists - could be negative or positive
+	if (m_parallaxRate.has_value()) {
+
+		parallaxRate = m_parallaxRate.value();
+	}
+
+	float camerAdjustX = Camera::instance().frame().x;
+	float camerAdjustY = Camera::instance().frame().y;
+
+	camerAdjustX = std::max((float)0, camerAdjustX + (camerAdjustX * parallaxRate));
+	camerAdjustY = std::max((float)0, camerAdjustY + (camerAdjustY * parallaxRate));
+
+	destRect.x -= camerAdjustX;
+	destRect.y -= camerAdjustY;
+
+	return destRect;
+
+}
+
 /*
 Get the destination for rendering the gameObject
 The end result should be a rectangle with a width and height in pixels and
@@ -117,43 +143,18 @@ SDL_FRect RenderComponent::getRenderDestRect()
 	const auto& transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 	//Get its current position. Should be center of object
-	//destRect = m_transformComponent->getPositionRect();
 	destRect = transform->getPositionRect();
 
 	destRect.w += m_xRenderAdjustment;
 	destRect.h += m_yRenderAdjustment;
 
-
-	if (parent()->id() == "ESCAPE_STAIRS") {
-		int todd = 1;
-	}
 	//Adjust position based on current camera position - offset
 	if (transform->absolutePositioning() == false)
 	{
-		//default to 100%
-		float parallaxRate{0};
-
-		//Adjust for paralax if exists - could be negative or positive
-		if (m_parallaxRate.has_value()) {
-
-			parallaxRate = m_parallaxRate.value();
-		}
-
-		float camerAdjustX = Camera::instance().frame().x;
-		float camerAdjustY = Camera::instance().frame().y;
-
-		camerAdjustX = std::max((float)0, camerAdjustX + (camerAdjustX * parallaxRate));
-		camerAdjustY = std::max((float)0, camerAdjustY + (camerAdjustY * parallaxRate));
-
-		destRect.x -= camerAdjustX;
-		destRect.y -= camerAdjustY;
-
-		//destRect.x -= camerAdjustX + (camerAdjustX * parallaxRate);
-		//destRect.y -= camerAdjustY + (camerAdjustY * parallaxRate);
-
+		//Include application of Camera adjustment and Parallax rate
+		destRect = getRenderDestRect(destRect);
 
 	}
-
 
 	return destRect;
 }

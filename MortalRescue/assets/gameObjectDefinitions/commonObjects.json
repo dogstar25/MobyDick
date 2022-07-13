@@ -25,7 +25,7 @@
                         {
                             "contactTag": "ContactTag::PLAYER_COLLISION",
                             "collisionShape": "B2_CIRCLE",
-                            "collisionRadius": 1.32,
+                            "collisionRadius": 1.28,
                             "friction": 0.00,
                             "restitution": 0.0,
                             "density": 50.5,
@@ -600,7 +600,8 @@
                 },
                 {
                     "id": "PARTICLE_COMPONENT",
-                    "type": "ParticleEmitterType::ONETIME"
+                    "type": "ParticleEmitterType::ONETIME",
+                    "maxParticles": 100
                 }
             ]
         },
@@ -630,7 +631,7 @@
             ]
         },
         {
-            "id": "RAIN_EMITTER",
+            "id": "METEOR_EMITTER",
             "traitTags": [ "abstract" ],
             "description": "Rain Emitter",
             "components": [
@@ -641,11 +642,12 @@
                     "id": "TRANSFORM_COMPONENT"
                 },
                 {
-                    "id": "PARTICLE_X_COMPONENT",
+                    "id": "PARTICLE_COMPONENT",
                     "type": "ParticleEmitterType::CONTINUOUS",
-                    "emissionInterval": 0.2,
+                    "emissionInterval": 0.5,
+                    "maxParticles": 2000,
                     "effects": [
-                        "rain"
+                        "meteor"
                     ]
                 }
             ]
@@ -1126,7 +1128,7 @@
                     "textureId": "TX_BACKGROUND_1_512",
                     "color": {
                         "tint": "Colors::CYAN",
-                        "alpha": 100
+                        "alpha": 50
                     }
                 },
                 {
@@ -1136,6 +1138,42 @@
                         "height": 512
                     },
                     "absolutePositioning": false
+                }
+            ]
+        },
+        {
+            "id": "GLOBAL_FRAME",
+            "traitTags": ["abstract"],
+            "description": "Global Frame",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "tint": "Colors::RED",
+                        "alpha": 100
+                    }
+                
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 1920,
+                        "height": 1080
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::CONTAINER_INSIDE",
+                            "collisionShape": "B2_CHAIN",
+                            "physicsChainType": "PhysicsChainType::CCW_REFLECT_IN",
+                            "friction": 0.00,
+                            "restitution": 0.0,
+                            "density": 1.5
+                        }
+                    ]
                 }
             ]
         }

@@ -103,7 +103,14 @@ bool MRGame::init(ContactListener* contactListener, ContactFilter* contactFilter
 	//Initialize the clock object
 	Clock::instance().init();
 
-	//scene.addGameObject("BOWMAN", GameLayer::GUI, 3, 3);
+	auto object = scene.addGameObject("GLOBAL_FRAME", GameLayer::BACKGROUND_1, 0, 0);
+	object->postInit();
+
+	object = scene.addGameObject("METEOR_EMITTER", GameLayer::BACKGROUND_1, 3, 7);
+	object->postInit();
+
+	
+	
 
 	return true;
 }

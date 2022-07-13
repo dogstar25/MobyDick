@@ -10,7 +10,8 @@ ParticleComponent::ParticleComponent(Json::Value componentJSON)
 {
 	m_componentType = ComponentTypes::PARTICLE_COMPONENT;
 
-	for (int i = 0; i < 300; i++) {
+	m_maxParticles = componentJSON["maxParticles"].asInt();
+	for (int i = 0; i < m_maxParticles; i++) {
 
 		m_particles.emplace_back(Particle());
 
@@ -42,35 +43,21 @@ ParticleComponent::~ParticleComponent()
 void ParticleComponent::render()
 {
 
+	const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
+
 	for (auto& particle : m_particles) {
 
 		if (particle.isActive == true) {
 
-			SDL_FRect destRect =
-			{ particle.position.x,
-				particle.position.y,
-				particle.size,
-				particle.size
+			SDL_FRect positionRect = { 
+				particle.position.x, particle.position.y, 
+				particle.size,	particle.size
 			};
 
-			//Adjust destination for camera position
-			destRect.x -= Camera::instance().frame().x;
-			destRect.y -= Camera::instance().frame().y;
+			SDL_FRect destRect = renderComponent->getRenderDestRect(positionRect);
 
-			//SDL_SetTextureColorMod(particle.texture, particle.color.r, particle.color.g, particle.color.b);
-			//SDL_SetTextureAlphaMod(particle.texture, particle.color.a);
-			//SDL_SetTextureBlendMode(particle.texture, SDL_BLENDMODE_ADD);
+			game->renderer()->drawSprite(destRect, particle.color, particle.texture, &particle.texture->textureAtlasQuad, 0, false, SDL_Color{}, RenderBlendMode::ADD);
 
-			game->renderer()->drawSprite(destRect, particle.color, particle.texture, nullptr, 0, false, SDL_Color{}, RenderBlendMode::ADD);
-
-			//SDL_RenderCopyExF(
-			//	RendererSDL::instance().renderer(),
-			//	particle.texture,
-			//	nullptr,
-			//	&destRect,
-			//	0,
-			//	NULL,
-			//	SDL_FLIP_NONE);
 		}
 	}
 
@@ -102,8 +89,6 @@ void ParticleComponent::update()
 			else {
 			}
 
-			//particle.position.x += particle.velocity.x * .01666 ;
-			//particle.position.y += particle.velocity.y * .01666;
 			float timeFactor{ GameConfig::instance().gameLoopStep() };
 			if (SceneManager::instance().gameTimer().timeRemaining().count() > 0) {
 				timeFactor = SceneManager::instance().gameTimer().timeRemaining().count();
@@ -112,7 +97,7 @@ void ParticleComponent::update()
 			particle.position.y += particle.velocity.y * timeFactor;
 
 			if (particle.alphaFade == true) {
-				Uint8 alpha = int(255 * particle.lifetimeTimer.percentTargetMet());
+				Uint8 alpha = int(particle.originalALpha * particle.lifetimeTimer.percentTargetMet());
 				particle.color.a = alpha;
 			}
 		}
@@ -157,6 +142,7 @@ void ParticleComponent::update()
 
 					//Set the color of the particle. Randomize the color values if they are different
 					particle.value()->color = util::generateRandomColor(effect.colorRangeBegin, effect.colorRangeEnd);
+					particle.value()->originalALpha = particle.value()->color.a;
 
 					//Size
 					particle.value()->size = util::generateRandomNumber(effect.particleSizeMin, effect.particleSizeMax);
@@ -189,7 +175,7 @@ void ParticleComponent::update()
 					particle.value()->velocity.y = sin(emitAngle) * (force * PARTICLE_EMITTER_FORCE_ADJ);
 
 					//Position - If zero was passed in then use the location of the gameObject
-					//that this ParticlrComponent belongs to
+					//that this ParticleComponent belongs to
 					b2Vec2 positionVector = {};
 					if (effect.originMin.Length() > 0 || effect.originMax.Length() > 0) {
 

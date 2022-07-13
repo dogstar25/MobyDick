@@ -108,10 +108,10 @@
             "id": "LOC_0022_0002",
             "gameObjectId": "PLAYER_HEART"
         },
-        {
-            "id": "LOC_0016_0013",
-            "gameObjectId": "DRONE"
-        },
+        //{
+        //    "id": "LOC_0016_0013",
+        //    "gameObjectId": "DRONE"
+        //},
         {
             "id": "LOC_0016_0006",
             "gameObjectId": "HEALTH_STATION"

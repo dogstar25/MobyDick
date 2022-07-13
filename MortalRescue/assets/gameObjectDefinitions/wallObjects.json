@@ -10,7 +10,7 @@
                     "textureId": "TX_WALL1_OPEN",
                     "color": {
                         "tint": "Colors::PARAKEET",
-                        "alpha": 255
+                        "alpha": 200
                     }
                 },
                 {
@@ -46,7 +46,7 @@
                     "textureId": "TX_WALL1_COLUMN",
                     "color": {
                         "tint": "Colors::PARAKEET",
-                        "alpha": 255
+                        "alpha": 200
                     }
                 },
                 {
@@ -81,7 +81,7 @@
                     "textureId": "TX_WALL1_CORNER",
                     "color": {
                         "tint": "Colors::PARAKEET",
-                        "alpha": 255
+                        "alpha": 200
                     }
                 },
                 {
@@ -116,7 +116,7 @@
                     "textureId": "TX_WALL1_END",
                     "color": {
                         "tint": "Colors::PARAKEET",
-                        "alpha": 255
+                        "alpha": 200
                     }
                 },
                 {
@@ -151,7 +151,7 @@
                     "textureId": "TX_WALL1_HALL",
                     "color": {
                         "tint": "Colors::PARAKEET",
-                        "alpha": 255
+                        "alpha": 200
                     }
                 },
                 {
@@ -186,7 +186,7 @@
                     "textureId": "TX_WALL1_WALL",
                     "color": {
                         "tint": "Colors::PARAKEET",
-                        "alpha": 255
+                        "alpha": 200
                     }
                 },
                 {

@@ -29,7 +29,8 @@ public:
 	void render(SDL_FRect destQuad);
 	void postInit() override;
 
-	SDL_FRect  getRenderDestRect();
+	SDL_FRect getRenderDestRect();
+	SDL_FRect getRenderDestRect(SDL_FRect& positionRect);
 	void setColor(int red, int green, int blue, int alpha);
 	void setTexture(std::shared_ptr<Texture> texture) { m_texture = texture; }
 
