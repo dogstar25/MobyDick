@@ -163,18 +163,18 @@
             "gameObjectId": "TURRET",
             "angle": 270
         },
-        {
-            "id": "LOC_0019_0031",
-            "gameObjectId": "BREAKABLE_WALL"
-        },
-        {
-            "id": "LOC_0020_0031",
-            "gameObjectId": "BREAKABLE_WALL"
-        },
-        {
-            "id": "LOC_0021_0031",
-            "gameObjectId": "BREAKABLE_WALL"
-        },
+        //{
+        //    "id": "LOC_0019_0031",
+        //    "gameObjectId": "BREAKABLE_WALL"
+        //},
+        //{
+        //    "id": "LOC_0020_0031",
+        //    "gameObjectId": "BREAKABLE_WALL"
+        //},
+        //{
+        //    "id": "LOC_0021_0031",
+        //    "gameObjectId": "BREAKABLE_WALL"
+        //},
         {
             "id": "LOC_0034_0033",
             "gameObjectId": "TURRET",

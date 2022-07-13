@@ -215,6 +215,7 @@
     <ClCompile Include="src\MRGame.cpp" />
     <ClCompile Include="src\MRContextManager.cpp" />
     <ClCompile Include="src\particleEffects\MRParticleEffectsFactory.cpp" />
+    <ClCompile Include="src\triggers\LevelComplete.cpp" />
     <ClCompile Include="src\triggers\MRTriggerFactory.cpp" />
     <ClCompile Include="src\triggers\PlayerDeath.cpp" />
   </ItemGroup>
@@ -316,6 +317,7 @@
     <ClInclude Include="src\particleEffects\GameParticleEffects.h" />
     <ClInclude Include="src\MRContextManager.h" />
     <ClInclude Include="src\particleEffects\MRParticleEffectsFactory.h" />
+    <ClInclude Include="src\triggers\LevelComplete.h" />
     <ClInclude Include="src\triggers\MRTriggerFactory.h" />
     <ClInclude Include="src\triggers\PlayerDeath.h" />
   </ItemGroup>

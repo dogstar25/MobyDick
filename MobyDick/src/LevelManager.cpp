@@ -173,6 +173,10 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 	//Load the Level definition
 	_loadDefinition(levelId);
 
+	//Save this level to the save file
+	//std::shared_ptr<GameSaveFileData> saveFileData{};
+	//game->contextMananger()->load
+
 	//I am representing the level grid as a png image file 
 	surface = TextureManager::instance().getTexture(m_blueprintTexture)->surface;
 

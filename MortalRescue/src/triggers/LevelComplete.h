@@ -1,5 +1,5 @@
 #pragma once
-#include "Trigger.h"
+#include "triggers/Trigger.h"
 class LevelComplete :  public Trigger
 {
 

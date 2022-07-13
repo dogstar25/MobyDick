@@ -100,13 +100,20 @@ void Scene::loadLevel(std::string levelId)
 void Scene::loadNextLevel()
 {
 
-	std::optional<std::string> nextLevelId = LevelManager::instance().getNextLevelId(m_currentLevelId);
+	std::optional<std::string> nextLevelId = getNextLevel();
 	if (nextLevelId.has_value()) {
 		loadLevel(nextLevelId.value());
 	}
 	else {
 		assert(false && "We are already at the last level!");
 	}
+
+}
+
+std::optional<std::string> Scene::getNextLevel()
+{
+
+	return LevelManager::instance().getNextLevelId(m_currentLevelId);
 
 }
 

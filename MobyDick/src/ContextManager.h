@@ -85,9 +85,10 @@ public:
 	int getSoundVolume();
 	void addStatusItem(int id, StatusItem& statusItem);
 
+	virtual bool saveGame(BaseSaveFileData* saveFileData) = 0;
+	virtual bool loadGame(BaseSaveFileData* saveFileData) = 0;
+
 protected:
-	virtual bool saveGame(BaseSaveFileData& saveFileData) = 0;
-	virtual bool loadGame(BaseSaveFileData& saveFileData) = 0;
 
 	std::map<int, StatusItem> m_statusValueMap;
 	UserSettings m_userSettings{};

@@ -168,15 +168,15 @@ void IMGuiPauseWindow::settingsModal()
 void IMGuiPauseWindow::apply(int mouseSensitivity, int soundVolume)
 {
 
-	GameSaveFileData saveFileData{};
+	auto saveFileData = std::make_shared<GameSaveFileData>();
 
 	//First load whats currently on file
-	std::dynamic_pointer_cast<MRContextManager>(game->contextMananger())->loadGame(saveFileData);
+	game->contextMananger()->loadGame(saveFileData.get());
 
-	saveFileData.mouseSensitivity = mouseSensitivity;
-	saveFileData.soundLevel = soundVolume;
+	saveFileData->mouseSensitivity = mouseSensitivity;
+	saveFileData->soundLevel = soundVolume;
 
-	std::dynamic_pointer_cast<MRContextManager>(game->contextMananger())->saveGame(saveFileData);
+	game->contextMananger()->saveGame(saveFileData.get());
 
 }
 

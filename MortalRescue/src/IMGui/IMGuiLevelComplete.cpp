@@ -108,21 +108,3 @@ void IMGuiLevelComplete::_sendNextLevelEvent()
 }
 
 
-
-void IMGuiLevelComplete::apply(int mouseSensitivity, int soundVolume)
-{
-
-	GameSaveFileData saveFileData{};
-
-	//First load whats currently on file
-	std::dynamic_pointer_cast<MRContextManager>(game->contextMananger())->loadGame(saveFileData);
-
-	saveFileData.mouseSensitivity = mouseSensitivity;
-	saveFileData.soundLevel = soundVolume;
-
-	std::dynamic_pointer_cast<MRContextManager>(game->contextMananger())->saveGame(saveFileData);
-
-}
-
-
-
