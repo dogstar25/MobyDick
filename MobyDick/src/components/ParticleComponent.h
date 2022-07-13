@@ -29,6 +29,7 @@ struct Particle
 	Texture* texture;
 	SDL_Color color{ 255,255,255,255 };
 	bool alphaFade{};
+	Uint8 originalALpha{};
 	Timer lifetimeTimer{};
 
 };
@@ -54,6 +55,7 @@ private:
 	std::vector<ParticleEffect> m_particleEffects;
 	std::chrono::duration<float, std::milli> m_emissionInterval{ std::chrono::duration<float>(0.f) };
 	std::vector<Particle> m_particles;
+	int m_maxParticles{};
 
 	Timer m_emissionTimer{};
 

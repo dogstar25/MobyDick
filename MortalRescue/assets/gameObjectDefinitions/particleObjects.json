@@ -153,7 +153,11 @@
                 {
                     "id": "RENDER_COMPONENT",
                     "textureId": "TX_HEART_PICKUP",
-                    "color": "Colors::RED"
+                    "color": {
+
+                        "tint": "Colors::RED",
+                        "alpha": 100
+                    }
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",

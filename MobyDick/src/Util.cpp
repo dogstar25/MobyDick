@@ -63,12 +63,13 @@ namespace util
 
 	const SDL_Color generateRandomColor(SDL_Color beginRange, SDL_Color endRange)
 	{
-		Uint8 red, green, blue;
+		Uint8 red, green, blue, alpha;
 
 		red = generateRandomNumber(beginRange.r, endRange.r);
 		green = generateRandomNumber(beginRange.g, endRange.g);
 		blue = generateRandomNumber(beginRange.b, endRange.b);
-		SDL_Color color = {red, green, blue, 255};
+		alpha = generateRandomNumber(beginRange.a, endRange.a);
+		SDL_Color color = {red, green, blue, alpha};
 
 		return color;
 

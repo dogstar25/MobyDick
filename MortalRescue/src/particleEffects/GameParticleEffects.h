@@ -136,23 +136,23 @@ namespace ParticleEffects {
 		.particleSpawnCountMax = 5
 	};
 
-	static const ParticleEffect rain = {
+	static const ParticleEffect meteor = {
 		.poolId = "SMOKE1_POOL",
 		.originMin = {0,0},
-		.originMax = {1280,720},
+		.originMax = {4000,4080},
 		.forceMin = 1,
-		.forceMax = 3,
-		.lifetimeMin = 1.2F,
-		.lifetimeMax = 4.5F,
+		.forceMax = 2,
+		.lifetimeMin = 5.2F,
+		.lifetimeMax = 35.0F,
 		.alphaFade = true,
-		.angleMin = 45,
-		.angleMax = 45,
-		.particleSizeMin = 3.F,
-		.particleSizeMax = 3.F,
-		.colorRangeBegin = {255,255,255,255},
-		.colorRangeEnd = {255,255,255,255},
-		.particleSpawnCountMin = 10,
-		.particleSpawnCountMax = 200
+		.angleMin = 0,
+		.angleMax = 360,
+		.particleSizeMin = 2.0F,
+		.particleSizeMax = 8.0F,
+		.colorRangeBegin = {0,0,255,100},
+		.colorRangeEnd = {0,0,255,255},
+		.particleSpawnCountMin = 15,
+		.particleSpawnCountMax = 50
 	};
 
 	static const ParticleEffect explosionSmoke = {

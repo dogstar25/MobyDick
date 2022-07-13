@@ -46,7 +46,11 @@ ParticleEffect MRParticleEffectsFactory::create(std::string particleType)
 
 		particleEffect = ParticleEffects::turretScrap;
 	}
-    
+	else if (particleType == "meteor") {
+
+		particleEffect = ParticleEffects::meteor;
+	}
+
     else {
         particleEffect = ParticleEffectsFactory::create(particleType);
     }
