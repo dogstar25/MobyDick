@@ -208,7 +208,9 @@ void SceneManager::popScene()
 {
 
 	m_scenes.pop_back();
-	_restoreSceneState(m_scenes.back().id());
+	if (!m_scenes.empty()) {
+		_restoreSceneState(m_scenes.back().id());
+	}
 
 }
 
@@ -240,9 +242,9 @@ void SceneManager::loadNextLevel()
 	m_scenes.back().loadNextLevel();
 }
 
-void SceneManager::reloadCurrentLevel()
+void SceneManager::loadCurrentLevel()
 {
-	m_scenes.back().reloadCurrentLevel();
+	m_scenes.back().loadCurrentLevel();
 }
 
 void SceneManager::directScene(std::string cutSceneId)

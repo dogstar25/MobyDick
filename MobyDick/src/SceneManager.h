@@ -51,7 +51,7 @@ public:
 	std::shared_ptr<Scene> getScene(std::string sceneId);
 	void loadLevel(std::string levelId);
 	void loadNextLevel();
-	void reloadCurrentLevel();
+	void loadCurrentLevel();
 
 	std::optional<SceneAction> getSceneKeyAction(SDL_Keycode);
 

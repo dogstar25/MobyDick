@@ -644,6 +644,17 @@
                 "width": 512,
                 "height": 512
             }
+        },
+        {
+            "id": "TX_TITLE_SCREEN_IMAGE1",
+            "description": "Background 1",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 518,
+                "y": 2320,
+                "width": 367,
+                "height": 512
+            }
         }
 
     ],

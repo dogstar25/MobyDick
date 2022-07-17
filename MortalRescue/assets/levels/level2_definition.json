@@ -3,12 +3,83 @@
     "blueprint": "TX_LEVEL2_BLUEPRINT",
     "description": "Level 2",
     "dimensions": {
-        "levelWidth": 34,
+        "levelWidth": 60,
         "levelHeight": 34,
         "tileWidth": 32,
         "tileHeight": 32
     },
-    "tileSize": 32,
+    "tiledLayers": [
+        {
+            "layer": "GameLayer::BACKGROUND_1",
+            "tiledObjectId": "BACKGROUND_GRID_1",
+            "tileSize": {
+                "width": 512,
+                "height": 512
+            }
+        }
+    ],
+    "parallax": [
+        {
+            "layer": "GameLayer::BACKGROUND_1",
+            "parallaxRate": -10 // percent of normal scroll. negative value is slower. positive value is faster
+        },
+        {
+            "layer": "GameLayer::FOREGROUND_2",
+            "parallaxRate": 15
+        }
+
+    ],
+    "statusItems": [
+        {
+            "id": "StatusItemId::PLAYERS_HEART_COUNT",
+            "initialValue": 6,
+            "minValue": 0,
+            "maxValue": 6
+        },
+        {
+            "id": "StatusItemId::SURVIVORS",
+            "initialValue": 3,
+            "minValue": 0,
+            "maxValue": 3
+        },
+        {
+            "id": "StatusItemId::PLAYER_WEAPON_LEVEL",
+            "initialValue": 1,
+            "minValue": 0,
+            "maxValue": 3
+        },
+        {
+            "id": "StatusItemId::SCRAP_COUNT",
+            "initialValue": 0,
+            "minValue": 0,
+            "maxValue": 2000
+        },
+        {
+            "id": "StatusItemId::PLAYER_WEAPON_ACCRUAL",
+            "initialValue": 0,
+            "minValue": 0,
+            "maxValue": 50
+        }
+
+    ],
+    "objectives": [
+        {
+            "id": "StatusItemId::SURVIVORS",
+            "targetValue": 0
+        }
+
+    ],
+    "levelTriggers": [
+        {
+            "description": "Player Death",
+            "triggerClass": "PlayerDeath"
+        },
+        {
+            "description": "Level Complete",
+            "triggerClass": "LevelComplete"
+        }
+
+    ],
     "locationDefinedObjects": [
         {
             "id": "LOC_0003_0003",

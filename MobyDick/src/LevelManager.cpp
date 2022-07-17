@@ -173,6 +173,10 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 	//Load the Level definition
 	_loadDefinition(levelId);
 
+	//Save this level to the save file
+	//std::shared_ptr<GameSaveFileData> saveFileData{};
+	//game->contextMananger()->load
+
 	//I am representing the level grid as a png image file 
 	surface = TextureManager::instance().getTexture(m_blueprintTexture)->surface;
 
@@ -539,21 +543,25 @@ void LevelManager::_buildTiledLayers(Scene* scene)
 
 
 		//Calculate the number of background tiles horizontal and vertical
-		auto widthCount = m_tileWidth * m_width / tiledLayer.second.tileSize.x;
-		auto heightCount = m_tileHeight * m_height / tiledLayer.second.tileSize.y;
+		//Add 1 in case
+		auto widthCount = (m_tileWidth * m_width) / tiledLayer.second.tileSize.x;
+		auto heightCount = (m_tileHeight * m_height) / tiledLayer.second.tileSize.y;
 
-		//If we have parallax defined for this layer then we probably need to build extra tiles on the screen 
-		//so it doesnt show empty
+		auto widthRemainder = (m_tileWidth * m_width) % tiledLayer.second.tileSize.x;
+		auto heightRemainder = (m_tileHeight * m_height) % tiledLayer.second.tileSize.y;
 
-
+		//If it did not dived evenly then we need to add 1 to cover the screen
+		if (widthRemainder > 0) {
+			widthCount += 1;
+		}
+		if (heightRemainder > 0) {
+			heightCount += 1;
+		}
 
 		//adjust the X and Y map position based on the size of our background tiles 
 		//and the size of all other tiles in the game
 		auto adjustX = tiledLayer.second.tileSize.x / m_tileWidth;
 		auto adjustY = tiledLayer.second.tileSize.y / m_tileHeight;
-
-
-
 
 		for (auto y = 0; y < heightCount; y++) {
 			for (auto x = 0; x < widthCount; x++) {

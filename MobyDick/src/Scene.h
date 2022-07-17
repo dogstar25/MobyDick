@@ -49,7 +49,7 @@ public:
 
 	void loadLevel(std::string levelId);
 	void loadNextLevel();
-	void reloadCurrentLevel();
+	void loadCurrentLevel();
 	void reset();
 	void clear();
 	void render();
@@ -65,6 +65,7 @@ public:
 	void applyCurrentControlMode();
 	SDL_FPoint calcWindowPosition(int globalPosition);
 	GameObject* getGameObject(std::string name);
+	std::optional<std::string> getNextLevel();
 	
 	void stepB2PhysicsWorld() {
 		m_physicsWorld->Step(m_physicsConfig.timeStep,

@@ -1,4 +1,4 @@
-#include "IMGuiPauseWindow.h"
+#include "IMGuiTitleScreenMenu.h"
 
 #include "Scene.h"
 #include <SDL2/SDL.h>
@@ -12,7 +12,7 @@
 extern std::unique_ptr<Game> game;
 
 
-IMGuiPauseWindow::IMGuiPauseWindow(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor,
+IMGuiTitleScreenMenu::IMGuiTitleScreenMenu(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor,
 	ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize) :
 	IMGuiItem(gameObjectId, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize)
 {
@@ -20,10 +20,11 @@ IMGuiPauseWindow::IMGuiPauseWindow(std::string gameObjectId, b2Vec2 padding, ImV
 
 }
 
-glm::vec2 IMGuiPauseWindow::render()
+glm::vec2 IMGuiTitleScreenMenu::render()
 {
-	ImVec2 buttonSize{ ImGui::MRSettings::button1Size};
+	ImVec2 buttonSize{ ImGui::MRSettings::button1Size };
 	glm::vec2 windowSize{};
+	bool continueButtonDisabled{};
 
 	const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -41,11 +42,32 @@ glm::vec2 IMGuiPauseWindow::render()
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, m_buttonActiveColor);
 
 		//top window spacing
+		ImGui::Spacing();
+
+		//Continue Button - disable if the player hasnt yet started a game
+		GameSaveFileData gameSaveFileData{};
+		game->contextMananger()->loadGame(&gameSaveFileData);
+		if (gameSaveFileData.level <= 0) {
+			continueButtonDisabled = true;
+		}
+
+		if(continueButtonDisabled){
+			ImGui::BeginDisabled();
+		}
+
+		if (ImGui::Button("Continue", ImGui::MRSettings::button1Size)) {
+			ImGui::continueGameLoad();
+		}
+
+		if (continueButtonDisabled) {
+			ImGui::EndDisabled();
+		}
+
+		//spacing
 		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
-		//Continue Button
-		if (ImGui::Button("Continue", ImGui::MRSettings::button1Size)) {
-			util::sendSceneEvent(SCENE_ACTION_EXIT);
+		if (ImGui::Button("New Game", ImGui::MRSettings::button1Size)) {
+			ImGui::newGameLoad();
 		}
 
 		//spacing
@@ -61,15 +83,15 @@ glm::vec2 IMGuiPauseWindow::render()
 		}
 
 		//spacing
-		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
+		ImGui::Spacing(); ImGui::Spacing();	ImGui::Spacing(); ImGui::Spacing();
 
-		//Quit Button
-		if (ImGui::Button("Quit", ImGui::MRSettings::button1Size)) {
+		//Exit Button
+		if (ImGui::Button("Exit Game", ImGui::MRSettings::button1Size)) {
 			util::sendSceneEvent(SCENE_ACTION_QUIT);
 		}
 
 		//spacing
-		ImGui::Spacing(); ImGui::Spacing();	ImGui::Spacing(); ImGui::Spacing();	ImGui::Spacing();
+		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
 		ImGui::PopStyleColor();
 		ImGui::PopStyleColor();
@@ -88,7 +110,9 @@ glm::vec2 IMGuiPauseWindow::render()
 
 }
 
-void IMGuiPauseWindow::settingsModal()
+
+
+void IMGuiTitleScreenMenu::settingsModal()
 {
 
 	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
@@ -125,14 +149,14 @@ void IMGuiPauseWindow::settingsModal()
 	//Buttons
 	if (ImGui::Button("Ok", ImGui::MRSettings::button1Size)) {
 		apply(mouseSensitivity, soundvolume);
-		//ImGui::CloseCurrentPopup();
-		util::sendSceneEvent(SCENE_ACTION_EXIT);
+		ImGui::CloseCurrentPopup();
+		//ImGui::sendSceneExitEvent();
 	}
 
 	ImGui::SameLine(156);
 	if (ImGui::Button("Cancel", ImGui::MRSettings::button1Size)) {
-		//ImGui::CloseCurrentPopup();
-		util::sendSceneEvent(SCENE_ACTION_EXIT);
+		ImGui::CloseCurrentPopup();
+		//ImGui::sendSceneExitEvent();
 	}
 	ImGui::EndGroup();
 
@@ -165,7 +189,7 @@ void IMGuiPauseWindow::settingsModal()
 //
 //}
 
-void IMGuiPauseWindow::apply(int mouseSensitivity, int soundVolume)
+void IMGuiTitleScreenMenu::apply(int mouseSensitivity, int soundVolume)
 {
 
 	auto saveFileData = std::make_shared<GameSaveFileData>();

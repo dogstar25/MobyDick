@@ -1,7 +1,8 @@
 #include "LevelComplete.h"
 
-#include "../SceneManager.h"
-#include "../game.h"
+#include "SceneManager.h"
+#include "../MRContextManager.h"
+#include "game.h"
 
 extern std::unique_ptr<Game> game;
 
@@ -69,21 +70,29 @@ bool LevelComplete::hasMetCriteria(Scene* scene)
 void LevelComplete::execute()
 {
 
-	SDL_Event event;
-
-	SceneAction* sceneAction = new SceneAction();
-	sceneAction->actionCode = SCENE_ACTION_ADD;
-	sceneAction->actionId = "SCENE_LEVEL_COMPLETE";
-
-	event.type = SDL_USEREVENT;
-	event.user.data1 = sceneAction;
-	SDL_PushEvent(&event);
+	util::sendSceneEvent(SCENE_ACTION_ADD, "SCENE_LEVEL_COMPLETE");
 
 	m_hasTriggered = true;
 
+	//Disable the player
 	auto _player = SceneManager::instance().currentScene().getGameObject("PlayerGina");
 	_player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
 
+	//Save the current level so we can continune from where we left off if we leave
+	if (SceneManager::instance().currentScene().getNextLevel().has_value()) {
+
+ 		auto newLevelId = SceneManager::instance().currentScene().getNextLevel();
+
+		auto saveFileData = std::make_shared<GameSaveFileData>();
+
+		//First load whats currently on file
+		game->contextMananger()->loadGame(saveFileData.get());
+
+		std::istringstream(newLevelId.value()) >> saveFileData->level;
+
+		game->contextMananger()->saveGame(saveFileData.get());
+
+	}
 
 
 

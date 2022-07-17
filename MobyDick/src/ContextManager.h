@@ -17,7 +17,7 @@ class StatusItem
 {
 
 public:
-	StatusItem(int id, float value=0, float minValue=0, float maxValue=0) :
+	StatusItem(int id, float value = 0, float minValue = 0, float maxValue = 0) :
 		m_id(id),
 		m_value(value),
 		m_initialValue(value), 
@@ -85,9 +85,10 @@ public:
 	int getSoundVolume();
 	void addStatusItem(int id, StatusItem& statusItem);
 
+	virtual bool saveGame(BaseSaveFileData* saveFileData) = 0;
+	virtual bool loadGame(BaseSaveFileData* saveFileData) = 0;
+
 protected:
-	virtual bool saveGame(BaseSaveFileData& saveFileData) = 0;
-	virtual bool loadGame(BaseSaveFileData& saveFileData) = 0;
 
 	std::map<int, StatusItem> m_statusValueMap;
 	UserSettings m_userSettings{};

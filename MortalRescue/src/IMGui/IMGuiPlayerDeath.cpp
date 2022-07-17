@@ -59,7 +59,7 @@ glm::vec2 IMGuiPlayerDeath::render()
 		//Quit Button
 		ImGui::setCursorToCentered(ImGui::MRSettings::button1Size.x);
 		if (ImGui::Button("Quit", ImGui::MRSettings::button1Size)) {
-			ImGui::sendQuitEvent();
+			util::sendSceneEvent(SCENE_ACTION_EXIT);
 		}
 
 
@@ -85,28 +85,8 @@ void IMGuiPlayerDeath::_sendNextLevelEvent()
 {
 
 
-	SDL_Event event;
-	SceneAction* sceneAction{};
-
-	//Push event to exit the player death scene
-	sceneAction = new SceneAction();
-	sceneAction->actionCode = SCENE_ACTION_EXIT;
-	sceneAction->actionId = "";
-
-	event.type = SDL_USEREVENT;
-	event.user.data1 = sceneAction;
-	SDL_PushEvent(&event);
-
-	//Push the event to reload the current level
-	sceneAction = new SceneAction();
-	
-	sceneAction->actionCode = SCENE_ACTION_RELOAD_CURRENTLEVEL;
-	sceneAction->actionId = "";
-
-	event.type = SDL_USEREVENT;
-	event.user.data1 = sceneAction;
-	SDL_PushEvent(&event);
-
+	util::sendSceneEvent(SCENE_ACTION_EXIT);
+	util::sendSceneEvent(SCENE_ACTION_LOAD_CURRENTLEVEL);
 
 }
 

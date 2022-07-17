@@ -117,6 +117,12 @@
     <ClCompile Include="src\actions\ActorSprintAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\triggers\LevelComplete.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\IMGui\IMGuiTitleScreenMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\blueprints\drone1_blueprint.png">
@@ -173,6 +179,7 @@
     <None Include="setup25.bat">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="assets\gameObjectDefinitions\titleScreenObjects.json" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav">
@@ -339,6 +346,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\actions\ActorSprintAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\triggers\LevelComplete.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IMGui\IMGuiTitleScreenMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

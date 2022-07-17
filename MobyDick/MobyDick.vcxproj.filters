@@ -141,13 +141,7 @@
     <ClCompile Include="src\actions\DefaultOnHoverAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\actions\ContinueGameClickAction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\actions\DefaultOnHoverOutAction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\actions\QuitGameAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\actions\DefaultMoveAction.cpp">
@@ -184,9 +178,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\triggers\Trigger.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\triggers\LevelComplete.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Timer.cpp">
@@ -277,9 +268,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\components\IMGuiComponent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\actions\ActionSettingsClick.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\IMGui\IMGuiExample.cpp">
@@ -440,13 +428,7 @@
     <ClInclude Include="src\actions\DefaultOnHoverAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\actions\ContinueGameClickAction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\actions\DefaultOnHoverOutAction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\actions\QuitGameAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\actions\DefaultMoveAction.h">
@@ -504,9 +486,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\triggers\Trigger.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\triggers\LevelComplete.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Timer.h">
@@ -588,9 +567,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\components\IMGuiComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\actions\ActionSettingsClick.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\IMGui\IMGuiExample.h">
