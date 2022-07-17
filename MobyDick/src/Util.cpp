@@ -5,11 +5,29 @@
 #include <format>
 #include "GameConfig.h"
 #include <iostream>
+#include "Scene.h"
 
 
 
 namespace util
 {
+
+
+	void sendSceneEvent(const int sceneActionCode, const std::string& sceneActionCodeId)
+	{
+
+		SDL_Event event;
+
+		SceneAction* sceneAction = new SceneAction();
+		sceneAction->actionCode = sceneActionCode;
+		sceneAction->actionId = sceneActionCodeId;
+
+		event.type = SDL_USEREVENT;
+		event.user.data1 = sceneAction;
+		SDL_PushEvent(&event);
+
+
+	}
 
 	const int generateRandomNumber(int min, int max)
 	{

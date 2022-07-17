@@ -77,33 +77,11 @@ glm::vec2 IMGuiLevelComplete::render()
 void IMGuiLevelComplete::_sendNextLevelEvent()
 {
 
-
 	//Load the next level into SCENE_PLAY
-	//LevelManager::instance().loadNextLevel("SCENE_PLAY");
-
-	//parent()->parentScene()->loadNextLevel();
-
-	SDL_Event event;
-	SceneAction* sceneAction{};
+	util::sendSceneEvent(SCENE_ACTION_EXIT);
 
 	//Push the event from this levelComplete scene
-	sceneAction = new SceneAction();
-	sceneAction->actionCode = SCENE_ACTION_EXIT;
-	sceneAction->actionId = "";
-
-	event.type = SDL_USEREVENT;
-	event.user.data1 = sceneAction;
-	SDL_PushEvent(&event);
-
-	//Push the event from this levelComplete scene
-	sceneAction = new SceneAction();
-	sceneAction->actionCode = SCENE_ACTION_LOAD_NEXTLEVEL;
-	sceneAction->actionId = "";
-
-	event.type = SDL_USEREVENT;
-	event.user.data1 = sceneAction;
-	SDL_PushEvent(&event);
-
+	util::sendSceneEvent(SCENE_ACTION_LOAD_NEXTLEVEL);
 
 }
 

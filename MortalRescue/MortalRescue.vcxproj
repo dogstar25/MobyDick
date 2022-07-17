@@ -201,6 +201,7 @@
     <ClCompile Include="src\IMGui\IMGuiLevelComplete.cpp" />
     <ClCompile Include="src\IMGui\IMGuiPauseWindow.cpp" />
     <ClCompile Include="src\IMGui\IMGuiPlayerDeath.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiTitleScreenMenu.cpp" />
     <ClCompile Include="src\IMGui\IMGuiTopHud.cpp" />
     <ClCompile Include="src\IMGui\IMGuiTopLeftHud.cpp" />
     <ClCompile Include="src\IMGui\IMGuiTopRightHud.cpp" />
@@ -246,6 +247,7 @@
     <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
     <None Include="assets\gameObjectDefinitions\guiObjects.json" />
     <None Include="assets\gameObjectDefinitions\hudObjects.json" />
+    <None Include="assets\gameObjectDefinitions\titleScreenObjects.json" />
     <None Include="assets\gameObjectDefinitions\wallObjects.json" />
     <None Include="assets\gameObjectDefinitions\particleObjects.json" />
     <None Include="assets\gameObjectDefinitions\triggerObjects.json" />
@@ -303,6 +305,7 @@
     <ClInclude Include="src\IMGui\IMGuiLevelComplete.h" />
     <ClInclude Include="src\IMGui\IMGuiPauseWindow.h" />
     <ClInclude Include="src\IMGui\IMGuiPlayerDeath.h" />
+    <ClInclude Include="src\IMGui\IMGuiTitleScreenMenu.h" />
     <ClInclude Include="src\IMGui\IMGuiTopLeftHud.h" />
     <ClInclude Include="src\IMGui\IMGuiTopRightHud.h" />
     <ClInclude Include="src\IMGui\MR_IMGuiUtil.h" />

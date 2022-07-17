@@ -117,7 +117,7 @@ std::optional<std::string> Scene::getNextLevel()
 
 }
 
-void Scene::reloadCurrentLevel()
+void Scene::loadCurrentLevel()
 {
 
 	loadLevel(m_currentLevelId);

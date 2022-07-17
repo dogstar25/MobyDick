@@ -70,15 +70,7 @@ bool LevelComplete::hasMetCriteria(Scene* scene)
 void LevelComplete::execute()
 {
 
-	SDL_Event event;
-
-	SceneAction* sceneAction = new SceneAction();
-	sceneAction->actionCode = SCENE_ACTION_ADD;
-	sceneAction->actionId = "SCENE_LEVEL_COMPLETE";
-
-	event.type = SDL_USEREVENT;
-	event.user.data1 = sceneAction;
-	SDL_PushEvent(&event);
+	util::sendSceneEvent(SCENE_ACTION_ADD, "SCENE_LEVEL_COMPLETE");
 
 	m_hasTriggered = true;
 
@@ -96,7 +88,7 @@ void LevelComplete::execute()
 		//First load whats currently on file
 		game->contextMananger()->loadGame(saveFileData.get());
 
-		saveFileData->level = newLevelId.value();
+		std::istringstream(newLevelId.value()) >> saveFileData->level;
 
 		game->contextMananger()->saveGame(saveFileData.get());
 

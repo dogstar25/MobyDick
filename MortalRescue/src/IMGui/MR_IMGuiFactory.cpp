@@ -6,6 +6,7 @@
 #include "IMGuiTopRightHud.h"
 #include "IMGuiLevelComplete.h"
 #include "IMGuiPlayerDeath.h"
+#include "IMGuiTitleScreenMenu.h"
 
 
 MR_IMGuiFactory::MR_IMGuiFactory()
@@ -40,6 +41,11 @@ std::shared_ptr<IMGuiItem> MR_IMGuiFactory::create(std::string iMGuiItemType, st
 	else if (iMGuiItemType == "IMGuiPlayerDeath") {
 		iMGuiItem = std::make_shared<IMGuiPlayerDeath>(gameObjectId, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize);
 	}
+	else if (iMGuiItemType == "IMGuiTitleScreenMenu") {
+		iMGuiItem = std::make_shared<IMGuiTitleScreenMenu>(gameObjectId, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize);
+	}
+
+	
 
 	else {
 

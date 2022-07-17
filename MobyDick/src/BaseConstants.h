@@ -312,7 +312,7 @@ inline constexpr int SCENE_ACTION_REPLACE = 3;
 inline constexpr int SCENE_ACTION_EXIT = 4;
 inline constexpr int SCENE_ACTION_LOAD_LEVEL = 5;
 inline constexpr int SCENE_ACTION_LOAD_NEXTLEVEL = 6;
-inline constexpr int SCENE_ACTION_RELOAD_CURRENTLEVEL = 7;
+inline constexpr int SCENE_ACTION_LOAD_CURRENTLEVEL = 7;
 inline constexpr int SCENE_ACTION_DIRECT = 8;
 inline constexpr int SCENE_ACTION_RELEASE_DIRECT = 9;
 

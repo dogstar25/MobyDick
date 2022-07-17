@@ -97,12 +97,7 @@ void CutSceneDiscoverTreasure::end()
 	_endPlayer();
 
 	//Create the event that will trigger the end of the scene to the sceneManager
-	SceneAction* sceneAction = new SceneAction();
-	sceneAction->actionCode = SCENE_ACTION_RELEASE_DIRECT;
-	sceneAction->actionId = "";
-	event.type = SDL_USEREVENT;
-	event.user.data1 = sceneAction;
-	SDL_PushEvent(&event);
+	util::sendSceneEvent(SCENE_ACTION_RELEASE_DIRECT);
 
 }
 

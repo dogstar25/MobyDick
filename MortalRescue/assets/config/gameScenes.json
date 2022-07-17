@@ -1,9 +1,34 @@
 {
     "scenes": [
         {
-            "id": "SCENE_INTRO",
+            "id": "SCENE_TITLE_SCREEN",
             "inputControlMode": "CONTROL_MODE_SELECT",
-            "maxObjects": 500
+            "maxObjects": 500,
+            "gameObjects": [
+                {
+                    "gameObjectId": "SCENE_TITLE_SCREEN",
+                    "layer": "GameLayer::MAIN",
+                    "location": {
+                        "windowPosition": "PositionAlignment::CENTER",
+                        "adjust": {
+                            "x": 0,
+                            "y": -100
+                        }
+                    }
+                },
+                {
+                    "gameObjectId": "IMGUI_TITLE_SCREEN_MENU",
+                    "layer": "GameLayer::GUI",
+                    "location": {
+                        "windowPosition": "PositionAlignment::CENTER",
+                        "adjust": {
+                            "x": 0,
+                            "y": 200
+                        }
+                    }
+                }
+            ]
+
         },
         {
             "id": "SCENE_PLAY",

@@ -36,15 +36,8 @@ bool PlayerDeath::hasMetCriteria(Scene* scene)
 void PlayerDeath::execute()
 {
 
-	SDL_Event event;
 
-	SceneAction* sceneAction = new SceneAction();
-	sceneAction->actionCode = SCENE_ACTION_ADD;
-	sceneAction->actionId = "SCENE_PLAYER_DEATH";
-
-	event.type = SDL_USEREVENT;
-	event.user.data1 = sceneAction;
-	SDL_PushEvent(&event);
+	util::sendSceneEvent(SCENE_ACTION_ADD, "SCENE_PLAYER_DEATH");
 
 	m_hasTriggered = true;
 

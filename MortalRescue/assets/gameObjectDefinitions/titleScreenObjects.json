@@ -1,0 +1,59 @@
+{
+    "gameObjects": [
+        {
+            "id": "SCENE_TITLE_SCREEN",
+            "contactTag": "ContactTag::GENERAL_FREE",
+            "traitTags": [],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_TITLE_SCREEN_IMAGE1"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 512,
+                        "height": 662
+                    },
+                    "absolutePositioning": true
+                }
+            ]
+        },
+        {
+            "id": "IMGUI_TITLE_SCREEN_MENU",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 190,
+                        "height": 245
+                    },
+                    "absolutePositioning": true
+                },
+                {
+                    "id": "IMGUI_COMPONENT",
+                    "imguiType": "IMGuiTitleScreenMenu",
+                    "autoSize": false,
+                    "color": {
+                        "background": "Colors::CHARCOAL",
+                        "backgroundAlpha": 175,
+                        "text": "Colors::WHITE",
+                        "button": "Colors::BLUE",
+                        "buttonHover": "Colors::MIRKWOOD",
+                        "buttonActive": "Colors::YELLOW"
+                    },
+                    "padding": {
+                        "x": 24,
+                        "y": 24
+                    }
+
+                }
+            ]
+        }
+
+    ]
+}

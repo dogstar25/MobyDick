@@ -17,7 +17,7 @@ class StatusItem
 {
 
 public:
-	StatusItem(int id, float value=0, float minValue=0, float maxValue=0) :
+	StatusItem(int id, float value = 0, float minValue = 0, float maxValue = 0) :
 		m_id(id),
 		m_value(value),
 		m_initialValue(value), 

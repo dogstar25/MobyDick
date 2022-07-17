@@ -18,8 +18,6 @@ namespace ImGui
 	void MobyDickFPSFrame();
 	void setFont64();
 	void textCentered(std::string text);
-	void sendQuitEvent();
-	void sendSceneExitEvent();
 	void setCursorToCentered(float itemToCenterSize);
 
 }

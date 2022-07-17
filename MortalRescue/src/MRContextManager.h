@@ -4,7 +4,7 @@
 
 class GameSaveFileData : public BaseSaveFileData {
 	public:
-	std::string level;
+	short level;
 };
 
 class MRContextManager : public ContextManager
@@ -16,6 +16,7 @@ public:
 
 	bool saveGame(BaseSaveFileData* saveFileData) override;
 	bool loadGame(BaseSaveFileData* saveFileData) override;
+	int getCurrentLevel();
 
 
 

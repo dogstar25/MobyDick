@@ -6,10 +6,7 @@
         "levelWidth": 128,
         "levelHeight": 64,
         "tileWidth": 32,
-        "tileHeight": 32,
-        "backgroundTileWidth": 512,
-        "backgroundTileHeight": 512
-
+        "tileHeight": 32
     },
     "tiledLayers": [
         {
@@ -137,10 +134,10 @@
         //    "gameObjectId": "GLOWWALL_192",
         //    "angle": 90
         //},
-        //{
-        //    "id": "LOC_0014_0001",
-        //    "gameObjectId": "ESCAPE_STAIRS"
-        //},
+        {
+            "id": "LOC_0014_0001",
+            "gameObjectId": "ESCAPE_STAIRS"
+        },
         {
             "id": "LOC_0014_0020",
             "gameObjectId": "TURRET"

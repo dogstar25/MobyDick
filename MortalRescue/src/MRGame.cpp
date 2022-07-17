@@ -11,6 +11,7 @@
 #include "ContactListener.h"
 #include "components/DroneBrainComponent.h"
 #include "IMGui/IMGuiUtil.h"
+#include <fstream>
 
 #include "EnumMaps.h"
 #include "ColorMap.h"
@@ -71,12 +72,19 @@ bool MRGame::init(std::shared_ptr<ContactListener> contactListener, std::shared_
 	GameObjectManager::instance().load("gameObjectDefinitions/compositeObjects");
 	GameObjectManager::instance().load("gameObjectDefinitions/guiObjects");
 	GameObjectManager::instance().load("gameObjectDefinitions/hudObjects");
+	GameObjectManager::instance().load("gameObjectDefinitions/titleScreenObjects");
 
 	_displayLoadingMsg();
 
 	//Load a first scene
-	Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
-	scene.loadLevel("1");
+	Scene& scene = SceneManager::instance().pushScene("SCENE_TITLE_SCREEN");
+
+	//Load the current saved level
+	//GameSaveFileData gameSaveFileData{};
+	//contextManager->loadGame(&gameSaveFileData);
+	//std::stringstream level{};
+	//level << gameSaveFileData.level;
+	//scene.loadLevel(level.str());
 
 	//Initialize the sound manager
 	SoundManager::instance().initSound();
@@ -85,11 +93,11 @@ bool MRGame::init(std::shared_ptr<ContactListener> contactListener, std::shared_
 	//Initialize the clock object
 	Clock::instance().init();
 
-	auto object = scene.addGameObject("GLOBAL_FRAME", GameLayer::BACKGROUND_1, 0, 0);
-	object->postInit();
+	//auto object = scene.addGameObject("GLOBAL_FRAME", GameLayer::BACKGROUND_1, 0, 0);
+	//object->postInit();
 
-	object = scene.addGameObject("METEOR_EMITTER", GameLayer::BACKGROUND_1, 3, 7);
-	object->postInit();
+	//auto object = scene.addGameObject("METEOR_EMITTER", GameLayer::BACKGROUND_1, 3, 7);
+	//object->postInit();
 
 	
 	

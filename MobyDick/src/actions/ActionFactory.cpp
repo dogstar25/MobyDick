@@ -10,10 +10,7 @@
 #include "LoadNextLevelAction.h"
 #include "ActorUseAction.h"
 #include "InteractAction.h"
-#include "ActionSettingsClick.h"
 #include "PistolFireAction.h"
-#include "ContinueGameClickAction.h"
-#include "QuitGameAction.h"
 #include "NoAction.h"
 
 #include <iostream>
@@ -75,23 +72,10 @@ std::shared_ptr<Action> ActionFactory::create(std::string actionType)
 
         action = std::make_shared<PistolFireAction>();
     }
-    else if (actionType == "ContinueClick") {
-
-        action = std::make_shared<ContinueGameClickAction>();
-    }
-    else if (actionType == "QuitClick") {
-
-        action = std::make_shared<QuitGameAction>();
-    }
     else if (actionType == "COLL_Player_Wall") {
 
         action = std::make_shared<NoAction>();
     }
-	else if (actionType == "SettingsClick") {
-
-		action = std::make_shared<ActionSettingsClick>();
-	}
-
     else {
         std::cout << "No Action was Matched" << std::endl;
         action = std::make_shared<NoAction>();

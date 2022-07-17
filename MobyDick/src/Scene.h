@@ -49,7 +49,7 @@ public:
 
 	void loadLevel(std::string levelId);
 	void loadNextLevel();
-	void reloadCurrentLevel();
+	void loadCurrentLevel();
 	void reset();
 	void clear();
 	void render();

@@ -125,8 +125,8 @@ void Game::play()
 			else if (action->actionCode == SCENE_ACTION_LOAD_NEXTLEVEL) {
 				SceneManager::instance().loadNextLevel();
 			}
-			else if (action->actionCode == SCENE_ACTION_RELOAD_CURRENTLEVEL) {
-				SceneManager::instance().reloadCurrentLevel();
+			else if (action->actionCode == SCENE_ACTION_LOAD_CURRENTLEVEL) {
+				SceneManager::instance().loadCurrentLevel();
 			}
 			else if (action->actionCode == SCENE_ACTION_DIRECT) {
 				SceneManager::instance().directScene(action->actionId);
