@@ -453,13 +453,25 @@
                         {
                             "actionId": "ACTION_USAGE",
                             "actionClass": "PistolFire"
+                        },
+                        {
+                            "actionId": "ACTION_USAGE_SPECIAL",
+                            "actionClass": "PistolSecondaryFire"
                         }
+
                     ]
                 },
                 {
                     "id": "WEAPON_PISTOL_COMPONENT",
                     "fireOffset": -0.5,
                     "levelUpIncrement": 50,
+                    "secondaryFire": {
+                        "radius": 20,
+                        "chargeTime": 1.5,
+                        "bulletPoolId": "PULSE1_POOL",
+                        "color": "Colors::YELLOW",
+                        "force": 3
+                    },
                     "weaponLevels": [
                         {
                             "level": 1,
@@ -480,89 +492,6 @@
                             "bulletPoolId": "BULLET1_POOL"
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "id": "BULLET1",
-            "traitTags": [ "pooled" ],
-            "description": "Bullet 1",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_BULLET2"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 7,
-                        "height": 4
-                    }
-                },
-                {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_DYNAMIC",
-                    "isBullet": true,
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::PLAYER_BULLET",
-                            "collisionShape": "B2_BOX",
-                            "density": 0.1,
-                            "restitution": 0.3
-                        }
-                    ]
-
-                },
-                {
-                    "id": "POOL_COMPONENT"
-                },
-                {
-                    "id": "VITALITY_COMPONENT",
-                    "speed": 50,
-                    "lifetime": 1.0,
-                    "lifetimeAlphaFade": true
-                }
-            ]
-        },
-        {
-            "id": "BULLET2",
-            "traitTags": [ "pooled" ],
-            "description": "Bullet 2",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_BULLET2",
-                    "color": "Colors::GREEN"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 7,
-                        "height": 4
-                    }
-                },
-                {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_DYNAMIC",
-                    "isBullet": true,
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::ENEMY_BULLET",
-                            "collisionShape": "B2_BOX",
-                            "density": 0.1,
-                            "restitution": 0.3
-                        }
-                    ]
-
-                },
-                {
-                    "id": "POOL_COMPONENT"
-                },
-                {
-                    "id": "VITALITY_COMPONENT",
-                    "speed": 90,
-                    "lifetime": 1.0,
-                    "lifetimeAlphaFade": true
                 }
             ]
         },

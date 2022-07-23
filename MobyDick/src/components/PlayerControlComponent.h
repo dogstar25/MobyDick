@@ -15,10 +15,8 @@ class TransformComponent;
 class VitalityComponent;
 
 namespace PlayerState {
-	inline constexpr int general = 0;
-	inline constexpr int boosting = 1;
-	inline constexpr int invulnerable = 2;
-	inline constexpr int dead = 3;
+	inline constexpr int invulnerable = 1;
+	inline constexpr int dead = 2;
 
 }
 
@@ -32,12 +30,14 @@ public:
 	~PlayerControlComponent();
 
 	virtual void update() {};
-	void setState(int state) { m_currentState = state; }
-	int state() { return m_currentState; }
+	//void setState(int state) { m_currentState = state; }
+	std::bitset<8> state() { return m_state; }
+
+	
 
 protected:
-	int m_currentState{ PlayerState::general };
-
+	//int m_currentState{ PlayerState::general };
+	std::bitset<8> m_state{};
 
 };
 

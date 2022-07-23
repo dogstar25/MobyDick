@@ -42,6 +42,7 @@ public:
 
 	void setLifetimeTimer(float lifetime);
 	void resetLifetime();
+	void reset();
 
 	bool inflictDamage(float damage);
 	bool addHealth(float damage);
@@ -65,7 +66,8 @@ private:
 	std::array<LevelDefinition, MAX_VITALITY_LEVELS> m_regenLevels = {};
 
 	bool m_isLifetimeAlphaFade{ true };
-	std::chrono::duration<float, std::milli> m_lifetime;
+	float m_lifetime{};
+	float m_OriginalLifetime{};
 
 	Timer m_lifetimeTimer{};
 	Timer m_regenTimer{};

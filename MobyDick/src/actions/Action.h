@@ -19,6 +19,7 @@ public:
 	//If we end up calling base, then throw an assert
 	virtual void perform() { assert(false && "An Empty Action was executed!"); };
 	virtual void perform(GameObject*) { assert(false && "An Empty Action was executed!"); };
+	virtual void perform(GameObject*, int) { assert(false && "An Empty Action was executed!"); };
 	virtual void perform(GameObject*, int, int) { assert(false && "An Empty Action was executed!"); };
 	virtual void perform(GameObject*, b2Vec2) { assert(false && "An Empty Action was executed!"); };
 	virtual void perform(GameObject*, float) { assert(false && "An Empty Action was executed!"); };

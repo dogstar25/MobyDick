@@ -65,7 +65,10 @@ glm::vec2 IMGuiPauseWindow::render()
 
 		//Quit Button
 		if (ImGui::Button("Quit", ImGui::MRSettings::button1Size)) {
-			util::sendSceneEvent(SCENE_ACTION_QUIT);
+			//Exit the pause scene
+			util::sendSceneEvent(SCENE_ACTION_EXIT);
+			//Replace the play scene with the title screen
+			util::sendSceneEvent(SCENE_ACTION_REPLACE, "SCENE_TITLE_SCREEN");
 		}
 
 		//spacing

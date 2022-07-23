@@ -59,6 +59,26 @@
             "id": "SFX_TURRET_EXPLODE_1",
             "description": "",
             "filename": "sci-fi_explosion_04.wav"
+        },
+        {
+            "id": "SFX_PULSE_FIRE_3",
+            "description": "Fire Pulse 3",
+            "filename": "fire_pulse_3.wav"
+        },
+        {
+            "id": "SFX_PULSE_FAIL_1",
+            "description": "Fire Pulse Fail 1",
+            "filename": "fire_pulse_fail_1.wav"
+        },
+        {
+            "id": "SFX_PULSE_CHARGING_1",
+            "description": "Pulse Charging 1",
+            "filename": "pulse_charging_1.wav"
+        },
+        {
+            "id": "SFX_PULSE_FULLY_CHARGED_1",
+            "description": "Pulse Fully Charged 1",
+            "filename": "pulse_fully_charged_1.wav"
         }
     ],
   "music": [

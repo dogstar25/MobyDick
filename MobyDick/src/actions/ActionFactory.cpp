@@ -4,13 +4,9 @@
 #include "DefaultOnHoverAction.h"
 #include "DefaultOnHoverOutAction.h"
 #include "PrimitiveMoveAction.h"
-#include "ActorMoveAction.h"
 #include "DroneMoveAction.h"
-#include "ActorRotateAction.h"
 #include "LoadNextLevelAction.h"
-#include "ActorUseAction.h"
 #include "InteractAction.h"
-#include "PistolFireAction.h"
 #include "NoAction.h"
 
 #include <iostream>
@@ -40,10 +36,6 @@ std::shared_ptr<Action> ActionFactory::create(std::string actionType)
 
         action = std::make_shared<DefaultOnHoverOutAction>();
     }
-    else if (actionType == "ActorMove") {
-
-        action = std::make_shared<ActorMoveAction>();
-    }
     else if (actionType == "PrimitiveMove") {
 
         action = std::make_shared<PrimitiveMoveAction>();
@@ -52,25 +44,13 @@ std::shared_ptr<Action> ActionFactory::create(std::string actionType)
 
         action = std::make_shared<DroneMoveAction>();
     }
-    else if (actionType == "ActorRotate") {
-
-        action = std::make_shared<ActorRotateAction>();
-    }
     else if (actionType == "LoadNextLevel") {
 
         action = std::make_shared<LoadNextLevelAction>();
     }
-    else if (actionType == "ActorUse") {
-
-        action = std::make_shared<ActorUseAction>();
-    }
     else if (actionType == "Interact") {
 
         action = std::make_shared<InteractAction>();
-    }
-    else if (actionType == "PistolFire") {
-
-        action = std::make_shared<PistolFireAction>();
     }
     else if (actionType == "COLL_Player_Wall") {
 

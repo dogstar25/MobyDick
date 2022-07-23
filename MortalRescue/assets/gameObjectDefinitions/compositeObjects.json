@@ -104,7 +104,7 @@
                 },
                 {
                     "id": "VITALITY_COMPONENT",
-                    "speed": 20.0,
+                    //"speed": 20.0,
                     "rotationSpeed": 30
                 }
             ]
@@ -143,7 +143,7 @@
                 },
                 {
                     "id": "VITALITY_COMPONENT",
-                    "resistance": 1
+                    "resistance": 5
                 }
             ]
         },

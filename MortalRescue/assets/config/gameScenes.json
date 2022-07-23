@@ -124,7 +124,20 @@
                     "gameObjectId": "TURRET_SCRAP",
                     "lifetime": 0.0,
                     "maxItems": 25
+                },
+                {
+                    "id": "PULSE1_POOL",
+                    "gameObjectId": "PULSE1",
+                    "lifetime": 0.0,
+                    "maxItems": 5
+                },
+                {
+                    "id": "PULSE_EXPLOSION_POOL",
+                    "gameObjectId": "PULSE_EXPLOSION",
+                    "lifetime": 0.0,
+                    "maxItems": 5
                 }
+
 
             ],
             "physics": {

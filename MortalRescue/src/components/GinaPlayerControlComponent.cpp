@@ -1,6 +1,6 @@
 #include "GinaPlayerControlComponent.h"
 
-
+#include "PistolWeaponComponent.h"
 #include "IMGui/IMGuiUtil.h"
 #include "SceneManager.h"
 #include "EnumMaps.h"
@@ -73,7 +73,7 @@ void GinaPlayerControlComponent::handleMovement()
 	{
 		const auto& action = actionComponent->getAction(ACTION_SPRINT);
 		action->perform(parent(), direction, strafe);
-		m_currentState = PlayerState::boosting;
+		m_state.set(PlayerState::boosting);
 		_jetPackSwitch(true);
 		_disableWeapon();
 	}
@@ -81,7 +81,7 @@ void GinaPlayerControlComponent::handleMovement()
 
 		const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
 		moveAction->perform(parent(), direction, strafe);
-		m_currentState = PlayerState::general;
+		m_state.reset(PlayerState::boosting);
 		_jetPackSwitch(false);
 		_enableWeapon();
 	}
@@ -96,6 +96,21 @@ void GinaPlayerControlComponent::handleMovement()
 }
 void GinaPlayerControlComponent::handleActions()
 {
+	//Get the current mouse state
+	int mouseX, mouseY;
+	auto mouseButtons = SDL_GetMouseState(&mouseX, &mouseY);
+
+	//We need to know the state of the right mosue button to see
+	//if we send the charging indicator to the weapon
+	if (mouseButtons & SDL_BUTTON_RMASK) {
+
+		_sendWeaponChargeFlag(true);
+
+	}
+	else {
+		_sendWeaponChargeFlag(false);
+	}
+
 
 	if (SceneManager::instance().playerInputEvents().empty() == false) {
 		//convenience reference to outside component(s)
@@ -125,10 +140,24 @@ void GinaPlayerControlComponent::handleActions()
 
 					break;
 				case SDL_MOUSEBUTTONDOWN:
+					
+					if(m_state.test(PlayerState::boosting) == false){
 
-					if(m_currentState != PlayerState::boosting){
+						if (mouseButtons & SDL_BUTTON_LMASK) {
+							action = actionComponent->getAction(ACTION_USE);
+							action->perform(parent(), ACTION_USAGE);
+						}
+					}
+					break;
+				case SDL_MOUSEBUTTONUP:
+
+					//If this is the right mouse button released, then fire the secondary weapon action
+					//Note: the weapon will determine whether it can fire based on whether its charged
+					if (m_state.test(PlayerState::boosting) == false && inputEvent.event.button.button == SDL_BUTTON_RIGHT) {
+
 						action = actionComponent->getAction(ACTION_USE);
-						action->perform(parent());
+						action->perform(parent(), ACTION_USAGE_SPECIAL);
+
 					}
 					break;
 
@@ -160,7 +189,7 @@ void GinaPlayerControlComponent::_jetPackSwitch(bool turnOn)
 void GinaPlayerControlComponent::boostReset(bool boostTimerRest)
 {
 
-	m_currentState = PlayerState::general;
+	m_state.reset(PlayerState::boosting);
 	_jetPackSwitch(false);
 
 	//Set a timer so that we cant boost again for a set time
@@ -253,3 +282,19 @@ void GinaPlayerControlComponent::_enableWeapon()
 
 }
 
+void GinaPlayerControlComponent::_sendWeaponChargeFlag(const bool isCharging)
+{
+
+	const auto& inventoryComponent = parent()->getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT);
+
+	//If the active inventory item is not the pistol/weapon then do nothing
+	auto pistol = inventoryComponent->getActiveItem();
+	if (pistol->hasTrait(TraitTag::weapon) == true) {
+
+		const auto& weaponComponent = pistol->getComponent<PistolWeaponComponent>(ComponentTypes::WEAPON_COMPONENT);
+
+		weaponComponent->charge(isCharging);
+
+	}
+
+}

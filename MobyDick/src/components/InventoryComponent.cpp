@@ -74,6 +74,8 @@ std::optional<GameObject*> InventoryComponent::getItem(const int traitTag)
 	return foundItem;
 }
 
+
+
 int InventoryComponent::addCollectible(const int collectibleType, int count)
 {
 

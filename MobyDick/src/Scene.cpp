@@ -71,6 +71,9 @@ Scene::Scene(std::string sceneId)
 		m_physicsWorld->SetDebugDraw(&DebugDraw::instance());
 	}
 
+	//Initialize the camera state
+	Camera::instance().setCurrentState(CameraState::IDLE);
+
 }
 
 Scene::~Scene()

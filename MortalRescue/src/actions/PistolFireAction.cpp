@@ -1,8 +1,8 @@
 #include "PistolFireAction.h"
 
 
-#include "../GameObject.h"
-#include "../SoundManager.h"
+#include "GameObject.h"
+#include "SoundManager.h"
 
 void PistolFireAction::perform(GameObject* gameObject)
 {
@@ -10,6 +10,8 @@ void PistolFireAction::perform(GameObject* gameObject)
 	const auto& weaponComponent = gameObject->getComponent<WeaponComponent>(ComponentTypes::WEAPON_COMPONENT);
 	b2Vec2 position = {0,0};
 	float angle = 0;
+
+	std::string bulletPoolId = weaponComponent->getBulletPoolId();
 
 	//Sound
 	SoundManager::instance().playSound("SFX_LASER_002");
