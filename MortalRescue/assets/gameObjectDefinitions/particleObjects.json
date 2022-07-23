@@ -188,7 +188,7 @@
         },
         {
             "id": "FORCE_WALL_SLIDER_32",
-            "traitTags": [ ],
+            "traitTags": [],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -220,6 +220,168 @@
                 {
                     "id": "POOL_COMPONENT"
                 }
+            ]
+        },
+        {
+            "id": "BULLET1",
+            "traitTags": [ "pooled" ],
+            "description": "Bullet 1",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_BULLET2"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 7,
+                        "height": 4
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "isBullet": true,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::PLAYER_BULLET",
+                            "collisionShape": "B2_BOX",
+                            "density": 0.1,
+                            "restitution": 0.3
+                        }
+                    ]
+
+                },
+                {
+                    "id": "POOL_COMPONENT"
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 50,
+                    "lifetime": 1.0,
+                    "lifetimeAlphaFade": true
+                }
+            ]
+        },
+        {
+            "id": "BULLET2",
+            "traitTags": [ "pooled" ],
+            "description": "Bullet 2",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_BULLET2",
+                    "color": "Colors::GREEN"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 7,
+                        "height": 4
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "isBullet": true,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::ENEMY_BULLET",
+                            "collisionShape": "B2_BOX",
+                            "density": 0.1,
+                            "restitution": 0.3
+                        }
+                    ]
+
+                },
+                {
+                    "id": "POOL_COMPONENT"
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 90,
+                    "lifetime": 1.0,
+                    "lifetimeAlphaFade": true
+                }
+            ]
+        },
+        {
+            "id": "PULSE1",
+            "traitTags": [ "pooled" ],
+            "description": "Pulse Bullet 1",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_SMOKE_PARTICLE_2"
+                    //"textureBlendMode": "RenderBlendMode::ADD"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::PLAYER_PULSE_BULLET",
+                            "collisionShape": "B2_CIRCLE",
+                            "density": 2.1,
+                            "restitution": 0.0,
+                            "collisionRadius": 0.64
+                        }
+                    ]
+
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 20,
+                    "lifetimeAlphaFade": false
+                },
+                {
+                    "id": "POOL_COMPONENT"
+                }
+
+            ]
+        },
+        {
+            "id": "PULSE_EXPLOSION",
+            "traitTags": ["pooled"],
+            "description": "Pulse Explosion 1",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_SMOKE_PARTICLE_2",
+                    "color": "Colors::BLUE"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::PLAYER_PULSE_EXPLOSION",
+                            "collisionShape": "B2_CIRCLE",
+                            "density": 5.1,
+                            "collisionRadius": 0.64
+                        }
+                    ]
+
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "lifetime": 0.5
+                },
+                {
+                    "id": "POOL_COMPONENT"
+                }
+
             ]
         }
     ]

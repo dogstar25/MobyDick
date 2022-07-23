@@ -170,7 +170,7 @@ void DroneBrainComponent::_doEngage()
 		auto actionComponent = eyeGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 
 		const auto& action = actionComponent->getAction(ACTION_USAGE);
-		action->perform(eyeGameObject.get());
+		//action->perform(eyeGameObject.get());
 	}
 
 	//Navigate towards target location, unless you are already there
@@ -270,7 +270,7 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 	//Once the angle is very close then set the angle directly
 	if (difference < 0.05) {
 
-		action->perform(gameObject, 0.);
+		action->perform(gameObject, (float)0.);
 
 	}
 	else {

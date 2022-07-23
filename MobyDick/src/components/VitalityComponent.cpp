@@ -18,12 +18,12 @@ VitalityComponent::VitalityComponent(Json::Value componentJSON)
 
 	m_speed = componentJSON["speed"].asFloat();
 	m_rotationSpeed = componentJSON["rotationSpeed"].asFloat();
-	m_lifetime = std::chrono::duration<float>(componentJSON["lifetime"].asFloat());
+	//m_lifetime  = std::chrono::duration<float>(componentJSON["lifetime"].asFloat());
 
 	m_health = m_maxHealth = componentJSON["health"].asFloat();
 
-	float lifetime = componentJSON["lifetime"].asFloat();
-	m_lifetimeTimer = Timer(lifetime);
+	float m_lifetime = m_OriginalLifetime =  componentJSON["lifetime"].asFloat();
+	m_lifetimeTimer = Timer(m_lifetime);
 
 	m_isLifetimeAlphaFade = componentJSON["lifetimeAlphaFade"].asBool();
 	m_resistance = componentJSON["resistance"].asFloat();
@@ -228,5 +228,13 @@ void VitalityComponent::resetLifetime()
 {
 
 	m_lifetimeTimer.reset();
+
+}
+
+void VitalityComponent::reset()
+{
+
+	m_lifetimeTimer = Timer(m_OriginalLifetime);
+	resetLifetime();
 
 }

@@ -12,6 +12,20 @@
 namespace util
 {
 
+	//bool isMouseButtonPressed(uint8 button) {
+
+	//	int mouseX, mouseY;
+	//	auto mouseButtons = SDL_GetMouseState(&mouseX, &mouseY);
+	//	if (mouseButtons & button) {
+	//		return true;
+	//	}
+	//	else {
+	//		return false;
+	//	}
+
+	//	
+
+	//}
 
 	void sendSceneEvent(const int sceneActionCode, const std::string& sceneActionCodeId)
 	{

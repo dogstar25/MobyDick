@@ -342,7 +342,7 @@ bool SurvivorBrainComponent::_rotateTowards(b2Vec2 targetPoint)
 	if (difference < 0.19) {
 
 		const auto& action = actionComponent->getAction(ACTION_ROTATE);
-		action->perform(parent(), 0);
+		action->perform(parent(), (float)0.0);
 		onTarget = true;
 
 		//This next code makes the aim dead on balls accurate - may be too hard

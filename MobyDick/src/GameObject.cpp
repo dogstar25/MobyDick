@@ -15,6 +15,8 @@ extern std::unique_ptr<Game> game;
 GameObject::~GameObject()
 {
 
+	std::cout << "GameObject Destructor called" << std::endl;
+
 }
 
 GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, int layer, bool cameraFollow, std::string name)
@@ -276,13 +278,20 @@ void GameObject::render()
 
 void GameObject::reset()
 {
+
+	if (this->id() == "PULSE1") {
+		int todd = 1;
+	}
+
 	if (hasComponent(ComponentTypes::POOL_COMPONENT)) {
 		getComponent<PoolComponent>(ComponentTypes::POOL_COMPONENT)->reset();
 	}
+
 	if (hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
 		getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT)->setOffGrid();
 		getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT)->update();
 	}
+
 
 }
 

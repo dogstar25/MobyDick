@@ -103,15 +103,19 @@
         },
         {
             "id": "LOC_0022_0002",
-            "gameObjectId": "PLAYER_HEART"
+            "gameObjectId": "PULSE1"
         },
-        //{
-        //    "id": "LOC_0016_0013",
-        //    "gameObjectId": "DRONE"
-        //},
+        {
+            "id": "LOC_0016_0013",
+            "gameObjectId": "DRONE"
+        },
         {
             "id": "LOC_0016_0006",
             "gameObjectId": "HEALTH_STATION"
+        },
+        {
+            "id": "LOC_0011_0005",
+            "gameObjectId": "PLAYER_HEART"
         },
         {
             "id": "LOC_0015_0023",
@@ -160,18 +164,18 @@
             "gameObjectId": "TURRET",
             "angle": 270
         },
-        //{
-        //    "id": "LOC_0019_0031",
-        //    "gameObjectId": "BREAKABLE_WALL"
-        //},
-        //{
-        //    "id": "LOC_0020_0031",
-        //    "gameObjectId": "BREAKABLE_WALL"
-        //},
-        //{
-        //    "id": "LOC_0021_0031",
-        //    "gameObjectId": "BREAKABLE_WALL"
-        //},
+        {
+            "id": "LOC_0019_0031",
+            "gameObjectId": "BREAKABLE_WALL"
+        },
+        {
+            "id": "LOC_0020_0031",
+            "gameObjectId": "BREAKABLE_WALL"
+        },
+        {
+            "id": "LOC_0021_0031",
+            "gameObjectId": "BREAKABLE_WALL"
+        },
         {
             "id": "LOC_0034_0033",
             "gameObjectId": "TURRET",

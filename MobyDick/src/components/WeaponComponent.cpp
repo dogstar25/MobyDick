@@ -45,21 +45,17 @@ void WeaponComponent::update()
 
 }
 
-void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
+void WeaponComponent::fire(const b2Vec2& origin, const float& angle, std::string bulletPoolId, float force, std::optional<SDL_Color> color)
 {
-	std::string bulletPoolId =
-		m_weaponLevelDetails.at(m_currentLevel).bulletPoolId;
-	
+
 	//Get a free bullet
 	std::optional<std::shared_ptr<GameObject>> bullet = parent()->parentScene()->objectPoolManager().getPooledObject(bulletPoolId);
 
-	if(bullet.has_value()){
+	if (bullet.has_value()) {
 		//Get references to the bullets components
 		const auto& vitalityComponent = bullet.value()->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 		const auto& physicsComponent = bullet.value()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 		const auto& renderComponent = bullet.value()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
-
-		float force = m_weaponLevelDetails.at(m_currentLevel).force;
 
 		//Calculate the origin of the bullet
 		float dx = origin.x + cos(angle);
@@ -88,7 +84,7 @@ void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 
 		//Only set the bullets color if one was defined in the weapons config
 		//otherwise leave bullet whatever color it is
-		if (m_weaponLevelDetails.at(m_currentLevel).color.has_value()) {
+		if (color.has_value()) {
 			renderComponent->setColor(m_weaponLevelDetails.at(m_currentLevel).color.value());
 		}
 
@@ -99,6 +95,24 @@ void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
 		std::cout << "No Bullet available" << std::endl;
 	}
 
+}
+
+void WeaponComponent::fire(const b2Vec2& origin, const float& angle)
+{
+	float force = m_weaponLevelDetails.at(m_currentLevel).force;
+	std::string bulletPoolId = m_weaponLevelDetails.at(m_currentLevel).bulletPoolId;
+	
+	std::optional<SDL_Color> color = m_weaponLevelDetails.at(m_currentLevel).color;
+
+	fire(origin, angle, bulletPoolId, force, color);
+
+}
+
+std::string WeaponComponent::getBulletPoolId()
+{
+	assert(m_weaponLevelDetails.find(m_currentLevel) != m_weaponLevelDetails.end() && "There is no bulletId at the set level!");
+
+	return m_weaponLevelDetails.at(m_currentLevel).bulletPoolId;
 }
 
 void WeaponComponent::_levelUp()

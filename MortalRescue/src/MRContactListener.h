@@ -18,27 +18,28 @@ public:
 
 	MRContactListener() {};
 
-//	static MRContactListener& instance();
-
-	//Override functions
 	void BeginContact(b2Contact*) override;
 	void EndContact(b2Contact*) override;
 
 	void virtual handleContact(b2Contact* contact, b2Vec2 contactPoint) override;
 
 private:
-	void _player_wall(GameObject* player, GameObject* wall, b2Vec2 contactPoint);
-	void _bullet_wall(GameObject* bullet, GameObject* wall, b2Vec2 contactPoint);
-	void _playerBullet_droneShield(GameObject* playerBullet, GameObject* droneShield, b2Vec2 contactPoint);
-	void _player_shieldScrap(GameObject* player, GameObject* shieldScrap, b2Vec2 contactPoint);
-	void _enemyBullet_player(GameObject* bullet, GameObject* player, b2Vec2 contactPoint);
-	void _survivor_escape(GameObject* bullet, GameObject* player, b2Vec2 contactPoint);
-	void _playerBullet_wallPiece(GameObject* playerBullet, GameObject* wallPiece, b2Vec2 contactPoint);
-	void _playerBullet_enemyTurret(GameObject* playerBullet, GameObject* enenmyTurret, b2Vec2 contactPoint);
-	void _playerBullet_droneBrain(GameObject* playerBullet, GameObject* droneBrain, b2Vec2 contactPoint);
-	void _player_heartPickup(GameObject* player, GameObject* heartPickup, b2Vec2 contactPoint);
 
-	
+	void _player_wall(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _bullet_wall(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _playerBullet_droneShield(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _player_shieldScrap(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _enemyBullet_player(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _survivor_escape(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _playerBullet_wallPiece(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _playerBullet_enemyTurret(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _playerBullet_droneBrain(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _player_heartPickup(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _playerPulseBullet_droneShield(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _playerPulseBullet_wallPiece(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _playerPulseExplosion_droneShield(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _playerPulse_wallPiece(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _playerPulseExplosion_wallPiece(GameObject*, GameObject*, b2Vec2 contactPoint);
 	
 };
 

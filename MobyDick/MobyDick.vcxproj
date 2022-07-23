@@ -256,7 +256,6 @@
     <ClCompile Include="src\components\BrainComponent.cpp" />
     <ClCompile Include="src\components\ParticleComponent.cpp" />
     <ClCompile Include="src\components\PoolComponent.cpp" />
-    <ClCompile Include="src\actions\PistolFireAction.cpp" />
     <ClCompile Include="src\actions\DefaultMoveAction.cpp" />
     <ClCompile Include="src\actions\DefaultRotateAction.cpp" />
     <ClCompile Include="src\actions\DefaultOnHoverOutAction.cpp" />
@@ -265,10 +264,7 @@
     <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\actions\NoAction.cpp" />
-    <ClCompile Include="src\actions\ActorUseAction.cpp" />
     <ClCompile Include="src\components\InventoryComponent.cpp" />
-    <ClCompile Include="src\actions\ActorRotateAction.cpp" />
-    <ClCompile Include="src\actions\ActorMoveAction.cpp" />
     <ClCompile Include="src\components\ActionComponent.cpp" />
     <ClCompile Include="src\actions\Action.cpp" />
     <ClCompile Include="src\DebugPanel.cpp" />
@@ -351,7 +347,6 @@
     <ClInclude Include="src\components\BrainComponent.h" />
     <ClInclude Include="src\components\ParticleComponent.h" />
     <ClInclude Include="src\components\PoolComponent.h" />
-    <ClInclude Include="src\actions\PistolFireAction.h" />
     <ClInclude Include="src\actions\DefaultMoveAction.h" />
     <ClInclude Include="src\actions\DefaultRotateAction.h" />
     <ClInclude Include="src\actions\DefaultOnHoverOutAction.h" />
@@ -363,10 +358,7 @@
     <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\actions\NoAction.h" />
-    <ClInclude Include="src\actions\ActorUseAction.h" />
     <ClInclude Include="src\components\InventoryComponent.h" />
-    <ClInclude Include="src\actions\ActorRotateAction.h" />
-    <ClInclude Include="src\actions\ActorMoveAction.h" />
     <ClInclude Include="src\components\ActionComponent.h" />
     <ClInclude Include="src\actions\Action.h" />
     <ClInclude Include="src\DebugPanel.h" />

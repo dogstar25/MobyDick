@@ -18,8 +18,10 @@ public:
 	static SoundManager& instance();
 	void initSound();
 	void update();
-	void playSound(std::string id);
+	int playSound(std::string id);
+	void playSound(std::string id, int channel);
 	void playMusic(std::string id, int loopTimes);
+	void stopSound(int channel);
 	void setVolume(int volume);
 
 	float test;

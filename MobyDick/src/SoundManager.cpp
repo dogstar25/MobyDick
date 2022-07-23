@@ -86,9 +86,23 @@ void SoundManager::loadSounds()
 
 }
 
-void SoundManager::playSound(std::string id )
+void SoundManager::stopSound(int channel)
+{
+	int channelPlayedOn = Mix_HaltChannel(channel);
+
+}
+
+int SoundManager::playSound(std::string id )
 {
 	int channelPlayedOn = Mix_PlayChannel(-1, m_sfxChunks[id], 0);
+	return channelPlayedOn;
+
+}
+
+
+void SoundManager::playSound(std::string id, int channel)
+{
+	int channelPlayedOn = Mix_PlayChannel(channel, m_sfxChunks[id], 0);
 
 }
 
@@ -102,7 +116,8 @@ void SoundManager::allocateChannels()
 {
 	int soundChannels = GameConfig::instance().soundChannels();
 
-	Mix_AllocateChannels(soundChannels);
+	//Mix_AllocateChannels(soundChannels);
+	int channels = Mix_AllocateChannels(soundChannels);
 
 }
 

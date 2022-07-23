@@ -62,6 +62,7 @@ namespace util
 	void colorApplyAlpha(ImVec4& color, int alpha);
 
 	b2Vec2 matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float);
+	bool isMouseButtonPressed(uint8 button);
 
 };
 

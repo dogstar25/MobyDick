@@ -15,8 +15,8 @@ class VitalityComponent;
 
 
 namespace PlayerState {
-	inline constexpr int custom = 10;
-
+	inline constexpr int boosting = 5;
+	//inline constexpr int chargingWeapon = 6;
 }
 
 class GinaPlayerControlComponent : public PlayerControlComponent
@@ -44,6 +44,7 @@ private:
 	void _enableWeapon();
 
 	void _jetPackSwitch(bool turnOn);
+	void _sendWeaponChargeFlag(const bool isCharging);
 };
 
 

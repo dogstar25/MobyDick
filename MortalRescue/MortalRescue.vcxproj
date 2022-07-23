@@ -184,10 +184,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\actions\ActorBoostAction.cpp" />
+    <ClCompile Include="src\actions\ActorMoveAction.cpp" />
+    <ClCompile Include="src\actions\ActorRotateAction.cpp" />
+    <ClCompile Include="src\actions\ActorUseAction.cpp" />
     <ClCompile Include="src\actions\HealthStationInteraction.cpp" />
     <ClCompile Include="src\actions\MRActionFactory.cpp" />
     <ClCompile Include="src\actions\DroneEyeRotateAction.cpp" />
     <ClCompile Include="src\actions\ActorSprintAction.cpp" />
+    <ClCompile Include="src\actions\PistolFireAction.cpp" />
+    <ClCompile Include="src\actions\PistolSecondaryFireAction.cpp" />
     <ClCompile Include="src\actions\SurvivorInteractionAction.cpp" />
     <ClCompile Include="src\actions\TurretFireAction.cpp" />
     <ClCompile Include="src\components\GinaVitalityComponent.cpp" />
@@ -287,11 +292,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\actions\ActorBoostAction.h" />
+    <ClInclude Include="src\actions\ActorMoveAction.h" />
+    <ClInclude Include="src\actions\ActorRotateAction.h" />
     <ClInclude Include="src\actions\ActorSprintAction.h" />
+    <ClInclude Include="src\actions\ActorUseAction.h" />
     <ClInclude Include="src\actions\HealthStationInteraction.h" />
     <ClInclude Include="src\actions\MRActionFactory.h" />
     <ClInclude Include="src\actions\DroneEyeRotateAction.h" />
     <ClInclude Include="src\actions\ButtonInteraction.h" />
+    <ClInclude Include="src\actions\PistolFireAction.h" />
+    <ClInclude Include="src\actions\PistolSecondaryFireAction.h" />
     <ClInclude Include="src\actions\SurvivorInteractionAction.h" />
     <ClInclude Include="src\actions\TurretFireAction.h" />
     <ClInclude Include="src\components\GinaVitalityComponent.h" />

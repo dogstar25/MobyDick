@@ -27,6 +27,8 @@ void ObjectPoolManager::init(Json::Value definitionJSON,  Scene* parentScene)
 			auto& gameObject = m_objectPool[poolId].emplace_back(std::make_shared<GameObject>(gameObjectId, -50.0f, -50.0f, 0.0f, parentScene));
 			gameObject->reset();
 
+			assert(gameObject->hasTrait(TraitTag::pooled) && "GameObject being pooled must be defined with the TraitTag::pooled trait");
+
 		}
 
 	}
@@ -62,7 +64,7 @@ std::optional<std::shared_ptr<GameObject>> ObjectPoolManager::getPooledObject(st
 
 			poolComponent->setAvailable(false);
 			physicsComponent->setPhysicsBodyActive(true);
-			vitalityComponent->resetLifetime();
+			vitalityComponent->reset();
 			return pooledObject;
 		}
 	}

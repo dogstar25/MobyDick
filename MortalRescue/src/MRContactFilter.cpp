@@ -28,6 +28,8 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[DRONE_SHIELD].reset();
 	m_contactMasks[DRONE_SHIELD].set(HEAVY_PARTICLE);
 	m_contactMasks[DRONE_SHIELD].set(PLAYER_BULLET);
+	m_contactMasks[DRONE_SHIELD].set(PLAYER_PULSE_BULLET);
+	m_contactMasks[DRONE_SHIELD].set(PLAYER_PULSE_EXPLOSION);
 
 	//DRONE_WEAPON
 	m_contactMasks[DRONE_WEAPON].reset();
@@ -91,6 +93,18 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_BULLET].set(WALL_PIECE);
 	m_contactMasks[PLAYER_BULLET].set(ENEMY_TURRET);
 
+	//PLAYER_PULSE_BULLET
+	m_contactMasks[PLAYER_PULSE_BULLET].reset();
+	m_contactMasks[PLAYER_PULSE_BULLET].set(DRONE_SHIELD);
+	m_contactMasks[PLAYER_PULSE_BULLET].set(WALL_PIECE);
+	m_contactMasks[PLAYER_PULSE_BULLET].set(ENEMY_TURRET);
+
+	//PLAYER_PULSE_EXPLOSION
+	m_contactMasks[PLAYER_PULSE_EXPLOSION].reset();
+	m_contactMasks[PLAYER_PULSE_EXPLOSION].set(DRONE_SHIELD);
+	m_contactMasks[PLAYER_PULSE_EXPLOSION].set(WALL_PIECE);
+	m_contactMasks[PLAYER_PULSE_EXPLOSION].set(ENEMY_TURRET);
+
 	//SHIELD_SCRAP
 	m_contactMasks[SHIELD_SCRAP].reset();
 	m_contactMasks[SHIELD_SCRAP].set(PLAYER_COLLISION);
@@ -137,12 +151,16 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[WALL_PIECE].set(SURVIVOR);
 	m_contactMasks[WALL_PIECE].set(PLAYER_COLLISION);
 	m_contactMasks[WALL_PIECE].set(PLAYER_BULLET);
+	m_contactMasks[WALL_PIECE].set(PLAYER_PULSE_BULLET);
+	m_contactMasks[WALL_PIECE].set(PLAYER_PULSE_EXPLOSION);
 
 	//Turret
 	m_contactMasks[ENEMY_TURRET].reset();
 	m_contactMasks[ENEMY_TURRET].set(SURVIVOR);
 	m_contactMasks[ENEMY_TURRET].set(SHIELD_SCRAP);
 	m_contactMasks[ENEMY_TURRET].set(PLAYER_BULLET);
+	m_contactMasks[ENEMY_TURRET].set(PLAYER_PULSE_BULLET);
+	m_contactMasks[ENEMY_TURRET].set(PLAYER_PULSE_EXPLOSION);
 
 	//Drone Scrap
 	m_contactMasks[DRONE_SCRAP].reset();
@@ -159,6 +177,7 @@ MRContactFilter::MRContactFilter()
 	//Container Inside
 	m_contactMasks[CONTAINER_INSIDE].reset();
 	m_contactMasks[CONTAINER_INSIDE].set(HEART_PICKUP);
+	m_contactMasks[CONTAINER_INSIDE].set(PLAYER_PULSE_BULLET);
 
 }
 

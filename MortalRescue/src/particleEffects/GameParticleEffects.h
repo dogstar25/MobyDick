@@ -193,4 +193,42 @@ namespace ParticleEffects {
 		.particleSpawnCountMax = 4
 	};
 
+	static const ParticleEffect testBullet = {
+		.poolId = "BULLET2_POOL",
+		.originMin = {0,0},
+		.originMax = {0,0},
+		.forceMin = 20,
+		.forceMax = 20,
+		.lifetimeMin = 4.0,
+		.lifetimeMax = 7.0,
+		.alphaFade = true,
+		.angleMin = 0,
+		.angleMax = 360,
+		.particleSizeMin = 16.F,
+		.particleSizeMax = 32.F,
+		.colorRangeBegin = { 0, 255, 255, 255 },
+		.colorRangeEnd = { 0, 255, 255, 255 },
+		.particleSpawnCountMin = 2,
+		.particleSpawnCountMax = 4
+	};
+
+	static const ParticleEffect pulseExplosion = {
+			.poolId = "PULSE_EXPLOSION_POOL",
+			.originMin = {0,0},
+			.originMax = {0,0},
+			.forceMin = 0,
+			.forceMax = 0,
+			.lifetimeMin = 1.0,
+			.lifetimeMax = 1.0,
+			.alphaFade = false,
+			.angleMin = 0,
+			.angleMax = 0,
+			.particleSizeMin = 32.F,
+			.particleSizeMax = 32.F,
+			.colorRangeBegin = { 0, 0, 0, 0 },
+			.colorRangeEnd = { 0, 0, 0, 0 },
+			.particleSpawnCountMin = 1,
+			.particleSpawnCountMax = 1
+	};
+
 }

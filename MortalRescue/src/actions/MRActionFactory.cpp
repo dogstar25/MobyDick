@@ -9,6 +9,11 @@
 #include "ActorBoostAction.h"
 #include "ActorSprintAction.h"
 #include "HealthStationInteraction.h"
+#include "ActorMoveAction.h"
+#include "ActorRotateAction.h"
+#include "ActorUseAction.h"
+#include "PistolFireAction.h"
+#include "PistolSecondaryFireAction.h"
 
 
 #include <iostream>
@@ -46,6 +51,27 @@ std::shared_ptr<Action> MRActionFactory::create(std::string actionType)
 
 		action = std::make_shared<ActorSprintAction>();
 	}
+	else if (actionType == "ActorUse") {
+
+		action = std::make_shared<ActorUseAction>();
+	}
+	else if (actionType == "ActorMove") {
+
+		action = std::make_shared<ActorMoveAction>();
+	}
+	else if (actionType == "ActorRotate") {
+
+		action = std::make_shared<ActorRotateAction>();
+	}
+	else if (actionType == "PistolFire") {
+
+		action = std::make_shared<PistolFireAction>();
+	}
+	else if (actionType == "PistolSecondaryFire") {
+
+		action = std::make_shared<PistolSecondaryFireAction>();
+	}
+
 
 	
 

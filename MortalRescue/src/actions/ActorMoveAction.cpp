@@ -1,7 +1,7 @@
 #include "ActorMoveAction.h"
 
 
-#include "../GameObject.h"
+#include "GameObject.h"
 
 
 void ActorMoveAction::perform(GameObject* gameObject, int direction, int strafe)

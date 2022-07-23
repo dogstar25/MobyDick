@@ -100,13 +100,17 @@ void MRContactListener::_playerBullet_droneBrain(GameObject* playerBullet, GameO
 
 }
 
-void MRContactListener::_playerBullet_enemyTurret(GameObject* player, GameObject* enemyTurret, b2Vec2 contactPoint)
+void MRContactListener::_playerBullet_enemyTurret(GameObject* playerBullet, GameObject* enemyTurret, b2Vec2 contactPoint)
 {
 
 
 	//Inflict damage to the turret
 	const auto& turretVitalityComponent = enemyTurret->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
-	bool turretDead = turretVitalityComponent->inflictDamage(1);
+	auto bulletVitality = playerBullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+
+	auto bulletForce = bulletVitality->attackPower();
+
+	bool turretDead = turretVitalityComponent->inflictDamage(bulletForce);
 	if (turretDead) {
 
 		enemyTurret->setRemoveFromWorld(true);
@@ -175,15 +179,9 @@ void MRContactListener::_bullet_wall(GameObject* bullet, GameObject* wall, b2Vec
 void MRContactListener::_playerBullet_droneShield(GameObject* playerBullet, GameObject* droneShield, b2Vec2 contactPoint)
 {
 
-	//IF the shield is broken, we dont want to do anything, but we still get this callback so just return 
-	//if (droneShield->broken() == true) {
-	//	return;
-	//}
 
 	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", GameLayer::MAIN, -1, -1);
 	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
-	//auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER", GameLayer::MAIN, -1, -1);
-	//auto particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
 
 	particleComponent->setType(ParticleEmitterType::ONETIME);
 
@@ -199,6 +197,7 @@ void MRContactListener::_playerBullet_droneShield(GameObject* playerBullet, Game
 	auto bulletVitality = playerBullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 	auto shieldVitality = droneShield->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 	auto shieldHolds = shieldVitality->testResistance(bulletVitality->attackPower());
+
 	if (shieldHolds == false) {
 
 		particleComponent->addParticleEffect(ParticleEffects::impactSmoke);
@@ -211,6 +210,115 @@ void MRContactListener::_playerBullet_droneShield(GameObject* playerBullet, Game
 		particleComponent->addParticleEffect(ParticleEffects::deflect);
 		SoundManager::instance().playSound("SFX_RETRO_IMPACT_DEFLECT_16");
 	}
+
+}
+
+
+void MRContactListener::_playerPulseBullet_droneShield(GameObject* playerPulseBullet, GameObject* droneShield, b2Vec2 contactPoint)
+{
+
+
+	//playerPulseBullet->setRemoveFromWorld(true);
+
+	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", GameLayer::MAIN, -1, -1);
+	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+
+	particleComponent->setType(ParticleEmitterType::ONETIME);
+	//particleComponent->addParticleEffect(ParticleEffects::impactSmoke);
+	//particleComponent->addParticleEffect(ParticleEffects::scrap);
+	particleComponent->addParticleEffect(ParticleEffects::pulseExplosion);
+
+	//Convert from box2d to gameWorld coordinates
+	contactPoint.x *= GameConfig::instance().scaleFactor();
+	contactPoint.y *= GameConfig::instance().scaleFactor();
+	particleEmitterObject->setPosition(contactPoint.x, contactPoint.y);
+
+	auto bulletVitality = playerPulseBullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+
+	auto shieldVitality = droneShield->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	auto shieldHolds = shieldVitality->testResistance(bulletVitality->attackPower());
+
+	//playerPulseBullet->setRemoveFromWorld(true);
+	SoundManager::instance().playSound("SFX_IMPACT_1");
+	//bulletVitality->setLifetimeTimer(0.0045);
+	playerPulseBullet->setRemoveFromWorld(true);
+
+
+
+	//SoundManager::instance().playSound("SFX_IMPACT_1");
+
+}
+
+void MRContactListener::_playerPulseBullet_wallPiece(GameObject* playerPulseBullet, GameObject* wallPiece, b2Vec2 contactPoint)
+{
+
+	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", GameLayer::MAIN, -1, -1);
+	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+
+	particleComponent->setType(ParticleEmitterType::ONETIME);
+	particleComponent->addParticleEffect(ParticleEffects::pulseExplosion);
+
+	//Convert from box2d to gameWorld coordinates
+	contactPoint.x *= GameConfig::instance().scaleFactor();
+	contactPoint.y *= GameConfig::instance().scaleFactor();
+	particleEmitterObject->setPosition(contactPoint.x, contactPoint.y);
+
+	auto bulletVitality = playerPulseBullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+
+	auto wallPieceVitality = wallPiece->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+
+	SoundManager::instance().playSound("SFX_IMPACT_1");
+	playerPulseBullet->setRemoveFromWorld(true);
+
+}
+void MRContactListener::_playerPulseExplosion_wallPiece(GameObject* playerPulseExplosion, GameObject* wallPiece, b2Vec2 contactPoint)
+{
+
+	const auto& pulseBulletPhysics = playerPulseExplosion->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	const auto& wallVitality = wallPiece->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+
+	//Create a large pulse object
+	auto shieldHolds = wallVitality->testResistance(5);
+	playerPulseExplosion->setRemoveFromWorld(true);
+
+	SoundManager::instance().playSound("SFX_IMPACT_1");
+
+	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", GameLayer::MAIN, -1, -1);
+	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+
+	particleComponent->setType(ParticleEmitterType::ONETIME);
+
+	//Convert from box2d to gameWorld coordinates
+	contactPoint.x *= GameConfig::instance().scaleFactor();
+	contactPoint.y *= GameConfig::instance().scaleFactor();
+	particleEmitterObject->setPosition(contactPoint.x, contactPoint.y);
+
+}
+
+void MRContactListener::_playerPulseExplosion_droneShield(GameObject* playerPulseExplosion, GameObject* droneShield, b2Vec2 contactPoint)
+{
+
+	const auto& pulseBulletPhysics = playerPulseExplosion->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	const auto& shieldVitality = droneShield->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+
+	//Create a large pulse object
+	auto shieldHolds = shieldVitality->testResistance(5);
+	playerPulseExplosion->setRemoveFromWorld(true);
+
+	SoundManager::instance().playSound("SFX_IMPACT_1");
+
+	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", GameLayer::MAIN, -1, -1);
+	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+
+	particleComponent->setType(ParticleEmitterType::ONETIME);
+	particleComponent->addParticleEffect(ParticleEffects::impactSmoke);
+	particleComponent->addParticleEffect(ParticleEffects::scrap);
+
+	//Convert from box2d to gameWorld coordinates
+	contactPoint.x *= GameConfig::instance().scaleFactor();
+	contactPoint.y *= GameConfig::instance().scaleFactor();
+	particleEmitterObject->setPosition(contactPoint.x, contactPoint.y);
+
 
 }
 
@@ -292,7 +400,7 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 	const auto& bulletVitalityComponent = bullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
 	//playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
-	playerVitalityComponent->inflictDamage(1);
+	//playerVitalityComponent->inflictDamage(1);
 
 
 }
@@ -361,6 +469,48 @@ void MRContactListener::handleContact(b2Contact* contact, b2Vec2 contactPoint)
 	int contactTag2 = contactDefinitionB->contactTag;
 
 
+	//////////////////////////////////////////
+	// Player Pulse  -  Wall Piece
+	//////////////////////////////////////////
+	if ((contactTag1 == ContactTag::PLAYER_PULSE_BULLET && contactTag2 == ContactTag::WALL_PIECE) ||
+		(contactTag2 == ContactTag::PLAYER_PULSE_BULLET && contactTag1 == ContactTag::WALL_PIECE)) {
+
+		if (contactTag1 == ContactTag::PLAYER_PULSE_BULLET) {
+			_playerPulseBullet_wallPiece(contact1, contact2, contactPoint);
+		}
+		else {
+			_playerPulseBullet_wallPiece(contact2, contact1, contactPoint);
+		}
+	}
+
+	//////////////////////////////////////////
+	// Player Pulse Exposion -  Wall Piece
+	//////////////////////////////////////////
+	if ((contactTag1 == ContactTag::PLAYER_PULSE_EXPLOSION && contactTag2 == ContactTag::WALL_PIECE) ||
+		(contactTag2 == ContactTag::PLAYER_PULSE_EXPLOSION && contactTag1 == ContactTag::WALL_PIECE)) {
+
+		if (contactTag1 == ContactTag::PLAYER_PULSE_EXPLOSION) {
+			_playerPulseExplosion_wallPiece(contact1, contact2, contactPoint);
+		}
+		else {
+			_playerPulseExplosion_wallPiece(contact2, contact1, contactPoint);
+		}
+	}
+
+	//////////////////////////////////////////
+	// Player Pulse Exposion -  Drone SHield
+	//////////////////////////////////////////
+	if ((contactTag1 == ContactTag::PLAYER_PULSE_EXPLOSION && contactTag2 == ContactTag::DRONE_SHIELD) ||
+		(contactTag2 == ContactTag::PLAYER_PULSE_EXPLOSION && contactTag1 == ContactTag::DRONE_SHIELD)) {
+
+		if (contactTag1 == ContactTag::PLAYER_PULSE_EXPLOSION) {
+			_playerPulseExplosion_droneShield(contact1, contact2, contactPoint);
+		}
+		else {
+			_playerPulseExplosion_droneShield(contact2, contact1, contactPoint);
+		}
+	}
+
 	////////////////////////////////////
 	// Player -  Heart Pickup
 	//////////////////////////////////
@@ -372,6 +522,20 @@ void MRContactListener::handleContact(b2Contact* contact, b2Vec2 contactPoint)
 		}
 		else {
 			_player_heartPickup(contact2, contact1, contactPoint);
+		}
+	}
+
+	//////////////////////////////////////
+	// PlayerPulseBullet -  Drone Shield
+	/////////////////////////////////////
+	if ((contactTag1 == ContactTag::PLAYER_PULSE_BULLET && contactTag2 == ContactTag::DRONE_SHIELD) ||
+		(contactTag2 == ContactTag::PLAYER_PULSE_BULLET && contactTag1 == ContactTag::DRONE_SHIELD)) {
+
+		if (contactTag1 == ContactTag::PLAYER_PULSE_BULLET) {
+			_playerPulseBullet_droneShield(contact1, contact2, contactPoint);
+		}
+		else {
+			_playerPulseBullet_droneShield(contact2, contact1, contactPoint);
 		}
 	}
 

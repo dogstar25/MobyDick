@@ -134,6 +134,8 @@ void MRGame::_addGameCollisionTags()
 	EnumMap::instance().addEnumItem("ContactTag::ENEMY_TURRET", ContactTag::ENEMY_TURRET);
 	EnumMap::instance().addEnumItem("ContactTag::HEART_PICKUP", ContactTag::HEART_PICKUP);
 	EnumMap::instance().addEnumItem("ContactTag::CONTAINER_INSIDE", ContactTag::CONTAINER_INSIDE);
+	EnumMap::instance().addEnumItem("ContactTag::PLAYER_PULSE_BULLET", ContactTag::PLAYER_PULSE_BULLET);
+	EnumMap::instance().addEnumItem("ContactTag::PLAYER_PULSE_EXPLOSION", ContactTag::PLAYER_PULSE_EXPLOSION);
 
 
 
@@ -167,6 +169,8 @@ void MRGame::_addGameTraits()
 
 void MRGame::_addGameColors()
 {
+
+	ColorMap::instance().addColor("Colors::NOCOLOR", Colors::NOCOLOR);
 
 	//greens
 	ColorMap::instance().addColor("Colors::FOREST", Colors::FOREST);
