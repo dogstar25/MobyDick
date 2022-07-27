@@ -59,7 +59,20 @@
             "initialValue": 0,
             "minValue": 0,
             "maxValue": 50
+        },
+        {
+            "id": "StatusItemId::PLAYER_WEAPON_CHARGED_PERCENT",
+            "initialValue": 0,
+            "minValue": 0,
+            "maxValue": 100
+        },
+        {
+            "id": "StatusItemId::PLAYER_WEAPON_IS_CHARGED",
+            "initialValue": 0,
+            "minValue": 0,
+            "maxValue": 1
         }
+
 
     ],
     "objectives": [

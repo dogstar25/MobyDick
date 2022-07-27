@@ -12,7 +12,7 @@ TurretBrainComponent::TurretBrainComponent(Json::Value definitionJSON)
 
 	m_currentState = BrainState::IDLE;
 
-	m_fireDelayTimer = Timer(.2);
+	m_fireDelayTimer = Timer(.2, true);
 
 }
 

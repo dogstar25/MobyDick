@@ -526,19 +526,19 @@ void Scene::_removeFromWorldPass()
 		while (it != gameObjects.end()) {
 
 			auto test = it->get();
-			//If this has a composite component then remove marked composite pieces
-			//if (it->get()->hasComponent(ComponentTypes::COMPOSITE_COMPONENT)) {
-			//	const auto& compositeComponent = it->get()->getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
-			//	compositeComponent->removeFromWorldPass();
-			//}
 
 			//Remove gameObject iteself it flagged
+			//If it's a physics object then it's probably pooled, but either way we dont want to completely delete it
+			//One of the BrainComponents may have stored this objects userData (gameObject raw pointer) and so completely deleting it
+			//would compromise those pointers
 			if (it->get()->removeFromWorld() == true) {
 
 				if (it->get()->hasTrait(TraitTag::pooled)) {
-					it->get()->reset();
-				}
 
+					it->get()->reset();
+
+				}
+			
 				it = gameObjects.erase(it);
 			}
 			else {

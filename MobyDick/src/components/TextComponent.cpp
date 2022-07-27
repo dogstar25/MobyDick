@@ -26,7 +26,7 @@ TextComponent::TextComponent(std::string gameObjectId, Json::Value componentJSON
 	std::string fontFile = TextureManager::instance().getFont(m_fontId);
 	m_fontObject = TTF_OpenFont(fontFile.c_str(), m_fontSize);
 
-	m_refreshTimer = Timer(GameConfig::instance().dynamicTextRefreshDelay());
+	m_refreshTimer = Timer(GameConfig::instance().dynamicTextRefreshDelay(), true);
 
 
 	//

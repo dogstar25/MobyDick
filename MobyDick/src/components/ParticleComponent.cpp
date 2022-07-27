@@ -18,7 +18,7 @@ ParticleComponent::ParticleComponent(Json::Value componentJSON)
 	}
 
 	auto emissionInterval = componentJSON["emissionInterval"].asFloat();
-	m_emissionTimer = Timer(emissionInterval);
+	m_emissionTimer = Timer(emissionInterval, true);
 
 	//Add any effects that may be pre-built into the particle emitter
 	for (Json::Value itrEffect : componentJSON["effects"])
@@ -97,7 +97,7 @@ void ParticleComponent::update()
 			particle.position.y += particle.velocity.y * timeFactor;
 
 			if (particle.alphaFade == true) {
-				Uint8 alpha = int(particle.originalALpha * particle.lifetimeTimer.percentTargetMet());
+				Uint8 alpha = int(particle.originalALpha * (100 - particle.lifetimeTimer.percentTargetMet()));
 				particle.color.a = alpha;
 			}
 		}

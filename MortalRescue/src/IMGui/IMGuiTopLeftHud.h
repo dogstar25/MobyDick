@@ -15,6 +15,7 @@ private:
 
 	void weaponLevel();
 	void hudWeaponAccrualBar(ImVec4 color, float accrualValue);
+	void hudWeaponChargeBar(float accrualValue);
 	void hudWeaponPistolImage(ImVec4 gunColor);
 
 

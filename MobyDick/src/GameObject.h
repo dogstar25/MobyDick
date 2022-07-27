@@ -22,7 +22,7 @@
 #include "components/ActionComponent.h"
 #include "components/AnimationComponent.h"
 #include "components/AttachmentsComponent.h"
-#include "components/BrainComponent.h"
+//#include "components/BrainComponent.h"
 #include "components/ChildrenComponent.h"
 #include "components/CompositeComponent.h"
 #include "components/NavigationComponent.h"

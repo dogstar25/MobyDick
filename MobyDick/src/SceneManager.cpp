@@ -31,7 +31,7 @@ void SceneManager::init()
 	m_scenes.reserve(MAX_SCENES);
 
 	float gameLoopStep = GameConfig::instance().gameLoopStep();
-	m_gameTimer = Timer(gameLoopStep);
+	m_gameTimer = Timer(gameLoopStep, true);
 
 }
 

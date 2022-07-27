@@ -1,13 +1,16 @@
-#pragma once
+#ifndef BRAINAABBCALLBACK_H
+#define BRAINAABBCALLBACK_H
+
 #include <box2d/box2d.h>
 #include <vector>
+#include <memory>
+#include "GameObject.h"
 
-class GameObject;
-
+//class GameObject;
 
 struct BrainAABBFoundObject
 {
-	b2Fixture* fixture;
+	//b2Fixture* fixture;
 	GameObject* gameObject;
 };
 
@@ -31,3 +34,4 @@ private:
 
 };
 
+#endif

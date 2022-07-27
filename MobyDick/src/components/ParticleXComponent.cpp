@@ -19,7 +19,7 @@ ParticleXComponent::ParticleXComponent(Json::Value componentJSON)
 
 	float emissionInterval = componentJSON["emissionInterval"].asFloat();
 	m_emissionInterval = (std::chrono::duration<float>(emissionInterval));
-	m_emissionTimer = Timer(emissionInterval);
+	m_emissionTimer = Timer(emissionInterval, true);
 
 	//Add any effects that may be pre-built into the particle emitter
 	for (Json::Value itrEffect : componentJSON["effects"])
