@@ -16,7 +16,7 @@ ContainerComponent::ContainerComponent(Json::Value componentJSON, Scene* parentS
 	if (componentJSON.isMember("refillTimer")) {
 		m_doesAutoRefill = true;
 		float timerDuration = componentJSON["refillTimer"].asFloat();
-		m_refillTimer = Timer(timerDuration);
+		m_refillTimer = Timer(timerDuration, true);
 	}
 
 	m_contentItemGameObjectId = componentJSON["gameObjectId"].asString();

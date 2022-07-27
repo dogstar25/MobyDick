@@ -15,7 +15,7 @@ extern std::unique_ptr<Game> game;
 GameObject::~GameObject()
 {
 
-	std::cout << "GameObject Destructor called" << std::endl;
+	std::cout << this->m_id << "GameObject Destructor called" << std::endl;
 
 }
 
@@ -278,10 +278,6 @@ void GameObject::render()
 
 void GameObject::reset()
 {
-
-	if (this->id() == "PULSE1") {
-		int todd = 1;
-	}
 
 	if (hasComponent(ComponentTypes::POOL_COMPONENT)) {
 		getComponent<PoolComponent>(ComponentTypes::POOL_COMPONENT)->reset();

@@ -143,7 +143,7 @@ void AnimationComponent::setFlash(SDL_Color flashColor, float flashSpeed, int fl
 	flashAnimation.flashSpeed = flashSpeed;
 	flashAnimation.flashTimes = flashTimes;
 	flashAnimation.flashCount = 0;
-	flashAnimation.speedTimer = { flashSpeed };
+	flashAnimation.speedTimer = { flashSpeed, true };
 	m_flashAnimation = std::move(flashAnimation);
 }
 

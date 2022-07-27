@@ -7,7 +7,7 @@ class Timer
 public:
 
 	Timer() = default;
-	Timer(float targetDuration);
+	Timer(float targetDuration, bool autoReset=false);
 
 	bool firstTime{ true };
 	bool infiniteLifetime() { return m_infiniteLifetime; }
@@ -52,7 +52,7 @@ private:
 	std::chrono::duration<float> m_targetDuration{};
 	std::chrono::steady_clock::time_point m_timeSnapshot{ std::chrono::steady_clock::now() };
 	bool m_infiniteLifetime{ false };
-	std::chrono::duration<float> m_accumulatedTimeDiff{};
+	bool m_autoReset{ false };
 
 };
 

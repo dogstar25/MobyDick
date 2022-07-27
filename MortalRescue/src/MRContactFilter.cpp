@@ -159,8 +159,6 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[ENEMY_TURRET].set(SURVIVOR);
 	m_contactMasks[ENEMY_TURRET].set(SHIELD_SCRAP);
 	m_contactMasks[ENEMY_TURRET].set(PLAYER_BULLET);
-	m_contactMasks[ENEMY_TURRET].set(PLAYER_PULSE_BULLET);
-	m_contactMasks[ENEMY_TURRET].set(PLAYER_PULSE_EXPLOSION);
 
 	//Drone Scrap
 	m_contactMasks[DRONE_SCRAP].reset();

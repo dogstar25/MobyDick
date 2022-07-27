@@ -159,6 +159,8 @@ void MRGame::_addStatusItemTypes()
 	EnumMap::instance().addEnumItem("StatusItemId::SCRAP_COUNT", StatusItemId::SCRAP_COUNT);
 	EnumMap::instance().addEnumItem("StatusItemId::PLAYER_WEAPON_ACCRUAL", StatusItemId::PLAYER_WEAPON_ACCRUAL);
 	EnumMap::instance().addEnumItem("StatusItemId::SURVIVORS", StatusItemId::SURVIVORS);
+	EnumMap::instance().addEnumItem("StatusItemId::PLAYER_WEAPON_CHARGED_PERCENT", StatusItemId::PLAYER_WEAPON_CHARGED_PERCENT);
+	EnumMap::instance().addEnumItem("StatusItemId::PLAYER_WEAPON_IS_CHARGED", StatusItemId::PLAYER_WEAPON_IS_CHARGED);
 }
 
 void MRGame::_addGameTraits()

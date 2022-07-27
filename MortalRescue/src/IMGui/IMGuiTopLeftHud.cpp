@@ -80,6 +80,13 @@ void IMGuiTopLeftHud::weaponLevel()
 
 	//Determine color of weapon
 	auto& weaponLevel = game->contextMananger()->getStatusItem(StatusItemId::PLAYER_WEAPON_LEVEL);
+
+	//Get charged level value
+	auto& isCharged = game->contextMananger()->getStatusItem(StatusItemId::PLAYER_WEAPON_IS_CHARGED);
+
+	//Get isFullyCharged flag
+	auto& chargedPercent = game->contextMananger()->getStatusItem(StatusItemId::PLAYER_WEAPON_CHARGED_PERCENT);
+
 	if (weaponLevel.value() == 1) {
 		gunColor = m_hudBlue;
 	}
@@ -112,6 +119,7 @@ void IMGuiTopLeftHud::weaponLevel()
 	//ImGui::NewLine();
 	//Bar grapgh showing the accrual level
 	hudWeaponAccrualBar(gunColor, levelUpAccrual.value());
+	hudWeaponChargeBar(chargedPercent.value());
 
 }
 
@@ -169,5 +177,42 @@ void IMGuiTopLeftHud::hudWeaponAccrualBar(ImVec4 color, float accrualValue)
 
 }
 
+
+void IMGuiTopLeftHud::hudWeaponChargeBar(float accrualValue)
+{
+	//CurrLineTextBaseOffset
+	ImGui::NewLine();
+
+
+	ImGui::Begin("weaponHud");
+	ImGui::SetWindowPos(ImVec2(400, 400));
+	ImGui::Value("accrualValue", accrualValue);
+	//ImGui::Value("hasMet", m_chargeTimer.hasMetTargetDuration());
+	ImGui::End();
+
+
+	//TextureAtlas Coordinates for bar
+	glm::vec2 topLeft = util::glNormalizeTextureCoords({ 33,0 }, { 256, 256 });
+	glm::vec2 bottomRight = util::glNormalizeTextureCoords({ 63,31 }, { 256, 256 });
+
+	for (int i = 0; i < accrualValue; i++) {
+
+		if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
+
+			GLuint textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::IMGUI_TEXTURE_ATLAS);
+			ImGui::Image((void*)(int*)textureAtlasId, ImVec2(2, 32), ImVec2(bottomRight.x, bottomRight.y), ImVec2(topLeft.x, topLeft.y), util::SDLColorToImVec4(Colors::WHITE));
+			ImGui::SameLine(0.0f, 0);
+		}
+		else {
+
+			//SDL2 Texture void* is the SDL_Texture*
+			SDL_Texture* sdlTexture = TextureManager::instance().getTexture("TEXTURE_IMGUI_ATLAS")->sdlTexture;
+			ImGui::Image((void*)(SDL_Texture*)sdlTexture, ImVec2(2, 32), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), util::SDLColorToImVec4(Colors::WHITE));
+			ImGui::SameLine(0.0f, 0);
+		}
+
+	}
+
+}
 
 

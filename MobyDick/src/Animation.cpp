@@ -15,7 +15,7 @@ Animation::Animation(Json::Value animationDetailsJSON, b2Vec2 frameSize) :
 	m_state = EnumMap::instance().toEnum(animationDetailsJSON["state"].asString());
 	m_speed = animationDetailsJSON["speed"].asFloat();
 
-	m_timer = Timer(m_speed);
+	m_timer = Timer(m_speed, true);
 
 	m_frameCount = animationDetailsJSON["frames"].asInt();
 

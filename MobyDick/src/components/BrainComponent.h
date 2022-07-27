@@ -1,13 +1,15 @@
 #pragma once
 #include "Component.h"
-#include "../GameObject.h"
-#include "../BrainAABBCallback.h"
 #include "../LevelManager.h"
+#include "../BrainAABBCallback.h"
 
 #include <json/json.h>
 #include "glm/glm.hpp"
+//#include "../GameObject.h"
 
 #include <optional>
+
+class GameObject;
 
 class BrainComponent : public Component
 {
@@ -67,6 +69,8 @@ private:
     bool _hasLineOfSight(BrainAABBFoundObject& detectedObject);
     bool _doDispatch();
     void _doIdle();
+
+    Timer m_updateSensorInputTimer{0.25, true};
 
 
 };

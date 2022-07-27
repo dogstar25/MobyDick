@@ -4,6 +4,8 @@
 #include "../game.h"
 #include "../RayCastCallBack.h"
 #include "../EnumMaps.h"
+//#include "../BrainAABBCallback.h"
+
 
 
 extern std::unique_ptr<Game> game;
@@ -88,7 +90,9 @@ void BrainComponent::setTargetDestination(SDL_FPoint destination)
 void BrainComponent::update()
 {
 
-	_updateSensorInput();
+	//if (m_updateSensorInputTimer.firstTime == false && m_updateSensorInputTimer.hasMetTargetDuration()) {
+		_updateSensorInput();
+	//}
 
 	switch (m_currentState) {
 
@@ -170,12 +174,14 @@ void BrainComponent::_updateSensorInput()
 	//of sight to
 	for (BrainAABBFoundObject detectedObject : BrainAABBCallback::instance().foundObjects()) {
 
-		if (parent()->id() == "DRONE") {
-			int todd = 1;
-		}
 		for (auto i = 0; i < m_detectObjectTraits.size(); i++) {
 
 			if (detectedObject.gameObject->traits()[i] && m_detectObjectTraits[i]) {
+
+				//Get this objects shared pointer from the scene and store it instead of the raw pointer
+				//auto gameObject = std::shared_ptr<GameObject>(parent()->parentScene()->getGameObject(detectedObject.gameObject->name()));
+
+
 				m_detectedObjects.push_back(detectedObject);
 
 				if (_hasLineOfSight(detectedObject) == true) {
