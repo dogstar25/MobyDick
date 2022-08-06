@@ -67,8 +67,15 @@
                             "y": 48
                         }
                     }
+                },
+                {
+                    "gameObjectId": "METEOR_EMITTER",
+                    "layer": "GameLayer::BACKGROUND_1",
+                    "location": {
+                        "X": -50,
+                        "Y": -50
+                    }
                 }
-
 
             ],
             "keyActions": [
@@ -129,7 +136,7 @@
                     "id": "PULSE1_POOL",
                     "gameObjectId": "PULSE1",
                     "lifetime": 0.0,
-                    "maxItems": 5
+                    "maxItems": 25
                 },
                 {
                     "id": "PULSE_EXPLOSION_POOL",
@@ -145,7 +152,7 @@
                     "x": 0.0,
                     "y": 0.0
                 },
-                "b2DebugDrawMode": false,
+                "b2DebugDrawMode": true,
                 "timeStep": 0.016, // 1/60 or 1/30
                 "velocityIterations": 6,
                 "positionIterations": 2

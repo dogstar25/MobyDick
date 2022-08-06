@@ -42,10 +42,10 @@ void CutSceneDiscoverTreasure::start()
 		//Get Frank, give Frank a brain, and dispatch Frank to a destination
 		_frank = _startFrank();
 		//_frank->dispatch({ 5400,900 });
-		const auto& brainComponent = _frank->getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+		const auto& brainComponent = _frank.lock()->getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
 		brainComponent->dispatch({ 5400,900 });
 
-		Camera::instance().setFollowMe(_frank);
+		Camera::instance().setFollowMe(_frank.lock());
 
 		scene1Timer = Timer(1500);
 
@@ -53,7 +53,7 @@ void CutSceneDiscoverTreasure::start()
 	else if (m_currentAct == 2) {
 
 		//_frank->dispatch({ 1,1 });
-		const auto& brainComponent = _frank->getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+		const auto& brainComponent = _frank.lock()->getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
 		brainComponent->dispatch({ 5400,900 });
 
 		Camera::instance().dispatch({ 4000,900 });
@@ -64,7 +64,7 @@ void CutSceneDiscoverTreasure::start()
 void CutSceneDiscoverTreasure::update()
 {
 
-	const auto& brainComponent = _frank->getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+	const auto& brainComponent = _frank.lock()->getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
 	auto franksBrainState = brainComponent->state();
 
 	if (m_currentAct == 1) {
@@ -101,27 +101,33 @@ void CutSceneDiscoverTreasure::end()
 
 }
 
-GameObject* CutSceneDiscoverTreasure::_startPlayer()
+std::shared_ptr<GameObject> CutSceneDiscoverTreasure::_startPlayer()
 {
-	_player = currentScene->getGameObject("PlayerGina");
-	_player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
+	auto playerObject = currentScene->getGameObject("PlayerGina");
+	assert(playerObject.has_value() && "GameObject wasnt found!");
 
-	return _player;
+	_player = playerObject.value();
+	_player.lock()->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
+
+	return _player.lock();;
 }
 
 void CutSceneDiscoverTreasure::_endPlayer()
 {
-	_player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->enable();
+	_player.lock()->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->enable();
 	
 }
 
-GameObject* CutSceneDiscoverTreasure::_startFrank()
+std::shared_ptr<GameObject> CutSceneDiscoverTreasure::_startFrank()
 {
 
 	Json::Value componentsDefinition{};
 	Json::Value brainDefinition{};
 
-	GameObject* frank = currentScene->getGameObject("Frank");
+	auto frankObject = currentScene->getGameObject("Frank");
+	assert(frankObject.has_value() && "GameObject wasnt found!");
+
+	auto frank = frankObject.value();
 
 	//Give Frank a brain
 	//brainDefinition["id"] = "BRAIN_COMPONENT";

@@ -339,6 +339,7 @@
                 {
                     "id": "VITALITY_COMPONENT",
                     "speed": 20,
+                    "lifetime": 10.0,
                     "lifetimeAlphaFade": false
                 },
                 {

@@ -72,7 +72,7 @@ Scene::Scene(std::string sceneId)
 	}
 
 	//Initialize the camera state
-	Camera::instance().setCurrentState(CameraState::IDLE);
+	//Camera::instance().init();
 
 }
 
@@ -168,6 +168,8 @@ void Scene::reset()
 
 void Scene::clear()
 {
+
+	Camera::instance().init();
 
 	//Clear everything
 	m_objectPoolManager.clear();
@@ -378,50 +380,6 @@ void Scene::setInputControlMode(int inputControlMode)
 
 }
 
-//SDL_FPoint Scene::calcWindowPosition(int globalPosition)
-//{
-//	SDL_FPoint globalPoint = {};
-//
-//	if (globalPosition == PositionAlignment::CENTER) {
-//
-//		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() / 2);
-//		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight() / 2);
-//
-//	}
-//	else if (globalPosition == PositionAlignment::TOP_CENTER) {
-//
-//		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() / 2);
-//		globalPoint.y = 0;
-//	}
-//	else if (globalPosition == PositionAlignment::TOP_LEFT) {
-//
-//		globalPoint.x = 0;
-//		globalPoint.y = 0;
-//	}
-//	else if (globalPosition == PositionAlignment::TOP_RIGHT) {
-//
-//		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() - 5);
-//		globalPoint.y = 0;
-//	}
-//	else if (globalPosition == PositionAlignment::CENTER_LEFT) {
-//
-//		globalPoint.x = 0;
-//		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight() / 2);
-//	}
-//	else if (globalPosition == PositionAlignment::BOTTOM_LEFT) {
-//
-//		globalPoint.x = 0;
-//		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight());
-//	}
-//
-//	else {
-//		/* Need other calcs added*/
-//	}
-//
-//	return globalPoint;
-//
-//}
-
 
 void Scene::_processGameObjectInterdependecies()
 {
@@ -431,6 +389,11 @@ void Scene::_processGameObjectInterdependecies()
 		for (auto& gameObject : layer) {
 
 			gameObject->postInit();
+
+			//Now that all gameobjects are created we can set the shared pointer for the object to follow for the camera
+			if (gameObject->name() == Camera::instance().getFollowMeName() && !Camera::instance().getFollowMeObject()) {
+				Camera::instance().setFollowMe(gameObject);
+			}
 
 		}
 
@@ -449,7 +412,6 @@ void Scene::_buildPhysicsWorld(Json::Value physicsJSON)
 
 	//Build the box2d physics world
 	m_physicsWorld = new b2World(m_physicsConfig.gravity);
-	//m_physicsWorld->SetAutoClearForces(true);
 
 	//Add a collision contact listener and filter for box2d callbacks
 	m_physicsWorld->SetContactFilter(game->contactFilter().get());
@@ -495,9 +457,9 @@ void Scene::_buildSceneGameObjects(Json::Value definitionJSON)
 	}
 }
 
-GameObject* Scene::getGameObject(std::string name)
+std::optional<std::shared_ptr<GameObject>> Scene::getGameObject(std::string name)
 {
-	std::optional<GameObject*> foundGameObject{};
+	std::optional<std::shared_ptr<GameObject>> foundGameObject{};
 
 	for (auto& layer : m_gameObjects) {
 
@@ -505,17 +467,16 @@ GameObject* Scene::getGameObject(std::string name)
 
 			if (gameObject->name() == name) {
 
-				foundGameObject = gameObject.get();
+				foundGameObject = gameObject;
 				break;
 			}
 		}
 	}
 
-	assert(foundGameObject.has_value() && "GameObject wasnt found!");
+	//assert(foundGameObject.has_value() && "GameObject wasnt found!");
 
-	return foundGameObject.value();
+	return foundGameObject;
 }
-
 
 void Scene::_removeFromWorldPass()
 {
@@ -569,3 +530,48 @@ void Scene::addParallaxItem(Parallax& parallaxItem)
 	m_parallaxRates.emplace(parallaxItem.layer, parallaxItem);
 
 }
+
+//SDL_FPoint Scene::calcWindowPosition(int globalPosition)
+//{
+//	SDL_FPoint globalPoint = {};
+//
+//	if (globalPosition == PositionAlignment::CENTER) {
+//
+//		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() / 2);
+//		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight() / 2);
+//
+//	}
+//	else if (globalPosition == PositionAlignment::TOP_CENTER) {
+//
+//		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() / 2);
+//		globalPoint.y = 0;
+//	}
+//	else if (globalPosition == PositionAlignment::TOP_LEFT) {
+//
+//		globalPoint.x = 0;
+//		globalPoint.y = 0;
+//	}
+//	else if (globalPosition == PositionAlignment::TOP_RIGHT) {
+//
+//		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() - 5);
+//		globalPoint.y = 0;
+//	}
+//	else if (globalPosition == PositionAlignment::CENTER_LEFT) {
+//
+//		globalPoint.x = 0;
+//		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight() / 2);
+//	}
+//	else if (globalPosition == PositionAlignment::BOTTOM_LEFT) {
+//
+//		globalPoint.x = 0;
+//		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight());
+//	}
+//
+//	else {
+//		/* Need other calcs added*/
+//	}
+//
+//	return globalPoint;
+//
+//}
+

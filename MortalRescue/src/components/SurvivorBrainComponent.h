@@ -17,7 +17,7 @@ public:
 
 
 	void update() override;
-	void followMe(GameObject* gameObjectToFollow);
+	void followMe(std::shared_ptr<GameObject> gameObjectToFollow);
 	void stay();
 
 	const int SURVIVOR_FOLLOW_TOLERANCE = 90;
@@ -36,7 +36,7 @@ private:
 	void _stayBehindFollowedObject();
 	bool _isTouchingBarrier();
 
-	GameObject* m_gameObjectToFollow{};
+	std::weak_ptr<GameObject> m_gameObjectToFollow{};
 	std::optional<SDL_FPoint> m_escapeLocation{};
 	Timer m_lostTimer;
 

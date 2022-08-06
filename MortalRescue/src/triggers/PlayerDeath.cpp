@@ -41,7 +41,10 @@ void PlayerDeath::execute()
 
 	m_hasTriggered = true;
 
-	auto _player = SceneManager::instance().currentScene().getGameObject("PlayerGina");
+	auto playerObject = SceneManager::instance().currentScene().getGameObject("PlayerGina");
+	assert(playerObject.has_value() && "GameObject wasnt found!");
+
+	auto _player = playerObject.value();
 	_player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
 
 

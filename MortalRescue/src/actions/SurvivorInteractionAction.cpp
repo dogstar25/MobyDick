@@ -11,7 +11,13 @@ void SurvivorInteractionAction::perform(GameObject* interactingObject, GameObjec
 	const auto& brainComponent = interactionObject->getComponent<SurvivorBrainComponent>(ComponentTypes::BRAIN_COMPONENT);
 
 	if (keyScanCode == SDL_SCANCODE_E) {
-		brainComponent->followMe(interactingObject);
+
+		//If we're storing this interacting gameObject in another game objects brain, then we need the shared_ptr version of the pointer
+		//in case this interacting game object is deleted
+		auto gameObjectSharedPtr = game->getGameObject(interactingObject->name());
+		assert(gameObjectSharedPtr.has_value() && "GameObject wasnt found!");
+
+		brainComponent->followMe(gameObjectSharedPtr.value());
 	}
 	if (keyScanCode == SDL_SCANCODE_R) {
 		brainComponent->stay();

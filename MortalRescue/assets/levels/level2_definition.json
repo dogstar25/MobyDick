@@ -97,12 +97,24 @@
         {
             "id": "LOC_0003_0003",
             "gameObjectId": "GINA_64",
+            "name": "PlayerGina",
             "cameraFollow": true
         },
         {
+            "id": "LOC_0011_0003",
+            "gameObjectId": "SURVIVOR"
+        },
+        {
             "id": "LOC_0014_0003",
-            "gameObjectId": "DRONE",
-            "cameraFollow": false
+            "gameObjectId": "ESCAPE_STAIRS"
+        },
+        {
+            "id": "LOC_0021_0002",
+            "gameObjectId": "SURVIVOR"
+        },
+        {
+            "id": "LOC_0021_0004",
+            "gameObjectId": "SURVIVOR"
         }
     ]
 }

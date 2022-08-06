@@ -46,7 +46,7 @@ public:
 
 	virtual void play();
 	virtual void _displayLoadingMsg();
-	GameObject* getGameObject(std::string name);
+	std::optional<std::shared_ptr<GameObject>> getGameObject(std::string name);
 	
 	void setGameState(GameState state) {
 		m_gameState = state;

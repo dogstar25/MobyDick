@@ -44,7 +44,7 @@ void SurvivorBrainComponent::update()
 
 }
 
-void SurvivorBrainComponent::followMe(GameObject* gameObjectToFollow) {
+void SurvivorBrainComponent::followMe(std::shared_ptr<GameObject> gameObjectToFollow) {
 
 	m_gameObjectToFollow = gameObjectToFollow;
 	m_currentState = BrainState::FOLLOW;
@@ -53,7 +53,7 @@ void SurvivorBrainComponent::followMe(GameObject* gameObjectToFollow) {
 
 void SurvivorBrainComponent::stay() {
 
-	m_gameObjectToFollow = nullptr;
+	m_gameObjectToFollow.reset();
 	m_currentState = BrainState::IDLE;
 
 }
@@ -127,23 +127,30 @@ void SurvivorBrainComponent::_doLost()
 {
 	//_determineTargetLocation(); - add this once all nav points are in place. Set targetDestination to the nearest nav point that 
 	//can see the followed object
-	setTargetDestination(m_gameObjectToFollow->getCenterPosition());
-	navigate();
-	m_tempVisitedNavPoints.clear();
+	if (m_gameObjectToFollow.expired() == false) {
+		setTargetDestination(m_gameObjectToFollow.lock()->getCenterPosition());
+		navigate();
+		m_tempVisitedNavPoints.clear();
+	}
 
 }
 
 void SurvivorBrainComponent::_stayBehindFollowedObject()
 {
 
-	const auto& gameObjectToFollowPhysicsComponent = m_gameObjectToFollow->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
-	const auto& gameObjectToFollowTransformComponent = m_gameObjectToFollow->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	//If the object being followed was deleted for some reason, then do nothing
+	if (m_gameObjectToFollow.expired() == true) {
+		return;
+	}
+
+	const auto& gameObjectToFollowPhysicsComponent = m_gameObjectToFollow.lock()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	const auto& gameObjectToFollowTransformComponent = m_gameObjectToFollow.lock()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 
 	float gameObjectAngleDegrees = util::radiansToDegrees(gameObjectToFollowPhysicsComponent->angle());
 	float orientationAngle = atan2(
-		parent()->getCenterPosition().y - m_gameObjectToFollow->getCenterPosition().y,
-		parent()->getCenterPosition().x - m_gameObjectToFollow->getCenterPosition().x
+		parent()->getCenterPosition().y - m_gameObjectToFollow.lock()->getCenterPosition().y,
+		parent()->getCenterPosition().x - m_gameObjectToFollow.lock()->getCenterPosition().x
 	);
 
 
@@ -168,8 +175,8 @@ void SurvivorBrainComponent::_stayBehindFollowedObject()
 
 		//Rotate myself around the object im following until im behind
 		b2Vec2 trajectory{};
-		trajectory.x = (sin(orientationAngle) * 200 * sinDirection) + (m_gameObjectToFollow->getCenterPosition().x - parent()->getCenterPosition().x);
-		trajectory.y = (cos(orientationAngle) * 200 * cosDirection) + (m_gameObjectToFollow->getCenterPosition().y - parent()->getCenterPosition().y);
+		trajectory.x = (sin(orientationAngle) * 200 * sinDirection) + (m_gameObjectToFollow.lock()->getCenterPosition().x - parent()->getCenterPosition().x);
+		trajectory.y = (cos(orientationAngle) * 200 * cosDirection) + (m_gameObjectToFollow.lock()->getCenterPosition().y - parent()->getCenterPosition().y);
 
 		//_rotateTowards(trajectory);
 
@@ -189,14 +196,19 @@ void SurvivorBrainComponent::_doFollow()
 
 	b2Vec2 trajectory{};
 
+	//If the object we are following was deleted for some reason, then do nothing
+	if (m_gameObjectToFollow.expired() == true) {
+		return;
+	}
+
 	//If we are not closeenough to the object we're following then move to within tolerance
-	if (util::calculateDistance(parent()->getCenterPosition(), m_gameObjectToFollow->getCenterPosition())
+	if (util::calculateDistance(parent()->getCenterPosition(), m_gameObjectToFollow.lock()->getCenterPosition())
 		> SURVIVOR_FOLLOW_TOLERANCE) {
 
-		trajectory.x = m_gameObjectToFollow->getCenterPosition().x - parent()->getCenterPosition().x;
-		trajectory.y = m_gameObjectToFollow->getCenterPosition().y - parent()->getCenterPosition().y;
+		trajectory.x = m_gameObjectToFollow.lock()->getCenterPosition().x - parent()->getCenterPosition().x;
+		trajectory.y = m_gameObjectToFollow.lock()->getCenterPosition().y - parent()->getCenterPosition().y;
 
-		_rotateTowards({ m_gameObjectToFollow->getCenterPosition().x , m_gameObjectToFollow->getCenterPosition().y });
+		_rotateTowards({ m_gameObjectToFollow.lock()->getCenterPosition().x , m_gameObjectToFollow.lock()->getCenterPosition().y });
 
 		trajectory.Normalize();
 
@@ -253,11 +265,14 @@ bool SurvivorBrainComponent::_detectFollowedObject()
 
 	std::optional<SDL_FPoint> playerPosition{};
 
-	for (auto& seenObject : m_seenObjects) {
+	//Always check if the followed object is still valid. it may have been deleted
+	if (m_gameObjectToFollow.expired() == false) {
+		for (auto& seenObject : m_seenObjects) {
 
-		if (seenObject.gameObject == m_gameObjectToFollow) {
+			if (seenObject.lock() == m_gameObjectToFollow.lock()) {
 
-			return true;
+				return true;
+			}
 		}
 	}
 
@@ -270,12 +285,15 @@ bool SurvivorBrainComponent::_detectEscapeLocation()
 
 	m_escapeLocation.reset();
 
-	for (auto& seenObject : m_seenObjects) {
+	for (auto seenObject : m_seenObjects) {
 
-		if (seenObject.gameObject->id() == "ESCAPE_STAIRS") {
+		//This object stored in the brain could have been deleted on the last pass so check if its still a valid pointer
+		if (seenObject.expired() == false) {
+			if (seenObject.lock()->id() == "ESCAPE_STAIRS") {
 
-			m_escapeLocation = seenObject.gameObject->getCenterPosition();
-			return true;
+				m_escapeLocation = seenObject.lock()->getCenterPosition();
+				return true;
+			}
 		}
 	}
 
@@ -366,9 +384,9 @@ std::optional<SDL_FPoint> SurvivorBrainComponent::_detectPlayer()
 
 	for (auto& seenObject : m_seenObjects) {
 
-		if (seenObject.gameObject->hasTrait(TraitTag::player)) {
+		if (seenObject.expired() == false && seenObject.lock()->hasTrait(TraitTag::player)) {
 
-			playerPosition = seenObject.gameObject->getCenterPosition();
+			playerPosition = seenObject.lock()->getCenterPosition();
 			break;
 		}
 	}

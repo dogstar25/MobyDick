@@ -59,7 +59,9 @@ glm::vec2 IMGuiPlayerDeath::render()
 		//Quit Button
 		ImGui::setCursorToCentered(ImGui::MRSettings::button1Size.x);
 		if (ImGui::Button("Quit", ImGui::MRSettings::button1Size)) {
+
 			util::sendSceneEvent(SCENE_ACTION_EXIT);
+			util::sendSceneEvent(SCENE_ACTION_REPLACE, "SCENE_TITLE_SCREEN");
 		}
 
 

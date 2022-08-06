@@ -20,12 +20,12 @@ private:
 	int m_currentAct{ 1 };
 	int m_numberOfActs{ 2 };
 
-	GameObject* _player;
-	GameObject* _frank;
+	std::weak_ptr<GameObject> _player;
+	std::weak_ptr<GameObject> _frank;
 	Timer scene1Timer{};
 
-	GameObject* _startPlayer();
-	GameObject* _startFrank();
+	std::shared_ptr<GameObject> _startPlayer();
+	std::shared_ptr<GameObject> _startFrank();
 
 	void _endFrank();
 	void _endPlayer();

@@ -31,19 +31,19 @@ public:
     //int sensorCount() { return m_sensorCount; }
     int sightSensorSize() { return m_sightSensorSize; }
 
-    std::vector<BrainAABBFoundObject> seenObjects() { return m_seenObjects; }
-    std::vector<BrainAABBFoundObject> detectedObjects() { return m_detectedObjects; }
+    std::vector<std::weak_ptr<GameObject>> seenObjects() { return m_seenObjects; }
+    std::vector<std::weak_ptr<GameObject>> detectedObjects() { return m_detectedObjects; }
 
 protected:
 
     int m_currentState{ BrainState::PATROL };
     std::bitset<32> m_detectObjectTraits{};
     
-    std::vector<GameObject*> m_navPoints;
-    std::vector<GameObject*> m_tempVisitedNavPoints;
+    std::vector<std::shared_ptr<GameObject>> m_navPoints;
+    std::vector<std::shared_ptr<GameObject>> m_tempVisitedNavPoints;
 
-    std::optional<GameObject*> m_targetDestination{};
-    std::optional<GameObject*> m_interimDestination{};
+    std::optional<std::shared_ptr<GameObject>> m_targetDestination{};
+    std::optional<std::shared_ptr<GameObject>> m_interimDestination{};
     
 
     //int m_sensorLength{};
@@ -53,12 +53,12 @@ protected:
 
     int m_sightSensorSize{};
 
-    std::vector<BrainAABBFoundObject> m_seenObjects;
-    std::vector<BrainAABBFoundObject> m_detectedObjects;
+    std::vector<std::weak_ptr<GameObject>> m_seenObjects;
+    std::vector<std::weak_ptr<GameObject>> m_detectedObjects;
 
-    GameObject* getClosestNavPoint(SDL_FPoint targetPosition, int navType);
-    GameObject* getClosestSeenNavPoint(SDL_FPoint targetPosition, int navType);
-    std::optional<GameObject*> getNextinterimDestination();
+    std::shared_ptr<GameObject> getClosestNavPoint(SDL_FPoint targetPosition, int navType);
+    std::shared_ptr<GameObject> getClosestSeenNavPoint(SDL_FPoint targetPosition, int navType);
+    std::optional<std::shared_ptr<GameObject>> getNextinterimDestination();
     bool navigate();
     void executeMove();
     void stopMovement();
