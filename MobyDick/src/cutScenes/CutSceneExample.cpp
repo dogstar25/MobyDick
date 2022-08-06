@@ -39,9 +39,9 @@ void CutSceneExample::start()
 
 		//Get Frank, give Frank a brain, and dispatch Frank to a destination
 		_frank = _startFrank();
-		_frank->dispatch({ 5400,900 });
+		_frank.lock()->dispatch({ 5400,900 });
 
-		Camera::instance().setFollowMe(_frank);
+		Camera::instance().setFollowMe(_frank.lock());
 
 		scene1Timer = Timer(15);
 
@@ -57,7 +57,7 @@ void CutSceneExample::start()
 void CutSceneExample::update()
 {
 
-	auto franksBrainState = _frank->brainState();
+	auto franksBrainState = _frank.lock()->brainState();
 
 	if (m_currentAct == 1) {
 		if (franksBrainState == BrainState::IDLE &&
@@ -92,27 +92,35 @@ void CutSceneExample::end()
 
 }
 
-GameObject* CutSceneExample::_startPlayer()
+std::shared_ptr<GameObject> CutSceneExample::_startPlayer()
 {
-	_player = currentScene->getGameObject("PlayerGina");
-	_player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
+	auto playerObject = currentScene->getGameObject("PlayerGina");
 
-	return _player;
+	assert(playerObject.has_value() && "GameObject wasnt found!");
+
+	_player = playerObject.value();
+	_player.lock()->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
+
+	return _player.lock();
 }
 
 void CutSceneExample::_endPlayer()
 {
-	_player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->enable();
+	_player.lock()->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->enable();
 	
 }
 
-GameObject* CutSceneExample::_startFrank()
+std::shared_ptr<GameObject> CutSceneExample::_startFrank()
 {
 
 	Json::Value componentsDefinition{};
 	Json::Value brainDefinition{};
 
-	GameObject* frank = currentScene->getGameObject("Frank");
+	auto frankObject = currentScene->getGameObject("Frank");
+
+	assert(frankObject.has_value() && "GameObject wasnt found!");
+
+	auto frank = frankObject.value();
 
 	//Give Frank a brain
 	brainDefinition["id"] = "BRAIN_COMPONENT";
@@ -123,7 +131,7 @@ GameObject* CutSceneExample::_startFrank()
 		std::static_pointer_cast<BrainComponent>(
 			game->componentFactory()->create(componentsDefinition, "Frank", "BOWMAN", currentScene, 0, 0, 0, ComponentTypes::BRAIN_COMPONENT)
 			);
-	brainComponent->setParent(frank);
+	brainComponent->setParent(frank.get());
 	frank->addComponent(brainComponent);
 
 	return frank;

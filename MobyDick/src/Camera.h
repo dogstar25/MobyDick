@@ -9,8 +9,9 @@
 
 #include "GameObject.h"
 #include "GameConfig.h"
-
+#include "Scene.h"
 #include "actions/Action.h"
+
 
 
 
@@ -22,11 +23,14 @@ public:
 	void setFramePosition(float, float);
 	void correctPosition(float& xPosition, float& yPosition);
 	void update();
+	void init();
 	
 	const SDL_FRect& frame() {	return m_frame; }
 	const float speed() { return m_speed; }
-	void setFollowMe(GameObject* gameObject);
-	std::optional<GameObject*> getFollowMeObject() { return m_followMe; }
+	void setFollowMe(std::shared_ptr<GameObject> gameObject);
+	void setFollowMe(std::string gameObjectName);
+	std::string getFollowMeName() { return m_followMeName; }
+	std::shared_ptr<GameObject> getFollowMeObject() { return m_followMe.lock(); }
 	bool dispatch(glm::vec2 destination);
 	void setSpeed(float speed);
 	void setCurrentState(int state) { m_currentState = state; }
@@ -42,7 +46,9 @@ private:
 
 	bool m_atXLimit{};
 	bool m_atYLimit{};
-	std::optional<GameObject*> m_followMe;
+	std::weak_ptr<GameObject> m_followMe;
+	std::string m_followMeName;
+	
 	float m_speed{};
 	int m_currentState{ CameraState::IDLE };
 	glm::vec2 m_currentDestination{};

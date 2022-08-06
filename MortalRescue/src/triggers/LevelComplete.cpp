@@ -75,7 +75,11 @@ void LevelComplete::execute()
 	m_hasTriggered = true;
 
 	//Disable the player
-	auto _player = SceneManager::instance().currentScene().getGameObject("PlayerGina");
+	auto playerObject = SceneManager::instance().currentScene().getGameObject("PlayerGina");
+	assert(playerObject.has_value() && "GameObject wasnt found!");
+
+	auto _player = playerObject.value();
+
 	_player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
 
 	//Save the current level so we can continune from where we left off if we leave

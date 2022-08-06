@@ -74,6 +74,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_COLLISION].set(HEAVY_PARTICLE);
 	m_contactMasks[PLAYER_COLLISION].set(DRONE_SCRAP);
 	m_contactMasks[PLAYER_COLLISION].set(HEART_PICKUP);
+	m_contactMasks[PLAYER_COLLISION].set(CONTAINER_INSIDE);
 
 	//PLAYER_TOUCH
 	m_contactMasks[PLAYER_TOUCH].reset();
@@ -92,6 +93,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_BULLET].set(WALL);
 	m_contactMasks[PLAYER_BULLET].set(WALL_PIECE);
 	m_contactMasks[PLAYER_BULLET].set(ENEMY_TURRET);
+	m_contactMasks[PLAYER_BULLET].set(CONTAINER_INSIDE);
 
 	//PLAYER_PULSE_BULLET
 	m_contactMasks[PLAYER_PULSE_BULLET].reset();
@@ -176,6 +178,8 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[CONTAINER_INSIDE].reset();
 	m_contactMasks[CONTAINER_INSIDE].set(HEART_PICKUP);
 	m_contactMasks[CONTAINER_INSIDE].set(PLAYER_PULSE_BULLET);
+	m_contactMasks[CONTAINER_INSIDE].set(PLAYER_BULLET);
+	m_contactMasks[CONTAINER_INSIDE].set(PLAYER_COLLISION);
 
 }
 

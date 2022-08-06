@@ -64,7 +64,7 @@ public:
 	void addKeyAction(SDL_Keycode, SceneAction);
 	void applyCurrentControlMode();
 	SDL_FPoint calcWindowPosition(int globalPosition);
-	GameObject* getGameObject(std::string name);
+	std::optional<std::shared_ptr<GameObject>> getGameObject(std::string name);
 	std::optional<std::string> getNextLevel();
 	
 	void stepB2PhysicsWorld() {

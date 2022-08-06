@@ -322,8 +322,8 @@ void SceneManager::_restoreSceneState(std::string sceneId)
 
 	m_scenes.back().setState(m_sceneSaveSnapshots[sceneId].state);
 	m_scenes.back().setInputControlMode(m_sceneSaveSnapshots[sceneId].inputControlMode);
-	if (m_sceneSaveSnapshots[sceneId].cameraFollowedObject.has_value()) {
-		Camera::instance().setFollowMe(m_sceneSaveSnapshots[sceneId].cameraFollowedObject.value());
+	if (m_sceneSaveSnapshots[sceneId].cameraFollowedObject != nullptr) {
+		Camera::instance().setFollowMe(m_sceneSaveSnapshots[sceneId].cameraFollowedObject);
 	}
 	else {
 		Camera::instance().setFramePosition(m_sceneSaveSnapshots[sceneId].cameraLocation.x, m_sceneSaveSnapshots[sceneId].cameraLocation.y);

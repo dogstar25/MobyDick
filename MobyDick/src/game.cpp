@@ -205,27 +205,16 @@ void Game::_displayLoadingMsg()
 
 }
 
-GameObject* Game::getGameObject(std::string name)
+std::optional<std::shared_ptr<GameObject>> Game::getGameObject(std::string name)
 {
-	std::optional<GameObject*> foundGameObject{};
+	std::optional<std::shared_ptr<GameObject>> foundGameObject{};
 
 	Scene& currentScene = SceneManager::instance().currentScene();
 
-	for (auto& layer : currentScene.gameObjects()) {
+	foundGameObject = currentScene.getGameObject(name);
 
-		for (auto& gameObject : layer) {
+	return foundGameObject;
 
-			if (gameObject->name() == name) {
-
-				foundGameObject = gameObject.get();
-				break;
-			}
-		}
-	}
-
-	assert(foundGameObject.has_value() && "GameObject wasnt found!");
-
-	return foundGameObject.value();
 }
 
 std::optional<SDL_Point> Game::_determineScreenResolution()

@@ -17,7 +17,7 @@ inline constexpr int MAX_SCENES = 12;
 
 struct SceneSnapshot {
 	SceneState state{};
-	std::optional<GameObject*> cameraFollowedObject{};
+	std::shared_ptr<GameObject> cameraFollowedObject{};
 	SDL_FPoint cameraLocation{};
 	int inputControlMode{};
 };

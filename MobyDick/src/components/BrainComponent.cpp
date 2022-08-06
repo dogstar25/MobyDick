@@ -33,6 +33,16 @@ BrainComponent::BrainComponent(Json::Value componentJSON)
 BrainComponent::~BrainComponent()
 {
 
+	m_navPoints.clear();
+	m_tempVisitedNavPoints.clear();
+
+	m_targetDestination.reset();
+	m_interimDestination.reset();
+
+	m_seenObjects.clear();
+	m_detectedObjects.clear();
+
+
 }
 
 void BrainComponent::_doIdle()
@@ -90,9 +100,9 @@ void BrainComponent::setTargetDestination(SDL_FPoint destination)
 void BrainComponent::update()
 {
 
-	//if (m_updateSensorInputTimer.firstTime == false && m_updateSensorInputTimer.hasMetTargetDuration()) {
+	if (m_updateSensorInputTimer.firstTime == false && m_updateSensorInputTimer.hasMetTargetDuration()) {
 		_updateSensorInput();
-	//}
+	}
 
 	switch (m_currentState) {
 
@@ -117,7 +127,7 @@ void BrainComponent::postInit()
 
 			const auto& navComponent = gameObject->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
 
-			m_navPoints.push_back(gameObject.get());
+			m_navPoints.push_back(gameObject);
 
 		}
 	}
@@ -153,20 +163,6 @@ void BrainComponent::_updateSensorInput()
 	util::toRenderPoint(botRight);
 	util::toRenderPoint(botLeft);
 
-	//topLeft -= glm::vec2{Camera::instance().frame().x, Camera::instance().frame().y};
-	//topRight -= glm::vec2{ Camera::instance().frame().x, Camera::instance().frame().y };
-	//botRight -= glm::vec2{ Camera::instance().frame().x, Camera::instance().frame().y };
-	//botLeft -= glm::vec2{ Camera::instance().frame().x, Camera::instance().frame().y };
-
-	//////top
-	//game->renderer()->addLine(topLeft, topRight, lineColor);
-	//////right
-	//game->renderer()->addLine(topRight, botRight, lineColor);
-	//////bottom
-	//game->renderer()->addLine(botRight, botLeft, lineColor);
-	//////left
-	//game->renderer()->addLine(botLeft, topLeft, lineColor);
-
 	//Make the AABB query
 	parent()->parentScene()->physicsWorld()->QueryAABB(&BrainAABBCallback::instance(), aabb);
 
@@ -176,18 +172,24 @@ void BrainComponent::_updateSensorInput()
 
 		for (auto i = 0; i < m_detectObjectTraits.size(); i++) {
 
-			if (detectedObject.gameObject->traits()[i] && m_detectObjectTraits[i]) {
+			//Is this one we care about and is it NOT our own body being detected
+			if (detectedObject.gameObject->traits()[i] && m_detectObjectTraits[i]
+				&& (detectedObject.gameObject != parent())) {
 
 				//Get this objects shared pointer from the scene and store it instead of the raw pointer
-				//auto gameObject = std::shared_ptr<GameObject>(parent()->parentScene()->getGameObject(detectedObject.gameObject->name()));
+				std::optional<std::weak_ptr<GameObject>> gameObject = parent()->parentScene()->getGameObject(detectedObject.gameObject->name());
 
+				//If this detected object was not found in the main gameObject structure then its okay because the brain sensor only
+				//updates so often and the detected object stored may have been deleted sicen the last brian refresh
+				if (gameObject.has_value()) {
 
-				m_detectedObjects.push_back(detectedObject);
+					m_detectedObjects.push_back(gameObject.value());
 
-				if (_hasLineOfSight(detectedObject) == true) {
+					if (_hasLineOfSight(detectedObject) == true) {
 
-					m_seenObjects.push_back(detectedObject);
+						m_seenObjects.push_back(gameObject.value());
 
+					}
 				}
 
 				break;
@@ -277,7 +279,7 @@ bool BrainComponent::navigate()
 
 		//Looks for next interim destination. null_Opt is returned if we alerady are at the
 		//closest nav point to the targetDestination
-		std::optional<GameObject*> nextInterimDestination = getNextinterimDestination();
+		std::optional<std::shared_ptr<GameObject>> nextInterimDestination = getNextinterimDestination();
 		if (nextInterimDestination.has_value()) {
 			m_interimDestination = nextInterimDestination.value();
 		}
@@ -301,7 +303,7 @@ bool BrainComponent::navigate()
 
 void BrainComponent::executeMove()
 {
-	GameObject* interim = m_interimDestination.value();
+	GameObject* interim = m_interimDestination.value().get();
 	const auto& interimNavComponent = interim->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	b2Vec2 trajectory{};
 	trajectory.x = interimNavComponent->getCenterPosition().x - parent()->getCenterPosition().x;
@@ -346,7 +348,7 @@ void BrainComponent::stopMovement()
 /*
 Find the accessible iterim point that is the closest to the current target
 */
-std::optional<GameObject*> BrainComponent::getNextinterimDestination()
+std::optional<std::shared_ptr<GameObject>> BrainComponent::getNextinterimDestination()
 {
 	const auto& target = m_targetDestination.value();
 	const auto& targetTransformComponent = target->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
@@ -357,7 +359,7 @@ std::optional<GameObject*> BrainComponent::getNextinterimDestination()
 
 
 	std::optional<float> shortestDistance{};
-	std::optional<GameObject*>shortestDistanceObject{};
+	std::optional<std::shared_ptr<GameObject>> shortestDistanceObject{};
 
 	//Are we already at the closest nav point possible
 	if (util::calculateDistance(interimTransformComponent->getCenterPosition(),
@@ -380,7 +382,7 @@ std::optional<GameObject*> BrainComponent::getNextinterimDestination()
 				if (shortestDistance.has_value() == false || shortestDistance.value() > distance) {
 
 					shortestDistance = distance;
-					shortestDistanceObject = navPointTemp.get();
+					shortestDistanceObject = navPointTemp;
 
 				}
 			}
@@ -398,7 +400,7 @@ bool BrainComponent::_existsInAlreadyVistedNavList(GameObject* navPoint)
 
 	for (const auto vistedPoint : m_tempVisitedNavPoints) {
 
-		if (navPoint == vistedPoint) {
+		if (navPoint == vistedPoint.get()) {
 			found = true;
 		}
 	}
@@ -406,25 +408,25 @@ bool BrainComponent::_existsInAlreadyVistedNavList(GameObject* navPoint)
 	return found;
 }
 
-GameObject* BrainComponent::getClosestSeenNavPoint(SDL_FPoint targetPosition, int navType)
+std::shared_ptr<GameObject> BrainComponent::getClosestSeenNavPoint(SDL_FPoint targetPosition, int navType)
 {
 
 	//For each navigation item, calculate the distance from the given position
 	float shortest{};
-	GameObject* closestNavPoint{};
+	std::shared_ptr<GameObject> closestNavPoint{};
 
 	/*
 	* Find the closest nav point that is within line of sight
 	*/
 	for (const auto& seenObject : m_seenObjects) {
 
-		if (seenObject.gameObject->hasTrait(TraitTag::navigation)) {
+		if (seenObject.expired() == false && seenObject.lock()->hasTrait(TraitTag::navigation)) {
 
-			const auto& navComponent = seenObject.gameObject->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
+			const auto& navComponent = seenObject.lock()->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
 
 			if (navComponent->type() == navType || navType == NavigationObjectType::UNSPECIFIED) {
 				const auto& transform =
-					seenObject.gameObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+					seenObject.lock()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 				auto navPosition = transform->getCenterPosition();
 
 				auto distance = std::powf((targetPosition.x - navPosition.x), 2) + std::powf((targetPosition.y - navPosition.y), 2);
@@ -432,7 +434,7 @@ GameObject* BrainComponent::getClosestSeenNavPoint(SDL_FPoint targetPosition, in
 
 				if (shortest == 0. || shortest > distance) {
 					shortest = distance;
-					closestNavPoint = seenObject.gameObject;
+					closestNavPoint = seenObject.lock();
 				}
 			}
 
@@ -453,10 +455,10 @@ GameObject* BrainComponent::getClosestSeenNavPoint(SDL_FPoint targetPosition, in
 	return closestNavPoint;
 }
 
-GameObject* BrainComponent::getClosestNavPoint(SDL_FPoint targetPosition, int navType)
+std::shared_ptr<GameObject> BrainComponent::getClosestNavPoint(SDL_FPoint targetPosition, int navType)
 {
 	float shortest{};
-	GameObject* closestNavPoint{};
+	std::shared_ptr<GameObject> closestNavPoint{};
 
 	for (const auto& gameObject : parent()->parentScene()->gameObjects()[GameLayer::ABSTRACT]) {
 
@@ -474,7 +476,7 @@ GameObject* BrainComponent::getClosestNavPoint(SDL_FPoint targetPosition, int na
 
 				if (shortest == 0. || shortest > distance) {
 					shortest = distance;
-					closestNavPoint = gameObject.get();
+					closestNavPoint = gameObject;
 				}
 			}
 		}

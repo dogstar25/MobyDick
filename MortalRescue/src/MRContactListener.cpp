@@ -384,9 +384,6 @@ void MRContactListener::_player_shieldScrap(GameObject* player, GameObject* shie
 void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* player, b2Vec2 contactPoint)
 {
 
-	//Update the status Manager
-	//game->contextMananger()->adjustStatusItemValue("PLAYER_HEARTS_COUNT", -1);
-
 	//flag the scrap item to be removed from the game and play a sound effect
 	bullet->setRemoveFromWorld(true);
 	SoundManager::instance().playSound("SFX_RETRO_IMPACT_5");
@@ -399,8 +396,7 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 	const auto& playerVitalityComponent = player->getComponent<GinaVitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 	const auto& bulletVitalityComponent = bullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
-	//playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
-	//playerVitalityComponent->inflictDamage(1);
+	playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
 
 
 }

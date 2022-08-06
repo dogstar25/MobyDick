@@ -21,16 +21,25 @@ Camera& Camera::instance()
 
 }
 
-void Camera::setFollowMe(GameObject* gameObject)
+void Camera::setFollowMe(std::shared_ptr<GameObject> gameObject)
 {
 	m_followMe = gameObject;
+	m_followMeName = gameObject->name();
 	m_currentState = CameraState::FOLLOW;
+}
+
+void Camera::setFollowMe(std::string gameObjectName)
+{
+	
+	m_followMe.reset();
+	m_followMeName = gameObjectName;
+
 }
 
 bool Camera::dispatch(glm::vec2 destination)
 {
 
-	m_followMe = std::nullopt;
+	m_followMe.reset();
 	m_currentState = CameraState::DISPATCH;
 
 	//Check the limits of the camera frame
@@ -45,9 +54,9 @@ void Camera::update()
 
 	if (m_currentState == CameraState::FOLLOW) {
 
-		assert(m_followMe != nullptr && "No Target for the Camera to follow");
+		assert(m_followMe.expired() == false && "No Target for the Camera to follow");
 
-		const auto& followObjectTransformComponent = m_followMe.value()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+		const auto& followObjectTransformComponent = m_followMe.lock()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 		setFramePosition(
 			followObjectTransformComponent->position().x -	(m_frame.w / 2),
 			followObjectTransformComponent->position().y - (m_frame.h / 2)
@@ -79,6 +88,16 @@ void Camera::update()
 
 	//Correct the camera position if it ran beyound the edges of the level
 	correctPosition(m_frame.x, m_frame.y);
+
+}
+
+void Camera::init()
+{
+
+
+	setCurrentState(CameraState::IDLE);
+	m_followMe.reset();
+	m_followMeName={};
 
 }
 

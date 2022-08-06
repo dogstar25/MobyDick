@@ -160,6 +160,11 @@ std::optional<std::string> LevelManager::getNextLevelId(std::string currentLevel
 			nextLevelId = *(it + 1);
 			break;
 		}
+		else{
+			++it;
+		}
+
+		
 	}
 
 	return nextLevelId;

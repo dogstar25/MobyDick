@@ -19,11 +19,11 @@ public:
 private:
 	//std::optional<GameObject*> m_targetDestination{};
 	//std::optional<GameObject*> m_interimDestination{};
-	std::vector<GameObject*> m_wayPoints;
+	std::vector<std::shared_ptr<GameObject>> m_wayPoints;
 	//std::vector<GameObject*> m_navPoints;
 	//std::vector<GameObject*> m_tempVisitedNavPoints;
 	//GameObject* getClosestNavPoint(SDL_FPoint targetPosition, int navType);
-	GameObject* getNextPatrolDestination();
+	std::shared_ptr<GameObject> getNextPatrolDestination();
 
 	int m_currentWaypointIndex{ 0 };
 	SDL_FPoint m_targetLocation{0,0};

@@ -15,7 +15,7 @@ extern std::unique_ptr<Game> game;
 GameObject::~GameObject()
 {
 
-	std::cout << this->m_id << "GameObject Destructor called" << std::endl;
+//	std::cout << this->m_id << "GameObject Destructor called" << std::endl;
 
 }
 
@@ -67,7 +67,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 	//Set the camera to follow this GameObject
 	if (cameraFollow) {
-		Camera::instance().setFollowMe(this);
+		Camera::instance().setFollowMe(this->name());
 	}
 
 }

@@ -207,7 +207,7 @@ void IMGuiTopLeftHud::hudWeaponChargeBar(float accrualValue)
 
 			//SDL2 Texture void* is the SDL_Texture*
 			SDL_Texture* sdlTexture = TextureManager::instance().getTexture("TEXTURE_IMGUI_ATLAS")->sdlTexture;
-			ImGui::Image((void*)(SDL_Texture*)sdlTexture, ImVec2(2, 32), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), util::SDLColorToImVec4(Colors::WHITE));
+			ImGui::Image((void*)(SDL_Texture*)sdlTexture, ImVec2(2, 8), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), util::SDLColorToImVec4(Colors::WHITE));
 			ImGui::SameLine(0.0f, 0);
 		}
 

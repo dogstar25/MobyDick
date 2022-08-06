@@ -56,13 +56,13 @@ void PistolWeaponComponent::charge(bool isCharging)
 	game->contextMananger()->setStatusItemValue(StatusItemId::PLAYER_WEAPON_CHARGED_PERCENT, m_chargeTimer.percentTargetMet()*100);
 
 
-	ImGui::Begin("weaponCharge");
-	ImGui::SetWindowPos(ImVec2(400, 0));
-	ImGui::Value("m_isFullyCharged", m_isFullyCharged);
-	ImGui::Value("percentTargetMet", m_chargeTimer.percentTargetMet()*100);
-	ImGui::Value("timeRemaining", m_chargeTimer.timeRemaining().count());
-	//ImGui::Value("hasMet", m_chargeTimer.hasMetTargetDuration());
-	ImGui::End();
+	//ImGui::Begin("weaponCharge");
+	//ImGui::SetWindowPos(ImVec2(400, 0));
+	//ImGui::Value("m_isFullyCharged", m_isFullyCharged);
+	//ImGui::Value("percentTargetMet", m_chargeTimer.percentTargetMet()*100);
+	//ImGui::Value("timeRemaining", m_chargeTimer.timeRemaining().count());
+	////ImGui::Value("hasMet", m_chargeTimer.hasMetTargetDuration());
+	//ImGui::End();
 
 
 	//If the charging timer hasnt even been started, then just bail

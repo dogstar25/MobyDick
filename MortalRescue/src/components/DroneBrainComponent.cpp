@@ -36,7 +36,7 @@ void DroneBrainComponent::postInit()
 
 			const auto& navComponent = gameObject->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
 			if (navComponent->type() == NavigationObjectType::WAYPOINT) {
-				m_wayPoints.push_back(gameObject.get());
+				m_wayPoints.push_back(gameObject);
 			}
 
 		}
@@ -149,13 +149,10 @@ void DroneBrainComponent::_doEngage()
 	//Set destination to last seen targets location
 	m_targetDestination = getClosestNavPoint(m_targetLocation, NavigationObjectType::UNSPECIFIED);
 
-	std::optional<GameObject*> nextInterimDestination = getNextinterimDestination();
+	std::optional<std::shared_ptr<GameObject>> nextInterimDestination = getNextinterimDestination();
 	if (nextInterimDestination.has_value()) {
 		m_interimDestination = nextInterimDestination.value();
 	}
-
-	//DebugPanel::instance().addItem("TargetDest", m_targetDestination.value()->name());
-	//DebugPanel::instance().addItem("InterimDest", m_interimDestination.value()->name());
 
 	//Point eye/weapon at target location
 	const auto& attachmentComponent = parent()->getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
@@ -207,7 +204,7 @@ void DroneBrainComponent::_navigateEngage()
 }
 
 
-GameObject* DroneBrainComponent::getNextPatrolDestination()
+std::shared_ptr<GameObject> DroneBrainComponent::getNextPatrolDestination()
 {
 
 	const auto& currentTarget = m_targetDestination.value();
@@ -318,9 +315,9 @@ std::optional<SDL_FPoint> DroneBrainComponent::_detectPlayer()
 
 	for (auto& seenObject : m_seenObjects) {
 
-		if (seenObject.gameObject->hasTrait(TraitTag::player)) {
+		if (seenObject.expired() == false && seenObject.lock()->hasTrait(TraitTag::player)) {
 
-			playerPosition = seenObject.gameObject->getCenterPosition();
+			playerPosition = seenObject.lock()->getCenterPosition();
 			break;
 		}
 	}
