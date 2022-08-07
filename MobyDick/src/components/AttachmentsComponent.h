@@ -14,12 +14,15 @@ class GameObject;
 
 struct Attachment
 {
+	std::string id{};
+	std::shared_ptr<GameObject> gameObject{};
 	bool addToInventory{ false };
 	b2JointType attachB2JointType{ b2JointType::e_weldJoint };
 	b2Vec2 attachLocation{};
-	std::shared_ptr<GameObject> gameObject;
+	
 
-	Attachment(bool addToInventory, b2JointType attachB2JointType, b2Vec2 attachLocation, std::shared_ptr<GameObject> gameObject) :
+	Attachment(std::string id, bool addToInventory, b2JointType attachB2JointType, b2Vec2 attachLocation, std::shared_ptr<GameObject> gameObject) :
+		id(id),
 		addToInventory(addToInventory),
 		attachB2JointType(attachB2JointType),
 		attachLocation(attachLocation),

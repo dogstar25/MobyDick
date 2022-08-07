@@ -94,6 +94,7 @@
                     "id": "ATTACHMENTS_COMPONENT",
                     "attachments": [
                         {
+                            "id": "PISTOL",
                             "gameObjectId": "PISTOL",
                             "attachLocation": {
                                 "x": 0.8,
@@ -103,6 +104,7 @@
                             "attachB2JointType": "B2_WELD"
                         },
                         {
+                            "id": "JETPACK",
                             "gameObjectId": "JETPACK",
                             "attachLocation": {
                                 "x": -0.8,
@@ -111,6 +113,7 @@
                             "attachB2JointType": "B2_WELD"
                         },
                         {
+                            "id": "PLAYER_HEART",
                             "gameObjectId": "PLAYER_HEART",
                             "attachLocation": {
                                 "x": 0.0,
@@ -738,6 +741,7 @@
                     "id": "ATTACHMENTS_COMPONENT",
                     "attachments": [
                         {
+                            "id": "PLAYER_HEART",
                             "gameObjectId": "PLAYER_HEART",
                             "attachLocation": {
                                 "x": 0.0,
