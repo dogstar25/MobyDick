@@ -156,7 +156,7 @@ void DroneBrainComponent::_doEngage()
 
 	//Point eye/weapon at target location
 	const auto& attachmentComponent = parent()->getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
-	const auto& eye = attachmentComponent->getAttachment("DRONE_EYE");
+	const auto& eye = attachmentComponent->getAttachment("DRONE2_EYE");
 	const auto& eyeGameObject = eye.value().gameObject;
 	b2Vec2 targetLoc = { m_targetLocation.x ,m_targetLocation.y };
 	b2Vec2 rotationCenter{ parent()->getCenterPosition().x, parent()->getCenterPosition().y };

@@ -31,6 +31,11 @@
             "filename": "assets/blueprints/drone1_blueprint.png"
         },
         {
+            "id": "TX_DRONE2_BLUEPRINT",
+            "description": "Drone 2 Blueprint",
+            "filename": "assets/blueprints/drone2_blueprint.png"
+        },
+        {
             "id": "TX_BREAKABLE_WALL_BLUEPRINT",
             "description": "Breakable Wall Blueprint",
             "filename": "assets/blueprints/breakable_wall_blueprint.png"
@@ -398,7 +403,7 @@
                 "x": 1930,
                 "y": 200,
                 "width": 78,
-                "height": 33
+                "height": 37
             }
         },
         {
