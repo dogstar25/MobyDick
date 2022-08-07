@@ -396,7 +396,7 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 	const auto& playerVitalityComponent = player->getComponent<GinaVitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 	const auto& bulletVitalityComponent = bullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
-	playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
+	//playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
 
 
 }

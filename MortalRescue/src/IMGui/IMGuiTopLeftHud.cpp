@@ -73,8 +73,6 @@ void IMGuiTopLeftHud::weaponLevel()
 
 	ImVec4 gunColor{};
 
-	//TextureAtlas Coordinates
-
 	//Get the value for the current player weapon levelup accrual
 	auto& levelUpAccrual = game->contextMananger()->getStatusItem(StatusItemId::PLAYER_WEAPON_ACCRUAL);
 
@@ -104,22 +102,28 @@ void IMGuiTopLeftHud::weaponLevel()
 	std::stringstream levelTxtSS;
 	std::string levelTxt;
 	if (weaponLevel.isAtMax()) {
-		levelTxtSS << "LVL MAX";
+		levelTxtSS << "MAX";
+		levelTxt = levelTxtSS.str();
+		ImGui::SetCursorPos({ 94,24 });
+		ImGui::Text(levelTxt.c_str());
 	}
 	else {
-		levelTxtSS << "LVL" << weaponLevel.value();
+		ImGui::PushFont(m_smallFont);
+		levelTxtSS << std::setw(2) << std::setfill('0') << weaponLevel.value();
+		levelTxt = levelTxtSS.str();
+		ImGui::SetCursorPos({ 65,39 });
+		ImGui::Text(levelTxt.c_str());
+		ImGui::PopFont();
 	}
-	levelTxt = levelTxtSS.str();
-	ImGui::SameLine();
 
-	//Move the text down a wee bit
-	ImGui::SetCursorPosY(22);
-	ImGui::Text(levelTxt.c_str());
-	//ImGui::PopFont();
-	//ImGui::NewLine();
 	//Bar grapgh showing the accrual level
+	ImGui::SetCursorPos({ 94,24 });
 	hudWeaponAccrualBar(gunColor, levelUpAccrual.value());
+
+	ImGui::SetCursorPos({ 94,58 });
 	hudWeaponChargeBar(chargedPercent.value());
+
+	levelTxtSS = {};
 
 }
 
@@ -150,8 +154,6 @@ void IMGuiTopLeftHud::hudWeaponPistolImage(ImVec4 color)
 
 void IMGuiTopLeftHud::hudWeaponAccrualBar(ImVec4 color, float accrualValue)
 {
-	//CurrLineTextBaseOffset
-	ImGui::SameLine();
 
 	//TextureAtlas Coordinates for bar
 	glm::vec2 topLeft = util::glNormalizeTextureCoords({ 33,0 }, { 256, 256 });
@@ -181,7 +183,7 @@ void IMGuiTopLeftHud::hudWeaponAccrualBar(ImVec4 color, float accrualValue)
 void IMGuiTopLeftHud::hudWeaponChargeBar(float accrualValue)
 {
 	//CurrLineTextBaseOffset
-	ImGui::NewLine();
+	//ImGui::NewLine();
 
 
 	ImGui::Begin("weaponHud");
@@ -189,6 +191,14 @@ void IMGuiTopLeftHud::hudWeaponChargeBar(float accrualValue)
 	ImGui::Value("accrualValue", accrualValue);
 	//ImGui::Value("hasMet", m_chargeTimer.hasMetTargetDuration());
 	ImGui::End();
+
+	SDL_Color accrualBarColor{};
+	if (accrualValue >= 100) {
+		accrualBarColor = Colors::RED;
+	}
+	else {
+		accrualBarColor = Colors::WHITE;
+	}
 
 
 	//TextureAtlas Coordinates for bar
@@ -200,14 +210,14 @@ void IMGuiTopLeftHud::hudWeaponChargeBar(float accrualValue)
 		if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 
 			GLuint textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::IMGUI_TEXTURE_ATLAS);
-			ImGui::Image((void*)(int*)textureAtlasId, ImVec2(2, 32), ImVec2(bottomRight.x, bottomRight.y), ImVec2(topLeft.x, topLeft.y), util::SDLColorToImVec4(Colors::WHITE));
+			ImGui::Image((void*)(int*)textureAtlasId, ImVec2(2, 32), ImVec2(bottomRight.x, bottomRight.y), ImVec2(topLeft.x, topLeft.y), util::SDLColorToImVec4(accrualBarColor));
 			ImGui::SameLine(0.0f, 0);
 		}
 		else {
 
 			//SDL2 Texture void* is the SDL_Texture*
 			SDL_Texture* sdlTexture = TextureManager::instance().getTexture("TEXTURE_IMGUI_ATLAS")->sdlTexture;
-			ImGui::Image((void*)(SDL_Texture*)sdlTexture, ImVec2(2, 8), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), util::SDLColorToImVec4(Colors::WHITE));
+			ImGui::Image((void*)(SDL_Texture*)sdlTexture, ImVec2(2, 4), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), util::SDLColorToImVec4(accrualBarColor));
 			ImGui::SameLine(0.0f, 0);
 		}
 

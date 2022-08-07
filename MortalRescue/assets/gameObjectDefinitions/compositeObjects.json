@@ -162,8 +162,8 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 26,
-                        "height": 11
+                        "width": 78,
+                        "height": 37
                     }
                 },
                 {
@@ -173,6 +173,222 @@
                     "angularDamping": 10.0,
                     "anchorPoint": {
                         "x": -1.56,
+                        "y": 0.0
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_BOX",
+                            "friction": 1.0,
+                            "density": 5.0
+                        }
+                    ]
+
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_ROTATE",
+                            "actionClass": "DroneEyeRotateAction"
+                        },
+                        {
+                            "actionId": "ACTION_USAGE",
+                            "actionClass": "PistolFire"
+                        }
+                    ]
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "rotationSpeed": 3000
+                },
+                {
+                    "id": "WEAPON_COMPONENT",
+                    "fireOffset": 1.0,
+                    "weaponLevels": [
+                        {
+                            "level": 1,
+                            "force": 1,
+                            "color": "Colors::RED",
+                            "bulletPoolId": "BULLET2_POOL"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "DRONE2",
+            "traitTags": [],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_CLEAR_QUAD"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "anchorPoint": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::DRONE_FRAME",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 1.28,
+                            "density": 2000.5
+                        }
+                    ]
+                },
+                {
+                    "id": "ATTACHMENTS_COMPONENT",
+                    "attachments": [
+                        {
+                            "gameObjectId": "DRONE2_EYE",
+                            "attachLocation": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "addToInventory": false,
+                            "attachB2JointType": "B2_REVOLUTE"
+                        },
+                        {
+                            "gameObjectId": "DRONE2_BRAIN",
+                            "attachLocation": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "addToInventory": false,
+                            "attachB2JointType": "B2_WELD"
+                        }
+                    ]
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_MOVE",
+                            "actionClass": "DroneMove"
+                        },
+                        {
+                            "actionId": "ACTION_ROTATE",
+                            "actionClass": "DefaultRotate"
+                        }
+                    ]
+                },
+                {
+                    "id": "COMPOSITE_COMPONENT",
+                    "physicsWeldPiecesOn": true,
+                    "blueprint": {
+                        "texture": "TX_DRONE2_BLUEPRINT",
+                        "legend": [
+                            {
+                                "gameObjectId": "FULL_PIECE",
+                                "color": "Colors::BLUE"
+                            },
+                            {
+                                "gameObjectId": "ANGLE1_PIECE",
+                                "color": "Colors::RED"
+                            },
+                            {
+                                "gameObjectId": "ANGLE2_PIECE",
+                                "color": "Colors::YELLOW"
+                            },
+                            {
+                                "gameObjectId": "ANGLE3_PIECE",
+                                "color": "Colors::GREEN"
+                            },
+                            {
+                                "gameObjectId": "ANGLE4_PIECE",
+                                "color": "Colors::PURPLE"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "BRAIN_DRONE_COMPONENT",
+                    "sightSensorSize": 25,
+                    "detectObjectTraits": [ "player", "objective", "navigation" ]
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 20.0,
+                    "rotationSpeed": 30
+                }
+            ]
+        },
+        {
+            "id": "DRONE2_BRAIN",
+            "traitTags": [],
+            "description": "Drone Brain",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_DRONE_BRAIN_64",
+                    "color": {
+                        "tint": "Colors::GOLD",
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 16,
+                        "height": 16
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::DRONE_BRAIN",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 0.32,
+                            "density": 1.0
+                        }
+                    ]
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "resistance": 5
+                }
+            ]
+        },
+        {
+            "id": "DRONE2_EYE",
+            "traitTags": [],
+            "description": "Drone Eye",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_DRONE_EYE",
+                    "xRenderAdjustment": 0,
+                    "yRenderAdjustment": 0,
+                    "color": "Colors::YELLOW"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 39,
+                        "height": 18.5
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "linearDamping": 0.0,
+                    "angularDamping": 10.0,
+                    "anchorPoint": {
+                        "x": -0.78,
                         "y": 0.0
                     },
                     "fixtures": [
@@ -553,7 +769,7 @@
         },
         {
             "id": "BREAKABLE_WALL",
-            "traitTags": [ ],
+            "traitTags": [],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -595,7 +811,7 @@
         },
         {
             "id": "WALL_PIECE",
-            "traitTags": ["fragment"],
+            "traitTags": [ "fragment" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",

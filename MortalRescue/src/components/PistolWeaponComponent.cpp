@@ -53,7 +53,7 @@ void PistolWeaponComponent::charge(bool isCharging)
 {
 
 	game->contextMananger()->setStatusItemValue(StatusItemId::PLAYER_WEAPON_IS_CHARGED, m_isFullyCharged);
-	game->contextMananger()->setStatusItemValue(StatusItemId::PLAYER_WEAPON_CHARGED_PERCENT, m_chargeTimer.percentTargetMet()*100);
+	game->contextMananger()->setStatusItemValue(StatusItemId::PLAYER_WEAPON_CHARGED_PERCENT, (float)0);
 
 
 	//ImGui::Begin("weaponCharge");
@@ -74,6 +74,8 @@ void PistolWeaponComponent::charge(bool isCharging)
 	if (m_isFullyCharged == false) {
 
 		if (isCharging) {
+
+			game->contextMananger()->setStatusItemValue(StatusItemId::PLAYER_WEAPON_CHARGED_PERCENT, m_chargeTimer.percentTargetMet() * 100);
 
 			if (m_chargingSoundStarted == false) {
 				m_chargingSoundChannel = SoundManager::instance().playSound("SFX_PULSE_CHARGING_1");
@@ -100,6 +102,9 @@ void PistolWeaponComponent::charge(bool isCharging)
 			m_chargingSoundStarted = false;
 
 		}
+	}
+	else {
+		game->contextMananger()->setStatusItemValue(StatusItemId::PLAYER_WEAPON_CHARGED_PERCENT, (float)100);
 	}
 
 
