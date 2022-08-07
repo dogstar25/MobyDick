@@ -55,7 +55,7 @@ namespace ContactTag {
 	inline constexpr int ENEMY_TURRET = 25;
 	inline constexpr int DRONE_SCRAP = 26;
 	inline constexpr int HEART_PICKUP = 27;
-	inline constexpr int CONTAINER_INSIDE = 28;
+	inline constexpr int HEALTH_STATION_INSIDE = 28;
 	inline constexpr int PLAYER_PULSE_BULLET = 29;
 	inline constexpr int PLAYER_PULSE_EXPLOSION = 30;
 

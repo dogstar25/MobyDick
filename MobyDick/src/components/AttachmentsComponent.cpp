@@ -13,13 +13,14 @@ AttachmentsComponent::AttachmentsComponent(Json::Value componentJSON, Scene* par
 
 	for (Json::Value itrItem : componentJSON["attachments"])
 	{
+		std::string id = itrItem["id"].asString();
 		std::string gameObjectId = itrItem["gameObjectId"].asString();
 		bool addToInventory = itrItem["addToInventory"].asBool();
 		b2Vec2 attachLocation = { itrItem["attachLocation"]["x"].asFloat(), itrItem["attachLocation"]["y"].asFloat() };
 		b2JointType attachB2JointType = static_cast<b2JointType>(EnumMap::instance().toEnum(itrItem["attachB2JointType"].asString()));
 		auto gameObject = std::make_shared<GameObject>(gameObjectId, - 1.0F, -1.0F, 0.F, parentScene);
 
-		Attachment attachment = { addToInventory, attachB2JointType, attachLocation, std::move(gameObject) };
+		Attachment attachment = { id, addToInventory, attachB2JointType, attachLocation, std::move(gameObject) };
 		m_attachments.emplace_back(attachment);
 
 	}
@@ -80,7 +81,7 @@ const std::optional<Attachment> AttachmentsComponent::getAttachment(std::string 
 
 	for (auto& attachment : m_attachments) {
 
-		if (attachment.gameObject->id() == id) {
+		if (attachment.id == id) {
 			foundAttachment = attachment;
 		}
 	}

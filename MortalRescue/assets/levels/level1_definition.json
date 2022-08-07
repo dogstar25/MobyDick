@@ -119,7 +119,7 @@
         },
         {
             "id": "LOC_0016_0013",
-            "gameObjectId": "DRONE2"
+            "gameObjectId": "DRONE"
         },
         {
             "id": "LOC_0016_0006",
@@ -239,6 +239,14 @@
         {
             "id": "LOC_0007_0010",
             "gameObjectId": "TEST_CONTAINER"
+        },
+        {
+            "id": "LOC_0103_0009",
+            "gameObjectId": "DRONE2"
+        },
+        {
+            "id": "LOC_0099_0028",
+            "gameObjectId": "DRONE2"
         }
 
     ]

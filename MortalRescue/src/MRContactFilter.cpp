@@ -23,6 +23,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[DRONE_FRAME].set(SHIELD_SCRAP);
 	m_contactMasks[DRONE_FRAME].set(SURVIVOR);
 	m_contactMasks[DRONE_FRAME].set(WALL);
+	m_contactMasks[DRONE_FRAME].set(DRONE_FRAME);
 
 	//DRONE_SHIELD
 	m_contactMasks[DRONE_SHIELD].reset();
@@ -74,7 +75,6 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_COLLISION].set(HEAVY_PARTICLE);
 	m_contactMasks[PLAYER_COLLISION].set(DRONE_SCRAP);
 	m_contactMasks[PLAYER_COLLISION].set(HEART_PICKUP);
-	m_contactMasks[PLAYER_COLLISION].set(CONTAINER_INSIDE);
 
 	//PLAYER_TOUCH
 	m_contactMasks[PLAYER_TOUCH].reset();
@@ -93,13 +93,14 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_BULLET].set(WALL);
 	m_contactMasks[PLAYER_BULLET].set(WALL_PIECE);
 	m_contactMasks[PLAYER_BULLET].set(ENEMY_TURRET);
-	m_contactMasks[PLAYER_BULLET].set(CONTAINER_INSIDE);
+	m_contactMasks[PLAYER_BULLET].set(HEALTH_STATION_INSIDE);
 
 	//PLAYER_PULSE_BULLET
 	m_contactMasks[PLAYER_PULSE_BULLET].reset();
 	m_contactMasks[PLAYER_PULSE_BULLET].set(DRONE_SHIELD);
 	m_contactMasks[PLAYER_PULSE_BULLET].set(WALL_PIECE);
 	m_contactMasks[PLAYER_PULSE_BULLET].set(ENEMY_TURRET);
+	m_contactMasks[PLAYER_PULSE_BULLET].set(HEALTH_STATION_INSIDE);
 
 	//PLAYER_PULSE_EXPLOSION
 	m_contactMasks[PLAYER_PULSE_EXPLOSION].reset();
@@ -171,15 +172,13 @@ MRContactFilter::MRContactFilter()
 	//Heart Pickup
 	m_contactMasks[HEART_PICKUP].reset();
 	m_contactMasks[HEART_PICKUP].set(PLAYER_COLLISION);
-	m_contactMasks[HEART_PICKUP].set(CONTAINER_INSIDE);
-	//m_contactMasks[HEART_PICKUP].set(HEART_PICKUP);
+	m_contactMasks[HEART_PICKUP].set(HEALTH_STATION_INSIDE);
 
-	//Container Inside
-	m_contactMasks[CONTAINER_INSIDE].reset();
-	m_contactMasks[CONTAINER_INSIDE].set(HEART_PICKUP);
-	m_contactMasks[CONTAINER_INSIDE].set(PLAYER_PULSE_BULLET);
-	m_contactMasks[CONTAINER_INSIDE].set(PLAYER_BULLET);
-	m_contactMasks[CONTAINER_INSIDE].set(PLAYER_COLLISION);
+	//HEALTH_STATION_INSIDE Inside
+	m_contactMasks[HEALTH_STATION_INSIDE].reset();
+	m_contactMasks[HEALTH_STATION_INSIDE].set(HEART_PICKUP);
+	m_contactMasks[HEALTH_STATION_INSIDE].set(PLAYER_BULLET);
+	m_contactMasks[HEALTH_STATION_INSIDE].set(PLAYER_PULSE_BULLET);
 
 }
 

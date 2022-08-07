@@ -36,6 +36,7 @@
                     "id": "ATTACHMENTS_COMPONENT",
                     "attachments": [
                         {
+                            "id": "DRONE_EYE",
                             "gameObjectId": "DRONE_EYE",
                             "attachLocation": {
                                 "x": 0.0,
@@ -45,6 +46,7 @@
                             "attachB2JointType": "B2_REVOLUTE"
                         },
                         {
+                            "id": "DRONE_BRAIN",
                             "gameObjectId": "DRONE_BRAIN",
                             "attachLocation": {
                                 "x": 0.0,
@@ -252,6 +254,7 @@
                     "id": "ATTACHMENTS_COMPONENT",
                     "attachments": [
                         {
+                            "id": "DRONE_EYE",
                             "gameObjectId": "DRONE2_EYE",
                             "attachLocation": {
                                 "x": 0.0,
@@ -261,6 +264,7 @@
                             "attachB2JointType": "B2_REVOLUTE"
                         },
                         {
+                            "id": "DRONE_BRAIN",
                             "gameObjectId": "DRONE2_BRAIN",
                             "attachLocation": {
                                 "x": 0.0,
