@@ -241,8 +241,55 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 	//Build Level Parallax values
 	_buildParallax(scene);
 
+	//Build Level Cage
+	_buildLevelCage(scene);
+
 	//Clear the level objects collection now that all gameObjects are built
 	m_levelObjects.clear();
+
+}
+
+void LevelManager::_buildLevelCage(Scene* scene)
+{
+
+	//b2Vec2 cageSize{};
+	b2ChainShape chain;
+
+
+	auto levelWidth = (m_tileWidth * m_width) / GameConfig::instance().scaleFactor() ;
+	auto levelHeight = (m_tileHeight * m_height) / GameConfig::instance().scaleFactor();
+
+	//Get the physices world
+	const auto physicsWorld = scene->physicsWorld();
+
+	b2BodyDef bodyDef;
+	bodyDef.type = static_cast<b2BodyType>(b2_staticBody);
+
+	//Default the position to zero.
+	bodyDef.position.SetZero();
+	b2Body* body = physicsWorld->CreateBody(&bodyDef);
+	body->GetUserData().pointer = reinterpret_cast<uintptr_t>(new GameObject());
+
+	//Build the cage fixture
+	b2Vec2 chainVs[4];
+	
+	chainVs[0].Set(0,0);
+	chainVs[1].Set(0 , levelHeight);
+	chainVs[2].Set(levelWidth, levelHeight );
+	chainVs[3].Set(levelWidth, 0);
+
+	chain.CreateLoop(chainVs, 4);
+
+	b2FixtureDef fixtureDef;
+	fixtureDef.shape = &chain;
+	
+
+	ContactDefinition* contactDefinition = new ContactDefinition();
+	contactDefinition->contactTag = ContactTag::GENERAL_SOLID;
+	fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(contactDefinition);
+
+	body->CreateFixture(&fixtureDef);
+
 
 }
 
