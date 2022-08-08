@@ -1073,42 +1073,6 @@
                     "absolutePositioning": false
                 }
             ]
-        },
-        {
-            "id": "GLOBAL_FRAME",
-            "traitTags": ["abstract"],
-            "description": "Global Frame",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "color": {
-                        "tint": "Colors::RED",
-                        "alpha": 100
-                    }
-                
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 1920,
-                        "height": 1088
-                    }
-                },
-                {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_STATIC",
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::CONTAINER_INSIDE",
-                            "collisionShape": "B2_CHAIN",
-                            "physicsChainType": "PhysicsChainType::CCW_REFLECT_IN",
-                            "friction": 0.00,
-                            "restitution": 0.0,
-                            "density": 1.5
-                        }
-                    ]
-                }
-            ]
         }
     ]
 }
