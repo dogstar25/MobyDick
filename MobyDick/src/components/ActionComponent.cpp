@@ -2,7 +2,7 @@
 
 #include <memory.h>
 
-#include "../EnumMaps.h"
+#include "../EnumMap.h"
 #include "../game.h"
 
 #include "../actions/DefaultMoveAction.h"
@@ -24,7 +24,7 @@ ActionComponent::ActionComponent(Json::Value componentJSON, Scene* parentScene)
 		std::string actionClass = itrAction["actionClass"].asString();
 
 		//Get the Enum that represents the Game Objects action as an int
-		int actionId = EnumMap::instance().toEnum(itrAction["actionId"].asString());
+		int actionId = game->enumMap()->toEnum(itrAction["actionId"].asString());
 
 		m_actions[actionId] = game->actionFactory()->create(actionClass);
 

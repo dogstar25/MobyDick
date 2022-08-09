@@ -4,7 +4,7 @@
 
 #include "GameObjectManager.h"
 #include "game.h"
-#include "EnumMaps.h"
+#include "EnumMap.h"
 
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_sdlrenderer.h"
@@ -45,7 +45,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 	//Trait tags
 	for (Json::Value itrControls : definitionJSON["traitTags"])
 	{
-		uint32_t trait = EnumMap::instance().toEnum(itrControls.asString());
+		uint32_t trait = game->enumMap()->toEnum(itrControls.asString());
 		m_traitTags.set(trait);
 	}
 
@@ -57,7 +57,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 	for (Json::Value componentJSON : definitionJSON["components"]){
 
-		int componentType = EnumMap::instance().toEnum(componentJSON["id"].asString());
+		int componentType = game->enumMap()->toEnum(componentJSON["id"].asString());
 
 		component = game->componentFactory()->create(definitionJSON, m_name, gameObjectId, parentScene, xMapPos, yMapPos, angleAdjust, componentType);
 		component->setParent(this);

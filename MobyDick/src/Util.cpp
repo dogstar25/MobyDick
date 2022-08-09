@@ -1,13 +1,14 @@
 #include "Util.h"
 
-#include "EnumMaps.h"
+#include "EnumMap.h"
 #include <random>
 #include <format>
 #include "GameConfig.h"
 #include <iostream>
 #include "Scene.h"
+#include "Game.h"
 
-
+extern std::unique_ptr<Game> game;
 
 namespace util
 {
@@ -285,7 +286,7 @@ namespace util
 		for (Json::Value componentJSON : definitionJSON["components"]) {
 
 			std::string id = componentJSON["id"].asString();
-			int type = EnumMap::instance().toEnum(id);
+			int type = game->enumMap()->toEnum(id);
 			if (type == componentType) {
 				return componentJSON;
 			}

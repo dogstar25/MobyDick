@@ -2,13 +2,6 @@
 #include <assert.h>
 #include "BaseConstants.h"
 
-ColorMap& ColorMap::instance()
-{
-
-	static ColorMap singletonInstance;
-	return singletonInstance;
-
-}
 ColorMap::ColorMap()
 {
 

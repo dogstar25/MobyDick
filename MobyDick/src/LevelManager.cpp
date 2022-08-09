@@ -2,7 +2,7 @@
 
 #include <fstream>
 
-#include "EnumMaps.h"
+#include "EnumMap.h"
 #include "Game.h"
 #include "ColorMap.h"
 #include <assert.h>
@@ -108,7 +108,7 @@ void LevelManager::_loadDefinition(std::string levelId)
 
 			TiledLayerDefinition tiledLayerDefinition;
 
-			tiledLayerDefinition.layerId = EnumMap::instance().toEnum(tiledLayer["layer"].asString());
+			tiledLayerDefinition.layerId = game->enumMap()->toEnum(tiledLayer["layer"].asString());
 			tiledLayerDefinition.tiledObjectId = tiledLayer["tiledObjectId"].asString();
 			tiledLayerDefinition.tileSize = { tiledLayer["tileSize"]["width"].asInt() , tiledLayer["tileSize"]["height"].asInt() };
 
@@ -303,7 +303,7 @@ void LevelManager::_buildParallax(Scene* scene)
 
 			Parallax parallaxItem;
 
-			parallaxItem.layer = EnumMap::instance().toEnum(parallax["layer"].asString());
+			parallaxItem.layer = game->enumMap()->toEnum(parallax["layer"].asString());
 			parallaxItem.rate = parallax["parallaxRate"].asFloat() * .01;
 
 			scene->addParallaxItem(parallaxItem);
@@ -361,13 +361,13 @@ std::optional<LevelObject> LevelManager::_determineColorDefinedObject(SDL_Color 
 	//This location should have a location item defined for it 
 	for (Json::Value colorItemJSON : m_colorDefinedList) {
 
-		SDL_Color definedColor = ColorMap::instance().toSDLColor(colorItemJSON["color"].asString());
+		SDL_Color definedColor = game->colorMap()->toSDLColor(colorItemJSON["color"].asString());
 		if (definedColor == color) {
 
 			levelObject = LevelObject();
 			levelObject->gameObjectId = colorItemJSON["gameObjectId"].asString();
 			if (colorItemJSON.isMember("layer")) {
-				levelObject->layer = EnumMap::instance().toEnum(colorItemJSON["layer"].asString());
+				levelObject->layer = game->enumMap()->toEnum(colorItemJSON["layer"].asString());
 			}
 			if (colorItemJSON.isMember("cameraFollow")) {
 				levelObject->cameraFollow = colorItemJSON["cameraFollow"].asBool();
@@ -407,7 +407,7 @@ std::optional<LevelObject> LevelManager::_determineLocationDefinedObject(int x, 
 			levelObject = LevelObject();
 			levelObject->gameObjectId = locationItemJSON["gameObjectId"].asString();
 			if (locationItemJSON.isMember("layer")) {
-				levelObject->layer = EnumMap::instance().toEnum(locationItemJSON["layer"].asString());
+				levelObject->layer = game->enumMap()->toEnum(locationItemJSON["layer"].asString());
 			}
 			if (locationItemJSON.isMember("cameraFollow")) {
 				levelObject->cameraFollow = locationItemJSON["cameraFollow"].asBool();
@@ -559,7 +559,7 @@ bool LevelManager::_isColorDefinedObject(SDL_Color color)
 
 	for (Json::Value colorItemJSON : m_colorDefinedList) {
 
-		SDL_Color definedColor = ColorMap::instance().toSDLColor(colorItemJSON["color"].asString());
+		SDL_Color definedColor = game->colorMap()->toSDLColor(colorItemJSON["color"].asString());
 		if (definedColor == color) {
 			return true;
 		}
@@ -650,7 +650,7 @@ void LevelManager::_buildLevelObjectives(Scene* scene)
 		for (Json::Value itrObjective : m_levelDefinition["objectives"])
 		{
 			Objective objective{};
-			objective.id = EnumMap::instance().toEnum(itrObjective["id"].asString());
+			objective.id = game->enumMap()->toEnum(itrObjective["id"].asString());
 			objective.targetValue = itrObjective["targetValue"].asFloat();
 			scene->addLevelObjective(objective);
 
@@ -673,7 +673,7 @@ void LevelManager::_buildLevelStatusItems(std::string levelId)
 		{
 
 			
-			int statusItemId = EnumMap::instance().toEnum(itrObjective["id"].asString());
+			int statusItemId = game->enumMap()->toEnum(itrObjective["id"].asString());
 			StatusItem statusItem(statusItemId);
 			statusItem.setValue(itrObjective["initialValue"].asFloat());
 			statusItem.setInitialValue(itrObjective["initialValue"].asFloat());

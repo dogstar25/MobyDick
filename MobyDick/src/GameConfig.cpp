@@ -1,7 +1,7 @@
 #include "GameConfig.h"
 
 #include "game.h"
-#include "EnumMaps.h"
+#include "EnumMap.h"
 
 #include <fstream>
 
@@ -35,7 +35,7 @@ bool GameConfig::init(std::string configFile)
 	m_debugPanelFontSize = root["debugPanel"]["fontSize"].asInt();
 	m_soundChannels = root["sound"]["numberOfChannels"].asInt();
 	m_scaleFactor = root["physics"]["box2dScale"].asFloat();
-	m_rendererType = static_cast<RendererType>(EnumMap::instance().toEnum(root["rendererType"].asString()));
+	m_rendererType = static_cast<RendererType>(game->enumMap()->toEnum(root["rendererType"].asString()));
 	m_openGLBatching = root["openGLBatching"].asBool();
 
 	Json::Value windowJSON = root["window"];

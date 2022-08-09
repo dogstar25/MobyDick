@@ -21,7 +21,7 @@ UIControlComponent::UIControlComponent(Json::Value componentJSON)
 
 	for (Json::Value itrControls : componentJSON["controls"])
 	{
-		/*int controlFlag = EnumMap::instance().toEnum(itrControls.asString());
+		/*int controlFlag = game->enumMap()->toEnum(itrControls.asString());
 		m_controls.set(controlFlag);*/
 	}
 

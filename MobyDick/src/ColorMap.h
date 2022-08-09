@@ -10,7 +10,6 @@ class ColorMap {
 public:
 	ColorMap();
 
-	static ColorMap& instance();
 	const SDL_Color toSDLColor(std::string name);
 	const ImVec4 toIMGUIColor(std::string name);
 	void addColor(std::string id, SDL_Color color) {
@@ -18,7 +17,7 @@ public:
 		m_colorMap[id] = color;
 	}
 
-private:
+protected:
 	std::map<std::string, SDL_Color> m_colorMap;
 
 };

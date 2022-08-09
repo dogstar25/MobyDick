@@ -1,6 +1,10 @@
 #include "ChildrenComponent.h"
-#include "../EnumMaps.h"
+#include "../EnumMap.h"
 #include "../GameObject.h"
+#include "../game.h"
+#include "../EnumMap.h"
+
+extern std::unique_ptr<Game> game;
 
 ChildrenComponent::ChildrenComponent()
 {
@@ -9,6 +13,7 @@ ChildrenComponent::ChildrenComponent()
 
 ChildrenComponent::ChildrenComponent(Json::Value componentJSON, Scene* parentScene)
 {
+
 
 	m_componentType = ComponentTypes::CHILDREN_COMPONENT;
 
@@ -30,7 +35,7 @@ ChildrenComponent::ChildrenComponent(Json::Value componentJSON, Scene* parentSce
 		//Slot alignment
 		PositionAlignment positionAlignment{ PositionAlignment::CENTER };
 		if (itrChild.isMember("alignment")) {
-			positionAlignment = static_cast<PositionAlignment>(EnumMap::instance().toEnum(itrChild["alignment"].asString()));
+			positionAlignment = static_cast<PositionAlignment>(game->enumMap()->toEnum(itrChild["alignment"].asString()));
 		}
 
 		//Absolute position

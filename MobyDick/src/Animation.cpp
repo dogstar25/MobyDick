@@ -1,10 +1,13 @@
 #include "Animation.h"
 
-
-#include "EnumMaps.h"
+#include "game.h"
+#include "EnumMap.h"
 #include "TextureManager.h"
 #include "ColorMap.h"
 #include "GameObject.h"
+
+
+extern std::unique_ptr<Game> game;
 
 
 Animation::Animation(Json::Value animationDetailsJSON, b2Vec2 frameSize) :
@@ -12,7 +15,7 @@ Animation::Animation(Json::Value animationDetailsJSON, b2Vec2 frameSize) :
 {
 
 	m_currentAnimFrame = 0;
-	m_state = EnumMap::instance().toEnum(animationDetailsJSON["state"].asString());
+	m_state = game->enumMap()->toEnum(animationDetailsJSON["state"].asString());
 	m_speed = animationDetailsJSON["speed"].asFloat();
 
 	m_timer = Timer(m_speed, true);
@@ -57,9 +60,6 @@ Animation::Animation(Json::Value animationDetailsJSON, b2Vec2 frameSize) :
 	m_currentTextureAnimationSrcRect->h = (int)m_frameSize.y;
 
 }
-
-
-
 
 int Animation::animate(GameObject* parentGameObject)
 {

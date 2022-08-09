@@ -2,6 +2,9 @@
 
 #include "../game.h"
 #include "../ColorMap.h"
+#include "../game.h"
+
+extern std::unique_ptr<Game> game;
 
 WeaponComponent::WeaponComponent()
 {
@@ -26,7 +29,7 @@ WeaponComponent::WeaponComponent(Json::Value componentJSON)
 		weaponLevelDetail.level = itrWeaponLevel["level"].asInt();
 		weaponLevelDetail.force = itrWeaponLevel["force"].asFloat();
 		if (itrWeaponLevel.isMember("color")) {
-			weaponLevelDetail.color = ColorMap::instance().toSDLColor(itrWeaponLevel["color"].asString());
+			weaponLevelDetail.color = game->colorMap()->toSDLColor(itrWeaponLevel["color"].asString());
 		}
 		weaponLevelDetail.bulletPoolId = itrWeaponLevel["bulletPoolId"].asString();
 		m_weaponLevelDetails.emplace(level, std::move(weaponLevelDetail));

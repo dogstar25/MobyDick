@@ -22,7 +22,7 @@ PistolWeaponComponent::PistolWeaponComponent(Json::Value definitionJSON)
 	m_chargeTimer = { chargeTimerTime };
 	m_secondaryFireRadius = definitionJSON["secondaryFire"]["radius"].asFloat();
 	m_secondaryFireBulletPoolId = definitionJSON["secondaryFire"]["bulletPoolId"].asString();
-	m_secondaryFireColor = ColorMap::instance().toSDLColor(definitionJSON["secondaryFire"]["color"].asString());
+	m_secondaryFireColor = game->colorMap()->toSDLColor(definitionJSON["secondaryFire"]["color"].asString());
 	m_secondaryFireForce = definitionJSON["secondaryFire"]["force"].asFloat();
 
 

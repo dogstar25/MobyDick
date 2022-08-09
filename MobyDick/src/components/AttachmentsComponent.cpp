@@ -1,9 +1,11 @@
 #include "AttachmentsComponent.h"
 
-#include "../EnumMaps.h"
+#include "../EnumMap.h"
 #include "../GameObject.h"
+#include "../game.h"
+#include "../EnumMap.h"
 
-
+extern std::unique_ptr<Game> game;
 
 
 AttachmentsComponent::AttachmentsComponent(Json::Value componentJSON, Scene* parentScene)
@@ -17,7 +19,7 @@ AttachmentsComponent::AttachmentsComponent(Json::Value componentJSON, Scene* par
 		std::string gameObjectId = itrItem["gameObjectId"].asString();
 		bool addToInventory = itrItem["addToInventory"].asBool();
 		b2Vec2 attachLocation = { itrItem["attachLocation"]["x"].asFloat(), itrItem["attachLocation"]["y"].asFloat() };
-		b2JointType attachB2JointType = static_cast<b2JointType>(EnumMap::instance().toEnum(itrItem["attachB2JointType"].asString()));
+		b2JointType attachB2JointType = static_cast<b2JointType>(game->enumMap()->toEnum(itrItem["attachB2JointType"].asString()));
 		auto gameObject = std::make_shared<GameObject>(gameObjectId, - 1.0F, -1.0F, 0.F, parentScene);
 
 		Attachment attachment = { id, addToInventory, attachB2JointType, attachLocation, std::move(gameObject) };

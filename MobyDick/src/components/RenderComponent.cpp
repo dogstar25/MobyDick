@@ -2,7 +2,7 @@
 
 #include <algorithm> 
 
-#include "../EnumMaps.h"
+#include "../EnumMap.h"
 #include "../ColorMap.h"
 #include "../game.h"
 #include "../BaseConstants.h"
@@ -20,7 +20,7 @@ RenderComponent::RenderComponent(Json::Value componentJSON)
 
 		if (componentJSON["color"].isObject() && componentJSON["color"].isMember("tint")) {
 
-			m_color = ColorMap::instance().toSDLColor(componentJSON["color"]["tint"].asString());
+			m_color = game->colorMap()->toSDLColor(componentJSON["color"]["tint"].asString());
 
 			if (componentJSON["color"].isMember("alpha")) {
 				util::colorApplyAlpha(m_color, componentJSON["color"]["alpha"].asInt());
@@ -32,7 +32,7 @@ RenderComponent::RenderComponent(Json::Value componentJSON)
 		}
 		//Simple color define
 		else {
-			m_color = ColorMap::instance().toSDLColor(componentJSON["color"].asString());
+			m_color = game->colorMap()->toSDLColor(componentJSON["color"].asString());
 			util::colorApplyAlpha(m_color, 255);
 		}
 	}
@@ -54,7 +54,7 @@ RenderComponent::RenderComponent(Json::Value componentJSON)
 	m_yRenderAdjustment = componentJSON["yRenderAdjustment"].asFloat();
 
 	if (componentJSON.isMember("textureBlendMode")) {
-		m_textureBlendMode = static_cast<RenderBlendMode>(EnumMap::instance().toEnum(componentJSON["textureBlendMode"].asString()));
+		m_textureBlendMode = static_cast<RenderBlendMode>(game->enumMap()->toEnum(componentJSON["textureBlendMode"].asString()));
 	}
 	else {
 		m_textureBlendMode = RenderBlendMode::BLEND;

@@ -138,6 +138,12 @@
     <ClCompile Include="src\actions\PistolSecondaryFireAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\MREnumMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MRColorMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\blueprints\drone1_blueprint.png">
@@ -382,6 +388,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\actions\PistolSecondaryFireAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MREnumMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MRColorMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,6 +2,9 @@
 
 #include "../GameObject.h"
 #include "../ColorMap.h"
+#include "../game.h"
+
+extern std::unique_ptr<Game> game;
 
 
 
@@ -45,7 +48,7 @@ VitalityComponent::VitalityComponent(Json::Value componentJSON)
 				levelItem.resistance = itrlevel["resistance"].asInt();
 
 				if (itrlevel.isMember("color")) {
-					levelItem.color = ColorMap::instance().toSDLColor(itrlevel["color"].asString());
+					levelItem.color = game->colorMap()->toSDLColor(itrlevel["color"].asString());
 					util::colorApplyAlpha(levelItem.color, 255);
 				}
 				else {

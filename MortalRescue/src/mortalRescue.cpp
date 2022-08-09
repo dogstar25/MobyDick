@@ -11,6 +11,8 @@
 #include "IMGui/MR_IMGuiFactory.h"
 #include "particleEffects/MRParticleEffectsFactory.h"
 #include "MRContextManager.h"
+#include "MREnumMap.h"
+#include "MRColorMap.h"
 
 std::unique_ptr<Game> game;
 
@@ -31,7 +33,9 @@ int main(int argc, char* args[])
 		std::make_shared<MRCutSceneFactory>(),
 		std::make_shared<MR_IMGuiFactory>(),
 		std::make_shared<MRTriggerFactory>(),
-		std::make_shared<MRContextManager>()
+		std::make_shared<MRContextManager>(),
+		std::make_shared<MREnumMap>(),
+		std::make_shared<MRColorMap>()
 	);
 
 	//play game

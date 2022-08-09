@@ -38,7 +38,7 @@ IMGuiComponent::IMGuiComponent(Json::Value componentJSON, std::string gameObject
 	{
 
 		if (componentJSON["color"].isMember("background")) {
-			backgroundColor = ColorMap::instance().toIMGUIColor(componentJSON["color"]["background"].asString());
+			backgroundColor = game->colorMap()->toIMGUIColor(componentJSON["color"]["background"].asString());
 
 			if (componentJSON["color"].isMember("backgroundAlpha")) {
 				util::colorApplyAlpha(backgroundColor, componentJSON["color"]["backgroundAlpha"].asInt());
@@ -49,16 +49,16 @@ IMGuiComponent::IMGuiComponent(Json::Value componentJSON, std::string gameObject
 		}
 
 		if (componentJSON["color"].isMember("text")) {
-			textColor = ColorMap::instance().toIMGUIColor(componentJSON["color"]["text"].asString());
+			textColor = game->colorMap()->toIMGUIColor(componentJSON["color"]["text"].asString());
 		}
 		if (componentJSON["color"].isMember("button")) {
-			buttonColor = ColorMap::instance().toIMGUIColor(componentJSON["color"]["button"].asString());
+			buttonColor = game->colorMap()->toIMGUIColor(componentJSON["color"]["button"].asString());
 		}
 		if (componentJSON["color"].isMember("buttonHover")) {
-			buttonHoverColor = ColorMap::instance().toIMGUIColor(componentJSON["color"]["buttonHover"].asString());
+			buttonHoverColor = game->colorMap()->toIMGUIColor(componentJSON["color"]["buttonHover"].asString());
 		}
 		if (componentJSON["color"].isMember("buttonActive")) {
-			buttonActiveColor = ColorMap::instance().toIMGUIColor(componentJSON["color"]["buttonActive"].asString());
+			buttonActiveColor = game->colorMap()->toIMGUIColor(componentJSON["color"]["buttonActive"].asString());
 		}
 	}
 

@@ -1,7 +1,7 @@
 #include "TextureManager.h"
 
 #include <fstream>
-#include "EnumMaps.h"
+#include "EnumMap.h"
 
 #include "game.h"
 
@@ -131,7 +131,7 @@ bool TextureManager::load(std::string texturesAssetsFile)
 		}
 		else if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 
-			GL_TextureIndexType textureIndex = (GL_TextureIndexType)EnumMap::instance().toEnum(itr["openglTextureIndex"].asString());
+			GL_TextureIndexType textureIndex = (GL_TextureIndexType)game->enumMap()->toEnum(itr["openglTextureIndex"].asString());
 
 			GLuint textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(textureIndex);
 			glActiveTexture((int)textureIndex);

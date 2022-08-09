@@ -28,6 +28,8 @@
 #include "ContactFilter.h"
 #include "ContextManager.h"
 #include "Renderer.h"
+#include "EnumMap.h"
+#include "ColorMap.h"
 
 
 /*
@@ -42,7 +44,8 @@ public:
 
 	virtual bool init(std::shared_ptr<ContactListener>, std::shared_ptr<ContactFilter>,
 		std::shared_ptr<ComponentFactory>, std::shared_ptr<ActionFactory>, std::shared_ptr<ParticleEffectsFactory>,
-		std::shared_ptr<CutSceneFactory>, std::shared_ptr<IMGuiFactory>, std::shared_ptr<TriggerFactory>, std::shared_ptr<ContextManager>) = 0;
+		std::shared_ptr<CutSceneFactory>, std::shared_ptr<IMGuiFactory>, std::shared_ptr<TriggerFactory>, std::shared_ptr<ContextManager>,
+		std::shared_ptr<EnumMap>, std::shared_ptr<ColorMap>) = 0;
 
 	virtual void play();
 	virtual void _displayLoadingMsg();
@@ -91,6 +94,12 @@ public:
 	std::shared_ptr<TriggerFactory> triggerFactory() {
 		return m_triggerFactory;
 	}
+	std::shared_ptr<EnumMap> enumMap() {
+		return m_enumMap;
+	}
+	std::shared_ptr<ColorMap> colorMap() {
+		return m_colorMap;
+	}
 
 	Renderer* renderer() { return m_renderer.get(); }
 
@@ -112,14 +121,10 @@ protected:
 	std::shared_ptr<ParticleEffectsFactory> m_particleEffectsFactory{};
 	std::shared_ptr<IMGuiFactory> m_iMGUIFactory{};
 	std::shared_ptr<TriggerFactory> m_triggerFactory{};
+	std::shared_ptr<EnumMap> m_enumMap{};
+	std::shared_ptr<ColorMap> m_colorMap{};
 
 	std::shared_ptr<Renderer> m_renderer;
-
-	virtual void _addGameCollisionTags() = 0;
-	virtual void _addGameComponentTypes() = 0;
-	virtual void _addGameColors() = 0;
-	virtual void _addGameTraits() = 0;
-	virtual void _addStatusItemTypes() = 0;
 
 	std::optional<SDL_Point> _determineScreenResolution();
 	

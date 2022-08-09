@@ -1,7 +1,9 @@
 #include "NavigationComponent.h"
-#include "../EnumMaps.h"
+#include "../EnumMap.h"
 #include "../RayCastCallBack.h"
+#include "../game.h"
 
+extern std::unique_ptr<Game> game;
 
 NavigationComponent::~NavigationComponent()
 { 
@@ -12,7 +14,7 @@ NavigationComponent::NavigationComponent(Json::Value componentJSON)
 {
 	m_componentType = ComponentTypes::NAVIGATION_COMPONENT;
 
-	m_type = EnumMap::instance().toEnum(componentJSON["type"].asString());
+	m_type = game->enumMap()->toEnum(componentJSON["type"].asString());
 
 }
 
