@@ -1,4 +1,4 @@
-#include "EnumMaps.h"
+#include "EnumMap.h"
 #include "hud/HudItemFactory.h"
 #include "Renderer.h"
 #include "opengl/GLRenderer.h"
@@ -6,13 +6,6 @@
 #include "ContextManager.h"
 
 
-EnumMap& EnumMap::instance()
-{
-
-	static EnumMap singletonInstance;
-	return singletonInstance;
-
-}
 EnumMap::EnumMap()
 {
 

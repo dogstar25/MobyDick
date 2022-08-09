@@ -51,7 +51,7 @@
     <ClCompile Include="src\Util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\EnumMaps.cpp">
+    <ClCompile Include="src\EnumMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\components\Component.cpp">
@@ -326,7 +326,7 @@
     <ClInclude Include="resource1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\EnumMaps.h">
+    <ClInclude Include="src\EnumMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\components\Component.h">

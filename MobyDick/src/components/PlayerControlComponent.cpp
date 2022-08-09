@@ -3,7 +3,7 @@
 
 #include "../IMGui/IMGuiUtil.h"
 #include "../SceneManager.h"
-#include "../EnumMaps.h"
+#include "../EnumMap.h"
 #include "../game.h"
 
 extern std::unique_ptr<Game> game;

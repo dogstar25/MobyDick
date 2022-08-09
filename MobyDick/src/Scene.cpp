@@ -1,7 +1,7 @@
 #include "Scene.h"
 
 
-#include "EnumMaps.h"
+#include "EnumMap.h"
 
 #include "GameObjectManager.h"
 #include "SoundManager.h"
@@ -38,7 +38,7 @@ Scene::Scene(std::string sceneId)
 	m_objectPoolManager.init(definitionJSON, this);
 
 	//Set the mouse mode
-	auto inputControlMode = EnumMap::instance().toEnum(definitionJSON["inputControlMode"].asString());
+	auto inputControlMode = game->enumMap()->toEnum(definitionJSON["inputControlMode"].asString());
 	m_inputControlMode = inputControlMode;
 	setInputControlMode(inputControlMode);
 
@@ -48,16 +48,16 @@ Scene::Scene(std::string sceneId)
 	//Tags
 	for (Json::Value itrTag : definitionJSON["tags"]) {
 
-		std::size_t tag = EnumMap::instance().toEnum(itrTag.asString());
+		std::size_t tag = game->enumMap()->toEnum(itrTag.asString());
 		m_sceneTags.set(tag);
 	}
 
 	//Keycode actions
 	for (Json::Value keyActionJSON : definitionJSON["keyActions"]) {
 
-		auto keyCode = EnumMap::instance().toEnum(keyActionJSON["keyCode"].asString());
+		auto keyCode = game->enumMap()->toEnum(keyActionJSON["keyCode"].asString());
 
-		auto action = EnumMap::instance().toEnum(keyActionJSON["sceneAction"]["action"].asString());
+		auto action = game->enumMap()->toEnum(keyActionJSON["sceneAction"]["action"].asString());
 		auto newSceneId = keyActionJSON["sceneAction"]["newSceneId"].asString();
 
 		SceneAction sceneAction = { int(action) , newSceneId };
@@ -431,13 +431,13 @@ void Scene::_buildSceneGameObjects(Json::Value definitionJSON)
 
 		auto id = gameObjectJSON["gameObjectId"].asString();
 
-		auto layer = EnumMap::instance().toEnum(gameObjectJSON["layer"].asString());
+		auto layer = game->enumMap()->toEnum(gameObjectJSON["layer"].asString());
 
 		//Determine location
 		auto locationJSON = gameObjectJSON["location"];
 		if (locationJSON.isMember("windowPosition")) {
 
-			PositionAlignment windowPosition = static_cast<PositionAlignment>(EnumMap::instance().toEnum(gameObjectJSON["location"]["windowPosition"].asString()));
+			PositionAlignment windowPosition = static_cast<PositionAlignment>(game->enumMap()->toEnum(gameObjectJSON["location"]["windowPosition"].asString()));
 
 			if (locationJSON.isMember("adjust")) {
 				auto adjustX = locationJSON["adjust"]["x"].asFloat();

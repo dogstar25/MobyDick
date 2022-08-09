@@ -3,15 +3,16 @@
 #include "../game.h"
 
 
-#include "../EnumMaps.h"
+#include "../EnumMap.h"
 
+extern std::unique_ptr<Game> game;
 
 AnimationComponent::AnimationComponent(Json::Value componentJSON)
 {
 	m_componentType = ComponentTypes::ANIMATION_COMPONENT;
 
 	if (componentJSON.isMember("defaultState")) {
-		m_defaultAnimationState = EnumMap::instance().toEnum(componentJSON["defaultState"].asString());
+		m_defaultAnimationState = game->enumMap()->toEnum(componentJSON["defaultState"].asString());
 	}
 	else {
 		m_defaultAnimationState=0;
@@ -24,7 +25,7 @@ AnimationComponent::AnimationComponent(Json::Value componentJSON)
 	for (Json::Value animItr : componentJSON["animations"])
 	{
 		i++;
-		int state = EnumMap::instance().toEnum(animItr["state"].asString());
+		int state = game->enumMap()->toEnum(animItr["state"].asString());
 
 		//Initialze current animation state to the first animation in the list
 		if (i == 1) {

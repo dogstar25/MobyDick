@@ -1,7 +1,7 @@
 #include "PhysicsComponent.h"
 
 
-#include "../EnumMaps.h"
+#include "../EnumMap.h"
 #include "../Game.h"
 
 extern std::unique_ptr<Game> game;
@@ -15,7 +15,7 @@ PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, Scene* parentScen
 	Json::Value physicsComponentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::PHYSICS_COMPONENT);
 	Json::Value transformComponentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::TRANSFORM_COMPONENT);
 
-	m_physicsType = EnumMap::instance().toEnum(physicsComponentJSON["type"].asString());
+	m_physicsType = game->enumMap()->toEnum(physicsComponentJSON["type"].asString());
 
 	m_objectAnchorPoint.Set(physicsComponentJSON["anchorPoint"]["x"].asFloat(),
 		physicsComponentJSON["anchorPoint"]["y"].asFloat());
@@ -167,7 +167,7 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 		b2ChainShape chain;
 		b2EdgeShape edge;
 
-		auto collisionShape = EnumMap::instance().toEnum(fixtureJSON["collisionShape"].asString());
+		auto collisionShape = game->enumMap()->toEnum(fixtureJSON["collisionShape"].asString());
 		//default
 		shape = &box;
 
@@ -195,7 +195,7 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 		}
 		else if (collisionShape == b2Shape::e_chain) {
 
-			PhysicsChainType physicsChainType = (PhysicsChainType)EnumMap::instance().toEnum(fixtureJSON["physicsChainType"].asString());
+			PhysicsChainType physicsChainType = (PhysicsChainType)game->enumMap()->toEnum(fixtureJSON["physicsChainType"].asString());
 
 			float sizeX{};
 			float sizeY{};
@@ -235,8 +235,8 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 		fixtureDef.isSensor = fixtureJSON["isSensor"].asFloat();
 
 		ContactDefinition* contactDefinition = new ContactDefinition();
-		contactDefinition->contactTag = EnumMap::instance().toEnum(fixtureJSON["contactTag"].asString());
-		contactDefinition->saveOriginalContactTag = EnumMap::instance().toEnum(fixtureJSON["contactTag"].asString());
+		contactDefinition->contactTag = game->enumMap()->toEnum(fixtureJSON["contactTag"].asString());
+		contactDefinition->saveOriginalContactTag = game->enumMap()->toEnum(fixtureJSON["contactTag"].asString());
 		fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(contactDefinition);
 
 		body->CreateFixture(&fixtureDef);

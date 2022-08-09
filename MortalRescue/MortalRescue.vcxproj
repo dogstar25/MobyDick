@@ -213,11 +213,13 @@
     <ClCompile Include="src\IMGui\MR_IMGuiUtil.cpp" />
     <ClCompile Include="src\IMGui\MR_IMGuiFactory.cpp" />
     <ClCompile Include="src\mortalRescue.cpp" />
+    <ClCompile Include="src\MRColorMap.cpp" />
     <ClCompile Include="src\MRContactFilter.cpp" />
     <ClCompile Include="src\MRContactListener.cpp" />
     <ClCompile Include="src\actions\ButtonInteraction.cpp" />
     <ClCompile Include="src\MRComponentFactory.cpp" />
     <ClCompile Include="src\components\DroneBrainComponent.cpp" />
+    <ClCompile Include="src\MREnumMap.cpp" />
     <ClCompile Include="src\MRGame.cpp" />
     <ClCompile Include="src\MRContextManager.cpp" />
     <ClCompile Include="src\particleEffects\MRParticleEffectsFactory.cpp" />
@@ -321,9 +323,11 @@
     <ClInclude Include="src\IMGui\MR_IMGuiUtil.h" />
     <ClInclude Include="src\IMGui\MR_IMGuiFactory.h" />
     <ClInclude Include="src\IMGui\IMGuiTopHud.h" />
+    <ClInclude Include="src\MRColorMap.h" />
     <ClInclude Include="src\MRComponentFactory.h" />
     <ClInclude Include="src\components\DroneBrainComponent.h" />
     <ClInclude Include="src\MRContactFilter.h" />
+    <ClInclude Include="src\MREnumMap.h" />
     <ClInclude Include="src\MRGame.h" />
     <ClInclude Include="src\MRContactListener.h" />
     <ClInclude Include="src\GameConstants.h" />

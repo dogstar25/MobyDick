@@ -3,7 +3,7 @@
 
 #include "../game.h"
 #include "../RayCastCallBack.h"
-#include "../EnumMaps.h"
+#include "../EnumMap.h"
 //#include "../BrainAABBCallback.h"
 
 
@@ -23,7 +23,7 @@ BrainComponent::BrainComponent(Json::Value componentJSON)
 
 	for (Json::Value traits : componentJSON["detectObjectTraits"])
 	{
-		uint32_t trait = EnumMap::instance().toEnum(traits.asString());
+		uint32_t trait = game->enumMap()->toEnum(traits.asString());
 		m_detectObjectTraits.set(trait);
 	}
 

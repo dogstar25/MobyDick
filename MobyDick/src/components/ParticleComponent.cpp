@@ -2,7 +2,7 @@
 
 
 #include "../game.h"
-#include "../EnumMaps.h"
+#include "../EnumMap.h"
 
 extern std::unique_ptr<Game> game;
 
@@ -30,7 +30,7 @@ ParticleComponent::ParticleComponent(Json::Value componentJSON)
 	}
 
 	if (componentJSON.isMember("type")) {
-		m_type = EnumMap::instance().toEnum(componentJSON["type"].asString());
+		m_type = game->enumMap()->toEnum(componentJSON["type"].asString());
 	}
 
 }

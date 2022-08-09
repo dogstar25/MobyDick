@@ -32,11 +32,11 @@ GameObjectDefinition::GameObjectDefinition(Json::Value gameObjectDefinitionJSON)
 	//	gameObjectDefinition->density = itr["physicsObject"]["density"].asFloat();
 	//	gameObjectDefinition->linearDamping = itr["physicsObject"]["linearDamping"].asFloat();
 	//	gameObjectDefinition->angularDamping = itr["physicsObject"]["angularDamping"].asFloat();
-	//	gameObjectDefinition->physicsType = EnumMap::instance().toEnum(itr["physicsObject"]["type"].asString());
-	//	gameObjectDefinition->collisionShape = EnumMap::instance().toEnum(itr["physicsObject"]["collisionShape"].asString());
+	//	gameObjectDefinition->physicsType = game->enumMap()->toEnum(itr["physicsObject"]["type"].asString());
+	//	gameObjectDefinition->collisionShape = game->enumMap()->toEnum(itr["physicsObject"]["collisionShape"].asString());
 	//	gameObjectDefinition->collisionRadius = itr["physicsObject"]["collisionRadius"].asFloat();
 
-	//	gameObjectDefinition->collisionCategory = EnumMap::instance().toEnum(itr["physicsObject"]["collisionCategory"].asString());
+	//	gameObjectDefinition->collisionCategory = game->enumMap()->toEnum(itr["physicsObject"]["collisionCategory"].asString());
 	//	gameObjectDefinition->weaponAnchorPoint.x = itr["physicsObject"]["weaponAnchorPoint"]["x"].asFloat();
 	//	gameObjectDefinition->weaponAnchorPoint.y = itr["physicsObject"]["weaponAnchorPoint"]["y"].asFloat();
 

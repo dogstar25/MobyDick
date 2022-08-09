@@ -11,14 +11,13 @@ public:
 	EnumMap();
 	~EnumMap();
 
-	static EnumMap& instance();
 	const int toEnum(std::string name);
 	void addEnumItem(std::string id, int enumValue) {
 
 		m_enumMap[id] = enumValue;
 	}
 
-private:
+protected:
 	std::map<std::string, int> m_enumMap;
 
 };
