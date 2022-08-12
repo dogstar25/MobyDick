@@ -81,7 +81,7 @@ bool MRGame::init(std::shared_ptr<ContactListener> contactListener, std::shared_
 
 	//Initialize the sound manager
 	SoundManager::instance().initSound();
-	SoundManager::instance().playMusic("music_ambience_1", -1);
+	//SoundManager::instance().playMusic("music_ambience_1", -1);
 
 	//Initialize the clock object
 	Clock::instance().init();

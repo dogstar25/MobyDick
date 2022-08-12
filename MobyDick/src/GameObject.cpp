@@ -72,7 +72,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 }
 
-void GameObject::addTouchingObject(GameObject* touchingObject) 
+void GameObject::addTouchingObject(std::shared_ptr<GameObject> touchingObject) 
 {
 
 	m_touchingGameObjects[touchingObject->name()] = touchingObject;
@@ -553,12 +553,16 @@ void GameObject::_updateTouchingObjects()
 			if (contact->IsTouching()) {
 
 				if (contactGameObject != this) {
-					//auto contactGameObjectSharedPtr = game->getGameObject(contactGameObject->name());
-					this->addTouchingObject(contactGameObject);
+					auto contactGameObjectSharedPtr = game->getGameObject(contactGameObject->name());
+					if (contactGameObjectSharedPtr.has_value()) {
+						this->addTouchingObject(contactGameObjectSharedPtr.value());
+					}
 				}
 				if (contactGameObject2 != this) {
-					//auto contactGameObjectSharedPtr = game->getGameObject(contactGameObject2->name());
-					this->addTouchingObject(contactGameObject2);
+					auto contactGameObjectSharedPtr = game->getGameObject(contactGameObject2->name());
+					if (contactGameObjectSharedPtr.has_value()) {
+						this->addTouchingObject(contactGameObjectSharedPtr.value());
+					}
 				}
 
 			}

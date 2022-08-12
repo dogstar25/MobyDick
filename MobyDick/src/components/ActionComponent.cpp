@@ -69,9 +69,9 @@ void ActionComponent::render()
 
 		for (const auto& touchingObject : parent()->getTouchingObjects()) {
 
-			if(touchingObject.second->hasTrait(TraitTag::player)) {
+			if(touchingObject.second.expired() == false && touchingObject.second.lock()->hasTrait(TraitTag::player)) {
 
-				GameObject* interactingObject = touchingObject.second;
+				GameObject* interactingObject = touchingObject.second.lock().get();
 				//Is the interactingObject(player) pointing at this interactive object?
 				if (interactingObject->isPointingAt(parent()->getCenterPosition())) {
 

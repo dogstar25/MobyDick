@@ -122,11 +122,11 @@ public:
 	void reset();
 	void addInventoryItem(GameObject* gameObject);
 	std::vector<GameObject> getTouchingByTrait(const int trait);
-	void addTouchingObject(GameObject* touchingObject);
+	void addTouchingObject(std::shared_ptr<GameObject> touchingObject);
 	void setParent(GameObject* parentObject);
 	std::optional<GameObject*> parent() { return m_parentObject; }
 
-	const std::unordered_map<std::string, GameObject*>& getTouchingObjects() {
+	const std::unordered_map<std::string, std::weak_ptr<GameObject>>& getTouchingObjects() {
 		return m_touchingGameObjects;
 	}
 
@@ -197,7 +197,7 @@ private:
 	Scene* m_parentScene{nullptr};
 	std::bitset<32> m_traitTags{};
 	std::bitset<8> m_stateTags{};
-	std::unordered_map<std::string, GameObject*> m_touchingGameObjects{};
+	std::unordered_map<std::string, std::weak_ptr<GameObject>> m_touchingGameObjects{};
 	std::shared_ptr<GameObjectDefinition> m_gameObjectDefinition;
 
 	int m_layer;
