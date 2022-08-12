@@ -117,10 +117,10 @@
             "id": "LOC_0022_0002",
             "gameObjectId": "PULSE1"
         },
-        {
-            "id": "LOC_0016_0013",
-            "gameObjectId": "DRONE"
-        },
+        //{
+        //    "id": "LOC_0016_0013",
+        //    "gameObjectId": "DRONE"
+        //},
         {
             "id": "LOC_0016_0006",
             "gameObjectId": "HEALTH_STATION"
@@ -242,11 +242,13 @@
         },
         {
             "id": "LOC_0103_0009",
-            "gameObjectId": "DRONE2"
+            "gameObjectId": "DRONE2",
+            "name": "Mini1"
         },
         {
             "id": "LOC_0099_0028",
-            "gameObjectId": "DRONE2"
+            "gameObjectId": "DRONE2",
+            "name": "Mini2"
         }
 
     ]

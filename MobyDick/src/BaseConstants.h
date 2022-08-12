@@ -59,11 +59,12 @@ namespace Alpha {
 
 //Game Object Collision Tags
 namespace ContactTag {
-	inline constexpr int MAX_OBJECT_CATEGORIES = 32;
+	inline constexpr int MAX_OBJECT_CATEGORIES = 56;
 
 	//General
 	inline constexpr int GENERAL_SOLID = 0;
 	inline constexpr int GENERAL_FREE = 1;
+	inline constexpr int LEVEL_CAGE = 2;
 }
 
 namespace TraitTag {

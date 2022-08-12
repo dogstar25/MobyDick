@@ -17,6 +17,9 @@ ContactFilter::ContactFilter()
 	//General_free - set all to NOT collide
 	m_contactMasks[GENERAL_FREE].reset();
 
+	//Initialize the level frame one
+	m_contactMasks[LEVEL_CAGE].reset();
+
 }
 
 bool ContactFilter::ShouldCollide(b2Fixture* fixtureA, b2Fixture* fixtureB)

@@ -13,7 +13,7 @@ BrainAABBCallback& BrainAABBCallback::instance()
 bool BrainAABBCallback::ReportFixture(b2Fixture* fixture)
 {
 	BrainAABBFoundObject brainAABBFoundObject;
-	//brainAABBFoundObject.fixture = fixture;
+
 	brainAABBFoundObject.gameObject = reinterpret_cast<GameObject*>(fixture->GetBody()->GetUserData().pointer);
 
 	//Do not store Particles or other objects that we dont care about

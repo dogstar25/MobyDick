@@ -553,9 +553,11 @@ void GameObject::_updateTouchingObjects()
 			if (contact->IsTouching()) {
 
 				if (contactGameObject != this) {
+					//auto contactGameObjectSharedPtr = game->getGameObject(contactGameObject->name());
 					this->addTouchingObject(contactGameObject);
 				}
 				if (contactGameObject2 != this) {
+					//auto contactGameObjectSharedPtr = game->getGameObject(contactGameObject2->name());
 					this->addTouchingObject(contactGameObject2);
 				}
 

@@ -106,7 +106,6 @@ void DroneBrainComponent::_doPatrol()
 
 
 	//Execute the base navigation logic
-	navigate();
 	bool atClosestAsPossibleToTarget = navigate();
 	if (atClosestAsPossibleToTarget) {
 		m_tempVisitedNavPoints.clear();

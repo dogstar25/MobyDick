@@ -252,43 +252,53 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 void LevelManager::_buildLevelCage(Scene* scene)
 {
 
-	//b2Vec2 cageSize{};
-	b2ChainShape chain;
+	Json::Value componentsDefinition{};
+	Json::Value transformDefinition{};
+	Json::Value physicsDefinition{};
+	Json::Value fixtureDefinition{};
 
 
-	auto levelWidth = (m_tileWidth * m_width) / GameConfig::instance().scaleFactor() ;
-	auto levelHeight = (m_tileHeight * m_height) / GameConfig::instance().scaleFactor();
+	auto levelWidth = (m_tileWidth * m_width) ;
+	auto levelHeight = (m_tileHeight * m_height) ;
 
-	//Get the physices world
-	const auto physicsWorld = scene->physicsWorld();
+	//Create a Level Cage game object
+	const auto& levelCageObject = scene->addGameObject("LEVEL_CAGE", GameLayer::ABSTRACT, (float)0, (float)0, (float)0);
 
-	b2BodyDef bodyDef;
-	bodyDef.type = static_cast<b2BodyType>(b2_staticBody);
+	//Create a transform component dynamically
+	transformDefinition["id"] = "TRANSFORM_COMPONENT";
+	transformDefinition["size"]["width"] = levelWidth;
+	transformDefinition["size"]["height"] = levelHeight;
+	componentsDefinition["components"].append(transformDefinition);
 
-	//Default the position to zero.
-	bodyDef.position.SetZero();
-	b2Body* body = physicsWorld->CreateBody(&bodyDef);
-	body->GetUserData().pointer = reinterpret_cast<uintptr_t>(new GameObject());
+	//Create a physics component dynamically
+	physicsDefinition["id"] = "PHYSICS_COMPONENT";
+	physicsDefinition["type"] = "B2_STATIC";
 
-	//Build the cage fixture
-	b2Vec2 chainVs[4];
-	
-	chainVs[0].Set(0,0);
-	chainVs[1].Set(0 , levelHeight);
-	chainVs[2].Set(levelWidth, levelHeight );
-	chainVs[3].Set(levelWidth, 0);
+	{
+		fixtureDefinition["contactTag"] = "ContactTag::WALL";
+		fixtureDefinition["collisionShape"] = "B2_CHAIN";
+		fixtureDefinition["physicsChainType"] = "PhysicsChainType::CCW_REFLECT_IN";
+	}
 
-	chain.CreateLoop(chainVs, 4);
+	physicsDefinition["fixtures"].append(fixtureDefinition);
+	componentsDefinition["components"].append(physicsDefinition);
 
-	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &chain;
-	
+	//Add the transform component
+	const auto& transformComponent =
+		std::static_pointer_cast<TransformComponent>(
+			game->componentFactory()->create(componentsDefinition, "", "", scene, 0, 0, 0, ComponentTypes::TRANSFORM_COMPONENT)
+			);
+	transformComponent->setParent(levelCageObject);
+	levelCageObject->addComponent(transformComponent);
 
-	ContactDefinition* contactDefinition = new ContactDefinition();
-	contactDefinition->contactTag = ContactTag::GENERAL_SOLID;
-	fixtureDef.userData.pointer = reinterpret_cast<uintptr_t>(contactDefinition);
 
-	body->CreateFixture(&fixtureDef);
+	//Add the physics component
+	const auto& physicsComponent =
+		std::static_pointer_cast<PhysicsComponent>(
+			game->componentFactory()->create(componentsDefinition, "", "", scene, 0, 0, 0, ComponentTypes::PHYSICS_COMPONENT)
+			);
+	physicsComponent->setParent(levelCageObject);
+	levelCageObject->addComponent(physicsComponent);
 
 
 }

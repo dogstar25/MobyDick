@@ -61,6 +61,7 @@ EnumMap::EnumMap()
 	//GameObject CollisionTags
 	m_enumMap["ContactTag::GENERAL_SOLID"] = ContactTag::GENERAL_SOLID;
 	m_enumMap["ContactTag::GENERAL_FREE"] = ContactTag::GENERAL_FREE;
+	m_enumMap["ContactTag::LEVEL_CAGE"] = ContactTag::LEVEL_CAGE;
 
 	//Box2d Related
 	m_enumMap["B2_STATIC"] = b2_staticBody;
