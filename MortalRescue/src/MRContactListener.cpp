@@ -450,9 +450,11 @@ void MRContactListener::EndContact(b2Contact* contact)
 void MRContactListener::handleContact(b2Contact* contact, b2Vec2 contactPoint)
 {
 
+
 	//Get fixtures
 	b2Fixture* fixture1 = contact->GetFixtureA();
 	b2Fixture* fixture2 = contact->GetFixtureB();
+
 
 	//Get the GameObjects attched to these fixtures
 	GameObject* contact1 = reinterpret_cast<GameObject*>(fixture1->GetBody()->GetUserData().pointer);
@@ -463,7 +465,6 @@ void MRContactListener::handleContact(b2Contact* contact, b2Vec2 contactPoint)
 
 	int contactTag1 = contactDefinitionA->contactTag;
 	int contactTag2 = contactDefinitionB->contactTag;
-
 
 	//////////////////////////////////////////
 	// Player Pulse  -  Wall Piece

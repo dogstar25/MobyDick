@@ -29,35 +29,35 @@ namespace Colors {
 
 namespace ContactTag {
 	
-	inline constexpr int SMOKE_PARTICLE = 2;
-	inline constexpr int NAVIGATION_POINT = 3;
-	inline constexpr int HEAVY_PARTICLE = 4;
-	inline constexpr int LIGHT_PARTICLE = 5;
-	inline constexpr int PLAYER_TOUCH = 6;
-	inline constexpr int PLAYER_COLLISION = 7;
-	inline constexpr int PLAYER_HITBOX = 8;
-	inline constexpr int WALL = 9;
-	inline constexpr int DEFLECT_EFFECT = 10;
-	inline constexpr int DRONE_BRAIN = 11;
-	inline constexpr int DRONE_FRAME = 12;
-	inline constexpr int DRONE_SHIELD = 13;
-	inline constexpr int DRONE_WEAPON = 14;
-	inline constexpr int ENEMY_BULLET = 15;
-	inline constexpr int FRIENDLY_BULLET = 16;
-	inline constexpr int PLAYER_BULLET = 17;
-	inline constexpr int SHIELD_SCRAP = 18;
-	inline constexpr int SURVIVOR = 19;
-	inline constexpr int MEDKIT = 20;
-	inline constexpr int WEAPON_PICKUP = 21;
-	inline constexpr int BUTTON = 22;
-	inline constexpr int ESCAPE_STAIRS = 23;
-	inline constexpr int WALL_PIECE = 24;
-	inline constexpr int ENEMY_TURRET = 25;
-	inline constexpr int DRONE_SCRAP = 26;
-	inline constexpr int HEART_PICKUP = 27;
-	inline constexpr int HEALTH_STATION_INSIDE = 28;
-	inline constexpr int PLAYER_PULSE_BULLET = 29;
-	inline constexpr int PLAYER_PULSE_EXPLOSION = 30;
+	inline constexpr int SMOKE_PARTICLE = 10;
+	inline constexpr int NAVIGATION_POINT = 11;
+	inline constexpr int HEAVY_PARTICLE = 12;
+	inline constexpr int LIGHT_PARTICLE = 13;
+	inline constexpr int PLAYER_TOUCH = 14;
+	inline constexpr int PLAYER_COLLISION = 15;
+	inline constexpr int PLAYER_HITBOX = 16;
+	inline constexpr int WALL = 17;
+	inline constexpr int DEFLECT_EFFECT = 18;
+	inline constexpr int DRONE_BRAIN = 19;
+	inline constexpr int DRONE_FRAME = 20;
+	inline constexpr int DRONE_SHIELD = 21;
+	inline constexpr int DRONE_WEAPON = 22;
+	inline constexpr int ENEMY_BULLET = 23;
+	inline constexpr int FRIENDLY_BULLET = 24;
+	inline constexpr int PLAYER_BULLET = 25;
+	inline constexpr int SHIELD_SCRAP = 26;
+	inline constexpr int SURVIVOR = 27;
+	inline constexpr int MEDKIT = 28;
+	inline constexpr int WEAPON_PICKUP = 29;
+	inline constexpr int BUTTON = 30;
+	inline constexpr int ESCAPE_STAIRS = 31;
+	inline constexpr int WALL_PIECE = 32;
+	inline constexpr int ENEMY_TURRET = 33;
+	inline constexpr int DRONE_SCRAP = 34;
+	inline constexpr int HEART_PICKUP = 35;
+	inline constexpr int HEALTH_STATION_INSIDE = 36;
+	inline constexpr int PLAYER_PULSE_BULLET = 37;
+	inline constexpr int PLAYER_PULSE_EXPLOSION = 38;
 
 }
 

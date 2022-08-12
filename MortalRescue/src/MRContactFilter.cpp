@@ -8,6 +8,15 @@ MRContactFilter::MRContactFilter()
 
 	using namespace ContactTag;
 
+	//LEVEL_CAGE
+	m_contactMasks[LEVEL_CAGE].reset();
+	m_contactMasks[LEVEL_CAGE].set(PLAYER_COLLISION);
+	m_contactMasks[LEVEL_CAGE].set(PLAYER_BULLET);
+	m_contactMasks[LEVEL_CAGE].set(DRONE_FRAME);
+	m_contactMasks[LEVEL_CAGE].set(SHIELD_SCRAP);
+	m_contactMasks[LEVEL_CAGE].set(SURVIVOR);
+	m_contactMasks[LEVEL_CAGE].set(DRONE_SCRAP);
+
 	//Intangible - set all to intangle
 	m_contactMasks[DEFLECT_EFFECT].reset();
 
@@ -75,6 +84,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_COLLISION].set(HEAVY_PARTICLE);
 	m_contactMasks[PLAYER_COLLISION].set(DRONE_SCRAP);
 	m_contactMasks[PLAYER_COLLISION].set(HEART_PICKUP);
+	m_contactMasks[PLAYER_COLLISION].set(LEVEL_CAGE);
 
 	//PLAYER_TOUCH
 	m_contactMasks[PLAYER_TOUCH].reset();
@@ -94,6 +104,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_BULLET].set(WALL_PIECE);
 	m_contactMasks[PLAYER_BULLET].set(ENEMY_TURRET);
 	m_contactMasks[PLAYER_BULLET].set(HEALTH_STATION_INSIDE);
+	m_contactMasks[PLAYER_BULLET].set(LEVEL_CAGE);
 
 	//PLAYER_PULSE_BULLET
 	m_contactMasks[PLAYER_PULSE_BULLET].reset();
@@ -114,6 +125,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[SHIELD_SCRAP].set(DRONE_FRAME);
 	m_contactMasks[SHIELD_SCRAP].set(ENEMY_TURRET);
 	m_contactMasks[SHIELD_SCRAP].set(WALL);
+	m_contactMasks[SHIELD_SCRAP].set(LEVEL_CAGE);
 
 	//SURVIVOR
 	m_contactMasks[SURVIVOR].reset();
@@ -124,6 +136,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[SURVIVOR].set(ESCAPE_STAIRS);
 	m_contactMasks[SURVIVOR].set(ENEMY_TURRET);
 	m_contactMasks[SURVIVOR].set(WALL_PIECE);
+	m_contactMasks[SURVIVOR].set(LEVEL_CAGE);
 
 	//WALL
 	m_contactMasks[WALL].reset();
@@ -168,6 +181,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[DRONE_SCRAP].set(HEAVY_PARTICLE);
 	m_contactMasks[DRONE_SCRAP].set(PLAYER_COLLISION);
 	m_contactMasks[DRONE_SCRAP].set(WALL);
+	m_contactMasks[DRONE_SCRAP].set(LEVEL_CAGE);
 
 	//Heart Pickup
 	m_contactMasks[HEART_PICKUP].reset();

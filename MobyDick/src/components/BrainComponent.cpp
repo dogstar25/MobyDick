@@ -269,7 +269,7 @@ bool BrainComponent::navigate()
 	//std::optional<std::shared_ptr<GameObject>> nextInterimDestination{ m_interimDestination };
 	bool alreadyAtClosestInterimToTargetDestination = false;
 
-	//Has the drone reached the interim destination
+	//Has the object reached the interim destination
 	if (util::calculateDistance(parent()->getCenterPosition(), m_interimDestination.value()->getCenterPosition())
 		< DESTINATION_DISTANCE_TOLERANCE) {
 

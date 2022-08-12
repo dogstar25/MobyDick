@@ -928,7 +928,7 @@
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
                         "width": 64,
-                        "height": 64    
+                        "height": 64
                     },
                     "centeredPositioning": false
                 },
@@ -1071,6 +1071,15 @@
                         "height": 512
                     },
                     "absolutePositioning": false
+                }
+            ]
+        },
+        {
+            "id": "LEVEL_CAGE",
+            "traitTags": ["abstract"],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
                 }
             ]
         }
