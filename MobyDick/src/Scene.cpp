@@ -470,6 +470,7 @@ std::optional<std::shared_ptr<GameObject>> Scene::getGameObject(std::string name
 				foundGameObject = gameObject;
 				break;
 			}
+
 		}
 	}
 

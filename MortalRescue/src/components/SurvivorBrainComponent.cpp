@@ -305,7 +305,7 @@ bool SurvivorBrainComponent::_isTouchingBarrier()
 
 	for (const auto& touchingObject : parent()->getTouchingObjects()) {
 
-		if (touchingObject.second->hasTrait(TraitTag::barrier)) {
+		if (touchingObject.second.expired() == false && touchingObject.second.lock()->hasTrait(TraitTag::barrier)) {
 			return true;
 		}
 	}
