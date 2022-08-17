@@ -67,7 +67,7 @@ namespace ParticleEffects {
 		.forceMin = 1,
 		.forceMax = 5,
 		.lifetimeMin = 1.2F,
-		.lifetimeMax = 7.5F,
+		.lifetimeMax = 17.5F,
 		.alphaFade = false,
 		.angleMin = 0,
 		.angleMax = 360,

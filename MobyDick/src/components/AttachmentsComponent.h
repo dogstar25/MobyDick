@@ -43,6 +43,7 @@ public:
 	void removeAllAttachments();
 	void removeAttachment(std::string id);
 
+	std::vector<Attachment>& attachments() {return m_attachments;};
 	const std::optional<Attachment> getAttachment(std::string id);
 
 

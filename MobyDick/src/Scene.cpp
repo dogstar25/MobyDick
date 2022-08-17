@@ -467,14 +467,20 @@ std::optional<std::shared_ptr<GameObject>> Scene::getGameObject(std::string name
 
 			if (gameObject->name() == name) {
 
-				foundGameObject = gameObject;
-				break;
+				return  gameObject;
+			}
+			else
+			{
+				foundGameObject = gameObject->getSubGameObject(name);
+				if (foundGameObject.has_value()) {
+					return foundGameObject;
+				}
 			}
 
 		}
 	}
 
-	//assert(foundGameObject.has_value() && "GameObject wasnt found!");
+	assert(foundGameObject.has_value() && "GameObject wasnt found!");
 
 	return foundGameObject;
 }

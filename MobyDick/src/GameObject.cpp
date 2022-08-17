@@ -72,6 +72,92 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 }
 
+std::optional<std::shared_ptr<GameObject>> GameObject::getSubGameObject(std::string name)
+{
+	std::optional<std::shared_ptr<GameObject>> foundObject{};
+
+	//Children sub objects
+	if (hasComponent(ComponentTypes::CHILDREN_COMPONENT)) {
+
+		const auto childrenComponent = getComponent<ChildrenComponent>(ComponentTypes::CHILDREN_COMPONENT);
+
+		for (const auto& childObject : childrenComponent->childObjects()) {
+
+			if (childObject.gameObject->name() == name) {
+
+				foundObject = childObject.gameObject;
+				return foundObject;
+			}
+			else {
+				childObject.gameObject->getSubGameObject(name);
+			}
+		}
+	}
+
+	//Composite sub objects
+	if (hasComponent(ComponentTypes::COMPOSITE_COMPONENT)) {
+
+		const auto compositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
+
+		for (const auto& piece : compositeComponent->pieces()) {
+
+			if (piece.pieceObject->name() == name) {
+
+				foundObject = (piece.pieceObject);
+				return foundObject;
+			}
+			else {
+				piece.pieceObject->getSubGameObject(name);
+			}
+
+
+		}
+
+	}
+
+	//Attachments sub objects
+	if (hasComponent(ComponentTypes::ATTACHMENTS_COMPONENT)) {
+
+		const auto attachComponent = getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
+
+		for (const auto& attachment : attachComponent->attachments()) {
+
+			if (attachment.gameObject->name() == name) {
+
+				foundObject = (attachment.gameObject);
+				return foundObject;
+			}
+			else {
+				attachment.gameObject->getSubGameObject(name);
+			}
+		}
+
+	}
+
+	//Container sub objects
+	if (hasComponent(ComponentTypes::CONTAINER_COMPONENT)) {
+
+		const auto containerComponent = getComponent<ContainerComponent>(ComponentTypes::CONTAINER_COMPONENT);
+
+		for (const auto& attachment : containerComponent->items()) {
+
+			if (attachment.gameObject->name() == name) {
+
+				foundObject = (attachment.gameObject);
+				return foundObject;
+			}
+			else {
+				attachment.gameObject->getSubGameObject(name);
+			}
+		}
+
+	}
+
+	return foundObject;
+
+}
+
+
 void GameObject::addTouchingObject(std::shared_ptr<GameObject> touchingObject) 
 {
 
@@ -554,15 +640,11 @@ void GameObject::_updateTouchingObjects()
 
 				if (contactGameObject != this) {
 					auto contactGameObjectSharedPtr = game->getGameObject(contactGameObject->name());
-					if (contactGameObjectSharedPtr.has_value()) {
 						this->addTouchingObject(contactGameObjectSharedPtr.value());
-					}
 				}
 				if (contactGameObject2 != this) {
 					auto contactGameObjectSharedPtr = game->getGameObject(contactGameObject2->name());
-					if (contactGameObjectSharedPtr.has_value()) {
 						this->addTouchingObject(contactGameObjectSharedPtr.value());
-					}
 				}
 
 			}

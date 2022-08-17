@@ -37,6 +37,7 @@ public:
 	ContainerItem& removeItem();
 	bool isEmpty();
 	bool isFull();
+	std::vector<ContainerItem>& items() { return m_items; }
 
 private:
 

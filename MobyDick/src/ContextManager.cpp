@@ -122,12 +122,10 @@ int ContextManager::getSoundVolume()
 StatusItem& ContextManager::getStatusItem(int valueId)
 {
 
-    StatusItem statusItem(0);
-    //assert(m_statusValueMap.find(valueId) != m_statusValueMap.end() && "ValueId Name wasnt found in StatusValueMap");
-
     //return an empty
     if (m_statusValueMap.find(valueId) == m_statusValueMap.end()) {
-        return statusItem;
+        return  m_statusValueMap[StatusItemId::DEFAULT_EMPTY];
+
     }
 
     return m_statusValueMap[valueId];

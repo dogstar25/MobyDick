@@ -345,6 +345,7 @@ inline constexpr int DEFAULT_HOVER_SCHEME = 0;
 
 namespace StatusItemId {
 
+	inline constexpr int DEFAULT_EMPTY = 0;
 	inline constexpr int CURRENT_LEVEL = 1;
 
 
