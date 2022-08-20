@@ -4,6 +4,7 @@
 #include <vector>
 #include <bitset>
 #include <optional>
+#include <unordered_map>
 
 #include <box2d/box2d.h>
 #include <json/json.h>
@@ -118,7 +119,9 @@ private:
 	PhysicsConfig m_physicsConfig{};
 	ObjectPoolManager m_objectPoolManager{};
 
+	std::unordered_map<std::string, std::shared_ptr<GameObject>> m_gameObjectLookup;
 	std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> m_gameObjects;
+
 	std::bitset<8> m_sceneTags;
 	std::map<SDL_Keycode, SceneAction> m_sceneKeyActions;
 

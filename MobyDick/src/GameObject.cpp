@@ -76,6 +76,10 @@ std::optional<std::shared_ptr<GameObject>> GameObject::getSubGameObject(std::str
 {
 	std::optional<std::shared_ptr<GameObject>> foundObject{};
 
+	if (foundObject.has_value() && foundObject.value()->name() == name) {
+		return foundObject;
+	}
+
 	//Children sub objects
 	if (hasComponent(ComponentTypes::CHILDREN_COMPONENT)) {
 

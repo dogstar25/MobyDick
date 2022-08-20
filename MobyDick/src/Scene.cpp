@@ -321,6 +321,10 @@ GameObject* Scene::addGameObject(std::shared_ptr<GameObject> gameObject, int lay
 	gameObject->setParentScene(this);
 	auto& gameObjectRef = this->m_gameObjects[layer].emplace_back(gameObject);
 
+	//Add index 
+	m_gameObjectLookup.insert(std::make_pair<std::string, gameObjectRef>);
+
+
 	return gameObjectRef.get();
 
 }
