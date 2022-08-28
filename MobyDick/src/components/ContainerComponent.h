@@ -34,7 +34,6 @@ public:
 	void postInit() override;
 
 	void addItem(std::string gameObjectId, float spawnForce, Scene* parentScene, bool onContainerConstruction=false);
-	ContainerItem& removeItem();
 	bool isEmpty();
 	bool isFull();
 	std::vector<ContainerItem>& items() { return m_items; }

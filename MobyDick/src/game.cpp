@@ -208,17 +208,17 @@ void Game::_displayLoadingMsg()
 
 }
 
-std::optional<std::shared_ptr<GameObject>> Game::getGameObject(std::string name)
-{
-	std::optional<std::shared_ptr<GameObject>> foundGameObject{};
-
-	Scene& currentScene = SceneManager::instance().currentScene();
-
-	foundGameObject = currentScene.getGameObject(name);
-
-	return foundGameObject;
-
-}
+//std::optional<std::shared_ptr<GameObject>> Game::getGameObject(std::string name)
+//{
+//	std::optional<std::shared_ptr<GameObject>> foundGameObject{};
+//
+//	Scene& currentScene = SceneManager::instance().currentScene();
+//
+//	foundGameObject = currentScene.getGameObject(name);
+//
+//	return foundGameObject;
+//
+//}
 
 std::optional<SDL_Point> Game::_determineScreenResolution()
 {

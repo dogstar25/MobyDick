@@ -12,6 +12,8 @@ CompositeComponent::CompositeComponent(Json::Value componentJSON, Scene* parentS
 
 	Json::Value bluePrintJSON = componentJSON["blueprint"];
 
+	m_isDependentObjectOwner = true;
+
 	m_physicsWeldPiecesOn = componentJSON["physicsWeldPiecesOn"].asBool();
 
 	m_blueprint.textureId = bluePrintJSON["texture"].asString();
@@ -38,11 +40,14 @@ CompositeComponent::~CompositeComponent()
 
 void CompositeComponent::update()
 {
-	_removeFromWorldPass();
+	
 	if (m_detachAllPieces == true) {
 		_detachAllPieces();
 	}
+
 	_updatePieces();
+
+	_removeFromWorldPass();
 
 }
 
@@ -53,11 +58,18 @@ void CompositeComponent::postInit()
 	for (auto& piece : m_pieces) {
 
 		piece.pieceObject->setLayer(parent()->layer());
+
+		if (m_physicsWeldPiecesOn == true) {
+			_weldOnPiece(piece);
+		}
+
+		piece.pieceObject->postInit();
+
 	}
 
-	if (m_physicsWeldPiecesOn == true) {
-		weldOnPieces();
-	}
+	//if (m_physicsWeldPiecesOn == true) {
+	//	weldOnPieces();
+	//}
 
 }
 
@@ -76,10 +88,8 @@ void CompositeComponent::render()
 
 }
 
-void CompositeComponent::weldOnPieces()
+void CompositeComponent::_weldOnPiece(GameObjectPiece piece)
 {
-
-	for (auto& piece : m_pieces) {
 
 		const auto& piecePhysicsComponent =  piece.pieceObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 		const auto& parentPhysicsComponent = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
@@ -100,6 +110,34 @@ void CompositeComponent::weldOnPieces()
 
 		b2Vec2 weldLocation = { x,y };
 		
+		parentPhysicsComponent->attachItem(piece.pieceObject.get(), b2JointType::e_weldJoint, weldLocation);
+
+}
+
+void CompositeComponent::weldOnPieces()
+{
+
+	for (auto& piece : m_pieces) {
+
+		const auto& piecePhysicsComponent = piece.pieceObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+		const auto& parentPhysicsComponent = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+		const auto& pieceTransformComponent = piece.pieceObject->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+		const auto& parentTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+		auto pieceSize = pieceTransformComponent->size();
+		auto parentSize = parentTransformComponent->size();
+
+		//calculate the center offset 
+		b2Vec2 center = {
+			parentTransformComponent->size().x / 2 / GameConfig::instance().scaleFactor(),
+			parentTransformComponent->size().y / 2 / GameConfig::instance().scaleFactor()
+		};
+
+		//calculate the base parent location to weld this piece on
+		auto x = (piece.parentPositionOffset.x - parentSize.x / 2 + (pieceSize.x / 2)) / GameConfig::instance().scaleFactor();
+		auto y = (piece.parentPositionOffset.y - parentSize.y / 2 + (pieceSize.y / 2)) / GameConfig::instance().scaleFactor();
+
+		b2Vec2 weldLocation = { x,y };
+
 		parentPhysicsComponent->attachItem(piece.pieceObject.get(), b2JointType::e_weldJoint, weldLocation);
 
 	}
@@ -168,6 +206,8 @@ void CompositeComponent::_buildPiece(CompositeLegendItem legendItem, int xPos, i
 	Build the game objects off screen. They will be placed in expect location during update loop
 	*/
 	const auto& pieceObject = std::make_shared<GameObject>(legendItem.gameObjectId, -5.f, -5.f, 0.f, parentScene);
+	parentScene->addGameObjectIndex(pieceObject);
+
 	piece.pieceObject = pieceObject;
 
 	//calculate the X,Y offset position in relating to the base object
@@ -179,6 +219,9 @@ void CompositeComponent::_buildPiece(CompositeLegendItem legendItem, int xPos, i
 	piece.parentPositionOffset.y = yOffset;
 
 	m_pieces.push_back(piece);
+
+	//Add index 
+	parentScene->addGameObjectIndex(pieceObject);
 
 }
 
@@ -254,7 +297,11 @@ void CompositeComponent::_removeFromWorldPass()
 
 		if (it->pieceObject->removeFromWorld() == true) {
 
+			//Remove object from gloabl index collection
+			parent()->parentScene()->deleteIndex(it->pieceObject->name());
+
 			//it->pieceObject->reset();
+			std::cout << "Erased from Composite collection" << it->pieceObject->name() << std::endl;
 			it = m_pieces.erase(it);
 		}
 		else {

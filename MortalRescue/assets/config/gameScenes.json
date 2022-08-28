@@ -4,6 +4,16 @@
             "id": "SCENE_TITLE_SCREEN",
             "inputControlMode": "CONTROL_MODE_SELECT",
             "maxObjects": 500,
+            "keyActions": [
+                {
+                    "keyCode": "SDLK_F2",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_REPLACE",
+                        "newSceneId": "SCENE_TEST"
+                    }
+                }
+
+            ],
             "gameObjects": [
                 {
                     "gameObjectId": "SCENE_TITLE_SCREEN",
@@ -91,6 +101,13 @@
                     "sceneAction": {
                         "action": "SCENE_ACTION_DIRECT",
                         "newSceneId": "CutSceneExample"
+                    }
+                },
+                {
+                    "keyCode": "SDLK_F2",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_REPLACE",
+                        "newSceneId": "SCENE_TEST"
                     }
                 }
 
@@ -228,6 +245,97 @@
             "tags": [
                 "SCENETAG_MENU"
             ]
+        },
+        {
+            "id": "SCENE_GAMEOVER",
+            "inputControlMode": "CONTROL_MODE_PLAY",
+            "maxObjects": 500
+        },
+        {
+            "id": "SCENE_LEVEL_COMPLETE",
+            "inputControlMode": "CONTROL_MODE_IMGUI",
+            "tags": [ "gui" ],
+            "maxObjects": 24,
+            "gameObjects": [
+                {
+                    "gameObjectId": "IMGUI_LEVEL_COMPLETE",
+                    "layer": "GameLayer::GUI",
+                    "location": {
+                        "windowPosition": "PositionAlignment::CENTER",
+                        "adjust": {
+                            "x": 0,
+                            "y": 0
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "id": "SCENE_TEST",
+            "inputControlMode": "CONTROL_MODE_PLAY",
+            "maxObjects": 5000,
+            "gameObjects": [
+                {
+                    "gameObjectId": "IMGUI_TEST_MENU",
+                    "layer": "GameLayer::GUI",
+                    "location": {
+                        "windowPosition": "PositionAlignment::TOP_RIGHT",
+                        "adjust": {
+                            "x": -64,
+                            "y": 0
+                        }
+                    }
+                }
+            ],
+            "gameObjectPools": [
+                {
+                    "id": "SMOKE1_POOL",
+                    "gameObjectId": "PARTICLE_SMOKE_1",
+                    "lifetime": 2.25,
+                    "maxItems": 500
+                },
+                {
+                    "id": "BULLET2_POOL",
+                    "gameObjectId": "BULLET2",
+                    "lifetime": 1.25,
+                    "maxItems": 50
+                },
+                {
+                    "id": "DEFLECT1_POOL",
+                    "gameObjectId": "DEFLECT1",
+                    "lifetime": 1.25,
+                    "maxItems": 30
+                },
+                {
+                    "id": "SCRAP1_POOL",
+                    "gameObjectId": "SCRAP_PIECE",
+                    "lifetime": 0.0,
+                    "maxItems": 500
+                },
+                {
+                    "id": "PULSE1_POOL",
+                    "gameObjectId": "PULSE1",
+                    "lifetime": 0.0,
+                    "maxItems": 25
+                },
+                {
+                    "id": "PULSE_EXPLOSION_POOL",
+                    "gameObjectId": "PULSE_EXPLOSION",
+                    "lifetime": 0.0,
+                    "maxItems": 5
+                }
+
+            ],
+            "physics": {
+                "gravity": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "b2DebugDrawMode": true,
+                "timeStep": 0.016,
+                "velocityIterations": 6,
+                "positionIterations": 2
+            }
         }
     ]
 }

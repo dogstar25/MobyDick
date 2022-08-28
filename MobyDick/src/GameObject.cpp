@@ -8,6 +8,7 @@
 
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_sdlrenderer.h"
+#include "Util.h"
 
 
 extern std::unique_ptr<Game> game;
@@ -72,94 +73,94 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 }
 
-std::optional<std::shared_ptr<GameObject>> GameObject::getSubGameObject(std::string name)
-{
-	std::optional<std::shared_ptr<GameObject>> foundObject{};
-
-	if (foundObject.has_value() && foundObject.value()->name() == name) {
-		return foundObject;
-	}
-
-	//Children sub objects
-	if (hasComponent(ComponentTypes::CHILDREN_COMPONENT)) {
-
-		const auto childrenComponent = getComponent<ChildrenComponent>(ComponentTypes::CHILDREN_COMPONENT);
-
-		for (const auto& childObject : childrenComponent->childObjects()) {
-
-			if (childObject.gameObject->name() == name) {
-
-				foundObject = childObject.gameObject;
-				return foundObject;
-			}
-			else {
-				childObject.gameObject->getSubGameObject(name);
-			}
-		}
-	}
-
-	//Composite sub objects
-	if (hasComponent(ComponentTypes::COMPOSITE_COMPONENT)) {
-
-		const auto compositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
-
-		for (const auto& piece : compositeComponent->pieces()) {
-
-			if (piece.pieceObject->name() == name) {
-
-				foundObject = (piece.pieceObject);
-				return foundObject;
-			}
-			else {
-				piece.pieceObject->getSubGameObject(name);
-			}
-
-
-		}
-
-	}
-
-	//Attachments sub objects
-	if (hasComponent(ComponentTypes::ATTACHMENTS_COMPONENT)) {
-
-		const auto attachComponent = getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
-
-		for (const auto& attachment : attachComponent->attachments()) {
-
-			if (attachment.gameObject->name() == name) {
-
-				foundObject = (attachment.gameObject);
-				return foundObject;
-			}
-			else {
-				attachment.gameObject->getSubGameObject(name);
-			}
-		}
-
-	}
-
-	//Container sub objects
-	if (hasComponent(ComponentTypes::CONTAINER_COMPONENT)) {
-
-		const auto containerComponent = getComponent<ContainerComponent>(ComponentTypes::CONTAINER_COMPONENT);
-
-		for (const auto& attachment : containerComponent->items()) {
-
-			if (attachment.gameObject->name() == name) {
-
-				foundObject = (attachment.gameObject);
-				return foundObject;
-			}
-			else {
-				attachment.gameObject->getSubGameObject(name);
-			}
-		}
-
-	}
-
-	return foundObject;
-
-}
+//std::optional<std::shared_ptr<GameObject>> GameObject::getSubGameObject(std::string name)
+//{
+//	std::optional<std::shared_ptr<GameObject>> foundObject{};
+//
+//	if (foundObject.has_value() && foundObject.value()->name() == name) {
+//		return foundObject;
+//	}
+//
+//	//Children sub objects
+//	if (hasComponent(ComponentTypes::CHILDREN_COMPONENT)) {
+//
+//		const auto childrenComponent = getComponent<ChildrenComponent>(ComponentTypes::CHILDREN_COMPONENT);
+//
+//		for (const auto& childObject : childrenComponent->childObjects()) {
+//
+//			if (childObject.gameObject->name() == name) {
+//
+//				foundObject = childObject.gameObject;
+//				return foundObject;
+//			}
+//			else {
+//				childObject.gameObject->getSubGameObject(name);
+//			}
+//		}
+//	}
+//
+//	//Composite sub objects
+//	if (hasComponent(ComponentTypes::COMPOSITE_COMPONENT)) {
+//
+//		const auto compositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
+//
+//		for (const auto& piece : compositeComponent->pieces()) {
+//
+//			if (piece.pieceObject->name() == name) {
+//
+//				foundObject = (piece.pieceObject);
+//				return foundObject;
+//			}
+//			else {
+//				piece.pieceObject->getSubGameObject(name);
+//			}
+//
+//
+//		}
+//
+//	}
+//
+//	//Attachments sub objects
+//	if (hasComponent(ComponentTypes::ATTACHMENTS_COMPONENT)) {
+//
+//		const auto attachComponent = getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
+//
+//		for (const auto& attachment : attachComponent->attachments()) {
+//
+//			if (attachment.gameObject->name() == name) {
+//
+//				foundObject = (attachment.gameObject);
+//				return foundObject;
+//			}
+//			else {
+//				attachment.gameObject->getSubGameObject(name);
+//			}
+//		}
+//
+//	}
+//
+//	//Container sub objects
+//	if (hasComponent(ComponentTypes::CONTAINER_COMPONENT)) {
+//
+//		const auto containerComponent = getComponent<ContainerComponent>(ComponentTypes::CONTAINER_COMPONENT);
+//
+//		for (const auto& attachment : containerComponent->items()) {
+//
+//			if (attachment.gameObject->name() == name) {
+//
+//				foundObject = (attachment.gameObject);
+//				return foundObject;
+//			}
+//			else {
+//				attachment.gameObject->getSubGameObject(name);
+//			}
+//		}
+//
+//	}
+//
+//	return foundObject;
+//
+//}
 
 
 void GameObject::addTouchingObject(std::shared_ptr<GameObject> touchingObject) 
@@ -181,12 +182,23 @@ void GameObject::setParent(GameObject* parentObject)
 void GameObject::setPosition(float x, float y)
 {
 
+	if (hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
+		b2Vec2 b2Point = {x, y};
+		auto b2Position = util::toBox2dPoint(b2Point);
+		getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT)->setTransform(b2Position);
+	}
+
 	getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT)->setPosition(x, y);
 
 }
 
 void GameObject::setPosition(SDL_FPoint position)
 {
+	if (hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
+		b2Vec2 b2Point = { position.x, position.y };
+		auto b2Position = util::toBox2dPoint(b2Point);
+		getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT)->setTransform(b2Position);
+	}
 
 	getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT)->setPosition(position);
 
@@ -197,10 +209,25 @@ void GameObject::setPosition(b2Vec2 position, float angle)
 	//-1 means don't apply the angle
 	if (angle != -1)
 	{
+
+		auto radianAngle = util::degreesToRadians(angle);
+
+		if (hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
+			b2Vec2 b2Point = { position.x, position.y };
+			auto b2Position = util::toBox2dPoint(b2Point);
+			getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT)->setTransform(b2Position, radianAngle);
+		}
+
 		getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT)->setPosition(position, angle);
 	}
 	else
 	{
+		if (hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {
+			b2Vec2 b2Point = { position.x, position.y };
+			auto b2Position = util::toBox2dPoint(b2Point);
+			getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT)->setTransform(b2Position);
+		}
+
 		getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT)->setPosition(position);
 	}
 
@@ -438,6 +465,22 @@ float GameObject::getAngle()
 	return 0;
 }
 
+bool GameObject::holdsDependentGameObjects()
+{
+	if (hasComponent(ComponentTypes::CHILDREN_COMPONENT) ||
+		hasComponent(ComponentTypes::COMPOSITE_COMPONENT) ||
+		hasComponent(ComponentTypes::ATTACHMENTS_COMPONENT) ||
+		hasComponent(ComponentTypes::INVENTORY_COMPONENT) ||
+		hasComponent(ComponentTypes::CONTAINER_COMPONENT)) 
+	{
+		return true;
+	}
+	else {
+		return false;
+	}
+
+}
+
 /*
 The postInit function allows for initialization that requires all objects in the game to be 'already' instantiated 
 ex. The brainComponent needs all navigation related gameObjects to be built first
@@ -451,16 +494,20 @@ void GameObject::postInit()
 	for (int i = 0; i < ComponentTypes::MAX_COMPONENT_TYPES; i++) {
 
 		if (components()[i]) {
+
 			components()[i]->postInit();
+
 		}
 	}
 
 }
 
+
 void GameObject::setParentScene(Scene* parentScene)
 {
 	m_parentScene = parentScene;
 }
+
 
 SDL_FPoint GameObject::getCenterPosition()
 {
@@ -488,7 +535,8 @@ SDL_FPoint GameObject::getTopLeftPosition()
 
 std::string GameObject::_buildName(std::string id, float xMapPos, float yMapPos, Scene* parentScene)
 {
-	auto name = std::format("{}_{:.0f}_{:.0f}_{:05d}", id, xMapPos, yMapPos, parentScene->gameObjectCount());
+	std::string randomid = util::genRandomId(16);
+	auto name = std::format("{}_{:.0f}_{:.0f}_{}", id, xMapPos, yMapPos, parentScene->gameObjectCount());
 
 	return name;
 
@@ -642,13 +690,17 @@ void GameObject::_updateTouchingObjects()
 
 			if (contact->IsTouching()) {
 
-				if (contactGameObject != this) {
-					auto contactGameObjectSharedPtr = game->getGameObject(contactGameObject->name());
-						this->addTouchingObject(contactGameObjectSharedPtr.value());
+				if (contactGameObject != this && contactGameObject->hasTrait(TraitTag::fragment) == false) {
+
+					auto contactGameObjectSharedPtr = m_parentScene->getGameObject(contactGameObject->name());
+					this->addTouchingObject(contactGameObjectSharedPtr.value());
+				
 				}
-				if (contactGameObject2 != this) {
-					auto contactGameObjectSharedPtr = game->getGameObject(contactGameObject2->name());
-						this->addTouchingObject(contactGameObjectSharedPtr.value());
+				else if (contactGameObject2 != this && contactGameObject2->hasTrait(TraitTag::fragment) == false) {
+
+					auto contactGameObjectSharedPtr = m_parentScene->getGameObject(contactGameObject2->name());
+					this->addTouchingObject(contactGameObjectSharedPtr.value());
+						
 				}
 
 			}

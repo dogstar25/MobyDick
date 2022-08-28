@@ -319,7 +319,41 @@
             ]
 
 
-        }
+        },
+        {
+            "id": "IMGUI_TEST_MENU",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 190,
+                        "height": 200
+                    },
+                    "absolutePositioning": true
+                },
+                {
+                    "id": "IMGUI_COMPONENT",
+                    "imguiType": "IMGuiTestLevelMenu",
+                    "color": {
+                        "background": "Colors::CHARCOAL",
+                        "backgroundAlpha": 175,
+                        "text": "Colors::WHITE",
+                        "button": "Colors::BLUE",
+                        "buttonHover": "Colors::MIRKWOOD",
+                        "buttonActive": "Colors::YELLOW"
+                    },
+                    "padding": {
+                        "x": 24,
+                        "y": 24
+                    },
+                    "autoSize": true
+                }
+            ]
 
+        }
     ]
 }

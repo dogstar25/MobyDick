@@ -17,6 +17,8 @@ HudComponent::HudComponent(Json::Value componentJSON, Scene* parentScene)
 	float labelPadding = componentJSON["labelPadding"].asFloat();
 	HudItemTypes type = static_cast<HudItemTypes>(game->enumMap()->toEnum(componentJSON["hudType"].asString()));
 
+	m_isDependentObjectOwner = true;
+
 	m_hudItem = HudItemFactory::instance().create(type, labelObjectId, statusObjectId, statusValueId, labelPadding, parentScene);
 }
 

@@ -57,7 +57,7 @@ void ContainerComponent::postInit()
 
 		_setPieceLocationAndForce(containerTransformComponent, item);
 
-
+		item.gameObject->postInit();
 	}
 
 
@@ -66,8 +66,6 @@ void ContainerComponent::postInit()
 
 void ContainerComponent::update()
 {
-
-	_removeFromWorldPass();
 
 	for (auto& item : m_items) {
 
@@ -103,6 +101,8 @@ void ContainerComponent::update()
 		}
 	}
 
+	_removeFromWorldPass();
+
 }
 
 void ContainerComponent::render()
@@ -121,7 +121,11 @@ void ContainerComponent::_removeFromWorldPass()
 
 		if (it->gameObject->removeFromWorld() == true) {
 
+			//Remove object from gloabl index collection
+			parent()->parentScene()->deleteIndex(it->gameObject->name());
+
 			//it->pieceObject->reset();
+			std::cout << "Erased from Containers collection" << it->gameObject->name() << std::endl;
 			it = m_items.erase(it);
 		}
 		else {
@@ -139,8 +143,10 @@ void ContainerComponent::addItem(std::string gameObjectId, float spawnForce, Sce
 	containerItem.spawnForce = spawnForce;
 
 	//Create off screen
-	containerItem.gameObject = std::make_shared<GameObject>(gameObjectId, (float)-50.0, (float)-50.0, (float)0, parentScene);
-	
+	auto gameObject = std::make_shared<GameObject>(gameObjectId, (float)-50.0, (float)-50.0, (float)0, parentScene);
+	containerItem.gameObject = gameObject;
+	parentScene->addGameObjectIndex(gameObject);
+
 	//If this is on the container construction we have to wait and let the postinit set the final destination
 	//otherwise we can set it now
 	if (onContainerConstruction == false) {
@@ -150,14 +156,6 @@ void ContainerComponent::addItem(std::string gameObjectId, float spawnForce, Sce
 	}
 	
 	m_items.emplace_back(containerItem);
-
-}
-
-ContainerItem& ContainerComponent::removeItem()
-{
-
-		return m_items[0];
-
 
 }
 

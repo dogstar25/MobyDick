@@ -206,6 +206,7 @@
     <ClCompile Include="src\IMGui\IMGuiLevelComplete.cpp" />
     <ClCompile Include="src\IMGui\IMGuiPauseWindow.cpp" />
     <ClCompile Include="src\IMGui\IMGuiPlayerDeath.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiTestLevelMenu.cpp" />
     <ClCompile Include="src\IMGui\IMGuiTitleScreenMenu.cpp" />
     <ClCompile Include="src\IMGui\IMGuiTopHud.cpp" />
     <ClCompile Include="src\IMGui\IMGuiTopLeftHud.cpp" />
@@ -235,18 +236,17 @@
   <ItemGroup>
     <Image Include="assets\blueprints\breakable_wall_blueprint.png" />
     <Image Include="assets\blueprints\drone1_blueprint.png" />
-    <Image Include="assets\blueprints\levels\level1_blueprint.png" />
-    <Image Include="assets\blueprints\levels\level1_blueprint_sav.png" />
+    <Image Include="assets\blueprints\drone2_blueprint.png" />
     <Image Include="assets\blueprints\testDrone_blueprint.png" />
     <Image Include="assets\blueprint_template.png" />
     <Image Include="assets\bowman1.png" />
     <Image Include="assets\levels\level1_blueprint.png" />
     <Image Include="assets\levels\level2_blueprint.png" />
+    <Image Include="assets\levels\level100_blueprint.png" />
     <Image Include="assets\textureAtlas00.png" />
     <Image Include="assets\textureAtlasImGui.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\blueprints\levels\level1_blueprint.json" />
     <None Include="assets\blueprints\testDrone_definition.json" />
     <None Include="assets\config\gameConfig.json" />
     <None Include="assets\config\gameScenes.json" />
@@ -254,6 +254,7 @@
     <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
     <None Include="assets\gameObjectDefinitions\guiObjects.json" />
     <None Include="assets\gameObjectDefinitions\hudObjects.json" />
+    <None Include="assets\gameObjectDefinitions\testObjects.json" />
     <None Include="assets\gameObjectDefinitions\titleScreenObjects.json" />
     <None Include="assets\gameObjectDefinitions\wallObjects.json" />
     <None Include="assets\gameObjectDefinitions\particleObjects.json" />
@@ -261,6 +262,7 @@
     <None Include="assets\levels\level1_definition.json" />
     <None Include="assets\levels\level2_definition.json" />
     <None Include="assets\levels\levels.json" />
+    <None Include="assets\levels\level100_definition.json" />
     <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\textureAtlasAssets.json" />
     <None Include="setup25.bat" />
@@ -317,6 +319,7 @@
     <ClInclude Include="src\IMGui\IMGuiLevelComplete.h" />
     <ClInclude Include="src\IMGui\IMGuiPauseWindow.h" />
     <ClInclude Include="src\IMGui\IMGuiPlayerDeath.h" />
+    <ClInclude Include="src\IMGui\IMGuiTestLevelMenu.h" />
     <ClInclude Include="src\IMGui\IMGuiTitleScreenMenu.h" />
     <ClInclude Include="src\IMGui\IMGuiTopLeftHud.h" />
     <ClInclude Include="src\IMGui\IMGuiTopRightHud.h" />

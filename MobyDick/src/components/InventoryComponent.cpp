@@ -3,7 +3,7 @@
 
 InventoryComponent::InventoryComponent()
 {
-
+	m_isDependentObjectOwner = true;
 }
 
 InventoryComponent::InventoryComponent(Json::Value componentJSON, Scene* parentScene)

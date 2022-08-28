@@ -85,6 +85,11 @@ void PhysicsComponent::setTransform(b2Vec2 positionVector, float angle)
 	m_physicsBody->SetTransform(positionVector, angle);
 }
 
+void PhysicsComponent::setTransform(b2Vec2 positionVector)
+{
+	m_physicsBody->SetTransform(positionVector, m_physicsBody->GetAngle());
+}
+
 void PhysicsComponent::setPhysicsBodyActive(bool  active)
 {
 	m_physicsBody->SetEnabled(active);

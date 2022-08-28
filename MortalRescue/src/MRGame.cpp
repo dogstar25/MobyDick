@@ -66,6 +66,7 @@ bool MRGame::init(std::shared_ptr<ContactListener> contactListener, std::shared_
 	GameObjectManager::instance().load("gameObjectDefinitions/guiObjects");
 	GameObjectManager::instance().load("gameObjectDefinitions/hudObjects");
 	GameObjectManager::instance().load("gameObjectDefinitions/titleScreenObjects");
+	GameObjectManager::instance().load("gameObjectDefinitions/testObjects");
 
 	_displayLoadingMsg();
 

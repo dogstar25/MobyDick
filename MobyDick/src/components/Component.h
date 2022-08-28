@@ -21,6 +21,7 @@ public:
 	void disable() { disabled = true; }
 	void enable() { disabled = false; }
 	bool isDisabled() { return disabled; }
+	bool isDependentObjectOwner() { return m_isDependentObjectOwner; }
 
 	virtual void setParent(GameObject* gameObject) { m_parentGameObject = gameObject; }
 	GameObject* parent() { return m_parentGameObject; }
@@ -31,6 +32,7 @@ protected:
 	std::string m_gameObjectId{};
 	int m_componentType{};
 	bool disabled{ false };
+	bool m_isDependentObjectOwner{};
 
 
 };

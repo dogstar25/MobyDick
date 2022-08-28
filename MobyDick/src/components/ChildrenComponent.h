@@ -65,6 +65,7 @@ private:
 
 	b2Vec2 _calcChildPosition(b2Vec2 childSize, int childCount, ChildLocation location, SDL_FPoint parentPositionRec, float parentAngle);
 	b2Vec2 _calcChildPosition(b2Vec2 childSize, ChildLocation location, SDL_FPoint parentPositionRec, float parentAngle);
+	void _removeFromWorldPass();
 
 
 };

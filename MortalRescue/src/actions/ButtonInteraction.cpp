@@ -8,7 +8,7 @@ void ButtonInteraction::perform(GameObject* interactingObject, GameObject* inter
 {
 	std::string buttonTargetObjectName = interactionObject->name() + "_TARGET";
 
-	auto bottonTargetObject = game->getGameObject(buttonTargetObjectName);
+	auto bottonTargetObject = interactionObject->parentScene()->getGameObject(buttonTargetObjectName);
 	assert(bottonTargetObject.has_value() && "GameObject wasnt found!");
 
 	const auto& animationComponent = interactionObject->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);

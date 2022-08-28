@@ -1,0 +1,418 @@
+{
+    "gameObjects": [
+        {
+            "id": "MOTHERSHIP",
+            "traitTags": [],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": "Colors::YELLOW",
+                    "testureId": "TX_WHITE_QUAD"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "anchorPoint": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_SOLID",
+                            "collisionShape": "B2_BOX",
+                            "density": 500.5,
+                            "friction": 12.0
+                        }
+                    ]
+                },
+                {
+                    "id": "ATTACHMENTS_COMPONENT",
+                    "attachments": [
+                        {
+                            "id": "ESCAPE_POD",
+                            "gameObjectId": "ESCAPE_POD",
+                            "attachLocation": {
+                                "x": 1.0,
+                                "y": 5.0
+                            },
+                            "addToInventory": false,
+                            "attachB2JointType": "B2_REVOLUTE"
+                        },
+                        {
+                            "id": "RADAR",
+                            "gameObjectId": "RADAR",
+                            "attachLocation": {
+                                "x": 5.0,
+                                "y": 5.0
+                            },
+                            "addToInventory": false,
+                            "attachB2JointType": "B2_WELD"
+                        }
+
+                    ]
+                },
+                {
+                    "id": "CHILDREN_COMPONENT",
+                    "childPadding": 0,
+                    "childPositionRelative": false,
+                    "childObjects": [
+                        {
+                            "gameObjectId": "MOTHERSHIP_LABEL",
+                            "locationSlot": 5
+                        }
+
+                    ]
+                }
+
+            ]
+        },
+        {
+            "id": "ESCAPE_POD",
+            "traitTags": [],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": "Colors::BLUE",
+                    "testureId": "TX_WHITE_QUAD"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "anchorPoint": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_SOLID",
+                            "collisionShape": "B2_BOX",
+                            "density": 5.5,
+                            "friction": 12.0
+                        }
+                    ]
+                },
+                {
+                    "id": "CHILDREN_COMPONENT",
+                    "childPadding": 0,
+                    "childPositionRelative": false,
+                    "childObjects": [
+                        {
+                            "gameObjectId": "ESCAPEPOD_LABEL",
+                            "locationSlot": 5
+                        },
+                        {
+                            "gameObjectId": "RADAR",
+                            "locationSlot": 1
+                        },
+                        {
+                            "gameObjectId": "SWORDLADY",
+                            "locationSlot": 7
+                        }
+
+                    ]
+                },
+                {
+                    "id": "ATTACHMENTS_COMPONENT",
+                    "attachments": [
+                        {
+                            "id": "PARACHUTE",
+                            "gameObjectId": "PARACHUTE",
+                            "attachLocation": {
+                                "x": 5.0,
+                                "y": 5.0
+                            },
+                            "addToInventory": false,
+                            "attachB2JointType": "B2_REVOLUTE"
+                        }
+
+
+                    ]
+                }
+
+            ]
+        },
+        {
+            "id": "RADAR",
+            "traitTags": [],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_CLEAR_QUAD"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "anchorPoint": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_BOX",
+                            "density": 10.5
+                        }
+                    ]
+                },
+                {
+                    "id": "COMPOSITE_COMPONENT",
+                    "physicsWeldPiecesOn": false,
+                    "blueprint": {
+                        "texture": "TX_BREAKABLE_WALL_BLUEPRINT",
+                        "legend": [
+                            {
+                                "gameObjectId": "RADAR_PIECE",
+                                "color": "Colors::BLUE"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "CHILDREN_COMPONENT",
+                    "childPadding": 0,
+                    "childPositionRelative": false,
+                    "childObjects": [
+                        {
+                            "gameObjectId": "RADAR_LABEL",
+                            "locationSlot": 5
+                        }
+
+                    ]
+                }
+
+            ]
+        },
+        {
+            "id": "PARACHUTE",
+            "traitTags": [],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": "Colors::GREEN",
+                    "testureId": "TX_WHITE_QUAD"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "anchorPoint": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_BOX",
+                            "density": 1.5
+                        }
+                    ]
+                },
+                {
+                    "id": "CHILDREN_COMPONENT",
+                    "childPadding": 0,
+                    "childPositionRelative": false,
+                    "childObjects": [
+                        {
+                            "gameObjectId": "PARACHUTE_LABEL",
+                            "locationSlot": 9
+                        }
+
+                    ]
+                },
+                {
+                    "id": "ATTACHMENTS_COMPONENT",
+                    "attachments": [
+                        {
+                            "id": "SURVIVOR",
+                            "gameObjectId": "SURVIVOR",
+                            "attachLocation": {
+                                "x": 1.0,
+                                "y": 1.0
+                            },
+                            "addToInventory": false,
+                            "attachB2JointType": "B2_REVOLUTE"
+                        }
+
+                    ]
+                }
+
+            ]
+        },
+        {
+            "id": "RADAR_PIECE",
+            "traitTags": [ "fragment" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_PIECE_FULL_8",
+                    "color": {
+                        "tint": "Colors::ORANGE",
+                        "alpha": 255
+                    },
+                    "xRenderAdjustment": 0,
+                    "yRenderAdjustment": 0
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 8,
+                        "height": 8
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "anchorPoint": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_SOLID",
+                            "collisionShape": "B2_BOX",
+                            "friction": 1.0,
+                            "density": 0.1,
+                            "restitution": 0.0
+                        }
+                    ]
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "resistance": 0
+                }
+            ]
+        },
+        {
+            "id": "MOTHERSHIP_LABEL",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "IMGUI_COMPONENT",
+                    "imguiType": "IMGuiText",
+                    "staticText": "Mothership",
+                    "autoSize": true,
+                    "color": {
+                        "text": "Colors::WHITE"
+                    },
+                    "padding": {
+                        "x": 8,
+                        "y": 8
+                    }
+                }
+            ]
+        },
+        {
+            "id": "RADAR_LABEL",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "IMGUI_COMPONENT",
+                    "imguiType": "IMGuiText",
+                    "staticText": "Radar",
+                    "autoSize": true,
+                    "color": {
+                        "text": "Colors::WHITE"
+                    },
+                    "padding": {
+                        "x": 8,
+                        "y": 8
+                    }
+                }
+            ]
+        },
+        {
+            "id": "ESCAPEPOD_LABEL",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "IMGUI_COMPONENT",
+                    "imguiType": "IMGuiText",
+                    "staticText": "Escape Pod",
+                    "autoSize": true,
+                    "color": {
+                        "text": "Colors::WHITE"
+                    },
+                    "padding": {
+                        "x": 8,
+                        "y": 8
+                    }
+                }
+            ]
+        },
+        {
+            "id": "PARACHUTE_LABEL",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "IMGUI_COMPONENT",
+                    "imguiType": "IMGuiText",
+                    "staticText": "Parachute",
+                    "autoSize": true,
+                    "color": {
+                        "text": "Colors::WHITE"
+                    },
+                    "padding": {
+                        "x": 8,
+                        "y": 8
+                    }
+                }
+            ]
+        }
+    ]
+}

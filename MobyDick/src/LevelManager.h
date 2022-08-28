@@ -94,5 +94,6 @@ private:
 	void _buildParallax(Scene* scene);
 	void _buildLevelCage(Scene* scene);
 	bool _isColorDefinedObject(SDL_Color color);
+	void _clear();
 };
 

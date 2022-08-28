@@ -42,6 +42,7 @@ public:
 	void update() override;
 	void render();
 	void weldOnPieces();
+	
 	void postInit();
 	bool physicsWeldPiecesOn() { return m_physicsWeldPiecesOn; }
 	void setDetachAllPieces() { m_detachAllPieces = true; }
@@ -60,7 +61,7 @@ private:
 	void _updatePiecePosition(GameObjectPiece& piece);
 	void _removeFromWorldPass();
 	void _detachAllPieces();
-	
+	void _weldOnPiece(GameObjectPiece piece);
 
 	std::vector<GameObjectPiece>m_pieces;
 	bool m_detachAllPieces{false};

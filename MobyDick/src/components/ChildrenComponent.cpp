@@ -22,6 +22,8 @@ ChildrenComponent::ChildrenComponent(Json::Value componentJSON, Scene* parentSce
 	std::optional<int> locationSlot{};
 	bool centeredOnLocation{true};
 
+	m_isDependentObjectOwner = true;
+
 	for (Json::Value itrChild : componentJSON["childObjects"])
 	{
 		std::string childObjectId = itrChild["gameObjectId"].asString();
@@ -66,9 +68,12 @@ ChildrenComponent::ChildrenComponent(Json::Value componentJSON, Scene* parentSce
 
 		location.centeredOnLocation = centeredOnLocation;
 		child.location = location;
-		child.gameObject = std::make_shared<GameObject>(childObjectId, -1.0F, -1.0F, 0.F, parentScene);
-
+		auto gameObject = std::make_shared<GameObject>(childObjectId, -1.0F, -1.0F, 0.F, parentScene);
+		child.gameObject = gameObject;
 		m_childObjects.push_back(child);
+
+		//Add index 
+		parentScene->addGameObjectIndex(gameObject);
 
 	}
 }
@@ -125,10 +130,34 @@ void ChildrenComponent::update()
 		//within children objects
 		childObject.gameObject->update();
 	}
+
+	_removeFromWorldPass();
 	
 }
 
+void ChildrenComponent::_removeFromWorldPass()
+{
+	//First remove any pieces that were mared to be removed
+	auto it = m_childObjects.begin();
+	while (it != m_childObjects.end()) {
 
+		if (it->gameObject->removeFromWorld() == true) {
+
+			//Remove object from gloabl index collection
+			parent()->parentScene()->deleteIndex(it->gameObject->name());
+
+			//it->pieceObject->reset();
+			std::cout << "Erased from Children collection" << it->gameObject->name() << std::endl;
+			it = m_childObjects.erase(it);
+		}
+		else {
+			++it;
+		}
+	}
+
+	m_childObjects.shrink_to_fit();
+
+}
 void ChildrenComponent::postInit()
 {
 
@@ -136,6 +165,7 @@ void ChildrenComponent::postInit()
 	for (auto& child : m_childObjects) {
 
 		child.gameObject->setLayer(parent()->layer());
+		child.gameObject->postInit();
 	}
 
 

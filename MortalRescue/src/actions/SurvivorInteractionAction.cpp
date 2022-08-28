@@ -14,7 +14,7 @@ void SurvivorInteractionAction::perform(GameObject* interactingObject, GameObjec
 
 		//If we're storing this interacting gameObject in another game objects brain, then we need the shared_ptr version of the pointer
 		//in case this interacting game object is deleted
-		auto gameObjectSharedPtr = game->getGameObject(interactingObject->name());
+		auto gameObjectSharedPtr = interactingObject->parentScene()->getGameObject(interactingObject->name());
 		assert(gameObjectSharedPtr.has_value() && "GameObject wasnt found!");
 
 		brainComponent->followMe(gameObjectSharedPtr.value());
