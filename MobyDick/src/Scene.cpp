@@ -517,7 +517,7 @@ std::optional<std::shared_ptr<GameObject>> Scene::getGameObject(std::string name
 
 void Scene::deleteIndex(std::string gameObjectKey)
 {
-	std::cout << "Erased from lookup map" << gameObjectKey << std::endl;
+	//std::cout << "Erased from lookup map" << gameObjectKey << std::endl;
 	m_gameObjectLookup.erase(gameObjectKey);
 	
 }
@@ -543,7 +543,7 @@ void Scene::_removeFromWorldPass()
 				//m_gameObjectLookup.erase(it->get()->name());
 				deleteIndex(it->get()->name());
 
-				std::cout << "Erased from Main collection " << it->get()->name() << std::endl;
+				//std::cout << "Erased from Main collection " << it->get()->name() << std::endl;
 				it = gameObjects.erase(it);
 				
 			}
