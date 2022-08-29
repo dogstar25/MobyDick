@@ -20,9 +20,17 @@ AttachmentsComponent::AttachmentsComponent(Json::Value componentJSON, Scene* par
 		bool addToInventory = itrItem["addToInventory"].asBool();
 		b2Vec2 attachLocation = { itrItem["attachLocation"]["x"].asFloat(), itrItem["attachLocation"]["y"].asFloat() };
 		b2JointType attachB2JointType = static_cast<b2JointType>(game->enumMap()->toEnum(itrItem["attachB2JointType"].asString()));
+
+		m_isDependentObjectOwner = true;
+
+		//tOdO: PUT A CHECK HER THAT WILL NOT ALLOW A STATIC OBJECT BE ATTACHED TO A DYNAMIC OBJECT
+
 		auto gameObject = std::make_shared<GameObject>(gameObjectId, - 1.0F, -1.0F, 0.F, parentScene);
 
-		Attachment attachment = { id, addToInventory, attachB2JointType, attachLocation, std::move(gameObject) };
+		//Add index 
+		parentScene->addGameObjectIndex(gameObject);
+
+		Attachment attachment = { id, addToInventory, attachB2JointType, attachLocation, gameObject };
 		m_attachments.emplace_back(attachment);
 
 	}
@@ -35,13 +43,12 @@ AttachmentsComponent::~AttachmentsComponent()
 
 void AttachmentsComponent::update()
 {
-	_removeFromWorldPass();
-
 	for (const auto& attachment: m_attachments) {
 
 		attachment.gameObject->update();
 	}
 
+	_removeFromWorldPass();
 
 }
 
@@ -73,6 +80,8 @@ void AttachmentsComponent::postInit()
 			const auto& inventoryComponent = parent()->getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT);
 			inventoryComponent->addItem(attachment.gameObject);
 		}
+
+		attachment.gameObject->postInit();
 
 	}
 }
@@ -113,7 +122,11 @@ void AttachmentsComponent::_removeFromWorldPass()
 
 		if (it->gameObject->removeFromWorld() == true) {
 
+			//Remove object from gloabl index collection
+			parent()->parentScene()->deleteIndex(it->gameObject->name());
+
 			//it->pieceObject->reset();
+			std::cout << "Erased from Attachments collection" << it->gameObject->name() << std::endl;
 			it = m_attachments.erase(it);
 		}
 		else {

@@ -179,17 +179,12 @@ void BrainComponent::_updateSensorInput()
 				//Get this objects shared pointer from the scene and store it instead of the raw pointer
 				std::optional<std::weak_ptr<GameObject>> gameObject = parent()->parentScene()->getGameObject(detectedObject.gameObject->name());
 
-				//If this detected object was not found in the main gameObject structure then its okay because the brain sensor only
-				//updates so often and the detected object stored may have been deleted sicen the last brian refresh
-				if (gameObject.has_value()) {
+				m_detectedObjects.push_back(gameObject.value());
 
-					m_detectedObjects.push_back(gameObject.value());
+				if (_hasLineOfSight(detectedObject) == true) {
 
-					if (_hasLineOfSight(detectedObject) == true) {
+					m_seenObjects.push_back(gameObject.value());
 
-						m_seenObjects.push_back(gameObject.value());
-
-					}
 				}
 
 				break;

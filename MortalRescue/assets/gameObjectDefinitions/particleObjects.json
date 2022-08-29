@@ -224,7 +224,7 @@
         },
         {
             "id": "BULLET1",
-            "traitTags": [ "pooled" ],
+            "traitTags": [ "pooled", "fragment" ],
             "description": "Bullet 1",
             "components": [
                 {
@@ -265,7 +265,7 @@
         },
         {
             "id": "BULLET2",
-            "traitTags": [ "pooled" ],
+            "traitTags": [ "pooled", "fragment" ],
             "description": "Bullet 2",
             "components": [
                 {

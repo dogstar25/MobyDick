@@ -148,10 +148,6 @@
                             "actionClass": "DefaultHover"
                         },
                         {
-                            "actionId": "ACTION_ON_CLICK",
-                            "actionClass": "ContinueClick"
-                        },
-                        {
                             "actionId": "ACTION_SPRINT",
                             "actionClass": "ActorSprintAction"
                         }

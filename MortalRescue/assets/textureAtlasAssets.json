@@ -26,6 +26,11 @@
             "filename": "assets/levels/level2_blueprint.png"
         },
         {
+            "id": "TX_LEVEL100_BLUEPRINT",
+            "description": "Level 2 Bluprint",
+            "filename": "assets/levels/level100_blueprint.png"
+        },
+        {
             "id": "TX_DRONE1_BLUEPRINT",
             "description": "Drone 1 Blueprint",
             "filename": "assets/blueprints/drone1_blueprint.png"

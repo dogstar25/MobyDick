@@ -142,7 +142,7 @@ void ParticleXComponent::update()
 
 				}
 				else {
-					std::cout << "No Particle available\n";
+					//std::cout << "No Particle available\n";
 				}
 			}
 		}

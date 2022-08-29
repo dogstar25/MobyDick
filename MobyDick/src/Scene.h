@@ -4,6 +4,7 @@
 #include <vector>
 #include <bitset>
 #include <optional>
+#include <unordered_map>
 
 #include <box2d/box2d.h>
 #include <json/json.h>
@@ -58,6 +59,8 @@ public:
 
 	GameObject* addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle = 0., bool cameraFollow = false,std::string name="");
 	GameObject* addGameObject(std::string gameObjectId, int layer, PositionAlignment windowPosition, float adjustX=0, float adjustY=0, float angle=0, bool cameraFollow=false);
+	void addGameObjectIndex(std::shared_ptr<GameObject> gameObject);
+
 	GameObject* addGameObject(std::shared_ptr<GameObject> gameObject, int layer);
 	void addLevelObjective(Objective objective);
 	void addLevelTrigger(std::shared_ptr<Trigger> trigger);
@@ -102,6 +105,8 @@ public:
 	void deleteCutScene();
 	void addParallaxItem(Parallax& parallaxItem);
 	std::optional<Parallax> getParallax(int layer);
+
+	void deleteIndex(std::string gameObjectIndex);
 	
 private:
 
@@ -118,7 +123,9 @@ private:
 	PhysicsConfig m_physicsConfig{};
 	ObjectPoolManager m_objectPoolManager{};
 
+	std::unordered_map<std::string, std::shared_ptr<GameObject>> m_gameObjectLookup;
 	std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> m_gameObjects;
+
 	std::bitset<8> m_sceneTags;
 	std::map<SDL_Keycode, SceneAction> m_sceneKeyActions;
 

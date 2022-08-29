@@ -35,6 +35,7 @@ public:
 	void applyTorque(float angularVelocity);
 	void setOffGrid();
 	void setTransform(b2Vec2 positionVector, float angle);
+	void setTransform(b2Vec2 positionVector);
 	void setLinearVelocity(b2Vec2 velocityVector);
 	void setPhysicsBodyActive(bool  active);
 	void setFixedRotation(bool fixedRotation);

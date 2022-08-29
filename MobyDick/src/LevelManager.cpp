@@ -245,9 +245,18 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 	_buildLevelCage(scene);
 
 	//Clear the level objects collection now that all gameObjects are built
-	m_levelObjects.clear();
+	_clear();
 
 }
+
+void LevelManager::_clear()
+{
+	m_levelObjects.clear();
+	m_tiledLayerDefinitions.clear();
+	m_colorDefinedList.clear();
+	m_locationDefinedList.clear();
+}
+
 
 void LevelManager::_buildLevelCage(Scene* scene)
 {

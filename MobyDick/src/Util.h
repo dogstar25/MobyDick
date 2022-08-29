@@ -63,6 +63,7 @@ namespace util
 
 	b2Vec2 matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float);
 	bool isMouseButtonPressed(uint8 button);
+	const std::string genRandomId(const int len);
 
 };
 

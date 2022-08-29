@@ -71,6 +71,7 @@ public:
 	void setPosition(PositionAlignment windowPosition, float adjustX=0., float adjustY=0.);
 	void setLayer(int layer) { m_layer = layer; }
 	bool isPointingAt(SDL_FPoint gameObject);
+	bool holdsDependentGameObjects();
 	
 	b2Vec2 getSize();
 	float getAngle();

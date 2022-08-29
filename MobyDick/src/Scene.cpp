@@ -185,6 +185,8 @@ void Scene::clear()
 	//}
 	m_levelObjectives.clear();
 
+	m_gameObjectLookup.clear();
+
 	for (int x = 0; x < MAX_GAMEOBJECT_LAYERS; x++)
 	{
 		m_gameObjects[x].clear();
@@ -205,9 +207,6 @@ void Scene::update() {
 
 	Camera::instance().update();
 	SoundManager::instance().update();
-
-	// Remove all objects that should be removed in first pass
-	_removeFromWorldPass();
 
 	if (hasPhysics()) {
 		stepB2PhysicsWorld();
@@ -232,6 +231,9 @@ void Scene::update() {
 			trigger->execute();
 		}
 	}
+
+	// Remove all objects that should be removed in first pass
+	_removeFromWorldPass();
 
 }
 
@@ -297,6 +299,9 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMap
 
 	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this, layer, cameraFollow, name));
 
+	//Add index - no fragment objects
+	addGameObjectIndex(gameObject);
+
 	return gameObject.get();
 
 }
@@ -305,8 +310,10 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, PositionAl
 {
 
 	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, (float)-5, (float)-5, angle, this, layer, cameraFollow));
-
 	gameObject->setPosition(windowPosition, adjustX, adjustY);
+
+	//Add index 
+	addGameObjectIndex(gameObject);
 
 	return gameObject.get();
 
@@ -319,11 +326,25 @@ GameObject* Scene::addGameObject(std::shared_ptr<GameObject> gameObject, int lay
 {
 
 	gameObject->setParentScene(this);
-	auto& gameObjectRef = this->m_gameObjects[layer].emplace_back(gameObject);
+	this->m_gameObjects[layer].push_back(gameObject);
 
-	return gameObjectRef.get();
+	//Add index 
+	addGameObjectIndex(gameObject);
+
+	return gameObject.get();
 
 }
+
+void Scene::addGameObjectIndex(std::shared_ptr<GameObject> gameObject)
+{
+
+	const auto gameObjectPair = m_gameObjectLookup.emplace(std::pair<std::string, std::shared_ptr<GameObject>>(gameObject->name(), gameObject));
+
+	return;
+
+}
+
+
 
 void Scene::addKeyAction(SDL_Keycode keyCode, SceneAction sceneAction)
 {
@@ -461,22 +482,44 @@ std::optional<std::shared_ptr<GameObject>> Scene::getGameObject(std::string name
 {
 	std::optional<std::shared_ptr<GameObject>> foundGameObject{};
 
-	for (auto& layer : m_gameObjects) {
 
-		for (auto& gameObject : layer) {
-
-			if (gameObject->name() == name) {
-
-				foundGameObject = gameObject;
-				break;
-			}
-
-		}
+	auto search = m_gameObjectLookup.find(name);
+	if (search != m_gameObjectLookup.end()) {
+		foundGameObject = search->second;
 	}
+
+	//foundGameObject = m_gameObjectLookup.at(name);
+
+
+	//for (auto& layer : m_gameObjects) {
+
+	//	for (auto& gameObject : layer) {
+
+	//		if (gameObject->name() == name) {
+
+	//			return  gameObject;
+	//		}
+	//		else
+	//		{
+	//			foundGameObject = gameObject->getSubGameObject(name);
+	//			if (foundGameObject.has_value()) {
+	//				return foundGameObject;
+	//			}
+	//		}
+
+	//	}
+	//}
 
 	//assert(foundGameObject.has_value() && "GameObject wasnt found!");
 
 	return foundGameObject;
+}
+
+void Scene::deleteIndex(std::string gameObjectKey)
+{
+	//std::cout << "Erased from lookup map" << gameObjectKey << std::endl;
+	m_gameObjectLookup.erase(gameObjectKey);
+	
 }
 
 void Scene::_removeFromWorldPass()
@@ -487,12 +530,7 @@ void Scene::_removeFromWorldPass()
 		auto it = gameObjects.begin();
 		while (it != gameObjects.end()) {
 
-			auto test = it->get();
-
-			//Remove gameObject iteself it flagged
-			//If it's a physics object then it's probably pooled, but either way we dont want to completely delete it
-			//One of the BrainComponents may have stored this objects userData (gameObject raw pointer) and so completely deleting it
-			//would compromise those pointers
+			//Remove gameObject iteself if flagged
 			if (it->get()->removeFromWorld() == true) {
 
 				if (it->get()->hasTrait(TraitTag::pooled)) {
@@ -500,8 +538,14 @@ void Scene::_removeFromWorldPass()
 					it->get()->reset();
 
 				}
-			
+
+				//delete the index
+				//m_gameObjectLookup.erase(it->get()->name());
+				deleteIndex(it->get()->name());
+
+				//std::cout << "Erased from Main collection " << it->get()->name() << std::endl;
 				it = gameObjects.erase(it);
+				
 			}
 			else {
 				++it;
