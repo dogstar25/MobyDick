@@ -294,10 +294,10 @@ void Scene::deleteCutScene()
 
 }
 
-GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow,std::string name)
+GameObject* Scene::addGameObject(std::string gameObjectType, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow,std::string name)
 {
 
-	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, xMapPos, yMapPos, angle, this, layer, cameraFollow, name));
+	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectType, xMapPos, yMapPos, angle, this, layer, cameraFollow, name));
 
 	//Add index - no fragment objects
 	addGameObjectIndex(gameObject);
@@ -306,10 +306,10 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, float xMap
 
 }
 
-GameObject* Scene::addGameObject(std::string gameObjectId, int layer, PositionAlignment windowPosition, float adjustX, float adjustY, float angle, bool cameraFollow)
+GameObject* Scene::addGameObject(std::string gameObjectType, int layer, PositionAlignment windowPosition, float adjustX, float adjustY, float angle, bool cameraFollow)
 {
 
-	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectId, (float)-5, (float)-5, angle, this, layer, cameraFollow));
+	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectType, (float)-5, (float)-5, angle, this, layer, cameraFollow));
 	gameObject->setPosition(windowPosition, adjustX, adjustY);
 
 	//Add index 
@@ -322,7 +322,7 @@ GameObject* Scene::addGameObject(std::string gameObjectId, int layer, PositionAl
 /*
 Emplace the new gameObject into the collection and also return a reference ptr to the newly created object as well
 */
-GameObject* Scene::addGameObject(std::shared_ptr<GameObject> gameObject, int layer)
+void Scene::addGameObject(std::shared_ptr<GameObject> gameObject, int layer)
 {
 
 	gameObject->setParentScene(this);
@@ -331,14 +331,14 @@ GameObject* Scene::addGameObject(std::shared_ptr<GameObject> gameObject, int lay
 	//Add index 
 	addGameObjectIndex(gameObject);
 
-	return gameObject.get();
+	return;;
 
 }
 
 void Scene::addGameObjectIndex(std::shared_ptr<GameObject> gameObject)
 {
 
-	const auto gameObjectPair = m_gameObjectLookup.emplace(std::pair<std::string, std::shared_ptr<GameObject>>(gameObject->name(), gameObject));
+	const auto gameObjectPair = m_gameObjectLookup.emplace(std::pair<std::string, std::shared_ptr<GameObject>>(gameObject->id(), gameObject));
 
 	return;
 
@@ -450,7 +450,8 @@ void Scene::_buildSceneGameObjects(Json::Value definitionJSON)
 {
 	for (Json::Value gameObjectJSON : definitionJSON["gameObjects"]) {
 
-		auto id = gameObjectJSON["gameObjectId"].asString();
+		std::string gameObjectType = gameObjectJSON["gameObjectType"].asString();
+		assert(!gameObjectType.empty() && "Empty GameObejectType in Scene definition for scene ");
 
 		auto layer = game->enumMap()->toEnum(gameObjectJSON["layer"].asString());
 
@@ -463,54 +464,49 @@ void Scene::_buildSceneGameObjects(Json::Value definitionJSON)
 			if (locationJSON.isMember("adjust")) {
 				auto adjustX = locationJSON["adjust"]["x"].asFloat();
 				auto adjustY = locationJSON["adjust"]["y"].asFloat();
-				addGameObject(id, layer, windowPosition, adjustX, adjustY);
+				addGameObject(gameObjectType, layer, windowPosition, adjustX, adjustY);
 			}
 			else {
-				addGameObject(id, layer, windowPosition);
+				addGameObject(gameObjectType, layer, windowPosition);
 			}
 			
 		}
 		else {
 			auto locationX = gameObjectJSON["location"]["x"].asFloat();
 			auto locationY = gameObjectJSON["location"]["y"].asFloat();
-			addGameObject(id, layer, locationX, locationY, 0);
+			addGameObject(gameObjectType, layer, locationX, locationY, 0);
 		}
 	}
 }
 
-std::optional<std::shared_ptr<GameObject>> Scene::getGameObject(std::string name)
+std::optional<std::shared_ptr<GameObject>> Scene::getGameObject(std::string id)
 {
 	std::optional<std::shared_ptr<GameObject>> foundGameObject{};
 
 
-	auto search = m_gameObjectLookup.find(name);
+	auto search = m_gameObjectLookup.find(id);
 	if (search != m_gameObjectLookup.end()) {
 		foundGameObject = search->second;
 	}
 
-	//foundGameObject = m_gameObjectLookup.at(name);
+	return foundGameObject;
+}
 
+std::optional<std::shared_ptr<GameObject>> Scene::getGameObjectByName(std::string name)
+{
+	std::optional<std::shared_ptr<GameObject>> foundGameObject{};
 
-	//for (auto& layer : m_gameObjects) {
+	auto it = m_gameObjectLookup.begin();
+	while (it != m_gameObjectLookup.end()) {
 
-	//	for (auto& gameObject : layer) {
+		//Remove gameObject iteself if flagged
+		if (it->second->name() == name) {
+			foundGameObject = it->second;
+			break;
+		}
 
-	//		if (gameObject->name() == name) {
-
-	//			return  gameObject;
-	//		}
-	//		else
-	//		{
-	//			foundGameObject = gameObject->getSubGameObject(name);
-	//			if (foundGameObject.has_value()) {
-	//				return foundGameObject;
-	//			}
-	//		}
-
-	//	}
-	//}
-
-	//assert(foundGameObject.has_value() && "GameObject wasnt found!");
+		++it;
+	}
 
 	return foundGameObject;
 }
@@ -540,8 +536,7 @@ void Scene::_removeFromWorldPass()
 				}
 
 				//delete the index
-				//m_gameObjectLookup.erase(it->get()->name());
-				deleteIndex(it->get()->name());
+				deleteIndex(it->get()->id());
 
 				//std::cout << "Erased from Main collection " << it->get()->name() << std::endl;
 				it = gameObjects.erase(it);

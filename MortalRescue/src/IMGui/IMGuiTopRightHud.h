@@ -5,7 +5,7 @@ class IMGuiTopRightHud : public IMGuiItem
 
 public:
 	IMGuiTopRightHud() = default;
-	IMGuiTopRightHud(std::string gameObjectId, b2Vec2 padding, Scene * parentScene, ImVec4 backgroundColor, ImVec4 textColor,
+	IMGuiTopRightHud(std::string gameObjectType, b2Vec2 padding, Scene * parentScene, ImVec4 backgroundColor, ImVec4 textColor,
 		ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize);
 	glm::vec2 render() override;
 

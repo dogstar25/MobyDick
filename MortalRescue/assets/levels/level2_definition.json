@@ -96,25 +96,25 @@
     "locationDefinedObjects": [
         {
             "id": "LOC_0003_0003",
-            "gameObjectId": "GINA_64",
+            "gameObjectType": "GINA_64",
             "name": "PlayerGina",
             "cameraFollow": true
         },
         {
             "id": "LOC_0011_0003",
-            "gameObjectId": "SURVIVOR"
+            "gameObjectType": "SURVIVOR"
         },
         {
             "id": "LOC_0014_0003",
-            "gameObjectId": "ESCAPE_STAIRS"
+            "gameObjectType": "ESCAPE_STAIRS"
         },
         {
             "id": "LOC_0021_0002",
-            "gameObjectId": "SURVIVOR"
+            "gameObjectType": "SURVIVOR"
         },
         {
             "id": "LOC_0021_0004",
-            "gameObjectId": "SURVIVOR"
+            "gameObjectType": "SURVIVOR"
         }
     ]
 }

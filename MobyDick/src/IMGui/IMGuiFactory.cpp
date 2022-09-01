@@ -6,7 +6,7 @@
 
 
 
-std::shared_ptr<IMGuiItem> IMGuiFactory::create(std::string iMGuiItemType, std::string gameObjectId, Scene* parentScene, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor, 
+std::shared_ptr<IMGuiItem> IMGuiFactory::create(std::string iMGuiItemType, std::string gameObjectType, Scene* parentScene, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor,
 	ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize, std::string staticTextValue)
 {
 	std::shared_ptr<IMGuiItem> iMGuiItem;
@@ -18,11 +18,11 @@ std::shared_ptr<IMGuiItem> IMGuiFactory::create(std::string iMGuiItemType, std::
 	}
 	else if (iMGuiItemType == "IMGuiText") {
 
-		iMGuiItem = std::make_shared<IMGuiText>(gameObjectId, padding, backgroundColor, textColor, colorNA, colorNA, colorNA, autoSize, staticTextValue);
+		iMGuiItem = std::make_shared<IMGuiText>(gameObjectType, padding, backgroundColor, textColor, colorNA, colorNA, colorNA, autoSize, staticTextValue);
 	}
 	else if (iMGuiItemType == "IMGuiInteractiveMenuBasic") {
 
-		iMGuiItem = std::make_shared<IMGuiInteractiveMenuBasic>(gameObjectId, padding, backgroundColor, textColor,	buttonColor, buttonHoverColor, buttonActiveColor, autoSize);
+		iMGuiItem = std::make_shared<IMGuiInteractiveMenuBasic>(gameObjectType, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize);
 	}
 
 	else {

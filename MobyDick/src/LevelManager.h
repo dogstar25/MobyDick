@@ -18,7 +18,7 @@
 
 struct LevelObject
 {
-	std::string gameObjectId {};
+	std::string gameObjectType{};
 	int layer{ GameLayer::MAIN };
 	int angleAdjustment {};
 	bool cameraFollow{ false };

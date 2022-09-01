@@ -11,7 +11,7 @@ ChildrenComponent::ChildrenComponent()
 
 }
 
-ChildrenComponent::ChildrenComponent(Json::Value componentJSON, Scene* parentScene)
+ChildrenComponent::ChildrenComponent(Json::Value componentJSON, std::string parentName, Scene* parentScene)
 {
 
 
@@ -24,9 +24,12 @@ ChildrenComponent::ChildrenComponent(Json::Value componentJSON, Scene* parentSce
 
 	m_isDependentObjectOwner = true;
 
+	int childCount{};
 	for (Json::Value itrChild : componentJSON["childObjects"])
 	{
-		std::string childObjectId = itrChild["gameObjectId"].asString();
+		childCount++;
+
+		std::string childObjectType = itrChild["gameObjectType"].asString();
 
 		//Slot
 		std::optional<int> locationSlot{};
@@ -68,7 +71,8 @@ ChildrenComponent::ChildrenComponent(Json::Value componentJSON, Scene* parentSce
 
 		location.centeredOnLocation = centeredOnLocation;
 		child.location = location;
-		auto gameObject = std::make_shared<GameObject>(childObjectId, -1.0F, -1.0F, 0.F, parentScene);
+		std::string name = _buildChildName(parentName, childCount);
+		auto gameObject = std::make_shared<GameObject>(childObjectType, -1.0F, -1.0F, 0.F, parentScene, 0., false, name );
 		child.gameObject = gameObject;
 		m_childObjects.push_back(child);
 
@@ -144,10 +148,10 @@ void ChildrenComponent::_removeFromWorldPass()
 		if (it->gameObject->removeFromWorld() == true) {
 
 			//Remove object from gloabl index collection
-			parent()->parentScene()->deleteIndex(it->gameObject->name());
+			parent()->parentScene()->deleteIndex(it->gameObject->id());
 
 			//it->pieceObject->reset();
-			std::cout << "Erased from Children collection" << it->gameObject->name() << std::endl;
+			std::cout << "Erased from Children collection" << it->gameObject->id() << std::endl;
 			it = m_childObjects.erase(it);
 		}
 		else {
@@ -326,6 +330,15 @@ b2Vec2 ChildrenComponent::_calcChildPosition(b2Vec2 childSize, ChildLocation loc
 
 	return position;
 
+
+}
+
+std::string ChildrenComponent::_buildChildName(std::string parentName, int childCount)
+{
+
+	auto name = std::format("{}_CH{:03}", parentName, childCount);
+
+	return name;
 
 }
 

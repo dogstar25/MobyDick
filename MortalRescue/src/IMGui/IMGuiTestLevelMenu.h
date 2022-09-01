@@ -10,7 +10,7 @@ class IMGuiTestLevelMenu : public IMGuiItem
 {
 public:
 	IMGuiTestLevelMenu() = default;
-	IMGuiTestLevelMenu(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor, ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor,
+	IMGuiTestLevelMenu(std::string gameObjectType, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor, ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor,
 		bool autoSize);
 	glm::vec2 render() override;
 	void sendQuitEvent();

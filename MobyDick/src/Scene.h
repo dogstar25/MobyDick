@@ -57,17 +57,19 @@ public:
 	void update();
 	void clearEvents();
 
-	GameObject* addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle = 0., bool cameraFollow = false,std::string name="");
-	GameObject* addGameObject(std::string gameObjectId, int layer, PositionAlignment windowPosition, float adjustX=0, float adjustY=0, float angle=0, bool cameraFollow=false);
-	void addGameObjectIndex(std::shared_ptr<GameObject> gameObject);
+	GameObject* addGameObject(std::string gameObjectType, int layer, float xMapPos, float yMapPos, float angle = 0., bool cameraFollow = false,std::string name="");
+	GameObject* addGameObject(std::string gameObjectType, int layer, PositionAlignment windowPosition, float adjustX=0, float adjustY=0, float angle=0, bool cameraFollow=false);
+	void addGameObject(std::shared_ptr<GameObject> gameObject, int layer);
 
-	GameObject* addGameObject(std::shared_ptr<GameObject> gameObject, int layer);
+	void addGameObjectIndex(std::shared_ptr<GameObject> gameObject);
+	
 	void addLevelObjective(Objective objective);
 	void addLevelTrigger(std::shared_ptr<Trigger> trigger);
 	void addKeyAction(SDL_Keycode, SceneAction);
 	void applyCurrentControlMode();
 	SDL_FPoint calcWindowPosition(int globalPosition);
-	std::optional<std::shared_ptr<GameObject>> getGameObject(std::string name);
+	std::optional<std::shared_ptr<GameObject>> getGameObject(std::string id);
+	std::optional<std::shared_ptr<GameObject>> getGameObjectByName(std::string name);
 	std::optional<std::string> getNextLevel();
 	
 	void stepB2PhysicsWorld() {

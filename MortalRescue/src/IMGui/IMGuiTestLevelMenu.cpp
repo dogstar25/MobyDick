@@ -12,9 +12,9 @@
 extern std::unique_ptr<Game> game;
 
 
-IMGuiTestLevelMenu::IMGuiTestLevelMenu(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor,
+IMGuiTestLevelMenu::IMGuiTestLevelMenu(std::string gameObjectType, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor,
 	ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize) :
-	IMGuiItem(gameObjectId, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize)
+	IMGuiItem(gameObjectType, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize)
 {
 	m_flags = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize;
 
@@ -33,7 +33,7 @@ glm::vec2 IMGuiTestLevelMenu::render()
 	//Set Color
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, m_backgroundColor);
 
-	ImGui::Begin(m_gameObjectId.c_str(), nullptr, m_flags);
+	ImGui::Begin(m_gameObjectType.c_str(), nullptr, m_flags);
 	{
 
 		ImGui::PushStyleColor(ImGuiCol_Button, m_buttonColor);
@@ -119,13 +119,13 @@ std::string IMGuiTestLevelMenu::levelInput()
 
 
 	// Mouse sensitivity setting slider
-	char level[4];
 	ImGui::SetKeyboardFocusHere();
-	ImGui::InputText("level", level, 4);
+	static char levelInput[128] = "1";
+	ImGui::InputText("level", levelInput, IM_ARRAYSIZE(levelInput));
 
 	if (ImGui::IsKeyPressed(ImGuiKey_Enter)) {
 		ImGui::CloseCurrentPopup();
-		util::sendSceneEvent(SCENE_ACTION_LOAD_LEVEL, level);
+		util::sendSceneEvent(SCENE_ACTION_LOAD_LEVEL, levelInput);
 	}
 
 	if (ImGui::IsKeyPressed(ImGuiKey_Escape) || ImGui::IsKeyPressed(ImGuiKey_RightCtrl)) {
@@ -135,7 +135,7 @@ std::string IMGuiTestLevelMenu::levelInput()
 
 	ImGui::EndPopup();
 
-	return std::string(level);
+	return std::string(levelInput);
 
 }
 
@@ -148,14 +148,18 @@ void IMGuiTestLevelMenu::deleteObject()
 
 
 	// Mouse sensitivity setting slider
-	char objectName[32];
 	ImGui::SetKeyboardFocusHere();
-	ImGui::InputText("Object Name", objectName, 32);
+	static char objectName[128] = "1";
+	ImGui::InputText("name", objectName, IM_ARRAYSIZE(objectName));
 
 	if (ImGui::IsKeyPressed(ImGuiKey_Enter)) {
+
 		ImGui::CloseCurrentPopup();
-		auto scene = SceneManager::instance().getScene("SCENE_TEST");
-		scene->getGameObject(objectName)->get()->setRemoveFromWorld(true);
+		auto& scene = SceneManager::instance().getScene("SCENE_TEST");
+		auto gameObject = scene.getGameObjectByName(objectName);
+		if (gameObject.has_value()) {
+			gameObject.value()->setRemoveFromWorld(true);
+		}
 	}
 
 	if (ImGui::IsKeyPressed(ImGuiKey_Escape) || ImGui::IsKeyPressed(ImGuiKey_RightCtrl)) {

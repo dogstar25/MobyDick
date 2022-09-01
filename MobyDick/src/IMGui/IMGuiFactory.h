@@ -16,7 +16,7 @@ public:
 
 	virtual std::shared_ptr<IMGuiItem> create(
 		std::string iMGuiItemType, 
-		std::string gameObjectId, 
+		std::string gameObjectType, 
 		Scene* parentScene,
 		b2Vec2 padding, 
 		ImVec4 backgroundColor, 

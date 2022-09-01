@@ -16,7 +16,7 @@ private:
 	std::shared_ptr<Component> create(
 		Json::Value definitionJSON,
 		std::string gameObjectName,
-		std::string textComponentGameObjectid,
+		std::string gameObjectTextType,
 		Scene* scene,
 		float xMapPos,
 		float yMapPos,

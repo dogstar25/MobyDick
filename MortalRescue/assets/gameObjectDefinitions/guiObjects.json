@@ -1,7 +1,7 @@
 {
     "gameObjects": [
         {
-            "id": "IMGUI_EXAMPLE_PANEL",
+            "type": "IMGUI_EXAMPLE_PANEL",
             "traitTags": [ "gui" ],
             "components": [
                 {
@@ -18,7 +18,7 @@
 
         },
         {
-            "id": "PLAYER_LABEL_2",
+            "type": "PLAYER_LABEL_2",
             "traitTags": [ "abstract" ],
             "components": [
                 {
@@ -43,7 +43,7 @@
             ]
         },
         {
-            "id": "IMGUI_PAUSE_WINDOW",
+            "type": "IMGUI_PAUSE_WINDOW",
             "traitTags": [ "abstract" ],
             "components": [
                 {
@@ -79,7 +79,7 @@
 
         },
         {
-            "id": "IMGUI_HUD_TOP_CENTER",
+            "type": "IMGUI_HUD_TOP_CENTER",
             "traitTags": [ "abstract" ],
             "components": [
                 {
@@ -113,7 +113,7 @@
 
         },
         {
-            "id": "IMGUI_HUD_TOP_LEFT",
+            "type": "IMGUI_HUD_TOP_LEFT",
             "traitTags": [ "abstract" ],
             "components": [
                 {
@@ -147,7 +147,7 @@
 
         },
         {
-            "id": "IMGUI_HUD_TOP_RIGHT",
+            "type": "IMGUI_HUD_TOP_RIGHT",
             "traitTags": [ "abstract" ],
             "components": [
                 {
@@ -181,7 +181,7 @@
 
         },
         {
-            "id": "IMGUI_LEVEL_COMPLETE",
+            "type": "IMGUI_LEVEL_COMPLETE",
             "traitTags": [ "abstract" ],
             "components": [
                 {
@@ -219,7 +219,7 @@
 
         },
         {
-            "id": "IMGUI_PLAYERDEATH_PANEL",
+            "type": "IMGUI_PLAYERDEATH_PANEL",
             "traitTags": [ "abstract" ],
             "components": [
                 {
@@ -257,7 +257,7 @@
 
         },
         {
-            "id": "INTERACTIVE_MENU_BASIC",
+            "type": "INTERACTIVE_MENU_BASIC",
             "traitTags": [ "abstract" ],
             "components": [
                 {
@@ -289,7 +289,7 @@
 
         },
         {
-            "id": "INTERACTIVE_MENU_SURVIVOR",
+            "type": "INTERACTIVE_MENU_SURVIVOR",
             "traitTags": [ "abstract" ],
             "components": [
                 {
@@ -321,7 +321,7 @@
 
         },
         {
-            "id": "IMGUI_TEST_MENU",
+            "type": "IMGUI_TEST_MENU",
             "traitTags": [ "abstract" ],
             "components": [
                 {

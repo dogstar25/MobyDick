@@ -1,7 +1,7 @@
 {
     "gameObjects": [
         {
-            "id": "PARTICLE_SMOKE_1",
+            "type": "PARTICLE_SMOKE_1",
             "traitTags": [ "pooled", "fragment" ],
             "description": "Smoke Particle 1",
             "components": [
@@ -43,7 +43,7 @@
             ]
         },
         {
-            "id": "DEFLECT1",
+            "type": "DEFLECT1",
             "traitTags": [ "pooled", "fragment" ],
             "description": "Deflect 1",
             "components": [
@@ -103,7 +103,7 @@
             ]
         },
         {
-            "id": "SCRAP_PIECE",
+            "type": "SCRAP_PIECE",
             "traitTags": [ "pooled", "fragment" ],
             "components": [
                 {
@@ -147,7 +147,7 @@
             ]
         },
         {
-            "id": "HEALTH_HEART",
+            "type": "HEALTH_HEART",
             "traitTags": [ "fragment" ],
             "components": [
                 {
@@ -187,7 +187,7 @@
             ]
         },
         {
-            "id": "FORCE_WALL_SLIDER_32",
+            "type": "FORCE_WALL_SLIDER_32",
             "traitTags": [],
             "components": [
                 {
@@ -223,7 +223,7 @@
             ]
         },
         {
-            "id": "BULLET1",
+            "type": "BULLET1",
             "traitTags": [ "pooled", "fragment" ],
             "description": "Bullet 1",
             "components": [
@@ -264,7 +264,7 @@
             ]
         },
         {
-            "id": "BULLET2",
+            "type": "BULLET2",
             "traitTags": [ "pooled", "fragment" ],
             "description": "Bullet 2",
             "components": [
@@ -306,7 +306,7 @@
             ]
         },
         {
-            "id": "PULSE1",
+            "type": "PULSE1",
             "traitTags": [ "pooled" ],
             "description": "Pulse Bullet 1",
             "components": [
@@ -349,8 +349,8 @@
             ]
         },
         {
-            "id": "PULSE_EXPLOSION",
-            "traitTags": ["pooled"],
+            "type": "PULSE_EXPLOSION",
+            "traitTags": [ "pooled" ],
             "description": "Pulse Explosion 1",
             "components": [
                 {

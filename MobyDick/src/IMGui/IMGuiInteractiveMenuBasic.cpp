@@ -8,9 +8,9 @@
 
 extern std::unique_ptr<Game> game;
 
-IMGuiInteractiveMenuBasic::IMGuiInteractiveMenuBasic(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor,
+IMGuiInteractiveMenuBasic::IMGuiInteractiveMenuBasic(std::string gameObjectType, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor,
 	ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize) :
-	IMGuiItem(gameObjectId, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize)
+	IMGuiItem(gameObjectType, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize)
 {
 
 	m_flags = ImGuiWindowFlags_NoNav | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize;
@@ -39,7 +39,7 @@ glm::vec2 IMGuiInteractiveMenuBasic::render()
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 
 
-	ImGui::Begin(m_gameObjectId.c_str(), nullptr, m_flags);
+	ImGui::Begin(m_gameObjectType.c_str(), nullptr, m_flags);
 	{
 		ImGui::PushFont(m_smallFont);
 		ImGui::SetWindowPos(ImVec2{ renderComponent->getRenderDestRect().x, renderComponent->getRenderDestRect().y });

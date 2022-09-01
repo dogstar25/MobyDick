@@ -26,14 +26,14 @@ class ContainerComponent : public Component
 
 public:
 	ContainerComponent();
-	ContainerComponent(Json::Value componentJSON, Scene* parentScene);
+	ContainerComponent(Json::Value componentJSON, std::string parentName, Scene* parentScene);
 	~ContainerComponent();
 
 	void update() override;
 	void render();
 	void postInit() override;
 
-	void addItem(std::string gameObjectId, float spawnForce, Scene* parentScene, bool onContainerConstruction=false);
+	void addItem(std::string gameObjectType, float spawnForce, Scene* parentScene, std::string parentName, int itemCount, bool onContainerConstruction=false);
 	bool isEmpty();
 	bool isFull();
 	std::vector<ContainerItem>& items() { return m_items; }
@@ -43,8 +43,9 @@ private:
 	int m_capacity{};
 	bool m_doesAutoRefill{};
 	Timer m_refillTimer{};
-	std::string m_contentItemGameObjectId{};
+	std::string m_contentItemGameObjectType{};
 	float m_contentsItemSpawnForce{};
+	std::string _buildItemName(std::string parentName, int itemCount);
 
 
 	std::vector<ContainerItem> m_items{};

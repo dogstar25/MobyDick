@@ -10,7 +10,7 @@
 
 struct PlanItem
 {
-	std::string gameObjectId{};
+	std::string gameObjectType{};
 	int layer{ 0 };
 	int angleAdjustment{};
 

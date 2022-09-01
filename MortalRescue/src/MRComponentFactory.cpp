@@ -13,7 +13,7 @@
 std::shared_ptr<Component> MRComponentFactory::create(
 	Json::Value definitionJSON,
 	std::string gameObjectName,
-	std::string textComponentGameObjectid,
+	std::string gameObjectTextType,
 	Scene* scene,
 	float xMapPos,
 	float yMapPos,
@@ -21,7 +21,7 @@ std::shared_ptr<Component> MRComponentFactory::create(
 	const int componentType)
 {
 	std::shared_ptr<Component> component{};
-	auto gameObjectId = definitionJSON["id"].asString();
+	auto gameObjectType = definitionJSON["type"].asString();
 	Json::Value componentJSON{};
 
 	//Handle game specific componenets, otherwise call the base ComponentFactory 'create'
@@ -54,7 +54,7 @@ std::shared_ptr<Component> MRComponentFactory::create(
 		component = ComponentFactory::create(
 			definitionJSON,
 			gameObjectName,
-			textComponentGameObjectid,
+			gameObjectTextType,
 			scene,
 			xMapPos,
 			yMapPos,

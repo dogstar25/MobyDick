@@ -5,7 +5,7 @@
 
 extern std::unique_ptr<Game> game;
 
-TextComponent::TextComponent(std::string gameObjectId, Json::Value componentJSON)
+TextComponent::TextComponent(std::string gameObjectType, Json::Value componentJSON)
 {
 	m_componentType = ComponentTypes::TEXT_COMPONENT;
 
@@ -15,8 +15,6 @@ TextComponent::TextComponent(std::string gameObjectId, Json::Value componentJSON
 	m_textValue = componentJSON["value"].asString();
 	m_fontSize = componentJSON["fontSize"].asInt();
 	m_dynamicValueId = componentJSON["statusValueId"].asString();
-	m_gameObjectId = gameObjectId;
-
 
 	if (m_textValue.empty())
 	{
@@ -28,7 +26,6 @@ TextComponent::TextComponent(std::string gameObjectId, Json::Value componentJSON
 
 	m_refreshTimer = Timer(GameConfig::instance().dynamicTextRefreshDelay(), true);
 
-
 	//
 	//Problem here
 	//
@@ -38,7 +35,7 @@ TextComponent::TextComponent(std::string gameObjectId, Json::Value componentJSON
 		m_textureId = uniqueTextureId.str();
 	}
 	else {
-		m_textureId = "TX_" + gameObjectId;
+		m_textureId = "TX_" + gameObjectType;
 
 	}
 

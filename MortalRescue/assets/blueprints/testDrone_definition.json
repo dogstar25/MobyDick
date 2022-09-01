@@ -9,23 +9,23 @@
 	"legend": [
 		{
 			"id": "LEGEND_01_00",
-			"gameObjectId": "FULL_PIECE"
+			"gameObjectType": "FULL_PIECE"
 		},
 		{
 			"id": "LEGEND_02_00",
-			"gameObjectId": "ANGLE1_PIECE"
+			"gameObjectType": "ANGLE1_PIECE"
 		},
 		{
 			"id": "LEGEND_03_00",
-			"gameObjectId": "ANGLE2_PIECE"
+			"gameObjectType": "ANGLE2_PIECE"
 		},
 		{
 			"id": "LEGEND_04_00",
-			"gameObjectId": "ANGLE3_PIECE"
+			"gameObjectType": "ANGLE3_PIECE"
 		},
 		{
 			"id": "LEGEND_05_00",
-			"gameObjectId": "ANGLE4_PIECE"
+			"gameObjectType": "ANGLE4_PIECE"
 		}
 
 	]

@@ -15,8 +15,8 @@ public:
 	bool init();
 	void load(std::string);
 	
-	std::shared_ptr<GameObjectDefinition> getDefinition(std::string gameObjectId);
-	bool hasDefinition(std::string gameObjectId);
+	std::shared_ptr<GameObjectDefinition> getDefinition(std::string gameObjectType);
+	bool hasDefinition(std::string gameObjectType);
 
 
 private:

@@ -10,7 +10,7 @@ class IMGuiItem
 {
 public:
 	IMGuiItem() {};
-	IMGuiItem(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor, ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize);
+	IMGuiItem(std::string gameObjectType, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor, ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize);
 	//IMGuiItem(std::string gameObjectId, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor, bool autoSize);
 	
 	virtual glm::vec2 render() = 0;
@@ -31,7 +31,7 @@ protected:
 	bool m_autoSize{};
 	b2Vec2 m_padding{};
 	ImGuiWindowFlags m_flags{};
-	std::string m_gameObjectId{};
+	std::string m_gameObjectType{};
 	std::string m_staticText{};
 
 	inline static ImFont* m_xSmallFont;

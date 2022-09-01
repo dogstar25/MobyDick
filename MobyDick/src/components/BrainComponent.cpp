@@ -177,7 +177,7 @@ void BrainComponent::_updateSensorInput()
 				&& (detectedObject.gameObject != parent())) {
 
 				//Get this objects shared pointer from the scene and store it instead of the raw pointer
-				std::optional<std::weak_ptr<GameObject>> gameObject = parent()->parentScene()->getGameObject(detectedObject.gameObject->name());
+				std::optional<std::weak_ptr<GameObject>> gameObject = parent()->parentScene()->getGameObject(detectedObject.gameObject->id());
 
 				m_detectedObjects.push_back(gameObject.value());
 
