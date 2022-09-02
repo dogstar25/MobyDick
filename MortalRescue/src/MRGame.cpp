@@ -72,6 +72,7 @@ bool MRGame::init(std::shared_ptr<ContactListener> contactListener, std::shared_
 
 	//Load a first scene
 	Scene& scene = SceneManager::instance().pushScene("SCENE_TITLE_SCREEN");
+	//Scene& scene = SceneManager::instance().pushScene("SCENE_TEST");
 
 	//Load the current saved level
 	//GameSaveFileData gameSaveFileData{};

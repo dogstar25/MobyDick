@@ -2,7 +2,8 @@
     "gameObjects": [
         {
             "type": "MOTHERSHIP",
-            "traitTags": [],
+            "traitTags": [
+            ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -76,7 +77,8 @@
         },
         {
             "type": "ESCAPE_POD",
-            "traitTags": [],
+            "traitTags": [
+            ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -149,7 +151,8 @@
         },
         {
             "type": "RADAR",
-            "traitTags": [],
+            "traitTags": [
+            ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -208,7 +211,8 @@
         },
         {
             "type": "PARACHUTE",
-            "traitTags": [],
+            "traitTags": [
+            ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -271,7 +275,7 @@
         },
         {
             "type": "RADAR_PIECE",
-            "traitTags": [ "fragment" ],
+            "traitTags": ["fragment"],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -316,7 +320,9 @@
         },
         {
             "type": "MOTHERSHIP_LABEL",
-            "traitTags": [ "abstract" ],
+            "traitTags": [
+                "abstract"
+            ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT"
@@ -341,7 +347,9 @@
         },
         {
             "type": "RADAR_LABEL",
-            "traitTags": [ "abstract" ],
+            "traitTags": [
+                "abstract"
+            ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT"
@@ -366,7 +374,9 @@
         },
         {
             "type": "ESCAPEPOD_LABEL",
-            "traitTags": [ "abstract" ],
+            "traitTags": [
+                "abstract"
+            ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT"
@@ -391,7 +401,9 @@
         },
         {
             "type": "PARACHUTE_LABEL",
-            "traitTags": [ "abstract" ],
+            "traitTags": [
+                "abstract"
+            ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT"

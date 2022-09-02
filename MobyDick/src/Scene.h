@@ -125,7 +125,7 @@ private:
 	PhysicsConfig m_physicsConfig{};
 	ObjectPoolManager m_objectPoolManager{};
 
-	std::unordered_map<std::string, std::shared_ptr<GameObject>> m_gameObjectLookup;
+	std::unordered_map<std::string, std::weak_ptr<GameObject>> m_gameObjectLookup;
 	std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> m_gameObjects;
 
 	std::bitset<8> m_sceneTags;

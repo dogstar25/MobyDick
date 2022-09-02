@@ -323,7 +323,7 @@ void LevelManager::_buildParallax(Scene* scene)
 			Parallax parallaxItem;
 
 			parallaxItem.layer = game->enumMap()->toEnum(parallax["layer"].asString());
-			parallaxItem.rate = parallax["parallaxRate"].asFloat() * .01;
+			parallaxItem.rate = parallax["parallaxRate"].asFloat() * (float).01;
 
 			scene->addParallaxItem(parallaxItem);
 		}

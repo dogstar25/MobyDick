@@ -144,7 +144,7 @@ void IMGuiTestLevelMenu::deleteObject()
 
 	ImVec2 center = ImGui::GetMainViewport()->GetCenter();
 	//ImGui::SetWindowPos(ImVec2{ 50,50});
-	ImGui::SetWindowSize(ImVec2{ 250,150 });
+	ImGui::SetWindowSize(ImVec2{ 600,150 });
 
 
 	// Mouse sensitivity setting slider
@@ -155,11 +155,9 @@ void IMGuiTestLevelMenu::deleteObject()
 	if (ImGui::IsKeyPressed(ImGuiKey_Enter)) {
 
 		ImGui::CloseCurrentPopup();
-		auto& scene = SceneManager::instance().getScene("SCENE_TEST");
-		auto gameObject = scene.getGameObjectByName(objectName);
-		if (gameObject.has_value()) {
-			gameObject.value()->setRemoveFromWorld(true);
-		}
+
+		SceneManager::instance().deleteGameObject(objectName);
+
 	}
 
 	if (ImGui::IsKeyPressed(ImGuiKey_Escape) || ImGui::IsKeyPressed(ImGuiKey_RightCtrl)) {

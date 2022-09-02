@@ -30,7 +30,7 @@ AttachmentsComponent::AttachmentsComponent(Json::Value componentJSON, std::strin
 		//tOdO: PUT A CHECK HER THAT WILL NOT ALLOW A STATIC OBJECT BE ATTACHED TO A DYNAMIC OBJECT
 
 		std::string name = _buildAttachmentName(parentName, attachmentCount);
-		auto gameObject = std::make_shared<GameObject>(gameObjectType, - 1.0F, -1.0F, 0.F, parentScene);
+		auto gameObject = std::make_shared<GameObject>(gameObjectType, - 1.0F, -1.0F, 0.F, parentScene, 0., false, name);
 
 		//Add index 
 		parentScene->addGameObjectIndex(gameObject);
@@ -131,7 +131,7 @@ void AttachmentsComponent::_removeFromWorldPass()
 			parent()->parentScene()->deleteIndex(it->gameObject->id());
 
 			//it->pieceObject->reset();
-			std::cout << "Erased from Attachments collection" << it->gameObject->id() << std::endl;
+			std::cout << "Erased from Attachments collection " << it->gameObject->id() << std::endl;
 			it = m_attachments.erase(it);
 		}
 		else {
@@ -164,7 +164,7 @@ void AttachmentsComponent::removeAttachment(std::string id)
 std::string AttachmentsComponent::_buildAttachmentName(std::string parentName, int attachmentCount)
 {
 
-	auto name = std::format("{}_CH{:03}", parentName.c_str(), attachmentCount);
+	auto name = std::format("{}_AT{:03}", parentName.c_str(), attachmentCount);
 
 	return name;
 

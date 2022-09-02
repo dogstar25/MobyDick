@@ -25,6 +25,18 @@ SceneManager& SceneManager::instance()
 
 }
 
+void SceneManager::deleteGameObject(std::string gameObjectName)
+{
+	auto foundGameObject = m_scenes.back().getGameObjectByName(gameObjectName);
+	if (foundGameObject.has_value()) {
+		foundGameObject.value()->setRemoveFromWorld(true);
+	}
+
+
+}
+
+
+
 void SceneManager::init()
 {
 	m_currentSceneIndex = 0;
@@ -170,10 +182,6 @@ std::optional<SceneAction> SceneManager::pollEvents()
 				int* type = static_cast<int*>(event.user.data1);
 				sceneAction = *(static_cast<std::optional<SceneAction>*>(event.user.data1));
 				delete event.user.data1;
-
-				std::stringstream ss;
-				ss << "user event " << sceneAction.value().actionCode << " " << std::endl;
-				std::cout << ss.str();
 
 				break;
 

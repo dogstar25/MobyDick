@@ -35,8 +35,6 @@ ContainerComponent::ContainerComponent(Json::Value componentJSON, std::string pa
 ContainerComponent::~ContainerComponent()
 {
 
-
-
 }
 
 
@@ -92,7 +90,7 @@ void ContainerComponent::update()
 		if (isFull() == false) {
 			if (m_refillTimer.hasMetTargetDuration()) {
 
-				addItem(m_contentItemGameObjectType, m_contentsItemSpawnForce, parent()->parentScene(), parent()->name(), m_items.size()+1);
+				addItem(m_contentItemGameObjectType, m_contentsItemSpawnForce, parent()->parentScene(), parent()->name(), m_items.size()+(int)1);
 				m_refillTimer.reset();
 			}
 		}
@@ -125,7 +123,7 @@ void ContainerComponent::_removeFromWorldPass()
 			parent()->parentScene()->deleteIndex(it->gameObject->id());
 
 			//it->pieceObject->reset();
-			std::cout << "Erased from Containers collection" << it->gameObject->id() << std::endl;
+			std::cout << "Erased from Containers collection " << it->gameObject->id() << std::endl;
 			it = m_items.erase(it);
 		}
 		else {

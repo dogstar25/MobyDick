@@ -34,7 +34,6 @@ CompositeComponent::CompositeComponent(Json::Value componentJSON, std::string pa
 CompositeComponent::~CompositeComponent()
 {
 
-	m_pieces.clear();
 
 }
 
@@ -305,7 +304,7 @@ void CompositeComponent::_removeFromWorldPass()
 			parent()->parentScene()->deleteIndex(it->pieceObject->id());
 
 			//it->pieceObject->reset();
-			std::cout << "Erased from Composite collection" << it->pieceObject->id() << std::endl;
+			std::cout << "Erased from Composite collection " << it->pieceObject->id() << std::endl;
 			it = m_pieces.erase(it);
 		}
 		else {

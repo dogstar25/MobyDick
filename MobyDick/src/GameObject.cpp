@@ -16,7 +16,7 @@ extern std::unique_ptr<Game> game;
 GameObject::~GameObject()
 {
 
-//	std::cout << this->m_id << "GameObject Destructor called" << std::endl;
+	std::cout << this->m_id << " GameObject Destructor called" << std::endl;
 
 }
 

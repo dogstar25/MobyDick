@@ -75,7 +75,7 @@ void LevelComplete::execute()
 	m_hasTriggered = true;
 
 	//Disable the player
-	auto playerObject = SceneManager::instance().currentScene().getGameObject("PlayerGina");
+	auto playerObject = SceneManager::instance().currentScene().getGameObjectByName("PlayerGina");
 	assert(playerObject.has_value() && "GameObject wasnt found!");
 
 	auto _player = playerObject.value();

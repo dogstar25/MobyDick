@@ -117,26 +117,26 @@
             "id": "LOC_0022_0002",
             "gameObjectType": "PARTICLE_EMITTER_SPARK"
         },
-        {
-            "id": "LOC_0029_0009",
-            "gameObjectType": "PARTICLE_EMITTER_SPARK"
-        },
-        {
-            "id": "LOC_0029_0010",
-            "gameObjectType": "PARTICLE_EMITTER_SPARK"
-        },
-        {
-            "id": "LOC_0029_0011",
-            "gameObjectType": "PARTICLE_EMITTER_SPARK"
-        },
-        {
-            "id": "LOC_0029_0012",
-            "gameObjectType": "PARTICLE_EMITTER_SPARK"
-        },
-        {
-            "id": "LOC_0029_0013",
-            "gameObjectType": "PARTICLE_EMITTER_SPARK"
-        },
+        //{
+        //    "id": "LOC_0029_0009",
+        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
+        //},
+        //{
+        //    "id": "LOC_0029_0010",
+        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
+        //},
+        //{
+        //    "id": "LOC_0029_0011",
+        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
+        //},
+        //{
+        //    "id": "LOC_0029_0012",
+        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
+        //},
+        //{
+        //    "id": "LOC_0029_0013",
+        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
+        //},
 
         //{
         //    "id": "LOC_0016_0013",

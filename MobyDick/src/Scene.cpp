@@ -486,7 +486,7 @@ std::optional<std::shared_ptr<GameObject>> Scene::getGameObject(std::string id)
 
 	auto search = m_gameObjectLookup.find(id);
 	if (search != m_gameObjectLookup.end()) {
-		foundGameObject = search->second;
+		foundGameObject = search->second.lock();
 	}
 
 	return foundGameObject;
@@ -500,8 +500,8 @@ std::optional<std::shared_ptr<GameObject>> Scene::getGameObjectByName(std::strin
 	while (it != m_gameObjectLookup.end()) {
 
 		//Remove gameObject iteself if flagged
-		if (it->second->name() == name) {
-			foundGameObject = it->second;
+		if (it->second.lock()->name() == name) {
+			foundGameObject = it->second.lock();
 			break;
 		}
 
@@ -535,9 +535,6 @@ void Scene::_removeFromWorldPass()
 
 				}
 
-				//delete the index
-				deleteIndex(it->get()->id());
-
 				//std::cout << "Erased from Main collection " << it->get()->name() << std::endl;
 				it = gameObjects.erase(it);
 				
@@ -549,6 +546,21 @@ void Scene::_removeFromWorldPass()
 
 		gameObjects.shrink_to_fit();
 
+	}
+
+	//Also loop through entire lookup map and delete any expired weak pointers.
+	//The strong pointers of the various gameObjects, some of which are dependents inside of other objects,
+	//may have been deleted and their weak_ptr reference should be cleaned up in the lookup table also
+	for (auto it = m_gameObjectLookup.cbegin(); it != m_gameObjectLookup.cend();)
+	{
+		if (it->second.expired() == true)
+		{
+			it = m_gameObjectLookup.erase(it);
+		}
+		else
+		{
+			++it;
+		}
 	}
 
 }
