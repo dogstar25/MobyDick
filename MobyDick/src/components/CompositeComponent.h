@@ -23,7 +23,7 @@ struct GameObjectPiece
 struct CompositeLegendItem
 {
 	SDL_Color color = {0,0,0,0};
-	std::string gameObjectId;
+	std::string gameObjectType;
 };
 
 struct CompositeBlueprint
@@ -36,7 +36,7 @@ class CompositeComponent : public Component
 {
 public:
 	CompositeComponent();
-	CompositeComponent(Json::Value componentJSON, Scene* parentScene);
+	CompositeComponent(Json::Value componentJSON, std::string parentName, Scene* parentScene);
 	~CompositeComponent();
 
 	void update() override;
@@ -54,14 +54,15 @@ private:
 	
 	CompositeBlueprint m_blueprint;
 
-	void _buildPiece(CompositeLegendItem, int, int, Scene* parentScene);
+	void _buildPiece(CompositeLegendItem, int, int, std::string parentName, int pieceCount, Scene* parentScene);
 	void _updatePieces();
-	void _buildComposite(Scene* parentScene);
+	void _buildComposite(Scene* parentScene, std::string parentName);
 	void _updatePieceState(GameObjectPiece& piece);
 	void _updatePiecePosition(GameObjectPiece& piece);
 	void _removeFromWorldPass();
 	void _detachAllPieces();
 	void _weldOnPiece(GameObjectPiece piece);
+	std::string _buildPieceName(std::string parentName, int pieceCount);
 
 	std::vector<GameObjectPiece>m_pieces;
 	bool m_detachAllPieces{false};

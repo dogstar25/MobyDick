@@ -47,16 +47,16 @@ Blueprint::Blueprint(std::string blueprintName)
 		 SDL_Color currentPixelcolor = { red, green, blue };
 
 		 //Build the location string for the color legend map
-		 std::stringstream colorlocationObjectId;
-		 colorlocationObjectId << "LOC" << "_" << std::setw(4) << std::setfill('0') << x << "_";
-		 colorlocationObjectId << std::setw(4) << std::setfill('0') << y;
-		 std::string id = colorlocationObjectId.str();
+		 std::stringstream colorlocationObjectType;
+		 colorlocationObjectType << "LOC" << "_" << std::setw(4) << std::setfill('0') << x << "_";
+		 colorlocationObjectType << std::setw(4) << std::setfill('0') << y;
+		 std::string type = colorlocationObjectType.str();
 
-		 //Get the gameObjectId from the color location map
-		 std::string gameObjectId = colorLocationMap.at(id);
+		 //Get the gameObjectType from the color location map
+		 std::string gameObjectType = colorLocationMap.at(type);
 
 		 //Store the color/GameId blueprint entry
-		 m_legend.emplace(currentPixelcolor, gameObjectId);
+		 m_legend.emplace(currentPixelcolor, gameObjectType);
 
 
 	 }

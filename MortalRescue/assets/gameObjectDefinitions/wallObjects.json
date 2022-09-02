@@ -1,7 +1,7 @@
 {
     "gameObjects": [
         {
-            "id": "WALL1_OPEN",
+            "type": "WALL1_OPEN",
             "traitTags": [ "barrier" ],
             "description": "WALL1_OPEN",
             "components": [
@@ -37,7 +37,7 @@
             ]
         },
         {
-            "id": "WALL1_COLUMN",
+            "type": "WALL1_COLUMN",
             "traitTags": [ "barrier" ],
             "description": "WALL1_COLUMN",
             "components": [
@@ -72,7 +72,7 @@
             ]
         },
         {
-            "id": "WALL1_CORNER",
+            "type": "WALL1_CORNER",
             "traitTags": [ "barrier" ],
             "description": "WALL1_CORNER",
             "components": [
@@ -107,7 +107,7 @@
             ]
         },
         {
-            "id": "WALL1_END",
+            "type": "WALL1_END",
             "traitTags": [ "barrier" ],
             "description": "WALL1_END",
             "components": [
@@ -142,7 +142,7 @@
             ]
         },
         {
-            "id": "WALL1_HALL",
+            "type": "WALL1_HALL",
             "traitTags": [ "barrier" ],
             "description": "WALL1_HALL",
             "components": [
@@ -177,7 +177,7 @@
             ]
         },
         {
-            "id": "WALL1_WALL",
+            "type": "WALL1_WALL",
             "traitTags": [ "barrier" ],
             "description": "WALL1_WALL",
             "components": [
@@ -212,7 +212,7 @@
             ]
         },
         {
-            "id": "GLOWWALL_352",
+            "type": "GLOWWALL_352",
             "traitTags": [ "barrier" ],
             "description": "Fog Box",
             "components": [
@@ -260,7 +260,7 @@
             ]
         },
         {
-            "id": "GLOWWALL_192",
+            "type": "GLOWWALL_192",
             "traitTags": [ "barrier" ],
             "description": "Fog Box",
             "components": [

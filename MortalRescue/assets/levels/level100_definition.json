@@ -52,16 +52,17 @@
 
     ],
     "locationDefinedObjects": [
-        {
-            "id": "LOC_0001_0001",
-            "gameObjectId": "GINA_64",
-            "name": "PlayerGina",
-            "cameraFollow": true
-        },
+        //{
+        //    "id": "LOC_0001_0001",
+        //    "gameObjectType": "GINA_64",
+        //    "name": "PlayerGina",
+        //    "cameraFollow": true
+        //},
         {
             "id": "LOC_0008_0005",
-            "gameObjectId": "MOTHERSHIP",
-            "name": "MOTHERSHIP"
+            "gameObjectType": "MOTHERSHIP",
+            "name": "MOTHERSHIP",
+            "cameraFollow": true
         }
 
     ]

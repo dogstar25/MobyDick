@@ -4,7 +4,7 @@
 std::shared_ptr<Component> ComponentFactory::create(
 	Json::Value definitionJSON,
 	std::string name,
-	std::string gameObjectid,
+	std::string gameObjectTextType,
 	Scene* scene,
 	float xMapPos,
 	float yMapPos,
@@ -12,8 +12,7 @@ std::shared_ptr<Component> ComponentFactory::create(
 	const int componentType)
 {
 	std::shared_ptr<Component> component{};
-
-	auto gameObjectId = definitionJSON["id"].asString();
+	auto gameObjectType = definitionJSON["type"].asString();
 	Json::Value componentJSON{};
 
 	switch (componentType) {
@@ -28,7 +27,7 @@ std::shared_ptr<Component> ComponentFactory::create(
 			break;
 		case ComponentTypes::ATTACHMENTS_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::ATTACHMENTS_COMPONENT);
-			component = std::make_shared<AttachmentsComponent>(componentJSON, scene);
+			component = std::make_shared<AttachmentsComponent>(componentJSON, name, scene);
 			break;
 		case ComponentTypes::BRAIN_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::BRAIN_COMPONENT);
@@ -36,15 +35,15 @@ std::shared_ptr<Component> ComponentFactory::create(
 			break;
 		case ComponentTypes::CHILDREN_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::CHILDREN_COMPONENT);
-			component = std::make_shared<ChildrenComponent>(componentJSON, scene);
+			component = std::make_shared<ChildrenComponent>(componentJSON, name, scene);
 			break;
 		case ComponentTypes::COMPOSITE_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::COMPOSITE_COMPONENT);
-			component = std::make_shared<CompositeComponent>(componentJSON, scene);
+			component = std::make_shared<CompositeComponent>(componentJSON, name, scene);
 			break;
 		case ComponentTypes::CONTAINER_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::CONTAINER_COMPONENT);
-			component = std::make_shared<ContainerComponent>(componentJSON, scene);
+			component = std::make_shared<ContainerComponent>(componentJSON, name, scene);
 			break;
 		case ComponentTypes::HUD_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::HUD_COMPONENT);
@@ -52,7 +51,7 @@ std::shared_ptr<Component> ComponentFactory::create(
 			break;
 		case ComponentTypes::INVENTORY_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::INVENTORY_COMPONENT);
-			component = std::make_shared<InventoryComponent>(componentJSON, scene);
+			component = std::make_shared<InventoryComponent>(componentJSON, name, scene);
 			break;
 		case ComponentTypes::IMGUI_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::IMGUI_COMPONENT);
@@ -90,7 +89,7 @@ std::shared_ptr<Component> ComponentFactory::create(
 			break;
 		case ComponentTypes::TEXT_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::TEXT_COMPONENT);
-			component = std::make_shared<TextComponent>(gameObjectid, componentJSON);
+			component = std::make_shared<TextComponent>(gameObjectTextType, componentJSON);
 			break;
 		case ComponentTypes::TRANSFORM_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::TRANSFORM_COMPONENT);

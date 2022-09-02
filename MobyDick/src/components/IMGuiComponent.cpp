@@ -12,7 +12,7 @@
 
 extern std::unique_ptr<Game> game;
 
-IMGuiComponent::IMGuiComponent(Json::Value componentJSON, std::string gameObjectId, Scene* parentScene)
+IMGuiComponent::IMGuiComponent(Json::Value componentJSON, std::string gameObjectType, Scene* parentScene)
 {
 	m_componentType = ComponentTypes::IMGUI_COMPONENT;
 
@@ -62,8 +62,7 @@ IMGuiComponent::IMGuiComponent(Json::Value componentJSON, std::string gameObject
 		}
 	}
 
-
-	m_IMGuiItem = game->iMGUIFactory()->create(imguiType, gameObjectId, parentScene, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize, staticText);
+	m_IMGuiItem = game->iMGUIFactory()->create(imguiType, gameObjectType, parentScene, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize, staticText);
 }
 
 void IMGuiComponent::setParent(GameObject* parentObject)

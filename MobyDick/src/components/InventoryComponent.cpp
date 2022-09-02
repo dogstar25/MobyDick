@@ -6,22 +6,12 @@ InventoryComponent::InventoryComponent()
 	m_isDependentObjectOwner = true;
 }
 
-InventoryComponent::InventoryComponent(Json::Value componentJSON, Scene* parentScene)
+InventoryComponent::InventoryComponent(Json::Value componentJSON, std::string parentName, Scene* parentScene)
 {
 
 	m_componentType = ComponentTypes::INVENTORY_COMPONENT;
 
 	m_activeItem = 0;
-
-	//for (Json::Value itrItem : definitionComponentJSON["items"])
-	//{
-	//	std::string gameObjectId = itrItem["gameObjectId"].asString();
-	//	auto gameObject = std::make_shared<GameObject>(gameObjectId, -1.0F, -1.0F, 0.F, parentScene);
-	//	gameObject->init();
-
-	//	m_items.emplace_back(std::move(gameObject));
-
-	//}
 
 }
 
@@ -29,19 +19,6 @@ InventoryComponent::~InventoryComponent()
 {
 
 }
-
-//void InventoryComponent::weldOnAttachments()
-//{
-//	assert(parent() != nullptr  && "parent GameObject hasn't been initialized");
-//
-//	for (auto& item : m_items) {
-//		if (item.attached) {
-//			parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT)->attachItem(item.gameObject.get());
-//		}
-//	}
-//
-//}
-
 
 size_t InventoryComponent::addItem(std::shared_ptr<GameObject> gameObject)
 {

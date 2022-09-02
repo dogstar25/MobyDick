@@ -29,7 +29,7 @@ public:
 
 protected:
 	GameObject* m_parentGameObject{ nullptr };
-	std::string m_gameObjectId{};
+	//std::string m_gameObjectId{};
 	int m_componentType{};
 	bool disabled{ false };
 	bool m_isDependentObjectOwner{};

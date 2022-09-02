@@ -1,7 +1,7 @@
 {
     "gameObjects": [
         {
-            "id": "SCENE_TITLE_SCREEN",
+            "type": "SCENE_TITLE_SCREEN",
             "contactTag": "ContactTag::GENERAL_FREE",
             "traitTags": [],
             "components": [
@@ -20,7 +20,7 @@
             ]
         },
         {
-            "id": "IMGUI_TITLE_SCREEN_MENU",
+            "type": "IMGUI_TITLE_SCREEN_MENU",
             "traitTags": [ "abstract" ],
             "components": [
                 {

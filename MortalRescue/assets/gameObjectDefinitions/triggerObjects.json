@@ -1,7 +1,7 @@
 {
     "gameObjects": [
         {
-            "id": "LOADLEVEL_TRIGGER",
+            "type": "LOADLEVEL_TRIGGER",
             "contactTag": "ContactTag::GENERAL_FREE",
             "traitTags": [ "trigger" ],
             "components": [

@@ -5,7 +5,7 @@
 extern std::unique_ptr<Game> game;
 
 
-CompositeComponent::CompositeComponent(Json::Value componentJSON, Scene* parentScene)
+CompositeComponent::CompositeComponent(Json::Value componentJSON, std::string parentName, Scene* parentScene)
 {
 
 	m_componentType = ComponentTypes::COMPOSITE_COMPONENT;
@@ -21,20 +21,19 @@ CompositeComponent::CompositeComponent(Json::Value componentJSON, Scene* parentS
 	for (Json::Value itrlegend : bluePrintJSON["legend"]) {
 
 		auto& legendItem = m_blueprint.legend.emplace_back();
-		legendItem.gameObjectId = itrlegend["gameObjectId"].asString();
+		legendItem.gameObjectType = itrlegend["gameObjectType"].asString();
 
 		legendItem.color = game->colorMap()->toSDLColor(itrlegend["color"].asString());
 
 	}
 
-	_buildComposite(parentScene);
+	_buildComposite(parentScene, parentName);
 
 }
 
 CompositeComponent::~CompositeComponent()
 {
 
-	m_pieces.clear();
 
 }
 
@@ -155,7 +154,7 @@ void CompositeComponent::_detachAllPieces()
 	}
 
 }
-void CompositeComponent::_buildComposite(Scene* parentScene)
+void CompositeComponent::_buildComposite(Scene* parentScene, std::string parentName)
 {
 
 	SDL_Surface* blueprintSurface;
@@ -170,6 +169,7 @@ void CompositeComponent::_buildComposite(Scene* parentScene)
 	SDL_LockSurface(blueprintSurface);
 
 	//Loop through entire image, top to bottom, left to right and build the pieces
+	int pieceCount{};
 	for (auto y = 0; y < blueprintSurface->h; y++)
 	{
 		for (auto x = 0; x < blueprintSurface->w; x++)
@@ -187,7 +187,8 @@ void CompositeComponent::_buildComposite(Scene* parentScene)
 			{
 				if (currentPixelcolor == legendItem.color == true)
 				{
-					_buildPiece(legendItem, x, y, parentScene);
+					pieceCount++;
+					_buildPiece(legendItem, x, y, parentName, pieceCount, parentScene);
 				}
 			}
 
@@ -197,7 +198,7 @@ void CompositeComponent::_buildComposite(Scene* parentScene)
 	SDL_UnlockSurface(blueprintSurface);
 }
 
-void CompositeComponent::_buildPiece(CompositeLegendItem legendItem, int xPos, int yPos, Scene* parentScene)
+void CompositeComponent::_buildPiece(CompositeLegendItem legendItem, int xPos, int yPos, std::string parentName, int pieceCount, Scene* parentScene)
 {
 	float xOffset, yOffset;
 	GameObjectPiece piece = {};
@@ -205,7 +206,9 @@ void CompositeComponent::_buildPiece(CompositeLegendItem legendItem, int xPos, i
 	/*
 	Build the game objects off screen. They will be placed in expect location during update loop
 	*/
-	const auto& pieceObject = std::make_shared<GameObject>(legendItem.gameObjectId, -5.f, -5.f, 0.f, parentScene);
+	_buildPieceName(parentName, pieceCount);
+
+	const auto& pieceObject = std::make_shared<GameObject>(legendItem.gameObjectType, -5.f, -5.f, 0.f, parentScene);
 	parentScene->addGameObjectIndex(pieceObject);
 
 	piece.pieceObject = pieceObject;
@@ -298,10 +301,10 @@ void CompositeComponent::_removeFromWorldPass()
 		if (it->pieceObject->removeFromWorld() == true) {
 
 			//Remove object from gloabl index collection
-			parent()->parentScene()->deleteIndex(it->pieceObject->name());
+			parent()->parentScene()->deleteIndex(it->pieceObject->id());
 
 			//it->pieceObject->reset();
-			std::cout << "Erased from Composite collection" << it->pieceObject->name() << std::endl;
+			std::cout << "Erased from Composite collection " << it->pieceObject->id() << std::endl;
 			it = m_pieces.erase(it);
 		}
 		else {
@@ -310,5 +313,14 @@ void CompositeComponent::_removeFromWorldPass()
 	}
 
 	m_pieces.shrink_to_fit();
+
+}
+
+std::string CompositeComponent::_buildPieceName(std::string parentName, int pieceCount)
+{
+
+	auto name = std::format("{}_CH{:03}", parentName, pieceCount);
+
+	return name;
 
 }

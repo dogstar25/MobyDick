@@ -95,12 +95,12 @@
     "colorDefinedObjects": [
         {
             "color": "Colors::BLUE",
-            "gameObjectId": "NAVIGATION_WAYPOINT",
+            "gameObjectType": "NAVIGATION_WAYPOINT",
             "layer": "GameLayer::ABSTRACT"
         },
         {
             "color": "Colors::CYAN",
-            "gameObjectId": "NAVIGATION_TRANSIT_POINT",
+            "gameObjectType": "NAVIGATION_TRANSIT_POINT",
             "layer": "GameLayer::ABSTRACT"
         }
 
@@ -108,35 +108,35 @@
     "locationDefinedObjects": [
         {
             "id": "LOC_0007_0005",
-            "gameObjectId": "GINA_64",
+            "gameObjectType": "GINA_64",
             "cameraFollow": true,
             "layer": "GameLayer::MAIN",
             "name": "PlayerGina"
         },
         {
             "id": "LOC_0022_0002",
-            "gameObjectId": "PARTICLE_EMITTER_SPARK"
+            "gameObjectType": "PARTICLE_EMITTER_SPARK"
         },
-        {
-            "id": "LOC_0029_0009",
-            "gameObjectId": "PARTICLE_EMITTER_SPARK"
-        },
-        {
-            "id": "LOC_0029_0010",
-            "gameObjectId": "PARTICLE_EMITTER_SPARK"
-        },
-        {
-            "id": "LOC_0029_0011",
-            "gameObjectId": "PARTICLE_EMITTER_SPARK"
-        },
-        {
-            "id": "LOC_0029_0012",
-            "gameObjectId": "PARTICLE_EMITTER_SPARK"
-        },
-        {
-            "id": "LOC_0029_0013",
-            "gameObjectId": "PARTICLE_EMITTER_SPARK"
-        },
+        //{
+        //    "id": "LOC_0029_0009",
+        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
+        //},
+        //{
+        //    "id": "LOC_0029_0010",
+        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
+        //},
+        //{
+        //    "id": "LOC_0029_0011",
+        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
+        //},
+        //{
+        //    "id": "LOC_0029_0012",
+        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
+        //},
+        //{
+        //    "id": "LOC_0029_0013",
+        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
+        //},
 
         //{
         //    "id": "LOC_0016_0013",
@@ -144,25 +144,25 @@
         //},
         {
             "id": "LOC_0016_0006",
-            "gameObjectId": "HEALTH_STATION"
+            "gameObjectType": "HEALTH_STATION"
         },
         {
             "id": "LOC_0011_0005",
-            "gameObjectId": "PLAYER_HEART"
+            "gameObjectType": "PLAYER_HEART"
         },
         {
             "id": "LOC_0015_0023",
-            "gameObjectId": "GLOWWALL_352",
+            "gameObjectType": "GLOWWALL_352",
             "name": "Button1_TARGET"
         },
         {
             "id": "LOC_0061_0027",
-            "gameObjectId": "BOWMAN",
+            "gameObjectType": "BOWMAN",
             "layer": "GameLayer::BACKGROUND_1"
         },
         {
             "id": "LOC_0059_0029",
-            "gameObjectId": "STUBB",
+            "gameObjectType": "STUBB",
             "layer": "GameLayer::FOREGROUND_2"
         },
 
@@ -173,15 +173,15 @@
         //},
         {
             "id": "LOC_0014_0001",
-            "gameObjectId": "ESCAPE_STAIRS"
+            "gameObjectType": "ESCAPE_STAIRS"
         },
         {
             "id": "LOC_0014_0020",
-            "gameObjectId": "TURRET"
+            "gameObjectType": "TURRET"
         },
         {
             "id": "LOC_0016_0032",
-            "gameObjectId": "ESCAPE_STAIRS",
+            "gameObjectType": "ESCAPE_STAIRS",
             "layer": "GameLayer::BACKGROUND_2",
             "angle": 270
         },
@@ -194,81 +194,81 @@
         //},
         {
             "id": "LOC_0034_0031",
-            "gameObjectId": "TURRET",
+            "gameObjectType": "TURRET",
             "angle": 270
         },
         {
             "id": "LOC_0019_0031",
-            "gameObjectId": "BREAKABLE_WALL"
+            "gameObjectType": "BREAKABLE_WALL"
         },
         {
             "id": "LOC_0020_0031",
-            "gameObjectId": "BREAKABLE_WALL"
+            "gameObjectType": "BREAKABLE_WALL"
         },
         {
             "id": "LOC_0021_0031",
-            "gameObjectId": "BREAKABLE_WALL"
+            "gameObjectType": "BREAKABLE_WALL"
         },
         {
             "id": "LOC_0034_0033",
-            "gameObjectId": "TURRET",
+            "gameObjectType": "TURRET",
             "angle": 270
         },
         {
             "id": "LOC_0034_0035",
-            "gameObjectId": "TURRET",
+            "gameObjectType": "TURRET",
             "angle": 270
         },
         {
             "id": "LOC_0034_0037",
-            "gameObjectId": "TURRET",
+            "gameObjectType": "TURRET",
             "angle": 270
         },
         {
             "id": "LOC_0034_0039",
-            "gameObjectId": "TURRET",
+            "gameObjectType": "TURRET",
             "angle": 270
         },
         {
             "id": "LOC_0028_0041",
-            "gameObjectId": "SURVIVOR"
+            "gameObjectType": "SURVIVOR"
         },
         {
             "id": "LOC_0022_0005",
-            "gameObjectId": "WALL_BUTTON",
+            "gameObjectType": "WALL_BUTTON",
             "name": "Button1"
         },
         {
             "id": "LOC_0033_0002",
-            "gameObjectId": "SURVIVOR"
+            "gameObjectType": "SURVIVOR"
 
         },
         {
             "id": "LOC_0028_0003",
-            "gameObjectId": "BOWMAN",
+            "gameObjectType": "BOWMAN",
             "cameraFollow": false,
             "name": "Frank"
         },
         {
             "id": "LOC_0002_0012",
-            "gameObjectId": "SURVIVOR"
+            "gameObjectType": "SURVIVOR"
         },
         {
             "id": "LOC_0017_0003",
-            "gameObjectId": "SURVIVOR"
+            "gameObjectType": "SURVIVOR"
         },
         {
             "id": "LOC_0007_0010",
-            "gameObjectId": "TEST_CONTAINER"
+            "gameObjectType": "TEST_CONTAINER"
         },
         {
             "id": "LOC_0103_0009",
-            "gameObjectId": "DRONE2",
+            "gameObjectType": "DRONE2",
             "name": "Mini1"
         },
         {
             "id": "LOC_0099_0028",
-            "gameObjectId": "DRONE2",
+            "gameObjectType": "DRONE2",
             "name": "Mini2"
         }
 

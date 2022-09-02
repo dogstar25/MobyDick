@@ -1,7 +1,7 @@
 {
     "gameObjects": [
         {
-            "id": "DRONE",
+            "type": "DRONE",
             "traitTags": [],
             "components": [
                 {
@@ -37,7 +37,7 @@
                     "attachments": [
                         {
                             "id": "DRONE_EYE",
-                            "gameObjectId": "DRONE_EYE",
+                            "gameObjectType": "DRONE_EYE",
                             "attachLocation": {
                                 "x": 0.0,
                                 "y": 0.0
@@ -47,7 +47,7 @@
                         },
                         {
                             "id": "DRONE_BRAIN",
-                            "gameObjectId": "DRONE_BRAIN",
+                            "gameObjectType": "DRONE_BRAIN",
                             "attachLocation": {
                                 "x": 0.0,
                                 "y": 0.0
@@ -77,23 +77,23 @@
                         "texture": "TX_DRONE1_BLUEPRINT",
                         "legend": [
                             {
-                                "gameObjectId": "FULL_PIECE",
+                                "gameObjectType": "FULL_PIECE",
                                 "color": "Colors::BLUE"
                             },
                             {
-                                "gameObjectId": "ANGLE1_PIECE",
+                                "gameObjectType": "ANGLE1_PIECE",
                                 "color": "Colors::RED"
                             },
                             {
-                                "gameObjectId": "ANGLE2_PIECE",
+                                "gameObjectType": "ANGLE2_PIECE",
                                 "color": "Colors::YELLOW"
                             },
                             {
-                                "gameObjectId": "ANGLE3_PIECE",
+                                "gameObjectType": "ANGLE3_PIECE",
                                 "color": "Colors::GREEN"
                             },
                             {
-                                "gameObjectId": "ANGLE4_PIECE",
+                                "gameObjectType": "ANGLE4_PIECE",
                                 "color": "Colors::PURPLE"
                             }
                         ]
@@ -112,7 +112,7 @@
             ]
         },
         {
-            "id": "DRONE_BRAIN",
+            "type": "DRONE_BRAIN",
             "traitTags": [],
             "description": "Drone Brain",
             "components": [
@@ -150,7 +150,7 @@
             ]
         },
         {
-            "id": "DRONE_EYE",
+            "type": "DRONE_EYE",
             "traitTags": [],
             "description": "Drone Eye",
             "components": [
@@ -219,7 +219,7 @@
             ]
         },
         {
-            "id": "DRONE2",
+            "type": "DRONE2",
             "traitTags": [],
             "components": [
                 {
@@ -255,7 +255,7 @@
                     "attachments": [
                         {
                             "id": "DRONE_EYE",
-                            "gameObjectId": "DRONE2_EYE",
+                            "gameObjectType": "DRONE2_EYE",
                             "attachLocation": {
                                 "x": 0.0,
                                 "y": 0.0
@@ -265,7 +265,7 @@
                         },
                         {
                             "id": "DRONE_BRAIN",
-                            "gameObjectId": "DRONE2_BRAIN",
+                            "gameObjectType": "DRONE2_BRAIN",
                             "attachLocation": {
                                 "x": 0.0,
                                 "y": 0.0
@@ -295,23 +295,23 @@
                         "texture": "TX_DRONE2_BLUEPRINT",
                         "legend": [
                             {
-                                "gameObjectId": "FULL_PIECE",
+                                "gameObjectType": "FULL_PIECE",
                                 "color": "Colors::BLUE"
                             },
                             {
-                                "gameObjectId": "ANGLE1_PIECE",
+                                "gameObjectType": "ANGLE1_PIECE",
                                 "color": "Colors::RED"
                             },
                             {
-                                "gameObjectId": "ANGLE2_PIECE",
+                                "gameObjectType": "ANGLE2_PIECE",
                                 "color": "Colors::YELLOW"
                             },
                             {
-                                "gameObjectId": "ANGLE3_PIECE",
+                                "gameObjectType": "ANGLE3_PIECE",
                                 "color": "Colors::GREEN"
                             },
                             {
-                                "gameObjectId": "ANGLE4_PIECE",
+                                "gameObjectType": "ANGLE4_PIECE",
                                 "color": "Colors::PURPLE"
                             }
                         ]
@@ -330,7 +330,7 @@
             ]
         },
         {
-            "id": "DRONE2_BRAIN",
+            "type": "DRONE2_BRAIN",
             "traitTags": [],
             "description": "Drone Brain",
             "components": [
@@ -368,7 +368,7 @@
             ]
         },
         {
-            "id": "DRONE2_EYE",
+            "type": "DRONE2_EYE",
             "traitTags": [],
             "description": "Drone Eye",
             "components": [
@@ -437,7 +437,7 @@
             ]
         },
         {
-            "id": "FULL_PIECE",
+            "type": "FULL_PIECE",
             "traitTags": [ "fragment" ],
             "components": [
                 {
@@ -504,7 +504,7 @@
             ]
         },
         {
-            "id": "ANGLE1_PIECE",
+            "type": "ANGLE1_PIECE",
             "traitTags": [ "fragment" ],
             "components": [
                 {
@@ -571,7 +571,7 @@
             ]
         },
         {
-            "id": "ANGLE2_PIECE",
+            "type": "ANGLE2_PIECE",
             "traitTags": [ "fragment" ],
             "components": [
                 {
@@ -638,7 +638,7 @@
             ]
         },
         {
-            "id": "ANGLE3_PIECE",
+            "type": "ANGLE3_PIECE",
             "traitTags": [ "fragment" ],
             "components": [
                 {
@@ -705,7 +705,7 @@
             ]
         },
         {
-            "id": "ANGLE4_PIECE",
+            "type": "ANGLE4_PIECE",
             "traitTags": [ "fragment" ],
             "components": [
                 {
@@ -772,7 +772,7 @@
             ]
         },
         {
-            "id": "BREAKABLE_WALL",
+            "type": "BREAKABLE_WALL",
             "traitTags": [],
             "components": [
                 {
@@ -805,7 +805,7 @@
                         "texture": "TX_BREAKABLE_WALL_BLUEPRINT",
                         "legend": [
                             {
-                                "gameObjectId": "WALL_PIECE",
+                                "gameObjectType": "WALL_PIECE",
                                 "color": "Colors::BLUE"
                             }
                         ]
@@ -814,7 +814,7 @@
             ]
         },
         {
-            "id": "WALL_PIECE",
+            "type": "WALL_PIECE",
             "traitTags": [ "fragment" ],
             "components": [
                 {

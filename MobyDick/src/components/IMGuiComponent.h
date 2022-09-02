@@ -11,7 +11,7 @@ class IMGuiComponent : public Component {
 
 public:
 	IMGuiComponent() = default;
-	IMGuiComponent(Json::Value componentJSON, std::string gameObjectId, Scene* parentScene);
+	IMGuiComponent(Json::Value componentJSON, std::string gameObjectType, Scene* parentScene);
 
 	void update() override;
 	void render();

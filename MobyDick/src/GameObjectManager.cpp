@@ -60,13 +60,11 @@ void GameObjectManager::load(std::string gameObjectAssetsFilename)
 
 	for (Json::Value itr : root["gameObjects"])
 	{
-		std::string gameObjectId = itr["id"].asString();
+		std::string gameObjectType = itr["type"].asString();
 
-		m_gameObjectDefinitions.emplace(gameObjectId, *(new GameObjectDefinition(itr)));
+		m_gameObjectDefinitions.emplace(gameObjectType, *(new GameObjectDefinition(itr)));
 	}
 }
-
-
 
 /*
 	Retrieve the GameObjetc Definition

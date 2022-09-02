@@ -289,7 +289,7 @@ bool SurvivorBrainComponent::_detectEscapeLocation()
 
 		//This object stored in the brain could have been deleted on the last pass so check if its still a valid pointer
 		if (seenObject.expired() == false) {
-			if (seenObject.lock()->id() == "ESCAPE_STAIRS") {
+			if (seenObject.lock()->type() == "ESCAPE_STAIRS") {
 
 				m_escapeLocation = seenObject.lock()->getCenterPosition();
 				return true;

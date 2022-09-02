@@ -54,13 +54,18 @@ void Camera::update()
 
 	if (m_currentState == CameraState::FOLLOW) {
 
-		assert(m_followMe.expired() == false && "No Target for the Camera to follow");
+		//assert(m_followMe.expired() == false && "No Target for the Camera to follow");
 
-		const auto& followObjectTransformComponent = m_followMe.lock()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-		setFramePosition(
-			followObjectTransformComponent->position().x -	(m_frame.w / 2),
-			followObjectTransformComponent->position().y - (m_frame.h / 2)
-		);
+		if (m_followMe.expired()) {
+			setFramePosition(0., 0.);
+		}
+		else {
+			const auto& followObjectTransformComponent = m_followMe.lock()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+			setFramePosition(
+				followObjectTransformComponent->position().x - (m_frame.w / 2),
+				followObjectTransformComponent->position().y - (m_frame.h / 2)
+			);
+		}
 	}
 	else if (m_currentState == CameraState::DISPATCH) {
 

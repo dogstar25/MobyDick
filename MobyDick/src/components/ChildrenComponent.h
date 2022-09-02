@@ -42,7 +42,7 @@ class ChildrenComponent : public Component
 {
 public:
 	ChildrenComponent();
-	ChildrenComponent(Json::Value componentJSON, Scene* scene);
+	ChildrenComponent(Json::Value componentJSON, std::string parentName, Scene* scene);
 	~ChildrenComponent();
 
 	void update() override;
@@ -65,6 +65,7 @@ private:
 
 	b2Vec2 _calcChildPosition(b2Vec2 childSize, int childCount, ChildLocation location, SDL_FPoint parentPositionRec, float parentAngle);
 	b2Vec2 _calcChildPosition(b2Vec2 childSize, ChildLocation location, SDL_FPoint parentPositionRec, float parentAngle);
+	std::string _buildChildName(std::string parentName, int childCount);
 	void _removeFromWorldPass();
 
 

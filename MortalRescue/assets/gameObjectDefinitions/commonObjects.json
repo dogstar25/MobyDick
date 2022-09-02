@@ -1,7 +1,7 @@
 {
     "gameObjects": [
         {
-            "id": "GINA_64",
+            "type": "GINA_64",
             "traitTags": [ "player" ],
             "components": [
                 {
@@ -84,7 +84,7 @@
                     "childPositionRelative": false,
                     "childObjects": [
                         {
-                            "gameObjectId": "PLAYER_LABEL_2",
+                            "gameObjectType": "PLAYER_LABEL_2",
                             "locationSlot": 1
                         }
 
@@ -95,7 +95,7 @@
                     "attachments": [
                         {
                             "id": "PISTOL",
-                            "gameObjectId": "PISTOL",
+                            "gameObjectType": "PISTOL",
                             "attachLocation": {
                                 "x": 0.8,
                                 "y": 0.0
@@ -105,7 +105,7 @@
                         },
                         {
                             "id": "JETPACK",
-                            "gameObjectId": "JETPACK",
+                            "gameObjectType": "JETPACK",
                             "attachLocation": {
                                 "x": -0.8,
                                 "y": 0.0
@@ -114,7 +114,7 @@
                         },
                         {
                             "id": "PLAYER_HEART",
-                            "gameObjectId": "PLAYER_HEART",
+                            "gameObjectType": "PLAYER_HEART",
                             "attachLocation": {
                                 "x": 0.0,
                                 "y": 0.0
@@ -174,7 +174,7 @@
             ]
         },
         {
-            "id": "JETPACK",
+            "type": "JETPACK",
             "traitTags": [ "abstract" ],
             "description": "Jetpack Particle Emitter",
             "components": [
@@ -217,7 +217,7 @@
             ]
         },
         {
-            "id": "WALL_BUTTON",
+            "type": "WALL_BUTTON",
             "traitTags": [ "interactive" ],
             "description": "Wall button",
             "components": [
@@ -282,7 +282,7 @@
             ]
         },
         {
-            "id": "SWORDLADY",
+            "type": "SWORDLADY",
             "traitTags": [],
             "description": "SwordLady",
             "components": [
@@ -316,7 +316,7 @@
             ]
         },
         {
-            "id": "BOWMAN",
+            "type": "BOWMAN",
             "traitTags": [],
             "components": [
                 {
@@ -350,7 +350,7 @@
             ]
         },
         {
-            "id": "ESCAPE_STAIRS",
+            "type": "ESCAPE_STAIRS",
             "traitTags": [ "objective" ],
             "components": [
                 {
@@ -385,7 +385,7 @@
             ]
         },
         {
-            "id": "STUBB",
+            "type": "STUBB",
             "traitTags": [],
             "components": [
                 {
@@ -408,7 +408,7 @@
             ]
         },
         {
-            "id": "PISTOL",
+            "type": "PISTOL",
             "traitTags": [ "collectable", "weapon" ],
             "description": "Weapon 1",
             "components": [
@@ -495,7 +495,7 @@
             ]
         },
         {
-            "id": "PARTICLE_X_EMITTER",
+            "type": "PARTICLE_X_EMITTER",
             "traitTags": [ "abstract" ],
             "description": "Particle Emitter",
             "components": [
@@ -516,7 +516,7 @@
             ]
         },
         {
-            "id": "PARTICLE_EMITTER",
+            "type": "PARTICLE_EMITTER",
             "traitTags": [ "abstract" ],
             "description": "Particle Emitter",
             "components": [
@@ -534,7 +534,7 @@
             ]
         },
         {
-            "id": "PARTICLE_EMITTER_SPARK",
+            "type": "PARTICLE_EMITTER_SPARK",
             "traitTags": [ "abstract" ],
             "description": "Particle Emitter",
             "components": [
@@ -559,7 +559,7 @@
             ]
         },
         {
-            "id": "METEOR_EMITTER",
+            "type": "METEOR_EMITTER",
             "traitTags": [ "abstract" ],
             "description": "Rain Emitter",
             "components": [
@@ -581,7 +581,7 @@
             ]
         },
         {
-            "id": "NAVIGATION_TRANSIT_POINT",
+            "type": "NAVIGATION_TRANSIT_POINT",
             "traitTags": [ "navigation", "abstract" ],
             "description": "Navigation Object",
             "components": [
@@ -612,7 +612,7 @@
             ]
         },
         {
-            "id": "NAVIGATION_WAYPOINT",
+            "type": "NAVIGATION_WAYPOINT",
             "traitTags": [ "navigation", "abstract" ],
             "description": "Navigation Object",
             "components": [
@@ -644,7 +644,7 @@
             ]
         },
         {
-            "id": "SURVIVOR",
+            "type": "SURVIVOR",
             "traitTags": [ "interactive", "objective" ],
             "components": [
                 {
@@ -738,7 +738,7 @@
                     "attachments": [
                         {
                             "id": "PLAYER_HEART",
-                            "gameObjectId": "PLAYER_HEART",
+                            "gameObjectType": "PLAYER_HEART",
                             "attachLocation": {
                                 "x": 0.0,
                                 "y": 0.0
@@ -751,7 +751,7 @@
             ]
         },
         {
-            "id": "TURRET",
+            "type": "TURRET",
             "traitTags": [ "barrier" ],
             "description": "Turret",
             "components": [
@@ -863,7 +863,7 @@
             ]
         },
         {
-            "id": "TURRET_SCRAP",
+            "type": "TURRET_SCRAP",
             "traitTags": [ "pooled" ],
             "description": "Turret Scrap",
             "components": [
@@ -909,7 +909,7 @@
             ]
         },
         {
-            "id": "HEALTH_STATION",
+            "type": "HEALTH_STATION",
             "traitTags": [ "interactive" ],
             "description": "Health Station",
             "components": [
@@ -985,7 +985,7 @@
                     "id": "CONTAINER_COMPONENT",
                     "capacity": 20,
                     "refillTimer": 10,
-                    "gameObjectId": "HEALTH_HEART",
+                    "gameObjectType": "HEALTH_HEART",
                     "count": 2,
                     "spawnForce": 1,
                     "layer": "GameLayer::MAIN"
@@ -993,7 +993,7 @@
             ]
         },
         {
-            "id": "PLAYER_HEART",
+            "type": "PLAYER_HEART",
             "traitTags": [],
             "components": [
                 {
@@ -1049,7 +1049,7 @@
             ]
         },
         {
-            "id": "BACKGROUND_GRID_1",
+            "type": "BACKGROUND_GRID_1",
             "traitTags": [],
             "components": [
                 {
@@ -1071,8 +1071,8 @@
             ]
         },
         {
-            "id": "LEVEL_CAGE",
-            "traitTags": ["abstract"],
+            "type": "LEVEL_CAGE",
+            "traitTags": [ "abstract" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT"

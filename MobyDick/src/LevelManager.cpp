@@ -323,7 +323,7 @@ void LevelManager::_buildParallax(Scene* scene)
 			Parallax parallaxItem;
 
 			parallaxItem.layer = game->enumMap()->toEnum(parallax["layer"].asString());
-			parallaxItem.rate = parallax["parallaxRate"].asFloat() * .01;
+			parallaxItem.rate = parallax["parallaxRate"].asFloat() * (float).01;
 
 			scene->addParallaxItem(parallaxItem);
 		}
@@ -384,7 +384,7 @@ std::optional<LevelObject> LevelManager::_determineColorDefinedObject(SDL_Color 
 		if (definedColor == color) {
 
 			levelObject = LevelObject();
-			levelObject->gameObjectId = colorItemJSON["gameObjectId"].asString();
+			levelObject->gameObjectType = colorItemJSON["gameObjectType"].asString();
 			if (colorItemJSON.isMember("layer")) {
 				levelObject->layer = game->enumMap()->toEnum(colorItemJSON["layer"].asString());
 			}
@@ -424,7 +424,7 @@ std::optional<LevelObject> LevelManager::_determineLocationDefinedObject(int x, 
 		if (levelObjectId == id) {
 
 			levelObject = LevelObject();
-			levelObject->gameObjectId = locationItemJSON["gameObjectId"].asString();
+			levelObject->gameObjectType = locationItemJSON["gameObjectType"].asString();
 			if (locationItemJSON.isMember("layer")) {
 				levelObject->layer = game->enumMap()->toEnum(locationItemJSON["layer"].asString());
 			}
@@ -497,77 +497,77 @@ LevelObject LevelManager::_determineWallObject(int x, int y, SDL_Surface* bluePr
 	//build levelObject Here
 	if (borderWalls == open)
 	{
-		levelObject.gameObjectId = "WALL1_OPEN";
+		levelObject.gameObjectType = "WALL1_OPEN";
 	}
 	else if (borderWalls == topEnd)
 	{
-		levelObject.gameObjectId = "WALL1_END";
+		levelObject.gameObjectType = "WALL1_END";
 	}
 	else if (borderWalls == bottomEnd)
 	{
-		levelObject.gameObjectId = "WALL1_END";
+		levelObject.gameObjectType = "WALL1_END";
 		levelObject.angleAdjustment = 180;
 	}
 	else if (borderWalls == rightEnd)
 	{
-		levelObject.gameObjectId = "WALL1_END";
+		levelObject.gameObjectType = "WALL1_END";
 		levelObject.angleAdjustment = 90;
 	}
 	else if (borderWalls == leftEnd)
 	{
-		levelObject.gameObjectId = "WALL1_END";
+		levelObject.gameObjectType = "WALL1_END";
 		levelObject.angleAdjustment = -90;
 	}
 	else if (borderWalls == topLeftCorner)
 	{
-		levelObject.gameObjectId = "WALL1_CORNER";
+		levelObject.gameObjectType = "WALL1_CORNER";
 	}
 	else if (borderWalls == topRightCorner)
 	{
-		levelObject.gameObjectId = "WALL1_CORNER";
+		levelObject.gameObjectType = "WALL1_CORNER";
 		levelObject.angleAdjustment = 90;
 	}
 	else if (borderWalls == bottomLeftCorner)
 	{
-		levelObject.gameObjectId = "WALL1_CORNER";
+		levelObject.gameObjectType = "WALL1_CORNER";
 		levelObject.angleAdjustment = -90;
 	}
 	else if (borderWalls == bottomRightCorner)
 	{
-		levelObject.gameObjectId = "WALL1_CORNER";
+		levelObject.gameObjectType = "WALL1_CORNER";
 		levelObject.angleAdjustment = 180;
 	}
 	else if (borderWalls == hallHorz)
 	{
-		levelObject.gameObjectId = "WALL1_HALL";
+		levelObject.gameObjectType = "WALL1_HALL";
 	}
 	else if (borderWalls == hallVert)
 	{
-		levelObject.gameObjectId = "WALL1_HALL";
+		levelObject.gameObjectType = "WALL1_HALL";
 		levelObject.angleAdjustment = 90;
 	}
 	else if (borderWalls == topWall)
 	{
-		levelObject.gameObjectId = "WALL1_WALL";
+		levelObject.gameObjectType = "WALL1_WALL";
 	}
 	else if (borderWalls == rightWall)
 	{
-		levelObject.gameObjectId = "WALL1_WALL";
+		levelObject.gameObjectType = "WALL1_WALL";
 		levelObject.angleAdjustment = 90;
 	}
 	else if (borderWalls == bottomWall)
 	{
-		levelObject.gameObjectId = "WALL1_WALL";
+		levelObject.gameObjectType = "WALL1_WALL";
 		levelObject.angleAdjustment = 180;
 	}
 	else if (borderWalls == leftWall)
 	{
-		levelObject.gameObjectId = "WALL1_WALL";
+		levelObject.gameObjectType = "WALL1_WALL";
 		levelObject.angleAdjustment = -90;
 	}
 	else if (borderWalls == column)
 	{
-		levelObject.gameObjectId = "WALL1_COLUMN";
+		levelObject.gameObjectType = "WALL1_COLUMN";
 	}
 	return levelObject;
 
@@ -595,10 +595,10 @@ void LevelManager::_buildLevelObjects(Scene* scene)
 	for (int y = 0; y < m_height; y++) {
 		for (int x = 0; x < m_width; x++) {
 
-			if (m_levelObjects[x][y].gameObjectId.empty() == false) {
+			if (m_levelObjects[x][y].gameObjectType.empty() == false) {
 
 				levelObject = &m_levelObjects[x][y];
-				scene->addGameObject(levelObject->gameObjectId, levelObject->layer,
+				scene->addGameObject(levelObject->gameObjectType, levelObject->layer,
 					(float)x, (float)y, (float)levelObject->angleAdjustment, levelObject->cameraFollow, levelObject->name);
 
 			}

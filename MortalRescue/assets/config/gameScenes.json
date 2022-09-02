@@ -16,7 +16,7 @@
             ],
             "gameObjects": [
                 {
-                    "gameObjectId": "SCENE_TITLE_SCREEN",
+                    "gameObjectType": "SCENE_TITLE_SCREEN",
                     "layer": "GameLayer::MAIN",
                     "location": {
                         "windowPosition": "PositionAlignment::CENTER",
@@ -27,7 +27,7 @@
                     }
                 },
                 {
-                    "gameObjectId": "IMGUI_TITLE_SCREEN_MENU",
+                    "gameObjectType": "IMGUI_TITLE_SCREEN_MENU",
                     "layer": "GameLayer::GUI",
                     "location": {
                         "windowPosition": "PositionAlignment::CENTER",
@@ -46,7 +46,7 @@
             "maxObjects": 5000,
             "gameObjects": [
                 {
-                    "gameObjectId": "IMGUI_HUD_TOP_CENTER",
+                    "gameObjectType": "IMGUI_HUD_TOP_CENTER",
                     "layer": "GameLayer::GUI",
                     "location": {
                         "windowPosition": "PositionAlignment::TOP_CENTER",
@@ -57,7 +57,7 @@
                     }
                 },
                 {
-                    "gameObjectId": "IMGUI_HUD_TOP_LEFT",
+                    "gameObjectType": "IMGUI_HUD_TOP_LEFT",
                     "layer": "GameLayer::GUI",
                     "location": {
                         "windowPosition": "PositionAlignment::TOP_LEFT",
@@ -68,7 +68,7 @@
                     }
                 },
                 {
-                    "gameObjectId": "IMGUI_HUD_TOP_RIGHT",
+                    "gameObjectType": "IMGUI_HUD_TOP_RIGHT",
                     "layer": "GameLayer::GUI",
                     "location": {
                         "windowPosition": "PositionAlignment::TOP_RIGHT",
@@ -79,7 +79,7 @@
                     }
                 },
                 {
-                    "gameObjectId": "METEOR_EMITTER",
+                    "gameObjectType": "METEOR_EMITTER",
                     "layer": "GameLayer::BACKGROUND_1",
                     "location": {
                         "X": -50,
@@ -115,53 +115,52 @@
             "gameObjectPools": [
                 {
                     "id": "SMOKE1_POOL",
-                    "gameObjectId": "PARTICLE_SMOKE_1",
+                    "gameObjectType": "PARTICLE_SMOKE_1",
                     "lifetime": 2.25,
                     "maxItems": 5000
                 },
                 {
                     "id": "BULLET1_POOL",
-                    "gameObjectId": "BULLET1",
+                    "gameObjectType": "BULLET1",
                     "lifetime": 1.25,
                     "maxItems": 50
                 },
                 {
                     "id": "BULLET2_POOL",
-                    "gameObjectId": "BULLET2",
+                    "gameObjectType": "BULLET2",
                     "lifetime": 1.25,
                     "maxItems": 50
                 },
                 {
                     "id": "DEFLECT1_POOL",
-                    "gameObjectId": "DEFLECT1",
+                    "gameObjectType": "DEFLECT1",
                     "lifetime": 1.25,
                     "maxItems": 30
                 },
                 {
                     "id": "SCRAP1_POOL",
-                    "gameObjectId": "SCRAP_PIECE",
+                    "gameObjectType": "SCRAP_PIECE",
                     "lifetime": 0.0,
                     "maxItems": 500
                 },
                 {
                     "id": "TURRET_SCRAP_POOL",
-                    "gameObjectId": "TURRET_SCRAP",
+                    "gameObjectType": "TURRET_SCRAP",
                     "lifetime": 0.0,
                     "maxItems": 25
                 },
                 {
                     "id": "PULSE1_POOL",
-                    "gameObjectId": "PULSE1",
+                    "gameObjectType": "PULSE1",
                     "lifetime": 0.0,
                     "maxItems": 25
                 },
                 {
                     "id": "PULSE_EXPLOSION_POOL",
-                    "gameObjectId": "PULSE_EXPLOSION",
+                    "gameObjectType": "PULSE_EXPLOSION",
                     "lifetime": 0.0,
                     "maxItems": 5
                 }
-
 
             ],
             "physics": {
@@ -187,7 +186,7 @@
             "maxObjects": 24,
             "gameObjects": [
                 {
-                    "gameObjectId": "IMGUI_LEVEL_COMPLETE",
+                    "gameObjectType": "IMGUI_LEVEL_COMPLETE",
                     "layer": "GameLayer::GUI",
                     "location": {
                         "windowPosition": "PositionAlignment::CENTER",
@@ -205,7 +204,7 @@
             "maxObjects": 5,
             "gameObjects": [
                 {
-                    "gameObjectId": "IMGUI_PLAYERDEATH_PANEL",
+                    "gameObjectType": "IMGUI_PLAYERDEATH_PANEL",
                     "layer": "GameLayer::MAIN",
                     "location": {
                         "windowPosition": "PositionAlignment::CENTER"
@@ -220,8 +219,8 @@
             "tags": [ "gui" ],
             "gameObjects": [
                 {
-                    "gameObjectId": "IMGUI_PAUSE_WINDOW",
-                    //"gameObjectId": "IMGUI_EXAMPLE_PANEL",
+                    "gameObjectType": "IMGUI_PAUSE_WINDOW",
+                    //"gameObjectType": "IMGUI_EXAMPLE_PANEL",
                     "layer": "GameLayer::GUI",
                     "location": {
                         "windowPosition": "PositionAlignment::CENTER"
@@ -258,7 +257,7 @@
             "maxObjects": 24,
             "gameObjects": [
                 {
-                    "gameObjectId": "IMGUI_LEVEL_COMPLETE",
+                    "gameObjectType": "IMGUI_LEVEL_COMPLETE",
                     "layer": "GameLayer::GUI",
                     "location": {
                         "windowPosition": "PositionAlignment::CENTER",
@@ -276,7 +275,7 @@
             "maxObjects": 5000,
             "gameObjects": [
                 {
-                    "gameObjectId": "IMGUI_TEST_MENU",
+                    "gameObjectType": "IMGUI_TEST_MENU",
                     "layer": "GameLayer::GUI",
                     "location": {
                         "windowPosition": "PositionAlignment::TOP_RIGHT",
@@ -290,37 +289,37 @@
             "gameObjectPools": [
                 {
                     "id": "SMOKE1_POOL",
-                    "gameObjectId": "PARTICLE_SMOKE_1",
+                    "gameObjectType": "PARTICLE_SMOKE_1",
                     "lifetime": 2.25,
                     "maxItems": 500
                 },
                 {
                     "id": "BULLET2_POOL",
-                    "gameObjectId": "BULLET2",
+                    "gameObjectType": "BULLET2",
                     "lifetime": 1.25,
                     "maxItems": 50
                 },
                 {
                     "id": "DEFLECT1_POOL",
-                    "gameObjectId": "DEFLECT1",
+                    "gameObjectType": "DEFLECT1",
                     "lifetime": 1.25,
                     "maxItems": 30
                 },
                 {
                     "id": "SCRAP1_POOL",
-                    "gameObjectId": "SCRAP_PIECE",
+                    "gameObjectType": "SCRAP_PIECE",
                     "lifetime": 0.0,
                     "maxItems": 500
                 },
                 {
                     "id": "PULSE1_POOL",
-                    "gameObjectId": "PULSE1",
+                    "gameObjectType": "PULSE1",
                     "lifetime": 0.0,
                     "maxItems": 25
                 },
                 {
                     "id": "PULSE_EXPLOSION_POOL",
-                    "gameObjectId": "PULSE_EXPLOSION",
+                    "gameObjectType": "PULSE_EXPLOSION",
                     "lifetime": 0.0,
                     "maxItems": 5
                 }

@@ -53,12 +53,7 @@ public:
 	GameObject(GameObject&&) = default;
 	GameObject& operator=(GameObject&&) = default;
 
-	std::string m_id;
-	
-
-	//int m_gameObjectType{ GameObjectType::SPRITE };
-
-	GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, int layer=GameLayer::MAIN, bool cameraFollow=false, std::string name="");
+	GameObject(std::string gameObjectType, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, int layer=GameLayer::MAIN, bool cameraFollow=false, std::string name="");
 
 	virtual void update();
 	virtual void render();
@@ -108,9 +103,12 @@ public:
 	bool collisionDisabled() { return m_stateTags.test(StateTag::disabledCollision); }
 
 	//Accessor Functions
-	std::string name() { return m_name; }
-	auto removeFromWorld() { return m_removeFromWorld; }
 	std::string id() { return m_id; }
+	std::string name() { return m_name; }
+	std::string type() { return m_type; }
+
+	auto removeFromWorld() { return m_removeFromWorld; }
+	
 	auto const& gameObjectDefinition() { return m_gameObjectDefinition; }
 	auto& components() { return m_components; }
 	Scene* parentScene() { return m_parentScene; }
@@ -191,9 +189,14 @@ public:
 
 private:
 
-	std::optional<GameObject*> m_parentObject{};
-	std::string m_name;
+	std::string m_id{};
+	std::string m_name{};
+	std::string m_type{};
 	int m_contactTag{ 0 };
+
+	std::optional<GameObject*> m_parentObject{};
+	
+	
 	bool m_removeFromWorld{ false };
 	Scene* m_parentScene{nullptr};
 	std::bitset<32> m_traitTags{};
@@ -207,7 +210,8 @@ private:
 	//std::unordered_map<std::type_index, std::shared_ptr<Component>>m_components;
 	std::array<std::shared_ptr<Component>, static_cast<int>(ComponentTypes::MAX_COMPONENT_TYPES)>m_components;
 
-	std::string _buildName(std::string id, float xMapPos, float yMapPos, Scene* parentScene);
+	std::string _buildId(std::string gameObjectType, float xMapPos, float yMapPos);
+	std::string _buildName(std::string rootName, std::string gameObjectType, bool isDependent);
 	void _updateTouchingObjects();
 
 };

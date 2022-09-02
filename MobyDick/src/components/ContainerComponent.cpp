@@ -6,7 +6,7 @@ ContainerComponent::ContainerComponent()
 
 }
 
-ContainerComponent::ContainerComponent(Json::Value componentJSON, Scene* parentScene)
+ContainerComponent::ContainerComponent(Json::Value componentJSON, std::string parentName, Scene* parentScene)
 {
 
 	m_componentType = ComponentTypes::CONTAINER_COMPONENT;
@@ -19,13 +19,13 @@ ContainerComponent::ContainerComponent(Json::Value componentJSON, Scene* parentS
 		m_refillTimer = Timer(timerDuration, true);
 	}
 
-	m_contentItemGameObjectId = componentJSON["gameObjectId"].asString();
+	m_contentItemGameObjectType = componentJSON["gameObjectType"].asString();
 	m_contentsItemSpawnForce = componentJSON["spawnForce"].asFloat();
 	auto count = componentJSON["count"].asInt();
 
 	for (auto i = 0; i < count;i++) {
 
-		addItem(m_contentItemGameObjectId, m_contentsItemSpawnForce, parentScene, true);
+		addItem(m_contentItemGameObjectType, m_contentsItemSpawnForce, parentScene, parentName, i, true);
 	}
 
 
@@ -34,8 +34,6 @@ ContainerComponent::ContainerComponent(Json::Value componentJSON, Scene* parentS
 
 ContainerComponent::~ContainerComponent()
 {
-
-
 
 }
 
@@ -92,7 +90,7 @@ void ContainerComponent::update()
 		if (isFull() == false) {
 			if (m_refillTimer.hasMetTargetDuration()) {
 
-				addItem(m_contentItemGameObjectId, m_contentsItemSpawnForce, parent()->parentScene());
+				addItem(m_contentItemGameObjectType, m_contentsItemSpawnForce, parent()->parentScene(), parent()->name(), m_items.size()+(int)1);
 				m_refillTimer.reset();
 			}
 		}
@@ -122,10 +120,10 @@ void ContainerComponent::_removeFromWorldPass()
 		if (it->gameObject->removeFromWorld() == true) {
 
 			//Remove object from gloabl index collection
-			parent()->parentScene()->deleteIndex(it->gameObject->name());
+			parent()->parentScene()->deleteIndex(it->gameObject->id());
 
 			//it->pieceObject->reset();
-			std::cout << "Erased from Containers collection" << it->gameObject->name() << std::endl;
+			std::cout << "Erased from Containers collection " << it->gameObject->id() << std::endl;
 			it = m_items.erase(it);
 		}
 		else {
@@ -136,14 +134,15 @@ void ContainerComponent::_removeFromWorldPass()
 	m_items.shrink_to_fit();
 
 }
-void ContainerComponent::addItem(std::string gameObjectId, float spawnForce, Scene* parentScene, bool onContainerConstruction)
+void ContainerComponent::addItem(std::string gameObjectType, float spawnForce, Scene* parentScene, std::string parentName, int itemCount, bool onContainerConstruction)
 {
 
 	ContainerItem containerItem{};
 	containerItem.spawnForce = spawnForce;
 
 	//Create off screen
-	auto gameObject = std::make_shared<GameObject>(gameObjectId, (float)-50.0, (float)-50.0, (float)0, parentScene);
+	std::string name = _buildItemName(parentName, itemCount);
+	auto gameObject = std::make_shared<GameObject>(gameObjectType, (float)-50.0, (float)-50.0, (float)0, parentScene, (float)0., false, name);
 	containerItem.gameObject = gameObject;
 	parentScene->addGameObjectIndex(gameObject);
 
@@ -207,3 +206,13 @@ bool ContainerComponent::isFull()
 	}
 
 }
+
+std::string ContainerComponent::_buildItemName(std::string parentName, int itemCount)
+{
+
+	auto name = std::format("{}_CH{:03}", parentName, itemCount);
+
+	return name;
+
+}
+

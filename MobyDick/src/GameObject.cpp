@@ -16,28 +16,31 @@ extern std::unique_ptr<Game> game;
 GameObject::~GameObject()
 {
 
-//	std::cout << this->m_id << "GameObject Destructor called" << std::endl;
+	std::cout << this->m_id << " GameObject Destructor called" << std::endl;
 
 }
 
-GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, int layer, bool cameraFollow, std::string name)
+GameObject::GameObject(std::string gameObjectType, float xMapPos, float yMapPos, float angleAdjust, Scene* parentScene, int layer, bool cameraFollow, std::string name)
 {
 
 	Json::Value definitionJSON;
 
 	//Build components
-	definitionJSON = GameObjectManager::instance().getDefinition(gameObjectId)->definitionJSON();
+	definitionJSON = GameObjectManager::instance().getDefinition(gameObjectType)->definitionJSON();
 
 	//Category Id and Object Type
-	m_id = gameObjectId;
+	m_type = gameObjectType;
 	m_removeFromWorld = false;
 
 	//Layer
 	m_layer = layer;
 
+	//Build the unique id
+	m_id = _buildId(gameObjectType, xMapPos, yMapPos);
+
 	//Build the unique name if a name wasnt given
 	if (name.empty()) {
-		m_name = _buildName(gameObjectId, xMapPos, yMapPos, parentScene);
+		m_name = gameObjectType + "_ANON";
 	}
 	else {
 		m_name = name;
@@ -60,7 +63,7 @@ GameObject::GameObject(std::string gameObjectId, float xMapPos, float yMapPos, f
 
 		int componentType = game->enumMap()->toEnum(componentJSON["id"].asString());
 
-		component = game->componentFactory()->create(definitionJSON, m_name, gameObjectId, parentScene, xMapPos, yMapPos, angleAdjust, componentType);
+		component = game->componentFactory()->create(definitionJSON, m_name, gameObjectType, parentScene, xMapPos, yMapPos, angleAdjust, componentType);
 		component->setParent(this);
 		addComponent(component);
 
@@ -533,10 +536,27 @@ SDL_FPoint GameObject::getTopLeftPosition()
 
 }
 
-std::string GameObject::_buildName(std::string id, float xMapPos, float yMapPos, Scene* parentScene)
+std::string GameObject::_buildName(std::string rootName, std::string gameObjectType, bool isDependent)
+{
+	std::string name{};
+	if (isDependent) {
+		name = name + rootName + gameObjectType;
+		//name = std::format("{}_{:.0f}_{:.0f}_{}", rootName, xMapPos, yMapPos, randomid);
+	}
+	else {
+
+		name = name + rootName + gameObjectType;
+
+	}
+
+	return name;
+
+}
+
+std::string GameObject::_buildId(std::string id, float xMapPos, float yMapPos)
 {
 	std::string randomid = util::genRandomId(16);
-	auto name = std::format("{}_{:.0f}_{:.0f}_{}", id, xMapPos, yMapPos, parentScene->gameObjectCount());
+	auto name = std::format("{}_{:.0f}_{:.0f}_{}", id, xMapPos, yMapPos, randomid);
 
 	return name;
 
@@ -692,13 +712,13 @@ void GameObject::_updateTouchingObjects()
 
 				if (contactGameObject != this && contactGameObject->hasTrait(TraitTag::fragment) == false) {
 
-					auto contactGameObjectSharedPtr = m_parentScene->getGameObject(contactGameObject->name());
+					auto contactGameObjectSharedPtr = m_parentScene->getGameObject(contactGameObject->id());
 					this->addTouchingObject(contactGameObjectSharedPtr.value());
 				
 				}
 				else if (contactGameObject2 != this && contactGameObject2->hasTrait(TraitTag::fragment) == false) {
 
-					auto contactGameObjectSharedPtr = m_parentScene->getGameObject(contactGameObject2->name());
+					auto contactGameObjectSharedPtr = m_parentScene->getGameObject(contactGameObject2->id());
 					this->addTouchingObject(contactGameObjectSharedPtr.value());
 						
 				}

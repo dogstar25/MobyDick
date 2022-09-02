@@ -25,6 +25,18 @@ SceneManager& SceneManager::instance()
 
 }
 
+void SceneManager::deleteGameObject(std::string gameObjectName)
+{
+	auto foundGameObject = m_scenes.back().getGameObjectByName(gameObjectName);
+	if (foundGameObject.has_value()) {
+		foundGameObject.value()->setRemoveFromWorld(true);
+	}
+
+
+}
+
+
+
 void SceneManager::init()
 {
 	m_currentSceneIndex = 0;
@@ -35,17 +47,15 @@ void SceneManager::init()
 
 }
 
-std::shared_ptr<Scene> SceneManager::getScene(std::string sceneId)
+Scene& SceneManager::getScene(std::string sceneId)
 {
-	std::shared_ptr<Scene> foundScene{};
 
 	for (auto scene : m_scenes) {
 		if (scene.id() == sceneId) {
-			foundScene = std::make_shared<Scene>(scene);
+			return scene;
 		}
 	}
 
-	return foundScene;
 }
 
 void SceneManager::load(std::string sceneDefinitionsFilename)
@@ -59,13 +69,13 @@ void SceneManager::load(std::string sceneDefinitionsFilename)
 
 	for (Json::Value itr : root["scenes"])
 	{
-		std::string gameObjectId = itr["id"].asString();
+		std::string sceneId = itr["id"].asString();
 
 
 		auto maxObjects = itr["maxObjects"].asInt();
 
 		//Json::Value sceneJSON = Json::Value(itr);
-		m_sceneDefinitions.emplace(gameObjectId, Json::Value(itr));
+		m_sceneDefinitions.emplace(sceneId, Json::Value(itr));
 	}
 }
 
@@ -173,10 +183,6 @@ std::optional<SceneAction> SceneManager::pollEvents()
 				sceneAction = *(static_cast<std::optional<SceneAction>*>(event.user.data1));
 				delete event.user.data1;
 
-				std::stringstream ss;
-				ss << "user event " << sceneAction.value().actionCode << " " << std::endl;
-				std::cout << ss.str();
-
 				break;
 
 			}
@@ -273,17 +279,18 @@ void SceneManager::releaseDirectScene()
 GameObject* SceneManager::addGameObject(std::shared_ptr<GameObject>gameObject, int layer)
 {
 	//Add the gameObject to the currently active scene using back()
-	auto gameObjectRef = m_scenes.back().addGameObject(gameObject, layer);
+	m_scenes.back().addGameObject(gameObject, layer);
 
-	return gameObjectRef;
+	//ToDo:fix this warning
+	return gameObject.get();
 
 }
 
-GameObject* SceneManager::addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow)
+GameObject* SceneManager::addGameObject(std::string gameObjectType, int layer, float xMapPos, float yMapPos, float angle, bool cameraFollow)
 {
 	//Add the gameObject to the currently active scene using back()
 	auto& currentScene = m_scenes.back();
-	auto gameObject = currentScene.addGameObject(gameObjectId, layer, xMapPos, yMapPos, angle, cameraFollow);
+	auto gameObject = currentScene.addGameObject(gameObjectType, layer, xMapPos, yMapPos, angle, cameraFollow);
 
 	return gameObject;
 

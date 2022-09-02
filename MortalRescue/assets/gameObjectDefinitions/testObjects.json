@@ -1,8 +1,9 @@
 {
     "gameObjects": [
         {
-            "id": "MOTHERSHIP",
-            "traitTags": [],
+            "type": "MOTHERSHIP",
+            "traitTags": [
+            ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -38,7 +39,7 @@
                     "attachments": [
                         {
                             "id": "ESCAPE_POD",
-                            "gameObjectId": "ESCAPE_POD",
+                            "gameObjectType": "ESCAPE_POD",
                             "attachLocation": {
                                 "x": 1.0,
                                 "y": 5.0
@@ -48,7 +49,7 @@
                         },
                         {
                             "id": "RADAR",
-                            "gameObjectId": "RADAR",
+                            "gameObjectType": "RADAR",
                             "attachLocation": {
                                 "x": 5.0,
                                 "y": 5.0
@@ -65,7 +66,7 @@
                     "childPositionRelative": false,
                     "childObjects": [
                         {
-                            "gameObjectId": "MOTHERSHIP_LABEL",
+                            "gameObjectType": "MOTHERSHIP_LABEL",
                             "locationSlot": 5
                         }
 
@@ -75,8 +76,9 @@
             ]
         },
         {
-            "id": "ESCAPE_POD",
-            "traitTags": [],
+            "type": "ESCAPE_POD",
+            "traitTags": [
+            ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -113,15 +115,15 @@
                     "childPositionRelative": false,
                     "childObjects": [
                         {
-                            "gameObjectId": "ESCAPEPOD_LABEL",
+                            "gameObjectType": "ESCAPEPOD_LABEL",
                             "locationSlot": 5
                         },
                         {
-                            "gameObjectId": "RADAR",
+                            "gameObjectType": "RADAR",
                             "locationSlot": 1
                         },
                         {
-                            "gameObjectId": "SWORDLADY",
+                            "gameObjectType": "SWORDLADY",
                             "locationSlot": 7
                         }
 
@@ -132,7 +134,7 @@
                     "attachments": [
                         {
                             "id": "PARACHUTE",
-                            "gameObjectId": "PARACHUTE",
+                            "gameObjectType": "PARACHUTE",
                             "attachLocation": {
                                 "x": 5.0,
                                 "y": 5.0
@@ -148,8 +150,9 @@
             ]
         },
         {
-            "id": "RADAR",
-            "traitTags": [],
+            "type": "RADAR",
+            "traitTags": [
+            ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -185,7 +188,7 @@
                         "texture": "TX_BREAKABLE_WALL_BLUEPRINT",
                         "legend": [
                             {
-                                "gameObjectId": "RADAR_PIECE",
+                                "gameObjectType": "RADAR_PIECE",
                                 "color": "Colors::BLUE"
                             }
                         ]
@@ -197,7 +200,7 @@
                     "childPositionRelative": false,
                     "childObjects": [
                         {
-                            "gameObjectId": "RADAR_LABEL",
+                            "gameObjectType": "RADAR_LABEL",
                             "locationSlot": 5
                         }
 
@@ -207,8 +210,9 @@
             ]
         },
         {
-            "id": "PARACHUTE",
-            "traitTags": [],
+            "type": "PARACHUTE",
+            "traitTags": [
+            ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -244,7 +248,7 @@
                     "childPositionRelative": false,
                     "childObjects": [
                         {
-                            "gameObjectId": "PARACHUTE_LABEL",
+                            "gameObjectType": "PARACHUTE_LABEL",
                             "locationSlot": 9
                         }
 
@@ -255,7 +259,7 @@
                     "attachments": [
                         {
                             "id": "SURVIVOR",
-                            "gameObjectId": "SURVIVOR",
+                            "gameObjectType": "SURVIVOR",
                             "attachLocation": {
                                 "x": 1.0,
                                 "y": 1.0
@@ -270,8 +274,8 @@
             ]
         },
         {
-            "id": "RADAR_PIECE",
-            "traitTags": [ "fragment" ],
+            "type": "RADAR_PIECE",
+            "traitTags": ["fragment"],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -315,8 +319,10 @@
             ]
         },
         {
-            "id": "MOTHERSHIP_LABEL",
-            "traitTags": [ "abstract" ],
+            "type": "MOTHERSHIP_LABEL",
+            "traitTags": [
+                "abstract"
+            ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT"
@@ -340,8 +346,10 @@
             ]
         },
         {
-            "id": "RADAR_LABEL",
-            "traitTags": [ "abstract" ],
+            "type": "RADAR_LABEL",
+            "traitTags": [
+                "abstract"
+            ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT"
@@ -365,8 +373,10 @@
             ]
         },
         {
-            "id": "ESCAPEPOD_LABEL",
-            "traitTags": [ "abstract" ],
+            "type": "ESCAPEPOD_LABEL",
+            "traitTags": [
+                "abstract"
+            ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT"
@@ -390,8 +400,10 @@
             ]
         },
         {
-            "id": "PARACHUTE_LABEL",
-            "traitTags": [ "abstract" ],
+            "type": "PARACHUTE_LABEL",
+            "traitTags": [
+                "abstract"
+            ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT"

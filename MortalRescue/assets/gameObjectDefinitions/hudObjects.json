@@ -1,7 +1,7 @@
 {
     "gameObjects": [
         {
-            "id": "HUD_STATUS_TOP",
+            "type": "HUD_STATUS_TOP",
             "traitTags": [ "gui" ],
             "components": [
                 {
@@ -30,7 +30,7 @@
                     "id": "CHILDREN_COMPONENT",
                     "childObjects": [
                         {
-                            "gameObjectId": "HUD_SCRAP_COUNT",
+                            "gameObjectType": "HUD_SCRAP_COUNT",
                             "centeredOnLocation": false,
                             "absolutePosition": {
                                 "x": 2,
@@ -38,7 +38,7 @@
                             }
                         },
                         {
-                            "gameObjectId": "HUD_SCRAP_BAR",
+                            "gameObjectType": "HUD_SCRAP_BAR",
                             "centeredOnLocation": false,
                             "absolutePosition": {
                                 "x": 2,
@@ -50,7 +50,7 @@
             ]
         },
         {
-            "id": "HUD_SCRAP_COUNT",
+            "type": "HUD_SCRAP_COUNT",
             "traitTags": [ "gui", "abstract" ],
             "description": "Hud Scrap Dynamic Text",
             "components": [
@@ -70,7 +70,7 @@
             ]
         },
         {
-            "id": "HUD_SCRAP_LABEL",
+            "type": "HUD_SCRAP_LABEL",
             "traitTags": [ "gui" ],
             "description": "Hud Level Label",
             "components": [
@@ -91,7 +91,7 @@
             ]
         },
         {
-            "id": "HUD_SCRAP_VALUE",
+            "type": "HUD_SCRAP_VALUE",
             "traitTags": [ "gui" ],
             "description": "Hud Level Value",
             "components": [
@@ -112,7 +112,7 @@
             ]
         },
         {
-            "id": "HUD_SCRAP_BAR",
+            "type": "HUD_SCRAP_BAR",
             "traitTags": [ "gui", "abstract" ],
             "description": "Hud Level Dynamic Text",
             "components": [
@@ -133,7 +133,7 @@
             ]
         },
         {
-            "id": "HUD_BAR",
+            "type": "HUD_BAR",
             "traitTags": [ "gui" ],
             "description": "Hud Bar rectangle image",
             "components": [

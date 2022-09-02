@@ -33,7 +33,7 @@ class AttachmentsComponent :   public Component
 {
 public:
 	AttachmentsComponent();
-	AttachmentsComponent(Json::Value componentJSON, Scene* parentScene);
+	AttachmentsComponent(Json::Value componentJSON, std::string parentName, Scene* parentScene);
 	~AttachmentsComponent();
 
 	void update() override;
@@ -49,6 +49,8 @@ public:
 
 private:
 	std::vector<Attachment> m_attachments;
+
+	std::string _buildAttachmentName(std::string parentName, int attachmentCount);
 	void _removeFromWorldPass();
 
 };

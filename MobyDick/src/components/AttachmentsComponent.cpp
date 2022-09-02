@@ -1,5 +1,6 @@
 #include "AttachmentsComponent.h"
 
+#include <format>
 #include "../EnumMap.h"
 #include "../GameObject.h"
 #include "../game.h"
@@ -8,15 +9,18 @@
 extern std::unique_ptr<Game> game;
 
 
-AttachmentsComponent::AttachmentsComponent(Json::Value componentJSON, Scene* parentScene)
+AttachmentsComponent::AttachmentsComponent(Json::Value componentJSON, std::string parentName, Scene* parentScene)
 {
 
 	m_componentType = ComponentTypes::ATTACHMENTS_COMPONENT;
 
+	int attachmentCount{};
 	for (Json::Value itrItem : componentJSON["attachments"])
 	{
+		attachmentCount++;
+
 		std::string id = itrItem["id"].asString();
-		std::string gameObjectId = itrItem["gameObjectId"].asString();
+		std::string gameObjectType = itrItem["gameObjectType"].asString();
 		bool addToInventory = itrItem["addToInventory"].asBool();
 		b2Vec2 attachLocation = { itrItem["attachLocation"]["x"].asFloat(), itrItem["attachLocation"]["y"].asFloat() };
 		b2JointType attachB2JointType = static_cast<b2JointType>(game->enumMap()->toEnum(itrItem["attachB2JointType"].asString()));
@@ -25,7 +29,8 @@ AttachmentsComponent::AttachmentsComponent(Json::Value componentJSON, Scene* par
 
 		//tOdO: PUT A CHECK HER THAT WILL NOT ALLOW A STATIC OBJECT BE ATTACHED TO A DYNAMIC OBJECT
 
-		auto gameObject = std::make_shared<GameObject>(gameObjectId, - 1.0F, -1.0F, 0.F, parentScene);
+		std::string name = _buildAttachmentName(parentName, attachmentCount);
+		auto gameObject = std::make_shared<GameObject>(gameObjectType, - 1.0F, -1.0F, 0.F, parentScene, 0., false, name);
 
 		//Add index 
 		parentScene->addGameObjectIndex(gameObject);
@@ -123,10 +128,10 @@ void AttachmentsComponent::_removeFromWorldPass()
 		if (it->gameObject->removeFromWorld() == true) {
 
 			//Remove object from gloabl index collection
-			parent()->parentScene()->deleteIndex(it->gameObject->name());
+			parent()->parentScene()->deleteIndex(it->gameObject->id());
 
 			//it->pieceObject->reset();
-			std::cout << "Erased from Attachments collection" << it->gameObject->name() << std::endl;
+			std::cout << "Erased from Attachments collection " << it->gameObject->id() << std::endl;
 			it = m_attachments.erase(it);
 		}
 		else {
@@ -153,5 +158,14 @@ void AttachmentsComponent::removeAttachment(std::string id)
 	auto& attachmentGameObject = attachment.value().gameObject;
 
 	attachmentGameObject->setRemoveFromWorld(true);
+
+}
+
+std::string AttachmentsComponent::_buildAttachmentName(std::string parentName, int attachmentCount)
+{
+
+	auto name = std::format("{}_AT{:03}", parentName.c_str(), attachmentCount);
+
+	return name;
 
 }

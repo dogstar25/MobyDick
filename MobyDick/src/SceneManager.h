@@ -48,10 +48,11 @@ public:
 	Timer& gameTimer() { return m_gameTimer; }
 	void testIMGUI();
 	Scene& currentScene() { return m_scenes.back(); }
-	std::shared_ptr<Scene> getScene(std::string sceneId);
+	Scene& getScene(std::string sceneId);
 	void loadLevel(std::string levelId);
 	void loadNextLevel();
 	void loadCurrentLevel();
+	void deleteGameObject(std::string gameObjectName);
 
 	std::optional<SceneAction> getSceneKeyAction(SDL_Keycode);
 
@@ -76,7 +77,7 @@ public:
 	}
 
 	GameObject* addGameObject(std::shared_ptr<GameObject>gameObject, int layer);
-	GameObject* addGameObject(std::string gameObjectId, int layer, float xMapPos, float yMapPos, float angle = 0., bool cameraFollow = false);
+	GameObject* addGameObject(std::string gameObjectType, int layer, float xMapPos, float yMapPos, float angle = 0., bool cameraFollow = false);
 
 private:
 	
