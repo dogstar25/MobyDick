@@ -134,8 +134,8 @@ private:
 	//Level related members
 	std::string m_currentLevelId;
 	std::vector<std::shared_ptr<Trigger>> m_levelTriggers;
-	std::vector<Objective> m_levelObjectives{};
-	std::map<int, Parallax>m_parallaxRates{};
+	std::vector<Objective> m_levelObjectives;
+	std::map<int, Parallax>m_parallaxRates;
 
 	void _processGameObjectInterdependecies();
 	void _buildPhysicsWorld(Json::Value physicsJSON);
