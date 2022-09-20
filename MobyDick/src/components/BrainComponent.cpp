@@ -266,7 +266,7 @@ bool BrainComponent::navigate()
 
 	//Has the object reached the interim destination
 	if (util::calculateDistance(parent()->getCenterPosition(), m_interimDestination.value()->getCenterPosition())
-		< DESTINATION_DISTANCE_TOLERANCE) {
+		< DESTINATION_DISTANCE_TOLERANCE || isStuck()) {
 
 		//Now that we have hit this interim nav point, add it to a list of visted nav points
 		//so that we can avoid these while trying to navigate to the ultimate target destination
@@ -296,6 +296,40 @@ bool BrainComponent::navigate()
 
 }
 
+bool BrainComponent::isStuck()
+{
+	bool isStuck = {};
+
+	if (m_previousLocation.has_value() == false) {
+		m_previousLocation = { -50,-50 };
+	}
+
+	//Check if we've moved from last iteration
+	if (util::calculateDistance(parent()->getCenterPosition(), m_previousLocation.value()) < HASMOVED_DISTANCE_TOLERANCE) {
+
+		if (m_navigateStuckTimer.isSet()) {
+
+			if (m_navigateStuckTimer.hasMetTargetDuration()) {
+				isStuck = true;
+			}
+			else {
+				isStuck = false;
+			}
+		}
+		else {
+			m_navigateStuckTimer = { NAVIGATION_STUCK_TIMER_DURATION };
+			isStuck = false;
+		}
+
+	}
+	else {
+		m_navigateStuckTimer = { 0 };
+	}
+
+	m_previousLocation = parent()->getCenterPosition();
+
+	return isStuck;
+}
 void BrainComponent::executeMove()
 {
 	GameObject* interim = m_interimDestination.value().get();
