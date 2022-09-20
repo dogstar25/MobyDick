@@ -47,7 +47,6 @@ private:
 
 	//void navigatePatrol();
 	void _navigateEngage();
-	bool _isStuck();
 
 };
 

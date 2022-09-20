@@ -9,6 +9,11 @@
 
 #include <optional>
 
+inline constexpr int DESTINATION_DISTANCE_TOLERANCE = 25;
+inline constexpr int HASMOVED_DISTANCE_TOLERANCE = 2;
+inline constexpr int NAVIGATION_STUCK_TIMER_DURATION = 2;
+
+
 class GameObject;
 
 class BrainComponent : public Component
@@ -45,7 +50,6 @@ protected:
     std::optional<std::shared_ptr<GameObject>> m_targetDestination{};
     std::optional<std::shared_ptr<GameObject>> m_interimDestination{};
     
-
     //int m_sensorLength{};
     //int m_sensorOffset{};
     //int m_sensorCount{};
@@ -62,6 +66,7 @@ protected:
     bool navigate();
     void executeMove();
     void stopMovement();
+    bool isStuck();
 
 private:
     void _updateSensorInput();
@@ -71,7 +76,8 @@ private:
     void _doIdle();
 
     Timer m_updateSensorInputTimer{0.25, true};
-
+    Timer m_navigateStuckTimer{};
+    std::optional<SDL_FPoint> m_previousLocation{};
 
 };
 

@@ -16,7 +16,7 @@ DroneBrainComponent::DroneBrainComponent(Json::Value definitionJSON)
 	: BrainComponent(definitionJSON)
 {
 
-	m_engageStateTimer = Timer(5);
+	m_engageStateTimer = Timer(3);
 	m_eyeFireDelayTimer = Timer(.5, true);
 
 
@@ -109,13 +109,6 @@ void DroneBrainComponent::_doPatrol()
 	bool atClosestAsPossibleToTarget = navigate();
 	if (atClosestAsPossibleToTarget) {
 		m_tempVisitedNavPoints.clear();
-		m_targetDestination = getNextPatrolDestination();
-	}
-
-	//Catch all stuck and need to pick a new destination
-	if (_isStuck()) {
-		m_tempVisitedNavPoints.clear();
-		m_interimDestination.reset();
 		m_targetDestination = getNextPatrolDestination();
 	}
 
@@ -325,7 +318,7 @@ std::optional<SDL_FPoint> DroneBrainComponent::_detectPlayer()
 
 }
 
-bool DroneBrainComponent::_isStuck()
+bool DroneBrainComponent::isStuck()
 {
 	bool isStuck = {};
 
