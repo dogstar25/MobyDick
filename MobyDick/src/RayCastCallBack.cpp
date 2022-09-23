@@ -22,7 +22,7 @@ float RayCastCallBack::ReportFixture(b2Fixture* fixture, const b2Vec2& point, co
 
 	m_intersectionItems.push_back(brainRayCastFoundItem);
 
-	return -1;
+	return 1;
 }
 
 bool RayCastCallBack::hasClearNavPath()

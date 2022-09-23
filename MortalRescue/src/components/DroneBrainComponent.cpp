@@ -289,10 +289,12 @@ int DroneBrainComponent::_determineState()
 
 		if (m_engageStateTimer.hasMetTargetDuration()) {
 
+			if (state == BrainState::ENGAGE) {
+				m_interimDestination = std::nullopt;
+			}
 			state = BrainState::PATROL;
+
 		}
-
-
 
 	}
 	
@@ -318,39 +320,6 @@ std::optional<SDL_FPoint> DroneBrainComponent::_detectPlayer()
 
 }
 
-bool DroneBrainComponent::isStuck()
-{
-	bool isStuck = {};
 
-	if (m_previousLocation.has_value() == false) {
-		m_previousLocation = {-50,-50};
-	}
-
-	//Check if we've moved from last iteration
-	if (util::calculateDistance(parent()->getCenterPosition(), m_previousLocation.value()) < HASMOVED_DISTANCE_TOLERANCE) {
-
-		if (m_patrolStuckTimer.isSet()) {
-
-			if (m_patrolStuckTimer.hasMetTargetDuration()) {
-				isStuck = true;
-			}
-			else {
-				isStuck =  false;
-			}
-		}
-		else {
-			m_patrolStuckTimer = { 3 };
-			isStuck =  false;
-		}
-
-	}
-	else {
-		m_patrolStuckTimer = { 0 };
-	}
-
-	m_previousLocation = parent()->getCenterPosition();
-
-	return isStuck;
-}
 
 
