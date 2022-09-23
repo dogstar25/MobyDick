@@ -48,6 +48,12 @@ void NavigationComponent::updateNavObjectsAccess()
 				b2Vec2 foundGameObjectPosition = { gameObject->getCenterPosition().x / GameConfig::instance().scaleFactor(),
 					gameObject->getCenterPosition().y / GameConfig::instance().scaleFactor() };
 
+				//drawa a line for debugging
+				//glm::uvec4 color = { 255,255,255,255 };
+				//glm::vec2 startPoint = { thisGameObjectPosition.x, thisGameObjectPosition.y };
+				//glm::vec2 endPoint = { foundGameObjectPosition.x, foundGameObjectPosition.y };
+				//game->renderer()->addLine(startPoint, endPoint, color);
+
 				RayCastCallBack::instance().reset();
 				parent()->parentScene()->physicsWorld()->RayCast(&RayCastCallBack::instance(), thisGameObjectPosition, foundGameObjectPosition);
 

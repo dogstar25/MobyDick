@@ -330,6 +330,7 @@ bool BrainComponent::isStuck()
 
 	return isStuck;
 }
+
 void BrainComponent::executeMove()
 {
 	GameObject* interim = m_interimDestination.value().get();

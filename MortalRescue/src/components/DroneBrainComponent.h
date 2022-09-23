@@ -32,7 +32,6 @@ private:
 	Timer m_patrolStuckTimer{};
 	std::optional<SDL_FPoint> m_previousLocation{};
 
-
 	void _doPatrol();
 	void _doAlert();
 	void _doPursue();
