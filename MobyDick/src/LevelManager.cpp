@@ -621,7 +621,7 @@ void LevelManager::_buildTiledLayers(Scene* scene)
 		auto widthRemainder = (m_tileWidth * m_width) % tiledLayer.second.tileSize.x;
 		auto heightRemainder = (m_tileHeight * m_height) % tiledLayer.second.tileSize.y;
 
-		//If it did not dived evenly then we need to add 1 to cover the screen
+		//If it did not divide evenly then we need to add 1 to cover the screen
 		if (widthRemainder > 0) {
 			widthCount += 1;
 		}

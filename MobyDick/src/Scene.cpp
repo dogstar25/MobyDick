@@ -499,7 +499,6 @@ std::optional<std::shared_ptr<GameObject>> Scene::getGameObjectByName(std::strin
 	auto it = m_gameObjectLookup.begin();
 	while (it != m_gameObjectLookup.end()) {
 
-		//Remove gameObject iteself if flagged
 		if (it->second.lock()->name() == name) {
 			foundGameObject = it->second.lock();
 			break;

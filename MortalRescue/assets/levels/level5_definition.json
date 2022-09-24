@@ -1,0 +1,276 @@
+﻿{
+    "id": "LEVEL5",
+    "blueprint": "TX_LEVEL5_BLUEPRINT",
+    "description": "Level 5",
+    "dimensions": {
+        "levelWidth": 128,
+        "levelHeight": 64,
+        "tileWidth": 32,
+        "tileHeight": 32
+    },
+    "tiledLayers": [
+        {
+            "layer": "GameLayer::BACKGROUND_1",
+            "tiledObjectId": "BACKGROUND_GRID_1",
+            "tileSize": {
+                "width": 512,
+                "height": 512
+            }
+        }
+    ],
+    "parallax": [
+        {
+            "layer": "GameLayer::BACKGROUND_1",
+            "parallaxRate": -10 // percent of normal scroll. negative value is slower. positive value is faster
+        },
+        {
+            "layer": "GameLayer::FOREGROUND_2",
+            "parallaxRate": 15
+        }
+
+    ],
+    "statusItems": [
+        {
+            "id": "StatusItemId::PLAYERS_HEART_COUNT",
+            "initialValue": 6,
+            "minValue": 0,
+            "maxValue": 6
+        },
+        {
+            "id": "StatusItemId::SURVIVORS",
+            "initialValue": 3,
+            "minValue": 0,
+            "maxValue": 3
+        },
+        {
+            "id": "StatusItemId::PLAYER_WEAPON_LEVEL",
+            "initialValue": 1,
+            "minValue": 0,
+            "maxValue": 3
+        },
+        {
+            "id": "StatusItemId::SCRAP_COUNT",
+            "initialValue": 0,
+            "minValue": 0,
+            "maxValue": 2000
+        },
+        {
+            "id": "StatusItemId::PLAYER_WEAPON_ACCRUAL",
+            "initialValue": 0,
+            "minValue": 0,
+            "maxValue": 50
+        },
+        {
+            "id": "StatusItemId::PLAYER_WEAPON_CHARGED_PERCENT",
+            "initialValue": 0,
+            "minValue": 0,
+            "maxValue": 100
+        },
+        {
+            "id": "StatusItemId::PLAYER_WEAPON_IS_CHARGED",
+            "initialValue": 0,
+            "minValue": 0,
+            "maxValue": 1
+        }
+
+    ],
+    "objectives": [
+        {
+            "id": "StatusItemId::SURVIVORS",
+            "targetValue": 0
+        }
+
+    ],
+    "levelTriggers": [
+        {
+            "description": "Player Death",
+            "triggerClass": "PlayerDeath"
+        },
+        {
+            "description": "Level Complete",
+            "triggerClass": "LevelComplete"
+        }
+
+    ],
+    "colorDefinedObjects": [
+        {
+            "color": "Colors::BLUE",
+            "gameObjectType": "NAVIGATION_WAYPOINT",
+            "layer": "GameLayer::ABSTRACT"
+        },
+        {
+            "color": "Colors::CYAN",
+            "gameObjectType": "NAVIGATION_TRANSIT_POINT",
+            "layer": "GameLayer::ABSTRACT"
+        }
+
+    ],
+    "locationDefinedObjects": [
+        {
+            "id": "LOC_0007_0005",
+            "gameObjectType": "GINA_64",
+            "cameraFollow": true,
+            "layer": "GameLayer::MAIN",
+            "name": "PlayerGina"
+        },
+        {
+            "id": "LOC_0022_0002",
+            "gameObjectType": "PARTICLE_EMITTER_SPARK"
+        },
+        //{
+        //    "id": "LOC_0029_0009",
+        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
+        //},
+        //{
+        //    "id": "LOC_0029_0010",
+        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
+        //},
+        //{
+        //    "id": "LOC_0029_0011",
+        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
+        //},
+        //{
+        //    "id": "LOC_0029_0012",
+        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
+        //},
+        //{
+        //    "id": "LOC_0029_0013",
+        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
+        //},
+
+        //{
+        //    "id": "LOC_0016_0013",
+        //    "gameObjectId": "DRONE"
+        //},
+        {
+            "id": "LOC_0016_0006",
+            "gameObjectType": "HEALTH_STATION"
+        },
+        {
+            "id": "LOC_0011_0005",
+            "gameObjectType": "PLAYER_HEART"
+        },
+        {
+            "id": "LOC_0015_0023",
+            "gameObjectType": "GLOWWALL_352",
+            "name": "Button1_TARGET"
+        },
+        {
+            "id": "LOC_0061_0027",
+            "gameObjectType": "BOWMAN",
+            "layer": "GameLayer::BACKGROUND_1"
+        },
+        {
+            "id": "LOC_0059_0029",
+            "gameObjectType": "STUBB",
+            "layer": "GameLayer::FOREGROUND_2"
+        },
+
+        //{
+        //    "id": "LOC_0026_0025",
+        //    "gameObjectId": "GLOWWALL_192",
+        //    "angle": 90
+        //},
+        {
+            "id": "LOC_0014_0001",
+            "gameObjectType": "ESCAPE_STAIRS"
+        },
+        {
+            "id": "LOC_0014_0020",
+            "gameObjectType": "TURRET"
+        },
+        {
+            "id": "LOC_0016_0032",
+            "gameObjectType": "ESCAPE_STAIRS",
+            "layer": "GameLayer::BACKGROUND_2",
+            "angle": 270
+        },
+        //{
+        //    "id": "LOC_0014_0001",
+        //    "gameObjectId": "ESCAPE_STAIRS",
+        //    "layer": "LAYER_BACKGROUND_1",
+        //    "angle": 270
+
+        //},
+        {
+            "id": "LOC_0034_0031",
+            "gameObjectType": "TURRET",
+            "angle": 270
+        },
+        {
+            "id": "LOC_0019_0031",
+            "gameObjectType": "BREAKABLE_WALL"
+        },
+        {
+            "id": "LOC_0020_0031",
+            "gameObjectType": "BREAKABLE_WALL"
+        },
+        {
+            "id": "LOC_0021_0031",
+            "gameObjectType": "BREAKABLE_WALL"
+        },
+        {
+            "id": "LOC_0034_0033",
+            "gameObjectType": "TURRET",
+            "angle": 270
+        },
+        {
+            "id": "LOC_0034_0035",
+            "gameObjectType": "TURRET",
+            "angle": 270
+        },
+        {
+            "id": "LOC_0034_0037",
+            "gameObjectType": "TURRET",
+            "angle": 270
+        },
+        {
+            "id": "LOC_0034_0039",
+            "gameObjectType": "TURRET",
+            "angle": 270
+        },
+        {
+            "id": "LOC_0028_0041",
+            "gameObjectType": "SURVIVOR"
+        },
+        {
+            "id": "LOC_0022_0005",
+            "gameObjectType": "WALL_BUTTON",
+            "name": "Button1"
+        },
+        {
+            "id": "LOC_0033_0002",
+            "gameObjectType": "SURVIVOR"
+
+        },
+        {
+            "id": "LOC_0028_0003",
+            "gameObjectType": "BOWMAN",
+            "cameraFollow": false,
+            "name": "Frank"
+        },
+        {
+            "id": "LOC_0002_0012",
+            "gameObjectType": "SURVIVOR"
+        },
+        {
+            "id": "LOC_0017_0003",
+            "gameObjectType": "SURVIVOR"
+        },
+        {
+            "id": "LOC_0007_0010",
+            "gameObjectType": "TEST_CONTAINER"
+        },
+        {
+            "id": "LOC_0103_0009",
+            "gameObjectType": "DRONE2",
+            "name": "Mini1"
+        },
+        {
+            "id": "LOC_0099_0028",
+            "gameObjectType": "DRONE2",
+            "name": "Mini2"
+        }
+
+    ]
+}

@@ -1057,7 +1057,7 @@
                     "textureId": "TX_BACKGROUND_1_512",
                     "color": {
                         "tint": "Colors::CYAN",
-                        "alpha": 50
+                        "alpha": 20
                     }
                 },
                 {
