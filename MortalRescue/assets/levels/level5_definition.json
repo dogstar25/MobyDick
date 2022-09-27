@@ -94,12 +94,12 @@
     ],
     "colorDefinedObjects": [
         {
-            "color": "Colors::BLUE",
+            "colorKey": "Colors::BLUE",
             "gameObjectType": "NAVIGATION_WAYPOINT",
             "layer": "GameLayer::ABSTRACT"
         },
         {
-            "color": "Colors::CYAN",
+            "colorKey": "Colors::CYAN",
             "gameObjectType": "NAVIGATION_TRANSIT_POINT",
             "layer": "GameLayer::ABSTRACT"
         }

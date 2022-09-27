@@ -78,6 +78,7 @@ public:
 	void setParentScene( Scene* parentScene);
 	void setAngleInDegrees(float angle);
 	void setAngleInRadians(float angle);
+	void setColor(SDL_Color color);
 	bool hasTrait(int32_t trait) { return m_traitTags.test(trait); }
 	std::bitset<32> traits() {	return m_traitTags;	}
 	std::bitset<8> states() { return m_stateTags; }

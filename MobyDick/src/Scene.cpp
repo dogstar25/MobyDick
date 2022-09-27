@@ -299,7 +299,7 @@ GameObject* Scene::addGameObject(std::string gameObjectType, int layer, float xM
 
 	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectType, xMapPos, yMapPos, angle, this, layer, cameraFollow, name));
 
-	//Add index - no fragment objects
+	//Add index
 	addGameObjectIndex(gameObject);
 
 	return gameObject.get();

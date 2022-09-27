@@ -352,4 +352,9 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties assets_4levels_4level1_3definition_1json__JsonSchema="https://download.stackhawk.com/hawk/jsonconfig/hawkconfig.json" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>

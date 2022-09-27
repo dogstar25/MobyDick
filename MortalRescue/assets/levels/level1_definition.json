@@ -2,6 +2,7 @@
     "id": "LEVEL_1",
     "blueprint": "TX_LEVEL1_BLUEPRINT",
     "description": "TX_LEVEL_1",
+    "wallColor": "Colors::PARAKEET",
     "dimensions": {
         "levelWidth": 60,
         "levelHeight": 33,
@@ -78,9 +79,15 @@
     ],
     "colorDefinedObjects": [
         {
-            "color": "Colors::CYAN",
+            "colorKey": "Colors::CYAN",
             "gameObjectType": "NAVIGATION_TRANSIT_POINT",
             "layer": "GameLayer::ABSTRACT"
+        },
+        {
+            "colorKey": "Colors::PURPLE",
+            "gameObjectType": "VOID_FILLER",
+            "layer": "GameLayer::BACKGROUND_1",
+            "objectColor": "Colors::CYAN"
         }
 
     ],
@@ -98,7 +105,8 @@
         },
         {
             "id": "LOC_0041_0015",
-            "gameObjectType": "ESCAPE_STAIRS"
+            "gameObjectType": "ESCAPE_STAIRS",
+            "objectColor": "Colors::RED"
         },
         {
             "id": "LOC_0055_0010",
@@ -112,16 +120,20 @@
             "name": "Button1_TARGET"
         },
         {
-            "id": "LOC_0044_0014",
-            "gameObjectType": "WALL_TEST_FILLER1"
+            "id": "LOC_0052_0020",
+            "gameObjectType": "SURVIVOR"
         },
         {
-            "id": "LOC_0044_0015",
-            "gameObjectType": "WALL_TEST_FILLER1"
+            "id": "LOC_0048_0021",
+            "gameObjectType": "SURVIVOR"
         },
         {
-            "id": "LOC_0044_0016",
-            "gameObjectType": "WALL_TEST_FILLER1"
+            "id": "LOC_0052_0023",
+            "gameObjectType": "SURVIVOR"
+        },
+        {
+            "id": "LOC_0043_0026",
+            "gameObjectType": "HEALTH_STATION"
         }
     ]
 }

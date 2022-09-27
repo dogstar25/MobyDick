@@ -1078,6 +1078,28 @@
                     "id": "RENDER_COMPONENT"
                 }
             ]
+        },
+        {
+            "type": "VOID_FILLER",
+            "traitTags": [],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_DRONE_BRAIN_64",
+                    "color": {
+                        "tint": "Colors::CYAN",
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                }
+            ]
         }
     ]
 }
