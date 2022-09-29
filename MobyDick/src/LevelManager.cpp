@@ -91,6 +91,10 @@ void LevelManager::_loadDefinition(std::string levelId)
 	m_description = root["description"].asString();
 	m_blueprintTexture = root["blueprint"].asString();
 
+	if (root.isMember("wallColor")) {
+		m_wallColor = game->colorMap()->toSDLColor(root["wallColor"].asString());
+	}
+
 	//Dimensions
 	m_width = root["dimensions"]["levelWidth"].asInt();
 	m_height = root["dimensions"]["levelHeight"].asInt();
@@ -380,8 +384,8 @@ std::optional<LevelObject> LevelManager::_determineColorDefinedObject(SDL_Color 
 	//This location should have a location item defined for it 
 	for (Json::Value colorItemJSON : m_colorDefinedList) {
 
-		SDL_Color definedColor = game->colorMap()->toSDLColor(colorItemJSON["color"].asString());
-		if (definedColor == color) {
+		SDL_Color colorKey = game->colorMap()->toSDLColor(colorItemJSON["colorKey"].asString());
+		if (colorKey == color) {
 
 			levelObject = LevelObject();
 			levelObject->gameObjectType = colorItemJSON["gameObjectType"].asString();
@@ -396,6 +400,9 @@ std::optional<LevelObject> LevelManager::_determineColorDefinedObject(SDL_Color 
 			}
 			if (colorItemJSON.isMember("angle")) {
 				levelObject->angleAdjustment = colorItemJSON["angle"].asInt();
+			}
+			if (colorItemJSON.isMember("objectColor")) {
+				levelObject->color = game->colorMap()->toSDLColor(colorItemJSON["objectColor"].asString());
 			}
 
 		}
@@ -437,6 +444,10 @@ std::optional<LevelObject> LevelManager::_determineLocationDefinedObject(int x, 
 			if (locationItemJSON.isMember("angle")) {
 				levelObject->angleAdjustment = locationItemJSON["angle"].asInt();
 			}
+			if (locationItemJSON.isMember("objectColor")) {
+				levelObject->color = game->colorMap()->toSDLColor(locationItemJSON["objectColor"].asString());
+			}
+
 
 			break;
 		}
@@ -569,6 +580,12 @@ LevelObject LevelManager::_determineWallObject(int x, int y, SDL_Surface* bluePr
 	{
 		levelObject.gameObjectType = "WALL1_COLUMN";
 	}
+
+	//Wall color override if exists
+	if (m_wallColor.has_value()) {
+		levelObject.color = m_wallColor;
+	}
+
 	return levelObject;
 
 }
@@ -578,7 +595,7 @@ bool LevelManager::_isColorDefinedObject(SDL_Color color)
 
 	for (Json::Value colorItemJSON : m_colorDefinedList) {
 
-		SDL_Color definedColor = game->colorMap()->toSDLColor(colorItemJSON["color"].asString());
+		SDL_Color definedColor = game->colorMap()->toSDLColor(colorItemJSON["colorKey"].asString());
 		if (definedColor == color) {
 			return true;
 		}
@@ -598,8 +615,14 @@ void LevelManager::_buildLevelObjects(Scene* scene)
 			if (m_levelObjects[x][y].gameObjectType.empty() == false) {
 
 				levelObject = &m_levelObjects[x][y];
-				scene->addGameObject(levelObject->gameObjectType, levelObject->layer,
+				auto gameObject = scene->addGameObject(levelObject->gameObjectType, levelObject->layer,
 					(float)x, (float)y, (float)levelObject->angleAdjustment, levelObject->cameraFollow, levelObject->name);
+
+				//Apply color override
+				if (levelObject->color.has_value()) {
+					gameObject->setColor(levelObject->color.value());
+				}
+
 
 			}
 		}
@@ -621,7 +644,7 @@ void LevelManager::_buildTiledLayers(Scene* scene)
 		auto widthRemainder = (m_tileWidth * m_width) % tiledLayer.second.tileSize.x;
 		auto heightRemainder = (m_tileHeight * m_height) % tiledLayer.second.tileSize.y;
 
-		//If it did not dived evenly then we need to add 1 to cover the screen
+		//If it did not divide evenly then we need to add 1 to cover the screen
 		if (widthRemainder > 0) {
 			widthCount += 1;
 		}

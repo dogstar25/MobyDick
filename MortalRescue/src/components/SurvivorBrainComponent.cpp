@@ -67,6 +67,11 @@ int SurvivorBrainComponent::_determineState()
 	if (_detectEscapeLocation()) {
 		state = BrainState::ESCAPE;
 	}
+	else {
+		//This resolves the case where the survivor was headed to escape but lost sight of the escape somehow
+		//He was probably following and if he cant find player, should switch over to lost
+		state = BrainState::FOLLOW;
+	}
 
 	if (m_currentState == BrainState::FOLLOW) {
 		//If we have lost site of the object we're following then change to lost state

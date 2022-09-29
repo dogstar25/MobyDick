@@ -689,6 +689,14 @@ void GameObject::setCollisionTag( int contactTag)
 
 }
 
+void GameObject::setColor(SDL_Color color)
+{
+
+	const auto& renderComponent = getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
+	renderComponent->setColor(color);
+
+}
+
 void GameObject::_updateTouchingObjects()
 {
 

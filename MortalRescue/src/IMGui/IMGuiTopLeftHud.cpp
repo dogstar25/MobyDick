@@ -182,15 +182,11 @@ void IMGuiTopLeftHud::hudWeaponAccrualBar(ImVec4 color, float accrualValue)
 
 void IMGuiTopLeftHud::hudWeaponChargeBar(float accrualValue)
 {
-	//CurrLineTextBaseOffset
-	//ImGui::NewLine();
 
-
-	ImGui::Begin("weaponHud");
-	ImGui::SetWindowPos(ImVec2(400, 400));
-	ImGui::Value("accrualValue", accrualValue);
-	//ImGui::Value("hasMet", m_chargeTimer.hasMetTargetDuration());
-	ImGui::End();
+	//ImGui::Begin("weaponHud");
+	//ImGui::SetWindowPos(ImVec2(400, 400));
+	//ImGui::Value("accrualValue", accrualValue);
+	//ImGui::End();
 
 	SDL_Color accrualBarColor{};
 	if (accrualValue >= 100) {
@@ -199,7 +195,6 @@ void IMGuiTopLeftHud::hudWeaponChargeBar(float accrualValue)
 	else {
 		accrualBarColor = Colors::WHITE;
 	}
-
 
 	//TextureAtlas Coordinates for bar
 	glm::vec2 topLeft = util::glNormalizeTextureCoords({ 33,0 }, { 256, 256 });

@@ -1,10 +1,11 @@
 {
-    "id": "LEVEL1",
+    "id": "LEVEL_1",
     "blueprint": "TX_LEVEL1_BLUEPRINT",
-    "description": "Level 1",
+    "description": "TX_LEVEL_1",
+    "wallColor": "Colors::PARAKEET",
     "dimensions": {
-        "levelWidth": 128,
-        "levelHeight": 64,
+        "levelWidth": 60,
+        "levelHeight": 33,
         "tileWidth": 32,
         "tileHeight": 32
     },
@@ -18,17 +19,6 @@
             }
         }
     ],
-    "parallax": [
-        {
-            "layer": "GameLayer::BACKGROUND_1",
-            "parallaxRate": -10 // percent of normal scroll. negative value is slower. positive value is faster
-        },
-        {
-            "layer": "GameLayer::FOREGROUND_2",
-            "parallaxRate": 15
-        }
-
-    ],
     "statusItems": [
         {
             "id": "StatusItemId::PLAYERS_HEART_COUNT",
@@ -37,22 +27,10 @@
             "maxValue": 6
         },
         {
-            "id": "StatusItemId::SURVIVORS",
-            "initialValue": 3,
-            "minValue": 0,
-            "maxValue": 3
-        },
-        {
             "id": "StatusItemId::PLAYER_WEAPON_LEVEL",
             "initialValue": 1,
             "minValue": 0,
             "maxValue": 3
-        },
-        {
-            "id": "StatusItemId::SCRAP_COUNT",
-            "initialValue": 0,
-            "minValue": 0,
-            "maxValue": 2000
         },
         {
             "id": "StatusItemId::PLAYER_WEAPON_ACCRUAL",
@@ -71,7 +49,14 @@
             "initialValue": 0,
             "minValue": 0,
             "maxValue": 1
+        },
+        {
+            "id": "StatusItemId::SURVIVORS",
+            "initialValue": 2,
+            "minValue": 0,
+            "maxValue": 2
         }
+
 
     ],
     "objectives": [
@@ -94,183 +79,61 @@
     ],
     "colorDefinedObjects": [
         {
-            "color": "Colors::BLUE",
-            "gameObjectType": "NAVIGATION_WAYPOINT",
+            "colorKey": "Colors::CYAN",
+            "gameObjectType": "NAVIGATION_TRANSIT_POINT",
             "layer": "GameLayer::ABSTRACT"
         },
         {
-            "color": "Colors::CYAN",
-            "gameObjectType": "NAVIGATION_TRANSIT_POINT",
-            "layer": "GameLayer::ABSTRACT"
+            "colorKey": "Colors::PURPLE",
+            "gameObjectType": "VOID_FILLER",
+            "layer": "GameLayer::BACKGROUND_1",
+            "objectColor": "Colors::CYAN"
         }
 
     ],
     "locationDefinedObjects": [
         {
-            "id": "LOC_0007_0005",
+            "id": "LOC_0005_0011",
             "gameObjectType": "GINA_64",
-            "cameraFollow": true,
-            "layer": "GameLayer::MAIN",
-            "name": "PlayerGina"
+            "name": "PlayerGina",
+            "cameraFollow": true
         },
         {
-            "id": "LOC_0022_0002",
-            "gameObjectType": "PARTICLE_EMITTER_SPARK"
-        },
-        //{
-        //    "id": "LOC_0029_0009",
-        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
-        //},
-        //{
-        //    "id": "LOC_0029_0010",
-        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
-        //},
-        //{
-        //    "id": "LOC_0029_0011",
-        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
-        //},
-        //{
-        //    "id": "LOC_0029_0012",
-        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
-        //},
-        //{
-        //    "id": "LOC_0029_0013",
-        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
-        //},
-
-        //{
-        //    "id": "LOC_0016_0013",
-        //    "gameObjectId": "DRONE"
-        //},
-        {
-            "id": "LOC_0016_0006",
-            "gameObjectType": "HEALTH_STATION"
-        },
-        {
-            "id": "LOC_0011_0005",
-            "gameObjectType": "PLAYER_HEART"
-        },
-        {
-            "id": "LOC_0015_0023",
-            "gameObjectType": "GLOWWALL_352",
-            "name": "Button1_TARGET"
-        },
-        {
-            "id": "LOC_0061_0027",
-            "gameObjectType": "BOWMAN",
-            "layer": "GameLayer::BACKGROUND_1"
-        },
-        {
-            "id": "LOC_0059_0029",
-            "gameObjectType": "STUBB",
-            "layer": "GameLayer::FOREGROUND_2"
-        },
-
-        //{
-        //    "id": "LOC_0026_0025",
-        //    "gameObjectId": "GLOWWALL_192",
-        //    "angle": 90
-        //},
-        {
-            "id": "LOC_0014_0001",
-            "gameObjectType": "ESCAPE_STAIRS"
-        },
-        {
-            "id": "LOC_0014_0020",
-            "gameObjectType": "TURRET"
-        },
-        {
-            "id": "LOC_0016_0032",
-            "gameObjectType": "ESCAPE_STAIRS",
-            "layer": "GameLayer::BACKGROUND_2",
-            "angle": 270
-        },
-        //{
-        //    "id": "LOC_0014_0001",
-        //    "gameObjectId": "ESCAPE_STAIRS",
-        //    "layer": "LAYER_BACKGROUND_1",
-        //    "angle": 270
-
-        //},
-        {
-            "id": "LOC_0034_0031",
-            "gameObjectType": "TURRET",
-            "angle": 270
-        },
-        {
-            "id": "LOC_0019_0031",
-            "gameObjectType": "BREAKABLE_WALL"
-        },
-        {
-            "id": "LOC_0020_0031",
-            "gameObjectType": "BREAKABLE_WALL"
-        },
-        {
-            "id": "LOC_0021_0031",
-            "gameObjectType": "BREAKABLE_WALL"
-        },
-        {
-            "id": "LOC_0034_0033",
-            "gameObjectType": "TURRET",
-            "angle": 270
-        },
-        {
-            "id": "LOC_0034_0035",
-            "gameObjectType": "TURRET",
-            "angle": 270
-        },
-        {
-            "id": "LOC_0034_0037",
-            "gameObjectType": "TURRET",
-            "angle": 270
-        },
-        {
-            "id": "LOC_0034_0039",
-            "gameObjectType": "TURRET",
-            "angle": 270
-        },
-        {
-            "id": "LOC_0028_0041",
-            "gameObjectType": "SURVIVOR"
-        },
-        {
-            "id": "LOC_0022_0005",
-            "gameObjectType": "WALL_BUTTON",
-            "name": "Button1"
-        },
-        {
-            "id": "LOC_0033_0002",
-            "gameObjectType": "SURVIVOR"
-
-        },
-        {
-            "id": "LOC_0028_0003",
-            "gameObjectType": "BOWMAN",
-            "cameraFollow": false,
+            "id": "LOC_0023_0014",
+            "gameObjectType": "SURVIVOR",
             "name": "Frank"
         },
         {
-            "id": "LOC_0002_0012",
+            "id": "LOC_0041_0015",
+            "gameObjectType": "ESCAPE_STAIRS",
+            "objectColor": "Colors::RED"
+        },
+        {
+            "id": "LOC_0055_0010",
+            "gameObjectType": "WALL_BUTTON",
+            "name": "Button1",
+            "angle": 270
+        },
+        {
+            "id": "LOC_0047_0017",
+            "gameObjectType": "GLOWWALL_192",
+            "name": "Button1_TARGET"
+        },
+        {
+            "id": "LOC_0052_0020",
             "gameObjectType": "SURVIVOR"
         },
         {
-            "id": "LOC_0017_0003",
+            "id": "LOC_0048_0021",
             "gameObjectType": "SURVIVOR"
         },
         {
-            "id": "LOC_0007_0010",
-            "gameObjectType": "TEST_CONTAINER"
+            "id": "LOC_0052_0023",
+            "gameObjectType": "SURVIVOR"
         },
         {
-            "id": "LOC_0103_0009",
-            "gameObjectType": "DRONE2",
-            "name": "Mini1"
-        },
-        {
-            "id": "LOC_0099_0028",
-            "gameObjectType": "DRONE2",
-            "name": "Mini2"
+            "id": "LOC_0043_0026",
+            "gameObjectType": "HEALTH_STATION"
         }
-
     ]
 }

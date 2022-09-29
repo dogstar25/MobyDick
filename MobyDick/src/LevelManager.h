@@ -23,6 +23,7 @@ struct LevelObject
 	int angleAdjustment {};
 	bool cameraFollow{ false };
 	std::string name{};
+	std::optional<SDL_Color> color{};
 };
 
 struct Objective
@@ -54,6 +55,7 @@ public:
 	int m_tileWidth{};
 	int m_tileHeight{};
 	SDL_Rect m_levelBounds{};
+	std::optional<SDL_Color> m_wallColor;
 
 	void loadLevel(std::string levelId, Scene* scene);
 	void loadLevel(std::string levelId, std::string sceneId);
