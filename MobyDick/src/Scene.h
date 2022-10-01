@@ -69,7 +69,7 @@ public:
 	void applyCurrentControlMode();
 	SDL_FPoint calcWindowPosition(int globalPosition);
 	std::optional<std::shared_ptr<GameObject>> getGameObject(std::string id);
-	std::optional<std::shared_ptr<GameObject>> getGameObjectByName(std::string name);
+	std::vector<std::shared_ptr<GameObject>> getGameObjectsByName(std::string name);
 	std::optional<std::string> getNextLevel();
 	
 	void stepB2PhysicsWorld() {

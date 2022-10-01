@@ -30,6 +30,7 @@ private:
 	void _playerBullet_droneShield(GameObject*, GameObject*, b2Vec2 contactPoint);
 	void _player_shieldScrap(GameObject*, GameObject*, b2Vec2 contactPoint);
 	void _enemyBullet_player(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _radiationParticle_player(GameObject*, GameObject*, b2Vec2 contactPoint);
 	void _survivor_escape(GameObject*, GameObject*, b2Vec2 contactPoint);
 	void _playerBullet_wallPiece(GameObject*, GameObject*, b2Vec2 contactPoint);
 	void _playerBullet_enemyTurret(GameObject*, GameObject*, b2Vec2 contactPoint);

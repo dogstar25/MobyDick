@@ -160,6 +160,12 @@
                     "gameObjectType": "PULSE_EXPLOSION",
                     "lifetime": 0.0,
                     "maxItems": 5
+                },
+                {
+                    "id": "RADIATION_POOL",
+                    "gameObjectType": "PARTICLE_RADIATION",
+                    "lifetime": 2.25,
+                    "maxItems": 1000
                 }
 
             ],

@@ -52,9 +52,9 @@
         },
         {
             "id": "StatusItemId::SURVIVORS",
-            "initialValue": 2,
+            "initialValue": 6,
             "minValue": 0,
-            "maxValue": 2
+            "maxValue": 6
         }
 
 
@@ -105,8 +105,7 @@
         },
         {
             "id": "LOC_0041_0015",
-            "gameObjectType": "ESCAPE_STAIRS",
-            "objectColor": "Colors::RED"
+            "gameObjectType": "ESCAPE_STAIRS"
         },
         {
             "id": "LOC_0055_0010",
@@ -116,16 +115,25 @@
         },
         {
             "id": "LOC_0047_0017",
-            "gameObjectType": "GLOWWALL_192",
+            "gameObjectType": "GLOWWALL_224",
             "name": "Button1_TARGET"
         },
         {
+            "id": "LOC_0044_0007",
+            "gameObjectType": "GLOWWALL_192",
+            "angle": 90,
+            "name": "Button1_TARGET",
+            "disabled": "DISABLED_TYPE::RENDER_AND_PHYSICS"
+        },
+        {
             "id": "LOC_0052_0020",
-            "gameObjectType": "SURVIVOR"
+            "gameObjectType": "SURVIVOR",
+            "angle": 90
         },
         {
             "id": "LOC_0048_0021",
-            "gameObjectType": "SURVIVOR"
+            "gameObjectType": "SURVIVOR",
+            "angle": 243
         },
         {
             "id": "LOC_0052_0023",
@@ -134,6 +142,91 @@
         {
             "id": "LOC_0043_0026",
             "gameObjectType": "HEALTH_STATION"
+        },
+        {
+            "id": "LOC_0023_0026",
+            "gameObjectType": "HEALTH_STATION"
+        },
+        {
+            "id": "LOC_0033_0025",
+            "gameObjectType": "TURRET",
+            "angle": 180
+        },
+        {
+            "id": "LOC_0033_0028",
+            "gameObjectType": "TURRET"
+        },
+        {
+            "id": "LOC_0045_0024",
+            "gameObjectType": "SURVIVOR"
+        },
+        {
+            "id": "LOC_0043_0018",
+            "gameObjectType": "TURRET",
+            "angle": 180
+        },
+        {
+            "id": "LOC_0028_0014",
+            "gameObjectType": "GLOWWALL_64",
+            "name": "button3_TARGET"
+        },
+        {
+            "id": "LOC_0046_0026",
+            "gameObjectType": "GLOWWALL_64",
+            "name": "button3_TARGET",
+            "angle": 90,
+            "disabled": "DISABLED_TYPE::RENDER_AND_PHYSICS"
+        },
+        {
+            "id": "LOC_0008_0018",
+            "gameObjectType": "WALL_BUTTON",
+            "name": "button3",
+            "angle": 180
+        },
+        {
+            "id": "LOC_0006_0021",
+            "gameObjectType": "SURVIVOR",
+            "angle": 90
+        },
+        {
+            "id": "LOC_0007_0022",
+            "gameObjectType": "SURVIVOR",
+            "angle": 180
+        },
+        {
+            "id": "LOC_0010_0019",
+            "gameObjectType": "BREAKABLE_WALL"
+        },
+        {
+            "id": "LOC_0010_0020",
+            "gameObjectType": "BREAKABLE_WALL"
+        },
+        {
+            "id": "LOC_0010_0021",
+            "gameObjectType": "BREAKABLE_WALL"
+        },
+        {
+            "id": "LOC_0032_0016",
+            "gameObjectType": "RADIATION_EMITTER",
+            "angle": 45
+        },
+        {
+            "id": "LOC_0023_0018",
+            "gameObjectType": "WALL_BUTTON",
+            "name": "button6",
+            "angle": 270
+        },
+        {
+            "id": "LOC_0025_0017",
+            "gameObjectType": "LASERWALL_64",
+            "name": "button6_TARGET",
+            "disabled": "DISABLED_TYPE::RENDER_AND_PHYSICS"
+        },
+        {
+            "id": "LOC_0031_0017",
+            "gameObjectType": "LASERWALL_64",
+            "name": "button6_TARGET",
+            "disabled": "DISABLED_TYPE::RENDER_AND_PHYSICS"
         }
     ]
 }

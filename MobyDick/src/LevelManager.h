@@ -24,6 +24,7 @@ struct LevelObject
 	bool cameraFollow{ false };
 	std::string name{};
 	std::optional<SDL_Color> color{};
+	std::optional<int> disabledType{};
 };
 
 struct Objective

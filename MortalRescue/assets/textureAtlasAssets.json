@@ -460,9 +460,9 @@
             "description": "Wall Button",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 235,
+                "x": 202,
                 "y": 56,
-                "width": 32,
+                "width": 64,
                 "height": 32
             }
 
@@ -664,6 +664,39 @@
                 "y": 2320,
                 "width": 367,
                 "height": 512
+            }
+        },
+        {
+            "id": "TX_DIAMOND_32",
+            "description": "A Diamond shape",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 530,
+                "y": 56,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_BROKEN_CIRCLE",
+            "description": "A Broken circle",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 651,
+                "y": 268,
+                "width": 64,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_LASERWALL",
+            "description": "Laser Wall",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 161,
+                "y": 4,
+                "width": 16,
+                "height": 8
             }
         }
 

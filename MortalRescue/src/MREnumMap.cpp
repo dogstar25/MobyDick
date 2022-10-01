@@ -31,6 +31,7 @@ MREnumMap::MREnumMap()
 	addEnumItem("ContactTag::CONTAINER_INSIDE", ContactTag::HEALTH_STATION_INSIDE);
 	addEnumItem("ContactTag::PLAYER_PULSE_BULLET", ContactTag::PLAYER_PULSE_BULLET);
 	addEnumItem("ContactTag::PLAYER_PULSE_EXPLOSION", ContactTag::PLAYER_PULSE_EXPLOSION);
+	addEnumItem("ContactTag::RADIATION_PARTICLE", ContactTag::RADIATION_PARTICLE);
 
 	//Custom Component Types
 	addEnumItem("BRAIN_DRONE_COMPONENT", ComponentTypes::BRAIN_DRONE_COMPONENT);

@@ -396,10 +396,31 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 	const auto& playerVitalityComponent = player->getComponent<GinaVitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 	const auto& bulletVitalityComponent = bullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
-	//playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
+	playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
 
 
 }
+
+void MRContactListener::_radiationParticle_player(GameObject* radiationParticle, GameObject* player, b2Vec2 contactPoint)
+{
+
+	//flag the scrap item to be removed from the game and play a sound effect
+	radiationParticle->setRemoveFromWorld(true);
+	SoundManager::instance().playSound("SFX_RETRO_IMPACT_5");
+
+	//Do a color flash animate on the turret
+	const auto& turretAnimationComponent = player->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
+	turretAnimationComponent->setFlash(Colors::YELLOW, .005, 2);
+
+	//Inflict damage
+	const auto& playerVitalityComponent = player->getComponent<GinaVitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	const auto& bulletVitalityComponent = radiationParticle->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+
+	playerVitalityComponent->inflictDamage(0.2);
+
+
+}
+
 
 
 void MRContactListener::_survivor_escape(GameObject* survivor, GameObject* escape, b2Vec2 contactPoint)
@@ -676,6 +697,21 @@ void MRContactListener::handleContact(b2Contact* contact, b2Vec2 contactPoint)
 		}
 		else {
 			_enemyBullet_player(contact2, contact1, contactPoint);
+		}
+
+	}
+
+	///////////////////////////////////
+	// Radiation Particle - Player
+	///////////////////////////////////
+	if ((contactTag1 == ContactTag::PLAYER_HITBOX && contactTag2 == ContactTag::RADIATION_PARTICLE) ||
+		(contactTag2 == ContactTag::PLAYER_HITBOX && contactTag1 == ContactTag::RADIATION_PARTICLE)) {
+
+		if (contactTag1 == ContactTag::RADIATION_PARTICLE) {
+			_radiationParticle_player(contact1, contact2, contactPoint);
+		}
+		else {
+			_radiationParticle_player(contact2, contact1, contactPoint);
 		}
 
 	}
