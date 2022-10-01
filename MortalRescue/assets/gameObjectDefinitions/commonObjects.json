@@ -758,7 +758,7 @@
                 {
                     "id": "RENDER_COMPONENT",
                     "color": {
-                        "tint": "Colors::RED",
+                        "tint": "Colors::CYAN",
                         "alpha": 255
                     }
                 },
@@ -850,15 +850,9 @@
                 {
                     "id": "WEAPON_COMPONENT",
                     "fireOffset": -1.0,
-                    "weaponLevels": [
-                        {
-                            "level": 1,
-                            "force": 1,
-                            "color": "Colors::RED",
-                            "levelUpTarget": 25,
-                            "bulletPoolId": "BULLET2_POOL"
-                        }
-                    ]
+                    "force": 0.25,
+                    "color": "Colors::WHITE",
+                    "bulletPoolId": "BULLET2_POOL"
                 }
             ]
         },

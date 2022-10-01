@@ -21,18 +21,31 @@ WeaponComponent::WeaponComponent(Json::Value componentJSON)
 	m_fireOffset = componentJSON["fireOffset"].asFloat();
 	m_levelUpIncrement = componentJSON["levelUpIncrement"].asFloat();
 
-	for (Json::Value itrWeaponLevel : componentJSON["weaponLevels"])
-	{
-		int level = itrWeaponLevel["level"].asInt();
-		WeaponLevelDetail weaponLevelDetail;
+	//We either have 1 set of weapon parameters or multiple levels
+	if (componentJSON.isMember("weaponLevels")) {
+		for (Json::Value itrWeaponLevel : componentJSON["weaponLevels"])
+		{
+			int level = itrWeaponLevel["level"].asInt();
+			WeaponLevelDetail weaponLevelDetail;
 
-		weaponLevelDetail.level = itrWeaponLevel["level"].asInt();
-		weaponLevelDetail.force = itrWeaponLevel["force"].asFloat();
-		if (itrWeaponLevel.isMember("color")) {
-			weaponLevelDetail.color = game->colorMap()->toSDLColor(itrWeaponLevel["color"].asString());
+			weaponLevelDetail.level = itrWeaponLevel["level"].asInt();
+			weaponLevelDetail.force = itrWeaponLevel["force"].asFloat();
+			if (itrWeaponLevel.isMember("color")) {
+				weaponLevelDetail.color = game->colorMap()->toSDLColor(itrWeaponLevel["color"].asString());
+			}
+			weaponLevelDetail.bulletPoolId = itrWeaponLevel["bulletPoolId"].asString();
+			m_weaponLevelDetails.emplace(level, std::move(weaponLevelDetail));
+
 		}
-		weaponLevelDetail.bulletPoolId = itrWeaponLevel["bulletPoolId"].asString();
-		m_weaponLevelDetails.emplace(level, std::move(weaponLevelDetail));
+	}
+	else {
+		WeaponLevelDetail weaponLevelDetail;
+		weaponLevelDetail.force = componentJSON["force"].asFloat();
+		if (componentJSON.isMember("color")) {
+			weaponLevelDetail.color = game->colorMap()->toSDLColor(componentJSON["color"].asString());
+		}
+		weaponLevelDetail.bulletPoolId = componentJSON["bulletPoolId"].asString();
+		m_weaponLevelDetails.emplace(1, std::move(weaponLevelDetail));
 
 	}
 
@@ -125,6 +138,22 @@ void WeaponComponent::_levelUp()
 		m_currentLevel++;
 	}
 
+
+}
+
+void WeaponComponent::setColor(SDL_Color color)
+{
+	//This only works for weapons with 1 level
+
+	m_weaponLevelDetails.at(1).color = color;
+
+}
+
+void WeaponComponent::setForce(float force)
+{
+	//This only works for weapons with 1 level
+
+	m_weaponLevelDetails.at(1).force = force;
 
 }
 
