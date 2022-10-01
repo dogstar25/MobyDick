@@ -697,6 +697,22 @@ void GameObject::setColor(SDL_Color color)
 
 }
 
+void GameObject::setWeaponColor(SDL_Color color)
+{
+
+	const auto& weaponComponent = getComponent<WeaponComponent>(ComponentTypes::WEAPON_COMPONENT);
+	weaponComponent->setColor(color);
+
+}
+
+void GameObject::setWeaponForce(float force)
+{
+
+	const auto& weaponComponent = getComponent<WeaponComponent>(ComponentTypes::WEAPON_COMPONENT);
+	weaponComponent->setForce(force);
+
+}
+
 void GameObject::_updateTouchingObjects()
 {
 

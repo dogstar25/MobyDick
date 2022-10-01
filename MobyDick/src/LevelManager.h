@@ -25,6 +25,8 @@ struct LevelObject
 	std::string name{};
 	std::optional<SDL_Color> color{};
 	std::optional<int> disabledType{};
+	std::optional<float> weaponForce{};
+	std::optional<SDL_Color> weaponColor{};
 };
 
 struct Objective

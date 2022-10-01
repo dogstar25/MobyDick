@@ -407,6 +407,12 @@ std::optional<LevelObject> LevelManager::_determineColorDefinedObject(SDL_Color 
 			if (colorItemJSON.isMember("disabled")) {
 				levelObject->disabledType = game->enumMap()->toEnum(colorItemJSON["disabled"].asString());
 			}
+			if (colorItemJSON.isMember("weaponForce")) {
+				levelObject->weaponForce = colorItemJSON["weaponForce"].asFloat();
+			}
+			if (colorItemJSON.isMember("weaponColor")) {
+				levelObject->weaponColor = game->colorMap()->toSDLColor(colorItemJSON["weaponColor"].asString());
+			}
 
 		}
 	}
@@ -452,6 +458,12 @@ std::optional<LevelObject> LevelManager::_determineLocationDefinedObject(int x, 
 			}
 			if (locationItemJSON.isMember("disabled")) {
 				levelObject->disabledType = game->enumMap()->toEnum(locationItemJSON["disabled"].asString());
+			}
+			if (locationItemJSON.isMember("weaponForce")) {
+				levelObject->weaponForce = locationItemJSON["weaponForce"].asFloat();
+			}
+			if (locationItemJSON.isMember("weaponColor")) {
+				levelObject->weaponColor = game->colorMap()->toSDLColor(locationItemJSON["weaponColor"].asString());
 			}
 
 			break;
@@ -654,6 +666,17 @@ void LevelManager::_buildLevelObjects(Scene* scene)
 					}
 
 				}
+
+				//Apply override weapon color if exists
+				if (levelObject->weaponColor.has_value()) {
+					gameObject->setWeaponColor(levelObject->weaponColor.value());
+				}
+
+				//Apply override weapon force if exists
+				if (levelObject->weaponForce.has_value()) {
+					gameObject->setWeaponForce(levelObject->weaponForce.value());
+				}
+
 				
 			}
 		}

@@ -65,20 +65,22 @@ public:
 	void setPosition(SDL_FPoint position);
 	void setPosition(PositionAlignment windowPosition, float adjustX=0., float adjustY=0.);
 	void setLayer(int layer) { m_layer = layer; }
-	bool isPointingAt(SDL_FPoint gameObject);
-	bool holdsDependentGameObjects();
-	
+	void setPhysicsActive(bool active);
+	void setParentScene(Scene* parentScene);
+	void setAngleInDegrees(float angle);
+	void setAngleInRadians(float angle);
+	void setColor(SDL_Color color);
+	void setWeaponForce(float force);
+	void setWeaponColor(SDL_Color color);
+
 	b2Vec2 getSize();
 	float getAngle();
 	SDL_FPoint getCenterPosition();
 	SDL_FPoint getTopLeftPosition();
-	
+	bool isPointingAt(SDL_FPoint gameObject);
+	bool holdsDependentGameObjects();
+
 	void postInit();
-	void setPhysicsActive(bool active);
-	void setParentScene( Scene* parentScene);
-	void setAngleInDegrees(float angle);
-	void setAngleInRadians(float angle);
-	void setColor(SDL_Color color);
 	bool hasTrait(int32_t trait) { return m_traitTags.test(trait); }
 	std::bitset<32> traits() {	return m_traitTags;	}
 	std::bitset<8> states() { return m_stateTags; }

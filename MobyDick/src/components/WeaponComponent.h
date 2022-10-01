@@ -33,6 +33,9 @@ public:
 	void checkLevelUp(const int) {};
 	std::string getBulletPoolId();
 
+	void setColor(SDL_Color color);
+	void setForce(float force);
+
 
 protected:
 	
