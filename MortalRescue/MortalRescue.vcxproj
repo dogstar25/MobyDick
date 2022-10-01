@@ -254,6 +254,7 @@
     <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
     <None Include="assets\gameObjectDefinitions\guiObjects.json" />
     <None Include="assets\gameObjectDefinitions\hudObjects.json" />
+    <None Include="assets\gameObjectDefinitions\playerObjects.json" />
     <None Include="assets\gameObjectDefinitions\testObjects.json" />
     <None Include="assets\gameObjectDefinitions\titleScreenObjects.json" />
     <None Include="assets\gameObjectDefinitions\wallObjects.json" />
@@ -275,6 +276,7 @@
     <Media Include="assets\sound\impact_metal_shell_003.wav" />
     <Media Include="assets\sound\pick_up_001.wav" />
     <Media Include="assets\sound\pick_up_002.wav" />
+    <Media Include="assets\sound\player_explode_1.wav" />
     <Media Include="assets\sound\retro_impact_hit_05.wav" />
     <Media Include="assets\sound\retro_impact_hit_16.wav" />
     <Media Include="assets\sound\retro_survivor_escapes.wav" />

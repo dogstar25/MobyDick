@@ -205,6 +205,7 @@
     <None Include="assets\gameObjectDefinitions\titleScreenObjects.json" />
     <None Include="assets\levels\level100_definition.json" />
     <None Include="assets\gameObjectDefinitions\testObjects.json" />
+    <None Include="assets\gameObjectDefinitions\playerObjects.json" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav">
@@ -256,6 +257,9 @@
       <Filter>Resource Files</Filter>
     </Media>
     <Media Include="assets\sound\turret deploy_1.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="assets\sound\player_explode_1.wav">
       <Filter>Resource Files</Filter>
     </Media>
   </ItemGroup>

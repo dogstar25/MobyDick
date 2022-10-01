@@ -4,6 +4,9 @@
 #include "game.h"
 #include "../GameConstants.h"
 #include "triggers/Trigger.h"
+#include "../particleEffects/GameParticleEffects.h"
+#include "SoundManager.h"
+
 
 extern std::unique_ptr<Game> game;
 
@@ -36,19 +39,7 @@ bool PlayerDeath::hasMetCriteria(Scene* scene)
 void PlayerDeath::execute()
 {
 
-
 	util::sendSceneEvent(SCENE_ACTION_ADD, "SCENE_PLAYER_DEATH");
-
 	m_hasTriggered = true;
-
-	auto playerObject = SceneManager::instance().currentScene().getGameObjectsByName("PlayerGina");
-	assert(!playerObject.empty() && "GameObject wasnt found!");
-
-	//There shoudl only be one player
-	auto _player = playerObject[0];
-	_player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
-
-
-
 
 }
