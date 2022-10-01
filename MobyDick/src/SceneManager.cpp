@@ -27,11 +27,10 @@ SceneManager& SceneManager::instance()
 
 void SceneManager::deleteGameObject(std::string gameObjectName)
 {
-	auto foundGameObject = m_scenes.back().getGameObjectByName(gameObjectName);
-	if (foundGameObject.has_value()) {
-		foundGameObject.value()->setRemoveFromWorld(true);
+	auto foundGameObjects = m_scenes.back().getGameObjectsByName(gameObjectName);
+	for (auto gameObject : foundGameObjects) {
+		gameObject->setRemoveFromWorld(true);
 	}
-
 
 }
 

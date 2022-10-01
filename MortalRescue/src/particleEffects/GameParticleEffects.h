@@ -231,4 +231,22 @@ namespace ParticleEffects {
 			.particleSpawnCountMax = 1
 	};
 
+	static const ParticleEffect radiation = {
+		.poolId = "RADIATION_POOL",
+		.originMin = {0,0},
+		.originMax = {0,0},
+		.forceMin = 1,
+		.forceMax = 5,
+		.lifetimeMin = 2.2F,
+		.lifetimeMax = 4.5F,
+		.alphaFade = false,
+		.angleMin = 30,
+		.angleMax = 145,
+		.particleSizeMin = 5.1,
+		.particleSizeMax = 20.2,
+		.colorRangeBegin = {180,0,0,255},
+		.colorRangeEnd = {255,30,76,255},
+		.particleSpawnCountMin = 20,
+		.particleSpawnCountMax = 40
+	};
 }

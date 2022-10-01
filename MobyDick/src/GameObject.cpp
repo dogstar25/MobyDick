@@ -169,7 +169,7 @@ GameObject::GameObject(std::string gameObjectType, float xMapPos, float yMapPos,
 void GameObject::addTouchingObject(std::shared_ptr<GameObject> touchingObject) 
 {
 
-	m_touchingGameObjects[touchingObject->name()] = touchingObject;
+	m_touchingGameObjects[touchingObject->id()] = touchingObject;
 
 }
 

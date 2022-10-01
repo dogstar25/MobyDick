@@ -103,13 +103,14 @@ void CutSceneDiscoverTreasure::end()
 
 std::shared_ptr<GameObject> CutSceneDiscoverTreasure::_startPlayer()
 {
-	auto playerObject = currentScene->getGameObject("PlayerGina");
-	assert(playerObject.has_value() && "GameObject wasnt found!");
+	auto playerObject = SceneManager::instance().currentScene().getGameObjectsByName("PlayerGina");
+	assert(!playerObject.empty() && "GameObject wasnt found!");
 
-	_player = playerObject.value();
-	_player.lock()->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
+	//There shoudl only be one player
+	auto _player = playerObject[0];
+	_player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
 
-	return _player.lock();;
+	return _player;
 }
 
 void CutSceneDiscoverTreasure::_endPlayer()
@@ -124,10 +125,11 @@ std::shared_ptr<GameObject> CutSceneDiscoverTreasure::_startFrank()
 	Json::Value componentsDefinition{};
 	Json::Value brainDefinition{};
 
-	auto frankObject = currentScene->getGameObject("Frank");
-	assert(frankObject.has_value() && "GameObject wasnt found!");
+	auto frankGameObjects = SceneManager::instance().currentScene().getGameObjectsByName("Frank");
+	assert(!frankGameObjects.empty() && "GameObject wasnt found!");
 
-	auto frank = frankObject.value();
+	//There shoudl only be one frank
+	auto frank = frankGameObjects[0];
 
 	//Give Frank a brain
 	//brainDefinition["id"] = "BRAIN_COMPONENT";

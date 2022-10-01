@@ -27,6 +27,15 @@ inline constexpr int CONTROL_MODE_PLAY = 1;
 inline constexpr int CONTROL_MODE_IMGUI = 2;
 
 
+namespace DISABLED_TYPE {
+	inline constexpr int RENDER = 0;
+	inline constexpr int UPDATE = 1;
+	inline constexpr int PHYSICS = 2;
+	inline constexpr int RENDER_AND_PHYSICS = 3;
+	inline constexpr int RENDER_AND_UPDATE = 4;
+	inline constexpr int PHYICS_AND_UPDATE = 5;
+}
+
 namespace Colors {
 
 	inline SDL_Color WHITE = { 255, 255, 255, 255 };

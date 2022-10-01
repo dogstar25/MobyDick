@@ -54,7 +54,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[HEAVY_PARTICLE].reset();
 	m_contactMasks[HEAVY_PARTICLE].set(WALL);
 	m_contactMasks[HEAVY_PARTICLE].set(DRONE_FRAME);
-	m_contactMasks[HEAVY_PARTICLE].set(PLAYER_COLLISION);
+	m_contactMasks[HEAVY_PARTICLE].set(PLAYER_HITBOX);
 	m_contactMasks[HEAVY_PARTICLE].set(DRONE_SHIELD);
 	m_contactMasks[HEAVY_PARTICLE].set(DRONE_SCRAP);
 
@@ -81,7 +81,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_COLLISION].set(DRONE_FRAME);
 	m_contactMasks[PLAYER_COLLISION].set(WALL);
 	m_contactMasks[PLAYER_COLLISION].set(WALL_PIECE);
-	m_contactMasks[PLAYER_COLLISION].set(HEAVY_PARTICLE);
+	m_contactMasks[PLAYER_COLLISION].set(RADIATION_PARTICLE);
 	m_contactMasks[PLAYER_COLLISION].set(DRONE_SCRAP);
 	m_contactMasks[PLAYER_COLLISION].set(HEART_PICKUP);
 	m_contactMasks[PLAYER_COLLISION].set(LEVEL_CAGE);
@@ -95,6 +95,8 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_HITBOX].reset();
 	m_contactMasks[PLAYER_HITBOX].set(ENEMY_BULLET);
 	m_contactMasks[PLAYER_HITBOX].set(ENEMY_TURRET);
+	m_contactMasks[PLAYER_HITBOX].set(HEAVY_PARTICLE);
+	m_contactMasks[PLAYER_HITBOX].set(RADIATION_PARTICLE);
 
 	//PLAYER_BULLET
 	m_contactMasks[PLAYER_BULLET].reset();
@@ -150,7 +152,8 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[WALL].set(SURVIVOR);
 	m_contactMasks[WALL].set(ENEMY_BULLET);
 	m_contactMasks[WALL].set(DRONE_SCRAP);
-
+	m_contactMasks[WALL].set(RADIATION_PARTICLE);
+	
 	//BUTTONS
 	m_contactMasks[BUTTON].reset();
 	m_contactMasks[BUTTON].set(GENERAL_SOLID);
@@ -193,6 +196,15 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[HEALTH_STATION_INSIDE].set(HEART_PICKUP);
 	m_contactMasks[HEALTH_STATION_INSIDE].set(PLAYER_BULLET);
 	m_contactMasks[HEALTH_STATION_INSIDE].set(PLAYER_PULSE_BULLET);
+
+	//Radiation Particle
+	m_contactMasks[RADIATION_PARTICLE].reset();
+	m_contactMasks[RADIATION_PARTICLE].set(WALL);
+	m_contactMasks[RADIATION_PARTICLE].set(DRONE_FRAME);
+	m_contactMasks[RADIATION_PARTICLE].set(PLAYER_HITBOX);
+	m_contactMasks[RADIATION_PARTICLE].set(DRONE_SHIELD);
+	m_contactMasks[RADIATION_PARTICLE].set(DRONE_SCRAP);
+	
 
 }
 

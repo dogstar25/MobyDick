@@ -252,8 +252,8 @@
                         {
                             "state": "ANIMATION_ACTIVE",
                             "textureId": "TX_WALL_BUTTON_ACTIVE",
-                            "speed": 0.05,
-                            "frames": 1
+                            "speed": 0.2,
+                            "frames": 2
                         }
                     ]
                 },
@@ -758,7 +758,7 @@
                 {
                     "id": "RENDER_COMPONENT",
                     "color": {
-                        "tint": "Colors::CYAN",
+                        "tint": "Colors::RED",
                         "alpha": 255
                     }
                 },
@@ -1098,6 +1098,36 @@
                         "height": 32
                     },
                     "absolutePositioning": false
+                }
+            ]
+        },
+        {
+            "type": "RADIATION_EMITTER",
+            "traitTags": [],
+            "description": "Particle Emitter",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_BROKEN_CIRCLE",
+                    "color": {
+                        "tint": "Colors::CYAN",
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    }
+                },
+                {
+                    "id": "PARTICLE_X_COMPONENT",
+                    "type": "ParticleEmitterType::CONTINUOUS",
+                    "emissionInterval": 0.2,
+                    "effects": [
+                        "radiation"
+                    ]
                 }
             ]
         }

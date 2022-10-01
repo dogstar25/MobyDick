@@ -492,22 +492,21 @@ std::optional<std::shared_ptr<GameObject>> Scene::getGameObject(std::string id)
 	return foundGameObject;
 }
 
-std::optional<std::shared_ptr<GameObject>> Scene::getGameObjectByName(std::string name)
+std::vector<std::shared_ptr<GameObject>> Scene::getGameObjectsByName(std::string name)
 {
-	std::optional<std::shared_ptr<GameObject>> foundGameObject{};
+	std::vector<std::shared_ptr<GameObject>> foundGameObjects;
 
 	auto it = m_gameObjectLookup.begin();
 	while (it != m_gameObjectLookup.end()) {
 
 		if (it->second.lock()->name() == name) {
-			foundGameObject = it->second.lock();
-			break;
+			foundGameObjects.push_back(it->second.lock());
 		}
 
 		++it;
 	}
 
-	return foundGameObject;
+	return foundGameObjects;
 }
 
 void Scene::deleteIndex(std::string gameObjectKey)

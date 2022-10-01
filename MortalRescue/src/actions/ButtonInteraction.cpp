@@ -8,25 +8,31 @@ void ButtonInteraction::perform(GameObject* interactingObject, GameObject* inter
 {
 	std::string buttonTargetObjectName = interactionObject->name() + "_TARGET";
 
-	auto bottonTargetObject = interactionObject->parentScene()->getGameObjectByName(buttonTargetObjectName);
-	assert(bottonTargetObject.has_value() && "GameObject wasnt found!");
+	auto bottonTargetObjects = interactionObject->parentScene()->getGameObjectsByName(buttonTargetObjectName);
+	assert(!bottonTargetObjects.empty() && "GameObject wasnt found!");
 
 	const auto& animationComponent = interactionObject->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 
-	if (bottonTargetObject.value()->renderDisabled() == true && bottonTargetObject.value()->physicsDisabled() == true) {
-		bottonTargetObject.value()->enableRender();
-		bottonTargetObject.value()->enablePhysics();
-		animationComponent->animate(ANIMATION_ACTIVE, ANIMATE_CONTINUOUS);
-	}
-	else {
-		bottonTargetObject.value()->disableRender();
-		bottonTargetObject.value()->disablePhysics();
-		animationComponent->animate(ANIMATION_IDLE, ANIMATE_CONTINUOUS);
+	//Animate the button
+	animationComponent->animate(ANIMATION_ACTIVE, ANIMATE_ONE_TIME);
+
+	for (auto& targetObject : bottonTargetObjects) {
+
+		if (targetObject->renderDisabled() == true && targetObject->physicsDisabled() == true) {
+			targetObject->enableRender();
+			targetObject->enablePhysics();
+			
+		}
+		else {
+			targetObject->disableRender();
+			targetObject->disablePhysics();
+		}
+
 	}
 
 	//Since we are disabling and enabling a wall that could affect navigation
 	//then refresh all navigation objects accessibility
-	LevelManager::instance().refreshNavigationAccess(bottonTargetObject.value()->parentScene());
+	LevelManager::instance().refreshNavigationAccess(interactionObject->parentScene());
 
 	
 }

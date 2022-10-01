@@ -404,6 +404,9 @@ std::optional<LevelObject> LevelManager::_determineColorDefinedObject(SDL_Color 
 			if (colorItemJSON.isMember("objectColor")) {
 				levelObject->color = game->colorMap()->toSDLColor(colorItemJSON["objectColor"].asString());
 			}
+			if (colorItemJSON.isMember("disabled")) {
+				levelObject->disabledType = game->enumMap()->toEnum(colorItemJSON["disabled"].asString());
+			}
 
 		}
 	}
@@ -447,7 +450,9 @@ std::optional<LevelObject> LevelManager::_determineLocationDefinedObject(int x, 
 			if (locationItemJSON.isMember("objectColor")) {
 				levelObject->color = game->colorMap()->toSDLColor(locationItemJSON["objectColor"].asString());
 			}
-
+			if (locationItemJSON.isMember("disabled")) {
+				levelObject->disabledType = game->enumMap()->toEnum(locationItemJSON["disabled"].asString());
+			}
 
 			break;
 		}
@@ -623,7 +628,33 @@ void LevelManager::_buildLevelObjects(Scene* scene)
 					gameObject->setColor(levelObject->color.value());
 				}
 
+				//Apply disabled override
+				if (levelObject->disabledType.has_value()) {
+					
+					if (levelObject->disabledType.value() == DISABLED_TYPE::RENDER) {
+						gameObject->disableRender();
+					}
+					else if (levelObject->disabledType.value() == DISABLED_TYPE::UPDATE) {
+						gameObject->disableUpdate();
+					}
+					else if (levelObject->disabledType.value() == DISABLED_TYPE::PHYSICS) {
+						gameObject->disablePhysics();
+					}
+					else if (levelObject->disabledType.value() == DISABLED_TYPE::RENDER_AND_PHYSICS) {
+						gameObject->disableRender();
+						gameObject->disablePhysics();
+					}
+					else if (levelObject->disabledType.value() == DISABLED_TYPE::RENDER_AND_UPDATE) {
+						gameObject->disableRender();
+						gameObject->disableUpdate();
+					}
+					else if (levelObject->disabledType.value() == DISABLED_TYPE::PHYICS_AND_UPDATE) {
+						gameObject->disablePhysics();
+						gameObject->disableUpdate();
+					}
 
+				}
+				
 			}
 		}
 	}

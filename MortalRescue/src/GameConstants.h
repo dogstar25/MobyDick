@@ -58,6 +58,7 @@ namespace ContactTag {
 	inline constexpr int HEALTH_STATION_INSIDE = 36;
 	inline constexpr int PLAYER_PULSE_BULLET = 37;
 	inline constexpr int PLAYER_PULSE_EXPLOSION = 38;
+	inline constexpr int RADIATION_PARTICLE = 39;
 
 }
 
