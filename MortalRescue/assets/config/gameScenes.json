@@ -120,6 +120,12 @@
                     "maxItems": 1000
                 },
                 {
+                    "id": "SMOKE_HEAVY_POOL",
+                    "gameObjectType": "PARTICLE_SMOKE_HEAVY",
+                    "lifetime": 2.25,
+                    "maxItems": 500
+                },
+                {
                     "id": "BULLET1_POOL",
                     "gameObjectType": "BULLET1",
                     "lifetime": 1.25,
@@ -166,6 +172,12 @@
                     "gameObjectType": "PARTICLE_RADIATION",
                     "lifetime": 2.25,
                     "maxItems": 1000
+                },
+                {
+                    "id": "GIBS_POOL",
+                    "gameObjectType": "PLAYER_GIB",
+                    "lifetime": 2.25,
+                    "maxItems": 50
                 }
 
             ],
@@ -298,6 +310,12 @@
                     "gameObjectType": "PARTICLE_SMOKE_1",
                     "lifetime": 2.25,
                     "maxItems": 500
+                },
+                {
+                    "id": "SMOKE_HEAVY_POOL",
+                    "gameObjectType": "PARTICLE_SMOKE_HEAVY",
+                    "lifetime": 2.25,
+                    "maxItems": 1000
                 },
                 {
                     "id": "BULLET2_POOL",

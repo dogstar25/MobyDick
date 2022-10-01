@@ -79,6 +79,11 @@
             "id": "SFX_PULSE_FULLY_CHARGED_1",
             "description": "Pulse Fully Charged 1",
             "filename": "pulse_fully_charged_1.wav"
+        },
+        {
+            "id": "SFX_PLAYER_EXPLODE_1",
+            "description": "Player Explode 1",
+            "filename": "player_explode_1.wav"
         }
     ],
   "music": [

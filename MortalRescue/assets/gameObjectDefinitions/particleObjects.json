@@ -43,6 +43,48 @@
             ]
         },
         {
+            "type": "PARTICLE_SMOKE_HEAVY",
+            "traitTags": [ "pooled", "fragment" ],
+            "description": "Smoke Particle 2",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_SMOKE_PARTICLE_2",
+                    "textureBlendMode": "RenderBlendMode::ADD"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::HEAVY_PARTICLE",
+                            "collisionShape": "B2_BOX",
+                            "density": 5.1,
+                            "restitution": 0.3
+                        }
+                    ]
+
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 50,
+                    "lifetime": 1.25,
+                    "lifetimeAlphaFade": true
+                },
+                {
+                    "id": "POOL_COMPONENT"
+                }
+
+            ]
+        },
+        {
             "type": "DEFLECT1",
             "traitTags": [ "pooled", "fragment" ],
             "description": "Deflect 1",

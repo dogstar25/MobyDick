@@ -59,6 +59,7 @@ bool MRGame::init(std::shared_ptr<ContactListener> contactListener, std::shared_
 
 	//Initialize the Game Object Manager
 	GameObjectManager::instance().init();
+	GameObjectManager::instance().load("gameObjectDefinitions/playerObjects");
 	GameObjectManager::instance().load("gameObjectDefinitions/commonObjects");
 	GameObjectManager::instance().load("gameObjectDefinitions/wallObjects");
 	GameObjectManager::instance().load("gameObjectDefinitions/particleObjects");

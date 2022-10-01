@@ -396,7 +396,23 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 	const auto& playerVitalityComponent = player->getComponent<GinaVitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 	const auto& bulletVitalityComponent = bullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
-	playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
+	bool dead = playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
+
+	if (dead) {
+		player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
+		player->disableCollision();
+		player->setRemoveFromWorld(true);
+
+		auto particleXEmitter = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", GameLayer::MAIN, -1, -1);
+		auto particleXComponent = particleXEmitter->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+
+		particleXEmitter->setPosition(player->getCenterPosition());
+		particleXComponent->addParticleEffect(ParticleEffects::explosionSmoke);
+		particleXComponent->addParticleEffect(ParticleEffects::gibs);
+		particleXComponent->addParticleEffect(ParticleEffects::playerExplode);
+
+		SoundManager::instance().playSound("SFX_PLAYER_EXPLODE_1");
+	}
 
 
 }

@@ -55,6 +55,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[HEAVY_PARTICLE].set(WALL);
 	m_contactMasks[HEAVY_PARTICLE].set(DRONE_FRAME);
 	m_contactMasks[HEAVY_PARTICLE].set(PLAYER_HITBOX);
+	m_contactMasks[HEAVY_PARTICLE].set(PLAYER_COLLISION);
 	m_contactMasks[HEAVY_PARTICLE].set(DRONE_SHIELD);
 	m_contactMasks[HEAVY_PARTICLE].set(DRONE_SCRAP);
 
@@ -82,9 +83,11 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_COLLISION].set(WALL);
 	m_contactMasks[PLAYER_COLLISION].set(WALL_PIECE);
 	m_contactMasks[PLAYER_COLLISION].set(RADIATION_PARTICLE);
+	m_contactMasks[PLAYER_COLLISION].set(HEAVY_PARTICLE);
 	m_contactMasks[PLAYER_COLLISION].set(DRONE_SCRAP);
 	m_contactMasks[PLAYER_COLLISION].set(HEART_PICKUP);
 	m_contactMasks[PLAYER_COLLISION].set(LEVEL_CAGE);
+	m_contactMasks[PLAYER_COLLISION].set(PLAYER_COLLISION);
 
 	//PLAYER_TOUCH
 	m_contactMasks[PLAYER_TOUCH].reset();

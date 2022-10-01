@@ -1,0 +1,409 @@
+{
+    "gameObjects": [
+        {
+            "type": "GINA_64",
+            "traitTags": [ "player" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": "Colors::YELLOW"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "linearDamping": 0.0,
+                    "angularDamping": 3.0,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::PLAYER_COLLISION",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 1.28,
+                            "friction": 0.00,
+                            "restitution": 0.0,
+                            "density": 50.5,
+                            "isSensor": false
+                        },
+                        {
+                            "contactTag": "ContactTag::PLAYER_TOUCH",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 2.64,
+                            "isSensor": true
+                        },
+                        {
+                            "contactTag": "ContactTag::PLAYER_HITBOX",
+                            "collisionShape": "B2_BOX",
+                            "size": {
+                                "width": 12,
+                                "height": 12
+                            },
+                            "isSensor": false
+                        }
+                    ],
+                    "anchorPoint": {
+                        "x": 0.8,
+                        "y": 0.0
+                    }
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_GINA_64_REDUX_IDLE",
+                            "frames": 1
+                        },
+                        {
+                            "state": "ANIMATION_RUN",
+                            "textureId": "TX_GINA_64_REDUX_RUN",
+                            "speed": 0.06,
+                            "frames": 4
+                        },
+                        {
+                            "state": "ANIMATION_SPRINT",
+                            "textureId": "TX_GINA_64_REDUX_BOOST2",
+                            "frames": 1
+                        }
+                    ]
+                },
+                {
+                    "id": "CHILDREN_COMPONENT",
+                    "childPadding": 0,
+                    "childPositionRelative": false,
+                    "childObjects": [
+                        {
+                            "gameObjectType": "PLAYER_LABEL_2",
+                            "locationSlot": 1
+                        }
+
+                    ]
+                },
+                {
+                    "id": "ATTACHMENTS_COMPONENT",
+                    "attachments": [
+                        {
+                            "id": "PISTOL",
+                            "gameObjectType": "PISTOL",
+                            "attachLocation": {
+                                "x": 0.8,
+                                "y": 0.0
+                            },
+                            "addToInventory": true,
+                            "attachB2JointType": "B2_WELD"
+                        },
+                        {
+                            "id": "JETPACK",
+                            "gameObjectType": "JETPACK",
+                            "attachLocation": {
+                                "x": -0.8,
+                                "y": 0.0
+                            },
+                            "attachB2JointType": "B2_WELD"
+                        },
+                        {
+                            "id": "PLAYER_HEART",
+                            "gameObjectType": "PLAYER_HEART",
+                            "attachLocation": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "attachB2JointType": "B2_WELD"
+                        }
+
+                    ]
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_MOVE",
+                            "actionClass": "ActorMove"
+                        },
+                        {
+                            "actionId": "ACTION_ROTATE",
+                            "actionClass": "ActorRotate"
+                        },
+                        {
+                            "actionId": "ACTION_USE",
+                            "actionClass": "ActorUse"
+                        },
+                        {
+                            "actionId": "ACTION_INTERACT",
+                            "actionClass": "Interact"
+                        },
+                        {
+                            "actionId": "ACTION_ON_HOVER",
+                            "actionClass": "DefaultHover"
+                        },
+                        {
+                            "actionId": "ACTION_SPRINT",
+                            "actionClass": "ActorSprintAction"
+                        }
+                    ]
+                },
+                {
+                    "id": "INVENTORY_COMPONENT",
+                    "items": [
+                        {
+                            "gameObjectId": "PISTOL",
+                            "attach": true,
+                            "weapon": true
+                        }
+                    ]
+                },
+                {
+                    "id": "GINA_PLAYER_CONTROL_COMPONENT"
+                },
+                {
+                    "id": "GINA_VITALITY_COMPONENT",
+                    "speed": 14,
+                    "health": 6
+                }
+            ]
+        },
+        {
+            "type": "JETPACK",
+            "traitTags": [ "abstract" ],
+            "description": "Jetpack Particle Emitter",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 4,
+                        "height": 4
+                    }
+                },
+                {
+                    "id": "PARTICLE_X_COMPONENT",
+                    "type": "ParticleEmitterType::CONTINUOUS",
+                    "emissionInterval": 0.1,
+                    "effects": [
+                        "jetpack_sparks",
+                        "jetpack"
+                    ]
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "anchorPoint": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_BOX",
+                            "density": 0.05
+                        }
+                    ]
+
+                }
+
+            ]
+        },
+        {
+            "type": "PISTOL",
+            "traitTags": [ "collectable", "weapon" ],
+            "description": "Weapon 1",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_WEAPON1_IDLE",
+                    "color": {
+                        "tint": "Colors::BLUE",
+                        "alpha": 127
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 16,
+                        "height": 16
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "linearDamping": 3.0,
+                    "angularDamping": 1.0,
+                    "anchorPoint": {
+                        "x": -0.2,
+                        "y": 0.0
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::WEAPON_PICKUP",
+                            "collisionShape": "B2_BOX",
+                            "density": 2.05
+                        }
+                    ]
+
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_USAGE",
+                            "actionClass": "PistolFire"
+                        },
+                        {
+                            "actionId": "ACTION_USAGE_SPECIAL",
+                            "actionClass": "PistolSecondaryFire"
+                        }
+
+                    ]
+                },
+                {
+                    "id": "WEAPON_PISTOL_COMPONENT",
+                    "fireOffset": -0.5,
+                    "levelUpIncrement": 50,
+                    "secondaryFire": {
+                        "radius": 20,
+                        "chargeTime": 1.5,
+                        "bulletPoolId": "PULSE1_POOL",
+                        "color": "Colors::YELLOW",
+                        "force": 3
+                    },
+                    "weaponLevels": [
+                        {
+                            "level": 1,
+                            "force": 1,
+                            "color": "Colors::GREEN",
+                            "bulletPoolId": "BULLET1_POOL"
+                        },
+                        {
+                            "level": 2,
+                            "force": 2,
+                            "color": "Colors::GREEN",
+                            "bulletPoolId": "BULLET1_POOL"
+                        },
+                        {
+                            "level": 3,
+                            "force": 5,
+                            "color": "Colors::RED",
+                            "bulletPoolId": "BULLET1_POOL"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "PLAYER_HEART",
+            "traitTags": [],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "tint": "Colors::RED",
+                        "alpha": 100
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 6,
+                        "height": 6
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "linearDamping": 0.0,
+                    "angularDamping": 0.0,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_BOX",
+                            "density": 0.1,
+                            "restitution": 0.0
+                        }
+                    ],
+                    "anchorPoint": {
+                        "x": 0.1,
+                        "y": -0.05
+                    }
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_ACTIVE",
+                    "frameSize": {
+                        "width": 8,
+                        "height": 8
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_ACTIVE",
+                            "textureId": "TX_HEARTBEAT_ACTIVE",
+                            "speed": 0.1,
+                            "frames": 6
+                        }
+
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "PLAYER_GIB",
+            "traitTags": [ "pooled","fragment" ],
+            "description": "Head Scrap",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_PLAYER_GIB",
+                    "color": "Colors::YELLOW"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 64
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "linearDamping": 1.0,
+                    "angularDamping": 0.5,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::HEAVY_PARTICLE",
+                            "collisionShape": "B2_BOX",
+                            "density": 0.2,
+                            "restitution": 0.2,
+                            "size": {
+                                "width": 16,
+                                "height": 16
+                            }
+                        }
+                    ]
+
+                },
+                {
+                    "id": "POOL_COMPONENT"
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "lifetime": 0.0,
+                    "lifetimeAlphaFade": true
+                }
+            ]
+        }
+    ]
+}

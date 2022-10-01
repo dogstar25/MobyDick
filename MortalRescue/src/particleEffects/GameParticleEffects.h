@@ -249,4 +249,42 @@ namespace ParticleEffects {
 		.particleSpawnCountMin = 20,
 		.particleSpawnCountMax = 40
 	};
+
+	static const ParticleEffect playerExplode = {
+			.poolId = "SMOKE_HEAVY_POOL",
+			.originMin = {0,0},
+			.originMax = {0,0},
+			.forceMin = 5,
+			.forceMax = 15,
+			.lifetimeMin = 1.2F,
+			.lifetimeMax = 1.5F,
+			.alphaFade = true,
+			.angleMin = 0,
+			.angleMax = 360,
+			.particleSizeMin = 5.1,
+			.particleSizeMax = 5.2,
+			.colorRangeBegin = {180,0,0,255},
+			.colorRangeEnd = {255,30,76,255},
+			.particleSpawnCountMin = 20,
+			.particleSpawnCountMax = 40
+	};	
+	
+	static const ParticleEffect gibs = {
+			.poolId = "GIBS_POOL",
+			.originMin = {0,0},
+			.originMax = {0,0},
+			.forceMin = 1,
+			.forceMax = 5,
+			.lifetimeMin = 0,
+			.lifetimeMax = 0,
+			.alphaFade = false,
+			.angleMin = 0,
+			.angleMax = 360,
+			.particleSizeMin = 3.1,
+			.particleSizeMax = 9.2,
+			.colorRangeBegin = {221,209,70,255},
+			.colorRangeEnd = {240,219,80,255},
+			.particleSpawnCountMin = 3,
+			.particleSpawnCountMax = 7
+	};
 }

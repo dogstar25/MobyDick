@@ -227,6 +227,12 @@
             "gameObjectType": "LASERWALL_64",
             "name": "button6_TARGET",
             "disabled": "DISABLED_TYPE::RENDER_AND_PHYSICS"
+        },
+        {
+            "id": "LOC_0007_0012",
+            "gameObjectType": "TURRET",
+            "weaponForce": 5
         }
+
     ]
 }
