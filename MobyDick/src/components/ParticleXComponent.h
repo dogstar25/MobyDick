@@ -24,7 +24,7 @@ public:
 
 	void update() override;
 	void setType(int type) { m_type = type; }
-	void setEmissionInterval(std::chrono::duration<float>);
+	void setEmissionInterval(float emissionInterval);
 	void addParticleEffect(ParticleEffect particleEffect);
 
 private:

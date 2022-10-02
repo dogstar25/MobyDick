@@ -54,7 +54,7 @@ PhysicsComponent::~PhysicsComponent()
 
 	//We need to free the memory associated with our special object that we store in each fixture's userdata
 	//NOTE:this should be the only spot where we do not depend on smart pointers
-	std::cout << this->parent()->id() << " PhysicsComponent Destructor called" << std::endl;
+	//std::cout << this->parent()->id() << " PhysicsComponent Destructor called" << std::endl;
 	for (auto fixture = m_physicsBody->GetFixtureList(); fixture != 0; fixture = fixture->GetNext())
 	{
 

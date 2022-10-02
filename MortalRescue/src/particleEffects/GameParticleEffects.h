@@ -66,17 +66,17 @@ namespace ParticleEffects {
 		.originMax = {0,0},
 		.forceMin = 1,
 		.forceMax = 5,
-		.lifetimeMin = 1.2F,
-		.lifetimeMax = 7.5F,
+		.lifetimeMin = 0.2F,
+		.lifetimeMax = 1.5F,
 		.alphaFade = true,
-		.angleMin = 0,
-		.angleMax = 360,
-		.particleSizeMin = 3.F,
-		.particleSizeMax = 70.F,
-		.colorRangeBegin = {0,0,0,255},
-		.colorRangeEnd = {255,255,255,255},
-		.particleSpawnCountMin = 10,
-		.particleSpawnCountMax = 20
+		.angleMin = 90,
+		.angleMax = 90,
+		.particleSizeMin = 1.F,
+		.particleSizeMax = 3.F,
+		.colorRangeBegin = {255,0,0,255},
+		.colorRangeEnd = {255,0,0,255},
+		.particleSpawnCountMin = 2,
+		.particleSpawnCountMax = 70
 	};
 
 	static const ParticleEffect jetpack = {

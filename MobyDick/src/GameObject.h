@@ -173,8 +173,6 @@ public:
 
 	bool operator==(GameObject &gameObject2) {
 
-		std::cout << "Match/n";
-
 		std::shared_ptr<TransformComponent> transformThis = this->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 		std::shared_ptr<TransformComponent> transform2 = gameObject2.getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 

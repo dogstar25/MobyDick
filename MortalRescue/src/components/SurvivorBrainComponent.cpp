@@ -67,11 +67,6 @@ int SurvivorBrainComponent::_determineState()
 	if (_detectEscapeLocation()) {
 		state = BrainState::ESCAPE;
 	}
-	else {
-		//This resolves the case where the survivor was headed to escape but lost sight of the escape somehow
-		//He was probably following and if he cant find player, should switch over to lost
-		state = BrainState::FOLLOW;
-	}
 
 	if (m_currentState == BrainState::FOLLOW) {
 		//If we have lost site of the object we're following then change to lost state
@@ -104,6 +99,11 @@ void SurvivorBrainComponent::_doEscape()
 {
 
 	b2Vec2 trajectory{};
+
+	//If the escapeObject is no longer aquired, then do nothing
+	if (m_escapeLocation.has_value() == false) {
+		return;
+	}
 
 	//If we are not closeenough to the object we're following then move to within tolerance
 	if (util::calculateDistance(parent()->getCenterPosition(), m_escapeLocation.value())

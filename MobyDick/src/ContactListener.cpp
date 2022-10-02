@@ -18,7 +18,7 @@ void ContactListener::EndContact(b2Contact* contact)
 void ContactListener::handleContact(b2Contact* contact, b2Vec2 contactPoint)
 {
 
-	std::cout<< "contact was made!";
+	
 
 }
 

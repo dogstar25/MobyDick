@@ -46,9 +46,14 @@
             "filename": "assets/blueprints/drone2_blueprint.png"
         },
         {
-            "id": "TX_BREAKABLE_WALL_BLUEPRINT",
+            "id": "TX_BREAKABLE_WALL_4_BLUEPRINT",
             "description": "Breakable Wall Blueprint",
-            "filename": "assets/blueprints/breakable_wall_blueprint.png"
+            "filename": "assets/blueprints/breakable_wall_4_blueprint.png"
+        },
+        {
+            "id": "TX_BREAKABLE_WALL_16_BLUEPRINT",
+            "description": "Breakable Wall Blueprint",
+            "filename": "assets/blueprints/breakable_wall_16_blueprint.png"
         }
 
     ],
@@ -450,7 +455,7 @@
             }
         },
         {
-            "id": "TX_WALL_BUTTON_IDLE",
+            "id": "TX_BUTTON_IDLE",
             "description": "Wall Button",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
@@ -461,13 +466,25 @@
             }
         },
         {
-            "id": "TX_WALL_BUTTON_ACTIVE",
+            "id": "TX_BUTTON_ACTIVE",
             "description": "Wall Button",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 202,
                 "y": 56,
                 "width": 64,
+                "height": 32
+            }
+
+        },
+        {
+            "id": "TX_BUTTON_DEAD",
+            "description": "Wall Button",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 234,
+                "y": 56,
+                "width": 32,
                 "height": 32
             }
 

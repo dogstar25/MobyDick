@@ -3,7 +3,8 @@
 #include "BaseConstants.h"
 #include "actions/NoAction.h"
 #include "DroneEyeRotateAction.h"
-#include "ButtonInteraction.h"
+#include "ToggleButtonInteraction.h"
+#include "OnetimeButtonInteraction.h"
 #include "TurretFireAction.h"
 #include "SurvivorInteractionAction.h"
 #include "ActorBoostAction.h"
@@ -27,9 +28,13 @@ std::shared_ptr<Action> MRActionFactory::create(std::string actionType)
 
         action = std::make_shared<DroneEyeRotateAction>();
     }
-	else if (actionType == "ButtonInteraction") {
+	else if (actionType == "ToggleButtonInteraction") {
 
-		action = std::make_shared<ButtonInteraction>();
+		action = std::make_shared<ToggleButtonInteraction>();
+	}
+	else if (actionType == "OnetimeButtonInteraction") {
+
+		action = std::make_shared<OnetimeButtonInteraction>();
 	}
 	else if (actionType == "TurretFire") {
 
