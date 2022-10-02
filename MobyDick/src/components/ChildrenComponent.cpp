@@ -149,7 +149,7 @@ void ChildrenComponent::_removeFromWorldPass()
 			parent()->parentScene()->deleteIndex(it->gameObject->id());
 
 			//it->pieceObject->reset();
-			std::cout << "Erased from Children collection " << it->gameObject->id() << std::endl;
+			//std::cout << "Erased from Children collection " << it->gameObject->id() << std::endl;
 			it = m_childObjects.erase(it);
 		}
 		else {

@@ -1,7 +1,7 @@
 {
     "gameObjects": [
         {
-            "type": "WALL_BUTTON",
+            "type": "TOGGLE_BUTTON",
             "traitTags": [ "interactive" ],
             "description": "Wall button",
             "components": [
@@ -29,13 +29,13 @@
                     "animations": [
                         {
                             "state": "ANIMATION_IDLE",
-                            "textureId": "TX_WALL_BUTTON_IDLE",
+                            "textureId": "TX_BUTTON_IDLE",
                             "speed": 0.05,
                             "frames": 1
                         },
                         {
                             "state": "ANIMATION_ACTIVE",
-                            "textureId": "TX_WALL_BUTTON_ACTIVE",
+                            "textureId": "TX_BUTTON_ACTIVE",
                             "speed": 0.2,
                             "frames": 2
                         }
@@ -58,7 +58,78 @@
                     "actions": [
                         {
                             "actionId": "ACTION_INTERACTION",
-                            "actionClass": "ButtonInteraction"
+                            "actionClass": "ToggleButtonInteraction"
+                        }
+                    ]
+                }
+
+            ]
+        },
+        {
+            "type": "ONETIME_BUTTON",
+            "traitTags": [ "interactive" ],
+            "description": "Wall button",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "tint": "Colors::CYAN",
+                        "alpha": 185
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    }
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_BUTTON_IDLE",
+                            "speed": 0.05,
+                            "frames": 1
+                        },
+                        {
+                            "state": "ANIMATION_ACTIVE",
+                            "textureId": "TX_BUTTON_ACTIVE",
+                            "speed": 0.2,
+                            "frames": 2
+                        },
+                        {
+                            "state": "ANIMATION_DEAD",
+                            "textureId": "TX_BUTTON_DEAD",
+                            "speed": 0.2,
+                            "frames": 1
+                        }
+                    ]
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::BUTTON",
+                            "collisionShape": "B2_BOX",
+                            "isSensor": true
+                        }
+                    ]
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "interactiveMenuObject": "INTERACTIVE_MENU_BASIC",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_INTERACTION",
+                            "actionClass": "OnetimeButtonInteraction"
                         }
                     ]
                 }
@@ -248,7 +319,7 @@
                 {
                     "id": "PARTICLE_X_COMPONENT",
                     "type": "ParticleEmitterType::CONTINUOUS",
-                    "emissionInterval": 0.2,
+                    "emissionInterval": 3.2,
                     "effects": [
                         "spark"
                     ]

@@ -24,7 +24,7 @@
     <ClCompile Include="src\MRComponentFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\actions\ButtonInteraction.cpp">
+    <ClCompile Include="src\actions\ToggleButtonInteraction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MRContactListener.cpp">
@@ -147,6 +147,9 @@
     <ClCompile Include="src\IMGui\IMGuiTestLevelMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\actions\OnetimeButtonInteraction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\blueprints\drone1_blueprint.png">
@@ -167,9 +170,6 @@
     <Image Include="assets\textureAtlasImGui.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="assets\blueprints\breakable_wall_blueprint.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="assets\blueprints\testDrone_blueprint.png">
       <Filter>Resource Files</Filter>
     </Image>
@@ -180,6 +180,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\blueprints\drone2_blueprint.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprints\breakable_wall_4_blueprint.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprints\breakable_wall_16_blueprint.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -275,7 +281,7 @@
     <ClInclude Include="src\components\DroneBrainComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\actions\ButtonInteraction.h">
+    <ClInclude Include="src\actions\ToggleButtonInteraction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GameConstants.h">
@@ -405,6 +411,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\IMGui\IMGuiTestLevelMenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\actions\OnetimeButtonInteraction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

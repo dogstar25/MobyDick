@@ -131,7 +131,7 @@ void AttachmentsComponent::_removeFromWorldPass()
 			parent()->parentScene()->deleteIndex(it->gameObject->id());
 
 			//it->pieceObject->reset();
-			std::cout << "Erased from Attachments collection " << it->gameObject->id() << std::endl;
+			//std::cout << "Erased from Attachments collection " << it->gameObject->id() << std::endl;
 			it = m_attachments.erase(it);
 		}
 		else {

@@ -191,6 +191,7 @@
     <ClCompile Include="src\actions\MRActionFactory.cpp" />
     <ClCompile Include="src\actions\DroneEyeRotateAction.cpp" />
     <ClCompile Include="src\actions\ActorSprintAction.cpp" />
+    <ClCompile Include="src\actions\OnetimeButtonInteraction.cpp" />
     <ClCompile Include="src\actions\PistolFireAction.cpp" />
     <ClCompile Include="src\actions\PistolSecondaryFireAction.cpp" />
     <ClCompile Include="src\actions\SurvivorInteractionAction.cpp" />
@@ -217,7 +218,7 @@
     <ClCompile Include="src\MRColorMap.cpp" />
     <ClCompile Include="src\MRContactFilter.cpp" />
     <ClCompile Include="src\MRContactListener.cpp" />
-    <ClCompile Include="src\actions\ButtonInteraction.cpp" />
+    <ClCompile Include="src\actions\ToggleButtonInteraction.cpp" />
     <ClCompile Include="src\MRComponentFactory.cpp" />
     <ClCompile Include="src\components\DroneBrainComponent.cpp" />
     <ClCompile Include="src\MREnumMap.cpp" />
@@ -234,7 +235,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\blueprints\breakable_wall_blueprint.png" />
+    <Image Include="assets\blueprints\breakable_wall_16_blueprint.png" />
+    <Image Include="assets\blueprints\breakable_wall_4_blueprint.png" />
     <Image Include="assets\blueprints\drone1_blueprint.png" />
     <Image Include="assets\blueprints\drone2_blueprint.png" />
     <Image Include="assets\blueprints\testDrone_blueprint.png" />
@@ -305,7 +307,8 @@
     <ClInclude Include="src\actions\HealthStationInteraction.h" />
     <ClInclude Include="src\actions\MRActionFactory.h" />
     <ClInclude Include="src\actions\DroneEyeRotateAction.h" />
-    <ClInclude Include="src\actions\ButtonInteraction.h" />
+    <ClInclude Include="src\actions\OnetimeButtonInteraction.h" />
+    <ClInclude Include="src\actions\ToggleButtonInteraction.h" />
     <ClInclude Include="src\actions\PistolFireAction.h" />
     <ClInclude Include="src\actions\PistolSecondaryFireAction.h" />
     <ClInclude Include="src\actions\SurvivorInteractionAction.h" />

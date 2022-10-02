@@ -39,9 +39,9 @@ ParticleXComponent::~ParticleXComponent()
 
 }
 
-void ParticleXComponent::setEmissionInterval(std::chrono::duration<float> emissionInterval)
+void ParticleXComponent::setEmissionInterval(float emissionInterval)
 {
-	m_emissionInterval = emissionInterval;
+	m_emissionInterval = std::chrono::duration<float>(emissionInterval);
 }
 
 

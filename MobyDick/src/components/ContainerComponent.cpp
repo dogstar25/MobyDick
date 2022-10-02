@@ -123,7 +123,7 @@ void ContainerComponent::_removeFromWorldPass()
 			parent()->parentScene()->deleteIndex(it->gameObject->id());
 
 			//it->pieceObject->reset();
-			std::cout << "Erased from Containers collection " << it->gameObject->id() << std::endl;
+			//std::cout << "Erased from Containers collection " << it->gameObject->id() << std::endl;
 			it = m_items.erase(it);
 		}
 		else {

@@ -3,7 +3,7 @@
 
 #include <SDL2/SDL.h>
 
-class ButtonInteraction : public Action
+class ToggleButtonInteraction : public Action
 {
 
 	void perform(GameObject* interactingObject, GameObject* interactionObject, SDL_Scancode keyCode) override;
