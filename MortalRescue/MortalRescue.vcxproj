@@ -245,6 +245,7 @@
     <Image Include="assets\levels\level1_blueprint.png" />
     <Image Include="assets\levels\level2_blueprint.png" />
     <Image Include="assets\levels\level100_blueprint.png" />
+    <Image Include="assets\levels\level5_blueprint.png" />
     <Image Include="assets\textureAtlas00.png" />
     <Image Include="assets\textureAtlasImGui.png" />
   </ItemGroup>
@@ -264,6 +265,7 @@
     <None Include="assets\gameObjectDefinitions\triggerObjects.json" />
     <None Include="assets\levels\level1_definition.json" />
     <None Include="assets\levels\level2_definition.json" />
+    <None Include="assets\levels\level5_definition.json" />
     <None Include="assets\levels\levels.json" />
     <None Include="assets\levels\level100_definition.json" />
     <None Include="assets\sound\soundAssets.json" />
@@ -345,14 +347,6 @@
     <ClInclude Include="src\triggers\LevelComplete.h" />
     <ClInclude Include="src\triggers\MRTriggerFactory.h" />
     <ClInclude Include="src\triggers\PlayerDeath.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Xsd Include="assets\levels\level5_definition.json">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </Xsd>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

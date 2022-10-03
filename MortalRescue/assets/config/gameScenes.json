@@ -354,7 +354,7 @@
                     "x": 0.0,
                     "y": 0.0
                 },
-                "b2DebugDrawMode": true,
+                "b2DebugDrawMode": false,
                 "timeStep": 0.016,
                 "velocityIterations": 6,
                 "positionIterations": 2

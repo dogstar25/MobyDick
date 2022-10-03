@@ -1,10 +1,11 @@
 {
-    "id": "LEVEL2",
+    "id": "LEVEL_2",
     "blueprint": "TX_LEVEL2_BLUEPRINT",
-    "description": "Level 2",
+    "description": "TX_LEVEL_2",
+    "wallColor": "Colors::PARAKEET",
     "dimensions": {
-        "levelWidth": 60,
-        "levelHeight": 34,
+        "levelWidth": 120,
+        "levelHeight": 33,
         "tileWidth": 32,
         "tileHeight": 32
     },
@@ -18,17 +19,6 @@
             }
         }
     ],
-    "parallax": [
-        {
-            "layer": "GameLayer::BACKGROUND_1",
-            "parallaxRate": -10 // percent of normal scroll. negative value is slower. positive value is faster
-        },
-        {
-            "layer": "GameLayer::FOREGROUND_2",
-            "parallaxRate": 15
-        }
-
-    ],
     "statusItems": [
         {
             "id": "StatusItemId::PLAYERS_HEART_COUNT",
@@ -37,22 +27,10 @@
             "maxValue": 6
         },
         {
-            "id": "StatusItemId::SURVIVORS",
-            "initialValue": 3,
-            "minValue": 0,
-            "maxValue": 3
-        },
-        {
             "id": "StatusItemId::PLAYER_WEAPON_LEVEL",
             "initialValue": 1,
             "minValue": 0,
             "maxValue": 3
-        },
-        {
-            "id": "StatusItemId::SCRAP_COUNT",
-            "initialValue": 0,
-            "minValue": 0,
-            "maxValue": 2000
         },
         {
             "id": "StatusItemId::PLAYER_WEAPON_ACCRUAL",
@@ -71,6 +49,12 @@
             "initialValue": 0,
             "minValue": 0,
             "maxValue": 1
+        },
+        {
+            "id": "StatusItemId::SURVIVORS",
+            "initialValue": 7,
+            "minValue": 0,
+            "maxValue": 7
         }
 
 
@@ -93,28 +77,38 @@
         }
 
     ],
-    "locationDefinedObjects": [
+    "colorDefinedObjects": [
         {
-            "id": "LOC_0003_0003",
-            "gameObjectType": "GINA_64",
-            "name": "PlayerGina",
-            "cameraFollow": true
+            "colorKey": "Colors::BLUE",
+            "gameObjectType": "NAVIGATION_WAYPOINT",
+            "layer": "GameLayer::ABSTRACT"
         },
         {
-            "id": "LOC_0011_0003",
-            "gameObjectType": "SURVIVOR"
+            "colorKey": "Colors::CYAN",
+            "gameObjectType": "NAVIGATION_TRANSIT_POINT",
+            "layer": "GameLayer::ABSTRACT"
         },
         {
-            "id": "LOC_0014_0003",
-            "gameObjectType": "ESCAPE_STAIRS"
-        },
-        {
-            "id": "LOC_0021_0002",
-            "gameObjectType": "SURVIVOR"
-        },
-        {
-            "id": "LOC_0021_0004",
-            "gameObjectType": "SURVIVOR"
+            "colorKey": "Colors::PURPLE",
+            "gameObjectType": "VOID_FILLER",
+            "layer": "GameLayer::BACKGROUND_1",
+            "objectColor": "Colors::CYAN"
         }
+
+    ],
+    "locationDefinedObjects": [
+        //{
+        //    "id": "LOC_0005_0006",
+        //    "gameObjectType": "GINA_64",
+        //    "name": "PlayerGina",
+        //    "cameraFollow": true
+        //},
+        {
+            "id": "LOC_0051_0027",
+            "gameObjectType": "DRONE2",
+            "cameraFollow": true
+        }
+
+
     ]
 }

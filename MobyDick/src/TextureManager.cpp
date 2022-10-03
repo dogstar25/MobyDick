@@ -253,7 +253,14 @@ std::shared_ptr<Texture> TextureManager::getTexture(std::string id)
 	}
 	else
 	{
+		//If the texture was not found and it is being used as a blueprint for a composite or a level
+		//Then we cannot use the default texture
+		if (id.empty() == false) {
+			assert(id.find("BLUEPRINT") != std::string::npos && "Cannot use a default texture for a blueprint texture");
+		}
+		
 		textureObject = m_textureMap["TX_DEFAULT"];
+		
 	}
 
 	return textureObject;
