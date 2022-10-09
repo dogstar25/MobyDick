@@ -241,3 +241,9 @@ void VitalityComponent::reset()
 	resetLifetime();
 
 }
+
+bool VitalityComponent::isDead() 
+{
+	return m_health <= 0.;
+
+}

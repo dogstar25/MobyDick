@@ -150,6 +150,9 @@
     <ClCompile Include="src\actions\OnetimeButtonInteraction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\triggers\EnenmyADeadTrigger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\blueprints\drone1_blueprint.png">
@@ -200,7 +203,7 @@
     <None Include="assets\gameObjectDefinitions\particleObjects.json" />
     <None Include="assets\levels\level1_definition.json" />
     <None Include="assets\sound\soundAssets.json" />
-    <None Include="assets\gameObjectDefinitions\triggerObjects.json" />
+    <None Include="assets\gameObjectDefinitions\checkpointObjects.json" />
     <None Include="assets\levels\level2_definition.json" />
     <None Include="assets\gameObjectDefinitions\wallObjects.json" />
     <None Include="assets\textureAtlasAssets.json" />
@@ -418,6 +421,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\actions\OnetimeButtonInteraction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\triggers\EnemyADeadTrigger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

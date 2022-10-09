@@ -77,6 +77,7 @@ public:
 	float getAngle();
 	SDL_FPoint getCenterPosition();
 	SDL_FPoint getTopLeftPosition();
+	SDL_FPoint getOriginalPosition();
 	bool isPointingAt(SDL_FPoint gameObject);
 	bool holdsDependentGameObjects();
 
@@ -88,6 +89,7 @@ public:
 	void removeTrait(int32_t trait) { m_traitTags.set(trait, false); }
 	void dispatch(SDL_FPoint destination);
 	int brainState();
+	bool isAlive();
 
 	void disableUpdate();
 	void enableUpdate();

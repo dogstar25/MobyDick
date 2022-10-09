@@ -23,6 +23,7 @@ private:
 	ImGuiWindowFlags m_SettingsModalflags{ ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove };
 
 	void _sendNextLevelEvent();
+	void _respawnPlayerEvent();
 
 };
 

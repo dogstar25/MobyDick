@@ -50,7 +50,6 @@ glm::vec2 IMGuiInteractiveMenuSurvivor::render()
 		ImGui::SameLine();
 		ImGui::Text("Stay");
 
-
 		ImGui::PopFont();
 		ImGui::SameLine();
 

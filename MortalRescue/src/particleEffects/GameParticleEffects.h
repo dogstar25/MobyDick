@@ -18,8 +18,8 @@ namespace ParticleEffects {
 		.particleSizeMax = 10.F,
 		.colorRangeBegin = {200,200,200,255},
 		.colorRangeEnd = {255,255,255,255},
-		.particleSpawnCountMin = 2,
-		.particleSpawnCountMax = 5
+		.particleSpawnCountMin = 5,
+		.particleSpawnCountMax = 10
 	};
 
 	static const ParticleEffect deflect = {
@@ -275,9 +275,9 @@ namespace ParticleEffects {
 			.originMax = {0,0},
 			.forceMin = 1,
 			.forceMax = 5,
-			.lifetimeMin = 0,
-			.lifetimeMax = 0,
-			.alphaFade = false,
+			.lifetimeMin = 5,
+			.lifetimeMax = 5,
+			.alphaFade = true,
 			.angleMin = 0,
 			.angleMax = 360,
 			.particleSizeMin = 3.1,

@@ -88,6 +88,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_COLLISION].set(HEART_PICKUP);
 	m_contactMasks[PLAYER_COLLISION].set(LEVEL_CAGE);
 	m_contactMasks[PLAYER_COLLISION].set(PLAYER_COLLISION);
+	m_contactMasks[PLAYER_COLLISION].set(CHECKPOINT);
 
 	//PLAYER_TOUCH
 	m_contactMasks[PLAYER_TOUCH].reset();
@@ -207,7 +208,11 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[RADIATION_PARTICLE].set(PLAYER_HITBOX);
 	m_contactMasks[RADIATION_PARTICLE].set(DRONE_SHIELD);
 	m_contactMasks[RADIATION_PARTICLE].set(DRONE_SCRAP);
-	
+
+	//Radiation Particle
+	m_contactMasks[CHECKPOINT].reset();
+	m_contactMasks[CHECKPOINT].set(PLAYER_COLLISION);
+
 
 }
 

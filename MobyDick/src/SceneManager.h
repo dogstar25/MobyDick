@@ -52,6 +52,7 @@ public:
 	void loadLevel(std::string levelId);
 	void loadNextLevel();
 	void loadCurrentLevel();
+	void respawnPlayer();
 	void deleteGameObject(std::string gameObjectName);
 
 	std::optional<SceneAction> getSceneKeyAction(SDL_Keycode);

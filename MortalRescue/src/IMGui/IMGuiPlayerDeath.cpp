@@ -47,7 +47,16 @@ glm::vec2 IMGuiPlayerDeath::render()
 		ImGui::Dummy({ 0,48 });
 		ImGui::PopFont();
 
-		//Restart Button
+		//Continue/Respawn Button
+		ImGui::setCursorToCentered(ImGui::MRSettings::button1Size.x);
+		if (ImGui::Button("Continue", ImGui::MRSettings::button1Size)) {
+			_respawnPlayerEvent();
+		}
+
+		//spacing
+		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
+
+		//Restart Level Button
 		ImGui::setCursorToCentered(ImGui::MRSettings::button1Size.x);
 		if (ImGui::Button("Restart Level", ImGui::MRSettings::button1Size)) {
 			_sendNextLevelEvent();
@@ -86,9 +95,16 @@ glm::vec2 IMGuiPlayerDeath::render()
 void IMGuiPlayerDeath::_sendNextLevelEvent()
 {
 
-
 	util::sendSceneEvent(SCENE_ACTION_EXIT);
 	util::sendSceneEvent(SCENE_ACTION_LOAD_CURRENTLEVEL);
+
+}
+
+
+void IMGuiPlayerDeath::_respawnPlayerEvent()
+{
+
+	util::sendSceneEvent(SCENE_ACTION_RESPAWN_PLAYER);
 
 }
 

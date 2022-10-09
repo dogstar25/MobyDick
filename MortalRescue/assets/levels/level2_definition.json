@@ -55,7 +55,14 @@
             "initialValue": 7,
             "minValue": 0,
             "maxValue": 7
+        },
+        {
+            "id": "StatusItemId::SCRAP_COUNT",
+            "initialValue": 0,
+            "minValue": 0,
+            "maxValue": 2000
         }
+
 
 
     ],
@@ -97,16 +104,16 @@
 
     ],
     "locationDefinedObjects": [
-        //{
-        //    "id": "LOC_0005_0006",
-        //    "gameObjectType": "GINA_64",
-        //    "name": "PlayerGina",
-        //    "cameraFollow": true
-        //},
+        {
+            "id": "LOC_0005_0006",
+            "gameObjectType": "GINA_64",
+            "name": "PlayerGina",
+            "cameraFollow": true
+        },
         {
             "id": "LOC_0051_0027",
             "gameObjectType": "DRONE2",
-            "cameraFollow": true
+            "name": "EnemyA"
         }
 
 

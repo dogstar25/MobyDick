@@ -14,6 +14,7 @@ EnumMap::EnumMap()
 	m_enumMap["ANIMATION_COMPONENT"] = (int)ComponentTypes::ANIMATION_COMPONENT;
 	m_enumMap["ATTACHMENTS_COMPONENT"] = (int)ComponentTypes::ATTACHMENTS_COMPONENT;
 	m_enumMap["BRAIN_COMPONENT"] = (int)ComponentTypes::BRAIN_COMPONENT;
+	m_enumMap["CHECKPOINT_COMPONENT"] = (int)ComponentTypes::CHECKPOINT_COMPONENT;
 	m_enumMap["CHILDREN_COMPONENT"] = (int)ComponentTypes::CHILDREN_COMPONENT;
 	m_enumMap["COMPOSITE_COMPONENT"] = (int)ComponentTypes::COMPOSITE_COMPONENT;
 	m_enumMap["CONTAINER_COMPONENT"] = (int)ComponentTypes::CONTAINER_COMPONENT;

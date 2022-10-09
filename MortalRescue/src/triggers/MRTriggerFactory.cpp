@@ -1,6 +1,7 @@
 #include "MRTriggerFactory.h"
 #include "PlayerDeath.h"
 #include "LevelComplete.h"
+#include "EnemyADeadTrigger.h"
 
 MRTriggerFactory::MRTriggerFactory()
 {
@@ -19,6 +20,10 @@ std::shared_ptr<Trigger> MRTriggerFactory::create(std::string triggerType)
 	else if (triggerType == "LevelComplete") {
 
 		trigger = std::make_shared<LevelComplete>();
+	}
+	else if (triggerType == "EnemyADeadTrigger") {
+
+		trigger = std::make_shared<EnemyADeadTrigger>();
 	}
 
 	else {

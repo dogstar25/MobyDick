@@ -16,22 +16,12 @@ TransformComponent::TransformComponent(Json::Value componentJSON, float xMapPos,
 		auto objectWidth = componentJSON["size"]["width"].asFloat();
 		auto objectHeight = componentJSON["size"]["height"].asFloat();
 
-		m_centeredPositioning = componentJSON["centeredPositioning"].asBool();
+		//setPosition(
+		//	(xMapPos * game->worldTileSize().x) + objectWidth / 2,
+		//	(yMapPos * game->worldTileSize().y) + objectHeight / 2
+		//);
 
-		if (m_centeredPositioning == true) {
-
-			setPosition(
-				((xMapPos * game->worldTileSize().x) + objectWidth / 2) - (objectWidth  / 2),
-				((yMapPos * game->worldTileSize().y) + objectHeight / 2) - (objectHeight / 2)
-			);
-		}
-		else {
-
-			setPosition(
-				(xMapPos * game->worldTileSize().x) + objectWidth / 2,
-				(yMapPos * game->worldTileSize().y) + objectHeight / 2
-			);
-		}
+		setPosition(util::tileToPixelLocation(xMapPos, yMapPos, objectWidth, objectHeight)	);
 
 		m_originalPosition = m_position;
 		m_size.Set(componentJSON["size"]["width"].asFloat(), componentJSON["size"]["height"].asFloat());

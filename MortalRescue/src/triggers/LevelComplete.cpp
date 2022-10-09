@@ -11,6 +11,7 @@ LevelComplete::LevelComplete():
 	Trigger()
 {
 	m_triggerOnlyOnce = true;
+	m_triggerName = "LevelComplete";
 
 }
 

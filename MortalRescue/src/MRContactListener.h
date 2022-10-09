@@ -41,6 +41,7 @@ private:
 	void _playerPulseExplosion_droneShield(GameObject*, GameObject*, b2Vec2 contactPoint);
 	void _playerPulse_wallPiece(GameObject*, GameObject*, b2Vec2 contactPoint);
 	void _playerPulseExplosion_wallPiece(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _player_checkpoint(GameObject*, GameObject*, b2Vec2 contactPoint);
 	
 };
 

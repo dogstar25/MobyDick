@@ -389,19 +389,20 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 	SoundManager::instance().playSound("SFX_RETRO_IMPACT_5");
 
 	//Do a color flash animate on the turret
-	const auto& turretAnimationComponent = player->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
-	turretAnimationComponent->setFlash(Colors::YELLOW, .005, 2);
+	const auto& animationComponent = player->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
+	animationComponent->setFlash(Colors::RED, .05, 2);
 
 	//Inflict damage
 	const auto& playerVitalityComponent = player->getComponent<GinaVitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 	const auto& bulletVitalityComponent = bullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	const auto& playerTransformComponent = bullet->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
 	bool dead = playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
 
 	if (dead) {
 		player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
 		player->disableCollision();
-		player->setRemoveFromWorld(true);
+		player->disableRender();
 
 		auto particleXEmitter = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", GameLayer::MAIN, -1, -1);
 		auto particleXComponent = particleXEmitter->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
@@ -425,14 +426,31 @@ void MRContactListener::_radiationParticle_player(GameObject* radiationParticle,
 	SoundManager::instance().playSound("SFX_RETRO_IMPACT_5");
 
 	//Do a color flash animate on the turret
-	const auto& turretAnimationComponent = player->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
-	turretAnimationComponent->setFlash(Colors::YELLOW, .005, 2);
+	const auto& animationComponent = player->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
+	animationComponent->setFlash(Colors::RED, .05, 2);
 
 	//Inflict damage
 	const auto& playerVitalityComponent = player->getComponent<GinaVitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 	const auto& bulletVitalityComponent = radiationParticle->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
-	playerVitalityComponent->inflictDamage(0.2);
+	bool dead = playerVitalityComponent->inflictDamage(0.2);
+
+	if (dead) {
+		player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
+		player->disableCollision();
+		player->disableRender();
+
+		auto particleXEmitter = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", GameLayer::MAIN, -1, -1);
+		auto particleXComponent = particleXEmitter->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+
+		particleXEmitter->setPosition(player->getCenterPosition());
+		particleXComponent->addParticleEffect(ParticleEffects::explosionSmoke);
+		particleXComponent->addParticleEffect(ParticleEffects::gibs);
+		particleXComponent->addParticleEffect(ParticleEffects::playerExplode);
+
+		SoundManager::instance().playSound("SFX_PLAYER_EXPLODE_1");
+	}
+
 
 
 }
@@ -460,6 +478,18 @@ void MRContactListener::_player_heartPickup(GameObject* player, GameObject* hear
 	if (playerVitality->addHealth(1)) {
 		heartPickup->setRemoveFromWorld(true);
 	}
+
+
+}
+
+
+void MRContactListener::_player_checkpoint(GameObject* player, GameObject* checkpoint, b2Vec2 contactPoint)
+{
+
+	//contact component
+	const auto& checkpointComponent = checkpoint->getComponent<CheckPointComponent>(ComponentTypes::CHECKPOINT_COMPONENT);
+
+	checkpointComponent->setContactMade(true);
 
 
 }
@@ -728,6 +758,21 @@ void MRContactListener::handleContact(b2Contact* contact, b2Vec2 contactPoint)
 		}
 		else {
 			_radiationParticle_player(contact2, contact1, contactPoint);
+		}
+
+	}
+
+	///////////////////////////////////
+	// Player - Checkpoint
+	///////////////////////////////////
+	if ((contactTag1 == ContactTag::PLAYER_COLLISION && contactTag2 == ContactTag::CHECKPOINT) ||
+		(contactTag2 == ContactTag::PLAYER_COLLISION && contactTag1 == ContactTag::CHECKPOINT)) {
+
+		if (contactTag1 == ContactTag::PLAYER_COLLISION) {
+			_player_checkpoint(contact1, contact2, contactPoint);
+		}
+		else {
+			_player_checkpoint(contact2, contact1, contactPoint);
 		}
 
 	}
