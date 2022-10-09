@@ -67,9 +67,9 @@ public:
 	void addLevelTrigger(std::shared_ptr<Trigger> trigger);
 	void addKeyAction(SDL_Keycode, SceneAction);
 	void applyCurrentControlMode();
-	SDL_FPoint calcWindowPosition(int globalPosition);
 	std::optional<std::shared_ptr<GameObject>> getGameObject(std::string id);
 	std::vector<std::shared_ptr<GameObject>> getGameObjectsByName(std::string name);
+	std::vector<std::shared_ptr<GameObject>> getGameObjectsByTrait(int trait);
 	std::optional<std::string> getNextLevel();
 	
 	void stepB2PhysicsWorld() {
@@ -109,7 +109,10 @@ public:
 	std::optional<Parallax> getParallax(int layer);
 
 	void deleteIndex(std::string gameObjectIndex);
-	
+	void setPlayerOriginalSpawnPoint(float x, float y) { m_playerOrigSpawnPoint = {x,y}; }
+	SDL_FPoint playerOriginalSpawnPoint() { return m_playerOrigSpawnPoint; }
+	void resetTrigger(std::string trigger);
+
 private:
 
 	std::string m_id;
@@ -118,6 +121,7 @@ private:
 	int m_inputControlMode{};
 	int m_parentSceneIndex{};
 	bool m_hasPhysics{};
+	SDL_FPoint m_playerOrigSpawnPoint{};
 
 	SceneState m_state{};
 	std::optional<std::shared_ptr<CutScene>> m_cutScene{};

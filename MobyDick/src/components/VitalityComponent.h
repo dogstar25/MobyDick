@@ -46,6 +46,7 @@ public:
 
 	bool inflictDamage(float damage);
 	bool addHealth(float damage);
+	bool isDead();
 
 
 private:

@@ -180,8 +180,6 @@ void GameObject::setParent(GameObject* parentObject)
 
 }
 
-
-
 void GameObject::setPosition(float x, float y)
 {
 
@@ -517,6 +515,32 @@ SDL_FPoint GameObject::getCenterPosition()
 
 	const auto& transformComponent = getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	return(transformComponent->getCenterPosition());
+
+}
+
+bool GameObject::isAlive()
+{
+
+	//Drive from isAlive vs isDead - inanimate objects are never alive
+	bool alive{};
+
+	if (hasComponent(ComponentTypes::VITALITY_COMPONENT)) {
+
+		const auto& vitalityComponent = getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+		alive = !vitalityComponent->isDead();
+	}
+
+	return alive;
+
+
+}
+
+SDL_FPoint GameObject::getOriginalPosition()
+{
+
+	const auto& transformComponent = getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	SDL_FPoint position = { transformComponent->originalPosition() .x, transformComponent->originalPosition() .y};
+	return(position);
 
 }
 

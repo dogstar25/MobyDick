@@ -137,6 +137,11 @@ void Game::play()
 			else if (action->actionCode == SCENE_ACTION_RELEASE_DIRECT) {
 				SceneManager::instance().releaseDirectScene();
 			}
+			else if (action->actionCode == SCENE_ACTION_RESPAWN_PLAYER) {
+				//Pop off the player died gui scene first
+				SceneManager::instance().popScene();
+				SceneManager::instance().respawnPlayer();
+			}
 
 		}
 

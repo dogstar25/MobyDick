@@ -136,7 +136,7 @@
             "angle": 243
         },
         {
-            "id": "LOC_0052_0023",
+            "id": "LOC_0055_0022",
             "gameObjectType": "SURVIVOR"
         },
         {
@@ -150,11 +150,13 @@
         {
             "id": "LOC_0033_0025",
             "gameObjectType": "TURRET",
-            "angle": 180
+            "angle": 180,
+            "name": "EnemyA"
         },
         {
             "id": "LOC_0033_0028",
-            "gameObjectType": "TURRET"
+            "gameObjectType": "TURRET",
+            "name": "EnemyA"
         },
         {
             "id": "LOC_0045_0024",
@@ -164,6 +166,10 @@
             "id": "LOC_0043_0018",
             "gameObjectType": "TURRET",
             "angle": 180
+        },
+        {
+            "id": "LOC_0031_0011",
+            "gameObjectType": "TURRET"
         },
         {
             "id": "LOC_0028_0014",
@@ -230,8 +236,19 @@
         },
         {
             "id": "LOC_0007_0012",
-            "gameObjectType": "TURRET",
-            "weaponForce": 5
+            "gameObjectType": "TURRET"
+        },
+        {
+            "id": "LOC_0044_0026",
+            "gameObjectType": "CHECKPOINT_1_A",
+            "checkPointContact": true,
+            "layer": "GameLayer::ABSTRACT"
+        },
+        {
+            "id": "LOC_0022_0026",
+            "gameObjectType": "CHECKPOINT_1_B",
+            "checkPointContact": false,
+            "layer": "GameLayer::ABSTRACT"
         }
 
     ]

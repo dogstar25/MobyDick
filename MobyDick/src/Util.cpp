@@ -158,6 +158,18 @@ namespace util
 		color.w = ((float)alpha/255);
 	}
 
+	SDL_FPoint tileToPixelLocation(float tileX, float tileY, float objectWidth, float objectHeight)
+	{
+		SDL_FPoint position{};
+
+		position = { 
+			(tileX * game->worldTileSize().x) + objectWidth / 2, 
+			(tileY * game->worldTileSize().y) + objectHeight / 2	
+		};
+
+		return position;
+	}
+
 	const ImVec4 JsonToImVec4Color(Json::Value JsonColor) 
 	{
 

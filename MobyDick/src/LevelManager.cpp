@@ -441,6 +441,7 @@ std::optional<LevelObject> LevelManager::_determineLocationDefinedObject(int x, 
 
 			levelObject = LevelObject();
 			levelObject->gameObjectType = locationItemJSON["gameObjectType"].asString();
+
 			if (locationItemJSON.isMember("layer")) {
 				levelObject->layer = game->enumMap()->toEnum(locationItemJSON["layer"].asString());
 			}

@@ -45,6 +45,10 @@ std::shared_ptr<Component> ComponentFactory::create(
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::CONTAINER_COMPONENT);
 			component = std::make_shared<ContainerComponent>(componentJSON, name, scene);
 			break;
+		case ComponentTypes::CHECKPOINT_COMPONENT:
+			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::CHECKPOINT_COMPONENT);
+			component = std::make_shared<CheckPointComponent>(componentJSON);
+			break;
 		case ComponentTypes::HUD_COMPONENT:
 			componentJSON = util::getComponentConfig(definitionJSON, ComponentTypes::HUD_COMPONENT);
 			component = std::make_shared<HudComponent>(componentJSON, scene);

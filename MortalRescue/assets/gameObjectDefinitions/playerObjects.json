@@ -399,9 +399,7 @@
                     "id": "POOL_COMPONENT"
                 },
                 {
-                    "id": "VITALITY_COMPONENT",
-                    "lifetime": 0.0,
-                    "lifetimeAlphaFade": true
+                    "id": "VITALITY_COMPONENT"
                 }
             ]
         }

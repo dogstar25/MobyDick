@@ -535,8 +535,7 @@
                     "size": {
                         "width": 32,
                         "height": 32
-                    },
-                    "centeredPositioning": false
+                    }
                 },
                 {
                     "id": "ANIMATION_COMPONENT",
@@ -687,8 +686,7 @@
                     "size": {
                         "width": 64,
                         "height": 64
-                    },
-                    "centeredPositioning": false
+                    }
                 },
                 {
                     "id": "ANIMATION_COMPONENT",

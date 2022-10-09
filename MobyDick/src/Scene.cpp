@@ -509,12 +509,45 @@ std::vector<std::shared_ptr<GameObject>> Scene::getGameObjectsByName(std::string
 	return foundGameObjects;
 }
 
+std::vector<std::shared_ptr<GameObject>> Scene::getGameObjectsByTrait(int trait)
+{
+	std::vector<std::shared_ptr<GameObject>> foundGameObjects;
+
+	auto it = m_gameObjectLookup.begin();
+	while (it != m_gameObjectLookup.end()) {
+
+		if (it->second.lock()->hasTrait(trait)) {
+			foundGameObjects.push_back(it->second.lock());
+		}
+
+		++it;
+	}
+
+	return foundGameObjects;
+}
+
 void Scene::deleteIndex(std::string gameObjectKey)
 {
 	//std::cout << "Erased from lookup map" << gameObjectKey << std::endl;
 	m_gameObjectLookup.erase(gameObjectKey);
 	
 }
+
+
+void Scene::resetTrigger(std::string triggerName)
+{
+
+	for (auto trigger : m_levelTriggers) {
+
+		if (trigger->getName() == triggerName) {
+
+			trigger->reset();
+
+		}
+	}
+
+}
+
 
 void Scene::_removeFromWorldPass()
 {

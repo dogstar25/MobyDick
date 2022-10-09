@@ -225,6 +225,7 @@
     <ClCompile Include="src\MRGame.cpp" />
     <ClCompile Include="src\MRContextManager.cpp" />
     <ClCompile Include="src\particleEffects\MRParticleEffectsFactory.cpp" />
+    <ClCompile Include="src\triggers\EnenmyADeadTrigger.cpp" />
     <ClCompile Include="src\triggers\LevelComplete.cpp" />
     <ClCompile Include="src\triggers\MRTriggerFactory.cpp" />
     <ClCompile Include="src\triggers\PlayerDeath.cpp" />
@@ -262,7 +263,7 @@
     <None Include="assets\gameObjectDefinitions\titleScreenObjects.json" />
     <None Include="assets\gameObjectDefinitions\wallObjects.json" />
     <None Include="assets\gameObjectDefinitions\particleObjects.json" />
-    <None Include="assets\gameObjectDefinitions\triggerObjects.json" />
+    <None Include="assets\gameObjectDefinitions\checkpointObjects.json" />
     <None Include="assets\levels\level1_definition.json" />
     <None Include="assets\levels\level2_definition.json" />
     <None Include="assets\levels\level5_definition.json" />
@@ -344,6 +345,7 @@
     <ClInclude Include="src\particleEffects\GameParticleEffects.h" />
     <ClInclude Include="src\MRContextManager.h" />
     <ClInclude Include="src\particleEffects\MRParticleEffectsFactory.h" />
+    <ClInclude Include="src\triggers\EnemyADeadTrigger.h" />
     <ClInclude Include="src\triggers\LevelComplete.h" />
     <ClInclude Include="src\triggers\MRTriggerFactory.h" />
     <ClInclude Include="src\triggers\PlayerDeath.h" />
@@ -353,7 +355,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties assets_4levels_4level1_3definition_1json__JsonSchema="https://download.stackhawk.com/hawk/jsonconfig/hawkconfig.json" />
+      <UserProperties assets_4gameObjectDefinitions_4checkpointObjects_1json__JsonSchema="https://json-schema.org/draft/2020-12/schema" assets_4levels_4level1_3definition_1json__JsonSchema="https://download.stackhawk.com/hawk/jsonconfig/hawkconfig.json" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

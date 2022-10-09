@@ -275,6 +275,73 @@ void SceneManager::releaseDirectScene()
 
 }
 
+void SceneManager::respawnPlayer()
+{
+
+	int highestSequence = 0;
+
+	//auto playerOrig = m_scenes.back().playerOriginalSpawnPoint();
+	std::optional<std::shared_ptr<CheckPointComponent>> highestCheckpoint{};
+
+	//loop through all gameObjects and find the checkPoint object with the highest sequence
+	for (const auto& gameObject : m_scenes.back().gameObjects()[GameLayer::ABSTRACT]) {
+
+		if (gameObject->hasComponent(ComponentTypes::CHECKPOINT_COMPONENT)) {
+
+			const std::shared_ptr<CheckPointComponent> checkpointComponent = 
+				gameObject->getComponent<CheckPointComponent>(ComponentTypes::CHECKPOINT_COMPONENT);
+
+			if (checkpointComponent->hasMetCriteria() && highestSequence < checkpointComponent->sequence()) {
+
+				highestSequence = checkpointComponent->sequence();
+				highestCheckpoint = checkpointComponent;
+			}
+
+		}
+	}
+
+	//Get the player gameObject
+	auto playerObject = m_scenes.back().getGameObjectsByTrait(TraitTag::player);
+	assert(!playerObject.empty() && "GameObject wasnt found!");
+	//There should only be one player
+	auto player = playerObject[0];
+
+	//Determine spawn position. Either the furthest checkpoint or the original spawn location
+	SDL_FPoint spawnLocation{};
+	if (highestCheckpoint.has_value()) {
+
+		spawnLocation = util::tileToPixelLocation(
+			highestCheckpoint->get()->playerSpawnLocation().x,
+			highestCheckpoint->get()->playerSpawnLocation().y,
+			player->getSize().x,
+			player->getSize().y);
+	}
+	else {
+
+		spawnLocation = player->getOriginalPosition();
+
+	}
+
+	player->enableCollision();
+	player->enableRender();
+
+	player->setPosition(spawnLocation);
+
+	//Restore Health
+	auto vitality = player->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+	vitality->setHealth(6);
+
+	//Restore Player Control
+	auto playerControl = player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT);
+	playerControl->enable();
+
+	//Reset the playerDeath Trigger
+	m_scenes.back().resetTrigger("PlayerDeath");
+
+
+
+}
+
 GameObject* SceneManager::addGameObject(std::shared_ptr<GameObject>gameObject, int layer)
 {
 	//Add the gameObject to the currently active scene using back()

@@ -14,6 +14,7 @@ PlayerDeath::PlayerDeath() :
 	Trigger()
 {
 	m_triggerOnlyOnce = true;
+	m_triggerName = "PlayerDeath";
 
 }
 
@@ -28,6 +29,7 @@ bool PlayerDeath::hasMetCriteria(Scene* scene)
 		auto objectiveStatusItem = game->contextMananger()->getStatusItem(StatusItemId::PLAYERS_HEART_COUNT);
 		if (objectiveStatusItem.value() <= 0) {
 			hasMet = true;
+
 		}
 
 	}
@@ -41,5 +43,21 @@ void PlayerDeath::execute()
 
 	util::sendSceneEvent(SCENE_ACTION_ADD, "SCENE_PLAYER_DEATH");
 	m_hasTriggered = true;
+
+	//If this trigger can trigger again then reset the criteria
+	if (m_triggerOnlyOnce == false) {
+
+		reset();
+	}
+
+
+
+}
+
+void PlayerDeath::reset()
+{
+
+	m_hasTriggered = false;
+	game->contextMananger()->getStatusItem(StatusItemId::PLAYERS_HEART_COUNT).reset();
 
 }

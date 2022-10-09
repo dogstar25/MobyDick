@@ -9,6 +9,7 @@
 #include "components/ChildrenComponent.h"
 #include "components/CompositeComponent.h"
 #include "components/ContainerComponent.h"
+#include "components/CheckPointComponent.h"
 #include "components/HudComponent.h"
 #include "components/InventoryComponent.h"
 #include "components/NavigationComponent.h"

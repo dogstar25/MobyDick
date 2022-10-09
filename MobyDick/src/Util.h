@@ -60,6 +60,7 @@ namespace util
 	bool fileExists(const std::string& filename);
 	void colorApplyAlpha(SDL_Color& color, int alpha);
 	void colorApplyAlpha(ImVec4& color, int alpha);
+	SDL_FPoint tileToPixelLocation(float tileX, float tileY, float objectWidth, float objectHeight);
 
 	b2Vec2 matchParentRotation(SDL_FPoint childPosition, SDL_FPoint parentPosition, float);
 	bool isMouseButtonPressed(uint8 button);
