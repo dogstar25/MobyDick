@@ -172,7 +172,7 @@
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
                     "linearDamping": 0.0,
-                    "angularDamping": 10.0,
+                    "angularDamping": 5.0,
                     "anchorPoint": {
                         "x": -1.56,
                         "y": 0.0
@@ -202,7 +202,7 @@
                 },
                 {
                     "id": "VITALITY_COMPONENT",
-                    "rotationSpeed": 3000
+                    "rotationSpeed": 20
                 },
                 {
                     "id": "WEAPON_COMPONENT",
@@ -245,7 +245,7 @@
                         {
                             "contactTag": "ContactTag::DRONE_FRAME",
                             "collisionShape": "B2_CIRCLE",
-                            "collisionRadius": 1.28,
+                            "collisionRadius": 1.44,
                             "density": 2000.5
                         }
                     ]
@@ -325,7 +325,7 @@
                 {
                     "id": "VITALITY_COMPONENT",
                     "speed": 20.0,
-                    "rotationSpeed": 30
+                    "rotationSpeed": 20
                 }
             ]
         },
@@ -363,7 +363,7 @@
                 },
                 {
                     "id": "VITALITY_COMPONENT",
-                    "resistance": 5
+                    "resistance": 1
                 }
             ]
         },
@@ -390,7 +390,7 @@
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
                     "linearDamping": 0.0,
-                    "angularDamping": 10.0,
+                    "angularDamping": 5.0,
                     "anchorPoint": {
                         "x": -0.78,
                         "y": 0.0
@@ -420,7 +420,7 @@
                 },
                 {
                     "id": "VITALITY_COMPONENT",
-                    "rotationSpeed": 3000
+                    "rotationSpeed": 20
                 },
                 {
                     "id": "WEAPON_COMPONENT",
@@ -488,7 +488,7 @@
                             },
                             {
                                 "resistance": 2,
-                                "color": "Colors::CYAN"
+                                "color": "Colors::YELLOW"
                             },
                             {
                                 "resistance": 3,
@@ -555,7 +555,7 @@
                             },
                             {
                                 "resistance": 2,
-                                "color": "Colors::CYAN"
+                                "color": "Colors::YELLOW"
                             },
                             {
                                 "resistance": 3,
@@ -622,7 +622,7 @@
                             },
                             {
                                 "resistance": 2,
-                                "color": "Colors::CYAN"
+                                "color": "Colors::YELLOW"
                             },
                             {
                                 "resistance": 3,
@@ -689,7 +689,7 @@
                             },
                             {
                                 "resistance": 2,
-                                "color": "Colors::CYAN"
+                                "color": "Colors::YELLOW"
                             },
                             {
                                 "resistance": 3,
@@ -756,7 +756,7 @@
                             },
                             {
                                 "resistance": 2,
-                                "color": "Colors::CYAN"
+                                "color": "Colors::YELLOW"
                             },
                             {
                                 "resistance": 3,

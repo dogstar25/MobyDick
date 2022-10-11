@@ -737,6 +737,19 @@ void GameObject::setWeaponForce(float force)
 
 }
 
+void GameObject::setCompositePieceLevelCap(int levelCap)
+{
+
+	const auto& compositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
+	for (auto& piece : compositeComponent->pieces()) {
+
+		const auto& vitalityComponent = piece.pieceObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+		vitalityComponent->setLevelCap(levelCap);
+
+	}
+
+}
+
 void GameObject::_updateTouchingObjects()
 {
 

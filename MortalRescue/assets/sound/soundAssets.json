@@ -3,88 +3,124 @@
         {
             "id": "SFX_WEAPON1_FIRE1",
             "description": "Weapon1 Fire Sound 1",
-            "filename": "weapon1_fire1.wav"
+            "filename": "weapon1_fire1.ogg"
         },
         {
             "id": "SFX_LASER_002",
             "description": "Laser 002",
-            "filename": "weapon_laser_002.wav"
+            "filename": "weapon_laser_002.ogg"
         },
         {
             "id": "SFX_LASER_004",
             "description": "Laser 004",
-            "filename": "weapon_laser_004.wav"
+            "filename": "weapon_laser_004.ogg"
         },
         {
             "id": "SFX_IMPACT_1",
             "description": "Imapct Fire Sound 1",
-            "filename": "impact_metal_shell_001.wav"
+            "filename": "impact_metal_shell_001.ogg"
         },
         {
             "id": "SFX_IMPACT_2",
             "description": "Imapct Fire Sound 2",
-            "filename": "impact_metal_shell_002.wav"
+            "filename": "impact_metal_shell_002.ogg"
         },
         {
             "id": "SFX_IMPACT_3",
             "description": "Imapct Fire Sound 3",
-            "filename": "impact_metal_shell_003.wav"
+            "filename": "impact_metal_shell_003.ogg"
         },
         {
             "id": "SFX_PICKUP_1",
             "description": "Pickup Item 1",
-            "filename": "pick_up_001.wav"
+            "filename": "pick_up_001.ogg"
         },
         {
             "id": "SFX_PICKUP_2",
             "description": "Pickup Item 2",
-            "filename": "pick_up_002.wav"
+            "filename": "pick_up_002.ogg"
         },
         {
             "id": "SFX_IMPACT_12",
             "description": "Impact Metal 12",
-            "filename": "impact_metal_012.wav"
+            "filename": "impact_metal_012.ogg"
         },
         {
             "id": "SFX_RETRO_IMPACT_5",
             "description": "Retro Impact 5",
-            "filename": "retro_impact_hit_05.wav"
+            "filename": "retro_impact_hit_05.ogg"
         },
         {
             "id": "SFX_RETRO_IMPACT_DEFLECT_16",
             "description": "Retro Impact deflect 16",
-            "filename": "retro_impact_hit_16.wav"
+            "filename": "retro_impact_hit_16.ogg"
         },
         {
             "id": "SFX_TURRET_EXPLODE_1",
             "description": "",
-            "filename": "sci-fi_explosion_04.wav"
+            "filename": "sci-fi_explosion_04.ogg"
         },
         {
             "id": "SFX_PULSE_FIRE_3",
             "description": "Fire Pulse 3",
-            "filename": "fire_pulse_3.wav"
+            "filename": "fire_pulse_3.ogg"
         },
         {
             "id": "SFX_PULSE_FAIL_1",
             "description": "Fire Pulse Fail 1",
-            "filename": "fire_pulse_fail_1.wav"
+            "filename": "fire_pulse_fail_1.ogg"
         },
         {
             "id": "SFX_PULSE_CHARGING_1",
             "description": "Pulse Charging 1",
-            "filename": "pulse_charging_1.wav"
+            "filename": "pulse_charging_1.ogg"
         },
         {
             "id": "SFX_PULSE_FULLY_CHARGED_1",
             "description": "Pulse Fully Charged 1",
-            "filename": "pulse_fully_charged_1.wav"
+            "filename": "pulse_fully_charged_1.ogg"
         },
         {
             "id": "SFX_PLAYER_EXPLODE_1",
             "description": "Player Explode 1",
-            "filename": "player_explode_1.wav"
+            "filename": "player_explode_1.ogg"
+        },
+        {
+            "id": "SFX_BUTTON_WORKING_1",
+            "description": "Button Working 1",
+            "filename": "buttonWorking.ogg"
+        },
+        {
+            "id": "SFX_BUTTON_BROKEN_1",
+            "description": "Button Broken 1",
+            "filename": "buttonBroken.ogg"
+        },
+        {
+            "id": "SFX_COLLECT_HEART_1",
+            "description": "Collect heart 1",
+            "filename": "collect_heart2_01.ogg"
+        },
+        {
+            "id": "SFX_DOOR_ACTIVATE_1",
+            "description": "Door activate 1",
+            "filename": "doorActivate1.ogg"
+        },
+        {
+            "id": "SFX_TURRET_DEPLOY_1",
+            "description": "Door activate 1",
+            "filename": "turretDeploy1_01.ogg"
+        },
+        {
+            "id": "SFX_TURRET_DEPLOY_2",
+            "description": "Door activate 1",
+            "filename": "turretDeploy2_01.ogg"
+        },
+        {
+            "id": "SFX_TURRET_UNDEPLOY_1",
+            "description": "Door activate 1",
+            "filename": "turretUndeploy1_01.ogg"
         }
+
     ],
   "music": [
     {

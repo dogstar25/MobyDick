@@ -101,7 +101,8 @@
         {
             "id": "LOC_0023_0014",
             "gameObjectType": "SURVIVOR",
-            "name": "Frank"
+            "name": "Frank",
+            "angle": 90
         },
         {
             "id": "LOC_0042_0015",

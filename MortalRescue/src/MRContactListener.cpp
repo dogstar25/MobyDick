@@ -477,7 +477,9 @@ void MRContactListener::_player_heartPickup(GameObject* player, GameObject* hear
 
 	if (playerVitality->addHealth(1)) {
 		heartPickup->setRemoveFromWorld(true);
+		SoundManager::instance().playSound("SFX_COLLECT_HEART_1");
 	}
+
 
 
 }

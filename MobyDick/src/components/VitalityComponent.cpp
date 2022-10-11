@@ -60,7 +60,9 @@ VitalityComponent::VitalityComponent(Json::Value componentJSON)
 				level++;
 			}
 
-		m_maxLevels = level;
+		//LevelCap is a setting that can be set at the level definition level so that the same vitality
+		//component can be resued for difffernt things
+		m_maxLevels = m_levelCap = level;
 
 		//Set values for first level
 		m_resistance = m_regenLevels[0].resistance;
@@ -145,7 +147,7 @@ void VitalityComponent::_updateRegeneration()
 
 	if (m_isBroken == true && m_regenTimer.hasMetTargetDuration()) {
 
-		if (m_currentLevel < m_maxLevels) {
+		if (m_currentLevel < m_maxLevels && m_currentLevel < m_levelCap) {
 
 			//Restore the object and if we aslo hid it while it was brokwen then unhide it
 			m_isBroken = false;
@@ -217,6 +219,13 @@ bool VitalityComponent::testResistance(float force)
 	else {
 		return true;
 	}
+
+}
+
+void VitalityComponent::setLevelCap(int levelCap)
+{
+
+	m_levelCap = levelCap;
 
 }
 

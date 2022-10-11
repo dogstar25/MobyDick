@@ -13,6 +13,7 @@ MRColorMap::MRColorMap()
 
 	//reds
 	addColor("Colors::WINE", Colors::WINE);
+	addColor("Colors::GRAPE", Colors::GRAPE);
 
 	//yellows
 	addColor("Colors::GOLD", Colors::GOLD);

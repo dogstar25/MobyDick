@@ -13,6 +13,7 @@ namespace Colors {
 	
 	//red
 	inline SDL_Color WINE = { 127, 6, 34, 255 };
+	inline SDL_Color GRAPE = { 200, 0, 255, 255 };
 
 	//yellow
 	inline SDL_Color GOLD = { 173, 167, 54, 255 };

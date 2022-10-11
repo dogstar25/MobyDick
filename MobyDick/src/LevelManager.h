@@ -28,6 +28,7 @@ struct LevelObject
 	std::optional<int> disabledType{};
 	std::optional<float> weaponForce{};
 	std::optional<SDL_Color> weaponColor{};
+	std::optional<int> compositePieceLevelCap{};
 };
 
 struct Objective

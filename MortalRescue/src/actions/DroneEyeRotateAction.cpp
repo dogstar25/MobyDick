@@ -13,7 +13,8 @@ void DroneEyeRotateAction::perform(GameObject* gameObject, float angularVelocity
 		physicsComponent->setLinearVelocity({ 0, 0 });
 	}
 	else {
-		physicsComponent->applyTorque(angularVelocity);
+		physicsComponent->applyRotation(angularVelocity);
+		//physicsComponent->applyTorque(angularVelocity);
 	}
 	
 

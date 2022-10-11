@@ -2,6 +2,7 @@
 #include <iostream>
 #include "game.h"
 #include "../particleEffects/GameParticleEffects.h"
+#include "SoundManager.h"
 
 extern std::unique_ptr<Game> game;
 
@@ -30,6 +31,9 @@ void OnetimeButtonInteraction::perform(GameObject* interactingObject, GameObject
 		}
 
 	}
+
+	SoundManager::instance().playSound("SFX_BUTTON_BROKEN_1");
+	SoundManager::instance().playSound("SFX_DOOR_ACTIVATE_1");
 
 	//Since we are possibly disabling and enabling a wall that could affect navigation
 	//then refresh all navigation objects accessibility

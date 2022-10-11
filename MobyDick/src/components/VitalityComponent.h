@@ -36,6 +36,7 @@ public:
 	void setHealth(float health) { m_health = health; }
 	float health() { return m_health; }
 	float rotateSpeed() { return m_rotationSpeed; }
+	void setLevelCap(int levelCap);
 
 	bool isLifetimeAlphaFade() { return m_isLifetimeAlphaFade; }
 	void setIsLifetimeAlphaFade(bool isLifetimeAlphaFade) { m_isLifetimeAlphaFade = isLifetimeAlphaFade; }
@@ -64,6 +65,7 @@ private:
 	float	m_regenSpeed{ 0 };
 	int		m_currentLevel{ 0 };
 	int		m_maxLevels{ 0 };
+	int     m_levelCap{ 1 };
 	std::array<LevelDefinition, MAX_VITALITY_LEVELS> m_regenLevels = {};
 
 	bool m_isLifetimeAlphaFade{ true };

@@ -30,7 +30,7 @@ SoundManager& SoundManager::instance()
 
 void SoundManager::initSound()
 {
-	Mix_OpenAudio(44100, AUDIO_S16SYS, 2, 512);
+	Mix_OpenAudio(44100, AUDIO_S32SYS, 2, 4096);
 
 	auto volume = game->contextMananger()->getSoundVolume();
 	Mix_Volume(-1, volume);
