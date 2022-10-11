@@ -257,7 +257,7 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 	const auto& action = actionComponent->getAction(ACTION_ROTATE);
 
 	//Once the angle is very close then set the angle directly
-	if (difference < 0.05) {
+	if (difference < 0.07) {
 
 		action->perform(gameObject, (float)0.);
 

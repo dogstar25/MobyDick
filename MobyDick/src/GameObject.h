@@ -72,6 +72,7 @@ public:
 	void setColor(SDL_Color color);
 	void setWeaponForce(float force);
 	void setWeaponColor(SDL_Color color);
+	void setCompositePieceLevelCap(int levelCap);
 
 	b2Vec2 getSize();
 	float getAngle();

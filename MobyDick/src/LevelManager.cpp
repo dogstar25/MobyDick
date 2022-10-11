@@ -413,6 +413,9 @@ std::optional<LevelObject> LevelManager::_determineColorDefinedObject(SDL_Color 
 			if (colorItemJSON.isMember("weaponColor")) {
 				levelObject->weaponColor = game->colorMap()->toSDLColor(colorItemJSON["weaponColor"].asString());
 			}
+			if (colorItemJSON.isMember("compositePieceLevelCap")) {
+				levelObject->compositePieceLevelCap = colorItemJSON["compositePieceLevelCap"].asInt();
+			}
 
 		}
 	}
@@ -465,6 +468,9 @@ std::optional<LevelObject> LevelManager::_determineLocationDefinedObject(int x, 
 			}
 			if (locationItemJSON.isMember("weaponColor")) {
 				levelObject->weaponColor = game->colorMap()->toSDLColor(locationItemJSON["weaponColor"].asString());
+			}
+			if (locationItemJSON.isMember("compositePieceLevelCap")) {
+				levelObject->compositePieceLevelCap = locationItemJSON["compositePieceLevelCap"].asInt();
 			}
 
 			break;
@@ -633,6 +639,11 @@ void LevelManager::_buildLevelObjects(Scene* scene)
 			if (m_levelObjects[x][y].gameObjectType.empty() == false) {
 
 				levelObject = &m_levelObjects[x][y];
+
+				if (levelObject->gameObjectType == "SURVIVOR") {
+					int todd = 1;
+				}
+				
 				auto gameObject = scene->addGameObject(levelObject->gameObjectType, levelObject->layer,
 					(float)x, (float)y, (float)levelObject->angleAdjustment, levelObject->cameraFollow, levelObject->name);
 
@@ -678,7 +689,11 @@ void LevelManager::_buildLevelObjects(Scene* scene)
 					gameObject->setWeaponForce(levelObject->weaponForce.value());
 				}
 
-				
+				//Apply override vitality levelCap if exists
+				if (levelObject->compositePieceLevelCap.has_value()) {
+					gameObject->setCompositePieceLevelCap(levelObject->compositePieceLevelCap.value());
+				}
+
 			}
 		}
 	}

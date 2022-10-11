@@ -753,6 +753,88 @@
             ]
         },
         {
+            "type": "HEALTH_STATION_96",
+            "traitTags": [ "interactive" ],
+            "description": "Health Station",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "tint": "Colors::CYAN",
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 96,
+                        "height": 96
+                    }
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_HEALTH_STATION_IDLE",
+                            "frames": 1
+                        },
+                        {
+                            "state": "ANIMATION_ACTIVE",
+                            "textureId": "TX_HEALTH_STATION_ACTIVE",
+                            "frames": 1
+                        }
+                    ]
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_CHAIN",
+                            "physicsChainType": "PhysicsChainType::CW_REFLECT_OUT",
+                            "friction": 0.00,
+                            "restitution": 0.0,
+                            "density": 1.5
+                        },
+                        {
+                            "contactTag": "ContactTag::CONTAINER_INSIDE",
+                            "collisionShape": "B2_CHAIN",
+                            "physicsChainType": "PhysicsChainType::CCW_REFLECT_IN",
+                            "friction": 0.00,
+                            "restitution": 0.0,
+                            "density": 1.5
+                        }
+
+                    ]
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "interactiveMenuObject": "INTERACTIVE_MENU_BASIC",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_INTERACTION",
+                            "actionClass": "HealthStationInteraction"
+                        }
+                    ]
+                },
+                {
+                    "id": "CONTAINER_COMPONENT",
+                    "capacity": 30,
+                    "gameObjectType": "HEALTH_HEART",
+                    "count": 30,
+                    "spawnForce": 1,
+                    "layer": "GameLayer::MAIN"
+                }
+            ]
+        },
+        {
             "type": "BACKGROUND_GRID_1",
             "traitTags": [],
             "components": [
@@ -761,7 +843,7 @@
                     "textureId": "TX_BACKGROUND_1_512",
                     "color": {
                         "tint": "Colors::CYAN",
-                        "alpha": 20
+                        "alpha": 33
                     }
                 },
                 {
@@ -802,6 +884,44 @@
                         "height": 32
                     },
                     "absolutePositioning": false
+                }
+            ]
+        },
+        {
+            "type": "BARREL_FILLER",
+            "traitTags": ["barrier"],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_DRONE_BRAIN_64",
+                    "color": {
+                        "tint": "Colors::CYAN",
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "linearDamping": 2.0,
+                    "angularDamping": 3.0,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_SOLID",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 0.64,
+                            "friction": 0.00,
+                            "restitution": 0.7,
+                            "density": 80.5
+                        }
+                    ]
                 }
             ]
         },

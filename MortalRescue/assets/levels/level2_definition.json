@@ -52,9 +52,9 @@
         },
         {
             "id": "StatusItemId::SURVIVORS",
-            "initialValue": 7,
+            "initialValue": 5,
             "minValue": 0,
-            "maxValue": 7
+            "maxValue": 5
         },
         {
             "id": "StatusItemId::SCRAP_COUNT",
@@ -100,12 +100,18 @@
             "gameObjectType": "VOID_FILLER",
             "layer": "GameLayer::BACKGROUND_1",
             "objectColor": "Colors::CYAN"
+        },
+        {
+            "colorKey": "Colors::GRAPE",
+            "gameObjectType": "BARREL_FILLER",
+            "layer": "GameLayer::MAIN",
+            "objectColor": "Colors::CYAN"
         }
 
     ],
     "locationDefinedObjects": [
         {
-            "id": "LOC_0005_0006",
+            "id": "LOC_0002_0014",
             "gameObjectType": "GINA_64",
             "name": "PlayerGina",
             "cameraFollow": true
@@ -113,7 +119,135 @@
         {
             "id": "LOC_0051_0027",
             "gameObjectType": "DRONE2",
-            "name": "EnemyA"
+            "name": "EnemyA",
+            "compositePieceLevelCap": 1
+        },
+        {
+            "id": "LOC_0088_0013",
+            "gameObjectType": "HEALTH_STATION_96"
+        },
+        {
+            "id": "LOC_0117_0014",
+            "gameObjectType": "ESCAPE_STAIRS"
+        },
+        {
+            "id": "LOC_0075_0030",
+            "gameObjectType": "SURVIVOR"
+        },
+        {
+            "id": "LOC_0018_0015",
+            "gameObjectType": "SURVIVOR"
+        },
+        {
+            "id": "LOC_0037_0015",
+            "gameObjectType": "SURVIVOR",
+            "angle": 180
+        },
+        {
+            "id": "LOC_0074_0015",
+            "gameObjectType": "SURVIVOR"
+        },
+        {
+            "id": "LOC_0073_0016",
+            "gameObjectType": "SURVIVOR"
+        },
+        {
+            "id": "LOC_0068_0027",
+            "gameObjectType": "TURRET",
+            "angle": 90
+        },
+        {
+            "id": "LOC_0008_0015",
+            "gameObjectType": "TOGGLE_BUTTON",
+            "name": "button1",
+            "angle": 270
+        },
+        {
+            "id": "LOC_0030_0023",
+            "gameObjectType": "TOGGLE_BUTTON",
+            "name": "button2",
+            "angle": 180
+        },
+        {
+            "id": "LOC_0061_0023",
+            "gameObjectType": "TOGGLE_BUTTON",
+            "name": "button3",
+            "angle": 180
+        },
+        {
+            "id": "LOC_0091_0022",
+            "gameObjectType": "TOGGLE_BUTTON",
+            "name": "button5"
+        },
+        {
+            "id": "LOC_0005_0013",
+            "gameObjectType": "LASERWALL_128",
+            "name": "button1_TARGET"
+        },
+        {
+            "id": "LOC_0005_0018",
+            "gameObjectType": "LASERWALL_128",
+            "name": "button1_TARGET"
+        },
+        {
+            "id": "LOC_0020_0014",
+            "gameObjectType": "LASERWALL_192",
+            "name": "button2_TARGET"
+        },
+        {
+            "id": "LOC_0020_0017",
+            "gameObjectType": "LASERWALL_192",
+            "name": "button3_TARGET"
+        },
+        {
+            "id": "LOC_0028_0014",
+            "gameObjectType": "LASERWALL_192",
+            "name": "button2_TARGET"
+        },
+        {
+            "id": "LOC_0028_0017",
+            "gameObjectType": "LASERWALL_192",
+            "name": "button3_TARGET"
+        },
+        {
+            "id": "LOC_0040_0014",
+            "gameObjectType": "LASERWALL_192",
+            "name": "button2_TARGET"
+        },
+        {
+            "id": "LOC_0040_0017",
+            "gameObjectType": "LASERWALL_192",
+            "name": "button3_TARGET"
+        },
+        {
+            "id": "LOC_0047_0014",
+            "gameObjectType": "LASERWALL_192",
+            "name": "button2_TARGET"
+        },
+        {
+            "id": "LOC_0047_0017",
+            "gameObjectType": "LASERWALL_192",
+            "name": "button3_TARGET"
+        },
+        {
+            "id": "LOC_0060_0014",
+            "gameObjectType": "LASERWALL_192",
+            "name": "button2_TARGET"
+        },
+        {
+            "id": "LOC_0060_0017",
+            "gameObjectType": "LASERWALL_192",
+            "name": "button3_TARGET"
+        },
+        {
+            "id": "LOC_0067_0014",
+            "gameObjectType": "LASERWALL_192",
+            "name": "button2_TARGET"
+        },
+        {
+            "id": "LOC_0067_0017",
+            "gameObjectType": "LASERWALL_192",
+            "name": "button3_TARGET"
         }
 
 

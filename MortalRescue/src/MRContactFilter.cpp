@@ -109,7 +109,6 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_BULLET].set(WALL);
 	m_contactMasks[PLAYER_BULLET].set(WALL_PIECE);
 	m_contactMasks[PLAYER_BULLET].set(ENEMY_TURRET);
-	m_contactMasks[PLAYER_BULLET].set(HEALTH_STATION_INSIDE);
 	m_contactMasks[PLAYER_BULLET].set(LEVEL_CAGE);
 
 	//PLAYER_PULSE_BULLET
@@ -117,7 +116,6 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_PULSE_BULLET].set(DRONE_SHIELD);
 	m_contactMasks[PLAYER_PULSE_BULLET].set(WALL_PIECE);
 	m_contactMasks[PLAYER_PULSE_BULLET].set(ENEMY_TURRET);
-	m_contactMasks[PLAYER_PULSE_BULLET].set(HEALTH_STATION_INSIDE);
 
 	//PLAYER_PULSE_EXPLOSION
 	m_contactMasks[PLAYER_PULSE_EXPLOSION].reset();
@@ -198,8 +196,6 @@ MRContactFilter::MRContactFilter()
 	//HEALTH_STATION_INSIDE Inside
 	m_contactMasks[HEALTH_STATION_INSIDE].reset();
 	m_contactMasks[HEALTH_STATION_INSIDE].set(HEART_PICKUP);
-	m_contactMasks[HEALTH_STATION_INSIDE].set(PLAYER_BULLET);
-	m_contactMasks[HEALTH_STATION_INSIDE].set(PLAYER_PULSE_BULLET);
 
 	//Radiation Particle
 	m_contactMasks[RADIATION_PARTICLE].reset();

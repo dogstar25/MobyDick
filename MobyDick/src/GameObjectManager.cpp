@@ -74,15 +74,7 @@ std::shared_ptr<GameObjectDefinition> GameObjectManager::getDefinition(std::stri
 
 	if (m_gameObjectDefinitions.find(definitionId) == this->m_gameObjectDefinitions.end())
 	{
-		if (m_gameObjectDefinitions.find("DEFAULT") == this->m_gameObjectDefinitions.end()) {
-			std::cout << "Missing DEFAULT gameObject. Configure a GameObject named DEFAULT\n";
-			return nullptr;
-		}
-		else {
-			definitionId = "DEFAULT";
-			return std::make_shared<GameObjectDefinition>(m_gameObjectDefinitions[definitionId]);
-		}
-		
+		assert(false && "Missing DEFAULT gameObject. Configure a GameObject named DEFAULT");
 	}
 	else
 	{

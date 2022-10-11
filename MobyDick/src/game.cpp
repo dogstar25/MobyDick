@@ -73,7 +73,6 @@ bool Game::init(std::shared_ptr<ContactListener> contactListener, std::shared_pt
 		m_gameScreenResolution.y,
 		windowFlags);
 
-
 	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 
 		m_renderer = std::make_shared<GLRenderer>(GLRenderer());
