@@ -41,6 +41,7 @@
 #include "components/PoolComponent.h"
 
 class Scene;
+struct SeenObjectDetails;
 
 class GameObject
 {
@@ -76,9 +77,13 @@ public:
 
 	b2Vec2 getSize();
 	float getAngle();
+	float getAngleInDegrees();
 	SDL_FPoint getCenterPosition();
 	SDL_FPoint getTopLeftPosition();
 	SDL_FPoint getOriginalPosition();
+	SDL_FPoint getOriginalTilePosition();
+	std::vector<SeenObjectDetails> getSeenObjects();
+
 	bool isPointingAt(SDL_FPoint gameObject);
 	bool holdsDependentGameObjects();
 
@@ -91,6 +96,7 @@ public:
 	void dispatch(SDL_FPoint destination);
 	int brainState();
 	bool isAlive();
+	bool isCompositeEmpty();
 
 	void disableUpdate();
 	void enableUpdate();
@@ -126,7 +132,7 @@ public:
 
 	void reset();
 	void addInventoryItem(GameObject* gameObject);
-	std::vector<GameObject> getTouchingByTrait(const int trait);
+	std::vector<GameObject*> getTouchingByTrait(const int trait);
 	void addTouchingObject(std::shared_ptr<GameObject> touchingObject);
 	void setParent(GameObject* parentObject);
 	std::optional<GameObject*> parent() { return m_parentObject; }

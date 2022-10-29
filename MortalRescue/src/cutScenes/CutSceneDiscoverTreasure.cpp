@@ -41,9 +41,9 @@ void CutSceneDiscoverTreasure::start()
 
 		//Get Frank, give Frank a brain, and dispatch Frank to a destination
 		_frank = _startFrank();
-		//_frank->dispatch({ 5400,900 });
-		const auto& brainComponent = _frank.lock()->getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
-		brainComponent->dispatch({ 5400,900 });
+
+		const auto& navComponent = _frank.lock()->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
+		navComponent->navigateTo(5400,900);
 
 		Camera::instance().setFollowMe(_frank.lock());
 
@@ -53,8 +53,8 @@ void CutSceneDiscoverTreasure::start()
 	else if (m_currentAct == 2) {
 
 		//_frank->dispatch({ 1,1 });
-		const auto& brainComponent = _frank.lock()->getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
-		brainComponent->dispatch({ 5400,900 });
+		const auto& navComponent = _frank.lock()->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
+		navComponent->navigateTo(5400, 900);
 
 		Camera::instance().dispatch({ 4000,900 });
 	}

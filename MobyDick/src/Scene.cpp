@@ -58,21 +58,18 @@ Scene::Scene(std::string sceneId)
 		auto keyCode = game->enumMap()->toEnum(keyActionJSON["keyCode"].asString());
 
 		auto action = game->enumMap()->toEnum(keyActionJSON["sceneAction"]["action"].asString());
-		auto newSceneId = keyActionJSON["sceneAction"]["newSceneId"].asString();
+		auto actionId = keyActionJSON["sceneAction"]["actionId"].asString();
 
-		SceneAction sceneAction = { int(action) , newSceneId };
+		SceneAction sceneAction = { int(action) , actionId };
 		addKeyAction(keyCode, sceneAction);
 	}
 
 	//Debug Mode
-	if (m_hasPhysics && m_physicsConfig.b2DebugDrawMode == true)
+	if (m_hasPhysics == true)
 	{
 		DebugDraw::instance().SetFlags(DebugDraw::e_shapeBit);
 		m_physicsWorld->SetDebugDraw(&DebugDraw::instance());
 	}
-
-	//Initialize the camera state
-	//Camera::instance().init();
 
 }
 
@@ -80,6 +77,25 @@ Scene::~Scene()
 {
 
 	clear();
+
+}
+
+void Scene::setDebugSetting(int setting) {
+
+	m_sceneDebugSettings.flip(setting);
+
+	//If this is the debug navigation grid then reset it
+	if (setting == DebugSceneSettings::SHOW_NAVIGATION_DEBUG_MAP) {
+		resetGridDisplay();
+	}
+
+
+}
+
+bool Scene::isDebugSetting(int setting)
+{
+
+	return m_sceneDebugSettings.test(setting);
 
 }
 
@@ -158,11 +174,14 @@ void Scene::reset()
 	_buildSceneGameObjects(sceneJSON);
 
 	//Debug Mode
-	if (m_hasPhysics && m_physicsConfig.b2DebugDrawMode == true)
+	if (m_hasPhysics == true)
 	{
 		DebugDraw::instance().SetFlags(DebugDraw::e_shapeBit);
 		m_physicsWorld->SetDebugDraw(&DebugDraw::instance());
 	}
+
+	//DebugSettings
+	m_sceneDebugSettings.reset();
 
 }
 
@@ -175,17 +194,9 @@ void Scene::clear()
 	m_objectPoolManager.clear();
 	m_levelTriggers.clear();
 
-	//Clear the objective contextManager values as well as the objective items stored in the scene
-	//for (auto& objective : m_levelObjectives) {
-
-	//	auto& objectiveStatusItem = game->contextMananger()->getStatusItem(objective.contextManagerId);
-	//	objectiveStatusItem.setOriginalValue(0);
-	//	objectiveStatusItem.setMaxValue(0);
-	//	objectiveStatusItem.setValue(0);
-	//}
 	m_levelObjectives.clear();
-
 	m_gameObjectLookup.clear();
+	m_navigationMap.clear();
 
 	for (int x = 0; x < MAX_GAMEOBJECT_LAYERS; x++)
 	{
@@ -235,6 +246,15 @@ void Scene::update() {
 	// Remove all objects that should be removed in first pass
 	_removeFromWorldPass();
 
+	//Update the navigationMap
+	_updateNavigationMap();
+
+
+	//If the Debug display navigation grid is turned on then build it
+	if (isDebugSetting(DebugSceneSettings::SHOW_NAVIGATION_DEBUG_MAP)) {
+		_showNavigationMap();
+	}
+
 }
 
 void Scene::render() {
@@ -244,10 +264,6 @@ void Scene::render() {
 	//Render all of the layers
 	for (auto& gameLayer : m_gameObjects)
 	{
-
-		//USE THE LAYERiNDEX TO DETERMINE IF WE HAVE A PARALLAX and set a new filed on the gameObjects
-		//render component
-		//_setParallax();
 
 		//Render all of the GameObjects in this layer
 		for (auto& gameObject : gameLayer)
@@ -263,15 +279,24 @@ void Scene::render() {
 	}
 	
 	//DebugDraw
-	if (m_hasPhysics && m_physicsConfig.b2DebugDrawMode == true)
+	if (m_hasPhysics && isDebugSetting(DebugSceneSettings::SHOW_PHYSICS_DEBUG) == true)
 	{
 		m_physicsWorld->DebugDraw();
 	}
 
+}
+
+void Scene::resetGridDisplay()
+{
+
+	for (const auto& gameObject : m_gameObjects[GameLayer::GRID_DISPLAY]) {
+
+		gameObject->disableRender();
+
+	}
 
 
 }
-
 
 void Scene::direct()
 {
@@ -374,8 +399,6 @@ std::optional<Parallax> Scene::getParallax(int layer)
 void Scene::clearEvents()
 {
 
-	//First delete all player input events from last loop
-	//m_PlayerInputEvents.clear();
 }
 
 void Scene::setInputControlMode(int inputControlMode)
@@ -429,7 +452,7 @@ void Scene::_buildPhysicsWorld(Json::Value physicsJSON)
 	m_physicsConfig.timeStep = physicsJSON["timeStep"].asFloat();
 	m_physicsConfig.velocityIterations = physicsJSON["velocityIterations"].asInt();
 	m_physicsConfig.positionIterations = physicsJSON["positionIterations"].asInt();
-	m_physicsConfig.b2DebugDrawMode = physicsJSON["b2DebugDrawMode"].asBool();
+	//m_physicsConfig.b2DebugDrawMode = physicsJSON["b2DebugDrawMode"].asBool();
 
 	//Build the box2d physics world
 	m_physicsWorld = new b2World(m_physicsConfig.gravity);
@@ -601,6 +624,18 @@ void Scene::addLevelObjective(Objective objective)
 	m_levelObjectives.emplace_back(objective);
 }
 
+void Scene::addNavigationMapItem(NavigationMapItem& navigationMapItem, int x, int y)
+{
+	m_navigationMap[x][y] = navigationMapItem;
+}
+
+
+void Scene::setNavigationMapArraySize(int width, int height)
+{
+	m_navigationMap.resize(width, std::vector<NavigationMapItem>(height));
+
+}
+
 void Scene::addLevelTrigger(std::shared_ptr<Trigger> trigger)
 {
 	m_levelTriggers.emplace_back(trigger);
@@ -614,47 +649,173 @@ void Scene::addParallaxItem(Parallax& parallaxItem)
 
 }
 
-//SDL_FPoint Scene::calcWindowPosition(int globalPosition)
-//{
-//	SDL_FPoint globalPoint = {};
-//
-//	if (globalPosition == PositionAlignment::CENTER) {
-//
-//		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() / 2);
-//		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight() / 2);
-//
-//	}
-//	else if (globalPosition == PositionAlignment::TOP_CENTER) {
-//
-//		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() / 2);
-//		globalPoint.y = 0;
-//	}
-//	else if (globalPosition == PositionAlignment::TOP_LEFT) {
-//
-//		globalPoint.x = 0;
-//		globalPoint.y = 0;
-//	}
-//	else if (globalPosition == PositionAlignment::TOP_RIGHT) {
-//
-//		globalPoint.x = (float)round(GameConfig::instance().windowWidth() / game->worldTileWidth() - 5);
-//		globalPoint.y = 0;
-//	}
-//	else if (globalPosition == PositionAlignment::CENTER_LEFT) {
-//
-//		globalPoint.x = 0;
-//		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight() / 2);
-//	}
-//	else if (globalPosition == PositionAlignment::BOTTOM_LEFT) {
-//
-//		globalPoint.x = 0;
-//		globalPoint.y = (float)round(GameConfig::instance().windowHeight() / game->worldTileHeight());
-//	}
-//
-//	else {
-//		/* Need other calcs added*/
-//	}
-//
-//	return globalPoint;
-//
-//}
+
+void Scene::_updateNavigationMap()
+{
+
+	for (auto x = 0; x <  m_navigationMap.size(); ++x)
+	{
+		for (auto y = 0; y < m_navigationMap[x].size(); ++y)
+		{
+
+
+			auto& navItem = m_navigationMap[x][y];
+
+			//If this gameObject hasnt been deleted elsewhere somehow the get the gameObject representing 
+			// this navigation map grid location
+			if (navItem.gameObject.has_value() && navItem.gameObject->expired() == false) {
+
+				const auto& gameObject = navItem.gameObject->lock();
+
+				//Get the gameobject and its width in tiles
+				int widthInTiles = std::round(gameObject->getSize().x / LevelManager::instance().m_tileWidth);
+
+				//Plain impassable
+				if (gameObject->hasTrait(TraitTag::impasse)) {
+					m_navigationMap[x][y].passable = false;
+				}
+				else if (gameObject->hasTrait(TraitTag::conditional_impasse)) {
+
+					if (x == 67 && y == 28) {
+						int todd = 1;
+					}
+
+
+					//if we are at 0 angle then we need to set the next "widthInTiles" tiles horizontally to impassable
+					if ((int)gameObject->getAngleInDegrees() == 0) {
+
+						if (gameObject->physicsDisabled() == true) {
+
+							//set the next tiles to the right as no-impasse
+							for (auto i = 0; i < widthInTiles; i++) {
+								if ((x + i) < LevelManager::instance().m_width - 1) {
+									m_navigationMap[x + i][y].passable = true;
+								}
+							}
+						}
+						else {
+
+							//set the next tiles to the right as no-impasse
+							for (auto i = 0; i < widthInTiles; i++) {
+								if ((x + i) < LevelManager::instance().m_width - 1) {
+									m_navigationMap[x + i][y].passable = false;
+								}
+							}
+
+						}
+
+					}
+					//if we are at 90 angle then we need to set the next "widthInTiles" tiles vertically to impassable
+					else if ((int)gameObject->getAngleInDegrees() == 90) {
+
+						if (gameObject->physicsDisabled() == true) {
+
+							//set the next tiles to the right as no-impasse
+							for (auto i = 0; i < widthInTiles; i++) {
+								if ((y + i) < LevelManager::instance().m_height - 1) {
+									m_navigationMap[x][y + i].passable = true;
+								}
+							}
+						}
+						else {
+
+							//set the next tiles to the right as no-impasse
+							for (auto i = 0; i < widthInTiles; i++) {
+								if ((y + i) < LevelManager::instance().m_height - 1) {
+									m_navigationMap[x][y + i].passable = false;
+								}
+							}
+
+						}
+
+					}
+
+				}
+				//This is a composite object that needs a different type of check for passable			
+				else if (gameObject->hasTrait(TraitTag::complex_impasse)) {
+
+
+					if (x == 67 && y == 28) {
+						int todd = 1;
+					}
+
+					//if we are at 0 angle then we need to set the next "widthInTiles" tiles to impassable
+					if ((int)navItem.gameObject->lock()->getAngleInDegrees() == 0) {
+
+						//Has the composite object been destroyed
+						if (gameObject->isCompositeEmpty() == true) {
+
+							//Set the next "widthInTiles" tiles vertically to passable
+							for (auto i = 0; i < widthInTiles; i++) {
+								if ((x + i) < LevelManager::instance().m_width - 1) {
+									m_navigationMap[x + i][y].passable = true;
+								}
+							}
+						}
+						else {
+
+							//Set the next "widthInTiles" tiles vertically to impassable
+							for (auto i = 0; i < widthInTiles; i++) {
+								if ((x + i) < LevelManager::instance().m_width - 1) {
+									m_navigationMap[x + i][y].passable = false;
+								}
+							}
+
+						}
+
+					}
+					//if we are at 0 angle then we need to set the next "widthInTiles" tiles to impassable
+					else if (gameObject->getAngleInDegrees() == 90) {
+
+						if (gameObject->isCompositeEmpty() == true) {
+
+							//set the next tiles to the right as no-impasse
+							for (auto i = 0; i < widthInTiles; i++) {
+								if ((y + i) < LevelManager::instance().m_height - 1) {
+									m_navigationMap[x][y + i].passable = true;
+								}
+							}
+						}
+						else {
+
+							//set the next tiles to the right as no-impasse
+							for (auto i = 0; i < widthInTiles; i++) {
+								if ((y + i) < LevelManager::instance().m_height - 1) {
+									m_navigationMap[x][y + i].passable = false;
+								}
+							}
+
+						}
+
+					}
+
+				}
+			}
+		}
+	}
+
+}
+
+void Scene::_showNavigationMap()
+{
+
+	for (const auto& gameObject : m_gameObjects[GameLayer::GRID_DISPLAY]) {
+
+		//Get the x,y object from the navigation map
+		int x = (int)gameObject->getOriginalTilePosition().x;
+		int y = (int)gameObject->getOriginalTilePosition().y;
+
+		if (m_navigationMap[x][y].passable == false) {
+
+			gameObject->enableRender();
+				
+		}
+		else {
+			gameObject->disableRender();
+		}
+
+
+	}
+
+}
 

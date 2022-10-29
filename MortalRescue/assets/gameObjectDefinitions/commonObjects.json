@@ -1,4 +1,6 @@
 {
+    "$schema": "http://json-schema.org/draft/2020-12/schema",
+
     "gameObjects": [
         {
             "type": "TOGGLE_BUTTON",
@@ -349,39 +351,8 @@
             ]
         },
         {
-            "type": "NAVIGATION_TRANSIT_POINT",
-            "traitTags": [ "navigation", "abstract" ],
-            "description": "Navigation Object",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 64,
-                        "height": 64
-                    }
-                },
-                {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_STATIC",
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::GENERAL_FREE",
-                            "collisionShape": "B2_BOX"
-                        }
-                    ]
-                },
-                {
-                    "id": "NAVIGATION_COMPONENT",
-                    "type": "NavigationObjectType::TRANSIT_POINT"
-                }
-            ]
-        },
-        {
             "type": "NAVIGATION_WAYPOINT",
-            "traitTags": [ "navigation", "abstract" ],
+            "traitTags": [ "waypoint", "abstract" ],
             "description": "Navigation Object",
             "components": [
                 {
@@ -404,10 +375,6 @@
                         }
                     ]
 
-                },
-                {
-                    "id": "NAVIGATION_COMPONENT",
-                    "type": "NavigationObjectType::WAYPOINT"
                 }
             ]
         },
@@ -499,7 +466,7 @@
                 {
                     "id": "SURVIVOR_BRAIN_COMPONENT",
                     "sightSensorSize": 15,
-                    "detectObjectTraits": [ "player", "objective", "navigation" ]
+                    "detectObjectTraits": [ "player", "objective" ]
                 },
                 {
                     "id": "ATTACHMENTS_COMPONENT",
@@ -515,111 +482,6 @@
                         }
 
                     ]
-                }
-            ]
-        },
-        {
-            "type": "TURRET",
-            "traitTags": [ "barrier" ],
-            "description": "Turret",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "color": {
-                        "tint": "Colors::CYAN",
-                        "alpha": 255
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 32,
-                        "height": 32
-                    }
-                },
-                {
-                    "id": "ANIMATION_COMPONENT",
-                    "defaultState": "ANIMATION_DEPLOY",
-                    "frameSize": {
-                        "width": 64,
-                        "height": 64
-                    },
-                    "flash": {
-                        "color": "Colors::RED",
-                        "alpha": "200",
-                        "speed": 0.15
-                    },
-                    "animations": [
-                        {
-                            "state": "ANIMATION_IDLE",
-                            "textureId": "TX_TURRET_IDLE",
-                            "speed": 0.95,
-                            "frames": 1
-                        },
-                        {
-                            "state": "ANIMATION_DEPLOY",
-                            "textureId": "TX_TURRET_DEPLOY",
-                            "speed": 0.05,
-                            "frames": 4
-                        },
-                        {
-                            "state": "ANIMATION_UNDEPLOY",
-                            "textureId": "TX_TURRET_UNDEPLOY",
-                            "speed": 0.05,
-                            "frames": 4
-                        },
-                        {
-                            "state": "ANIMATION_ACTIVE",
-                            "textureId": "TX_TURRET_ACTIVE",
-                            "speed": 0.15,
-                            "frames": 1
-                        }
-
-                    ]
-                },
-                {
-                    "id": "VITALITY_COMPONENT",
-                    "rotationSpeed": 20,
-                    "health": 3
-                },
-                {
-                    "id": "TURRET_BRAIN_COMPONENT",
-                    "sightSensorSize": 7,
-                    "detectObjectTraits": [ "player", "objective" ]
-                },
-                {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_KINEMATIC",
-                    "linearDamping": 0.0,
-                    "angularDamping": 20.0,
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::ENEMY_TURRET",
-                            "collisionShape": "B2_BOX",
-                            "density": 10.1
-                        }
-                    ]
-
-                },
-                {
-                    "id": "ACTION_COMPONENT",
-                    "actions": [
-                        {
-                            "actionId": "ACTION_ROTATE",
-                            "actionClass": "DefaultRotate"
-                        },
-                        {
-                            "actionId": "ACTION_USAGE",
-                            "actionClass": "TurretFire"
-                        }
-                    ]
-                },
-                {
-                    "id": "WEAPON_COMPONENT",
-                    "fireOffset": -1.0,
-                    "force": 0.25,
-                    "color": "Colors::WHITE",
-                    "bulletPoolId": "BULLET2_POOL"
                 }
             ]
         },
@@ -866,6 +728,24 @@
             ]
         },
         {
+            "type": "IMPASSE",
+            "traitTags": [ "abstract", "impasse" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                }
+
+            ]
+        },
+        {
             "type": "VOID_FILLER",
             "traitTags": [],
             "components": [
@@ -889,7 +769,7 @@
         },
         {
             "type": "BARREL_FILLER",
-            "traitTags": ["barrier"],
+            "traitTags": [ "barrier" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -952,6 +832,29 @@
                     "effects": [
                         "radiation"
                     ]
+                }
+            ]
+        },
+        {
+            "type": "DEBUG_GRID_32",
+            "traitTags": [],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureBlendMode": "RenderBlendMode::NONE",
+                    "textureId": "TX_FOG_BOX",
+                    "color": {
+                        "tint": "Colors::RED",
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
                 }
             ]
         }

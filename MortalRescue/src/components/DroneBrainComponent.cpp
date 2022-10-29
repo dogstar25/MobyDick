@@ -1,15 +1,20 @@
 #include "DroneBrainComponent.h"
+#include "../GameConstants.h"
+#include "game.h"
 
 #include <math.h>
 #include <random>
 #include <assert.h>
 #include <format>
+#include <bitset>
 
 #include "DebugPanel.h"
 #include "GameObjectManager.h"
 
 
 #include "components/VitalityComponent.h"
+
+extern std::unique_ptr<Game> game;
 
 
 DroneBrainComponent::DroneBrainComponent(Json::Value definitionJSON)
@@ -21,7 +26,6 @@ DroneBrainComponent::DroneBrainComponent(Json::Value definitionJSON)
 
 
 
-
 }
 
 void DroneBrainComponent::postInit()
@@ -30,16 +34,9 @@ void DroneBrainComponent::postInit()
 	BrainComponent::postInit();
 
 	//Get all WayPoints
-	for (const auto& gameObject : parent()->parentScene()->gameObjects()[GameLayer::ABSTRACT]) {
+	for (const auto& gameObject : parent()->parentScene()->getGameObjectsByTrait(TraitTag::waypoint)) {
 
-		if (gameObject->hasTrait(TraitTag::navigation)) {
-
-			const auto& navComponent = gameObject->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
-			if (navComponent->type() == NavigationObjectType::WAYPOINT) {
-				m_wayPoints.push_back(gameObject);
-			}
-
-		}
+		m_wayPoints.push_back(gameObject);
 	}
 
 	//Do an random sort of the waypoints order
@@ -74,42 +71,19 @@ void DroneBrainComponent::update()
 void DroneBrainComponent::_doPatrol()
 {
 
-	Json::Value definitionJSON;
+	bool hasReachedWaypoint{};
+	auto navigationComponent = parent()->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
 
-	//set back to normal speed
-	//ToDo:Need to store original speed instead of going back to json
-	//definitionJSON = GameObjectManager::instance().getDefinition(parent()->id())->definitionJSON();
-	//Json::Value vitalityComponentJSON = definitionJSON["vitalityComponent"];
-	//auto speed = vitalityComponentJSON["speed"].asFloat();
-	const auto& vitals = parent()->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
-	//vitals->setSpeed(speed);
-
-
-	auto transform = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-	// Get the closest waypoint to your current position
-	if (m_targetDestination.has_value() == false) {
-		m_targetDestination = getClosestNavPoint(transform->getCenterPosition(), NavigationObjectType::WAYPOINT);
+	if (m_focusPoint.has_value() == false) {
+		m_focusPoint = _getNextPatrolDestination();
+		hasReachedWaypoint = navigationComponent->navigateTo(m_focusPoint.value().x, m_focusPoint.value().y);
+	}
+	else{
+		hasReachedWaypoint = navigationComponent->navigateTo(m_focusPoint.value().x, m_focusPoint.value().y);
 	}
 
-	//Have we reached the current target destination.
-	//If so, then get the next waypoint destination
-	if (util::calculateDistance(parent()->getCenterPosition(), 
-		m_targetDestination.value()->getCenterPosition()) < DESTINATION_DISTANCE_TOLERANCE) {
-
-		m_targetDestination = getNextPatrolDestination();
-
-		//Clear out the visited itermin nav points now that we've onto
-		//a new fresh target destination
-		m_tempVisitedNavPoints.clear();
-
-	}
-
-
-	//Execute the base navigation logic
-	bool atClosestAsPossibleToTarget = navigate();
-	if (atClosestAsPossibleToTarget) {
-		m_tempVisitedNavPoints.clear();
-		m_targetDestination = getNextPatrolDestination();
+	if (hasReachedWaypoint) {
+		m_focusPoint = _getNextPatrolDestination();
 	}
 
 }
@@ -128,29 +102,14 @@ void DroneBrainComponent::_doPursue()
 void DroneBrainComponent::_doEngage()
 {
 
-	//std::cout << "Engaging player \n";
+	auto navigationComponent = parent()->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
 
-	//clear out patrol temp vistied
-	m_tempVisitedNavPoints.clear();
-
-	//Make sure interimDestination is populated if off of the track - initialization
-	if (m_interimDestination.has_value() == false) {
-		m_interimDestination = getClosestNavPoint(parent()->getCenterPosition(), NavigationObjectType::UNSPECIFIED);
-	}
-
-	//Set destination to last seen targets location
-	m_targetDestination = getClosestNavPoint(m_targetLocation, NavigationObjectType::UNSPECIFIED);
-
-	std::optional<std::shared_ptr<GameObject>> nextInterimDestination = getNextinterimDestination();
-	if (nextInterimDestination.has_value()) {
-		m_interimDestination = nextInterimDestination.value();
-	}
 
 	//Point eye/weapon at target location
 	const auto& attachmentComponent = parent()->getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
 	const auto& eye = attachmentComponent->getAttachment("DRONE_EYE");
 	const auto& eyeGameObject = eye.value().gameObject;
-	b2Vec2 targetLoc = { m_targetLocation.x ,m_targetLocation.y };
+	b2Vec2 targetLoc = { m_focusPoint.value().x ,m_focusPoint.value().y };
 	b2Vec2 rotationCenter{ parent()->getCenterPosition().x, parent()->getCenterPosition().y };
 	_rotateTowards(targetLoc, rotationCenter, eyeGameObject.get());
 
@@ -162,45 +121,27 @@ void DroneBrainComponent::_doEngage()
 		action->perform(eyeGameObject.get());
 	}
 
-	//Navigate towards target location, unless you are already there
-	_navigateEngage();
+	//ToDo: if we have lost navigation access to the target but can still shoot at it, then shoot 
+	// but dont try to navigate
+	auto playerDistance = util::calculateDistance(parent()->getCenterPosition(), m_focusPoint.value());
+	auto objectSize = parent()->getSize().x;
+	if (playerDistance > (objectSize * 2)) {
 
-
-}
-
-void DroneBrainComponent::_navigateEngage()
-{
-
-	//If we have reached the interim destination then find the next possible interim destination that gets us
-	//closest to the target dstination
-	//Its possible that the interim destination that we find IS the actual target destination we're trying to get to
-	//std::optional<std::shared_ptr<GameObject>> nextInterimDestination{ m_interimDestination };
-	bool alreadyAtClosestInterimToTargetDestination = false;
-
-	//Has the drone reached the interim destination
-	if (util::calculateDistance(parent()->getCenterPosition(), m_interimDestination.value()->getCenterPosition())
-		< DESTINATION_DISTANCE_TOLERANCE) {
-
-			alreadyAtClosestInterimToTargetDestination = true;
+		//Navigate towards target location, unless you are already there
+		navigationComponent->navigateTo(m_focusPoint.value().x, m_focusPoint.value().y);
 
 	}
 
-	//Execute the move actions to get us closer to the interim destination point
-	if (alreadyAtClosestInterimToTargetDestination) {
-		stopMovement();
-	}
-	else {
-		executeMove();
-	}
+	navigationComponent->navigateTo(m_focusPoint.value().x, m_focusPoint.value().y);
 
 }
 
 
-std::shared_ptr<GameObject> DroneBrainComponent::getNextPatrolDestination()
+
+SDL_FPoint DroneBrainComponent::_getNextPatrolDestination()
 {
 
-	const auto& currentTarget = m_targetDestination.value();
-	const auto& currentNavComponent = currentTarget->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
+	SDL_FPoint newPatrolLocation{};
 
 	//Get the next waypoint in the list
 	//If we have reached the end then randomly resort the waypoints and reset to zero
@@ -216,7 +157,11 @@ std::shared_ptr<GameObject> DroneBrainComponent::getNextPatrolDestination()
 	}
 
 	auto newDestination = m_wayPoints[m_currentWaypointIndex];
-	return newDestination;
+	newPatrolLocation = newDestination.lock().get()->getCenterPosition();
+
+	//newPatrolLocation = util::pixelToTileLocation(newPatrolLocation.x, newPatrolLocation.y);
+
+	return newPatrolLocation;
 
 }
 
@@ -274,33 +219,47 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 
 int DroneBrainComponent::_determineState()
 {
-	int state{m_currentState};
+	int state{ m_currentState };
 
 	//Do we see the enemy
 	std::optional<SDL_FPoint> playerLocation = _detectPlayer();
-	if (playerLocation.has_value() ) {
+	if (playerLocation.has_value()) {
 
-		m_targetLocation = playerLocation.value();
+		m_focusPoint = playerLocation.value();
 		m_engageStateTimer.reset();
 		state = BrainState::ENGAGE;
 
 	}
 	else {
 
-		if (m_engageStateTimer.hasMetTargetDuration()) {
+		if (m_currentState == BrainState::ENGAGE) {
 
-			if (state == BrainState::ENGAGE) {
-				m_interimDestination = std::nullopt;
+			if (m_engageStateTimer.hasMetTargetDuration()) {
+
+				m_focusPoint = std::nullopt;
+				state = BrainState::PATROL;
+
 			}
+			else {
+
+				//get the payers actual position
+				auto player = parent()->parentScene()->getGameObjectsByTrait(TraitTag::player)[0];
+				m_focusPoint = player->getCenterPosition();
+
+			}
+
+		}
+		else if (m_currentState == BrainState::PATROL) {
+
 			state = BrainState::PATROL;
 
 		}
 
 	}
-	
-	return state;
 
+	return state;
 }
+
 
 std::optional<SDL_FPoint> DroneBrainComponent::_detectPlayer()
 {
@@ -309,10 +268,21 @@ std::optional<SDL_FPoint> DroneBrainComponent::_detectPlayer()
 
 	for (auto& seenObject : m_seenObjects) {
 
-		if (seenObject.expired() == false && seenObject.lock()->hasTrait(TraitTag::player) && seenObject.lock()->isAlive()) {
+		if (seenObject.gameObject.expired() == false) {
 
-			playerPosition = seenObject.lock()->getCenterPosition();
-			break;
+			//Is this the hitbox fixture of the PlayerObject
+			ContactDefinition* contactDefinition = reinterpret_cast<ContactDefinition*>(seenObject.fixture->GetUserData().pointer);
+			if (contactDefinition->contactTag == ContactTag::PLAYER_HITBOX)
+			{
+
+				if (seenObject.gameObject.expired() == false && seenObject.gameObject.lock()->hasTrait(TraitTag::player)
+					&& seenObject.gameObject.lock()->isAlive())
+				{
+
+					playerPosition = seenObject.gameObject.lock()->getCenterPosition();
+					break;
+				}
+			}
 		}
 	}
 

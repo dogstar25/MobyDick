@@ -43,6 +43,7 @@ public:
 	std::optional<SceneAction> pollEvents();
 	void popScene();
 	void directScene(std::string cutSceneId);
+	void toggleSetting(int settingType);
 	void releaseDirectScene();
 	Scene& pushScene(std::string sceneId, bool pausePreviousScene = false);
 	Timer& gameTimer() { return m_gameTimer; }
@@ -89,6 +90,8 @@ private:
 	std::map<std::string, Json::Value>m_sceneDefinitions;
 	std::map<std::string, SceneSnapshot>m_sceneSaveSnapshots{};
 	
+	//flags for different debug settings
+	//std::bitset<8> m_debugSettings{};
 
 	int m_currentSceneIndex{};
 	Timer m_gameTimer{};
@@ -98,6 +101,7 @@ private:
 	void _directorRelease();
 	void _saveCurrentState(std::string sceneId);
 	void _restoreSceneState(std::string sceneId);
+	
 
 };
 

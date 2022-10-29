@@ -46,15 +46,21 @@
             "filename": "assets/blueprints/drone2_blueprint.png"
         },
         {
-            "id": "TX_BREAKABLE_WALL_4_BLUEPRINT",
+            "id": "TX_BREAKABLE_WALL_64_BLUEPRINT",
             "description": "Breakable Wall Blueprint",
-            "filename": "assets/blueprints/breakable_wall_4_blueprint.png"
+            "filename": "assets/blueprints/breakable_wall_64_blueprint.png"
         },
         {
-            "id": "TX_BREAKABLE_WALL_16_BLUEPRINT",
+            "id": "TX_BREAKABLE_WALL_96_BLUEPRINT",
             "description": "Breakable Wall Blueprint",
-            "filename": "assets/blueprints/breakable_wall_16_blueprint.png"
+            "filename": "assets/blueprints/breakable_wall_96_blueprint.png"
+        },
+        {
+            "id": "TX_BREAKABLE_WALL_128_BLUEPRINT",
+            "description": "Breakable Wall Blueprint",
+            "filename": "assets/blueprints/breakable_wall_128_blueprint.png"
         }
+
 
     ],
     "textures": [

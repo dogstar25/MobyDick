@@ -141,6 +141,9 @@ void Game::play()
 				SceneManager::instance().popScene();
 				SceneManager::instance().respawnPlayer();
 			}
+			else if (action->actionCode == SCENE_ACTION_TOGGLE_SETTING) {
+				SceneManager::instance().toggleSetting(enumMap()->toEnum(action->actionId));
+			}
 
 		}
 

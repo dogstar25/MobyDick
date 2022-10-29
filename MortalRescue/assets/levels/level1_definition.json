@@ -52,7 +52,7 @@
         },
         {
             "id": "StatusItemId::SURVIVORS",
-            "initialValue": 7,
+            "initialValue": 1,
             "minValue": 0,
             "maxValue": 7
         }
@@ -78,11 +78,6 @@
 
     ],
     "colorDefinedObjects": [
-        {
-            "colorKey": "Colors::CYAN",
-            "gameObjectType": "NAVIGATION_TRANSIT_POINT",
-            "layer": "GameLayer::ABSTRACT"
-        },
         {
             "colorKey": "Colors::PURPLE",
             "gameObjectType": "VOID_FILLER",
@@ -202,15 +197,8 @@
         },
         {
             "id": "LOC_0010_0019",
-            "gameObjectType": "BREAKABLE_WALL_4"
-        },
-        {
-            "id": "LOC_0010_0020",
-            "gameObjectType": "BREAKABLE_WALL_4"
-        },
-        {
-            "id": "LOC_0010_0021",
-            "gameObjectType": "BREAKABLE_WALL_4"
+            "gameObjectType": "BREAKABLE_WALL_96",
+            "angle": 90
         },
         {
             "id": "LOC_0032_0016",

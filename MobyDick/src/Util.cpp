@@ -3,10 +3,13 @@
 #include "EnumMap.h"
 #include <random>
 #include <format>
+#include <algorithm>
+#include <math.h>
 #include "GameConfig.h"
 #include <iostream>
 #include "Scene.h"
 #include "Game.h"
+
 
 extern std::unique_ptr<Game> game;
 
@@ -170,6 +173,30 @@ namespace util
 		return position;
 	}
 
+	SDL_Point pixelToTileLocation(float pixelX, float pixelY)
+	{
+		SDL_Point position{};
+
+		position = {
+			std::max(0, (int)trunc (pixelX / game->worldTileSize().x)-1),
+			std::max(0, (int)trunc (pixelY / game->worldTileSize().y)-1)
+		};
+
+		return position;
+	}
+
+	std::string locationToString(float x, float y)
+	{
+		char buffer[10];
+		
+		snprintf(buffer, 10, "%04d_%04d", (int)x, (int)y);
+		auto position = std::string(buffer, 10);
+
+		//auto position = std::format("{:04}_{:04}", (int)x, (int)y);
+
+		return position;
+	}
+
 	const ImVec4 JsonToImVec4Color(Json::Value JsonColor) 
 	{
 
@@ -328,6 +355,15 @@ namespace util
 	}
 
 	float calculateDistance(SDL_FPoint location1, SDL_FPoint location2)
+	{
+
+		auto distance = std::powf((location1.x - location2.x), 2) + std::powf((location1.y - location2.y), 2);
+		distance = std::sqrtf(distance);
+
+		return distance;
+	}
+
+	float calculateDistance(SDL_Point location1, SDL_Point location2)
 	{
 
 		auto distance = std::powf((location1.x - location2.x), 2) + std::powf((location1.y - location2.y), 2);

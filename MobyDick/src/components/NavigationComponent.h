@@ -3,8 +3,24 @@
 #include "../GameObject.h"
 
 #include <json/json.h>
-
+#include <list>
 #include <memory>
+
+
+inline constexpr int NAV_DISTANCE_TOLERANCE = 64;
+
+struct AStarNode
+{
+	std::optional<std::shared_ptr<AStarNode>> connection{};
+	SDL_Point position{};
+	float gCost{};
+	float hCost{};
+	float fCost{};
+
+	std::string connectionKey{};
+	std::string keyValue{};
+
+};
 
 class NavigationComponent : public Component
 {
@@ -16,18 +32,32 @@ public:
 
 	void update() override;
 	void postInit() override;
+	bool navigateTo(float pixelX, float pixelY);
+	void navigateStop();
 
-	int type() { return m_type; }
-	void setType(int type) { m_type = type; }
-	std::vector < std::shared_ptr<GameObject>> accessibleNavObjects() { return m_accessibleNavObjects; }
-
-	void updateNavObjectsAccess();
 
 private:
 
-	int m_type{};
+	std::vector<SDL_Point>m_solutionPath{};
 
-	std::vector<std::shared_ptr<GameObject>>m_accessibleNavObjects;
+	bool _buildPathToDestination();
+	void _buildNeighbors(AStarNode& currentNode, std::vector<std::shared_ptr<AStarNode>>& neighbors);
+	bool _isValidNode(const int x, const int y);
+	void _addNeighbor(int x, int y, std::vector<std::shared_ptr<AStarNode>>& neighbors);
+	bool _listContainsNode(AStarNode* node, std::unordered_map<std::string, std::shared_ptr<AStarNode>>& list);
+	void _calculateCosts(AStarNode* startingNode, AStarNode* node);
+	void _moveTo(SDL_Point destinationTile);
+	void _applyAvoidanceMovement(b2Vec2& trajectory);
+
+
+	Timer m_pathRefreshTimer{ 0.5, true };
+	SDL_FPoint m_targetPixelDestination{};
+	SDL_Point m_targetTileDestination{};
+	int m_currentNavStep{};
+
+
+
+
 
 };
 

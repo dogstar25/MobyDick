@@ -203,8 +203,11 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 
 	SDL_LockSurface(surface);
 
-	//Allocate the 2 dimentional vector
+	//Allocate the 2 dimentional vector for the level object 2d array
 	setLevelObjectArraySize(m_width, m_height);
+
+	//Allocate the 2 dimentional vector for the level nagigation map 2d array
+	scene->setNavigationMapArraySize(m_width, m_height);
 
 	//Loop through entire image, top to bottom, left to right and build the
 	//2 dimensional array of tile objects
@@ -229,6 +232,9 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 	//Build all of the objects that make up this level and store them
 	//In the main gameObject collection
 	_buildLevelObjects(scene);
+
+	//Build theDebug_grid_level objects
+	_buildDebugGridObjects(scene);
 
 	//Build the background image/objects
 	_buildTiledLayers(scene);
@@ -261,6 +267,21 @@ void LevelManager::_clear()
 	m_locationDefinedList.clear();
 }
 
+void LevelManager::_buildDebugGridObjects(Scene* scene)
+{
+
+	//build all of the initial , blank, grid objects
+	for (auto x = 0; x < m_width;x++) {
+		for (auto y = 0; y < m_height; y++) {
+
+			const auto& gridObject = scene->addGameObject("DEBUG_GRID_32", GameLayer::GRID_DISPLAY, (float)x, (float)y, (float)0);
+			gridObject->disableRender();
+
+
+		}
+	}
+
+}
 
 void LevelManager::_buildLevelCage(Scene* scene)
 {
@@ -629,6 +650,54 @@ bool LevelManager::_isColorDefinedObject(SDL_Color color)
 
 }
 
+void LevelManager::_buildNavigationMapItem(GameObject* gameObject, Scene* scene)
+{
+
+	NavigationMapItem navigationMapItem{};
+
+	//This is a normal wall
+	if (gameObject->hasTrait(TraitTag::impasse) || 
+		gameObject->hasTrait(TraitTag::conditional_impasse) || 
+		gameObject->hasTrait(TraitTag::complex_impasse))
+	{
+
+		//Find this objects shared_ptr so we can store the weak_ptr of it here
+		auto gameObjectSharedPtr = scene->getGameObject(gameObject->id()).value();
+		auto angle = gameObjectSharedPtr->getAngleInDegrees();
+
+		navigationMapItem.gameObject = gameObjectSharedPtr;
+
+		//If this is impasse, then it will always be so set it now so that the 
+		//the navigationComponent will work on the first pass
+		if(gameObject->hasTrait(TraitTag::impasse)){
+			navigationMapItem.passable = false;
+		}
+
+		//Add the initial navigationMapItem to the collection
+		scene->addNavigationMapItem(navigationMapItem, 
+			(int)gameObject->getOriginalTilePosition().x, 
+			(int)gameObject->getOriginalTilePosition().y);
+
+		//Assert check that certain conditional na objects have to be a 0 or 90
+		if (gameObject->hasTrait(TraitTag::conditional_impasse) || 
+			gameObject->hasTrait(TraitTag::complex_impasse)) {
+
+			assert((angle == 0 || angle == 90) && "A conditional_impasse object needs to be 0 or 90 degrees,(top to bottom or Left to right)");
+
+		}
+
+	}
+	else {
+
+		navigationMapItem.passable = true;
+		scene->addNavigationMapItem(navigationMapItem,
+			(int)gameObject->getOriginalTilePosition().x,
+			(int)gameObject->getOriginalTilePosition().y);
+
+	}
+
+}
+
 void LevelManager::_buildLevelObjects(Scene* scene)
 {
 	LevelObject* levelObject;
@@ -640,10 +709,6 @@ void LevelManager::_buildLevelObjects(Scene* scene)
 
 				levelObject = &m_levelObjects[x][y];
 
-				if (levelObject->gameObjectType == "SURVIVOR") {
-					int todd = 1;
-				}
-				
 				auto gameObject = scene->addGameObject(levelObject->gameObjectType, levelObject->layer,
 					(float)x, (float)y, (float)levelObject->angleAdjustment, levelObject->cameraFollow, levelObject->name);
 
@@ -694,7 +759,11 @@ void LevelManager::_buildLevelObjects(Scene* scene)
 					gameObject->setCompositePieceLevelCap(levelObject->compositePieceLevelCap.value());
 				}
 
+				//Build the navigation map item for this object
+				_buildNavigationMapItem(gameObject, scene);
+
 			}
+
 		}
 	}
 }
@@ -731,23 +800,12 @@ void LevelManager::_buildTiledLayers(Scene* scene)
 			for (auto x = 0; x < widthCount; x++) {
 
 				//adjust the X and Y map position based on the size of our background tiles
-				auto newBackgroundObject = scene->addGameObject(tiledLayer.second.tiledObjectId, GameLayer::BACKGROUND_1, (float)x * adjustX, (float)y * adjustY, (float)0);
+				auto newBackgroundObject = 
+					scene->addGameObject(
+						tiledLayer.second.tiledObjectId, GameLayer::BACKGROUND_1, (float)x * adjustX, (float)y * adjustY, (float)0);
 
 			}
 
-		}
-	}
-
-}
-
-void LevelManager::refreshNavigationAccess(Scene* scene)
-{
-	for (auto& gameObject : scene->gameObjects()[GameLayer::ABSTRACT])
-	{
-		if (gameObject->hasComponent(ComponentTypes::NAVIGATION_COMPONENT)) {
-
-			const auto& navComponent = gameObject->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
-			navComponent->updateNavObjectsAccess();
 		}
 	}
 

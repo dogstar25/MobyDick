@@ -97,11 +97,6 @@
             "colorKey": "Colors::BLUE",
             "gameObjectType": "NAVIGATION_WAYPOINT",
             "layer": "GameLayer::ABSTRACT"
-        },
-        {
-            "colorKey": "Colors::CYAN",
-            "gameObjectType": "NAVIGATION_TRANSIT_POINT",
-            "layer": "GameLayer::ABSTRACT"
         }
 
     ],
@@ -114,34 +109,9 @@
             "name": "PlayerGina"
         },
         {
-            "id": "LOC_0022_0002",
-            "gameObjectType": "PARTICLE_EMITTER_SPARK"
+            "id": "LOC_0016_0013",
+            "gameObjectType": "DRONE"
         },
-        //{
-        //    "id": "LOC_0029_0009",
-        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
-        //},
-        //{
-        //    "id": "LOC_0029_0010",
-        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
-        //},
-        //{
-        //    "id": "LOC_0029_0011",
-        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
-        //},
-        //{
-        //    "id": "LOC_0029_0012",
-        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
-        //},
-        //{
-        //    "id": "LOC_0029_0013",
-        //    "gameObjectType": "PARTICLE_EMITTER_SPARK"
-        //},
-
-        //{
-        //    "id": "LOC_0016_0013",
-        //    "gameObjectId": "DRONE"
-        //},
         {
             "id": "LOC_0016_0006",
             "gameObjectType": "HEALTH_STATION"
@@ -152,7 +122,7 @@
         },
         {
             "id": "LOC_0015_0023",
-            "gameObjectType": "GLOWWALL_352",
+            "gameObjectType": "LASERWALL_352",
             "name": "Button1_TARGET"
         },
         {
@@ -199,15 +169,7 @@
         },
         {
             "id": "LOC_0019_0031",
-            "gameObjectType": "BREAKABLE_WALL"
-        },
-        {
-            "id": "LOC_0020_0031",
-            "gameObjectType": "BREAKABLE_WALL"
-        },
-        {
-            "id": "LOC_0021_0031",
-            "gameObjectType": "BREAKABLE_WALL"
+            "gameObjectType": "BREAKABLE_WALL_96"
         },
         {
             "id": "LOC_0034_0033",

@@ -14,7 +14,6 @@ public:
 	TurretBrainComponent(Json::Value definitionJSON);
 
 	void update() override;
-	//void postInit() override;
 
 private:
 

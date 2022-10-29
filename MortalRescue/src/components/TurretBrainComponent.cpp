@@ -217,9 +217,9 @@ std::optional<SDL_FPoint> TurretBrainComponent::_detectPlayer()
 
 	for (auto& seenObject : m_seenObjects) {
 
-		if (seenObject.expired() == false && seenObject.lock()->hasTrait(TraitTag::player) && seenObject.lock()->isAlive()) {
+		if (seenObject.gameObject.expired() == false && seenObject.gameObject.lock()->hasTrait(TraitTag::player) && seenObject.gameObject.lock()->isAlive()) {
 
-			playerPosition = seenObject.lock()->getCenterPosition();
+			playerPosition = seenObject.gameObject.lock()->getCenterPosition();
 			break;
 		}
 	}

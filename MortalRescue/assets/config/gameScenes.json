@@ -9,9 +9,17 @@
                     "keyCode": "SDLK_F2",
                     "sceneAction": {
                         "action": "SCENE_ACTION_REPLACE",
-                        "newSceneId": "SCENE_TEST"
+                        "actionId": "SCENE_TEST"
+                    }
+                },
+                {
+                    "keyCode": "SDLK_F3",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_ADD",
+                        "actionId": "SCENE_NAVMAP"
                     }
                 }
+
 
             ],
             "gameObjects": [
@@ -93,21 +101,35 @@
                     "keyCode": "SDLK_ESCAPE",
                     "sceneAction": {
                         "action": "SCENE_ACTION_ADD_AND_PAUSE",
-                        "newSceneId": "SCENE_PAUSE_MENU"
+                        "actionId": "SCENE_PAUSE_MENU"
                     }
                 },
                 {
                     "keyCode": "SDLK_F1",
                     "sceneAction": {
                         "action": "SCENE_ACTION_DIRECT",
-                        "newSceneId": "CutSceneExample"
+                        "actionId": "CutSceneExample"
                     }
                 },
                 {
                     "keyCode": "SDLK_F2",
                     "sceneAction": {
                         "action": "SCENE_ACTION_REPLACE",
-                        "newSceneId": "SCENE_TEST"
+                        "actionId": "SCENE_TEST"
+                    }
+                },
+                {
+                    "keyCode": "SDLK_F3",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_TOGGLE_SETTING",
+                        "actionId": "DebugSceneSettings::SHOW_NAVIGATION_DEBUG_MAP"
+                    }
+                },
+                {
+                    "keyCode": "SDLK_F4",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_TOGGLE_SETTING",
+                        "actionId": "DebugSceneSettings::SHOW_PHYSICS_DEBUG"
                     }
                 }
 
@@ -286,6 +308,12 @@
                     }
                 }
             ]
+        },
+        {
+            "id": "SCENE_NAVMAP",
+            "inputControlMode": "CONTROL_MODE_IMGUI",
+            "tags": [  ],
+            "maxObjects": 3000
         },
         {
             "id": "SCENE_TEST",

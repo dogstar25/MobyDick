@@ -2,7 +2,7 @@
     "gameObjects": [
         {
             "type": "WALL1_OPEN",
-            "traitTags": [ "barrier" ],
+            "traitTags": [ "barrier", "impasse" ],
             "description": "WALL1_OPEN",
             "components": [
                 {
@@ -38,7 +38,7 @@
         },
         {
             "type": "WALL1_COLUMN",
-            "traitTags": [ "barrier" ],
+            "traitTags": [ "barrier", "impasse" ],
             "description": "WALL1_COLUMN",
             "components": [
                 {
@@ -73,7 +73,7 @@
         },
         {
             "type": "WALL1_CORNER",
-            "traitTags": [ "barrier" ],
+            "traitTags": [ "barrier", "impasse" ],
             "description": "WALL1_CORNER",
             "components": [
                 {
@@ -108,7 +108,7 @@
         },
         {
             "type": "WALL1_END",
-            "traitTags": [ "barrier" ],
+            "traitTags": [ "barrier", "impasse" ],
             "description": "WALL1_END",
             "components": [
                 {
@@ -143,7 +143,7 @@
         },
         {
             "type": "WALL1_HALL",
-            "traitTags": [ "barrier" ],
+            "traitTags": [ "barrier", "impasse" ],
             "description": "WALL1_HALL",
             "components": [
                 {
@@ -178,7 +178,7 @@
         },
         {
             "type": "WALL1_WALL",
-            "traitTags": [ "barrier" ],
+            "traitTags": [ "barrier", "impasse" ],
             "description": "WALL1_WALL",
             "components": [
                 {
@@ -213,7 +213,7 @@
         },
         {
             "type": "LASERWALL_352",
-            "traitTags": [ "barrier" ],
+            "traitTags": [ "barrier", "conditional_impasse" ],
             "description": "Fog Box",
             "components": [
                 {
@@ -261,7 +261,7 @@
         },
         {
             "type": "LASERWALL_128",
-            "traitTags": [ "barrier" ],
+            "traitTags": [ "barrier", "conditional_impasse" ],
             "description": "Fog Box",
             "components": [
                 {
@@ -309,7 +309,7 @@
         },
         {
             "type": "LASERWALL_192",
-            "traitTags": [ "barrier" ],
+            "traitTags": [ "barrier", "conditional_impasse" ],
             "description": "Fog Box",
             "components": [
                 {
@@ -358,7 +358,7 @@
         },
         {
             "type": "LASERWALL_224",
-            "traitTags": [ "barrier" ],
+            "traitTags": [ "barrier", "conditional_impasse" ],
             "description": "Fog Box",
             "components": [
                 {
@@ -407,7 +407,7 @@
         },
         {
             "type": "LASERWALL_64",
-            "traitTags": [ "barrier" ],
+            "traitTags": [ "barrier", "conditional_impasse" ],
             "description": "Fog Box",
             "components": [
                 {
@@ -452,28 +452,6 @@
                         }
 
                     ]
-                }
-            ]
-        },
-        {
-            "type": "WALL_TEST_FILLER1",
-            "traitTags": [],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_FOG_BOX",
-                    "color": {
-                        "tint": "Colors::CYAN",
-                        "alpha": 255
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 32,
-                        "height": 32
-                    },
-                    "absolutePositioning": false
                 }
             ]
         }
