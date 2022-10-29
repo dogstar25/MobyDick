@@ -35,10 +35,6 @@ void OnetimeButtonInteraction::perform(GameObject* interactingObject, GameObject
 	SoundManager::instance().playSound("SFX_BUTTON_BROKEN_1");
 	SoundManager::instance().playSound("SFX_DOOR_ACTIVATE_1");
 
-	//Since we are possibly disabling and enabling a wall that could affect navigation
-	//then refresh all navigation objects accessibility
-	LevelManager::instance().refreshNavigationAccess(interactionObject->parentScene());
-
 	//Disable this button sinc eits been used its onetime
 	interactionObject->disablePhysics();
 	interactionObject->setColor(Colors::RED);

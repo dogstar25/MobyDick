@@ -16,11 +16,7 @@ TransformComponent::TransformComponent(Json::Value componentJSON, float xMapPos,
 		auto objectWidth = componentJSON["size"]["width"].asFloat();
 		auto objectHeight = componentJSON["size"]["height"].asFloat();
 
-		//setPosition(
-		//	(xMapPos * game->worldTileSize().x) + objectWidth / 2,
-		//	(yMapPos * game->worldTileSize().y) + objectHeight / 2
-		//);
-
+		m_originalTilePosition = { xMapPos , yMapPos };
 		setPosition(util::tileToPixelLocation(xMapPos, yMapPos, objectWidth, objectHeight)	);
 
 		m_originalPosition = m_position;

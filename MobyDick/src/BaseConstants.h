@@ -40,6 +40,8 @@ namespace Colors {
 
 	inline SDL_Color WHITE = { 255, 255, 255, 255 };
 	inline SDL_Color BLACK = { 0, 0, 0, 255 };
+	inline SDL_Color CLOUD = { 200, 200, 200, 200 };
+
 	inline SDL_Color RED = { 255, 0, 0, 255 };
 	inline SDL_Color GREEN = { 0, 255, 0, 255 };
 	inline SDL_Color BLUE = { 0, 0, 255, 255 };
@@ -48,6 +50,7 @@ namespace Colors {
 	inline SDL_Color ORANGE = { 255, 127, 0, 255 };
 	inline SDL_Color GREY = { 127, 127, 127, 255 };
 	inline SDL_Color CYAN = { 0, 255, 255, 255 };
+	
 
 
 }
@@ -81,13 +84,17 @@ namespace TraitTag {
 	inline constexpr int collectable = 3;
 	inline constexpr int weapon = 4;
 	inline constexpr int gui = 5;
-	inline constexpr int navigation = 6;
+	inline constexpr int waypoint = 6;
 	inline constexpr int abstract = 7;
 	inline constexpr int interactive = 8;
 	inline constexpr int debug = 9;
 	inline constexpr int pooled = 10;
 	inline constexpr int fragment = 11;
 	inline constexpr int objective = 12;
+	inline constexpr int impasse = 13;
+	inline constexpr int conditional_impasse = 14;
+	inline constexpr int complex_impasse = 15;
+	inline constexpr int baddie = 16;
 
 }
 
@@ -136,27 +143,6 @@ namespace ParticleEmitterType {
 	inline constexpr int ONETIME = 0;
 	inline constexpr int CONTINUOUS = 1;
 }
-
-namespace NavigationObjectType {
-
-	inline constexpr int UNSPECIFIED= 0;
-	inline constexpr int TRANSIT_POINT = 1;
-	inline constexpr int WAYPOINT = 2;
-}
-
-//namespace PositionAlignment {
-//
-//	inline constexpr int CENTER = 0;
-//	inline constexpr int TOP_LEFT = 1;
-//	inline constexpr int TOP_CENTER = 2;
-//	inline constexpr int TOP_RIGHT = 3;
-//	inline constexpr int CENTER_LEFT = 4;
-//	inline constexpr int CENTER_RIGHT = 5;
-//	inline constexpr int BOTTOM_LEFT = 6;
-//	inline constexpr int BOTTOM_CENTER = 7;
-//	inline constexpr int BOTTOM_RIGHT = 8;
-//
-//}
 
 enum class PositionAlignment {
 
@@ -212,6 +198,10 @@ enum class PhysicsChainType {
 	CW_REFLECT_OUT
 };
 
+namespace DebugSceneSettings {
+	inline constexpr int SHOW_PHYSICS_DEBUG = 0;
+	inline constexpr int SHOW_NAVIGATION_DEBUG_MAP = 1;
+};
 
 //Component Types
 namespace ComponentTypes {
@@ -245,33 +235,6 @@ namespace ComponentTypes {
 	inline constexpr int LAST_BASE_COMPONENT = 24;
 
 }
-
-
-
-//Components
-//enum class ComponentTypes {
-//	ACTION_COMPONENT = 0,
-//	ANIMATION_COMPONENT,
-//	ATTACHMENTS_COMPONENT,
-//	BRAIN_COMPONENT,
-//	CHILDREN_COMPONENT,
-//	COMPOSITE_COMPONENT,
-//	HUD_COMPONENT,
-//	INVENTORY_COMPONENT,
-//	PARTICLE_COMPONENT,
-//	NAVIGATION_COMPONENT,
-//	PARTICLE_X_COMPONENT,
-//	PHYSICS_COMPONENT,
-//	PLAYERCONTROL_COMPONENT,
-//	POOL_COMPONENT,
-//	RENDER_COMPONENT,
-//	TEXT_COMPONENT,
-//	TRANSFORM_COMPONENT,
-//	UICONTROL_COMPONENT,
-//	VITALITY_COMPONENT,
-//	WEAPON_COMPONENT,
-//	COUNT
-//};
 
 //Animation States
 inline constexpr int ANIMATION_IDLE = 0;
@@ -326,12 +289,13 @@ inline constexpr int SCENE_ACTION_LOAD_CURRENTLEVEL = 7;
 inline constexpr int SCENE_ACTION_DIRECT = 8;
 inline constexpr int SCENE_ACTION_RELEASE_DIRECT = 9;
 inline constexpr int SCENE_ACTION_RESPAWN_PLAYER = 10;
+inline constexpr int SCENE_ACTION_TOGGLE_SETTING = 11;
 
 //Scene Tags
 inline constexpr int SCENETAG_MENU = 1;
 
 //Game Layers
-inline constexpr int MAX_GAMEOBJECT_LAYERS = 7;
+inline constexpr int MAX_GAMEOBJECT_LAYERS = 8;
 
 namespace GameLayer {
 	inline constexpr int BACKGROUND_1 = 0;
@@ -341,6 +305,7 @@ namespace GameLayer {
 	inline constexpr int FOREGROUND_2 = 4;
 	inline constexpr int GUI = 5;
 	inline constexpr int ABSTRACT = 6;
+	inline constexpr int GRID_DISPLAY = 7;
 }
 
 //Game Object Display Modes

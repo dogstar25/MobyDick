@@ -84,7 +84,6 @@ int SurvivorBrainComponent::_determineState()
 	if (m_currentState == BrainState::LOST) {
 
 		if (_detectFollowedObject() == true) {
-			m_interimDestination.reset();
 			state = BrainState::FOLLOW;
 			m_lostTimer = {};
 				
@@ -115,14 +114,9 @@ void SurvivorBrainComponent::_doEscape()
 		_rotateTowards({ m_escapeLocation.value().x, m_escapeLocation.value().y});
 		trajectory.Normalize();
 
-		
-
 		const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 		const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
 		moveAction->perform(parent(), trajectory);
-
-
-		
 
 	}
 
@@ -130,12 +124,13 @@ void SurvivorBrainComponent::_doEscape()
 
 void SurvivorBrainComponent::_doLost()
 {
-	//_determineTargetLocation(); - add this once all nav points are in place. Set targetDestination to the nearest nav point that 
-	//can see the followed object
 	if (m_gameObjectToFollow.expired() == false) {
-		setTargetDestination(m_gameObjectToFollow.lock()->getCenterPosition());
-		navigate();
-		m_tempVisitedNavPoints.clear();
+
+		//get the navigation component and use it to go somewhre
+
+
+
+
 	}
 
 }
@@ -274,7 +269,7 @@ bool SurvivorBrainComponent::_detectFollowedObject()
 	if (m_gameObjectToFollow.expired() == false) {
 		for (auto& seenObject : m_seenObjects) {
 
-			if (seenObject.lock() == m_gameObjectToFollow.lock()) {
+			if (seenObject.gameObject.lock() == m_gameObjectToFollow.lock()) {
 
 				return true;
 			}
@@ -293,10 +288,10 @@ bool SurvivorBrainComponent::_detectEscapeLocation()
 	for (auto seenObject : m_seenObjects) {
 
 		//This object stored in the brain could have been deleted on the last pass so check if its still a valid pointer
-		if (seenObject.expired() == false) {
-			if (seenObject.lock()->type() == "ESCAPE_STAIRS") {
+		if (seenObject.gameObject.expired() == false) {
+			if (seenObject.gameObject.lock()->type() == "ESCAPE_STAIRS") {
 
-				m_escapeLocation = seenObject.lock()->getCenterPosition();
+				m_escapeLocation = seenObject.gameObject.lock()->getCenterPosition();
 				return true;
 			}
 		}
@@ -389,9 +384,9 @@ std::optional<SDL_FPoint> SurvivorBrainComponent::_detectPlayer()
 
 	for (auto& seenObject : m_seenObjects) {
 
-		if (seenObject.expired() == false && seenObject.lock()->hasTrait(TraitTag::player)) {
+		if (seenObject.gameObject.expired() == false && seenObject.gameObject.lock()->hasTrait(TraitTag::player)) {
 
-			playerPosition = seenObject.lock()->getCenterPosition();
+			playerPosition = seenObject.gameObject.lock()->getCenterPosition();
 			break;
 		}
 	}

@@ -1,0 +1,553 @@
+{
+    "gameObjects": [
+        {
+            "type": "DRONE",
+            "traitTags": ["baddie"],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_CLEAR_QUAD"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 128,
+                        "height": 128
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "anchorPoint": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::DRONE_FRAME",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 2.56,
+                            "density": 5000.5
+                        }
+                    ]
+                },
+                {
+                    "id": "ATTACHMENTS_COMPONENT",
+                    "attachments": [
+                        {
+                            "id": "DRONE_EYE",
+                            "gameObjectType": "DRONE_EYE",
+                            "attachLocation": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "addToInventory": false,
+                            "attachB2JointType": "B2_REVOLUTE"
+                        },
+                        {
+                            "id": "DRONE_BRAIN",
+                            "gameObjectType": "DRONE_BRAIN",
+                            "attachLocation": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "addToInventory": false,
+                            "attachB2JointType": "B2_WELD"
+                        }
+                    ]
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_MOVE",
+                            "actionClass": "DroneMove"
+                        },
+                        {
+                            "actionId": "ACTION_ROTATE",
+                            "actionClass": "DefaultRotate"
+                        }
+                    ]
+                },
+                {
+                    "id": "COMPOSITE_COMPONENT",
+                    "physicsWeldPiecesOn": true,
+                    "blueprint": {
+                        "texture": "TX_DRONE1_BLUEPRINT",
+                        "legend": [
+                            {
+                                "gameObjectType": "FULL_PIECE",
+                                "color": "Colors::BLUE"
+                            },
+                            {
+                                "gameObjectType": "ANGLE1_PIECE",
+                                "color": "Colors::RED"
+                            },
+                            {
+                                "gameObjectType": "ANGLE2_PIECE",
+                                "color": "Colors::YELLOW"
+                            },
+                            {
+                                "gameObjectType": "ANGLE3_PIECE",
+                                "color": "Colors::GREEN"
+                            },
+                            {
+                                "gameObjectType": "ANGLE4_PIECE",
+                                "color": "Colors::PURPLE"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "BRAIN_DRONE_COMPONENT",
+                    "sightSensorSize": 25,
+                    "detectObjectTraits": [ "player", "objective", "barrier", "baddie" ]
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 20.0,
+                    "rotationSpeed": 20
+                },
+                {
+                    "id": "NAVIGATION_COMPONENT"
+                }
+            ]
+        },
+        {
+            "type": "DRONE_BRAIN",
+            "traitTags": [],
+            "description": "Drone Brain",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_DRONE_BRAIN_64",
+                    "color": {
+                        "tint": "Colors::GOLD",
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::DRONE_BRAIN",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 0.64,
+                            "density": 1.0
+                        }
+                    ]
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "resistance": 5
+                }
+            ]
+        },
+        {
+            "type": "DRONE_EYE",
+            "traitTags": [],
+            "description": "Drone Eye",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_DRONE_EYE",
+                    "xRenderAdjustment": 0,
+                    "yRenderAdjustment": 0,
+                    "color": "Colors::YELLOW"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 78,
+                        "height": 37
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "linearDamping": 0.0,
+                    "angularDamping": 5.0,
+                    "anchorPoint": {
+                        "x": -1.56,
+                        "y": 0.0
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_BOX",
+                            "friction": 1.0,
+                            "density": 5.0
+                        }
+                    ]
+
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_ROTATE",
+                            "actionClass": "DroneEyeRotateAction"
+                        },
+                        {
+                            "actionId": "ACTION_USAGE",
+                            "actionClass": "PistolFire"
+                        }
+                    ]
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "rotationSpeed": 20
+                },
+                {
+                    "id": "WEAPON_COMPONENT",
+                    "fireOffset": 1.0,
+                    "weaponLevels": [
+                        {
+                            "level": 1,
+                            "force": 1,
+                            "color": "Colors::RED",
+                            "bulletPoolId": "BULLET2_POOL"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "DRONE2",
+            "traitTags": ["baddie"],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_CLEAR_QUAD"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "anchorPoint": {
+                        "x": 0.0,
+                        "y": 0.0
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::DRONE_FRAME",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 1.28,
+                            "density": 2000.5
+                        }
+                    ]
+                },
+                {
+                    "id": "ATTACHMENTS_COMPONENT",
+                    "attachments": [
+                        {
+                            "id": "DRONE_EYE",
+                            "gameObjectType": "DRONE2_EYE",
+                            "attachLocation": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "addToInventory": false,
+                            "attachB2JointType": "B2_REVOLUTE"
+                        },
+                        {
+                            "id": "DRONE_BRAIN",
+                            "gameObjectType": "DRONE2_BRAIN",
+                            "attachLocation": {
+                                "x": 0.0,
+                                "y": 0.0
+                            },
+                            "addToInventory": false,
+                            "attachB2JointType": "B2_WELD"
+                        }
+                    ]
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_MOVE",
+                            "actionClass": "DroneMove"
+                        },
+                        {
+                            "actionId": "ACTION_ROTATE",
+                            "actionClass": "DefaultRotate"
+                        }
+                    ]
+                },
+                {
+                    "id": "COMPOSITE_COMPONENT",
+                    "physicsWeldPiecesOn": true,
+                    "blueprint": {
+                        "texture": "TX_DRONE2_BLUEPRINT",
+                        "legend": [
+                            {
+                                "gameObjectType": "FULL_PIECE",
+                                "color": "Colors::BLUE"
+                            },
+                            {
+                                "gameObjectType": "ANGLE1_PIECE",
+                                "color": "Colors::RED"
+                            },
+                            {
+                                "gameObjectType": "ANGLE2_PIECE",
+                                "color": "Colors::YELLOW"
+                            },
+                            {
+                                "gameObjectType": "ANGLE3_PIECE",
+                                "color": "Colors::GREEN"
+                            },
+                            {
+                                "gameObjectType": "ANGLE4_PIECE",
+                                "color": "Colors::PURPLE"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "BRAIN_DRONE_COMPONENT",
+                    "sightSensorSize": 25,
+                    "detectObjectTraits": [ "player", "objective", "barrier", "baddie" ]
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 20.0,
+                    "rotationSpeed": 20
+                },
+                {
+                    "id": "NAVIGATION_COMPONENT"
+                }
+                
+            ]
+        },
+        {
+            "type": "DRONE2_BRAIN",
+            "traitTags": [],
+            "description": "Drone Brain",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_DRONE_BRAIN_64",
+                    "color": {
+                        "tint": "Colors::GOLD",
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 16,
+                        "height": 16
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::DRONE_BRAIN",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 0.32,
+                            "density": 1.0
+                        }
+                    ]
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "resistance": 1
+                }
+            ]
+        },
+        {
+            "type": "DRONE2_EYE",
+            "traitTags": [],
+            "description": "Drone Eye",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_DRONE_EYE",
+                    "xRenderAdjustment": 0,
+                    "yRenderAdjustment": 0,
+                    "color": "Colors::YELLOW"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 39,
+                        "height": 18.5
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "linearDamping": 0.0,
+                    "angularDamping": 5.0,
+                    "anchorPoint": {
+                        "x": -0.78,
+                        "y": 0.0
+                    },
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_BOX",
+                            "friction": 1.0,
+                            "density": 5.0
+                        }
+                    ]
+
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_ROTATE",
+                            "actionClass": "DroneEyeRotateAction"
+                        },
+                        {
+                            "actionId": "ACTION_USAGE",
+                            "actionClass": "PistolFire"
+                        }
+                    ]
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "rotationSpeed": 20
+                },
+                {
+                    "id": "WEAPON_COMPONENT",
+                    "fireOffset": 1.0,
+                    "weaponLevels": [
+                        {
+                            "level": 1,
+                            "force": 1,
+                            "color": "Colors::RED",
+                            "bulletPoolId": "BULLET2_POOL"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "TURRET",
+            "traitTags": [ "barrier" ],
+            "description": "Turret",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "tint": "Colors::CYAN",
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    }
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_DEPLOY",
+                    "frameSize": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "flash": {
+                        "color": "Colors::RED",
+                        "alpha": "200",
+                        "speed": 0.15
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_TURRET_IDLE",
+                            "speed": 0.95,
+                            "frames": 1
+                        },
+                        {
+                            "state": "ANIMATION_DEPLOY",
+                            "textureId": "TX_TURRET_DEPLOY",
+                            "speed": 0.05,
+                            "frames": 4
+                        },
+                        {
+                            "state": "ANIMATION_UNDEPLOY",
+                            "textureId": "TX_TURRET_UNDEPLOY",
+                            "speed": 0.05,
+                            "frames": 4
+                        },
+                        {
+                            "state": "ANIMATION_ACTIVE",
+                            "textureId": "TX_TURRET_ACTIVE",
+                            "speed": 0.15,
+                            "frames": 1
+                        }
+
+                    ]
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "rotationSpeed": 20,
+                    "health": 3
+                },
+                {
+                    "id": "TURRET_BRAIN_COMPONENT",
+                    "sightSensorSize": 7,
+                    "detectObjectTraits": [ "player", "objective" ]
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_KINEMATIC",
+                    "linearDamping": 0.0,
+                    "angularDamping": 20.0,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::ENEMY_TURRET",
+                            "collisionShape": "B2_BOX",
+                            "density": 10.1
+                        }
+                    ]
+
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_ROTATE",
+                            "actionClass": "DefaultRotate"
+                        },
+                        {
+                            "actionId": "ACTION_USAGE",
+                            "actionClass": "TurretFire"
+                        }
+                    ]
+                },
+                {
+                    "id": "WEAPON_COMPONENT",
+                    "fireOffset": -1.0,
+                    "force": 0.25,
+                    "color": "Colors::WHITE",
+                    "bulletPoolId": "BULLET2_POOL"
+                }
+            ]
+        }
+
+    ]
+}

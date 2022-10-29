@@ -30,7 +30,6 @@ struct PhysicsConfig
 	float timeStep{};
 	int velocityIterations{};
 	int positionIterations{};
-	bool b2DebugDrawMode{false};
 };
 
 struct Parallax
@@ -38,6 +37,13 @@ struct Parallax
 	int layer{};
 	float rate{1};
 };
+
+struct NavigationMapItem
+{
+	bool passable{ true };
+	std::optional<std::weak_ptr<GameObject>>gameObject{};
+};
+
 
 void _updatePhysics(b2World* physicsWorld);
 
@@ -62,7 +68,7 @@ public:
 	void addGameObject(std::shared_ptr<GameObject> gameObject, int layer);
 
 	void addGameObjectIndex(std::shared_ptr<GameObject> gameObject);
-	
+	void addNavigationMapItem(NavigationMapItem& navigationMapItem, int x, int y);
 	void addLevelObjective(Objective objective);
 	void addLevelTrigger(std::shared_ptr<Trigger> trigger);
 	void addKeyAction(SDL_Keycode, SceneAction);
@@ -89,6 +95,9 @@ public:
 	int inputControlMode() { return m_inputControlMode; }
 	const std::vector<Objective>& objectives() { return m_levelObjectives; }
 
+	std::vector < std::vector<NavigationMapItem>>& navigationMap() { return m_navigationMap; }
+	void setNavigationMapArraySize(int width, int height);
+
 	void setState(SceneState state) { m_state = state; }
 	SceneState state() { return m_state; }
 
@@ -113,6 +122,10 @@ public:
 	SDL_FPoint playerOriginalSpawnPoint() { return m_playerOrigSpawnPoint; }
 	void resetTrigger(std::string trigger);
 
+	void setDebugSetting(int setting);
+	bool isDebugSetting(int setting);
+	void resetGridDisplay();
+
 private:
 
 	std::string m_id;
@@ -132,7 +145,10 @@ private:
 	std::unordered_map<std::string, std::weak_ptr<GameObject>> m_gameObjectLookup;
 	std::array <std::vector<std::shared_ptr<GameObject>>, MAX_GAMEOBJECT_LAYERS> m_gameObjects;
 
+	std::vector < std::vector<NavigationMapItem>> m_navigationMap{};
+
 	std::bitset<8> m_sceneTags;
+	std::bitset<8> m_sceneDebugSettings{};
 	std::map<SDL_Keycode, SceneAction> m_sceneKeyActions;
 
 	//Level related members
@@ -145,6 +161,8 @@ private:
 	void _buildPhysicsWorld(Json::Value physicsJSON);
 	void _buildSceneGameObjects(Json::Value sceneJSON);
 	void _removeFromWorldPass();
+	void _showNavigationMap();
+	void _updateNavigationMap();
 	
 
 };

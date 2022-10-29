@@ -91,11 +91,6 @@
             "layer": "GameLayer::ABSTRACT"
         },
         {
-            "colorKey": "Colors::CYAN",
-            "gameObjectType": "NAVIGATION_TRANSIT_POINT",
-            "layer": "GameLayer::ABSTRACT"
-        },
-        {
             "colorKey": "Colors::PURPLE",
             "gameObjectType": "VOID_FILLER",
             "layer": "GameLayer::BACKGROUND_1",
@@ -106,6 +101,11 @@
             "gameObjectType": "BARREL_FILLER",
             "layer": "GameLayer::MAIN",
             "objectColor": "Colors::CYAN"
+        },
+        {
+            "colorKey": "Colors::CLOUD",
+            "gameObjectType": "IMPASSE",
+            "layer": "GameLayer::MAIN"
         }
 
     ],
@@ -114,13 +114,49 @@
             "id": "LOC_0002_0014",
             "gameObjectType": "GINA_64",
             "name": "PlayerGina",
-            "cameraFollow": true
+            "cameraFollow": false
         },
         {
             "id": "LOC_0051_0027",
             "gameObjectType": "DRONE2",
             "name": "EnemyA",
-            "compositePieceLevelCap": 1
+            "compositePieceLevelCap": 1,
+            "cameraFollow": true
+        },
+        {
+            "id": "LOC_0052_0027",
+            "gameObjectType": "DRONE2",
+            "name": "EnemyB",
+            "compositePieceLevelCap": 1,
+            "cameraFollow": false
+        },
+        {
+            "id": "LOC_0053_0027",
+            "gameObjectType": "DRONE2",
+            "name": "EnemyC",
+            "compositePieceLevelCap": 1,
+            "cameraFollow": false
+        },
+        {
+            "id": "LOC_0054_0027",
+            "gameObjectType": "DRONE2",
+            "name": "EnemyC",
+            "compositePieceLevelCap": 1,
+            "cameraFollow": false
+        },
+        {
+            "id": "LOC_0055_0027",
+            "gameObjectType": "DRONE2",
+            "name": "EnemyC",
+            "compositePieceLevelCap": 1,
+            "cameraFollow": false
+        },
+        {
+            "id": "LOC_0056_0027",
+            "gameObjectType": "DRONE2",
+            "name": "EnemyC",
+            "compositePieceLevelCap": 1,
+            "cameraFollow": false
         },
         {
             "id": "LOC_0088_0013",
@@ -249,7 +285,6 @@
             "gameObjectType": "LASERWALL_192",
             "name": "button3_TARGET"
         }
-
 
     ]
 }

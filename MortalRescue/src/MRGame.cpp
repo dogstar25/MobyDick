@@ -69,6 +69,7 @@ bool MRGame::init(std::shared_ptr<ContactListener> contactListener, std::shared_
 	GameObjectManager::instance().load("gameObjectDefinitions/titleScreenObjects");
 	GameObjectManager::instance().load("gameObjectDefinitions/testObjects");
 	GameObjectManager::instance().load("gameObjectDefinitions/checkpointObjects");
+	GameObjectManager::instance().load("gameObjectDefinitions/enemyObjects");
 
 	_displayLoadingMsg();
 

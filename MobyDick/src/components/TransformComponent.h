@@ -34,6 +34,7 @@ public:
 	b2Vec2 size() { return m_size; }
 	b2Vec2 position() {	return m_position; }
 	b2Vec2 originalPosition() {	return m_originalPosition; }
+	b2Vec2 originalTilePosition() { return m_originalTilePosition; }
 	float originalAngle() { return m_originalAngle; }
 	float angle() {	return m_angle;	}
 	bool absolutePositioning() { return m_absolutePositioning; }
@@ -52,7 +53,9 @@ private:
 	b2Vec2
 		m_position,
 		m_size,
+		m_originalTilePosition,
 		m_originalPosition;
+
 	bool
 		m_absolutePositioning,
 		m_centeredPositioning;

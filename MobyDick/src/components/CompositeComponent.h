@@ -46,6 +46,7 @@ public:
 	void postInit();
 	bool physicsWeldPiecesOn() { return m_physicsWeldPiecesOn; }
 	void setDetachAllPieces() { m_detachAllPieces = true; }
+	bool isCompositeEmpty();
 	std::vector<GameObjectPiece>& pieces() { return m_pieces; };
 	
 

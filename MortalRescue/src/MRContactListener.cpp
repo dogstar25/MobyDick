@@ -397,7 +397,8 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 	const auto& bulletVitalityComponent = bullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 	const auto& playerTransformComponent = bullet->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
-	bool dead = playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
+	//bool dead = playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
+	bool dead = false;
 
 	if (dead) {
 		player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();

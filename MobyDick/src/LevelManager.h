@@ -29,6 +29,7 @@ struct LevelObject
 	std::optional<float> weaponForce{};
 	std::optional<SDL_Color> weaponColor{};
 	std::optional<int> compositePieceLevelCap{};
+
 };
 
 struct Objective
@@ -68,7 +69,7 @@ public:
 
 	void addLevelObject(int xIndex, int yIndex, LevelObject levelObject);
 	void setLevelObjectArraySize(int width, int height);
-	void refreshNavigationAccess(Scene* scene);
+	
 
 	//Accessor Functions
 	std::string description() {	return m_description; }
@@ -100,6 +101,8 @@ private:
 	void _buildTiledLayers(Scene* scene);
 	void _buildParallax(Scene* scene);
 	void _buildLevelCage(Scene* scene);
+	void _buildNavigationMapItem(GameObject* gameObject, Scene* scene);
+	void _buildDebugGridObjects(Scene* scene);
 	bool _isColorDefinedObject(SDL_Color color);
 	void _clear();
 };

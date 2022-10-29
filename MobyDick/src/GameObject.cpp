@@ -76,96 +76,6 @@ GameObject::GameObject(std::string gameObjectType, float xMapPos, float yMapPos,
 
 }
 
-//std::optional<std::shared_ptr<GameObject>> GameObject::getSubGameObject(std::string name)
-//{
-//	std::optional<std::shared_ptr<GameObject>> foundObject{};
-//
-//	if (foundObject.has_value() && foundObject.value()->name() == name) {
-//		return foundObject;
-//	}
-//
-//	//Children sub objects
-//	if (hasComponent(ComponentTypes::CHILDREN_COMPONENT)) {
-//
-//		const auto childrenComponent = getComponent<ChildrenComponent>(ComponentTypes::CHILDREN_COMPONENT);
-//
-//		for (const auto& childObject : childrenComponent->childObjects()) {
-//
-//			if (childObject.gameObject->name() == name) {
-//
-//				foundObject = childObject.gameObject;
-//				return foundObject;
-//			}
-//			else {
-//				childObject.gameObject->getSubGameObject(name);
-//			}
-//		}
-//	}
-//
-//	//Composite sub objects
-//	if (hasComponent(ComponentTypes::COMPOSITE_COMPONENT)) {
-//
-//		const auto compositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
-//
-//		for (const auto& piece : compositeComponent->pieces()) {
-//
-//			if (piece.pieceObject->name() == name) {
-//
-//				foundObject = (piece.pieceObject);
-//				return foundObject;
-//			}
-//			else {
-//				piece.pieceObject->getSubGameObject(name);
-//			}
-//
-//
-//		}
-//
-//	}
-//
-//	//Attachments sub objects
-//	if (hasComponent(ComponentTypes::ATTACHMENTS_COMPONENT)) {
-//
-//		const auto attachComponent = getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
-//
-//		for (const auto& attachment : attachComponent->attachments()) {
-//
-//			if (attachment.gameObject->name() == name) {
-//
-//				foundObject = (attachment.gameObject);
-//				return foundObject;
-//			}
-//			else {
-//				attachment.gameObject->getSubGameObject(name);
-//			}
-//		}
-//
-//	}
-//
-//	//Container sub objects
-//	if (hasComponent(ComponentTypes::CONTAINER_COMPONENT)) {
-//
-//		const auto containerComponent = getComponent<ContainerComponent>(ComponentTypes::CONTAINER_COMPONENT);
-//
-//		for (const auto& attachment : containerComponent->items()) {
-//
-//			if (attachment.gameObject->name() == name) {
-//
-//				foundObject = (attachment.gameObject);
-//				return foundObject;
-//			}
-//			else {
-//				attachment.gameObject->getSubGameObject(name);
-//			}
-//		}
-//
-//	}
-//
-//	return foundObject;
-//
-//}
-
-
 void GameObject::addTouchingObject(std::shared_ptr<GameObject> touchingObject) 
 {
 
@@ -314,6 +224,25 @@ void GameObject::update()
 
 		//Update touching GameObject
 		_updateTouchingObjects();
+
+		//If this is an object that can alter the level's navigation map then 
+		//refresh the navigation map with the status
+		///////////////////////////////////////////
+		//CAUTION:: DOES IT MAKE SENCE TO PUT THIS HERE?
+		/////////////////////////////
+
+
+		/// <summary>
+		/// 
+		/// </summary>
+		//if (this->hasTrait(TraitTag::navigation)) {
+
+		//	//ONLY IF THIS THING CHANGED?
+		//	//CANT DO THIS EVERY LOOP
+
+
+		//	m_parentScene->refreshNavigationMap();
+		//}
 	}
 
 }
@@ -466,6 +395,18 @@ float GameObject::getAngle()
 	return 0;
 }
 
+float GameObject::getAngleInDegrees()
+{
+
+	const auto& physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	if (physicsComponent) {
+
+		return util::radiansToDegrees(physicsComponent->angle());
+	}
+
+	return 0;
+}
+
 bool GameObject::holdsDependentGameObjects()
 {
 	if (hasComponent(ComponentTypes::CHILDREN_COMPONENT) ||
@@ -544,6 +485,16 @@ SDL_FPoint GameObject::getOriginalPosition()
 
 }
 
+
+SDL_FPoint GameObject::getOriginalTilePosition()
+{
+
+ 	const auto& transformComponent = getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	SDL_FPoint position = { transformComponent->originalTilePosition().x, transformComponent->originalTilePosition().y };
+	return(position);
+
+}
+
 b2Vec2 GameObject::getSize()
 {
 
@@ -607,11 +558,25 @@ bool GameObject::isPointingAt(SDL_FPoint gameObjectPosition)
 
 }
 
+bool GameObject::isCompositeEmpty()
+{
+
+	if (hasComponent(ComponentTypes::COMPOSITE_COMPONENT) == true) {
+
+		const auto& compositeComponent = getComponent<CompositeComponent>(ComponentTypes::COMPOSITE_COMPONENT);
+		if (compositeComponent) {
+			return compositeComponent->isCompositeEmpty();
+		}
+	}
+
+	return false;
+}
+
 
 void GameObject::dispatch(SDL_FPoint destination)
 {
 	const auto& brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
-	brainComponent->dispatch(destination);
+	//brainComponent->dispatch(destination);
 }
 
 int GameObject::brainState()
@@ -771,6 +736,9 @@ void GameObject::_updateTouchingObjects()
 
 			if (contact->IsTouching()) {
 
+				//const auto manifold = contact->GetManifold();
+				//manifold->localNormal;
+
 				if (contactGameObject != this && contactGameObject->hasTrait(TraitTag::fragment) == false) {
 
 					auto contactGameObjectSharedPtr = m_parentScene->getGameObject(contactGameObject->id());
@@ -788,5 +756,33 @@ void GameObject::_updateTouchingObjects()
 		}
 	}
 
+
+}
+
+std::vector<SeenObjectDetails> GameObject::getSeenObjects()
+{
+
+	if (hasComponent(ComponentTypes::BRAIN_COMPONENT)) {
+
+
+		const auto& brain = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+		return brain->seenObjects();
+	}
+
+}
+
+std::vector<GameObject*> GameObject::getTouchingByTrait(const int trait)
+{
+	std::vector<GameObject*>touchingObjects{};
+
+	for (auto& gameObject : m_touchingGameObjects) {
+
+		if (gameObject.second.expired() == false && gameObject.second.lock()->hasTrait(trait)) {
+			touchingObjects.push_back(gameObject.second.lock().get());
+		}
+
+	}
+
+	return touchingObjects;
 
 }

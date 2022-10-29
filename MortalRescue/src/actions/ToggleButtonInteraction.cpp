@@ -34,9 +34,5 @@ void ToggleButtonInteraction::perform(GameObject* interactingObject, GameObject*
 	SoundManager::instance().playSound("SFX_BUTTON_WORKING_1");
 	SoundManager::instance().playSound("SFX_DOOR_ACTIVATE_1");
 	
-	//Since we are disabling and enabling a wall that could affect navigation
-	//then refresh all navigation objects accessibility
-	LevelManager::instance().refreshNavigationAccess(interactionObject->parentScene());
-
 	
 }

@@ -268,8 +268,8 @@ void PhysicsComponent::applyImpulse(float force, b2Vec2 trajectory)
 	trajectory.x *= force;
 	trajectory.y *= force;
 
-	m_physicsBody->ApplyForceToCenter(trajectory, true);
-	//m_physicsBody->ApplyForceToCenter(trajectory, true);
+	//m_physicsBody->ApplyLinearImpulseToCenter(trajectory, true);
+	m_physicsBody->ApplyLinearImpulseToCenter(trajectory, true);
 
 }
 
@@ -279,6 +279,7 @@ void PhysicsComponent::applyMovement(float velocity, b2Vec2 trajectory)
 	trajectory.x *= velocity;
 	trajectory.y *= velocity;
 
+	//m_physicsBody->ApplyForceToCenter(trajectory, true);
 	m_physicsBody->SetLinearVelocity(trajectory);
 
 }

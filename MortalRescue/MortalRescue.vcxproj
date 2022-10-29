@@ -236,8 +236,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\blueprints\breakable_wall_16_blueprint.png" />
-    <Image Include="assets\blueprints\breakable_wall_4_blueprint.png" />
+    <Image Include="assets\blueprints\breakable_wall_128_blueprint.png" />
+    <Image Include="assets\blueprints\breakable_wall_64_blueprint.png" />
+    <Image Include="assets\blueprints\breakable_wall_96_blueprint.png" />
     <Image Include="assets\blueprints\drone1_blueprint.png" />
     <Image Include="assets\blueprints\drone2_blueprint.png" />
     <Image Include="assets\blueprints\testDrone_blueprint.png" />
@@ -256,6 +257,7 @@
     <None Include="assets\config\gameScenes.json" />
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />
     <None Include="assets\gameObjectDefinitions\compositeObjects.json" />
+    <None Include="assets\gameObjectDefinitions\enemyObjects.json" />
     <None Include="assets\gameObjectDefinitions\guiObjects.json" />
     <None Include="assets\gameObjectDefinitions\hudObjects.json" />
     <None Include="assets\gameObjectDefinitions\playerObjects.json" />
@@ -355,7 +357,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties assets_4gameObjectDefinitions_4checkpointObjects_1json__JsonSchema="https://json-schema.org/draft/2020-12/schema" assets_4levels_4level1_3definition_1json__JsonSchema="https://download.stackhawk.com/hawk/jsonconfig/hawkconfig.json" assets_4levels_4level2_3definition_1json__JsonSchema="https://jsonapi.org/schema" />
+      <UserProperties assets_4config_4gameScenes_1json__JsonSchema="https://json.schemastore.org/base.json" assets_4gameObjectDefinitions_4checkpointObjects_1json__JsonSchema="https://json-schema.org/draft/2020-12/schema" assets_4gameObjectDefinitions_4commonObjects_1json__JsonSchema="https://json-schema.org/draft/2020-12/schema" assets_4levels_4level1_3definition_1json__JsonSchema="https://download.stackhawk.com/hawk/jsonconfig/hawkconfig.json" assets_4levels_4level2_3definition_1json__JsonSchema="https://jsonapi.org/schema" assets_4textureAtlasAssets_1json__JsonSchema="https://json-schema.org/draft/2019-09/schema" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

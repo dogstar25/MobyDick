@@ -16,6 +16,9 @@ bool BrainAABBCallback::ReportFixture(b2Fixture* fixture)
 
 	brainAABBFoundObject.gameObject = reinterpret_cast<GameObject*>(fixture->GetBody()->GetUserData().pointer);
 
+	//new 10/27
+	brainAABBFoundObject.fixture = fixture;
+
 	//Do not store Particles or other objects that we dont care about
 	if (brainAABBFoundObject.gameObject->hasTrait(TraitTag::fragment) == false) {
 

@@ -237,6 +237,25 @@ Scene& SceneManager::pushScene(std::string sceneId, bool pausePreviousScene)
 	
 }
 
+void SceneManager::toggleSetting(int setting)
+{
+
+	if (setting == DebugSceneSettings::SHOW_PHYSICS_DEBUG) {
+
+		//toggle
+		m_scenes.back().setDebugSetting(DebugSceneSettings::SHOW_PHYSICS_DEBUG);
+
+	}
+	else if (setting == DebugSceneSettings::SHOW_NAVIGATION_DEBUG_MAP) {
+
+		m_scenes.back().setDebugSetting(DebugSceneSettings::SHOW_NAVIGATION_DEBUG_MAP);
+	}
+
+
+
+
+}
+
 void SceneManager::loadLevel(std::string levelId)
 {
 	m_scenes.back().loadLevel(levelId);

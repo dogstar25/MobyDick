@@ -246,6 +246,11 @@ void CompositeComponent::_updatePieces()
 
 }
 
+bool CompositeComponent::isCompositeEmpty()
+{
+	return m_pieces.size() <= 0;
+}
+
 void CompositeComponent::_updatePiecePosition(GameObjectPiece& piece)
 {
 

@@ -91,7 +91,7 @@ void RendererSDL::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* textu
 		NULL,
 		SDL_FLIP_NONE);
 
-	//outline the object if defiend so
+	//outline the object if defined to
 	if (outline) {
 
 		outlineObject(destQuad, outlineColor);

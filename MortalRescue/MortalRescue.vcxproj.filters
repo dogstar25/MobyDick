@@ -185,13 +185,16 @@
     <Image Include="assets\blueprints\drone2_blueprint.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="assets\blueprints\breakable_wall_4_blueprint.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\blueprints\breakable_wall_16_blueprint.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="assets\levels\level5_blueprint.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprints\breakable_wall_64_blueprint.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprints\breakable_wall_128_blueprint.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\blueprints\breakable_wall_96_blueprint.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -219,6 +222,7 @@
     <None Include="assets\gameObjectDefinitions\testObjects.json" />
     <None Include="assets\gameObjectDefinitions\playerObjects.json" />
     <None Include="assets\levels\level5_definition.json" />
+    <None Include="assets\gameObjectDefinitions\enemyObjects.json" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav">

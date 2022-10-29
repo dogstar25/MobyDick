@@ -10,7 +10,7 @@
 
 struct BrainAABBFoundObject
 {
-	//b2Fixture* fixture;
+	b2Fixture* fixture;
 	GameObject* gameObject;
 };
 

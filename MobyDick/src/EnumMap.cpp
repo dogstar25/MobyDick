@@ -113,6 +113,8 @@ EnumMap::EnumMap()
 	m_enumMap["SDLK_ESCAPE"] = SDLK_ESCAPE;
 	m_enumMap["SDLK_F1"] = SDLK_F1;
 	m_enumMap["SDLK_F2"] = SDLK_F2;
+	m_enumMap["SDLK_F3"] = SDLK_F3;
+	m_enumMap["SDLK_F4"] = SDLK_F4;
 	m_enumMap["SDLK_F12"] = SDLK_F12;
 
 	//Scene Action Codes
@@ -125,6 +127,7 @@ EnumMap::EnumMap()
 	m_enumMap["SCENE_ACTION_EXIT"] = SCENE_ACTION_EXIT;
 	m_enumMap["SCENE_ACTION_DIRECT"] = SCENE_ACTION_DIRECT;
 	m_enumMap["SCENE_ACTION_RELEASE_DIRECT"] = SCENE_ACTION_RELEASE_DIRECT;
+	m_enumMap["SCENE_ACTION_TOGGLE_SETTING"] = SCENE_ACTION_TOGGLE_SETTING;
 
 	//Scene Tags
 	m_enumMap["SCENETAG_MENU"] = SCENETAG_MENU;
@@ -148,6 +151,7 @@ EnumMap::EnumMap()
 	m_enumMap["GameLayer::FOREGROUND_2"] = GameLayer::FOREGROUND_2;
 	m_enumMap["GameLayer::GUI"] = GameLayer::GUI;
 	m_enumMap["GameLayer::ABSTRACT"] = GameLayer::ABSTRACT;
+	m_enumMap["GameLayer::GRID_DISPLAY"] = GameLayer::GRID_DISPLAY;
 
 	//Game Object Display Modes
 	m_enumMap["DISPLAY_UI_MODE_STANDARD"] = DISPLAY_UI_MODE_STANDARD;
@@ -157,11 +161,6 @@ EnumMap::EnumMap()
 	//Particle Emitter types
 	m_enumMap["ParticleEmitterType::ONETIME"] = ParticleEmitterType::ONETIME;
 	m_enumMap["ParticleEmitterType::CONTINUOUS"] = ParticleEmitterType::CONTINUOUS;
-
-	//Navigation Object types
-	m_enumMap["NavigationObjectType::UNSPECIFIED"] = NavigationObjectType::UNSPECIFIED;
-	m_enumMap["NavigationObjectType::TRANSIT_POINT"] = NavigationObjectType::TRANSIT_POINT;
-	m_enumMap["NavigationObjectType::WAYPOINT"] = NavigationObjectType::WAYPOINT;
 
 	//OpenGL Texture Index values
 	m_enumMap["GL_TextureIndexType::MAIN_TEXTURE_ATLAS"] = (int)GL_TextureIndexType::MAIN_TEXTURE_ATLAS;
@@ -185,13 +184,17 @@ EnumMap::EnumMap()
 	m_enumMap["collectable"] = TraitTag::collectable;
 	m_enumMap["weapon"] = TraitTag::weapon;
 	m_enumMap["gui"] = TraitTag::gui;
-	m_enumMap["navigation"] = TraitTag::navigation;
+	m_enumMap["waypoint"] = TraitTag::waypoint;
 	m_enumMap["abstract"] = TraitTag::abstract;
 	m_enumMap["interactive"] = TraitTag::interactive;
 	m_enumMap["debug"] = TraitTag::debug;
 	m_enumMap["pooled"] = TraitTag::pooled;
 	m_enumMap["fragment"] = TraitTag::fragment;
 	m_enumMap["objective"] = TraitTag::objective;
+	m_enumMap["impasse"] = TraitTag::impasse;
+	m_enumMap["conditional_impasse"] = TraitTag::conditional_impasse;
+	m_enumMap["complex_impasse"] = TraitTag::complex_impasse;
+	m_enumMap["baddie"] = TraitTag::baddie;
 
 	//Hud Item Types
 	m_enumMap["HudItemTypes::STATUS_SINGLE"] = (int)HudItemTypes::STATUS_SINGLE;
@@ -203,6 +206,11 @@ EnumMap::EnumMap()
 	m_enumMap["DISABLED_TYPE::RENDER_AND_PHYSICS"] = DISABLED_TYPE::RENDER_AND_PHYSICS;
 	m_enumMap["DISABLED_TYPE::RENDER_AND_UPDATE"] = DISABLED_TYPE::RENDER_AND_UPDATE;
 	m_enumMap["DISABLED_TYPE::PHYICS_AND_UPDATE"] = DISABLED_TYPE::PHYICS_AND_UPDATE;
+
+	//Scene Settings
+	m_enumMap["DebugSceneSettings::SHOW_PHYSICS_DEBUG"] = DebugSceneSettings::SHOW_PHYSICS_DEBUG;
+	m_enumMap["DebugSceneSettings::SHOW_NAVIGATION_DEBUG_MAP"] = DebugSceneSettings::SHOW_NAVIGATION_DEBUG_MAP;
+
 
 }
 
