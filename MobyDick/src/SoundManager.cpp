@@ -94,7 +94,18 @@ void SoundManager::stopSound(int channel)
 
 int SoundManager::playSound(std::string id )
 {
-	int channelPlayedOn = Mix_PlayChannel(-1, m_sfxChunks[id], 0);
+
+	//This should return an avaialable channel from the default group (all channels)
+	int availableChannel = Mix_GroupAvailable(-1);
+
+	//can add a distance input now, and use teh avail channel
+	//?????
+	//actually, should the sound played ALWAYS be the distance from the player?ok, is he working on it?
+
+
+
+
+	int channelPlayedOn = Mix_PlayChannel(availableChannel, m_sfxChunks[id], 0);
 	return channelPlayedOn;
 
 }

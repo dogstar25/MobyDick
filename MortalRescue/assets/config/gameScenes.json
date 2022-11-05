@@ -332,6 +332,30 @@
                     }
                 }
             ],
+            "keyActions": [
+                {
+                    "keyCode": "SDLK_F1",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_DIRECT",
+                        "actionId": "CutSceneExample"
+                    }
+                },
+                {
+                    "keyCode": "SDLK_F3",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_TOGGLE_SETTING",
+                        "actionId": "DebugSceneSettings::SHOW_NAVIGATION_DEBUG_MAP"
+                    }
+                },
+                {
+                    "keyCode": "SDLK_F4",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_TOGGLE_SETTING",
+                        "actionId": "DebugSceneSettings::SHOW_PHYSICS_DEBUG"
+                    }
+                }
+
+            ],
             "gameObjectPools": [
                 {
                     "id": "SMOKE1_POOL",

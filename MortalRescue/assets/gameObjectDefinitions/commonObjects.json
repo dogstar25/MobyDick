@@ -806,6 +806,41 @@
             ]
         },
         {
+            "type": "BARREL_STATIC_FILLER",
+            "traitTags": [ "barrier" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_DRONE_BRAIN_64",
+                    "color": {
+                        "tint": "Colors::CYAN",
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_SOLID",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 0.64,
+                            "restitution": 2.7,
+                            "density": 80.5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "type": "RADIATION_EMITTER",
             "traitTags": [],
             "description": "Particle Emitter",

@@ -61,8 +61,13 @@
             "initialValue": 0,
             "minValue": 0,
             "maxValue": 2000
+        },
+        {
+            "id": "StatusItemId::ENEMY_COUNT",
+            "initialValue": 2,
+            "minValue": 0,
+            "maxValue": 2
         }
-
 
 
     ],
@@ -71,6 +76,10 @@
             "id": "StatusItemId::SURVIVORS",
             "targetValue": 0
         }
+        //{
+        //    "id": "StatusItemId::ENEMY_COUNT",
+        //    "targetValue": 0
+        //}
 
     ],
     "levelTriggers": [
@@ -114,47 +123,12 @@
             "id": "LOC_0002_0014",
             "gameObjectType": "GINA_64",
             "name": "PlayerGina",
-            "cameraFollow": false
+            "cameraFollow": true
         },
         {
             "id": "LOC_0051_0027",
             "gameObjectType": "DRONE2",
             "name": "EnemyA",
-            "compositePieceLevelCap": 1,
-            "cameraFollow": true
-        },
-        {
-            "id": "LOC_0052_0027",
-            "gameObjectType": "DRONE2",
-            "name": "EnemyB",
-            "compositePieceLevelCap": 1,
-            "cameraFollow": false
-        },
-        {
-            "id": "LOC_0053_0027",
-            "gameObjectType": "DRONE2",
-            "name": "EnemyC",
-            "compositePieceLevelCap": 1,
-            "cameraFollow": false
-        },
-        {
-            "id": "LOC_0054_0027",
-            "gameObjectType": "DRONE2",
-            "name": "EnemyC",
-            "compositePieceLevelCap": 1,
-            "cameraFollow": false
-        },
-        {
-            "id": "LOC_0055_0027",
-            "gameObjectType": "DRONE2",
-            "name": "EnemyC",
-            "compositePieceLevelCap": 1,
-            "cameraFollow": false
-        },
-        {
-            "id": "LOC_0056_0027",
-            "gameObjectType": "DRONE2",
-            "name": "EnemyC",
             "compositePieceLevelCap": 1,
             "cameraFollow": false
         },
@@ -284,6 +258,14 @@
             "id": "LOC_0067_0017",
             "gameObjectType": "LASERWALL_192",
             "name": "button3_TARGET"
+        },
+        {
+            "id": "LOC_0077_0028",
+            "gameObjectType": "BARREL_STATIC_FILLER"
+        },
+        {
+            "id": "LOC_0069_0026",
+            "gameObjectType": "BARREL_STATIC_FILLER"
         }
 
     ]

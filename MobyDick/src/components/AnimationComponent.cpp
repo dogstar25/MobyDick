@@ -52,7 +52,7 @@ void AnimationComponent::update()
 
 	//If this animation has completed and it was a one-time animate, then reset the current
 	//animation to the default, and put it in continuous mode (probably IDLE)
-	if (animationFrame == 0) {
+		if (animationFrame == 0) {
 
 		if (m_currentAnimationMode == ANIMATE_ONE_TIME) {
 			m_currentAnimationState = m_defaultAnimationState;

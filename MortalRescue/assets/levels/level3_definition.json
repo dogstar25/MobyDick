@@ -1,0 +1,130 @@
+{
+    "id": "LEVEL_3",
+    "blueprint": "TX_LEVEL3_BLUEPRINT",
+    "description": "TX_LEVEL_3",
+    "wallColor": "Colors::PARAKEET",
+    "dimensions": {
+        "levelWidth": 120,
+        "levelHeight": 33,
+        "tileWidth": 32,
+        "tileHeight": 32
+    },
+    "tiledLayers": [
+        {
+            "layer": "GameLayer::BACKGROUND_1",
+            "tiledObjectId": "BACKGROUND_GRID_1",
+            "tileSize": {
+                "width": 512,
+                "height": 512
+            }
+        }
+    ],
+    "statusItems": [
+        {
+            "id": "StatusItemId::PLAYERS_HEART_COUNT",
+            "initialValue": 6,
+            "minValue": 0,
+            "maxValue": 6
+        },
+        {
+            "id": "StatusItemId::PLAYER_WEAPON_LEVEL",
+            "initialValue": 1,
+            "minValue": 0,
+            "maxValue": 3
+        },
+        {
+            "id": "StatusItemId::PLAYER_WEAPON_ACCRUAL",
+            "initialValue": 0,
+            "minValue": 0,
+            "maxValue": 50
+        },
+        {
+            "id": "StatusItemId::PLAYER_WEAPON_CHARGED_PERCENT",
+            "initialValue": 0,
+            "minValue": 0,
+            "maxValue": 100
+        },
+        {
+            "id": "StatusItemId::PLAYER_WEAPON_IS_CHARGED",
+            "initialValue": 0,
+            "minValue": 0,
+            "maxValue": 1
+        },
+        {
+            "id": "StatusItemId::SURVIVORS",
+            "initialValue": 5,
+            "minValue": 0,
+            "maxValue": 5
+        },
+        {
+            "id": "StatusItemId::SCRAP_COUNT",
+            "initialValue": 0,
+            "minValue": 0,
+            "maxValue": 2000
+        },
+        {
+            "id": "StatusItemId::ENEMY_COUNT",
+            "initialValue": 2,
+            "minValue": 0,
+            "maxValue": 2
+        }
+
+
+    ],
+    "objectives": [
+        {
+            "id": "StatusItemId::SURVIVORS",
+            "targetValue": 0
+        }
+        //{
+        //    "id": "StatusItemId::ENEMY_COUNT",
+        //    "targetValue": 0
+        //}
+
+    ],
+    "levelTriggers": [
+        {
+            "description": "Player Death",
+            "triggerClass": "PlayerDeath"
+        },
+        {
+            "description": "Level Complete",
+            "triggerClass": "LevelComplete"
+        }
+
+    ],
+    "colorDefinedObjects": [
+        {
+            "colorKey": "Colors::BLUE",
+            "gameObjectType": "NAVIGATION_WAYPOINT",
+            "layer": "GameLayer::ABSTRACT"
+        },
+        {
+            "colorKey": "Colors::PURPLE",
+            "gameObjectType": "VOID_FILLER",
+            "layer": "GameLayer::BACKGROUND_1",
+            "objectColor": "Colors::CYAN"
+        },
+        {
+            "colorKey": "Colors::GRAPE",
+            "gameObjectType": "BARREL_FILLER",
+            "layer": "GameLayer::MAIN",
+            "objectColor": "Colors::CYAN"
+        },
+        {
+            "colorKey": "Colors::CLOUD",
+            "gameObjectType": "IMPASSE",
+            "layer": "GameLayer::MAIN"
+        }
+
+    ],
+    "locationDefinedObjects": [
+        {
+            "id": "LOC_0006_0004",
+            "gameObjectType": "GINA_64",
+            "name": "PlayerGina",
+            "cameraFollow": true
+        }
+
+    ]
+}

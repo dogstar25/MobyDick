@@ -26,6 +26,11 @@
             "filename": "assets/levels/level2_blueprint.png"
         },
         {
+            "id": "TX_LEVEL3_BLUEPRINT",
+            "description": "Level 3 Bluprint",
+            "filename": "assets/levels/level3_blueprint.png"
+        },
+        {
             "id": "TX_LEVEL5_BLUEPRINT",
             "description": "Level 5 Bluprint",
             "filename": "assets/levels/level5_blueprint.png"
