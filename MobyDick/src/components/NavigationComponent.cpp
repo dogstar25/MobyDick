@@ -339,6 +339,8 @@ void NavigationComponent::_moveTo(SDL_Point destinationTile)
 	const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 	const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
 
+	moveAction->perform(parent(), trajectory);
+
 	_applyAvoidanceMovement(trajectory);
 
 	moveAction->perform(parent(), trajectory);
@@ -348,6 +350,7 @@ void NavigationComponent::_moveTo(SDL_Point destinationTile)
 
 
 }
+
 
 void NavigationComponent::_applyAvoidanceMovement(b2Vec2& trajectory)
 {
@@ -359,52 +362,48 @@ void NavigationComponent::_applyAvoidanceMovement(b2Vec2& trajectory)
 
 		//If I see a barrier or a baddie and it within X pixels, then apply an adjustment to the trajectory so that we dont
 		//get caught on corners and baddies dont get caught on each othersuch
+		//ToDo:need a way to configure which trait tags are used here. Since this is base code, we chouldnt assume that this object should apply 
+		// special movement for other baddies - baddies may not even be a thing for this game
 		if (barrierItem.gameObject.expired() == false &&
-			(barrierItem.gameObject.lock().get()->hasTrait(TraitTag::barrier) 
+			(barrierItem.gameObject.lock().get()->hasTrait(TraitTag::barrier)
 				|| barrierItem.gameObject.lock().get()->hasTrait(TraitTag::baddie))) {
 
 			//Distance
-			//int distance = (int)(barrierItem.distance * 100);
 			float distance = util::calculateDistance(parent()->getCenterPosition(), barrierItem.gameObject.lock()->getCenterPosition());
 
-			//Calculate the distance that an object has to be from a barrier to apply
-			//a trajectory adjustment
-			//We have 2 once considered close and 2 considers very close
-			auto distanceBuffer1 = (parent()->getSize().x + parent()->getSize().y) / 2 * 1.15  ;
-			auto distanceBuffer2 = (parent()->getSize().x + parent()->getSize().y) / 2 * .90;
 
-			//Distance facxtor
-			glm::uvec4 color = { 255,255,255,255 };
-			std::optional<float> distanceFactor{};
-			if (distance < distanceBuffer1) {
-				distanceFactor = 0.10;
-				color = { 255,255,255,255 };
-			}
-			if (distance < distanceBuffer2) {
-				distanceFactor = 0.15;
-				color = { 255,0,0,255 };
-			}
+			//Avoid for other baddies
+			if (distance < 64 && barrierItem.gameObject.lock().get()->hasTrait(TraitTag::baddie)) {
 
-			if (distanceFactor.has_value()) {
+				//Easy 90 degree applied to trajectory
+				b2Vec2 avoidTrajectory90 = { trajectory.y, -trajectory.x };
 
-				b2Vec2 normal = { (float)(barrierItem.normal.x) * distanceFactor.value(), (float)(barrierItem.normal.y) * distanceFactor.value()};
-				trajectory += normal;
-				trajectory.Normalize();
+				//Apply 45 degrees to  trajectory
+				b2Vec2 avoidTrajectory45 = { (trajectory.x + trajectory.y) * sqrtf(2), (trajectory.y - trajectory.x) * sqrtf(2) };
 
-				glm::vec2 begin = { parent()->getCenterPosition().x ,parent()->getCenterPosition().y };
-				glm::vec2 end = { barrierItem.gameObject.lock()->getCenterPosition().x, barrierItem.gameObject.lock()->getCenterPosition().y };
-				//glm::uvec4 color = { 255,255,255,255 };
-
-				begin.x -= Camera::instance().frame().x;
-				begin.y -= Camera::instance().frame().y;
-				end.x -= Camera::instance().frame().x;
-				end.y -= Camera::instance().frame().y;
-
-
-				game->renderer()->addLine(begin, end, color);
+				trajectory = avoidTrajectory45;
+				break;
 
 			}
 
+			//Avoid a wall if its too close
+			//This code below MAY help from getting stuck. I havent proven that. Ima leveave it in for now and revisit when needed
+			if (distance < 50 && barrierItem.gameObject.lock().get()->hasTrait(TraitTag::barrier)) {
+
+				//which is the closer to the wall, the X or the Y direction
+				float xDistance = abs(parent()->getCenterPosition().x - barrierItem.gameObject.lock()->getCenterPosition().x);
+				float yDistance = abs(parent()->getCenterPosition().y - barrierItem.gameObject.lock()->getCenterPosition().y);
+
+				if (xDistance > yDistance) {
+					trajectory.x = trajectory.x + -(barrierItem.normal.x);
+				}
+				else {
+					trajectory.y = trajectory.y + -(barrierItem.normal.y);
+				}
+
+				break;
+
+			}
 
 		}
 
@@ -412,7 +411,6 @@ void NavigationComponent::_applyAvoidanceMovement(b2Vec2& trajectory)
 	}
 
 }
-
 
 
 

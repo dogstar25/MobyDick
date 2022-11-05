@@ -197,6 +197,9 @@
     <Image Include="assets\blueprints\breakable_wall_96_blueprint.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\levels\level3_blueprint.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\config\gameConfig.json" />
@@ -223,6 +226,34 @@
     <None Include="assets\gameObjectDefinitions\playerObjects.json" />
     <None Include="assets\levels\level5_definition.json" />
     <None Include="assets\gameObjectDefinitions\enemyObjects.json" />
+    <None Include="assets\levels\level3_definition.json" />
+    <None Include="assets\sound\turretDeploy1_01.ogg" />
+    <None Include="assets\sound\turretDeploy2_01.ogg" />
+    <None Include="assets\sound\turretUndeploy1_01.ogg" />
+    <None Include="assets\sound\weapon_laser_002.ogg" />
+    <None Include="assets\sound\weapon_laser_004.ogg" />
+    <None Include="assets\sound\weapon2_fire1_01.ogg" />
+    <None Include="assets\sound\shield_hit_002.ogg" />
+    <None Include="assets\sound\sci-fi_explosion_04.ogg" />
+    <None Include="assets\sound\sci-fi_weapon_plasma_pistol_06.ogg" />
+    <None Include="assets\sound\shield_hit_001.ogg" />
+    <None Include="assets\sound\retro_impact_hit_05.ogg" />
+    <None Include="assets\sound\buttonWorking.ogg" />
+    <None Include="assets\sound\collect_heart1_02.ogg" />
+    <None Include="assets\sound\collect_heart2_01.ogg" />
+    <None Include="assets\sound\doorActivate1.ogg" />
+    <None Include="assets\sound\fire_pulse_1.ogg" />
+    <None Include="assets\sound\fire_pulse_2.ogg" />
+    <None Include="assets\sound\fire_pulse_3.ogg" />
+    <None Include="assets\sound\fire_pulse_fail_1.ogg" />
+    <None Include="assets\sound\impact_metal_012.ogg" />
+    <None Include="assets\sound\impact_metal_shell_001.ogg" />
+    <None Include="assets\sound\impact_metal_shell_002.ogg" />
+    <None Include="assets\sound\impact_metal_shell_003.ogg" />
+    <None Include="assets\sound\pick_up_002.ogg" />
+    <None Include="assets\sound\player_explode_1.ogg" />
+    <None Include="assets\sound\pulse_charging_1.ogg" />
+    <None Include="assets\sound\pulse_fully_charged_1.ogg" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav">

@@ -48,6 +48,7 @@ private:
 	void _calculateCosts(AStarNode* startingNode, AStarNode* node);
 	void _moveTo(SDL_Point destinationTile);
 	void _applyAvoidanceMovement(b2Vec2& trajectory);
+	void _applyAvoidanceMovement2(b2Vec2& trajectory);
 
 
 	Timer m_pathRefreshTimer{ 0.5, true };

@@ -3,8 +3,8 @@
     "blueprint": "TX_LEVEL100_BLUEPRINT",
     "description": "TX_LEVEL_T100",
     "dimensions": {
-        "levelWidth": 60,
-        "levelHeight": 32,
+        "levelWidth": 61,
+        "levelHeight": 33,
         "tileWidth": 32,
         "tileHeight": 32
     },
@@ -59,11 +59,29 @@
         //    "cameraFollow": true
         //},
         {
-            "id": "LOC_0008_0005",
-            "gameObjectType": "MOTHERSHIP",
-            "name": "MOTHERSHIP",
+            "id": "LOC_0006_0005",
+            "gameObjectType": "DRONE2",
+            "name": "DRONE1",
             "cameraFollow": true
+        },
+        {
+            "id": "LOC_0023_0005",
+            "gameObjectType": "DRONE2",
+            "name": "DRONE2"
         }
 
+
+    ],
+    "colorDefinedObjects": [
+        {
+            "colorKey": "Colors::BLUE",
+            "gameObjectType": "NAVIGATION_WAYPOINT",
+            "layer": "GameLayer::ABSTRACT"
+        },
+        {
+            "colorKey": "Colors::CLOUD",
+            "gameObjectType": "IMPASSE",
+            "layer": "GameLayer::MAIN"
+        }
     ]
 }
