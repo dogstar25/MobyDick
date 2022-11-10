@@ -30,10 +30,15 @@ void OnetimeButtonInteraction::perform(GameObject* interactingObject, GameObject
 			targetObject->disablePhysics();
 		}
 
+		//If the object being toggled has a toggle sound then play it
+		if (targetObject->hasComponent(ComponentTypes::SOUND_COMPONENT) == true) {
+
+			const auto& soundComponent = targetObject->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+			soundComponent->playSound("TOGGLE_SOUND");
+		}
+
 	}
 
-	SoundManager::instance().playSound("SFX_BUTTON_BROKEN_1");
-	SoundManager::instance().playSound("SFX_DOOR_ACTIVATE_1");
 
 	//Disable this button sinc eits been used its onetime
 	interactionObject->disablePhysics();

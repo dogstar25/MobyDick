@@ -29,10 +29,27 @@ void ToggleButtonInteraction::perform(GameObject* interactingObject, GameObject*
 			targetObject->disablePhysics();
 		}
 
+		//If the object being toggled has a toggle sound then play it
+		if (targetObject->hasComponent(ComponentTypes::SOUND_COMPONENT) == true) {
+
+			const auto& soundComponent = targetObject->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+			soundComponent->playSound("TOGGLE_SOUND");
+		}
+
 	}
 
-	SoundManager::instance().playSound("SFX_BUTTON_WORKING_1");
-	SoundManager::instance().playSound("SFX_DOOR_ACTIVATE_1");
+
+	//SoundManager::instance().playSound("SFX_BUTTON_WORKING_1");
+
+	//Play Sound
+	if (interactionObject->hasComponent(ComponentTypes::SOUND_COMPONENT) == true) {
+		const auto& soundComponent = interactionObject->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+		soundComponent->playSound("USE_SOUND");
+	}
+
+
+	//Put this in the gameObject disable physics function and play the "DISABLE_SOUND" if it exists for the object
+	//SoundManager::instance().playSound("SFX_DOOR_ACTIVATE_1");
 	
 	
 }

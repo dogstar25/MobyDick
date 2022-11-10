@@ -220,6 +220,7 @@
     <ClCompile Include="src\components\CheckPointComponent.cpp" />
     <ClCompile Include="src\components\ContainerComponent.cpp" />
     <ClCompile Include="src\components\IMGuiComponent.cpp" />
+    <ClCompile Include="src\components\SoundComponent.cpp" />
     <ClCompile Include="src\cutScenes\CutScene.cpp" />
     <ClCompile Include="src\cutScenes\CutSceneExample.cpp" />
     <ClCompile Include="src\cutScenes\CutSceneFactory.cpp" />
@@ -313,6 +314,7 @@
     <ClInclude Include="src\components\CheckPointComponent.h" />
     <ClInclude Include="src\components\ContainerComponent.h" />
     <ClInclude Include="src\components\IMGuiComponent.h" />
+    <ClInclude Include="src\components\SoundComponent.h" />
     <ClInclude Include="src\cutScenes\CutScene.h" />
     <ClInclude Include="src\cutScenes\CutSceneExample.h" />
     <ClInclude Include="src\cutScenes\CutSceneFactory.h" />

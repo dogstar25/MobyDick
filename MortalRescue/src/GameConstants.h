@@ -70,12 +70,12 @@ namespace CollectibleTypes {
 
 namespace ComponentTypes {
 
-	inline constexpr int BRAIN_DRONE_COMPONENT = 24;
-	inline constexpr int WEAPON_PISTOL_COMPONENT = 25;
-	inline constexpr int TURRET_BRAIN_COMPONENT = 26;
-	inline constexpr int SURVIVOR_BRAIN_COMPONENT = 27;
-	inline constexpr int GINA_PLAYER_CONTROL_COMPONENT = 28;
-	inline constexpr int GINA_VITALITY_COMPONENT = 29;
+	inline constexpr int BRAIN_DRONE_COMPONENT = 27;
+	inline constexpr int WEAPON_PISTOL_COMPONENT = 28;
+	inline constexpr int TURRET_BRAIN_COMPONENT = 29;
+	inline constexpr int SURVIVOR_BRAIN_COMPONENT = 30;
+	inline constexpr int GINA_PLAYER_CONTROL_COMPONENT = 31;
+	inline constexpr int GINA_VITALITY_COMPONENT = 32;
 
 
 }

@@ -119,6 +119,31 @@
             "id": "SFX_TURRET_UNDEPLOY_1",
             "description": "Door activate 1",
             "filename": "turretUndeploy1_01.ogg"
+        },
+        {
+            "id": "SFX_DRONE_MOVING_1",
+            "description": "Drone Moving 1",
+            "filename": "droneMoving1.ogg"
+        },
+        {
+            "id": "SFX_RADIATION_LEAK_1",
+            "description": "Radiation Leak 1",
+            "filename": "radiationLeak1.ogg"
+        },
+        {
+            "id": "SFX_JETPACK_START_1",
+            "description": "Jetpack start 1 1",
+            "filename": "jetpack_start1.ogg"
+        },
+        {
+            "id": "SFX_JETPACK_START_2",
+            "description": "Jetpack start 2",
+            "filename": "jetpack_start2.ogg"
+        },
+        {
+            "id": "SFX_JETPACK_OPERATING_1",
+            "description": "Jetpack start 1",
+            "filename": "jetpack_operating1.ogg"
         }
 
     ],

@@ -175,11 +175,16 @@ void GinaPlayerControlComponent::_jetPackSwitch(bool turnOn)
 
 	const auto& attachmentsComponent = parent()->getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
 	auto& jetPack = attachmentsComponent->getAttachment("JETPACK");
+
+	const auto& soundComponent = jetPack->gameObject->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+
 	if (jetPack.has_value()) {
-		if (turnOn) {
+		if (turnOn && jetPack->gameObject->updateDisabled() == true) {
 			jetPack->gameObject->enableUpdate();
+			//soundComponent->playSound("START_SOUND");
+			//static int channel = soundComponent->playSound("OPERATING_SOUND");
 		}
-		else {
+		else if (jetPack->gameObject->updateDisabled() == false){
 			jetPack->gameObject->disableUpdate();
 		}
 	}

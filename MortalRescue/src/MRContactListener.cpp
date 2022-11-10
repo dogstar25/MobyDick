@@ -51,10 +51,17 @@ void MRContactListener::_playerBullet_droneBrain(GameObject* playerBullet, GameO
 		particleXComponent->addParticleEffect(ParticleEffects::impactSmoke);
 		particleXComponent->addParticleEffect(ParticleEffects::turretScrap);
 		particleXComponent->addParticleEffect(ParticleEffects::explosionSmoke);
-		SoundManager::instance().playSound("SFX_TURRET_EXPLODE_1");
 
 		//Get the Drone object
 		auto droneObject = droneBrain->parent();
+
+		//Stop all of the drone sounds
+		const auto& droneSoundComponent = droneObject.value()->getComponent <SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+		droneSoundComponent->stopSounds();
+
+		//Play destroyyed sound
+		const auto& soundComponent = droneObject.value()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+		soundComponent->playSound("DESTROYED_SOUND");
 
 		//Hide the drone base and set it to dbe removed in 5 seconds
 		//droneObject.value()->disableRender();
@@ -95,7 +102,13 @@ void MRContactListener::_playerBullet_droneBrain(GameObject* playerBullet, GameO
 	else {
 
 		particleXComponent->addParticleEffect(ParticleEffects::deflect);
-		SoundManager::instance().playSound("SFX_RETRO_IMPACT_DEFLECT_16");
+
+		//Get the Drone object
+		auto droneObject = droneBrain->parent();
+
+		//Play deflect sound
+		const auto& soundComponent = droneObject.value()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+		soundComponent->playSound("DEFLECT_SOUND");
 	}
 
 }
@@ -125,11 +138,16 @@ void MRContactListener::_playerBullet_enemyTurret(GameObject* playerBullet, Game
 		particleComponent->addParticleEffect(ParticleEffects::turretScrap);
 		particleComponent->addParticleEffect(ParticleEffects::explosionSmoke);
 
-		//sound
-		SoundManager::instance().playSound("SFX_TURRET_EXPLODE_1");
+		//Play destroyed sound
+		const auto& soundComponent = enemyTurret->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+		soundComponent->playSound("DESTROYED_SOUND");
+
 	}
 	else {
-		SoundManager::instance().playSound("SFX_IMPACT_12");
+
+		const auto& soundComponent = enemyTurret->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+		soundComponent->playSound("IMPACTED_SOUND");
+
 	}
 
 	//Do a color flash animate on the turret
@@ -198,17 +216,22 @@ void MRContactListener::_playerBullet_droneShield(GameObject* playerBullet, Game
 	auto shieldVitality = droneShield->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 	auto shieldHolds = shieldVitality->testResistance(bulletVitality->attackPower());
 
+	//Sound component
+	auto drone = droneShield->parent();
+	const auto& soundComponent = drone.value()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+	soundComponent->playSound("IMPACTED_SOUND");
+
 	if (shieldHolds == false) {
 
 		particleComponent->addParticleEffect(ParticleEffects::impactSmoke);
 		particleComponent->addParticleEffect(ParticleEffects::scrap);
-		SoundManager::instance().playSound("SFX_IMPACT_1");
+		soundComponent->playSound("IMPACTED_SOUND");
 
 	}
 	else {
 
 		particleComponent->addParticleEffect(ParticleEffects::deflect);
-		SoundManager::instance().playSound("SFX_RETRO_IMPACT_DEFLECT_16");
+		soundComponent->playSound("DEFLECT_SOUND");
 	}
 
 }
@@ -238,14 +261,13 @@ void MRContactListener::_playerPulseBullet_droneShield(GameObject* playerPulseBu
 	auto shieldVitality = droneShield->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 	auto shieldHolds = shieldVitality->testResistance(bulletVitality->attackPower());
 
-	//playerPulseBullet->setRemoveFromWorld(true);
-	SoundManager::instance().playSound("SFX_IMPACT_1");
-	//bulletVitality->setLifetimeTimer(0.0045);
+	//Get the drone onject itself object
+	auto droneObject = droneShield->parent();
+	const auto& soundComponent = droneObject.value()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+	soundComponent->playSound("IMPACTED_SOUND");
+
 	playerPulseBullet->setRemoveFromWorld(true);
 
-
-
-	//SoundManager::instance().playSound("SFX_IMPACT_1");
 
 }
 
@@ -267,7 +289,6 @@ void MRContactListener::_playerPulseBullet_wallPiece(GameObject* playerPulseBull
 
 	auto wallPieceVitality = wallPiece->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
-	SoundManager::instance().playSound("SFX_IMPACT_1");
 	playerPulseBullet->setRemoveFromWorld(true);
 
 }
@@ -277,11 +298,14 @@ void MRContactListener::_playerPulseExplosion_wallPiece(GameObject* playerPulseE
 	const auto& pulseBulletPhysics = playerPulseExplosion->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 	const auto& wallVitality = wallPiece->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 
+	const auto& soundComponent = wallPiece->parent().value()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+
 	//Create a large pulse object
 	auto shieldHolds = wallVitality->testResistance(5);
 	playerPulseExplosion->setRemoveFromWorld(true);
 
-	SoundManager::instance().playSound("SFX_IMPACT_1");
+	//Sound
+	soundComponent->playSound("IMPACTED_SOUND");
 
 	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", GameLayer::MAIN, -1, -1);
 	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
@@ -327,6 +351,11 @@ void MRContactListener::_playerBullet_wallPiece(GameObject* playerBullet, GameOb
 
 	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", GameLayer::MAIN, -1, -1);
 	auto particleComponent = particleEmitterObject->getComponent<ParticleXComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
+	auto mainWallSoundComponent = wallPiece->parent().value()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+
+
+	
+
 	//auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_EMITTER", LAYER_MAIN, -1, -1);
 	//auto particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_COMPONENT);
 
@@ -348,13 +377,13 @@ void MRContactListener::_playerBullet_wallPiece(GameObject* playerBullet, GameOb
 	if (shieldHolds == false) {
 
 		particleComponent->addParticleEffect(ParticleEffects::impactSmoke);
-		SoundManager::instance().playSound("SFX_IMPACT_1");
+		mainWallSoundComponent->playSound("IMPACT_SOUND");
 
 	}
 	else {
 
 		particleComponent->addParticleEffect(ParticleEffects::deflect);
-		SoundManager::instance().playSound("SFX_IMPACT_3");
+		mainWallSoundComponent->playSound("DEFLECT_SOUND");
 	}
 
 }
@@ -413,7 +442,9 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 		particleXComponent->addParticleEffect(ParticleEffects::gibs);
 		particleXComponent->addParticleEffect(ParticleEffects::playerExplode);
 
-		SoundManager::instance().playSound("SFX_PLAYER_EXPLODE_1");
+		const auto& soundComponent = player->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+		soundComponent->playSound("DESTROYED_SOUND");
+
 	}
 
 

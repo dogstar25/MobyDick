@@ -19,6 +19,7 @@
 #include "components/UIControlComponent.h"
 #include "components/PhysicsComponent.h"
 #include "components/RenderComponent.h"
+#include "components/SoundComponent.h"
 #include "components/TextComponent.h"
 #include "components/TransformComponent.h"
 #include "components/VitalityComponent.h"

@@ -63,6 +63,24 @@
                             "actionClass": "ToggleButtonInteraction"
                         }
                     ]
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "USE_SOUND",
+                            "soundAssetId": "SFX_BUTTON_WORKING_1",
+                            "distanceSensitive": false,
+                            "continuous": false
+                        },
+                        {
+                            "id": "USE_BROKEN_SOUND",
+                            "soundAssetId": "SFX_BUTTON_BROKEN_1",
+                            "distanceSensitive": false,
+                            "continuous": false
+                        }
+
+                    ]
                 }
 
             ]
@@ -134,7 +152,26 @@
                             "actionClass": "OnetimeButtonInteraction"
                         }
                     ]
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "USE_SOUND",
+                            "soundAssetId": "SFX_BUTTON_WORKING_1",
+                            "distanceSensitive": false,
+                            "continuous": false
+                        },
+                        {
+                            "id": "USE_BROKEN_SOUND",
+                            "soundAssetId": "SFX_BUTTON_BROKEN_1",
+                            "distanceSensitive": false,
+                            "continuous": false
+                        }
+
+                    ]
                 }
+
 
             ]
         },
@@ -866,6 +903,18 @@
                     "emissionInterval": 0.2,
                     "effects": [
                         "radiation"
+                    ]
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "OPERATING_SOUND",
+                            "soundAssetId": "SFX_RADIATION_LEAK_1",
+                            "distanceSensitive": true,
+                            "continuous": true,
+                            "soundRange": 800
+                        }
                     ]
                 }
             ]

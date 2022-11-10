@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include "SoundManager.h"
+#include "components/SoundComponent.h"
 
 void PistolFireAction::perform(GameObject* gameObject)
 {
@@ -14,7 +15,8 @@ void PistolFireAction::perform(GameObject* gameObject)
 	std::string bulletPoolId = weaponComponent->getBulletPoolId();
 
 	//Sound
-	SoundManager::instance().playSound("SFX_LASER_002");
+	const auto& soundComponent = gameObject->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+	soundComponent->playSound("FIRE_SOUND");
 
 	//If this object is NOT a physics object then we need to divide by the scale factor to convert the X.Y
 	if (gameObject->hasComponent(ComponentTypes::PHYSICS_COMPONENT)) {

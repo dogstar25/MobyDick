@@ -1,4 +1,5 @@
 #include "TurretBrainComponent.h"
+#include "components/SoundComponent.h"
 
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_opengl3.h"
@@ -104,7 +105,9 @@ void TurretBrainComponent::_doDeploy()
 
 	const auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 
-	SoundManager::instance().playSound("SFX_TURRET_DEPLOY_1");
+	const auto& soundComponent = parent()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+	soundComponent->playSound("DEPLOY_SOUND");
+
 	animationComponent->animate(ANIMATION_DEPLOY, ANIMATE_ONE_TIME);
 	animationComponent->setDefaultAnimationState(ANIMATION_ACTIVE);
 
@@ -112,7 +115,9 @@ void TurretBrainComponent::_doDeploy()
 
 void TurretBrainComponent::_doUnDeploy()
 {
-	SoundManager::instance().playSound("SFX_TURRET_UNDEPLOY_1");
+	const auto& soundComponent = parent()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+	soundComponent->playSound("UNDEPLOY_SOUND");
+
 	const auto& physicsComponent = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 	const auto& transformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	const auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);

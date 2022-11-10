@@ -254,6 +254,7 @@
     <None Include="assets\sound\player_explode_1.ogg" />
     <None Include="assets\sound\pulse_charging_1.ogg" />
     <None Include="assets\sound\pulse_fully_charged_1.ogg" />
+    <None Include="assets\sound\droneMoving1.ogg" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav">
