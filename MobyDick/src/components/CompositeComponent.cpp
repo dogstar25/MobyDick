@@ -64,6 +64,9 @@ void CompositeComponent::postInit()
 
 		piece.pieceObject->postInit();
 
+		//Set this composite pieces parent as the main object
+		piece.pieceObject->setParent(parent());
+
 	}
 
 	//if (m_physicsWeldPiecesOn == true) {

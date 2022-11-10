@@ -226,13 +226,14 @@ namespace ComponentTypes {
 	inline constexpr int PLAYER_CONTROL_COMPONENT = 16;
 	inline constexpr int POOL_COMPONENT = 17;
 	inline constexpr int RENDER_COMPONENT = 18;
-	inline constexpr int TEXT_COMPONENT = 19;
-	inline constexpr int TRANSFORM_COMPONENT = 20;
-	inline constexpr int UICONTROL_COMPONENT = 21;
-	inline constexpr int VITALITY_COMPONENT = 22;
-	inline constexpr int WEAPON_COMPONENT = 23;
+	inline constexpr int SOUND_COMPONENT = 19;
+	inline constexpr int TEXT_COMPONENT = 20;
+	inline constexpr int TRANSFORM_COMPONENT = 21;
+	inline constexpr int UICONTROL_COMPONENT = 22;
+	inline constexpr int VITALITY_COMPONENT = 23;
+	inline constexpr int WEAPON_COMPONENT = 24;
 	
-	inline constexpr int LAST_BASE_COMPONENT = 24;
+	inline constexpr int LAST_BASE_COMPONENT = 26;
 
 }
 

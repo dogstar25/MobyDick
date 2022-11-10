@@ -608,6 +608,7 @@ void GameObject::disablePhysics()
 			physicsComponent->setPhysicsBodyActive(false);
 		}
 	}
+
 }
 
 void GameObject::enablePhysics()

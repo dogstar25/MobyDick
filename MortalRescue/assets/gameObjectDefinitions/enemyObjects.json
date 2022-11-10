@@ -332,8 +332,32 @@
                 },
                 {
                     "id": "NAVIGATION_COMPONENT"
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "OPERATING_SOUND",
+                            "soundAssetId": "SFX_DRONE_MOVING_1",
+                            "distanceSensitive": true,
+                            "continuous": true,
+                            "soundRange": 2000
+                        },
+                        {
+                            "id": "DESTROYED_SOUND",
+                            "soundAssetId": "SFX_TURRET_EXPLODE_1"
+                        },
+                        {
+                            "id": "DEFLECT_SOUND",
+                            "soundAssetId": "SFX_RETRO_IMPACT_DEFLECT_16"
+                        },
+                        {
+                            "id": "IMPACTED_SOUND",
+                            "soundAssetId": "SFX_IMPACT_1"
+                        }
+                    ]
                 }
-                
+
             ]
         },
         {
@@ -545,7 +569,49 @@
                     "force": 0.25,
                     "color": "Colors::WHITE",
                     "bulletPoolId": "BULLET2_POOL"
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "FIRE_SOUND",
+                            "soundAssetId": "SFX_LASER_004",
+                            "distanceSensitive": true,
+                            "soundRange": 600
+
+                        },
+                        {
+                            "id": "DEPLOY_SOUND",
+                            "soundAssetId": "SFX_TURRET_DEPLOY_1",
+                            "distanceSensitive": true,
+                            "soundRange": 600
+
+                        },
+                        {
+                            "id": "UNDEPLOY_SOUND",
+                            "soundAssetId": "SFX_TURRET_UNDEPLOY_1",
+                            "distanceSensitive": true,
+                            "soundRange": 600
+
+                        },
+                        {
+                            "id": "DESTROYED_SOUND",
+                            "soundAssetId": "SFX_TURRET_EXPLODE_1",
+                            "distanceSensitive": true,
+                            "soundRange": 600
+
+                        },
+                        {
+                            "id": "IMPACTED_SOUND",
+                            "soundAssetId": "SFX_IMPACT_12",
+                            "distanceSensitive": true,
+                            "soundRange": 600
+
+                        }
+
+                    ]
                 }
+
             ]
         }
 

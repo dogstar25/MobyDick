@@ -277,6 +277,7 @@
     <None Include="assets\sound\collect_heart1_02.ogg" />
     <None Include="assets\sound\collect_heart2_01.ogg" />
     <None Include="assets\sound\doorActivate1.ogg" />
+    <None Include="assets\sound\droneMoving1.ogg" />
     <None Include="assets\sound\fire_pulse_1.ogg" />
     <None Include="assets\sound\fire_pulse_2.ogg" />
     <None Include="assets\sound\fire_pulse_3.ogg" />

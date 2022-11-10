@@ -170,7 +170,17 @@
                     "id": "GINA_VITALITY_COMPONENT",
                     "speed": 14,
                     "health": 6
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "DESTROYED_SOUND",
+                            "soundAssetId": "SFX_PLAYER_EXPLODE_1"
+                        }
+                    ]
                 }
+
             ]
         },
         {
@@ -212,6 +222,20 @@
                         }
                     ]
 
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "OPERATING_SOUND",
+                            "soundAssetId": "SFX_JETPACK_OPERATING_1"
+                        },
+                        {
+                            "id": "START_SOUND",
+                            "soundAssetId": "SFX_JETPACK_START_1"
+                        }
+
+                    ]
                 }
 
             ]
@@ -300,7 +324,34 @@
                             "bulletPoolId": "BULLET1_POOL"
                         }
                     ]
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "FIRE_SOUND",
+                            "soundAssetId": "SFX_LASER_002"
+                        },
+                        {
+                            "id": "PULSE_FIRE_SOUND",
+                            "soundAssetId": "SFX_PULSE_FIRE_3"
+                        },
+                        {
+                            "id": "PULSE_CHARGING_SOUND",
+                            "soundAssetId": "SFX_PULSE_CHARGING_1"
+                        },
+                        {
+                            "id": "PULSE_FULL_CHARGE_SOUND",
+                            "soundAssetId": "SFX_PULSE_FULLY_CHARGED_1"
+                        },
+                        {
+                            "id": "PULSE_FAIL_SOUND",
+                            "soundAssetId": "SFX_PULSE_FAIL_1"
+                        }
+
+                    ]
                 }
+                
             ]
         },
         {

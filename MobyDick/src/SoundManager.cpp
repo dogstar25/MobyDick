@@ -92,34 +92,48 @@ void SoundManager::stopSound(int channel)
 
 }
 
-int SoundManager::playSound(std::string id )
+int SoundManager::playSound(std::string id, int distanceMagnitude, bool loops )
 {
-
+	int loopFlag{};
+	if (loops) {
+		loopFlag = -1;
+	}
+	
 	//This should return an avaialable channel from the default group (all channels)
 	int availableChannel = Mix_GroupAvailable(-1);
 
-	//can add a distance input now, and use teh avail channel
-	//?????
-	//actually, should the sound played ALWAYS be the distance from the player?ok, is he working on it?
+	Mix_SetDistance(availableChannel, distanceMagnitude);
 
-
-
-
-	int channelPlayedOn = Mix_PlayChannel(availableChannel, m_sfxChunks[id], 0);
+	int channelPlayedOn = Mix_PlayChannel(availableChannel, m_sfxChunks[id], loopFlag);
 	return channelPlayedOn;
 
 }
 
 
-void SoundManager::playSound(std::string id, int channel)
-{
-	int channelPlayedOn = Mix_PlayChannel(channel, m_sfxChunks[id], 0);
-
-}
+//void SoundManager::playSound(std::string id, int channel, int distanceMagnitude, bool loops)
+//{
+//
+//	int loopFlag{};
+//	if (loops) {
+//		loopFlag = -1;
+//	}
+//
+//	Mix_SetDistance(channel, distanceMagnitude);
+//
+//	int channelPlayedOn = Mix_PlayChannel(channel, m_sfxChunks[id], loopFlag);
+//
+//}
 
 void SoundManager::playMusic(std::string id, int loopTimes)
 {
 	Mix_PlayMusic(m_sfxMusic[id], loopTimes);
+
+}
+
+void SoundManager::setChannelDistance(int channel, int distance)
+{
+
+	Mix_SetDistance(channel, distance);
 
 }
 

@@ -256,6 +256,15 @@
                             "collisionShape": "B2_BOX"
                         }
                     ]
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "TOGGLE_SOUND",
+                            "soundAssetId": "SFX_DOOR_ACTIVATE_1"
+                        }
+                    ]
                 }
             ]
         },
@@ -302,6 +311,15 @@
                         {
                             "contactTag": "ContactTag::WALL",
                             "collisionShape": "B2_BOX"
+                        }
+                    ]
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "TOGGLE_SOUND",
+                            "soundAssetId": "SFX_DOOR_ACTIVATE_1"
                         }
                     ]
                 }
@@ -353,6 +371,15 @@
                             "collisionShape": "B2_BOX"
                         }
                     ]
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "TOGGLE_SOUND",
+                            "soundAssetId": "SFX_DOOR_ACTIVATE_1"
+                        }
+                    ]
                 }
             ]
         },
@@ -400,6 +427,15 @@
                         {
                             "contactTag": "ContactTag::WALL",
                             "collisionShape": "B2_BOX"
+                        }
+                    ]
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "TOGGLE_SOUND",
+                            "soundAssetId": "SFX_DOOR_ACTIVATE_1"
                         }
                     ]
                 }
@@ -451,6 +487,15 @@
                             "frames": 2
                         }
 
+                    ]
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "TOGGLE_SOUND",
+                            "soundAssetId": "SFX_DOOR_ACTIVATE_1"
+                        }
                     ]
                 }
             ]

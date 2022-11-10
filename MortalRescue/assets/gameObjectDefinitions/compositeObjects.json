@@ -374,6 +374,23 @@
                             }
                         ]
                     }
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "IMPACT_SOUND",
+                            "soundAssetId": "SFX_IMPACT_1",
+                            "distanceSensitive": true,
+                            "soundRange": 1200
+                        },
+                        {
+                            "id": "DEFLECT_SOUND",
+                            "soundAssetId": "SFX_IMPACT_3",
+                            "distanceSensitive": true,
+                            "soundRange": 1200
+                        }
+                    ]
                 }
             ]
         },
@@ -416,7 +433,25 @@
                             }
                         ]
                     }
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "IMPACT_SOUND",
+                            "soundAssetId": "SFX_IMPACT_1",
+                            "distanceSensitive": true,
+                            "soundRange": 1200
+                        },
+                        {
+                            "id": "DEFLECT_SOUND",
+                            "soundAssetId": "SFX_IMPACT_3",
+                            "distanceSensitive": true,
+                            "soundRange": 1200
+                        }
+                    ]
                 }
+
             ]
         },
         {
@@ -458,7 +493,26 @@
                             }
                         ]
                     }
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "IMPACT_SOUND",
+                            "soundAssetId": "SFX_IMPACT_1",
+                            "distanceSensitive": true,
+                            "soundRange": 1200
+                        },
+                        {
+                            "id": "DEFLECT_SOUND",
+                            "soundAssetId": "SFX_IMPACT_3",
+                            "distanceSensitive": true,
+                            "soundRange": 1200
+                        }
+
+                    ]
                 }
+
             ]
         },
         {

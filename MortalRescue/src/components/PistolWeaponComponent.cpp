@@ -70,6 +70,8 @@ void PistolWeaponComponent::charge(bool isCharging)
 		return;
 	}
 
+	const auto& soundComponent = parent()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+
 	//If we are fully charged, then stay that way and do noting
 	if (m_isFullyCharged == false) {
 
@@ -78,15 +80,15 @@ void PistolWeaponComponent::charge(bool isCharging)
 			game->contextMananger()->setStatusItemValue(StatusItemId::PLAYER_WEAPON_CHARGED_PERCENT, m_chargeTimer.percentTargetMet() * 100);
 
 			if (m_chargingSoundStarted == false) {
-				m_chargingSoundChannel = SoundManager::instance().playSound("SFX_PULSE_CHARGING_1");
+				m_chargingSoundChannel = soundComponent->playSound("PULSE_CHARGING_SOUND");
 				m_chargingSoundStarted = true;
 			}
 
 			//If we have met the charging timer time, then set to fully charded
 			//otherwise
 			if (m_chargeTimer.hasMetTargetDuration()) {
-				SoundManager::instance().stopSound(m_chargingSoundChannel);
-				SoundManager::instance().playSound("SFX_PULSE_FULLY_CHARGED_1");
+				soundComponent->stopSound(m_chargingSoundChannel);
+				m_chargingSoundChannel = soundComponent->playSound("PULSE_FULL_CHARGE_SOUND");
 				m_isFullyCharged = true;
 			}
 
@@ -113,16 +115,19 @@ void PistolWeaponComponent::charge(bool isCharging)
 void PistolWeaponComponent::fireSecondary(const b2Vec2& origin, const float& angle)
 {
 
+	const auto& soundComponent = parent()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+	
+
 	if (m_isFullyCharged) {
-		//Sound
-		SoundManager::instance().playSound("SFX_PULSE_FIRE_3");
+
+		soundComponent->playSound("PULSE_FIRE_SOUND");
 
 		WeaponComponent::fire(origin, angle, m_secondaryFireBulletPoolId, m_secondaryFireForce, m_secondaryFireColor);
 		m_isFullyCharged = false;
 	}
 	else {
 
-		SoundManager::instance().playSound("SFX_PULSE_FAIL_1");
+		soundComponent->playSound("PULSE_FAIL_SOUND");
 
 	}
 
