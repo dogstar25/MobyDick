@@ -71,6 +71,7 @@ void GinaPlayerControlComponent::handleMovement()
 	//Sprint
 	if (currentKeyStates[SDL_SCANCODE_LSHIFT])
 	{
+
 		const auto& action = actionComponent->getAction(ACTION_SPRINT);
 		action->perform(parent(), direction, strafe);
 		m_state.set(PlayerState::boosting);
@@ -85,6 +86,7 @@ void GinaPlayerControlComponent::handleMovement()
 		_jetPackSwitch(false);
 		_enableWeapon();
 	}
+
 
 	//Handle Mouse related movement
 	const uint32_t currentMouseStates = SDL_GetRelativeMouseState(&mouseX, &mouseY);
@@ -110,7 +112,6 @@ void GinaPlayerControlComponent::handleActions()
 	else {
 		_sendWeaponChargeFlag(false);
 	}
-
 
 	if (SceneManager::instance().playerInputEvents().empty() == false) {
 		//convenience reference to outside component(s)
@@ -178,29 +179,22 @@ void GinaPlayerControlComponent::_jetPackSwitch(bool turnOn)
 
 	const auto& soundComponent = jetPack->gameObject->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
 
+	static int channel{};
+
 	if (jetPack.has_value()) {
 		if (turnOn && jetPack->gameObject->updateDisabled() == true) {
 			jetPack->gameObject->enableUpdate();
-			//soundComponent->playSound("START_SOUND");
-			//static int channel = soundComponent->playSound("OPERATING_SOUND");
+			soundComponent->playSound("START_SOUND");
+			
+			m_jetPackSoundChannel = soundComponent->playSound("OPERATING_SOUND");
 		}
-		else if (jetPack->gameObject->updateDisabled() == false){
+		else if (turnOn == false && jetPack->gameObject->updateDisabled() == false){
 			jetPack->gameObject->disableUpdate();
+			soundComponent->stopSound(m_jetPackSoundChannel);
+
 		}
 	}
 
-}
-
-void GinaPlayerControlComponent::boostReset(bool boostTimerRest)
-{
-
-	m_state.reset(PlayerState::boosting);
-	_jetPackSwitch(false);
-
-	//Set a timer so that we cant boost again for a set time
-	if (boostTimerRest) {
-		m_boostAgainTimer = { 2 };
-	}
 
 }
 
