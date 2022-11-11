@@ -218,7 +218,19 @@
                             "bulletPoolId": "BULLET2_POOL"
                         }
                     ]
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "FIRE_SOUND",
+                            "soundAssetId": "SFX_LASER_004",
+                            "distanceSensitive": true,
+                            "soundRange": 600
+                        }
+                    ]
                 }
+
             ]
         },
         {
@@ -462,6 +474,17 @@
                             "force": 1,
                             "color": "Colors::RED",
                             "bulletPoolId": "BULLET2_POOL"
+                        }
+                    ]
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "FIRE_SOUND",
+                            "soundAssetId": "SFX_LASER_004",
+                            "distanceSensitive": true,
+                            "soundRange": 600
                         }
                     ]
                 }

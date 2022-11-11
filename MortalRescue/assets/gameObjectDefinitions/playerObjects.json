@@ -228,7 +228,8 @@
                     "sounds": [
                         {
                             "id": "OPERATING_SOUND",
-                            "soundAssetId": "SFX_JETPACK_OPERATING_1"
+                            "soundAssetId": "SFX_JETPACK_OPERATING_1",
+                            "continuous":  true
                         },
                         {
                             "id": "START_SOUND",

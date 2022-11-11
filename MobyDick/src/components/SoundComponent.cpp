@@ -131,7 +131,11 @@ int SoundComponent::playSound(std::string soundId)
 			soundDistanceMagnitude =  _calculateSoundDistanceMagnitude(playerPosition, parentPosition, (m_sounds.at(soundId).soundRange));
 		}
 
-		channel = SoundManager::instance().playSound(m_sounds.at(soundId).soundAssetId, soundDistanceMagnitude);
+		//Loops?
+		bool loops = m_sounds.at(soundId).isContinuous;
+
+		//play
+		channel = SoundManager::instance().playSound(m_sounds.at(soundId).soundAssetId, soundDistanceMagnitude, loops);
 
 	}
 
