@@ -4,6 +4,17 @@
 
 #include <SDL2/SDL.h>
 
+enum NavigationStatus {
+
+	IN_PROGRESS = 0,
+	DESTINATION_REACHED = 1,
+	NO_PATH_FOUND = 2,
+	STUCK = 3
+
+};
+
+inline constexpr int TURN_ON = 0;
+inline constexpr int TURN_OFF = 1;
 
 inline constexpr int CHILD_POSITIONS = 9;
 inline constexpr int MAX_VITALITY_LEVELS = 5;
@@ -94,7 +105,7 @@ namespace TraitTag {
 	inline constexpr int impasse = 13;
 	inline constexpr int conditional_impasse = 14;
 	inline constexpr int complex_impasse = 15;
-	inline constexpr int baddie = 16;
+	inline constexpr int mobile = 16;
 
 }
 

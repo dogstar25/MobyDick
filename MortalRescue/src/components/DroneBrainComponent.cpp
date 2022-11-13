@@ -71,19 +71,28 @@ void DroneBrainComponent::update()
 void DroneBrainComponent::_doPatrol()
 {
 
-	bool hasReachedWaypoint{};
+	NavigationStatus navigationCode{};
 	auto navigationComponent = parent()->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
 
 	if (m_focusPoint.has_value() == false) {
 		m_focusPoint = _getNextPatrolDestination();
-		hasReachedWaypoint = navigationComponent->navigateTo(m_focusPoint.value().x, m_focusPoint.value().y);
-	}
-	else{
-		hasReachedWaypoint = navigationComponent->navigateTo(m_focusPoint.value().x, m_focusPoint.value().y);
 	}
 
-	if (hasReachedWaypoint) {
+	navigationCode = navigationComponent->navigateTo(m_focusPoint.value().x, m_focusPoint.value().y);
+
+	if (navigationCode == NavigationStatus::DESTINATION_REACHED) {
 		m_focusPoint = _getNextPatrolDestination();
+		assert(m_focusPoint.has_value() && "No Patrol Destination was set");
+	}
+	else if (navigationCode == NavigationStatus::NO_PATH_FOUND) {
+		m_focusPoint = _getNextPatrolDestination();
+		std::cout << "No path was found for navigation!" << std::endl;
+	}
+	else if (navigationCode == NavigationStatus::STUCK) {
+
+		if (m_currentState == BrainState::PATROL) {
+			m_focusPoint = _getNextPatrolDestination();
+		}
 	}
 
 }

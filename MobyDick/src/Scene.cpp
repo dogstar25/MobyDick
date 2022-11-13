@@ -247,7 +247,7 @@ void Scene::update() {
 	_removeFromWorldPass();
 
 	//Update the navigationMap
-	_updateNavigationMap();
+	m_navigationMapChanged = _updateNavigationMap();
 
 
 	//If the Debug display navigation grid is turned on then build it
@@ -649,9 +649,34 @@ void Scene::addParallaxItem(Parallax& parallaxItem)
 
 }
 
-
-void Scene::_updateNavigationMap()
+void Scene::updateGridDisplay(int xPos, int yPos, int operation, SDL_Color color)
 {
+
+	for (const auto& gameObject : m_gameObjects[GameLayer::GRID_DISPLAY]) {
+
+		int x = (int)gameObject->getOriginalTilePosition().x;
+		int y = (int)gameObject->getOriginalTilePosition().y;
+
+		if (x == xPos && y == yPos) {
+
+			if (operation == TURN_OFF) {
+				gameObject->disableRender();
+			}
+			else{
+				gameObject->setColor(color);
+				gameObject->enableRender();
+			}
+
+		}
+
+	}
+
+}
+
+bool Scene::_updateNavigationMap()
+{
+
+	bool aValueChanged{};
 
 	for (auto x = 0; x <  m_navigationMap.size(); ++x)
 	{
@@ -672,13 +697,12 @@ void Scene::_updateNavigationMap()
 
 				//Plain impassable
 				if (gameObject->hasTrait(TraitTag::impasse)) {
+					if (m_navigationMap[x][y].passable != false) {
+						aValueChanged = true;
+					}
 					m_navigationMap[x][y].passable = false;
 				}
 				else if (gameObject->hasTrait(TraitTag::conditional_impasse)) {
-
-					if (x == 67 && y == 28) {
-						int todd = 1;
-					}
 
 
 					//if we are at 0 angle then we need to set the next "widthInTiles" tiles horizontally to impassable
@@ -689,6 +713,11 @@ void Scene::_updateNavigationMap()
 							//set the next tiles to the right as no-impasse
 							for (auto i = 0; i < widthInTiles; i++) {
 								if ((x + i) < LevelManager::instance().m_width - 1) {
+
+									if (m_navigationMap[x][y].passable != true) {
+										aValueChanged = true;
+									}
+
 									m_navigationMap[x + i][y].passable = true;
 								}
 							}
@@ -698,6 +727,11 @@ void Scene::_updateNavigationMap()
 							//set the next tiles to the right as no-impasse
 							for (auto i = 0; i < widthInTiles; i++) {
 								if ((x + i) < LevelManager::instance().m_width - 1) {
+
+									if (m_navigationMap[x][y].passable != false) {
+										aValueChanged = true;
+									}
+
 									m_navigationMap[x + i][y].passable = false;
 								}
 							}
@@ -713,6 +747,11 @@ void Scene::_updateNavigationMap()
 							//set the next tiles to the right as no-impasse
 							for (auto i = 0; i < widthInTiles; i++) {
 								if ((y + i) < LevelManager::instance().m_height - 1) {
+
+									if (m_navigationMap[x][y].passable != true) {
+										aValueChanged = true;
+									}
+
 									m_navigationMap[x][y + i].passable = true;
 								}
 							}
@@ -722,6 +761,11 @@ void Scene::_updateNavigationMap()
 							//set the next tiles to the right as no-impasse
 							for (auto i = 0; i < widthInTiles; i++) {
 								if ((y + i) < LevelManager::instance().m_height - 1) {
+
+									if (m_navigationMap[x][y].passable != false) {
+										aValueChanged = true;
+									}
+
 									m_navigationMap[x][y + i].passable = false;
 								}
 							}
@@ -735,10 +779,6 @@ void Scene::_updateNavigationMap()
 				else if (gameObject->hasTrait(TraitTag::complex_impasse)) {
 
 
-					if (x == 67 && y == 28) {
-						int todd = 1;
-					}
-
 					//if we are at 0 angle then we need to set the next "widthInTiles" tiles to impassable
 					if ((int)navItem.gameObject->lock()->getAngleInDegrees() == 0) {
 
@@ -748,6 +788,11 @@ void Scene::_updateNavigationMap()
 							//Set the next "widthInTiles" tiles vertically to passable
 							for (auto i = 0; i < widthInTiles; i++) {
 								if ((x + i) < LevelManager::instance().m_width - 1) {
+
+									if (m_navigationMap[x][y].passable != true) {
+										aValueChanged = true;
+									}
+
 									m_navigationMap[x + i][y].passable = true;
 								}
 							}
@@ -757,6 +802,11 @@ void Scene::_updateNavigationMap()
 							//Set the next "widthInTiles" tiles vertically to impassable
 							for (auto i = 0; i < widthInTiles; i++) {
 								if ((x + i) < LevelManager::instance().m_width - 1) {
+
+									if (m_navigationMap[x][y].passable != false) {
+										aValueChanged = true;
+									}
+
 									m_navigationMap[x + i][y].passable = false;
 								}
 							}
@@ -772,6 +822,11 @@ void Scene::_updateNavigationMap()
 							//set the next tiles to the right as no-impasse
 							for (auto i = 0; i < widthInTiles; i++) {
 								if ((y + i) < LevelManager::instance().m_height - 1) {
+
+									if (m_navigationMap[x][y].passable != true) {
+										aValueChanged = true;
+									}
+
 									m_navigationMap[x][y + i].passable = true;
 								}
 							}
@@ -781,6 +836,11 @@ void Scene::_updateNavigationMap()
 							//set the next tiles to the right as no-impasse
 							for (auto i = 0; i < widthInTiles; i++) {
 								if ((y + i) < LevelManager::instance().m_height - 1) {
+
+									if (m_navigationMap[x][y].passable != false) {
+										aValueChanged = true;
+									}
+
 									m_navigationMap[x][y + i].passable = false;
 								}
 							}
@@ -793,6 +853,8 @@ void Scene::_updateNavigationMap()
 			}
 		}
 	}
+
+	return aValueChanged;
 
 }
 

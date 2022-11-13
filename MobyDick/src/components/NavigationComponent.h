@@ -7,7 +7,8 @@
 #include <memory>
 
 
-inline constexpr int NAV_DISTANCE_TOLERANCE = 64;
+inline constexpr int NAV_DISTANCE_TOLERANCE = 16;
+inline constexpr int NAV_STUCK_TOLERANCE = 4;
 
 struct AStarNode
 {
@@ -32,7 +33,7 @@ public:
 
 	void update() override;
 	void postInit() override;
-	bool navigateTo(float pixelX, float pixelY);
+	NavigationStatus navigateTo(float pixelX, float pixelY);
 	void navigateStop();
 
 
@@ -49,12 +50,19 @@ private:
 	void _moveTo(SDL_Point destinationTile);
 	void _applyAvoidanceMovement(b2Vec2& trajectory);
 	void _applyAvoidanceMovement2(b2Vec2& trajectory);
+	void _checkLocation(const int x, const int y);
+	bool _applyNavObjectSizeCheck(int x, int y, int objectCategory);
+	bool _isStuck();
 
 
 	Timer m_pathRefreshTimer{ 0.5, true };
+	
 	SDL_FPoint m_targetPixelDestination{};
 	SDL_Point m_targetTileDestination{};
 	int m_currentNavStep{};
+
+	Timer m_stuckTimer{};
+	SDL_FPoint m_previousLocation{};
 
 
 
