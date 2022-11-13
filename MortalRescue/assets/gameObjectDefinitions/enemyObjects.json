@@ -2,7 +2,7 @@
     "gameObjects": [
         {
             "type": "DRONE",
-            "traitTags": ["baddie"],
+            "traitTags": ["mobile"],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -102,7 +102,7 @@
                 {
                     "id": "BRAIN_DRONE_COMPONENT",
                     "sightSensorSize": 25,
-                    "detectObjectTraits": [ "player", "objective", "barrier", "baddie" ]
+                    "detectObjectTraits": [ "player", "objective", "barrier", "mobile" ]
                 },
                 {
                     "id": "VITALITY_COMPONENT",
@@ -235,7 +235,7 @@
         },
         {
             "type": "DRONE2",
-            "traitTags": ["baddie"],
+            "traitTags": [ "mobile" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
@@ -335,7 +335,7 @@
                 {
                     "id": "BRAIN_DRONE_COMPONENT",
                     "sightSensorSize": 25,
-                    "detectObjectTraits": [ "player", "objective", "barrier", "baddie" ]
+                    "detectObjectTraits": [ "objective", "barrier", "mobile" ]
                 },
                 {
                     "id": "VITALITY_COMPONENT",

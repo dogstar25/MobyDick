@@ -125,6 +125,11 @@ public:
 	void setDebugSetting(int setting);
 	bool isDebugSetting(int setting);
 	void resetGridDisplay();
+	void updateGridDisplay(int xPos, int yPos, int operation, SDL_Color color);
+
+	bool navigationMapChanged() {
+		return m_navigationMapChanged;
+	}
 
 private:
 
@@ -135,6 +140,7 @@ private:
 	int m_parentSceneIndex{};
 	bool m_hasPhysics{};
 	SDL_FPoint m_playerOrigSpawnPoint{};
+	bool m_navigationMapChanged{};
 
 	SceneState m_state{};
 	std::optional<std::shared_ptr<CutScene>> m_cutScene{};
@@ -162,7 +168,7 @@ private:
 	void _buildSceneGameObjects(Json::Value sceneJSON);
 	void _removeFromWorldPass();
 	void _showNavigationMap();
-	void _updateNavigationMap();
+	bool _updateNavigationMap();
 	
 
 };
