@@ -110,6 +110,7 @@ void DroneBrainComponent::_doPursue()
 
 void DroneBrainComponent::_doEngage()
 {
+	NavigationStatus navigationCode{};
 
 	auto navigationComponent = parent()->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
 
@@ -130,18 +131,27 @@ void DroneBrainComponent::_doEngage()
 		action->perform(eyeGameObject.get());
 	}
 
-	//ToDo: if we have lost navigation access to the target but can still shoot at it, then shoot 
+	//If we are pretty close to the player then stop but should keep shooting
 	// but dont try to navigate
 	auto playerDistance = util::calculateDistance(parent()->getCenterPosition(), m_focusPoint.value());
 	auto objectSize = parent()->getSize().x;
-	if (playerDistance > (objectSize * 2)) {
+	if (playerDistance > (objectSize * 3)) {
 
 		//Navigate towards target location, unless you are already there
-		navigationComponent->navigateTo(m_focusPoint.value().x, m_focusPoint.value().y);
+		navigationCode = navigationComponent->navigateTo(m_focusPoint.value().x, m_focusPoint.value().y);
+
+		//If we cant get to the player location then stop navigating
+		if (navigationCode == NavigationStatus::NO_PATH_FOUND) {
+
+			navigationComponent->navigateStop();
+		}
 
 	}
+	else {
 
-	navigationComponent->navigateTo(m_focusPoint.value().x, m_focusPoint.value().y);
+		navigationComponent->navigateStop();
+	}
+
 
 }
 

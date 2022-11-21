@@ -52,24 +52,18 @@
 
     ],
     "locationDefinedObjects": [
-        //{
-        //    "id": "LOC_0001_0001",
-        //    "gameObjectType": "GINA_64",
-        //    "name": "PlayerGina",
-        //    "cameraFollow": true
-        //},
         {
-            "id": "LOC_0006_0005",
-            "gameObjectType": "DRONE2",
-            "name": "DRONE1",
+            "id": "LOC_0005_0014",
+            "gameObjectType": "GINA_64",
+            "name": "PlayerGina",
             "cameraFollow": true
         },
         {
-            "id": "LOC_0023_0005",
+            "id": "LOC_0034_0014",
             "gameObjectType": "DRONE2",
-            "name": "DRONE2"
+            "name": "DRONE1",
+            "cameraFollow": false
         }
-
 
     ],
     "colorDefinedObjects": [
@@ -77,11 +71,6 @@
             "colorKey": "Colors::BLUE",
             "gameObjectType": "NAVIGATION_WAYPOINT",
             "layer": "GameLayer::ABSTRACT"
-        },
-        {
-            "colorKey": "Colors::CLOUD",
-            "gameObjectType": "IMPASSE",
-            "layer": "GameLayer::MAIN"
         }
     ]
 }

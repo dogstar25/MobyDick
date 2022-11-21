@@ -335,7 +335,7 @@
                 {
                     "id": "BRAIN_DRONE_COMPONENT",
                     "sightSensorSize": 25,
-                    "detectObjectTraits": [ "objective", "barrier", "mobile" ]
+                    "detectObjectTraits": [ "player","objective", "barrier", "mobile" ]
                 },
                 {
                     "id": "VITALITY_COMPONENT",
