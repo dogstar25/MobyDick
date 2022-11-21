@@ -20,6 +20,24 @@ NavigationComponent::NavigationComponent(Json::Value componentJSON)
 
 }
 
+void NavigationComponent::navigateStop()
+{
+
+	b2Vec2 trajectory{ 0,0 };
+	float angularVelocity{ 0. };
+
+	auto actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+
+	if (actionComponent->getAction(ACTION_MOVE)) {
+		const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
+		moveAction->perform(parent(), trajectory);
+	}
+
+	//if (actionComponent->getAction(ACTION_ROTATE)) {
+	//	const auto& moveAction = actionComponent->getAction(ACTION_ROTATE);
+	//	moveAction->perform(parent(), angularVelocity);
+	//}
+}
 
 NavigationStatus NavigationComponent::navigateTo(float pixelX, float pixelY)
 {
@@ -48,11 +66,8 @@ NavigationStatus NavigationComponent::navigateTo(float pixelX, float pixelY)
 
 	if (parent()->parentScene()->navigationMapChanged() == true || 
 		destinationChanged == true ||
-		m_solutionPath.empty() == true) {
-
-		if(parent()->parentScene()->navigationMapChanged()) {
-			int todd = 1;
-		}
+		m_solutionPath.empty() == true || 
+		m_pathRefreshTimer.hasMetTargetDuration()) {
 
 		m_solutionPath.clear();
 		m_currentNavStep = 0;
@@ -66,7 +81,15 @@ NavigationStatus NavigationComponent::navigateTo(float pixelX, float pixelY)
 		if (pathFound == false) {
 			return NavigationStatus::NO_PATH_FOUND;
 		}
+
+		m_pathRefreshTimer.reset();
 	}
+
+	ImGui::Value("DestinationX", m_targetPixelDestination.x);
+	ImGui::Value("DestinationY", m_targetPixelDestination.y);
+	ImGui::Value("FirstStepX", m_solutionPath[0].x);
+	ImGui::Value("FirstStepY", m_solutionPath[0].y);
+
 
 	//Have we reached the taregtDestination
 	if (util::calculateDistance(parent()->getCenterPosition(), m_targetPixelDestination) < NAV_DISTANCE_TOLERANCE) {
@@ -91,6 +114,10 @@ NavigationStatus NavigationComponent::navigateTo(float pixelX, float pixelY)
 		}
 
 	}
+
+	ImGui::Value("NavStep", m_currentNavStep);
+
+
 
 	//Execute Moves to get to targetDestination
 	_moveTo(m_solutionPath.at(m_currentNavStep));
@@ -132,7 +159,7 @@ bool NavigationComponent::_buildPathToDestination()
 
 	//test
 
-	parent()->parentScene()->resetGridDisplay();
+	//parent()->parentScene()->resetGridDisplay();
 
 
 	////
@@ -178,7 +205,7 @@ bool NavigationComponent::_buildPathToDestination()
 				if (pathNode->position.x == startingNode->position.x &&
 					pathNode->position.y == startingNode->position.y) {
 
-					m_solutionPath.insert(m_solutionPath.begin(), pathNode->position);
+					//m_solutionPath.insert(m_solutionPath.begin(), pathNode->position);
 					break;
 				}
 
@@ -189,7 +216,7 @@ bool NavigationComponent::_buildPathToDestination()
 
 				//test
 
-				parent()->parentScene()->updateGridDisplay(pathNode->position.x, pathNode->position.y, TURN_ON, Colors::GREEN);
+				//parent()->parentScene()->updateGridDisplay(pathNode->position.x, pathNode->position.y, TURN_ON, Colors::GREEN);
 
 				/////
 

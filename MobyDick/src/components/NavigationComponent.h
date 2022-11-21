@@ -7,7 +7,7 @@
 #include <memory>
 
 
-inline constexpr int NAV_DISTANCE_TOLERANCE = 16;
+inline constexpr int NAV_DISTANCE_TOLERANCE = 64;
 inline constexpr int NAV_STUCK_TOLERANCE = 4;
 
 struct AStarNode
