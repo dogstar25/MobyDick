@@ -44,7 +44,7 @@ void SoundManager::update()
 {
 
 	auto volume = game->contextMananger()->getSoundVolume();
-	Mix_Volume(-1, volume);
+	setVolume( volume);
 
 }
 
@@ -77,7 +77,7 @@ void SoundManager::loadSounds()
 	{
 
 		id = musicItr["id"].asString();
-		filename = "assets/sound/" + musicItr["filename"].asString();
+		filename = "assets/sound/music/" + musicItr["filename"].asString();
 		music = Mix_LoadMUS(filename.c_str());
 		m_sfxMusic.emplace(id, music);
 
@@ -89,6 +89,12 @@ void SoundManager::loadSounds()
 void SoundManager::stopSound(int channel)
 {
 	int channelPlayedOn = Mix_HaltChannel(channel);
+
+}
+
+void SoundManager::stopMusic()
+{
+	int channelPlayedOn = Mix_HaltMusic();;
 
 }
 
@@ -148,6 +154,16 @@ void SoundManager::allocateChannels()
 
 void SoundManager::setVolume(int volume)
 {
+
+	//Indifidual sound effects volume
 	Mix_Volume(-1, volume);
+
+	//music volume
+	Mix_VolumeMusic(volume);
+
+	//Total sound effects mix volumn - so things dont completely blast speakers when all sounds playing together
+	Mix_MasterVolume(int(volume - (volume * .20)));
+
+
 }
 

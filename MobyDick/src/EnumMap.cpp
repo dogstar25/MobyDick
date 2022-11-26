@@ -212,6 +212,10 @@ EnumMap::EnumMap()
 	m_enumMap["DebugSceneSettings::SHOW_PHYSICS_DEBUG"] = DebugSceneSettings::SHOW_PHYSICS_DEBUG;
 	m_enumMap["DebugSceneSettings::SHOW_NAVIGATION_DEBUG_MAP"] = DebugSceneSettings::SHOW_NAVIGATION_DEBUG_MAP;
 
+	//Scene Settings
+	m_enumMap["NavigationSizeCategory::SMALL"] = NavigationSizeCategory::SMALL;
+	m_enumMap["NavigationSizeCategory::MEDIUM"] = NavigationSizeCategory::MEDIUM;
+	m_enumMap["NavigationSizeCategory::LARGE"] = NavigationSizeCategory::LARGE;
 
 }
 

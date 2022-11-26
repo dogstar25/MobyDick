@@ -286,6 +286,9 @@
     <None Include="assets\sound\impact_metal_shell_001.ogg" />
     <None Include="assets\sound\impact_metal_shell_002.ogg" />
     <None Include="assets\sound\impact_metal_shell_003.ogg" />
+    <None Include="assets\sound\jetpack_operating1.ogg" />
+    <None Include="assets\sound\jetpack_start1.ogg" />
+    <None Include="assets\sound\jetpack_start2.ogg" />
     <None Include="assets\sound\pick_up_002.ogg" />
     <None Include="assets\sound\player_explode_1.ogg" />
     <None Include="assets\sound\pulse_charging_1.ogg" />
@@ -311,6 +314,12 @@
     <Media Include="assets\sound\impact_metal_shell_001.wav" />
     <Media Include="assets\sound\impact_metal_shell_002.wav" />
     <Media Include="assets\sound\impact_metal_shell_003.wav" />
+    <Media Include="assets\sound\music\ambience_deep_shining.wav" />
+    <Media Include="assets\sound\music\level_background_a.mp3" />
+    <Media Include="assets\sound\music\level_background_b.mp3" />
+    <Media Include="assets\sound\music\level_background_c.mp3" />
+    <Media Include="assets\sound\music\level_background_d.mp3" />
+    <Media Include="assets\sound\music\main_theme_a.mp3" />
     <Media Include="assets\sound\pick_up_001.wav" />
     <Media Include="assets\sound\pick_up_002.wav" />
     <Media Include="assets\sound\player_explode_1.wav" />

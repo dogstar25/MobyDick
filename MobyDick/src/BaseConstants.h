@@ -37,6 +37,12 @@ inline constexpr int CONTROL_MODE_SELECT = 0;
 inline constexpr int CONTROL_MODE_PLAY = 1;
 inline constexpr int CONTROL_MODE_IMGUI = 2;
 
+namespace NavigationSizeCategory {
+	inline constexpr int SMALL = 0;
+	inline constexpr int MEDIUM = 1;
+	inline constexpr int LARGE = 2;
+
+}
 
 namespace DISABLED_TYPE {
 	inline constexpr int RENDER = 0;

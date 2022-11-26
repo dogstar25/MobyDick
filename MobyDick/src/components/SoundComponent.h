@@ -40,7 +40,8 @@ public:
 	void render();
 	void postInit() override;
 
-	SoundItem& getSound(std::string soundId);
+	std::optional<SoundItem> getSound(std::string soundId);
+	void addSound(std::string id, std::string soundAssetId, bool isDistanceSensitive=false, bool isContinuous=false, int soundRange=0);
 	int playSound(std::string soundId);
 	void stopSounds();
 	void stopSound(int channel);

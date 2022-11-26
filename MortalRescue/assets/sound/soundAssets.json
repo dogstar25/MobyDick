@@ -147,12 +147,47 @@
         }
 
     ],
-  "music": [
-    {
-      "id": "MUSIC_AMBIENCE_1",
-      "description": "Ambience Music 1",
-      "filename": "ambience_deep_shining.wav"
-    }
-  ]
+    "music": [
+        {
+            "id": "MUSIC_AMBIENCE_1",
+            "description": "Ambience Music 1",
+            "filename": "ambience_deep_shining.wav"
+        },
+        {
+            "id": "MUSIC_MAIN_THEME_A",
+            "description": "Music",
+            "filename": "main_theme_a.mp3"
+        },
+        {
+            "id": "MUSIC_LEVEL_BG_A",
+            "description": "Music",
+            "filename": "level_background_a.mp3"
+        },
+        {
+            "id": "MUSIC_LEVEL_BG_B",
+            "description": "Music",
+            "filename": "level_background_b.mp3"
+        },
+        {
+            "id": "MUSIC_LEVEL_BG_C",
+            "description": "Music",
+            "filename": "level_background_c.mp3"
+        },
+        {
+            "id": "MUSIC_LEVEL_BG_D",
+            "description": "Music",
+            "filename": "level_background_d.mp3"
+        },
+        {
+            "id": "MUSIC_LEVEL_BG_E",
+            "description": "Music",
+            "filename": "level_background_e.mp3"
+        },
+        {
+            "id": "MUSIC_LEVEL_BG_F",
+            "description": "Music",
+            "filename": "level_background_f.mp3"
+        }
+    ]
 
 }

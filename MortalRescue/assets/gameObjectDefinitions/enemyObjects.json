@@ -110,7 +110,8 @@
                     "rotationSpeed": 20
                 },
                 {
-                    "id": "NAVIGATION_COMPONENT"
+                    "id": "NAVIGATION_COMPONENT",
+                    "passageFitSizeCategory": "NavigationSizeCategory::LARGE"
                 }
             ]
         },
@@ -343,7 +344,8 @@
                     "rotationSpeed": 20
                 },
                 {
-                    "id": "NAVIGATION_COMPONENT"
+                    "id": "NAVIGATION_COMPONENT",
+                    "passageFitSizeCategory": "NavigationSizeCategory::MEDIUM"
                 },
                 {
                     "id": "SOUND_COMPONENT",

@@ -61,7 +61,8 @@ namespace util
 	bool fileExists(const std::string& filename);
 	void colorApplyAlpha(SDL_Color& color, int alpha);
 	void colorApplyAlpha(ImVec4& color, int alpha);
-	SDL_FPoint tileToPixelLocation(float tileX, float tileY, float objectWidth, float objectHeight);
+	SDL_FPoint tileToPixelLocation(float tileX, float tileY);
+	SDL_FPoint tileToPixelPlacementLocation(float tileX, float tileY, float objectWidth, float objectHeight);
 	SDL_Point pixelToTileLocation(float pixelX, float pixelY);
 	std::string locationToString(float x, float y);
 

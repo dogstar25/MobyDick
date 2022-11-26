@@ -3,6 +3,7 @@
     "blueprint": "TX_LEVEL1_BLUEPRINT",
     "description": "TX_LEVEL_1",
     "wallColor": "Colors::PARAKEET",
+    "backgroundMusic": "MUSIC_LEVEL_BG_A",
     "dimensions": {
         "levelWidth": 60,
         "levelHeight": 33,

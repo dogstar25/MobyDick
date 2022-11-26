@@ -73,6 +73,9 @@ bool MRGame::init(std::shared_ptr<ContactListener> contactListener, std::shared_
 
 	_displayLoadingMsg();
 
+	//Initialize the sound manager
+	SoundManager::instance().initSound();
+
 	//Load a first scene
 	Scene& scene = SceneManager::instance().pushScene("SCENE_TITLE_SCREEN");
 	//Scene& scene = SceneManager::instance().pushScene("SCENE_TEST");
@@ -84,8 +87,6 @@ bool MRGame::init(std::shared_ptr<ContactListener> contactListener, std::shared_
 	//level << gameSaveFileData.level;
 	//scene.loadLevel(level.str());
 
-	//Initialize the sound manager
-	SoundManager::instance().initSound();
 	//SoundManager::instance().playMusic("music_ambience_1", -1);
 
 	//Initialize the clock object

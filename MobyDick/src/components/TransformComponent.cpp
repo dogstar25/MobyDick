@@ -17,7 +17,7 @@ TransformComponent::TransformComponent(Json::Value componentJSON, float xMapPos,
 		auto objectHeight = componentJSON["size"]["height"].asFloat();
 
 		m_originalTilePosition = { xMapPos , yMapPos };
-		setPosition(util::tileToPixelLocation(xMapPos, yMapPos, objectWidth, objectHeight)	);
+		setPosition(util::tileToPixelPlacementLocation(xMapPos, yMapPos, objectWidth, objectHeight)	);
 
 		m_originalPosition = m_position;
 		m_size.Set(componentJSON["size"]["width"].asFloat(), componentJSON["size"]["height"].asFloat());

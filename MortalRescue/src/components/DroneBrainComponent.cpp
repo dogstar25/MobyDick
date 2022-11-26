@@ -86,7 +86,7 @@ void DroneBrainComponent::_doPatrol()
 	}
 	else if (navigationCode == NavigationStatus::NO_PATH_FOUND) {
 		m_focusPoint = _getNextPatrolDestination();
-		std::cout << "No path was found for navigation!" << std::endl;
+		std::cout << "Drone! No path was found for navigation!" << std::endl;
 	}
 	else if (navigationCode == NavigationStatus::STUCK) {
 

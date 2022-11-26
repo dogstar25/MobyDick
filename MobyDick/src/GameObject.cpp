@@ -716,6 +716,24 @@ void GameObject::setCompositePieceLevelCap(int levelCap)
 
 }
 
+void GameObject::setOperatingSound(std::string soundAssetId)
+{
+
+	const auto& soundComponent = getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+	std::optional<SoundItem> sound{};
+
+	sound = soundComponent->getSound("OPERATING_SOUND");
+	if (sound.has_value()) {
+
+		sound->soundAssetId = soundAssetId;
+	}
+	else {
+
+		soundComponent->addSound("OPERATING_SOUND", soundAssetId, false, true);
+	}
+
+}
+
 void GameObject::_updateTouchingObjects()
 {
 

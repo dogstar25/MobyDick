@@ -7,8 +7,8 @@
 #include <memory>
 
 
-inline constexpr int NAV_DISTANCE_TOLERANCE = 64;
-inline constexpr int NAV_STUCK_TOLERANCE = 4;
+//inline constexpr int NAV_DISTANCE_TOLERANCE = 42;
+inline constexpr int NAV_STUCK_TOLERANCE = 16;
 
 struct AStarNode
 {
@@ -61,8 +61,11 @@ private:
 	SDL_Point m_targetTileDestination{};
 	int m_currentNavStep{};
 
-	Timer m_stuckTimer{};
+	Timer m_stuckTimer{2, true};
 	SDL_FPoint m_previousLocation{};
+	int m_passageFitSizeCategory{};
+	float m_navigationDestinationTolerance{};
+	float m_navigationStuckTolerance{};
 
 
 
