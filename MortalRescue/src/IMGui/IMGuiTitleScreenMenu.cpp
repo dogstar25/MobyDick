@@ -37,6 +37,7 @@ glm::vec2 IMGuiTitleScreenMenu::render()
 	ImGui::Begin(m_gameObjectType.c_str(), nullptr, m_flags);
 	{
 
+		ImGui::PushStyleColor(ImGuiCol_Text, m_textColor);
 		ImGui::PushStyleColor(ImGuiCol_Button, m_buttonColor);
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, m_buttonHoverColor);
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, m_buttonActiveColor);
@@ -96,6 +97,7 @@ glm::vec2 IMGuiTitleScreenMenu::render()
 		ImGui::PopStyleColor();
 		ImGui::PopStyleColor();
 		ImGui::PopStyleColor();
+		ImGui::PopStyleColor();
 
 
 		windowSize = { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
@@ -120,7 +122,8 @@ void IMGuiTitleScreenMenu::settingsModal()
 	ImGui::SetWindowSize(m_settingsModalSize);
 
 	//Button Style
-	ImGui::PushStyleColor(ImGuiCol_Button, m_buttonColor);
+	ImGui::PushStyleColor(ImGuiCol_Text, util::SDLColorToImVec4(Colors::WHITE));
+	ImGui::PushStyleColor(ImGuiCol_Button, util::SDLColorToImVec4(Colors::BLUE));
 	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, m_buttonHoverColor);
 	ImGui::PushStyleColor(ImGuiCol_ButtonActive, m_buttonActiveColor);
 
@@ -161,6 +164,7 @@ void IMGuiTitleScreenMenu::settingsModal()
 	ImGui::EndGroup();
 
 
+	ImGui::PopStyleColor();
 	ImGui::PopStyleColor();
 	ImGui::PopStyleColor();
 	ImGui::PopStyleColor();

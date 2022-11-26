@@ -155,6 +155,25 @@ namespace ParticleEffects {
 		.particleSpawnCountMax = 50
 	};
 
+	static const ParticleEffect meteor2 = {
+		.poolId = "SMOKE1_POOL",
+		.originMin = {0,0},
+		.originMax = {2000,0},
+		.forceMin = 25,
+		.forceMax = 30,
+		.lifetimeMin = 5.2F,
+		.lifetimeMax = 10.0F,
+		.alphaFade = true,
+		.angleMin = 90,
+		.angleMax = 90,
+		.particleSizeMin = 10.0F,
+		.particleSizeMax = 10.0F,
+		.colorRangeBegin = {0,255,255,100},
+		.colorRangeEnd = {0,255,255,255},
+		.particleSpawnCountMin = 0,
+		.particleSpawnCountMax = 4
+	};
+
 	static const ParticleEffect explosionSmoke = {
 		.poolId = "SMOKE1_POOL",
 		.originMin = {0,0},

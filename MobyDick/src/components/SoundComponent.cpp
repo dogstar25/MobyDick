@@ -36,6 +36,33 @@ SoundComponent::~SoundComponent()
 	m_sounds.clear();
 
 }
+std::optional<SoundItem> SoundComponent::getSound(std::string soundId)
+{
+	std::optional<SoundItem> foundSound{};
+
+	if (m_sounds.find(soundId) != m_sounds.end()) {
+
+		foundSound = m_sounds[soundId];
+
+	}
+
+	return foundSound;
+}
+
+void SoundComponent::addSound(std::string id, std::string soundAssetId, bool isDistanceSensitive, bool isContinuous, int soundRange)
+{
+
+	SoundItem soundItem{};
+	soundItem.id = id;
+	soundItem.soundAssetId = soundAssetId;
+	soundItem.isDistanceSensitive = isDistanceSensitive;
+	soundItem.isContinuous = isContinuous;
+	soundItem.soundRange = soundRange;
+
+	m_sounds.emplace(soundItem.id, soundItem);
+
+
+}
 
 void SoundComponent::update()
 {

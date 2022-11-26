@@ -25,6 +25,7 @@ namespace Colors {
 	//grey / dark
 	inline SDL_Color CHARCOAL = { 25, 25, 25, 255 };
 	inline SDL_Color MIRKWOOD = { 39, 52, 39, 255 };
+	inline SDL_Color SLATE = { 11, 14, 51, 255 };
 
 }
 

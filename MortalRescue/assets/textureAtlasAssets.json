@@ -700,6 +700,17 @@
             }
         },
         {
+            "id": "TX_TITLE_SCREEN_IMAGE2",
+            "description": "Background 2",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 887,
+                "y": 2320,
+                "width": 800,
+                "height": 800
+            }
+        },
+        {
             "id": "TX_DIAMOND_32",
             "description": "A Diamond shape",
             "atlas": "TEXTURE_ATLAS_0",

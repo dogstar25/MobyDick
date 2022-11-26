@@ -388,6 +388,28 @@
             ]
         },
         {
+            "type": "METEOR_EMITTER_2",
+            "traitTags": [ "abstract" ],
+            "description": "Rain Emitter",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "PARTICLE_COMPONENT",
+                    "type": "ParticleEmitterType::CONTINUOUS",
+                    "emissionInterval": 0.5,
+                    "maxParticles": 2000,
+                    "effects": [
+                        "meteor2"
+                    ]
+                }
+            ]
+        },
+        {
             "type": "NAVIGATION_WAYPOINT",
             "traitTags": [ "waypoint", "abstract" ],
             "description": "Navigation Object",
@@ -519,6 +541,10 @@
                         }
 
                     ]
+                },
+                {
+                    "id": "NAVIGATION_COMPONENT",
+                    "passageFitSizeCategory": "NavigationSizeCategory::SMALL"
                 }
             ]
         },
@@ -761,6 +787,24 @@
             "components": [
                 {
                     "id": "RENDER_COMPONENT"
+                }
+            ]
+        },
+        {
+            "type": "LEVEL_MUSIC_PLAYER",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "OPERATING_SOUND",
+                            "continuous": true
+                        }
+                    ]
                 }
             ]
         },

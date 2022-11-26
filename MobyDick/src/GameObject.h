@@ -74,6 +74,7 @@ public:
 	void setWeaponForce(float force);
 	void setWeaponColor(SDL_Color color);
 	void setCompositePieceLevelCap(int levelCap);
+	void setOperatingSound(std::string soundAssetId);
 
 	b2Vec2 getSize();
 	float getAngle();

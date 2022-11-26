@@ -2,6 +2,7 @@
     "id": "LEVEL_2",
     "blueprint": "TX_LEVEL2_BLUEPRINT",
     "description": "TX_LEVEL_2",
+    "backgroundMusic": "MUSIC_LEVEL_BG_B",
     "wallColor": "Colors::PARAKEET",
     "dimensions": {
         "levelWidth": 120,
@@ -139,34 +140,6 @@
             "compositePieceLevelCap": 1,
             "cameraFollow": false
         },
-        //{
-        //    "id": "LOC_0053_0027",
-        //    "gameObjectType": "DRONE2",
-        //    "name": "EnemyC",
-        //    "compositePieceLevelCap": 1,
-        //    "cameraFollow": false
-        //},
-        //{
-        //    "id": "LOC_0054_0027",
-        //    "gameObjectType": "DRONE2",
-        //    "name": "EnemyD",
-        //    "compositePieceLevelCap": 1,
-        //    "cameraFollow": false
-        //},
-        //{
-        //    "id": "LOC_0055_0027",
-        //    "gameObjectType": "DRONE2",
-        //    "name": "EnemyE",
-        //    "compositePieceLevelCap": 1,
-        //    "cameraFollow": false
-        //},
-        //{
-        //    "id": "LOC_0056_0027",
-        //    "gameObjectType": "DRONE2",
-        //    "name": "EnemyF",
-        //    "compositePieceLevelCap": 1,
-        //    "cameraFollow": false
-        //},
         {
             "id": "LOC_0088_0013",
             "gameObjectType": "HEALTH_STATION_96"

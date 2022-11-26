@@ -161,13 +161,29 @@ namespace util
 		color.w = ((float)alpha/255);
 	}
 
-	SDL_FPoint tileToPixelLocation(float tileX, float tileY, float objectWidth, float objectHeight)
+	// To be used when placing an object on a specific tile
+	//This takes the objects size into consideration so that , for example
+	//A 128 pixel object doesnt get placed with its body crossing into other possible wall tiles
+	SDL_FPoint tileToPixelPlacementLocation(float tileX, float tileY, float objectWidth, float objectHeight)
 	{
 		SDL_FPoint position{};
 
 		position = { 
 			(tileX * game->worldTileSize().x) + objectWidth / 2, 
 			(tileY * game->worldTileSize().y) + objectHeight / 2	
+		};
+
+		return position;
+	}
+
+	//To be used for STRICTLY calculating the center of a given tile location
+	SDL_FPoint tileToPixelLocation(float tileX, float tileY)
+	{
+		SDL_FPoint position{};
+
+		position = {
+			(tileX * game->worldTileSize().x) + (game->worldTileSize().x / 2),
+			(tileY * game->worldTileSize().y) + (game->worldTileSize().y / 2)
 		};
 
 		return position;

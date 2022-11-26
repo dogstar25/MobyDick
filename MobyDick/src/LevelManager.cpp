@@ -7,6 +7,7 @@
 #include "ColorMap.h"
 #include <assert.h>
 #include "BaseConstants.h"
+#include "SoundManager.h"
 
 
 extern std::unique_ptr<Game> game;
@@ -93,6 +94,11 @@ void LevelManager::_loadDefinition(std::string levelId)
 
 	if (root.isMember("wallColor")) {
 		m_wallColor = game->colorMap()->toSDLColor(root["wallColor"].asString());
+	}
+
+	//Background Music
+	if (root.isMember("backgroundMusic")) {
+		m_backgroundMusicAssetId = root["backgroundMusic"].asString();
 	}
 
 	//Dimensions
@@ -182,10 +188,6 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 	//Load the Level definition
 	_loadDefinition(levelId);
 
-	//Save this level to the save file
-	//std::shared_ptr<GameSaveFileData> saveFileData{};
-	//game->contextMananger()->load
-
 	//I am representing the level grid as a png image file 
 	surface = TextureManager::instance().getTexture(m_blueprintTexture)->surface;
 
@@ -254,6 +256,9 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 	//Build Level Cage
 	_buildLevelCage(scene);
 
+	//Build background music object
+	_startBackgroundMusic();
+
 	//Clear the level objects collection now that all gameObjects are built
 	_clear();
 
@@ -280,6 +285,19 @@ void LevelManager::_buildDebugGridObjects(Scene* scene)
 
 		}
 	}
+
+}
+
+void LevelManager::_startBackgroundMusic()
+{
+
+	//If there is background music specified then play it
+	if (m_backgroundMusicAssetId.has_value()) {
+
+		SoundManager::instance().playMusic(m_backgroundMusicAssetId.value(), -1);
+	}
+
+
 
 }
 

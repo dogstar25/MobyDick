@@ -7,13 +7,17 @@
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "textureId": "TX_TITLE_SCREEN_IMAGE1"
+                    "textureId": "TX_TITLE_SCREEN_IMAGE2",
+                    "color": {
+                        "tint": "Colors::WHITE",
+                        "alpha": 175
+                    }
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 512,
-                        "height": 662
+                        "width": 800,
+                        "height": 800
                     },
                     "absolutePositioning": true
                 }
@@ -41,8 +45,8 @@
                     "color": {
                         "background": "Colors::CHARCOAL",
                         "backgroundAlpha": 175,
-                        "text": "Colors::WHITE",
-                        "button": "Colors::BLUE",
+                        "text": "Colors::SLATE",
+                        "button": "Colors::CYAN",
                         "buttonHover": "Colors::MIRKWOOD",
                         "buttonActive": "Colors::YELLOW"
                     },

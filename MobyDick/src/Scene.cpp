@@ -71,6 +71,14 @@ Scene::Scene(std::string sceneId)
 		m_physicsWorld->SetDebugDraw(&DebugDraw::instance());
 	}
 
+	//If there is background music specified then play it
+	if (definitionJSON.isMember("backgroundMusicId")) {
+
+		std::string backGroundMusicId = definitionJSON["backgroundMusicId"].asString();
+		SoundManager::instance().playMusic(backGroundMusicId, -1);
+	}
+		
+
 }
 
 Scene::~Scene()
@@ -103,6 +111,9 @@ void Scene::loadLevel(std::string levelId)
 {
 
 	m_currentLevelId = levelId;
+
+	//Stop music from previous level
+	SoundManager::instance().stopMusic();
 
 	game->_displayLoadingMsg();
 
@@ -471,6 +482,8 @@ void _updatePhysics(b2World* physicsWorld)
 
 void Scene::_buildSceneGameObjects(Json::Value definitionJSON)
 {
+	GameObject* gameObject{};
+
 	for (Json::Value gameObjectJSON : definitionJSON["gameObjects"]) {
 
 		std::string gameObjectType = gameObjectJSON["gameObjectType"].asString();
@@ -487,18 +500,20 @@ void Scene::_buildSceneGameObjects(Json::Value definitionJSON)
 			if (locationJSON.isMember("adjust")) {
 				auto adjustX = locationJSON["adjust"]["x"].asFloat();
 				auto adjustY = locationJSON["adjust"]["y"].asFloat();
-				addGameObject(gameObjectType, layer, windowPosition, adjustX, adjustY);
+				gameObject = addGameObject(gameObjectType, layer, windowPosition, adjustX, adjustY);
 			}
 			else {
-				addGameObject(gameObjectType, layer, windowPosition);
+				gameObject = addGameObject(gameObjectType, layer, windowPosition);
 			}
 			
 		}
 		else {
 			auto locationX = gameObjectJSON["location"]["x"].asFloat();
 			auto locationY = gameObjectJSON["location"]["y"].asFloat();
-			addGameObject(gameObjectType, layer, locationX, locationY, 0);
+			gameObject = addGameObject(gameObjectType, layer, locationX, locationY, 0);
 		}
+
+		gameObject->postInit();
 	}
 }
 

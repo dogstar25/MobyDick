@@ -50,6 +50,10 @@ ParticleEffect MRParticleEffectsFactory::create(std::string particleType)
 
 		particleEffect = ParticleEffects::meteor;
 	}
+    else if (particleType == "meteor2") {
+
+        particleEffect = ParticleEffects::meteor2;
+    }
     else if (particleType == "radiation") {
 
         particleEffect = ParticleEffects::radiation;

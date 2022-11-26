@@ -1,6 +1,7 @@
 {
     "id": "LEVEL_3",
     "blueprint": "TX_LEVEL3_BLUEPRINT",
+    "backgroundMusic": "MUSIC_LEVEL_BG_C",
     "description": "TX_LEVEL_3",
     "wallColor": "Colors::PARAKEET",
     "dimensions": {

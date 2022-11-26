@@ -59,8 +59,8 @@
             "cameraFollow": true
         },
         {
-            "id": "LOC_0034_0014",
-            "gameObjectType": "DRONE2",
+            "id": "LOC_0007_0014",
+            "gameObjectType": "SURVIVOR",
             "name": "DRONE1",
             "cameraFollow": false
         }
@@ -71,6 +71,12 @@
             "colorKey": "Colors::BLUE",
             "gameObjectType": "NAVIGATION_WAYPOINT",
             "layer": "GameLayer::ABSTRACT"
+        },
+        {
+            "colorKey": "Colors::CLOUD",
+            "gameObjectType": "IMPASSE",
+            "layer": "GameLayer::MAIN"
         }
+
     ]
 }

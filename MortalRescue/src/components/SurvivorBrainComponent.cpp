@@ -63,7 +63,7 @@ int SurvivorBrainComponent::_determineState()
 
 	int state{ m_currentState };
 
-	//regarless of current state, If we can see an escape location then set that as the destination and go
+	//regardless of current state, If we can see an escape location then set that as the destination and go
 	if (_detectEscapeLocation()) {
 		state = BrainState::ESCAPE;
 	}
@@ -124,12 +124,19 @@ void SurvivorBrainComponent::_doEscape()
 
 void SurvivorBrainComponent::_doLost()
 {
+	//I'm lost and I cant see the object that Im following, but I have a reference to the object
+	//it self so use my navigationComponent to find it
 	if (m_gameObjectToFollow.expired() == false) {
 
 		//get the navigation component and use it to go somewhre
+		const auto& navigationComponent = parent()->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
 
+		SDL_FPoint objectLocation = m_gameObjectToFollow.lock()->getCenterPosition();
+		auto navStatus = navigationComponent->navigateTo(objectLocation.x, objectLocation.y);
 
-
+		if (navStatus == NavigationStatus::NO_PATH_FOUND) {
+			std::cout << "Survivor! No path was found for navigation!" << std::endl;
+		}
 
 	}
 

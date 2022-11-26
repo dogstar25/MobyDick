@@ -26,5 +26,6 @@ MRColorMap::MRColorMap()
 	//Dark
 	addColor("Colors::CHARCOAL", Colors::CHARCOAL);
 	addColor("Colors::MIRKWOOD", Colors::MIRKWOOD);
+	addColor("Colors::SLATE", Colors::SLATE);
 
 }

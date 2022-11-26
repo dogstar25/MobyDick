@@ -329,7 +329,7 @@ void SceneManager::respawnPlayer()
 	SDL_FPoint spawnLocation{};
 	if (highestCheckpoint.has_value()) {
 
-		spawnLocation = util::tileToPixelLocation(
+		spawnLocation = util::tileToPixelPlacementLocation(
 			highestCheckpoint->get()->playerSpawnLocation().x,
 			highestCheckpoint->get()->playerSpawnLocation().y,
 			player->getSize().x,

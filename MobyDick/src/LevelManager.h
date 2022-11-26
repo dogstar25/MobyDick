@@ -84,6 +84,7 @@ private:
 	Json::Value m_colorDefinedList{};
 	Json::Value m_locationDefinedList{};
 	Json::Value m_levelDefinition{};
+	std::optional<std::string> m_backgroundMusicAssetId{};
 
 	std::vector< std::vector <LevelObject>> m_levelObjects{};
 	std::vector<std::string> m_levels{};
@@ -103,6 +104,7 @@ private:
 	void _buildLevelCage(Scene* scene);
 	void _buildNavigationMapItem(GameObject* gameObject, Scene* scene);
 	void _buildDebugGridObjects(Scene* scene);
+	void _startBackgroundMusic();
 	bool _isColorDefinedObject(SDL_Color color);
 	void _clear();
 };

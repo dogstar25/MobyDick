@@ -16,7 +16,14 @@ NavigationComponent::NavigationComponent(Json::Value componentJSON)
 {
 	m_componentType = ComponentTypes::NAVIGATION_COMPONENT;
 
+	m_passageFitSizeCategory = game->enumMap()->toEnum(componentJSON["passageFitSizeCategory"].asString());
+
 	m_pathRefreshTimer = { 0.5, true };
+
+	//Based on the size of the object, calculate the destination met tolerance
+	auto tileSize = game->worldTileSize().x;
+	m_navigationDestinationTolerance = (m_passageFitSizeCategory + 1) * tileSize / 2;
+	m_navigationStuckTolerance = (m_passageFitSizeCategory + 1) * tileSize / 16;
 
 }
 
@@ -55,8 +62,8 @@ NavigationStatus NavigationComponent::navigateTo(float pixelX, float pixelY)
 
 	//If we have been stuck in the same spot for a few seconds then
 	//return stuck status and let the brain decide what to do
+	//bool isStuck = _isStuck();
 	if (_isStuck()) {
-
 		return NavigationStatus::STUCK;
 	}
 
@@ -85,14 +92,8 @@ NavigationStatus NavigationComponent::navigateTo(float pixelX, float pixelY)
 		m_pathRefreshTimer.reset();
 	}
 
-	ImGui::Value("DestinationX", m_targetPixelDestination.x);
-	ImGui::Value("DestinationY", m_targetPixelDestination.y);
-	ImGui::Value("FirstStepX", m_solutionPath[0].x);
-	ImGui::Value("FirstStepY", m_solutionPath[0].y);
-
-
 	//Have we reached the taregtDestination
-	if (util::calculateDistance(parent()->getCenterPosition(), m_targetPixelDestination) < NAV_DISTANCE_TOLERANCE) {
+	if (util::calculateDistance(parent()->getCenterPosition(), m_targetPixelDestination) < m_navigationDestinationTolerance) {
 	
 		m_solutionPath.clear();
 		return NavigationStatus::DESTINATION_REACHED;
@@ -102,22 +103,18 @@ NavigationStatus NavigationComponent::navigateTo(float pixelX, float pixelY)
 	const auto objectSize = parent()->getSize();
 	SDL_Point interimNavStepTileLocation = m_solutionPath.at(m_currentNavStep);
 	SDL_FPoint interimNavStepPixelLocation = util::tileToPixelLocation(
-		interimNavStepTileLocation.x, interimNavStepTileLocation.y, objectSize.x, objectSize.y);
+		interimNavStepTileLocation.x, interimNavStepTileLocation.y);
 
 	//Distance between our master oobject and the destination
 	float targetDistance = util::calculateDistance(parent()->getCenterPosition(), interimNavStepPixelLocation);
 
-	if (targetDistance < NAV_DISTANCE_TOLERANCE) {
+	if (targetDistance < m_navigationDestinationTolerance) {
 
 		if ((m_currentNavStep+1) < m_solutionPath.size()) {
 			m_currentNavStep++;
 		}
 
 	}
-
-	ImGui::Value("NavStep", m_currentNavStep);
-
-
 
 	//Execute Moves to get to targetDestination
 	_moveTo(m_solutionPath.at(m_currentNavStep));
@@ -159,7 +156,7 @@ bool NavigationComponent::_buildPathToDestination()
 
 	//test
 
-	//parent()->parentScene()->resetGridDisplay();
+	parent()->parentScene()->resetGridDisplay();
 
 
 	////
@@ -272,7 +269,7 @@ bool NavigationComponent::_isStuck()
 
 	//Get current location
 	float distanceTraveled = util::calculateDistance(parent()->getCenterPosition(), m_previousLocation);
-	if (distanceTraveled < NAV_STUCK_TOLERANCE) {
+	if (distanceTraveled < m_navigationStuckTolerance) {
 
 		if (m_stuckTimer.isSet() == false) {
 			m_stuckTimer = { 2 };
@@ -400,24 +397,6 @@ bool NavigationComponent::_isValidNode(const int x, const int y)
 	int xMax = navMap.size();
 	int yMax = navMap[0].size();
 	bool passable{true};
-	int objectCategory{};
-
-	const int OBJECT_SMALL = 0;
-	const int OBJECT_MEDIUM = 1;
-	const int OBJECT_LARGE = 2;
-
-	//Determine navigating objects size category
-	auto factor = int(parent()->getSize().x / game->worldTileSize().x);
-	
-	if (factor < 2) {
-		objectCategory = OBJECT_SMALL;
-	}
-	else if (factor < 3) {
-		objectCategory = OBJECT_MEDIUM;
-	}
-	else {
-		objectCategory = OBJECT_LARGE;
-	}
 
 	//Check map boundaries - small navigating object
 	if (x >= 0 && x < xMax && y > 0 && y < yMax) {
@@ -431,15 +410,15 @@ bool NavigationComponent::_isValidNode(const int x, const int y)
 		// If this tile was passable and this is a medium size navigating object
 		// then also check each tile around this one
 
-		if (objectCategory > OBJECT_SMALL && passable == true) {
+		if (m_passageFitSizeCategory > NavigationSizeCategory::SMALL && passable == true) {
 
 			//first check medium
-			if (objectCategory == OBJECT_MEDIUM || objectCategory == OBJECT_LARGE) {
-				passable = _applyNavObjectSizeCheck(x, y, OBJECT_MEDIUM);
+			if (m_passageFitSizeCategory == NavigationSizeCategory::MEDIUM || m_passageFitSizeCategory == NavigationSizeCategory::LARGE) {
+				passable = _applyNavObjectSizeCheck(x, y, m_passageFitSizeCategory);
 			}
 			//If we're still passable and we're a large object then check for large
-			if (objectCategory == OBJECT_LARGE && passable) {
-				passable = _applyNavObjectSizeCheck(x, y, OBJECT_LARGE);
+			if (m_passageFitSizeCategory == NavigationSizeCategory::LARGE && passable) {
+				passable = _applyNavObjectSizeCheck(x, y, m_passageFitSizeCategory);
 			}
 
 		}
@@ -533,11 +512,25 @@ void NavigationComponent::_moveTo(SDL_Point destinationTile)
 	//Need the objects size to calc the right pixel position
 	const auto objectSize = parent()->getSize();
 
-	SDL_FPoint destinationPixelLoc = util::tileToPixelLocation(destinationTile.x, destinationTile.y, objectSize.x, objectSize.y);
+	SDL_FPoint destinationPixelLoc = util::tileToPixelLocation(destinationTile.x, destinationTile.y);
 
 	b2Vec2 trajectory{};
 	trajectory.x = destinationPixelLoc.x - parent()->getCenterPosition().x;
 	trajectory.y = destinationPixelLoc.y - parent()->getCenterPosition().y;
+
+
+
+
+
+	/// debug line
+	float x = parent()->getCenterPosition().x;
+	float y = parent()->getCenterPosition().y;
+
+	glm::vec2 startPoint = { x, y};
+	glm::vec2 endPoint = { destinationPixelLoc.x, destinationPixelLoc.y };
+	glm::uvec4 color = { 255,255,255,255 };
+	game->renderer()->addLine(startPoint, endPoint, color);
+	///
 
 	trajectory.Normalize();
 
@@ -549,6 +542,8 @@ void NavigationComponent::_moveTo(SDL_Point destinationTile)
 	_applyAvoidanceMovement(trajectory);
 
 	moveAction->perform(parent(), trajectory);
+
+
 
 	//Set the angle to point towards the next nav point using the trajectory we calculated above
 	//_rotateTowards(trajectory, parent());
