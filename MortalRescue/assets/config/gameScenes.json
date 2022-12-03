@@ -183,14 +183,14 @@
                     "maxItems": 500
                 },
                 {
-                    "id": "BULLET1_POOL",
-                    "gameObjectType": "BULLET1",
+                    "id": "PLAYER_BULLET_POOL",
+                    "gameObjectType": "PLAYER_BULLET",
                     "lifetime": 1.25,
                     "maxItems": 50
                 },
                 {
-                    "id": "BULLET2_POOL",
-                    "gameObjectType": "BULLET2",
+                    "id": "ENEMY_BULLET_POOL",
+                    "gameObjectType": "ENEMY_BULLET",
                     "lifetime": 1.25,
                     "maxItems": 50
                 },
@@ -365,6 +365,39 @@
                             "y": 0
                         }
                     }
+                },
+                {
+                    "gameObjectType": "IMGUI_HUD_TOP_CENTER",
+                    "layer": "GameLayer::GUI",
+                    "location": {
+                        "windowPosition": "PositionAlignment::TOP_CENTER",
+                        "adjust": {
+                            "x": 0,
+                            "y": 48
+                        }
+                    }
+                },
+                {
+                    "gameObjectType": "IMGUI_HUD_TOP_LEFT",
+                    "layer": "GameLayer::GUI",
+                    "location": {
+                        "windowPosition": "PositionAlignment::TOP_LEFT",
+                        "adjust": {
+                            "x": 48,
+                            "y": 48
+                        }
+                    }
+                },
+                {
+                    "gameObjectType": "IMGUI_HUD_TOP_RIGHT",
+                    "layer": "GameLayer::GUI",
+                    "location": {
+                        "windowPosition": "PositionAlignment::TOP_RIGHT",
+                        "adjust": {
+                            "x": -48,
+                            "y": 48
+                        }
+                    }
                 }
             ],
             "keyActions": [
@@ -396,19 +429,25 @@
                     "id": "SMOKE1_POOL",
                     "gameObjectType": "PARTICLE_SMOKE_1",
                     "lifetime": 2.25,
-                    "maxItems": 500
+                    "maxItems": 1000
                 },
                 {
                     "id": "SMOKE_HEAVY_POOL",
                     "gameObjectType": "PARTICLE_SMOKE_HEAVY",
                     "lifetime": 2.25,
-                    "maxItems": 1000
+                    "maxItems": 500
                 },
                 {
-                    "id": "BULLET2_POOL",
-                    "gameObjectType": "BULLET2",
+                    "id": "PLAYER_BULLET_POOL",
+                    "gameObjectType": "PLAYER_BULLET",
                     "lifetime": 1.25,
-                    "maxItems": 50
+                    "maxItems": 25
+                },
+                {
+                    "id": "ENEMY_BULLET_POOL",
+                    "gameObjectType": "ENEMY_BULLET",
+                    "lifetime": 1.25,
+                    "maxItems": 200
                 },
                 {
                     "id": "DEFLECT1_POOL",
@@ -423,6 +462,12 @@
                     "maxItems": 500
                 },
                 {
+                    "id": "TURRET_SCRAP_POOL",
+                    "gameObjectType": "TURRET_SCRAP",
+                    "lifetime": 0.0,
+                    "maxItems": 25
+                },
+                {
                     "id": "PULSE1_POOL",
                     "gameObjectType": "PULSE1",
                     "lifetime": 0.0,
@@ -433,6 +478,18 @@
                     "gameObjectType": "PULSE_EXPLOSION",
                     "lifetime": 0.0,
                     "maxItems": 5
+                },
+                {
+                    "id": "RADIATION_POOL",
+                    "gameObjectType": "PARTICLE_RADIATION",
+                    "lifetime": 2.25,
+                    "maxItems": 1000
+                },
+                {
+                    "id": "GIBS_POOL",
+                    "gameObjectType": "PLAYER_GIB",
+                    "lifetime": 2.25,
+                    "maxItems": 50
                 }
 
             ],

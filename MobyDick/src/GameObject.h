@@ -75,8 +75,10 @@ public:
 	void setWeaponColor(SDL_Color color);
 	void setCompositePieceLevelCap(int levelCap);
 	void setOperatingSound(std::string soundAssetId);
+	void setBrainSensorSize(int brainSensorSize);
 
 	b2Vec2 getSize();
+	SDL_Color getColor();
 	float getAngle();
 	float getAngleInDegrees();
 	SDL_FPoint getCenterPosition();

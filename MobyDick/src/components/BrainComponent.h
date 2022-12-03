@@ -37,6 +37,7 @@ public:
     int state() { return m_currentState; }
 
     int sightSensorSize() { return m_sightSensorSize; }
+    void setSightSensorSize(int sensorSize) { m_sightSensorSize = sensorSize; }
 
     std::vector<SeenObjectDetails> seenObjects() { return m_seenObjects; }
     std::vector<std::weak_ptr<GameObject>> detectedObjects() { return m_detectedObjects; }

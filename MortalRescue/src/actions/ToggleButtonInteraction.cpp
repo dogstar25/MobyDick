@@ -24,6 +24,9 @@ void ToggleButtonInteraction::perform(GameObject* interactingObject, GameObject*
 			targetObject->enablePhysics();
 			
 		}
+		else if (targetObject->updateDisabled() == true) {
+			targetObject->enableUpdate();
+		}
 		else {
 			targetObject->disableRender();
 			targetObject->disablePhysics();

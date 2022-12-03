@@ -672,7 +672,88 @@
                     "refillTimer": 10,
                     "gameObjectType": "HEALTH_HEART",
                     "count": 2,
-                    "spawnForce": 1,
+                    "spawnForce": 0.5,
+                    "layer": "GameLayer::MAIN"
+                }
+            ]
+        },
+        {
+            "type": "HEALTH_STATION_LIMITED",
+            "traitTags": [ "interactive" ],
+            "description": "Health Station",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "tint": "Colors::CYAN",
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 96,
+                        "height": 64
+                    }
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_HEALTH_STATION_IDLE",
+                            "frames": 1
+                        },
+                        {
+                            "state": "ANIMATION_ACTIVE",
+                            "textureId": "TX_HEALTH_STATION_ACTIVE",
+                            "frames": 1
+                        }
+                    ]
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_CHAIN",
+                            "physicsChainType": "PhysicsChainType::CW_REFLECT_OUT",
+                            "friction": 0.00,
+                            "restitution": 0.0,
+                            "density": 1.5
+                        },
+                        {
+                            "contactTag": "ContactTag::CONTAINER_INSIDE",
+                            "collisionShape": "B2_CHAIN",
+                            "physicsChainType": "PhysicsChainType::CCW_REFLECT_IN",
+                            "friction": 0.00,
+                            "restitution": 0.0,
+                            "density": 1.5
+                        }
+
+                    ]
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "interactiveMenuObject": "INTERACTIVE_MENU_BASIC",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_INTERACTION",
+                            "actionClass": "HealthStationInteraction"
+                        }
+                    ]
+                },
+                {
+                    "id": "CONTAINER_COMPONENT",
+                    "gameObjectType": "HEALTH_HEART",
+                    "count": 10,
+                    "spawnForce": 0.0,
                     "layer": "GameLayer::MAIN"
                 }
             ]
@@ -755,6 +836,87 @@
                     "gameObjectType": "HEALTH_HEART",
                     "count": 30,
                     "spawnForce": 1,
+                    "layer": "GameLayer::MAIN"
+                }
+            ]
+        },
+        {
+            "type": "HEALTH_STATION_128",
+            "traitTags": [ "interactive" ],
+            "description": "Health Station",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "tint": "Colors::CYAN",
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 128,
+                        "height": 128
+                    }
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_HEALTH_STATION_IDLE",
+                            "frames": 1
+                        },
+                        {
+                            "state": "ANIMATION_ACTIVE",
+                            "textureId": "TX_HEALTH_STATION_ACTIVE",
+                            "frames": 1
+                        }
+                    ]
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_CHAIN",
+                            "physicsChainType": "PhysicsChainType::CW_REFLECT_OUT",
+                            "friction": 0.00,
+                            "restitution": 0.0,
+                            "density": 1.5
+                        },
+                        {
+                            "contactTag": "ContactTag::CONTAINER_INSIDE",
+                            "collisionShape": "B2_CHAIN",
+                            "physicsChainType": "PhysicsChainType::CCW_REFLECT_IN",
+                            "friction": 0.00,
+                            "restitution": 0.0,
+                            "density": 1.5
+                        }
+
+                    ]
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "interactiveMenuObject": "INTERACTIVE_MENU_BASIC",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_INTERACTION",
+                            "actionClass": "HealthStationInteraction"
+                        }
+                    ]
+                },
+                {
+                    "id": "CONTAINER_COMPONENT",
+                    "capacity": 15,
+                    "gameObjectType": "HEALTH_HEART",
+                    "count": 15,
                     "layer": "GameLayer::MAIN"
                 }
             ]
@@ -871,7 +1033,7 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "linearDamping": 2.0,
+                    "linearDamping": 4.0,
                     "angularDamping": 3.0,
                     "fixtures": [
                         {

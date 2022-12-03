@@ -226,6 +226,7 @@
     <ClCompile Include="src\MRContextManager.cpp" />
     <ClCompile Include="src\particleEffects\MRParticleEffectsFactory.cpp" />
     <ClCompile Include="src\triggers\EnenmyADeadTrigger.cpp" />
+    <ClCompile Include="src\triggers\EnenmyCDeadTrigger.cpp" />
     <ClCompile Include="src\triggers\LevelComplete.cpp" />
     <ClCompile Include="src\triggers\MRTriggerFactory.cpp" />
     <ClCompile Include="src\triggers\PlayerDeath.cpp" />
@@ -244,10 +245,12 @@
     <Image Include="assets\blueprints\testDrone_blueprint.png" />
     <Image Include="assets\blueprint_template.png" />
     <Image Include="assets\bowman1.png" />
+    <Image Include="assets\levels\level10_blueprint.png" />
     <Image Include="assets\levels\level1_blueprint.png" />
     <Image Include="assets\levels\level2_blueprint.png" />
     <Image Include="assets\levels\level100_blueprint.png" />
     <Image Include="assets\levels\level3_blueprint.png" />
+    <Image Include="assets\levels\level4_blueprint.png" />
     <Image Include="assets\levels\level5_blueprint.png" />
     <Image Include="assets\textureAtlas00.png" />
     <Image Include="assets\textureAtlasImGui.png" />
@@ -270,7 +273,8 @@
     <None Include="assets\levels\level1_definition.json" />
     <None Include="assets\levels\level2_definition.json" />
     <None Include="assets\levels\level3_definition.json" />
-    <None Include="assets\levels\level5_definition.json" />
+    <None Include="assets\levels\level10_definition.json" />
+    <None Include="assets\levels\level4_definition.json" />
     <None Include="assets\levels\levels.json" />
     <None Include="assets\levels\level100_definition.json" />
     <None Include="assets\sound\buttonWorking.ogg" />
@@ -387,6 +391,7 @@
     <ClInclude Include="src\MRContextManager.h" />
     <ClInclude Include="src\particleEffects\MRParticleEffectsFactory.h" />
     <ClInclude Include="src\triggers\EnemyADeadTrigger.h" />
+    <ClInclude Include="src\triggers\EnemyCDeadTrigger.h" />
     <ClInclude Include="src\triggers\LevelComplete.h" />
     <ClInclude Include="src\triggers\MRTriggerFactory.h" />
     <ClInclude Include="src\triggers\PlayerDeath.h" />

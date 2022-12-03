@@ -1,7 +1,7 @@
 ﻿{
-    "id": "LEVEL5",
-    "blueprint": "TX_LEVEL5_BLUEPRINT",
-    "description": "Level 5",
+    "id": "LEVEL10",
+    "blueprint": "TX_LEVEL10_BLUEPRINT",
+    "description": "Level 10",
     "dimensions": {
         "levelWidth": 128,
         "levelHeight": 64,

@@ -310,19 +310,19 @@
                             "level": 1,
                             "force": 1,
                             "color": "Colors::GREEN",
-                            "bulletPoolId": "BULLET1_POOL"
+                            "bulletPoolId": "PLAYER_BULLET_POOL"
                         },
                         {
                             "level": 2,
                             "force": 2,
                             "color": "Colors::GREEN",
-                            "bulletPoolId": "BULLET1_POOL"
+                            "bulletPoolId": "PLAYER_BULLET_POOL"
                         },
                         {
                             "level": 3,
                             "force": 5,
                             "color": "Colors::RED",
-                            "bulletPoolId": "BULLET1_POOL"
+                            "bulletPoolId": "PLAYER_BULLET_POOL"
                         }
                     ]
                 },

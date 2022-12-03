@@ -219,7 +219,7 @@
                             "contactTag": "ContactTag::HEART_PICKUP",
                             "collisionShape": "B2_BOX",
                             "density": 0.5,
-                            "restitution": 1.0
+                            "restitution": 0.9
                         }
                     ]
                 },
@@ -265,13 +265,13 @@
             ]
         },
         {
-            "type": "BULLET1",
+            "type": "PLAYER_BULLET",
             "traitTags": [ "pooled", "fragment" ],
             "description": "Bullet 1",
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "textureId": "TX_BULLET2"
+                    "textureId": "TX_PLAYER_BULLET"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
@@ -299,20 +299,20 @@
                 },
                 {
                     "id": "VITALITY_COMPONENT",
-                    "speed": 50,
+                    "speed": 70,
                     "lifetime": 1.0,
                     "lifetimeAlphaFade": true
                 }
             ]
         },
         {
-            "type": "BULLET2",
+            "type": "ENEMY_BULLET",
             "traitTags": [ "pooled", "fragment" ],
             "description": "Bullet 2",
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "textureId": "TX_BULLET2",
+                    "textureId": "TX_ENEMY_BULLET",
                     "color": "Colors::GREEN"
                 },
                 {
@@ -341,7 +341,7 @@
                 },
                 {
                     "id": "VITALITY_COMPONENT",
-                    "speed": 90,
+                    "speed": 200,
                     "lifetime": 1.0,
                     "lifetimeAlphaFade": true
                 }

@@ -72,7 +72,7 @@
                 },
                 {
                     "id": "COMPOSITE_COMPONENT",
-                    "physicsWeldPiecesOn": true,
+                    "physicsWeldPiecesOn": false,
                     "blueprint": {
                         "texture": "TX_DRONE1_BLUEPRINT",
                         "legend": [
@@ -112,6 +112,30 @@
                 {
                     "id": "NAVIGATION_COMPONENT",
                     "passageFitSizeCategory": "NavigationSizeCategory::LARGE"
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "OPERATING_SOUND",
+                            "soundAssetId": "SFX_DRONE_MOVING_1",
+                            "distanceSensitive": true,
+                            "continuous": true,
+                            "soundRange": 2000
+                        },
+                        {
+                            "id": "DESTROYED_SOUND",
+                            "soundAssetId": "SFX_TURRET_EXPLODE_1"
+                        },
+                        {
+                            "id": "DEFLECT_SOUND",
+                            "soundAssetId": "SFX_RETRO_IMPACT_DEFLECT_16"
+                        },
+                        {
+                            "id": "IMPACTED_SOUND",
+                            "soundAssetId": "SFX_IMPACT_1"
+                        }
+                    ]
                 }
             ]
         },
@@ -206,7 +230,7 @@
                 },
                 {
                     "id": "VITALITY_COMPONENT",
-                    "rotationSpeed": 20
+                    "rotationSpeed": 40
                 },
                 {
                     "id": "WEAPON_COMPONENT",
@@ -216,7 +240,7 @@
                             "level": 1,
                             "force": 1,
                             "color": "Colors::RED",
-                            "bulletPoolId": "BULLET2_POOL"
+                            "bulletPoolId": "ENEMY_BULLET_POOL"
                         }
                     ]
                 },
@@ -475,7 +499,7 @@
                             "level": 1,
                             "force": 1,
                             "color": "Colors::RED",
-                            "bulletPoolId": "BULLET2_POOL"
+                            "bulletPoolId": "ENEMY_BULLET_POOL"
                         }
                     ]
                 },
@@ -593,7 +617,7 @@
                     "fireOffset": -1.0,
                     "force": 0.25,
                     "color": "Colors::WHITE",
-                    "bulletPoolId": "BULLET2_POOL"
+                    "bulletPoolId": "ENEMY_BULLET_POOL"
                 },
                 {
                     "id": "SOUND_COMPONENT",

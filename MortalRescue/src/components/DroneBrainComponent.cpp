@@ -135,7 +135,7 @@ void DroneBrainComponent::_doEngage()
 	// but dont try to navigate
 	auto playerDistance = util::calculateDistance(parent()->getCenterPosition(), m_focusPoint.value());
 	auto objectSize = parent()->getSize().x;
-	if (playerDistance > (objectSize * 3)) {
+	if (playerDistance > (objectSize * 2)) {
 
 		//Navigate towards target location, unless you are already there
 		navigationCode = navigationComponent->navigateTo(m_focusPoint.value().x, m_focusPoint.value().y);

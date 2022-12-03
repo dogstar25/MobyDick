@@ -35,3 +35,9 @@ bool EnemyADeadTrigger::hasMetCriteria(Scene* scene)
 	return hasMet;
 }
 
+void EnemyADeadTrigger::execute()
+{
+
+
+}
+
