@@ -29,6 +29,7 @@ struct LevelObject
 	std::optional<float> weaponForce{};
 	std::optional<SDL_Color> weaponColor{};
 	std::optional<int> compositePieceLevelCap{};
+	std::optional<int> brainSensorSize{};
 
 };
 

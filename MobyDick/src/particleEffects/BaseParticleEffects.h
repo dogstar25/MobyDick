@@ -29,6 +29,15 @@ struct ParticleEffect {
 	SDL_Color colorRangeEnd = { 255,255,255,255 };
 	int particleSpawnCountMin = 25;
 	int particleSpawnCountMax = 25;
+
+	void setColorRangeBegin(SDL_Color color) {
+		colorRangeBegin = { color.r, color.g, color.b, color.a };
+	}
+
+	void setColorRangeEnd(SDL_Color color) {
+		colorRangeEnd = { color.r, color.g, color.b, color.a };
+	}
+
 };
 
 namespace ParticleEffects {

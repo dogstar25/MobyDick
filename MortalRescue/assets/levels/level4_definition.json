@@ -1,12 +1,12 @@
 {
-    "id": "LEVEL_3",
-    "blueprint": "TX_LEVEL3_BLUEPRINT",
-    "backgroundMusic": "MUSIC_LEVEL_BG_C",
-    "description": "TX_LEVEL_3",
+    "id": "LEVEL_4",
+    "blueprint": "TX_LEVEL4_BLUEPRINT",
+    "backgroundMusic": "MUSIC_LEVEL_BG_D",
+    "description": "TX_LEVEL_4",
     "wallColor": "Colors::PARAKEET",
     "dimensions": {
-        "levelWidth": 76,
-        "levelHeight": 33,
+        "levelWidth": 128,
+        "levelHeight": 64,
         "tileWidth": 32,
         "tileHeight": 32
     },
@@ -125,143 +125,98 @@
     ],
     "locationDefinedObjects": [
         {
-            "id": "LOC_0006_0004",
+            "id": "LOC_0007_0006",
             "gameObjectType": "GINA_64",
             "name": "PlayerGina",
             "cameraFollow": true
         },
         {
-            "id": "LOC_0003_0008",
-            "gameObjectType": "HEALTH_STATION"
+            "id": "LOC_0035_0024",
+            "gameObjectType": "RADIATION_EMITTER",
+            "name": "PlayerGina",
+            "angle": 270
         },
         {
-            "id": "LOC_0006_0029",
-            "gameObjectType": "HEALTH_STATION"
-        },
-        {
-            "id": "LOC_0049_0030",
-            "gameObjectType": "HEALTH_STATION_LIMITED"
-        },
-        {
-            "id": "LOC_0035_0017",
-            "gameObjectType": "TURRET",
-            "angle": 270,
-            "brainSensorSize": 40,
-            "objectColor": "Colors::RED",
-            "name": "EnemyA"
-        },
-        {
-            "id": "LOC_0019_0025",
-            "gameObjectType": "DRONE2"
-        },
-        {
-            "id": "LOC_0048_0002",
-            "gameObjectType": "DRONE",
+            "id": "LOC_0109_0053",
+            "gameObjectType": "DRONE2",
             "name": "EnemyC"
         },
         {
-            "id": "LOC_0028_0019",
-            "gameObjectType": "RADIATION_EMITTER",
-            "angle": 0
+            "id": "LOC_0095_0054",
+            "gameObjectType": "DRONE",
+            "name": "EnemyB",
+            "compositePieceLevelCap": 2
         },
         {
-            "id": "LOC_0005_0020",
-            "gameObjectType": "RADIATION_EMITTER",
-            "angle": 0
+            "id": "LOC_0100_0008",
+            "gameObjectType": "BREAKABLE_WALL_64"
         },
         {
-            "id": "LOC_0035_0023",
-            "gameObjectType": "ONETIME_BUTTON",
-            "angle": 270,
-            "name": "button1"
+            "id": "LOC_0103_0008",
+            "gameObjectType": "BREAKABLE_WALL_64"
         },
         {
-            "id": "LOC_0008_0021",
-            "gameObjectType": "TOGGLE_BUTTON",
-            "angle": 90,
-            "name": "button2"
+            "id": "LOC_0106_0008",
+            "gameObjectType": "BREAKABLE_WALL_64"
         },
         {
-            "id": "LOC_0006_0030",
-            "gameObjectType": "TOGGLE_BUTTON",
-            "angle": 90,
-            "name": "button3"
+            "id": "LOC_0091_0008",
+            "gameObjectType": "BREAKABLE_WALL_64"
         },
         {
-            "id": "LOC_0019_0016",
-            "gameObjectType": "TOGGLE_BUTTON",
+            "id": "LOC_0094_0008",
+            "gameObjectType": "BREAKABLE_WALL_64"
+        },
+        {
+            "id": "LOC_0097_0008",
+            "gameObjectType": "BREAKABLE_WALL_64"
+        },
+        {
+            "id": "LOC_0109_0008",
+            "gameObjectType": "BREAKABLE_WALL_64"
+        },
+        {
+            "id": "LOC_0112_0008",
+            "gameObjectType": "BREAKABLE_WALL_64"
+        },
+        {
+            "id": "LOC_0115_0008",
+            "gameObjectType": "BREAKABLE_WALL_64"
+        },
+        {
+            "id": "LOC_0099_0009",
+            "gameObjectType": "TURRET",
             "angle": 180,
-            "name": "button3"
+            "brainSensorSize": 40
         },
         {
-            "id": "LOC_0038_0016",
-            "gameObjectType": "TOGGLE_BUTTON",
+            "id": "LOC_0102_0009",
+            "gameObjectType": "TURRET",
             "angle": 180,
-            "name": "button4"
+            "brainSensorSize": 40
         },
         {
-            "id": "LOC_0005_0021",
+            "id": "LOC_0105_0009",
+            "gameObjectType": "TURRET",
+            "angle": 180,
+            "brainSensorSize": 40
+        },
+        {
+            "id": "LOC_0108_0009",
+            "gameObjectType": "TURRET",
+            "angle": 180,
+            "brainSensorSize": 30
+        },
+        {
+            "id": "LOC_0083_0016",
             "gameObjectType": "LASERWALL_64",
-            "name": "button2_TARGET",
-            "disabled": "DISABLED_TYPE::RENDER_AND_PHYSICS"
-        },
-        {
-            "id": "LOC_0034_0020",
-            "gameObjectType": "LASERWALL_64",
-            "name": "button1_TARGET",
-            "disabled": "DISABLED_TYPE::RENDER_AND_PHYSICS"
-        },
-        {
-            "id": "LOC_0004_0018",
-            "gameObjectType": "LASERWALL_64",
-            "name": "button3_TARGET",
-            "disabled": "DISABLED_TYPE::RENDER_AND_PHYSICS"
-        },
-        {
-            "id": "LOC_0027_0020",
-            "gameObjectType": "LASERWALL_96",
-            "name": "button1_TARGET",
-            "disabled": "DISABLED_TYPE::RENDER_AND_PHYSICS"
-        },
-        {
-            "id": "LOC_0064_0021",
-            "gameObjectType": "LASERWALL_96",
-            "angle": 90,
             "name": "EnemyCTrigger_TARGET"
         },
         {
-            "id": "LOC_0036_0028",
-            "gameObjectType": "LASERWALL_64",
-            "angle": 90,
-            "name": "button3_TARGET"
-        },
-        {
-            "id": "LOC_0048_0006",
-            "gameObjectType": "LASERWALL_128",
-            "name": "button4_TARGET"
-        },
-        {
-            "id": "LOC_0045_0015",
-            "gameObjectType": "LASERWALL_64",
-            "angle": 90,
-            "name": "button4_TARGET"
-        },
-        {
-            "id": "LOC_0055_0015",
-            "gameObjectType": "LASERWALL_64",
-            "angle": 90,
-            "name": "button4_TARGET"
-        },
-        {
-            "id": "LOC_0063_0014",
-            "gameObjectType": "ESCAPE_STAIRS",
-            "angle": 180
-        },
-        {
-            "id": "LOC_0035_0016",
-            "gameObjectType": "CHECKPOINT_3_A",
-            "layer": "GameLayer::ABSTRACT"
+            "id": "LOC_0082_0029",
+            "gameObjectType": "HEALTH_STATION_128"
         }
+
 
     ]
 }

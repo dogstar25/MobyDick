@@ -1,10 +1,10 @@
 #pragma once
 #include "triggers/Trigger.h"
-class EnemyADeadTrigger : public Trigger
+class EnemyCDeadTrigger : public Trigger
 {
 
 public:
-	EnemyADeadTrigger();
+	EnemyCDeadTrigger();
 	bool hasMetCriteria(Scene* scene) override;
 	void execute() override;
 };

@@ -225,24 +225,6 @@ void GameObject::update()
 		//Update touching GameObject
 		_updateTouchingObjects();
 
-		//If this is an object that can alter the level's navigation map then 
-		//refresh the navigation map with the status
-		///////////////////////////////////////////
-		//CAUTION:: DOES IT MAKE SENCE TO PUT THIS HERE?
-		/////////////////////////////
-
-
-		/// <summary>
-		/// 
-		/// </summary>
-		//if (this->hasTrait(TraitTag::navigation)) {
-
-		//	//ONLY IF THIS THING CHANGED?
-		//	//CANT DO THIS EVERY LOOP
-
-
-		//	m_parentScene->refreshNavigationMap();
-		//}
 	}
 
 }
@@ -391,6 +373,12 @@ float GameObject::getAngle()
 
 		return physicsComponent->angle();
 	}
+	else {
+		const auto& transformComponent = getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+		if (transformComponent) {
+			return util::degreesToRadians(transformComponent->angle());
+		}
+	}
 
 	return 0;
 }
@@ -403,6 +391,13 @@ float GameObject::getAngleInDegrees()
 
 		return util::radiansToDegrees(physicsComponent->angle());
 	}
+	else {
+		const auto& transformComponent = getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+		if (transformComponent) {
+			return transformComponent->angle();
+		}
+	}
+
 
 	return 0;
 }
@@ -716,6 +711,14 @@ void GameObject::setCompositePieceLevelCap(int levelCap)
 
 }
 
+void GameObject::setBrainSensorSize(int brainSensorSize)
+{
+
+	const auto& brainComponent = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
+	brainComponent->setSightSensorSize(brainSensorSize);
+
+}
+
 void GameObject::setOperatingSound(std::string soundAssetId)
 {
 
@@ -777,6 +780,15 @@ void GameObject::_updateTouchingObjects()
 
 
 }
+
+SDL_Color GameObject::getColor()
+{
+
+	const auto& renderComponent = getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
+	return renderComponent->color();
+
+}
+
 
 std::vector<SeenObjectDetails> GameObject::getSeenObjects()
 {

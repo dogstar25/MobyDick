@@ -455,6 +455,9 @@ std::optional<LevelObject> LevelManager::_determineColorDefinedObject(SDL_Color 
 			if (colorItemJSON.isMember("compositePieceLevelCap")) {
 				levelObject->compositePieceLevelCap = colorItemJSON["compositePieceLevelCap"].asInt();
 			}
+			if (colorItemJSON.isMember("brainSensorSize")) {
+				levelObject->brainSensorSize = colorItemJSON["brainSensorSize"].asInt();
+			}
 
 		}
 	}
@@ -510,6 +513,9 @@ std::optional<LevelObject> LevelManager::_determineLocationDefinedObject(int x, 
 			}
 			if (locationItemJSON.isMember("compositePieceLevelCap")) {
 				levelObject->compositePieceLevelCap = locationItemJSON["compositePieceLevelCap"].asInt();
+			}
+			if (locationItemJSON.isMember("brainSensorSize")) {
+				levelObject->brainSensorSize = locationItemJSON["brainSensorSize"].asInt();
 			}
 
 			break;
@@ -775,6 +781,11 @@ void LevelManager::_buildLevelObjects(Scene* scene)
 				//Apply override vitality levelCap if exists
 				if (levelObject->compositePieceLevelCap.has_value()) {
 					gameObject->setCompositePieceLevelCap(levelObject->compositePieceLevelCap.value());
+				}
+
+				//Apply override brain sensor size if exists
+				if (levelObject->brainSensorSize.has_value()) {
+					gameObject->setBrainSensorSize(levelObject->brainSensorSize.value());
 				}
 
 				//Build the navigation map item for this object

@@ -274,7 +274,15 @@
         {
             "id": "LOC_0069_0026",
             "gameObjectType": "BARREL_STATIC_FILLER"
+        },
+        {
+            "id": "LOC_0074_0030",
+            "gameObjectType": "CHECKPOINT_2_A",
+            "checkPointContact": true,
+            "layer": "GameLayer::ABSTRACT"
+
         }
+
 
     ]
 }

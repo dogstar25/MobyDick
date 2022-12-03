@@ -212,7 +212,7 @@
             ]
         },
         {
-            "type": "LASERWALL_352",
+            "type": "LASERWALL_64",
             "traitTags": [ "barrier", "conditional_impasse" ],
             "description": "Fog Box",
             "components": [
@@ -226,7 +226,7 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 352,
+                        "width": 64,
                         "height": 32
                     },
                     "absolutePositioning": false
@@ -269,7 +269,7 @@
             ]
         },
         {
-            "type": "LASERWALL_128",
+            "type": "LASERWALL_96",
             "traitTags": [ "barrier", "conditional_impasse" ],
             "description": "Fog Box",
             "components": [
@@ -283,7 +283,7 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 128,
+                        "width": 96,
                         "height": 32
                     },
                     "absolutePositioning": false
@@ -299,10 +299,68 @@
                         {
                             "state": "ANIMATION_IDLE",
                             "textureId": "TX_LASERWALL",
-                            "speed": 0.2,
+                            "speed": 0.4,
                             "frames": 2
                         }
                     ]
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::WALL",
+                            "collisionShape": "B2_BOX"
+                        }
+                    ]
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "TOGGLE_SOUND",
+                            "soundAssetId": "SFX_DOOR_ACTIVATE_1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "LASERWALL_128",
+            "traitTags": [ "barrier", "conditional_impasse" ],
+            "description": "Fog Box",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "color": {
+                        "tint": "Colors::CYAN",
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 8,
+                        "height": 8
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_LASERWALL",
+                            "speed": 0.04,
+                            "frames": 2
+                        }
+
+                    ]
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 128,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
                 },
                 {
                     "id": "PHYSICS_COMPONENT",
@@ -390,27 +448,11 @@
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
+                    "textureId": "TX_LASERWALL",
                     "color": {
                         "tint": "Colors::CYAN",
                         "alpha": 255
                     }
-                },
-                {
-                    "id": "ANIMATION_COMPONENT",
-                    "defaultState": "ANIMATION_IDLE",
-                    "frameSize": {
-                        "width": 8,
-                        "height": 8
-                    },
-                    "animations": [
-                        {
-                            "state": "ANIMATION_IDLE",
-                            "textureId": "TX_LASERWALL",
-                            "speed": 0.08,
-                            "frames": 2
-                        }
-
-                    ]
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
@@ -431,6 +473,23 @@
                     ]
                 },
                 {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 8,
+                        "height": 8
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_LASERWALL",
+                            "speed": 0.6,
+                            "frames": 2
+                        }
+
+                    ]
+                },
+                {
                     "id": "SOUND_COMPONENT",
                     "sounds": [
                         {
@@ -442,7 +501,7 @@
             ]
         },
         {
-            "type": "LASERWALL_64",
+            "type": "LASERWALL_352",
             "traitTags": [ "barrier", "conditional_impasse" ],
             "description": "Fog Box",
             "components": [
@@ -457,7 +516,7 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 64,
+                        "width": 352,
                         "height": 32
                     },
                     "absolutePositioning": false
@@ -483,7 +542,7 @@
                         {
                             "state": "ANIMATION_IDLE",
                             "textureId": "TX_LASERWALL",
-                            "speed": 2.5,
+                            "speed": 1.0,
                             "frames": 2
                         }
 

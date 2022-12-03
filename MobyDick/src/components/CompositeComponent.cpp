@@ -69,9 +69,8 @@ void CompositeComponent::postInit()
 
 	}
 
-	//if (m_physicsWeldPiecesOn == true) {
-	//	weldOnPieces();
-	//}
+	//Call update once in the posinit so that it will display
+	update();
 
 }
 

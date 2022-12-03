@@ -116,12 +116,14 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[PLAYER_PULSE_BULLET].set(DRONE_SHIELD);
 	m_contactMasks[PLAYER_PULSE_BULLET].set(WALL_PIECE);
 	m_contactMasks[PLAYER_PULSE_BULLET].set(ENEMY_TURRET);
+	m_contactMasks[PLAYER_PULSE_BULLET].set(WALL);
 
 	//PLAYER_PULSE_EXPLOSION
 	m_contactMasks[PLAYER_PULSE_EXPLOSION].reset();
 	m_contactMasks[PLAYER_PULSE_EXPLOSION].set(DRONE_SHIELD);
 	m_contactMasks[PLAYER_PULSE_EXPLOSION].set(WALL_PIECE);
 	m_contactMasks[PLAYER_PULSE_EXPLOSION].set(ENEMY_TURRET);
+	m_contactMasks[PLAYER_PULSE_EXPLOSION].set(WALL);
 
 	//SHIELD_SCRAP
 	m_contactMasks[SHIELD_SCRAP].reset();
@@ -155,10 +157,12 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[WALL].set(ENEMY_BULLET);
 	m_contactMasks[WALL].set(DRONE_SCRAP);
 	m_contactMasks[WALL].set(RADIATION_PARTICLE);
+	m_contactMasks[WALL].set(PLAYER_PULSE_BULLET);
+	m_contactMasks[WALL].set(PLAYER_PULSE_EXPLOSION);
+
 	
 	//BUTTONS
 	m_contactMasks[BUTTON].reset();
-	m_contactMasks[BUTTON].set(GENERAL_SOLID);
 	m_contactMasks[BUTTON].set(PLAYER_TOUCH);
 
 	//ESCAPE STAIRS
@@ -192,6 +196,7 @@ MRContactFilter::MRContactFilter()
 	m_contactMasks[HEART_PICKUP].reset();
 	m_contactMasks[HEART_PICKUP].set(PLAYER_COLLISION);
 	m_contactMasks[HEART_PICKUP].set(HEALTH_STATION_INSIDE);
+	m_contactMasks[HEART_PICKUP].set(HEART_PICKUP);
 
 	//HEALTH_STATION_INSIDE Inside
 	m_contactMasks[HEALTH_STATION_INSIDE].reset();

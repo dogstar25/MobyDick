@@ -67,7 +67,7 @@ void MRContactListener::_playerBullet_droneBrain(GameObject* playerBullet, GameO
 		//droneObject.value()->disableRender();
 		droneObject.value()->disableCollision();
 		const auto& droneVitalityComponent = droneObject.value()->getComponent <VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
-		droneVitalityComponent->setLifetimeTimer(10);
+		droneVitalityComponent->setLifetimeTimer(4);
 		droneVitalityComponent->setIsLifetimeAlphaFade(true);
 
 		//Set the drones composite component to detach all of its pieces from its body
@@ -94,7 +94,7 @@ void MRContactListener::_playerBullet_droneBrain(GameObject* playerBullet, GameO
 			//Make fade away
 			const auto& pieceVitalityComponent = piece.pieceObject->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 			pieceVitalityComponent->setIsLifetimeAlphaFade(true);
-			pieceVitalityComponent->setLifetimeTimer(10);
+			pieceVitalityComponent->setLifetimeTimer(4);
 
 		}
 
@@ -135,7 +135,14 @@ void MRContactListener::_playerBullet_enemyTurret(GameObject* playerBullet, Game
 		contactPoint.x *= GameConfig::instance().scaleFactor();
 		contactPoint.y *= GameConfig::instance().scaleFactor();
 		particleEmitterObject->setPosition(contactPoint.x, contactPoint.y);
-		particleComponent->addParticleEffect(ParticleEffects::turretScrap);
+
+		//Lets make the turret crap same color as the turret, because it can be different at times
+		auto turretScrap = ParticleEffects::turretScrap;
+		turretScrap.setColorRangeBegin( enemyTurret->getColor());
+		turretScrap.setColorRangeEnd(enemyTurret->getColor());
+		particleComponent->addParticleEffect(turretScrap);
+
+		//Add a smoke effect too
 		particleComponent->addParticleEffect(ParticleEffects::explosionSmoke);
 
 		//Play destroyed sound
@@ -426,8 +433,8 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 	const auto& bulletVitalityComponent = bullet->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
 	const auto& playerTransformComponent = bullet->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 
-	//bool dead = playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
-	bool dead = false;
+	bool dead = playerVitalityComponent->inflictDamage(bulletVitalityComponent->attackPower());
+	//bool dead = false;
 
 	if (dead) {
 		player->getComponent<PlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT)->disable();
