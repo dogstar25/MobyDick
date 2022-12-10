@@ -666,6 +666,12 @@ void Scene::addParallaxItem(Parallax& parallaxItem)
 
 void Scene::updateGridDisplay(int xPos, int yPos, int operation, SDL_Color color)
 {
+	//ToDo:This can be changed to use multithreasing
+	//use  std::foreach(std::execution::par, m_gameObjects[GameLayer::GRID_DISPLAY.begin, m_gameObjects[GameLayer::GRID_DISPLAY.end, 
+    //[this](const std::shared_ptr<GameObject>)
+	//{
+	// put below code here
+	//});
 
 	for (const auto& gameObject : m_gameObjects[GameLayer::GRID_DISPLAY]) {
 
