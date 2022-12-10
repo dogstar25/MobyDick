@@ -1,7 +1,7 @@
 {
     "gameTitle": "MortalRescue",
     "window": {
-        "fullscreen": false,
+        "fullscreen": true,
         "defaultTileSize": {
             "width": 1,
             "height": 1
@@ -16,7 +16,7 @@
         }
         },
     "sound": {
-        "numberOfChannels": 32
+        "numberOfChannels": 128
     },
     "scenes": {
         "maxScenes": 12

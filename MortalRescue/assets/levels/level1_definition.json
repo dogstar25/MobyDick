@@ -169,6 +169,16 @@
             "gameObjectType": "TURRET"
         },
         {
+            "id": "LOC_0099_0035",
+            "gameObjectType": "TURRET",
+            "angle": 90
+        },
+        {
+            "id": "LOC_0097_0030",
+            "gameObjectType": "TURRET",
+            "weaponColor": "Colors::RED"
+        },
+        {
             "id": "LOC_0028_0014",
             "gameObjectType": "LASERWALL_64",
             "name": "button3_TARGET"

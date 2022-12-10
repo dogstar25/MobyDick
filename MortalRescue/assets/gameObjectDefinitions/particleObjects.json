@@ -451,7 +451,7 @@
                         {
                             "contactTag": "ContactTag::RADIATION_PARTICLE",
                             "collisionShape": "B2_BOX",
-                            "density": 5.1,
+                            "density": 2.1,
                             "restitution": 0.7
                         }
                     ]

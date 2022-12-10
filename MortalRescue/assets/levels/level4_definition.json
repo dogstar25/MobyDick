@@ -53,9 +53,9 @@
         },
         {
             "id": "StatusItemId::SURVIVORS",
-            "initialValue": 5,
+            "initialValue": 6,
             "minValue": 0,
-            "maxValue": 5
+            "maxValue": 6
         },
         {
             "id": "StatusItemId::SCRAP_COUNT",
@@ -131,20 +131,14 @@
             "cameraFollow": true
         },
         {
-            "id": "LOC_0035_0024",
-            "gameObjectType": "RADIATION_EMITTER",
-            "name": "PlayerGina",
-            "angle": 270
-        },
-        {
             "id": "LOC_0109_0053",
             "gameObjectType": "DRONE2",
-            "name": "EnemyC"
+            "name": "EnemyA"
         },
         {
             "id": "LOC_0095_0054",
             "gameObjectType": "DRONE",
-            "name": "EnemyB",
+            "name": "EnemyC",
             "compositePieceLevelCap": 2
         },
         {
@@ -208,13 +202,168 @@
             "brainSensorSize": 30
         },
         {
-            "id": "LOC_0083_0016",
+            "id": "LOC_0016_0037",
+            "gameObjectType": "TURRET",
+            "angle": 180,
+            "brainSensorSize": 30,
+            "objectColor": "Colors::RED",
+            "weaponColor": "Colors::RED"
+        },
+        {
+            "id": "LOC_0004_0043",
+            "gameObjectType": "TURRET",
+            "angle": 90,
+            "brainSensorSize": 30,
+            "objectColor": "Colors::RED",
+            "weaponColor": "Colors::RED"
+        },
+        {
+            "id": "LOC_0004_0054",
+            "gameObjectType": "TURRET",
+            "angle": 90,
+            "brainSensorSize": 30,
+            "objectColor": "Colors::RED",
+            "weaponColor": "Colors::RED"
+        },
+        {
+            "id": "LOC_0010_0060",
+            "gameObjectType": "TURRET",
+            "brainSensorSize": 30,
+            "objectColor": "Colors::RED",
+            "weaponColor": "Colors::RED"
+        },
+        {
+            "id": "LOC_0021_0062",
+            "gameObjectType": "TURRET",
+            "brainSensorSize": 30,
+            "objectColor": "Colors::RED",
+            "weaponColor": "Colors::RED"
+        },
+        {
+            "id": "LOC_0027_0029",
             "gameObjectType": "LASERWALL_64",
+            "angle": 90,
+            "name": "EnemyCTrigger_TARGET",
+            "objectColor": "Colors::ORANGE"
+        },
+        {
+            "id": "LOC_0083_0045",
+            "gameObjectType": "LASERWALL_64",
+            "name": "button3_TARGET"
+        },
+        {
+            "id": "LOC_0090_0046",
+            "gameObjectType": "LASERWALL_64",
+            "angle": 90,
             "name": "EnemyCTrigger_TARGET"
+        },
+        {
+            "id": "LOC_0049_0041",
+            "gameObjectType": "LASERWALL_352",
+            "name": "button4_TARGET"
+        },
+        {
+            "id": "LOC_0065_0041",
+            "gameObjectType": "LASERWALL_352",
+            "name": "button4_TARGET"
+        },
+        {
+            "id": "LOC_0053_0048",
+            "gameObjectType": "LASERWALL_224",
+            "name": "button2_TARGET"
+        },
+        {
+            "id": "LOC_0068_0048",
+            "gameObjectType": "LASERWALL_352",
+            "name": "button2_TARGET"
+        },
+        {
+            "id": "LOC_0048_0046",
+            "gameObjectType": "LASERWALL_64",
+            "name": "button4_TARGET",
+            "angle": 90
+        },
+        {
+            "id": "LOC_0078_0043",
+            "gameObjectType": "TOGGLE_BUTTON",
+            "name": "button3",
+            "angle": 270
+        },
+        {
+            "id": "LOC_0078_0045",
+            "gameObjectType": "TOGGLE_BUTTON",
+            "name": "button2",
+            "angle": 270
+        },
+        {
+            "id": "LOC_0076_0042",
+            "gameObjectType": "TOGGLE_BUTTON",
+            "name": "button4",
+            "angle": 180
+        },
+        {
+            "id": "LOC_0035_0024",
+            "gameObjectType": "RADIATION_EMITTER",
+            "name": "PlayerGina",
+            "angle": 90
+        },
+        {
+            "id": "LOC_0053_0040",
+            "gameObjectType": "RADIATION_EMITTER",
+            "angle": 45
+        },
+        {
+            "id": "LOC_0068_0040",
+            "gameObjectType": "RADIATION_EMITTER",
+            "angle": 45
+        },
+        {
+            "id": "LOC_0051_0040",
+            "gameObjectType": "RADIATION_EMITTER",
+            "angle": 43
+        },
+        {
+            "id": "LOC_0074_0040",
+            "gameObjectType": "RADIATION_EMITTER",
+            "angle": 30
+        },
+        {
+            "id": "LOC_0078_0049",
+            "gameObjectType": "RADIATION_EMITTER",
+            "angle": 300
+        },
+        {
+            "id": "LOC_0076_0049",
+            "gameObjectType": "RADIATION_EMITTER",
+            "angle": 300
+        },
+        {
+            "id": "LOC_0072_0049",
+            "gameObjectType": "RADIATION_EMITTER",
+            "angle": 300
+        },
+        {
+            "id": "LOC_0056_0049",
+            "gameObjectType": "RADIATION_EMITTER",
+            "angle": 225
+        },
+        {
+            "id": "LOC_0052_0049",
+            "gameObjectType": "RADIATION_EMITTER",
+            "angle": 225
+        },
+        {
+            "id": "LOC_0033_0012",
+            "gameObjectType": "HEALTH_STATION_96"
         },
         {
             "id": "LOC_0082_0029",
             "gameObjectType": "HEALTH_STATION_128"
+        },
+        {
+            "id": "LOC_0004_0048",
+            "gameObjectType": "ESCAPE_STAIRS",
+            "angle": 90
         }
 
 
