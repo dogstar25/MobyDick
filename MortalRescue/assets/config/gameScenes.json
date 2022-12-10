@@ -228,7 +228,7 @@
                     "id": "RADIATION_POOL",
                     "gameObjectType": "PARTICLE_RADIATION",
                     "lifetime": 2.25,
-                    "maxItems": 1000
+                    "maxItems": 5000
                 },
                 {
                     "id": "GIBS_POOL",
@@ -353,7 +353,7 @@
         {
             "id": "SCENE_TEST",
             "inputControlMode": "CONTROL_MODE_PLAY",
-            "maxObjects": 5000,
+            "maxObjects": 8000,
             "gameObjects": [
                 {
                     "gameObjectType": "IMGUI_TEST_MENU",
@@ -483,7 +483,7 @@
                     "id": "RADIATION_POOL",
                     "gameObjectType": "PARTICLE_RADIATION",
                     "lifetime": 2.25,
-                    "maxItems": 1000
+                    "maxItems": 5000
                 },
                 {
                     "id": "GIBS_POOL",

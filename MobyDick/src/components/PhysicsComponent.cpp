@@ -434,6 +434,10 @@ void PhysicsComponent::attachItem(GameObject* attachObject, b2JointType jointTyp
 		revoluteJointDef->collideConnected = false;
 		revoluteJointDef->localAnchorA = anchorPoint;
 		revoluteJointDef->localAnchorB = attachObjectAnchorPoint;
+
+		////test
+		//revoluteJointDef->enableMotor = true;
+		//revoluteJointDef->maxMotorTorque = 100;
 		
 		jointDef = revoluteJointDef;
 	}

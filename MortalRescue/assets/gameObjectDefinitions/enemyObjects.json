@@ -624,9 +624,7 @@
                     "sounds": [
                         {
                             "id": "FIRE_SOUND",
-                            "soundAssetId": "SFX_LASER_004",
-                            "distanceSensitive": true,
-                            "soundRange": 600
+                            "soundAssetId": "SFX_LASER_004"
 
                         },
                         {

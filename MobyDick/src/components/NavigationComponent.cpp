@@ -273,12 +273,12 @@ bool NavigationComponent::_isStuck()
 
 		if (m_stuckTimer.isSet() == false) {
 			m_stuckTimer = { 2 };
-			std::cout << "Reset Timer" << std::endl;
+			//std::cout << "Reset Timer" << std::endl;
 		}
 		else {
 			if (m_stuckTimer.hasMetTargetDuration()) {
 				m_stuckTimer = { 0 };
-				std::cout << "Stuck!" << std::endl;
+				//Fcoutstd::cout << "Stuck!" << std::endl;
 				isStuck = true;
 			}
 		}

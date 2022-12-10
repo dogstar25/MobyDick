@@ -1,7 +1,7 @@
 #include "SoundComponent.h"
 #include "../SoundManager.h"
 #include "../LevelManager.h"
-
+#include "../IMGui/IMGuiUtil.h"
 #include <memory.h>
 
 #include "../EnumMap.h"
@@ -146,7 +146,7 @@ void SoundComponent::setParent(GameObject* gameObject)
 int SoundComponent::playSound(std::string soundId)
 {
 	int channel{};
-	int soundDistanceMagnitude{};
+	int soundDistanceMagnitude{1};
 
 	if (m_sounds.find(soundId) != m_sounds.end()) {
 
@@ -162,6 +162,7 @@ int SoundComponent::playSound(std::string soundId)
 		bool loops = m_sounds.at(soundId).isContinuous;
 
 		//play
+
 		channel = SoundManager::instance().playSound(m_sounds.at(soundId).soundAssetId, soundDistanceMagnitude, loops);
 
 	}

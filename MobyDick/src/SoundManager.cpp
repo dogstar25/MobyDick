@@ -30,7 +30,7 @@ SoundManager& SoundManager::instance()
 
 void SoundManager::initSound()
 {
-	Mix_OpenAudio(44100, AUDIO_S32SYS, 2, 4096);
+	Mix_OpenAudio(48000, AUDIO_F32SYS, 2, 1024);
 
 	auto volume = game->contextMananger()->getSoundVolume();
 	Mix_Volume(-1, volume);
@@ -88,7 +88,9 @@ void SoundManager::loadSounds()
 
 void SoundManager::stopSound(int channel)
 {
+	Mix_SetDistance(channel, 0);
 	int channelPlayedOn = Mix_HaltChannel(channel);
+	std::cout << "Sound Stopped " << std::endl;
 
 }
 
@@ -100,17 +102,34 @@ void SoundManager::stopMusic()
 
 int SoundManager::playSound(std::string id, int distanceMagnitude, bool loops )
 {
+	int channelPlayedOn{};
 	int loopFlag{};
 	if (loops) {
 		loopFlag = -1;
 	}
 	
-	//This should return an avaialable channel from the default group (all channels)
-	int availableChannel = Mix_GroupAvailable(-1);
 
-	Mix_SetDistance(availableChannel, distanceMagnitude);
+	//if the distanceMagnitude is 1, then we do not need to set the distance of a particular channel
+	if (distanceMagnitude == 1) {
 
-	int channelPlayedOn = Mix_PlayChannel(availableChannel, m_sfxChunks[id], loopFlag);
+		channelPlayedOn = Mix_PlayChannel(-1, m_sfxChunks[id], loopFlag);
+	}
+	else {
+
+		int availableChannel = Mix_GroupAvailable(-1);
+
+		if (availableChannel != -1) {
+			Mix_SetDistance(availableChannel, distanceMagnitude);
+
+			channelPlayedOn = Mix_PlayChannel(availableChannel, m_sfxChunks[id], loopFlag);
+		}
+		else {
+			std::cout << "negative sound channel for " << id << std::endl;
+			return -1;
+		}
+
+	}
+
 	return channelPlayedOn;
 
 }
