@@ -86,7 +86,7 @@
         {
             "id": "SCENE_PLAY",
             "inputControlMode": "CONTROL_MODE_PLAY",
-            "maxObjects": 5000,
+            "maxObjects": 7000,
             "gameObjects": [
                 {
                     "gameObjectType": "IMGUI_HUD_TOP_CENTER",
@@ -101,14 +101,7 @@
                 },
                 {
                     "gameObjectType": "IMGUI_HUD_TOP_LEFT",
-                    "layer": "GameLayer::GUI",
-                    "location": {
-                        "windowPosition": "PositionAlignment::TOP_LEFT",
-                        "adjust": {
-                            "x": 48,
-                            "y": 48
-                        }
-                    }
+                    "layer": "GameLayer::GUI"
                 },
                 {
                     "gameObjectType": "IMGUI_HUD_TOP_RIGHT",
@@ -228,7 +221,7 @@
                     "id": "RADIATION_POOL",
                     "gameObjectType": "PARTICLE_RADIATION",
                     "lifetime": 2.25,
-                    "maxItems": 5000
+                    "maxItems": 2000
                 },
                 {
                     "id": "GIBS_POOL",

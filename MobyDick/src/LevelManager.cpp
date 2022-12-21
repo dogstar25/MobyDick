@@ -84,6 +84,10 @@ void LevelManager::_loadDefinition(std::string levelId)
 
 	Json::Value root;
 	std::ifstream ifs(filename.str());
+	if (ifs.fail() == true) {
+		return;
+	}
+
 	ifs >> root;
 	m_levelDefinition = root;
 

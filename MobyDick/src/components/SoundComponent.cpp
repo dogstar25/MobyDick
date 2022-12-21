@@ -74,12 +74,14 @@ void SoundComponent::update()
 
 		if (itr->second.isDistanceSensitive == true && itr->second.isContinuous == true) {
 
-			const auto playerPosition = parent()->parentScene()->getGameObjectsByTrait(TraitTag::player)[0]->getCenterPosition();
-			const auto parentPosition = parent()->getCenterPosition();
-			int soundDistanceMagnitude = _calculateSoundDistanceMagnitude(playerPosition, parentPosition, itr->second.soundRange);
+			const auto player = parent()->parentScene()->getFirstGameObjectByTrait(TraitTag::player);
+			if (player.has_value()) {
+				const auto playerPosition = parent()->parentScene()->getFirstGameObjectByTrait(TraitTag::player).value()->getCenterPosition();
+				const auto parentPosition = parent()->getCenterPosition();
+				int soundDistanceMagnitude = _calculateSoundDistanceMagnitude(playerPosition, parentPosition, itr->second.soundRange);
 
-			SoundManager::instance().setChannelDistance(itr->second.soundChannel, soundDistanceMagnitude);
-			
+				SoundManager::instance().setChannelDistance(itr->second.soundChannel, soundDistanceMagnitude);
+			}
 		}
 
 		++itr;
@@ -99,9 +101,11 @@ void SoundComponent::postInit()
 
 		if (itr->second.isContinuous == true) {
 
-			SoundManager::instance().setChannelDistance(itr->second.soundChannel, 255);
-			int channel = SoundManager::instance().playSound(itr->second.soundAssetId, 255, true);
-			itr->second.soundChannel = channel;
+			if (itr->second.isDistanceSensitive == true) {
+				int channel = SoundManager::instance().playSound(itr->second.soundAssetId, 255, true);
+				itr->second.soundChannel = channel;
+				SoundManager::instance().setChannelDistance(itr->second.soundChannel, 255);
+			}
 
 		}
 
@@ -120,7 +124,7 @@ void SoundComponent::stopSounds()
 
 		if (itr->second.isContinuous == true) {
 
-			stopSound(itr->second.soundChannel);
+			stopChannel(itr->second.soundChannel);
 
 		}
 
@@ -129,10 +133,24 @@ void SoundComponent::stopSounds()
 
 }
 
-void SoundComponent::stopSound(int channel)
+void SoundComponent::stopChannel(int channel)
 {
 
-	SoundManager::instance().stopSound(channel);
+	SoundManager::instance().stopChannel(channel);
+
+}
+
+void SoundComponent::muteChannel(int channel)
+{
+
+	SoundManager::instance().muteChannel(channel);
+
+}
+
+void SoundComponent::unMuteChannel(int channel)
+{
+
+	SoundManager::instance().unMuteChannel(channel);
 
 }
 

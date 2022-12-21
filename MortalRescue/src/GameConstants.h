@@ -102,7 +102,7 @@ namespace StatusItemId {
 	inline constexpr int SURVIVORS = 14;
 	inline constexpr int PLAYER_WEAPON_IS_CHARGED = 15;
 	inline constexpr int PLAYER_WEAPON_CHARGED_PERCENT = 16;
-	inline constexpr int ENEMY_COUNT = 17;
+	inline constexpr int ENEMY_DRONE_COUNT = 17;
 	
 };
 

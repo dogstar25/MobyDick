@@ -76,6 +76,7 @@ public:
 	void setCompositePieceLevelCap(int levelCap);
 	void setOperatingSound(std::string soundAssetId);
 	void setBrainSensorSize(int brainSensorSize);
+	void setWindowRelativePosition(PositionAlignment windowPosition, float adjustX, float adjustY);
 
 	b2Vec2 getSize();
 	SDL_Color getColor();

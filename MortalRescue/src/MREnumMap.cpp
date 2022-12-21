@@ -50,7 +50,7 @@ MREnumMap::MREnumMap()
 	addEnumItem("StatusItemId::SURVIVORS", StatusItemId::SURVIVORS);
 	addEnumItem("StatusItemId::PLAYER_WEAPON_CHARGED_PERCENT", StatusItemId::PLAYER_WEAPON_CHARGED_PERCENT);
 	addEnumItem("StatusItemId::PLAYER_WEAPON_IS_CHARGED", StatusItemId::PLAYER_WEAPON_IS_CHARGED);
-	addEnumItem("StatusItemId::ENEMY_COUNT", StatusItemId::ENEMY_COUNT);
+	addEnumItem("StatusItemId::ENEMY_DRONE_COUNT", StatusItemId::ENEMY_DRONE_COUNT);
 
 
 }

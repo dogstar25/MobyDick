@@ -49,7 +49,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -133,7 +133,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>
       </AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <Optimization>Disabled</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -162,7 +162,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>
       </AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
       <Optimization>Full</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
@@ -401,7 +401,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties assets_4config_4gameScenes_1json__JsonSchema="https://json.schemastore.org/base.json" assets_4gameObjectDefinitions_4checkpointObjects_1json__JsonSchema="https://json-schema.org/draft/2020-12/schema" assets_4gameObjectDefinitions_4commonObjects_1json__JsonSchema="https://json-schema.org/draft/2020-12/schema" assets_4levels_4level1_3definition_1json__JsonSchema="https://download.stackhawk.com/hawk/jsonconfig/hawkconfig.json" assets_4levels_4level2_3definition_1json__JsonSchema="https://jsonapi.org/schema" assets_4textureAtlasAssets_1json__JsonSchema="https://json-schema.org/draft/2019-09/schema" />
+      <UserProperties assets_4config_4gameConfig_1json__JsonSchema="https://json-schema.org/draft-07/schema" assets_4config_4gameScenes_1json__JsonSchema="https://json.schemastore.org/base.json" assets_4gameObjectDefinitions_4checkpointObjects_1json__JsonSchema="https://json-schema.org/draft/2020-12/schema" assets_4gameObjectDefinitions_4commonObjects_1json__JsonSchema="https://json-schema.org/draft/2020-12/schema" assets_4levels_4level1_3definition_1json__JsonSchema="https://download.stackhawk.com/hawk/jsonconfig/hawkconfig.json" assets_4levels_4level2_3definition_1json__JsonSchema="https://jsonapi.org/schema" assets_4textureAtlasAssets_1json__JsonSchema="https://json-schema.org/draft/2019-09/schema" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

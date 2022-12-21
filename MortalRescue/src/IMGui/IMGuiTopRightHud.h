@@ -15,12 +15,19 @@ private:
 
 	void survivorCount();
 	void hudSurvivorImage(ImVec4 color);
+	void droneCount();
+	void hudDroneImage(ImVec4 color);
+	void _adjustForVariableStatusItems();
 
 	ImVec4 m_hudRed{};
 	ImVec4 m_hudWhite{};
 	ImVec4 m_hudGreen{};
 	ImVec4 m_hudBlue{};
 	ImVec4 m_hudYellow{};
+	ImVec4 m_hudOrange{};
+
+	bool m_hasSurvivorDisplay{};
+	bool m_hasDroneDisplay{};
 
 };
 

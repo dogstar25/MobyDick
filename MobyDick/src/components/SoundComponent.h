@@ -44,7 +44,9 @@ public:
 	void addSound(std::string id, std::string soundAssetId, bool isDistanceSensitive=false, bool isContinuous=false, int soundRange=0);
 	int playSound(std::string soundId);
 	void stopSounds();
-	void stopSound(int channel);
+	void stopChannel(int channel);
+	void muteChannel(int channel);
+	void unMuteChannel(int channel);
 
 	void setParent(GameObject* gameObject) override;
 

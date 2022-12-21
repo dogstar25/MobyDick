@@ -187,10 +187,13 @@ void GinaPlayerControlComponent::_jetPackSwitch(bool turnOn)
 			soundComponent->playSound("START_SOUND");
 			
 			m_jetPackSoundChannel = soundComponent->playSound("OPERATING_SOUND");
+			soundComponent->unMuteChannel(m_jetPackSoundChannel);
 		}
 		else if (turnOn == false && jetPack->gameObject->updateDisabled() == false){
 			jetPack->gameObject->disableUpdate();
-			soundComponent->stopSound(m_jetPackSoundChannel);
+			if (m_jetPackSoundChannel != -1) {
+				soundComponent->stopChannel(m_jetPackSoundChannel);
+			}
 
 		}
 	}

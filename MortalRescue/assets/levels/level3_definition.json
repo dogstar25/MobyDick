@@ -64,7 +64,7 @@
             "maxValue": 2000
         },
         {
-            "id": "StatusItemId::ENEMY_COUNT",
+            "id": "StatusItemId::ENEMY_DRONE_COUNT",
             "initialValue": 2,
             "minValue": 0,
             "maxValue": 2
@@ -78,7 +78,7 @@
             "targetValue": 0
         }
         //{
-        //    "id": "StatusItemId::ENEMY_COUNT",
+        //    "id": "StatusItemId::ENEMY_DRONE_COUNT",
         //    "targetValue": 0
         //}
 

@@ -51,6 +51,7 @@ void MRContactListener::_playerBullet_droneBrain(GameObject* playerBullet, GameO
 		particleXComponent->addParticleEffect(ParticleEffects::impactSmoke);
 		particleXComponent->addParticleEffect(ParticleEffects::turretScrap);
 		particleXComponent->addParticleEffect(ParticleEffects::explosionSmoke);
+		particleXComponent->addParticleEffect(ParticleEffects::pulseExplosion);
 
 		//Get the Drone object
 		auto droneObject = droneBrain->parent();
@@ -97,6 +98,10 @@ void MRContactListener::_playerBullet_droneBrain(GameObject* playerBullet, GameO
 			pieceVitalityComponent->setLifetimeTimer(4);
 
 		}
+
+		//Update the status tracker for enemy count
+		game->contextMananger()->adjustStatusItemValue(StatusItemId::ENEMY_DRONE_COUNT, -1);
+
 
 	}
 	else {
