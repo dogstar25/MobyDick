@@ -154,6 +154,44 @@
 
                 }
             ]
+        },
+        {
+            "type": "CHECKPOINT_4_A",
+            "description": "Checkpoint for level 4",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 96,
+                        "height": 64
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::CHECKPOINT",
+                            "collisionShape": "B2_BOX",
+                            "isSensor": true
+                        }
+                    ]
+                },
+                {
+                    "id": "CHECKPOINT_COMPONENT",
+                    "sequence": 1,
+                    "reSpawnLocation": {
+                        "x": 112,
+                        "y": 30
+                    },
+                    "contactRequired": true
+                }
+            ]
         }
 
     ]

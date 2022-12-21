@@ -23,7 +23,21 @@ TransformComponent::TransformComponent(Json::Value componentJSON, float xMapPos,
 		m_size.Set(componentJSON["size"]["width"].asFloat(), componentJSON["size"]["height"].asFloat());
 
 		m_absolutePositioning = componentJSON["absolutePositioning"].asBool();
-		
+
+		//Determine location
+		auto locationJSON = componentJSON["location"];
+		if (locationJSON.isMember("windowPosition")) {
+
+			PositionAlignment windowPosition = static_cast<PositionAlignment>(game->enumMap()->toEnum(componentJSON["location"]["windowPosition"].asString()));
+			m_windowRelativePosition = windowPosition;
+
+			if (locationJSON.isMember("adjust")) {
+				auto adjustX = locationJSON["adjust"]["x"].asFloat();
+				auto adjustY = locationJSON["adjust"]["y"].asFloat();
+				m_windowPositionAdjustment = { adjustX , adjustY };
+			}
+
+		}
 
 }
 
@@ -36,6 +50,12 @@ TransformComponent::~TransformComponent()
 
 void TransformComponent::update()
 {
+
+	//If this is using the window relative positioning, then we may need to adjust the position
+	//because the object may have changed size, i.e ImGui Window
+	if (m_windowRelativePosition) {
+		parent()->setPosition(m_windowRelativePosition.value(), m_windowPositionAdjustment.x, m_windowPositionAdjustment.y);
+	}
 
 
 }

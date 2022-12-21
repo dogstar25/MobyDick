@@ -9,7 +9,8 @@
 
 #include <SDL2/SDL_mixer.h>
 
-
+inline const int LOOPING_SOUNDS_GROUP_TAG = 1;
+//inline const int ALL_OTHER_SOUNDS_GROUP_TAG = 2;
 
 class SoundManager
 {
@@ -18,10 +19,12 @@ public:
 	static SoundManager& instance();
 	void initSound();
 	void update();
-	int playSound(std::string id, int distanceMagnitude=0, bool loops=false );
+	int playSound(std::string id, int distanceMagnitude=1, bool loops=false );
 	//void playSound(std::string id, int channel, int distanceMagnitude = 0, bool loops=false);
 	void playMusic(std::string id, int loopTimes);
-	void stopSound(int channel);
+	void stopChannel(int channel);
+	void muteChannel(int channel);
+	void unMuteChannel(int channel);
 	void stopMusic();
 	void setVolume(int volume);
 	void setChannelDistance(int channel, int distance);

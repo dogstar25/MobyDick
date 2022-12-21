@@ -144,6 +144,13 @@ void GameObject::setPosition(b2Vec2 position, float angle)
 
 }
 
+void GameObject::setWindowRelativePosition(PositionAlignment windowPosition, float adjustX, float adjustY)
+{
+	const auto& transforComponent = getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+	transforComponent->setWindowRelativePosition(windowPosition);
+	transforComponent->setWindowPositionAdjustment({ adjustX, adjustY });
+
+}
 
 void GameObject::setPosition(PositionAlignment windowPosition, float adjustX, float adjustY)
 {

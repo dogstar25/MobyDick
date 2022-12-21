@@ -348,6 +348,9 @@ GameObject* Scene::addGameObject(std::string gameObjectType, int layer, Position
 	auto& gameObject = m_gameObjects[layer].emplace_back(std::make_shared<GameObject>(gameObjectType, (float)-5, (float)-5, angle, this, layer, cameraFollow));
 	gameObject->setPosition(windowPosition, adjustX, adjustY);
 
+	//Set the window position override
+	gameObject->setWindowRelativePosition( windowPosition, adjustX, adjustY);
+
 	//Add index 
 	addGameObjectIndex(gameObject);
 
@@ -562,6 +565,24 @@ std::vector<std::shared_ptr<GameObject>> Scene::getGameObjectsByTrait(int trait)
 	}
 
 	return foundGameObjects;
+}
+
+std::optional<std::shared_ptr<GameObject>> Scene::getFirstGameObjectByTrait(int trait)
+{
+	std::optional<std::shared_ptr<GameObject>> foundGameObject{};
+
+	auto it = m_gameObjectLookup.begin();
+	while (it != m_gameObjectLookup.end()) {
+
+		if (it->second.lock()->hasTrait(trait)) {
+			foundGameObject = it->second.lock();
+			break;
+		}
+
+		++it;
+	}
+
+	return foundGameObject;
 }
 
 void Scene::deleteIndex(std::string gameObjectKey)

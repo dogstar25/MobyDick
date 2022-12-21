@@ -518,18 +518,14 @@ void NavigationComponent::_moveTo(SDL_Point destinationTile)
 	trajectory.x = destinationPixelLoc.x - parent()->getCenterPosition().x;
 	trajectory.y = destinationPixelLoc.y - parent()->getCenterPosition().y;
 
-
-
-
-
 	/// debug line
-	float x = parent()->getCenterPosition().x;
-	float y = parent()->getCenterPosition().y;
+	//float x = parent()->getCenterPosition().x;
+	//float y = parent()->getCenterPosition().y;
 
-	glm::vec2 startPoint = { x, y};
-	glm::vec2 endPoint = { destinationPixelLoc.x, destinationPixelLoc.y };
-	glm::uvec4 color = { 255,255,255,255 };
-	game->renderer()->addLine(startPoint, endPoint, color);
+	//glm::vec2 startPoint = { x, y};
+	//glm::vec2 endPoint = { destinationPixelLoc.x, destinationPixelLoc.y };
+	//glm::uvec4 color = { 255,255,255,255 };
+	//game->renderer()->addLine(startPoint, endPoint, color);
 	///
 
 	trajectory.Normalize();

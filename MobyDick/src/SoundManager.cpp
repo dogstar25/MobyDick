@@ -6,6 +6,7 @@
 
 #include "GameConfig.h"
 #include "game.h"
+#include "Util.h"
 
 extern std::unique_ptr<Game>game;
 
@@ -83,14 +84,30 @@ void SoundManager::loadSounds()
 
 	}
 
+	//Create a mixgroup of channesl for looping sound effects
+	//auto result = Mix_GroupChannels(1, 128, LOOPING_SOUNDS_GROUP_TAG);
+	//result = Mix_GroupChannels(21, 127, ALL_OTHER_SOUNDS_GROUP_TAG);
+
 
 }
 
-void SoundManager::stopSound(int channel)
+void SoundManager::stopChannel(int channel)
 {
 	Mix_SetDistance(channel, 0);
 	int channelPlayedOn = Mix_HaltChannel(channel);
 	std::cout << "Sound Stopped " << std::endl;
+
+}
+
+void SoundManager::muteChannel(int channel)
+{
+	Mix_Volume(channel, 0);
+
+}
+
+void SoundManager::unMuteChannel(int channel)
+{
+	Mix_Volume(channel, MIX_MAX_VOLUME);
 
 }
 
@@ -108,27 +125,21 @@ int SoundManager::playSound(std::string id, int distanceMagnitude, bool loops )
 		loopFlag = -1;
 	}
 	
+	//int availableChannel = -1;
+	int availableChannel = Mix_GroupAvailable(-1);
 
-	//if the distanceMagnitude is 1, then we do not need to set the distance of a particular channel
-	if (distanceMagnitude == 1) {
+	if (availableChannel != -1) {
+		if (distanceMagnitude != 1) {
+			Mix_SetDistance(availableChannel, distanceMagnitude);
+		}
 
-		channelPlayedOn = Mix_PlayChannel(-1, m_sfxChunks[id], loopFlag);
+		channelPlayedOn = Mix_PlayChannel(availableChannel, m_sfxChunks[id], loopFlag);
 	}
 	else {
-
-		int availableChannel = Mix_GroupAvailable(-1);
-
-		if (availableChannel != -1) {
-			Mix_SetDistance(availableChannel, distanceMagnitude);
-
-			channelPlayedOn = Mix_PlayChannel(availableChannel, m_sfxChunks[id], loopFlag);
-		}
-		else {
-			std::cout << "negative sound channel for " << id << std::endl;
-			return -1;
-		}
-
+		std::cout << "negative sound channel for " << id << std::endl;
+		return -1;
 	}
+
 
 	return channelPlayedOn;
 
@@ -151,7 +162,7 @@ int SoundManager::playSound(std::string id, int distanceMagnitude, bool loops )
 
 void SoundManager::playMusic(std::string id, int loopTimes)
 {
-	Mix_PlayMusic(m_sfxMusic[id], loopTimes);
+	//Mix_PlayMusic(m_sfxMusic[id], loopTimes);
 
 }
 

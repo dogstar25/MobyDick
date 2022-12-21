@@ -46,7 +46,7 @@ private:
 	void _jetPackSwitch(bool turnOn);
 	void _sendWeaponChargeFlag(const bool isCharging);
 
-	int m_jetPackSoundChannel{};
+	int m_jetPackSoundChannel{-1};
 };
 
 

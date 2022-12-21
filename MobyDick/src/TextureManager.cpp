@@ -101,6 +101,9 @@ bool TextureManager::load(std::string texturesAssetsFile)
 	Json::Value root;
 	std::string texturefilename = "assets/" + texturesAssetsFile + ".json";
 	std::ifstream ifs(texturefilename);
+
+	assert(ifs.fail() == false && "Opening TextureAsset file failed!!");
+
 	ifs >> root;
 
 	//Get and store config values

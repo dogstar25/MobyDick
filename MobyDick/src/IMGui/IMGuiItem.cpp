@@ -71,6 +71,10 @@ void IMGuiItem::setWindowProperties(GameObject* parentGameObject)
 	//Set window padding
 	style.WindowPadding = ImVec2{ m_padding.x, m_padding.y };
 
+	//If this gui object is positioned based on window alignment then  we may need to adjust positioning if the size of the window changed
+
+
+
 
 }
 

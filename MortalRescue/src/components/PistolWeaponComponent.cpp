@@ -84,10 +84,10 @@ void PistolWeaponComponent::charge(bool isCharging)
 				m_chargingSoundStarted = true;
 			}
 
-			//If we have met the charging timer time, then set to fully charded
+			//If we have met the charging timer time, then set to fully charged
 			//otherwise
 			if (m_chargeTimer.hasMetTargetDuration()) {
-				soundComponent->stopSound(m_chargingSoundChannel);
+				soundComponent->muteChannel(m_chargingSoundChannel);
 				m_chargingSoundChannel = soundComponent->playSound("PULSE_FULL_CHARGE_SOUND");
 				m_isFullyCharged = true;
 			}
@@ -98,7 +98,7 @@ void PistolWeaponComponent::charge(bool isCharging)
 		else {
 
 			if (m_chargingSoundStarted == true) {
-				SoundManager::instance().stopSound(m_chargingSoundChannel);
+				soundComponent->muteChannel(m_chargingSoundChannel);
 			}
 			m_chargeTimer.reset();
 			m_chargingSoundStarted = false;

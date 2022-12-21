@@ -72,7 +72,7 @@
                 },
                 {
                     "id": "COMPOSITE_COMPONENT",
-                    "physicsWeldPiecesOn": false,
+                    "physicsWeldPiecesOn": true,
                     "blueprint": {
                         "texture": "TX_DRONE1_BLUEPRINT",
                         "legend": [
@@ -631,28 +631,28 @@
                             "id": "DEPLOY_SOUND",
                             "soundAssetId": "SFX_TURRET_DEPLOY_1",
                             "distanceSensitive": true,
-                            "soundRange": 600
+                            "soundRange": 1000
 
                         },
                         {
                             "id": "UNDEPLOY_SOUND",
                             "soundAssetId": "SFX_TURRET_UNDEPLOY_1",
                             "distanceSensitive": true,
-                            "soundRange": 600
+                            "soundRange": 1000
 
                         },
                         {
                             "id": "DESTROYED_SOUND",
                             "soundAssetId": "SFX_TURRET_EXPLODE_1",
                             "distanceSensitive": true,
-                            "soundRange": 600
+                            "soundRange": 1000
 
                         },
                         {
                             "id": "IMPACTED_SOUND",
                             "soundAssetId": "SFX_IMPACT_12",
                             "distanceSensitive": true,
-                            "soundRange": 600
+                            "soundRange": 1000
 
                         }
 

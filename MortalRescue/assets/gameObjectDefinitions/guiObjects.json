@@ -125,8 +125,14 @@
                         "width": 275,
                         "height": 100
                     },
-                    "absolutePositioning": true
-
+                    "absolutePositioning": true,
+                    "location": {
+                        "windowPosition": "PositionAlignment::TOP_LEFT",
+                        "adjust": {
+                            "x": 48,
+                            "y": 48
+                        }
+                    }
                 },
                 {
                     "id": "IMGUI_COMPONENT",
@@ -157,7 +163,7 @@
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
                         "width": 275,
-                        "height": 112
+                        "height": 0
                     },
                     "absolutePositioning": true
 

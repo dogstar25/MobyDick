@@ -62,25 +62,13 @@
             "initialValue": 0,
             "minValue": 0,
             "maxValue": 2000
-        },
-        {
-            "id": "StatusItemId::ENEMY_COUNT",
-            "initialValue": 2,
-            "minValue": 0,
-            "maxValue": 2
         }
-
-
     ],
     "objectives": [
         {
             "id": "StatusItemId::SURVIVORS",
             "targetValue": 0
         }
-        //{
-        //    "id": "StatusItemId::ENEMY_COUNT",
-        //    "targetValue": 0
-        //}
 
     ],
     "levelTriggers": [
@@ -364,6 +352,13 @@
             "id": "LOC_0004_0048",
             "gameObjectType": "ESCAPE_STAIRS",
             "angle": 90
+        },
+        {
+            "id": "LOC_0105_0032",
+            "gameObjectType": "CHECKPOINT_4_A",
+            "checkPointContact": true,
+            "layer": "GameLayer::ABSTRACT"
+
         }
 
 

@@ -3,11 +3,9 @@
 
 #include <SDL2/SDL.h>
 
-#pragma warning(push,0)
 #include <box2d/box2d.h>
 #include <json/json.h>
-#pragma warning(pop)
-
+#include <optional>
 #include "Component.h"
 
 class TransformComponent : public Component
@@ -30,6 +28,8 @@ public:
 	void setAngle(float angle);
 	void setLine(b2Vec2 start, b2Vec2 end);
 	void setAbsolutePositioning(bool absolutePositioning);
+	void setWindowRelativePosition(PositionAlignment windowRelativePosition) { m_windowRelativePosition = windowRelativePosition; }
+	void setWindowPositionAdjustment(b2Vec2 windowPositionAdjustment) { m_windowPositionAdjustment = windowPositionAdjustment; }
 
 	b2Vec2 size() { return m_size; }
 	b2Vec2 position() {	return m_position; }
@@ -47,18 +47,18 @@ public:
 	SDL_FPoint getTopLeftPosition();
 
 private:
-	float
-		m_angle,
-		m_originalAngle{};
-	b2Vec2
-		m_position,
-		m_size,
-		m_originalTilePosition,
-		m_originalPosition;
+	float m_angle;
+	float m_originalAngle{};
+	b2Vec2 m_position;
+	b2Vec2 m_size;
+	b2Vec2 m_originalTilePosition;
+	b2Vec2 m_originalPosition;
 
-	bool
-		m_absolutePositioning,
-		m_centeredPositioning;
+	bool m_absolutePositioning;
+	bool m_centeredPositioning;
+	
+	std::optional<PositionAlignment>m_windowRelativePosition{};
+	b2Vec2 m_windowPositionAdjustment{};
 
 	//Primitive Point
 	b2Vec2 m_point;

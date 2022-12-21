@@ -6,7 +6,7 @@
     "backgroundMusic": "MUSIC_LEVEL_BG_A",
     "dimensions": {
         "levelWidth": 60,
-        "levelHeight": 33,
+        "levelHeight": 32,
         "tileWidth": 32,
         "tileHeight": 32
     },
