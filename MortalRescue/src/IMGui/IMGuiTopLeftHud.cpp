@@ -140,8 +140,8 @@ void IMGuiTopLeftHud::hudWeaponPistolImage(ImVec4 color)
 
 	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 
-		GLuint textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::IMGUI_TEXTURE_ATLAS);
-		ImGui::Image((void*)(int*)textureAtlasId, ImVec2(64, 64), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), color);
+		GLuint64 textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::IMGUI_TEXTURE_ATLAS);
+		ImGui::Image((void*)textureAtlasId, ImVec2(64, 64), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), color);
 	}
 	else {
 
@@ -163,8 +163,8 @@ void IMGuiTopLeftHud::hudWeaponAccrualBar(ImVec4 color, float accrualValue)
 
 		if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 
-			GLuint textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::IMGUI_TEXTURE_ATLAS);
-			ImGui::Image((void*)(int*)textureAtlasId, ImVec2(2, 32), ImVec2(bottomRight.x, bottomRight.y), ImVec2(topLeft.x, topLeft.y), color);
+			GLuint64 textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::IMGUI_TEXTURE_ATLAS);
+			ImGui::Image((void*)textureAtlasId, ImVec2(2, 32), ImVec2(bottomRight.x, bottomRight.y), ImVec2(topLeft.x, topLeft.y), color);
 			ImGui::SameLine(0.0f, 0);
 		}
 		else {
@@ -204,8 +204,8 @@ void IMGuiTopLeftHud::hudWeaponChargeBar(float accrualValue)
 
 		if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 
-			GLuint textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::IMGUI_TEXTURE_ATLAS);
-			ImGui::Image((void*)(int*)textureAtlasId, ImVec2(2, 32), ImVec2(bottomRight.x, bottomRight.y), ImVec2(topLeft.x, topLeft.y), util::SDLColorToImVec4(accrualBarColor));
+			GLuint64 textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::IMGUI_TEXTURE_ATLAS);
+			ImGui::Image((void*)textureAtlasId, ImVec2(2, 32), ImVec2(bottomRight.x, bottomRight.y), ImVec2(topLeft.x, topLeft.y), util::SDLColorToImVec4(accrualBarColor));
 			ImGui::SameLine(0.0f, 0);
 		}
 		else {

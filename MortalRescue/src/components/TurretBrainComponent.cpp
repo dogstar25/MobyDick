@@ -71,7 +71,6 @@ int TurretBrainComponent::_determineState()
 		}
 		else if (m_currentState == BrainState::UNDEPLOY) {
 
-			const auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 			state = BrainState::DEPLOY;
 
 		}
@@ -105,30 +104,41 @@ void TurretBrainComponent::_doDeploy()
 
 	const auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 
-	const auto& soundComponent = parent()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
-	soundComponent->playSound("DEPLOY_SOUND");
+	//If animation state is ANIMATION_DEPLOY then it hasnt finished the deploy, dont deploy again
+	if (animationComponent->currentAnimationState() != ANIMATION_DEPLOY) {
 
-	animationComponent->animate(ANIMATION_DEPLOY, ANIMATE_ONE_TIME);
-	animationComponent->setDefaultAnimationState(ANIMATION_ACTIVE);
+		const auto& soundComponent = parent()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+		soundComponent->playSound("DEPLOY_SOUND");
+
+		std::cout << "Turret Deploy" << std::endl;
+		animationComponent->animate(ANIMATION_DEPLOY, ANIMATE_ONE_TIME);
+		animationComponent->setDefaultAnimationState(ANIMATION_ACTIVE);
+	}
 
 }
 
 void TurretBrainComponent::_doUnDeploy()
 {
-	const auto& soundComponent = parent()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
-	soundComponent->playSound("UNDEPLOY_SOUND");
 
-	const auto& physicsComponent = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
-	const auto& transformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
 	const auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 
-	float angleRadians = util::degreesToRadians(transformComponent->originalAngle());
-	physicsComponent->setAngle(angleRadians);
-	physicsComponent->update();
+	//If animation state is ANIMATION_UNDEPLOY then it hasnt finished the undeploy, dont undeploy again
+	if (animationComponent->currentAnimationState() != ANIMATION_UNDEPLOY) {
 
-	animationComponent->animate(ANIMATION_UNDEPLOY, ANIMATE_ONE_TIME);
-	animationComponent->setDefaultAnimationState(ANIMATION_IDLE);
+		const auto& soundComponent = parent()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
+		soundComponent->playSound("UNDEPLOY_SOUND");
 
+		const auto& physicsComponent = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+		const auto& transformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
+		const auto& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
+
+		float angleRadians = util::degreesToRadians(transformComponent->originalAngle());
+		physicsComponent->setAngle(angleRadians);
+		physicsComponent->update();
+
+		animationComponent->animate(ANIMATION_UNDEPLOY, ANIMATE_ONE_TIME);
+		animationComponent->setDefaultAnimationState(ANIMATION_IDLE);
+	}
 }
 
 void TurretBrainComponent::_doIdle()

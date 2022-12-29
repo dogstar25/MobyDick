@@ -66,13 +66,15 @@ ChildrenComponent::ChildrenComponent(Json::Value componentJSON, std::string pare
 		}
 		else {
 			location.locationType = ChildLocationType::ABSOLUTE_POSITION;
-			location.absolutePosition = absolutePosition.value();
+			if (absolutePosition.has_value()) {
+				location.absolutePosition = absolutePosition.value();
+			}
 		}
 
 		location.centeredOnLocation = centeredOnLocation;
 		child.location = location;
 		std::string name = _buildChildName(parentName, childCount);
-		auto gameObject = std::make_shared<GameObject>(childObjectType, -1.0F, -1.0F, 0.F, parentScene, 0., false, name );
+		auto gameObject = std::make_shared<GameObject>(childObjectType, -1.0F, -1.0F, 0.F, parentScene, GameLayer::MAIN, false, name );
 		child.gameObject = gameObject;
 		m_childObjects.push_back(child);
 

@@ -23,8 +23,6 @@ public:
 	//void playSound(std::string id, int channel, int distanceMagnitude = 0, bool loops=false);
 	void playMusic(std::string id, int loopTimes);
 	void stopChannel(int channel);
-	void muteChannel(int channel);
-	void unMuteChannel(int channel);
 	void stopMusic();
 	void setVolume(int volume);
 	void setChannelDistance(int channel, int distance);

@@ -38,6 +38,7 @@ void GLRenderer::init(SDL_Window* window)
 	if (!gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD" << std::endl;
+		std::cout << SDL_GetError();
 	}
 
 	std::cout << "Vendor: " << glGetString(GL_VENDOR) << std::endl;

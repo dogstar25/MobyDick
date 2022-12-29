@@ -72,15 +72,15 @@ void SoundComponent::update()
 	auto itr = m_sounds.begin();
 	while (itr != m_sounds.end()) {
 
-		if (itr->second.isDistanceSensitive == true && itr->second.isContinuous == true) {
+		if (itr->second.isDistanceSensitive == true) {
 
 			const auto player = parent()->parentScene()->getFirstGameObjectByTrait(TraitTag::player);
-			if (player.has_value()) {
+			if (player.has_value() && itr->second.soundChannel.has_value()) {
 				const auto playerPosition = parent()->parentScene()->getFirstGameObjectByTrait(TraitTag::player).value()->getCenterPosition();
 				const auto parentPosition = parent()->getCenterPosition();
 				int soundDistanceMagnitude = _calculateSoundDistanceMagnitude(playerPosition, parentPosition, itr->second.soundRange);
 
-				SoundManager::instance().setChannelDistance(itr->second.soundChannel, soundDistanceMagnitude);
+				SoundManager::instance().setChannelDistance(itr->second.soundChannel.value(), soundDistanceMagnitude);
 			}
 		}
 
@@ -101,11 +101,9 @@ void SoundComponent::postInit()
 
 		if (itr->second.isContinuous == true) {
 
-			if (itr->second.isDistanceSensitive == true) {
-				int channel = SoundManager::instance().playSound(itr->second.soundAssetId, 255, true);
-				itr->second.soundChannel = channel;
-				SoundManager::instance().setChannelDistance(itr->second.soundChannel, 255);
-			}
+			int channel = SoundManager::instance().playSound(itr->second.soundAssetId, 255, true);
+			itr->second.soundChannel = channel;
+			SoundManager::instance().setChannelDistance(itr->second.soundChannel.value(), 255);
 
 		}
 
@@ -124,7 +122,7 @@ void SoundComponent::stopSounds()
 
 		if (itr->second.isContinuous == true) {
 
-			stopChannel(itr->second.soundChannel);
+			stopSound(itr->second.id);
 
 		}
 
@@ -133,26 +131,21 @@ void SoundComponent::stopSounds()
 
 }
 
-void SoundComponent::stopChannel(int channel)
+void SoundComponent::stopSound(std::string soundId)
 {
 
-	SoundManager::instance().stopChannel(channel);
+	if (m_sounds.find(soundId) != m_sounds.end()) {
+
+		if (m_sounds.at(soundId).soundChannel.has_value()) {
+			SoundManager::instance().stopChannel(m_sounds.at(soundId).soundChannel.value());
+
+			//Set this sounds channel to nothing because it has been freed and could have been grabbed by another sound
+			m_sounds.at(soundId).soundChannel = std::nullopt;
+		}
+	}
 
 }
 
-void SoundComponent::muteChannel(int channel)
-{
-
-	SoundManager::instance().muteChannel(channel);
-
-}
-
-void SoundComponent::unMuteChannel(int channel)
-{
-
-	SoundManager::instance().unMuteChannel(channel);
-
-}
 
 void SoundComponent::setParent(GameObject* gameObject)
 {
@@ -176,13 +169,9 @@ int SoundComponent::playSound(std::string soundId)
 			soundDistanceMagnitude =  _calculateSoundDistanceMagnitude(playerPosition, parentPosition, (m_sounds.at(soundId).soundRange));
 		}
 
-		//Loops?
-		bool loops = m_sounds.at(soundId).isContinuous;
-
 		//play
-
-		channel = SoundManager::instance().playSound(m_sounds.at(soundId).soundAssetId, soundDistanceMagnitude, loops);
-
+		channel = SoundManager::instance().playSound(m_sounds.at(soundId).soundAssetId, soundDistanceMagnitude, m_sounds.at(soundId).isContinuous);
+		m_sounds.at(soundId).soundChannel = channel;
 	}
 
 	return channel;
@@ -194,10 +183,9 @@ int SoundComponent::_calculateSoundDistanceMagnitude(SDL_FPoint playerPosition, 
 
 	float playerToSoundSource = util::calculateDistance(playerPosition, parentPosition);
 
-	float soundMagnitude = (playerToSoundSource / soundRange) * 255.0;
+	int soundMagnitude = int((playerToSoundSource / soundRange) * (float)255.0);
 	soundMagnitude = std::min((int)soundMagnitude, 255);
 
-	
 	return soundMagnitude;
 }
 

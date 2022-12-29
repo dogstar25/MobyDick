@@ -550,6 +550,24 @@ std::vector<std::shared_ptr<GameObject>> Scene::getGameObjectsByName(std::string
 	return foundGameObjects;
 }
 
+std::optional<std::shared_ptr<GameObject>> Scene::getFirstGameObjectByName(std::string name)
+{
+	std::optional<std::shared_ptr<GameObject>> foundGameObject{};
+
+	auto it = m_gameObjectLookup.begin();
+	while (it != m_gameObjectLookup.end()) {
+
+		if (it->second.lock()->name() == name) {
+			foundGameObject = it->second.lock();
+			break;
+		}
+
+		++it;
+	}
+
+	return foundGameObject;
+}
+
 std::vector<std::shared_ptr<GameObject>> Scene::getGameObjectsByTrait(int trait)
 {
 	std::vector<std::shared_ptr<GameObject>> foundGameObjects;
@@ -735,7 +753,7 @@ bool Scene::_updateNavigationMap()
 				const auto& gameObject = navItem.gameObject->lock();
 
 				//Get the gameobject and its width in tiles
-				int widthInTiles = std::round(gameObject->getSize().x / LevelManager::instance().m_tileWidth);
+				int widthInTiles = int(std::round(gameObject->getSize().x / LevelManager::instance().m_tileWidth));
 
 				//Plain impassable
 				if (gameObject->hasTrait(TraitTag::impasse)) {

@@ -14,7 +14,8 @@ EnemyCDeadTrigger::EnemyCDeadTrigger() :
 	Trigger()
 {
 	m_triggerOnlyOnce = true;
-	m_triggerName = "EnenmyADeadTrigger";
+	m_triggerName = "EnenmyCDeadTrigger";
+	m_criteriaCheckTimer = Timer(1, true);
 
 }
 
@@ -23,13 +24,18 @@ bool EnemyCDeadTrigger::hasMetCriteria(Scene* scene)
 
 	bool hasMet{ false };
 
-	if (m_triggerOnlyOnce == false || (m_triggerOnlyOnce && m_hasTriggered == false)) {
+	//Call base first
+	if(Trigger::hasMetCriteria(scene)){
 
-		const auto& enemyAList = scene->getGameObjectsByName("EnemyC");
-		if (enemyAList.empty()) {
-			hasMet = true;
+		std::cout << "checked" << std::endl;
+		if (m_triggerOnlyOnce == false || (m_triggerOnlyOnce && m_hasTriggered == false)) {
+
+			const auto& enemyC = scene->getGameObjectsByName("EnemyC");
+			if (enemyC.empty()) {
+				hasMet = true;
+			}
+
 		}
-
 	}
 
 	return hasMet;

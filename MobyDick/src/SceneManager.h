@@ -49,7 +49,6 @@ public:
 	Timer& gameTimer() { return m_gameTimer; }
 	void testIMGUI();
 	Scene& currentScene() { return m_scenes.back(); }
-	Scene& getScene(std::string sceneId);
 	void loadLevel(std::string levelId);
 	void loadNextLevel();
 	void loadCurrentLevel();

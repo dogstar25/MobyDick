@@ -100,7 +100,9 @@ void MRContactListener::_playerBullet_droneBrain(GameObject* playerBullet, GameO
 		}
 
 		//Update the status tracker for enemy count
-		game->contextMananger()->adjustStatusItemValue(StatusItemId::ENEMY_DRONE_COUNT, -1);
+		if (game->contextMananger()->getStatusItem(StatusItemId::ENEMY_DRONE_COUNT).id() != StatusItemId::DEFAULT_EMPTY) {
+			game->contextMananger()->adjustStatusItemValue(StatusItemId::ENEMY_DRONE_COUNT, -1);
+		}
 
 
 	}
@@ -232,6 +234,7 @@ void MRContactListener::_playerBullet_droneShield(GameObject* playerBullet, Game
 	auto drone = droneShield->parent();
 	const auto& soundComponent = drone.value()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
 	soundComponent->playSound("IMPACTED_SOUND");
+	std::cout << "ImpactSound" << std::endl;
 
 	if (shieldHolds == false) {
 
@@ -427,7 +430,7 @@ void MRContactListener::_enemyBullet_player(GameObject* bullet, GameObject* play
 
 	//flag the scrap item to be removed from the game and play a sound effect
 	bullet->setRemoveFromWorld(true);
-	SoundManager::instance().playSound("SFX_RETRO_IMPACT_5");
+	//SoundManager::instance().playSound("SFX_RETRO_IMPACT_5");
 
 	//Do a color flash animate on the turret
 	const auto& animationComponent = player->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);

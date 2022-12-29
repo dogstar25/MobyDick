@@ -801,10 +801,11 @@ std::vector<SeenObjectDetails> GameObject::getSeenObjects()
 {
 
 	if (hasComponent(ComponentTypes::BRAIN_COMPONENT)) {
-
-
 		const auto& brain = getComponent<BrainComponent>(ComponentTypes::BRAIN_COMPONENT);
 		return brain->seenObjects();
+	}
+	else {
+		return std::vector<SeenObjectDetails>();
 	}
 
 }

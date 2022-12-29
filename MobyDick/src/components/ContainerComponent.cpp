@@ -90,7 +90,7 @@ void ContainerComponent::update()
 		if (isFull() == false) {
 			if (m_refillTimer.hasMetTargetDuration()) {
 
-				addItem(m_contentItemGameObjectType, m_contentsItemSpawnForce, parent()->parentScene(), parent()->name(), m_items.size()+(int)1);
+				addItem(m_contentItemGameObjectType, m_contentsItemSpawnForce, parent()->parentScene(), parent()->name(), (int)m_items.size()+1);
 				m_refillTimer.reset();
 			}
 		}
@@ -142,7 +142,7 @@ void ContainerComponent::addItem(std::string gameObjectType, float spawnForce, S
 
 	//Create off screen
 	std::string name = _buildItemName(parentName, itemCount);
-	auto gameObject = std::make_shared<GameObject>(gameObjectType, (float)-50.0, (float)-50.0, (float)0, parentScene, (float)0., false, name);
+	auto gameObject = std::make_shared<GameObject>(gameObjectType, (float)-50.0, (float)-50.0, (float)0, parentScene, GameLayer::MAIN, false, name);
 	containerItem.gameObject = gameObject;
 	parentScene->addGameObjectIndex(gameObject);
 
