@@ -47,6 +47,10 @@ void SoundManager::update()
 	auto volume = game->contextMananger()->getSoundVolume();
 	setVolume( volume);
 
+	//for (int x = 0; x < 32; x++) {
+	//	ImGui::Value("SoundChannel", Mix_Playing(x));
+	//}
+
 }
 
 
@@ -84,30 +88,13 @@ void SoundManager::loadSounds()
 
 	}
 
-	//Create a mixgroup of channesl for looping sound effects
-	//auto result = Mix_GroupChannels(1, 128, LOOPING_SOUNDS_GROUP_TAG);
-	//result = Mix_GroupChannels(21, 127, ALL_OTHER_SOUNDS_GROUP_TAG);
-
-
 }
 
 void SoundManager::stopChannel(int channel)
 {
 	Mix_SetDistance(channel, 0);
-	int channelPlayedOn = Mix_HaltChannel(channel);
+	Mix_HaltChannel(channel);
 	std::cout << "Sound Stopped " << std::endl;
-
-}
-
-void SoundManager::muteChannel(int channel)
-{
-	Mix_Volume(channel, 0);
-
-}
-
-void SoundManager::unMuteChannel(int channel)
-{
-	Mix_Volume(channel, MIX_MAX_VOLUME);
 
 }
 
@@ -162,7 +149,7 @@ int SoundManager::playSound(std::string id, int distanceMagnitude, bool loops )
 
 void SoundManager::playMusic(std::string id, int loopTimes)
 {
-	//Mix_PlayMusic(m_sfxMusic[id], loopTimes);
+	Mix_PlayMusic(m_sfxMusic[id], loopTimes);
 
 }
 

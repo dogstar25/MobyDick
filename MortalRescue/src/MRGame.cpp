@@ -78,28 +78,10 @@ bool MRGame::init(std::shared_ptr<ContactListener> contactListener, std::shared_
 
 	//Load a first scene
 	Scene& scene = SceneManager::instance().pushScene("SCENE_TITLE_SCREEN");
-	//Scene& scene = SceneManager::instance().pushScene("SCENE_TEST");
-
-	//Load the current saved level
-	//GameSaveFileData gameSaveFileData{};
-	//contextManager->loadGame(&gameSaveFileData);
-	//std::stringstream level{};
-	//level << gameSaveFileData.level;
-	//scene.loadLevel(level.str());
-
-	//SoundManager::instance().playMusic("music_ambience_1", -1);
 
 	//Initialize the clock object
 	Clock::instance().init();
 
-	//auto object = scene.addGameObject("GLOBAL_FRAME", GameLayer::BACKGROUND_1, 0, 0);
-	//object->postInit();
-
-	//auto object = scene.addGameObject("METEOR_EMITTER", GameLayer::BACKGROUND_1, 3, 7);
-	//object->postInit();
-
-	
-	
 
 	return true;
 }

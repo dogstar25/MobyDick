@@ -27,5 +27,4 @@ private:
 
 	Timer m_fireDelayTimer{};
 
-
 };

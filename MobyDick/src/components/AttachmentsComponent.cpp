@@ -30,7 +30,7 @@ AttachmentsComponent::AttachmentsComponent(Json::Value componentJSON, std::strin
 		//tOdO: PUT A CHECK HER THAT WILL NOT ALLOW A STATIC OBJECT BE ATTACHED TO A DYNAMIC OBJECT
 
 		std::string name = _buildAttachmentName(parentName, attachmentCount);
-		auto gameObject = std::make_shared<GameObject>(gameObjectType, - 1.0F, -1.0F, 0.F, parentScene, 0., false, name);
+		auto gameObject = std::make_shared<GameObject>(gameObjectType, - 1.0F, -1.0F, 0.F, parentScene, GameLayer::MAIN, false, name);
 
 		//Add index 
 		parentScene->addGameObjectIndex(gameObject);

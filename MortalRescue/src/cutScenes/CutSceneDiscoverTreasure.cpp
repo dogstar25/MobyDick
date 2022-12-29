@@ -90,7 +90,6 @@ void CutSceneDiscoverTreasure::update()
 
 void CutSceneDiscoverTreasure::end()
 {
-	SDL_Event event;
 
 	//Call the wrapup functions for the pieces
 	_endFrank();

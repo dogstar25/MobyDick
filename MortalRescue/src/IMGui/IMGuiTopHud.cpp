@@ -108,8 +108,8 @@ void IMGuiTopHud::hudLives()
 
 		if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 
-			GLuint textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::IMGUI_TEXTURE_ATLAS);
-			ImGui::Image((void*)(int*)textureAtlasId, ImVec2(32, 32), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), heartColor);
+			GLuint64 textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::IMGUI_TEXTURE_ATLAS);
+			ImGui::Image((void*)textureAtlasId, ImVec2(32, 32), ImVec2(topLeft.x, topLeft.y), ImVec2(bottomRight.x, bottomRight.y), heartColor);
 			ImGui::SameLine(0.0f, 2);
 		}
 		else {

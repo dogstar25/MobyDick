@@ -72,15 +72,9 @@ void GameObjectManager::load(std::string gameObjectAssetsFilename)
 std::shared_ptr<GameObjectDefinition> GameObjectManager::getDefinition(std::string definitionId)
 {
 
-	if (m_gameObjectDefinitions.find(definitionId) == this->m_gameObjectDefinitions.end())
-	{
-		assert(false && "Missing DEFAULT gameObject. Configure a GameObject named DEFAULT");
-	}
-	else
-	{
-		return std::make_shared<GameObjectDefinition>(m_gameObjectDefinitions[definitionId]);
-	}
+	assert(m_gameObjectDefinitions.find(definitionId) != this->m_gameObjectDefinitions.end() && "Missing DEFAULT gameObject. Configure a GameObject named DEFAULT");
 
+	return std::make_shared<GameObjectDefinition>(m_gameObjectDefinitions[definitionId]);
 
 }
 

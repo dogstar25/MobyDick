@@ -22,8 +22,8 @@ NavigationComponent::NavigationComponent(Json::Value componentJSON)
 
 	//Based on the size of the object, calculate the destination met tolerance
 	auto tileSize = game->worldTileSize().x;
-	m_navigationDestinationTolerance = (m_passageFitSizeCategory + 1) * tileSize / 2;
-	m_navigationStuckTolerance = (m_passageFitSizeCategory + 1) * tileSize / 16;
+	m_navigationDestinationTolerance = float((m_passageFitSizeCategory + 1) * tileSize / 2);
+	m_navigationStuckTolerance = float((m_passageFitSizeCategory + 1) * tileSize / 16);
 
 }
 
@@ -103,7 +103,7 @@ NavigationStatus NavigationComponent::navigateTo(float pixelX, float pixelY)
 	const auto objectSize = parent()->getSize();
 	SDL_Point interimNavStepTileLocation = m_solutionPath.at(m_currentNavStep);
 	SDL_FPoint interimNavStepPixelLocation = util::tileToPixelLocation(
-		interimNavStepTileLocation.x, interimNavStepTileLocation.y);
+		(float)interimNavStepTileLocation.x, (float)interimNavStepTileLocation.y);
 
 	//Distance between our master oobject and the destination
 	float targetDistance = util::calculateDistance(parent()->getCenterPosition(), interimNavStepPixelLocation);
@@ -147,7 +147,7 @@ bool NavigationComponent::_buildPathToDestination()
 
 	//Make key
 	SDL_Point tileLocation = util::pixelToTileLocation(currentPosition.x, currentPosition.y);
-	std::string key = util::locationToString(tileLocation.x, tileLocation.y);
+	std::string key = util::locationToString((float)tileLocation.x, (float)tileLocation.y);
 
 	//set position (in tiles)
 	startingNode->position = tileLocation;
@@ -300,12 +300,6 @@ bool NavigationComponent::_isStuck()
 void NavigationComponent::_calculateCosts(AStarNode* startingNode, AStarNode* node)
 {
 
-	float startX = startingNode->position.x;
-	float startY = startingNode->position.y;
-
-	float evalNodeX = node->position.x;
-	float evalNodeY = node->position.y;
-
 	//Calculate GCost - distance from start
 	node->gCost = util::calculateDistance(startingNode->position, node->position);
 
@@ -384,7 +378,7 @@ void NavigationComponent::_addNeighbor(int x, int y, std::vector<std::shared_ptr
 
 		std::shared_ptr<AStarNode> starNode = std::make_shared<AStarNode>();
 		starNode->position = { x, y };
-		starNode->keyValue = util::locationToString(x,y);
+		starNode->keyValue = util::locationToString((float)x,(float)y);
 		neighbors.push_back(starNode);
 
 	}
@@ -512,7 +506,7 @@ void NavigationComponent::_moveTo(SDL_Point destinationTile)
 	//Need the objects size to calc the right pixel position
 	const auto objectSize = parent()->getSize();
 
-	SDL_FPoint destinationPixelLoc = util::tileToPixelLocation(destinationTile.x, destinationTile.y);
+	SDL_FPoint destinationPixelLoc = util::tileToPixelLocation((float)destinationTile.x, (float)destinationTile.y);
 
 	b2Vec2 trajectory{};
 	trajectory.x = destinationPixelLoc.x - parent()->getCenterPosition().x;

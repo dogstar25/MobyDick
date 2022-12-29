@@ -59,10 +59,12 @@
             "cameraFollow": true
         },
         {
-            "id": "LOC_0007_0014",
-            "gameObjectType": "SURVIVOR",
-            "name": "DRONE1",
-            "cameraFollow": false
+            "id": "LOC_0018_0008",
+            "gameObjectType": "TURRET"
+        },
+        {
+            "id": "LOC_0018_0013",
+            "gameObjectType": "TURRET"
         }
 
     ],

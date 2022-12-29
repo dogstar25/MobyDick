@@ -34,8 +34,6 @@ void SceneManager::deleteGameObject(std::string gameObjectName)
 
 }
 
-
-
 void SceneManager::init()
 {
 	m_currentSceneIndex = 0;
@@ -43,17 +41,6 @@ void SceneManager::init()
 
 	float gameLoopStep = GameConfig::instance().gameLoopStep();
 	m_gameTimer = Timer(gameLoopStep, true);
-
-}
-
-Scene& SceneManager::getScene(std::string sceneId)
-{
-
-	for (auto scene : m_scenes) {
-		if (scene.id() == sceneId) {
-			return scene;
-		}
-	}
 
 }
 

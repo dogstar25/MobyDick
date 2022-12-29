@@ -249,9 +249,7 @@
                     "sounds": [
                         {
                             "id": "FIRE_SOUND",
-                            "soundAssetId": "SFX_LASER_004",
-                            "distanceSensitive": true,
-                            "soundRange": 600
+                            "soundAssetId": "SFX_LASER_004"
                         }
                     ]
                 }
@@ -508,9 +506,7 @@
                     "sounds": [
                         {
                             "id": "FIRE_SOUND",
-                            "soundAssetId": "SFX_LASER_004",
-                            "distanceSensitive": true,
-                            "soundRange": 600
+                            "soundAssetId": "SFX_LASER_004"
                         }
                     ]
                 }
@@ -629,30 +625,22 @@
                         },
                         {
                             "id": "DEPLOY_SOUND",
-                            "soundAssetId": "SFX_TURRET_DEPLOY_1",
-                            "distanceSensitive": true,
-                            "soundRange": 1000
+                            "soundAssetId": "SFX_TURRET_DEPLOY_1"
 
                         },
                         {
                             "id": "UNDEPLOY_SOUND",
-                            "soundAssetId": "SFX_TURRET_UNDEPLOY_1",
-                            "distanceSensitive": true,
-                            "soundRange": 1000
+                            "soundAssetId": "SFX_TURRET_UNDEPLOY_1"
 
                         },
                         {
                             "id": "DESTROYED_SOUND",
-                            "soundAssetId": "SFX_TURRET_EXPLODE_1",
-                            "distanceSensitive": true,
-                            "soundRange": 1000
+                            "soundAssetId": "SFX_TURRET_EXPLODE_1"
 
                         },
                         {
                             "id": "IMPACTED_SOUND",
-                            "soundAssetId": "SFX_IMPACT_12",
-                            "distanceSensitive": true,
-                            "soundRange": 1000
+                            "soundAssetId": "SFX_IMPACT_12"
 
                         }
 

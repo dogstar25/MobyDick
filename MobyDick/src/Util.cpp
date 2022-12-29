@@ -382,7 +382,7 @@ namespace util
 	float calculateDistance(SDL_Point location1, SDL_Point location2)
 	{
 
-		auto distance = std::powf((location1.x - location2.x), 2) + std::powf((location1.y - location2.y), 2);
+		auto distance = std::pow((location1.x - location2.x), 2) + std::pow((location1.y - location2.y), 2);
 		distance = std::sqrtf(distance);
 
 		return distance;
