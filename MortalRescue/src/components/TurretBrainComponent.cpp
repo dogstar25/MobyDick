@@ -110,7 +110,7 @@ void TurretBrainComponent::_doDeploy()
 		const auto& soundComponent = parent()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
 		soundComponent->playSound("DEPLOY_SOUND");
 
-		std::cout << "Turret Deploy" << std::endl;
+		//std::cout << "Turret Deploy" << std::endl;
 		animationComponent->animate(ANIMATION_DEPLOY, ANIMATE_ONE_TIME);
 		animationComponent->setDefaultAnimationState(ANIMATION_ACTIVE);
 	}

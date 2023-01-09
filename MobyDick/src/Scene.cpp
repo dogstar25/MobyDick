@@ -135,7 +135,9 @@ void Scene::loadNextLevel()
 		loadLevel(nextLevelId.value());
 	}
 	else {
-		assert(false && "We are already at the last level!");
+		
+		util::sendSceneEvent(SCENE_ACTION_ADD_AND_PAUSE, "SCENE_YOU_WIN");
+
 	}
 
 }

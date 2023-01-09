@@ -27,7 +27,6 @@ bool EnemyCDeadTrigger::hasMetCriteria(Scene* scene)
 	//Call base first
 	if(Trigger::hasMetCriteria(scene)){
 
-		std::cout << "checked" << std::endl;
 		if (m_triggerOnlyOnce == false || (m_triggerOnlyOnce && m_hasTriggered == false)) {
 
 			const auto& enemyC = scene->getGameObjectsByName("EnemyC");

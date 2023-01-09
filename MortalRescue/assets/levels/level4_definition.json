@@ -53,9 +53,9 @@
         },
         {
             "id": "StatusItemId::SURVIVORS",
-            "initialValue": 6,
+            "initialValue": 8,
             "minValue": 0,
-            "maxValue": 6
+            "maxValue": 8
         },
         {
             "id": "StatusItemId::SCRAP_COUNT",

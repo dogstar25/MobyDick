@@ -27,7 +27,6 @@ bool GameConfig::init(std::string configFile)
 
 	m_gameTitle = root["gameTitle"].asString();
 	m_gameLoopStep = root["gameLoopStep"].asFloat();
-	m_mouseSensitivity = root["mouseSensitivity"].asFloat();
 	m_dynamicTextRefreshDelay = root["dynamicTextRefreshDelay"].asFloat();
 	m_debugPanel = root["debugPanel"]["show"].asBool();
 	m_debugPanelLocation.x = root["debugPanel"]["xPos"].asInt();

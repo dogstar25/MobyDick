@@ -20,9 +20,6 @@ public:
 	float scaleFactor() {
 		return m_scaleFactor;
 	}
-	float mouseSensitivity() {
-		return m_mouseSensitivity;
-	}
 	SDL_Point debugPanelLocation() {
 		return m_debugPanelLocation;
 	}
@@ -69,7 +66,6 @@ private:
 
 	RendererType m_rendererType;
 
-	float m_mouseSensitivity{};
 	float m_dynamicTextRefreshDelay{};
 	float m_gameLoopStep{};
 	bool m_windowFullscreen{};

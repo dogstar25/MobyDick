@@ -263,6 +263,44 @@
 
         },
         {
+            "type": "IMGUI_YOUWIN_PANEL",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 512,
+                        "height": 315
+                    },
+                    "absolutePositioning": true
+
+                },
+                {
+                    "id": "IMGUI_COMPONENT",
+                    "imguiType": "IMGuiYouWin",
+                    "padding": {
+                        "x": 24,
+                        "y": 24
+                    },
+                    "color": {
+                        "background": "Colors::CHARCOAL",
+                        "backgroundAlpha": 225,
+                        "text": "Colors::WHITE",
+                        "button": "Colors::BLUE",
+                        "buttonHover": "Colors::MIRKWOOD",
+                        "buttonActive": "Colors::YELLOW"
+
+                    },
+                    "autoSize": false
+
+                }
+            ]
+
+        },
+        {
             "type": "INTERACTIVE_MENU_BASIC",
             "traitTags": [ "abstract" ],
             "components": [
