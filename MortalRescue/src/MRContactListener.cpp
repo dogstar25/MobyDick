@@ -234,7 +234,6 @@ void MRContactListener::_playerBullet_droneShield(GameObject* playerBullet, Game
 	auto drone = droneShield->parent();
 	const auto& soundComponent = drone.value()->getComponent<SoundComponent>(ComponentTypes::SOUND_COMPONENT);
 	soundComponent->playSound("IMPACTED_SOUND");
-	std::cout << "ImpactSound" << std::endl;
 
 	if (shieldHolds == false) {
 

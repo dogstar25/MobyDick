@@ -24,7 +24,6 @@
     "rendererType": "RendererType::SDL",
     //"rendererType": "RendererType::OPENGL",
     //"openGLBatching": true,
-    "mouseSensitivity": 0.5, //higher the mmore sensitive
     "gameLoopStep": 0.016,
     "physics": {
         "box2dScale": 25

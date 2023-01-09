@@ -19,6 +19,13 @@
                         "action": "SCENE_ACTION_ADD",
                         "actionId": "SCENE_NAVMAP"
                     }
+                },
+                {
+                    "keyCode": "SDLK_F4",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_ADD",
+                        "actionId": "SCENE_YOU_WIN"
+                    }
                 }
 
 
@@ -281,6 +288,20 @@
             ]
         },
         {
+            "id": "SCENE_YOU_WIN",
+            "inputControlMode": "CONTROL_MODE_SELECT",
+            "maxObjects": 5,
+            "gameObjects": [
+                {
+                    "gameObjectType": "IMGUI_YOUWIN_PANEL",
+                    "layer": "GameLayer::MAIN",
+                    "location": {
+                        "windowPosition": "PositionAlignment::CENTER"
+                    }
+                }
+            ]
+        },
+        {
             "id": "SCENE_PAUSE_MENU",
             "inputControlMode": "CONTROL_MODE_IMGUI",
             "maxObjects": 24,
@@ -340,7 +361,7 @@
         {
             "id": "SCENE_NAVMAP",
             "inputControlMode": "CONTROL_MODE_IMGUI",
-            "tags": [  ],
+            "tags": [],
             "maxObjects": 3000
         },
         {

@@ -94,7 +94,7 @@ void SoundManager::stopChannel(int channel)
 {
 	Mix_SetDistance(channel, 0);
 	Mix_HaltChannel(channel);
-	std::cout << "Sound Stopped " << std::endl;
+//	std::cout << "Sound Stopped " << std::endl;
 
 }
 

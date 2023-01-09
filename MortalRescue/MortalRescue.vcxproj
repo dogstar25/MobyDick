@@ -212,6 +212,7 @@
     <ClCompile Include="src\IMGui\IMGuiTopHud.cpp" />
     <ClCompile Include="src\IMGui\IMGuiTopLeftHud.cpp" />
     <ClCompile Include="src\IMGui\IMGuiTopRightHud.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiYouWin.cpp" />
     <ClCompile Include="src\IMGui\MR_IMGuiUtil.cpp" />
     <ClCompile Include="src\IMGui\MR_IMGuiFactory.cpp" />
     <ClCompile Include="src\mortalRescue.cpp" />
@@ -245,6 +246,8 @@
     <Image Include="assets\blueprints\testDrone_blueprint.png" />
     <Image Include="assets\blueprint_template.png" />
     <Image Include="assets\bowman1.png" />
+    <Image Include="assets\icon1.ico" />
+    <Image Include="assets\icon2.ico" />
     <Image Include="assets\levels\level10_blueprint.png" />
     <Image Include="assets\levels\level1_blueprint.png" />
     <Image Include="assets\levels\level2_blueprint.png" />
@@ -297,6 +300,7 @@
     <None Include="assets\sound\player_explode_1.ogg" />
     <None Include="assets\sound\pulse_charging_1.ogg" />
     <None Include="assets\sound\pulse_fully_charged_1.ogg" />
+    <None Include="assets\sound\radiationLeak1.ogg" />
     <None Include="assets\sound\retro_impact_hit_05.ogg" />
     <None Include="assets\sound\sci-fi_explosion_04.ogg" />
     <None Include="assets\sound\sci-fi_weapon_plasma_pistol_06.ogg" />
@@ -376,6 +380,7 @@
     <ClInclude Include="src\IMGui\IMGuiTitleScreenMenu.h" />
     <ClInclude Include="src\IMGui\IMGuiTopLeftHud.h" />
     <ClInclude Include="src\IMGui\IMGuiTopRightHud.h" />
+    <ClInclude Include="src\IMGui\IMGuiYouWin.h" />
     <ClInclude Include="src\IMGui\MR_IMGuiUtil.h" />
     <ClInclude Include="src\IMGui\MR_IMGuiFactory.h" />
     <ClInclude Include="src\IMGui\IMGuiTopHud.h" />

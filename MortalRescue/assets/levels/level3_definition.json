@@ -53,21 +53,15 @@
         },
         {
             "id": "StatusItemId::SURVIVORS",
-            "initialValue": 5,
+            "initialValue": 10,
             "minValue": 0,
-            "maxValue": 5
+            "maxValue": 10
         },
         {
             "id": "StatusItemId::SCRAP_COUNT",
             "initialValue": 0,
             "minValue": 0,
             "maxValue": 2000
-        },
-        {
-            "id": "StatusItemId::ENEMY_DRONE_COUNT",
-            "initialValue": 2,
-            "minValue": 0,
-            "maxValue": 2
         }
 
 
@@ -77,10 +71,6 @@
             "id": "StatusItemId::SURVIVORS",
             "targetValue": 0
         }
-        //{
-        //    "id": "StatusItemId::ENEMY_DRONE_COUNT",
-        //    "targetValue": 0
-        //}
 
     ],
     "levelTriggers": [
@@ -182,7 +172,7 @@
             "name": "button2"
         },
         {
-            "id": "LOC_0006_0030",
+            "id": "LOC_0003_0026",
             "gameObjectType": "TOGGLE_BUTTON",
             "angle": 90,
             "name": "button3"
