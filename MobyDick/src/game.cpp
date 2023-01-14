@@ -4,6 +4,7 @@
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl.h"
 #include "IMGui/IMGuiUtil.h"
+#include "SoundManager.h"
 #include <memory>
 
 
@@ -60,8 +61,8 @@ bool Game::init(std::shared_ptr<ContactListener> contactListener, std::shared_pt
 	{
 		//Swict these depending on if you are building for a release executable or just local development
 		//SDL_WINDOW_FULLSCREEN_DESKTOP for local development
-		//windowFlags = windowFlags | SDL_WINDOW_FULLSCREEN;
-		windowFlags = windowFlags | SDL_WINDOW_FULLSCREEN_DESKTOP;
+		windowFlags = windowFlags | SDL_WINDOW_FULLSCREEN;
+		//windowFlags = windowFlags | SDL_WINDOW_FULLSCREEN_DESKTOP;
 	}
 	else
 	{
@@ -104,12 +105,32 @@ void Game::play()
 	while (m_gameState != GameState::QUIT) {
 
 
+
+		//Test spot for detecting if user has alt tabbed out of game
+		//SDL_GetWindowFlags
+		//SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "error", "There was an error", this->window());
+		//SDL_assert
+		//setenv("SDL_VIDEO_MINIMIZE_ON_FOCUS", "0", 0);
+		//SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED
+		//SDL_WINDOWEVENT_FOCUS_GAINED
+		//SDL_SetWindowKeyboardGrab
+		//SDL_SetWindowMouseGrab
+
+
 		std::optional<SceneAction> action = SceneManager::instance().pollEvents();
 
 		if (action.has_value()) {
 
 			if (action->actionCode == SCENE_ACTION_QUIT) {
 				m_gameState = GameState::QUIT;
+			}
+			else if (action->actionCode == SCENE_ACTION_WINDOW_PAUSE) {
+				m_gameState = GameState::PAUSE;
+				SoundManager::instance().pauseSound();
+			}
+			else if (action->actionCode == SCENE_ACTION_WINDOW_UNPAUSE) {
+				m_gameState = GameState::PLAY;
+				SoundManager::instance().resumeSound();
 			}
 			else if (action->actionCode == SCENE_ACTION_EXIT) {
 				SceneManager::instance().popScene();
@@ -150,7 +171,9 @@ void Game::play()
 
 		}
 
-		SceneManager::instance().run();
+		if (m_gameState != GameState::PAUSE) {
+			SceneManager::instance().run();
+		}
 	}
 }
 

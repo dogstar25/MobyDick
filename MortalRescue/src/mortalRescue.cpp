@@ -13,10 +13,12 @@
 #include "MRContextManager.h"
 #include "MREnumMap.h"
 #include "MRColorMap.h"
+#include <wtypes.h>
 
 std::unique_ptr<Game> game;
 
-int main(int argc, char* args[])
+int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char*, int nShowCmd)
+//int main(int argc, char* args[])
 {
 	//create game 
 	game = std::make_unique<MRGame>();

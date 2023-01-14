@@ -16,8 +16,8 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 800,
-                        "height": 800
+                        "width": 720,
+                        "height": 720
                     },
                     "absolutePositioning": true
                 }
