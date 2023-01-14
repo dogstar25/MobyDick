@@ -5,31 +5,15 @@
             "inputControlMode": "CONTROL_MODE_SELECT",
             "backgroundMusicId": "MUSIC_MAIN_THEME_A",
             "maxObjects": 500,
-            "keyActions": [
-                {
-                    "keyCode": "SDLK_F2",
-                    "sceneAction": {
-                        "action": "SCENE_ACTION_REPLACE",
-                        "actionId": "SCENE_TEST"
-                    }
-                },
-                {
-                    "keyCode": "SDLK_F3",
-                    "sceneAction": {
-                        "action": "SCENE_ACTION_ADD",
-                        "actionId": "SCENE_NAVMAP"
-                    }
-                },
-                {
-                    "keyCode": "SDLK_F4",
-                    "sceneAction": {
-                        "action": "SCENE_ACTION_ADD",
-                        "actionId": "SCENE_YOU_WIN"
-                    }
-                }
-
-
-            ],
+            //"keyActions": [
+            //    {
+            //        "keyCode": "SDLK_F2",
+            //        "sceneAction": {
+            //            "action": "SCENE_ACTION_REPLACE",
+            //            "actionId": "SCENE_TEST"
+            //        }
+            //    }
+            //],
             "gameObjects": [
                 {
                     "gameObjectType": "SCENE_TITLE_SCREEN",
@@ -138,35 +122,35 @@
                         "action": "SCENE_ACTION_ADD_AND_PAUSE",
                         "actionId": "SCENE_PAUSE_MENU"
                     }
-                },
-                {
-                    "keyCode": "SDLK_F1",
-                    "sceneAction": {
-                        "action": "SCENE_ACTION_DIRECT",
-                        "actionId": "CutSceneExample"
-                    }
-                },
-                {
-                    "keyCode": "SDLK_F2",
-                    "sceneAction": {
-                        "action": "SCENE_ACTION_REPLACE",
-                        "actionId": "SCENE_TEST"
-                    }
-                },
-                {
-                    "keyCode": "SDLK_F3",
-                    "sceneAction": {
-                        "action": "SCENE_ACTION_TOGGLE_SETTING",
-                        "actionId": "DebugSceneSettings::SHOW_NAVIGATION_DEBUG_MAP"
-                    }
-                },
-                {
-                    "keyCode": "SDLK_F4",
-                    "sceneAction": {
-                        "action": "SCENE_ACTION_TOGGLE_SETTING",
-                        "actionId": "DebugSceneSettings::SHOW_PHYSICS_DEBUG"
-                    }
                 }
+                //{
+                //    "keyCode": "SDLK_F1",
+                //    "sceneAction": {
+                //        "action": "SCENE_ACTION_DIRECT",
+                //        "actionId": "CutSceneExample"
+                //    }
+                //},
+                //{
+                //    "keyCode": "SDLK_F2",
+                //    "sceneAction": {
+                //        "action": "SCENE_ACTION_REPLACE",
+                //        "actionId": "SCENE_TEST"
+                //    }
+                //},
+                //{
+                //    "keyCode": "SDLK_F3",
+                //    "sceneAction": {
+                //        "action": "SCENE_ACTION_TOGGLE_SETTING",
+                //        "actionId": "DebugSceneSettings::SHOW_NAVIGATION_DEBUG_MAP"
+                //    }
+                //},
+                //{
+                //    "keyCode": "SDLK_F4",
+                //    "sceneAction": {
+                //        "action": "SCENE_ACTION_TOGGLE_SETTING",
+                //        "actionId": "DebugSceneSettings::SHOW_PHYSICS_DEBUG"
+                //    }
+                //}
 
             ],
             "gameObjectPools": [

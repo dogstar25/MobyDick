@@ -81,9 +81,6 @@ void RendererSDL::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* textu
 	SDL_SetTextureAlphaMod(texture->sdlTexture, color.a);
 	SDL_SetTextureColorMod(texture->sdlTexture, color.r, color.g, color.b);
 
-	//TRY THIS! - see the openGL code to compile a custom shader
-	glUseProgram(m_testShader.shaderProgramId());
-
 	//Render the texture
 	SDL_RenderCopyExF(
 		m_sdlRenderer,
@@ -94,8 +91,6 @@ void RendererSDL::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* textu
 		NULL,
 		SDL_FLIP_NONE);
 	
-	glUseProgram(0);
-
 	//outline the object if defined to
 	if (outline) {
 

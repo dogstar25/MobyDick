@@ -153,6 +153,20 @@ void SoundManager::playMusic(std::string id, int loopTimes)
 
 }
 
+void SoundManager::pauseSound()
+{
+	Mix_PauseMusic();
+	Mix_Pause(-1);
+
+}
+
+void SoundManager::resumeSound()
+{
+	Mix_ResumeMusic();
+	Mix_Resume(-1);
+
+}
+
 void SoundManager::setChannelDistance(int channel, int distance)
 {
 

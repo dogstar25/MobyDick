@@ -113,9 +113,8 @@ std::optional<SceneAction> SceneManager::pollEvents()
 	SDL_Event event;
 	//PlayerInputEvent* playerInputEvent = nullptr;
 	const Uint8* keyStates = nullptr;
-	std::optional<SceneAction> sceneAction;
-	sceneAction = std::nullopt;
-
+	std::optional<SceneAction> sceneAction{};
+	static int count = 0;
 	//Poll events and as soon as we find a sceneReloated action, break and handle it in game.cpp
 	//The "sceneAction.has_value()" check HAS to happen first in the below while, otherwise, an event could be lost during 
 	// the SDL_PollEvent() call
@@ -127,6 +126,46 @@ std::optional<SceneAction> SceneManager::pollEvents()
 
 		switch (event.type)
 		{
+			case SDL_WINDOWEVENT:
+				count++;
+				std::cout << "Window Event" << std::endl;
+				switch (event.window.event)
+				{
+					//case SDL_WINDOWEVENT_FOCUS_GAINED:
+					//	std::cout << "Focus gained" << count << std::endl;
+					//	//SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Debug Meaage", "Window focus was GAINED", game->window());
+					//	//SDL_SetWindowKeyboardGrab(game->window(), SDL_TRUE);
+					//	//SDL_SetWindowMouseGrab(game->window(), SDL_TRUE);
+					//	break;
+					//case SDL_WINDOWEVENT_FOCUS_LOST:
+					//	std::cout << "Focus lost" << count << std::endl;
+					//	//SDL_SetWindowKeyboardGrab(game->window(), SDL_FALSE);
+					//	//SDL_SetWindowMouseGrab(game->window(), SDL_FALSE);
+
+					//	break;
+					case SDL_WINDOWEVENT_MINIMIZED:
+						//SDL_SetWindowKeyboardGrab(game->window(), SDL_FALSE);
+						//SDL_SetWindowMouseGrab(game->window(), SDL_FALSE);
+						//SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Switched to PAUSE", "Switched to PAUSE", game->window());
+						sceneAction = SceneAction{};
+						sceneAction->actionCode = SCENE_ACTION_WINDOW_PAUSE;
+						break;
+
+					case SDL_WINDOWEVENT_RESTORED:
+					case SDL_WINDOWEVENT_MAXIMIZED:
+						//SDL_SetWindowKeyboardGrab(game->window(), SDL_TRUE);
+						//SDL_SetWindowMouseGrab(game->window(), SDL_TRUE);
+						//SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "Switched to UNPAUSE", "Switched to UNPAUSE", game->window());
+						sceneAction = SceneAction{};
+						sceneAction->actionCode = SCENE_ACTION_WINDOW_UNPAUSE;
+						break;
+
+					default:
+						std::cout << "Unknown Event" << count << std::endl;
+						break;
+
+				}
+				break;
 
 			case SDL_KEYUP:
 			case SDL_KEYDOWN:
@@ -181,6 +220,7 @@ std::optional<SceneAction> SceneManager::pollEvents()
 				break;
 			}
 			default:
+				std::cout << "Unhandled Event Type is " << event.type << std::endl;
 				break;
 
 		}

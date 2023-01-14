@@ -27,6 +27,9 @@ public:
 	void setVolume(int volume);
 	void setChannelDistance(int channel, int distance);
 
+	void pauseSound();
+	void resumeSound();
+
 	float test;
 	
 

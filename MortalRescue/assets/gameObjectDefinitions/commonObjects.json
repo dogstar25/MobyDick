@@ -832,9 +832,9 @@
                 },
                 {
                     "id": "CONTAINER_COMPONENT",
-                    "capacity": 30,
+                    "capacity": 15,
                     "gameObjectType": "HEALTH_HEART",
-                    "count": 30,
+                    "count": 5,
                     "spawnForce": 1,
                     "layer": "GameLayer::MAIN"
                 }

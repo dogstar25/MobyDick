@@ -308,6 +308,8 @@ inline constexpr int SCENE_ACTION_DIRECT = 8;
 inline constexpr int SCENE_ACTION_RELEASE_DIRECT = 9;
 inline constexpr int SCENE_ACTION_RESPAWN_PLAYER = 10;
 inline constexpr int SCENE_ACTION_TOGGLE_SETTING = 11;
+inline constexpr int SCENE_ACTION_WINDOW_PAUSE = 12;
+inline constexpr int SCENE_ACTION_WINDOW_UNPAUSE = 13;
 
 //Scene Tags
 inline constexpr int SCENETAG_MENU = 1;
