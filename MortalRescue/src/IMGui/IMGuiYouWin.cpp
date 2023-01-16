@@ -49,7 +49,7 @@ glm::vec2 IMGuiYouWin::render()
 		ImGui::textCentered("This completes the demo version of MortalRecon!");
 		ImGui::textCentered("Thank you for playing!");
 		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
-		ImGui::textCentered("Created by: Todd Dollar");
+		ImGui::textCentered("Created by: TDollar");
 		ImGui::Spacing(); ImGui::Spacing();
 		ImGui::PopFont();
 

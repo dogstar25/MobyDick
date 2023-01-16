@@ -129,8 +129,8 @@
             "gameObjectType": "HEALTH_STATION"
         },
         {
-            "id": "LOC_0049_0030",
-            "gameObjectType": "HEALTH_STATION_LIMITED"
+            "id": "LOC_0049_0029",
+            "gameObjectType": "HEALTH_STATION_96"
         },
         {
             "id": "LOC_0035_0017",

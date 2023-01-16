@@ -63,7 +63,7 @@
     "objectives": [
         {
             "id": "StatusItemId::SURVIVORS",
-            "targetValue": 0
+            "targetValue": 6
         }
 
     ],
@@ -138,11 +138,18 @@
         },
         {
             "id": "LOC_0043_0026",
-            "gameObjectType": "HEALTH_STATION"
+            "gameObjectType": "HEALTH_STATION",
+            "containerStartCount": 20,
+            "containerCapacity": 20,
+            "containerSpawnTimer":  0.0
         },
         {
             "id": "LOC_0023_0026",
-            "gameObjectType": "HEALTH_STATION"
+            "gameObjectType": "HEALTH_STATION",
+            "containerStartCount": 1,
+            "containerCapacity": 3,
+            "containerRespawnTimer": 3.0
+
         },
         {
             "id": "LOC_0033_0025",

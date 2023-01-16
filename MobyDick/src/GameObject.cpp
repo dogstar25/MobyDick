@@ -726,6 +726,30 @@ void GameObject::setBrainSensorSize(int brainSensorSize)
 
 }
 
+void GameObject::setContainerResapwnTimer(float containerResapwnTimer)
+{
+
+	const auto& containerComponent = getComponent<ContainerComponent>(ComponentTypes::CONTAINER_COMPONENT);
+	containerComponent->setRefillTimer(containerResapwnTimer);
+
+}
+
+void GameObject::setContainerStartCount(int containerStartCount)
+{
+
+	const auto& containerComponent = getComponent<ContainerComponent>(ComponentTypes::CONTAINER_COMPONENT);
+	containerComponent->setStartCount(containerStartCount);
+
+}
+
+void GameObject::setContainerCapacity(int containerCapacity)
+{
+
+	const auto& containerComponent = getComponent<ContainerComponent>(ComponentTypes::CONTAINER_COMPONENT);
+	containerComponent->setCapacity(containerCapacity);
+
+}
+
 void GameObject::setOperatingSound(std::string soundAssetId)
 {
 

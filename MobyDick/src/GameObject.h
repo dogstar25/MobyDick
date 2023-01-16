@@ -76,6 +76,11 @@ public:
 	void setCompositePieceLevelCap(int levelCap);
 	void setOperatingSound(std::string soundAssetId);
 	void setBrainSensorSize(int brainSensorSize);
+	void setContainerResapwnTimer(float containerResapwnTimer);
+	void setContainerStartCount(int containerStartCount);
+	void setContainerCapacity(int containerCapacity);
+
+
 	void setWindowRelativePosition(PositionAlignment windowPosition, float adjustX, float adjustY);
 
 	b2Vec2 getSize();
