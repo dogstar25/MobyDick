@@ -92,12 +92,12 @@ void LevelComplete::execute()
 		auto saveFileData = std::make_shared<GameSaveFileData>();
 
 		//First load whats currently on file
-		game->contextMananger()->loadGame(saveFileData.get());
+		auto success = game->contextMananger()->loadGame(saveFileData.get());
+		if (success) {
+			std::istringstream(newLevelId.value()) >> saveFileData->level;
 
-		std::istringstream(newLevelId.value()) >> saveFileData->level;
-
-		game->contextMananger()->saveGame(saveFileData.get());
-
+			game->contextMananger()->saveGame(saveFileData.get());
+		}
 	}
 
 

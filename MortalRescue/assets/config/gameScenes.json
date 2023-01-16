@@ -5,15 +5,15 @@
             "inputControlMode": "CONTROL_MODE_SELECT",
             "backgroundMusicId": "MUSIC_MAIN_THEME_A",
             "maxObjects": 500,
-            //"keyActions": [
-            //    {
-            //        "keyCode": "SDLK_F2",
-            //        "sceneAction": {
-            //            "action": "SCENE_ACTION_REPLACE",
-            //            "actionId": "SCENE_TEST"
-            //        }
-            //    }
-            //],
+            "keyActions": [
+                {
+                    "keyCode": "SDLK_F2",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_REPLACE",
+                        "actionId": "SCENE_TEST"
+                    }
+                }
+            ],
             "gameObjects": [
                 {
                     "gameObjectType": "SCENE_TITLE_SCREEN",

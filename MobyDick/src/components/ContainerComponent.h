@@ -33,7 +33,14 @@ public:
 	void render();
 	void postInit() override;
 
-	void addItem(std::string gameObjectType, float spawnForce, Scene* parentScene, std::string parentName, int itemCount, bool onContainerConstruction=false);
+	ContainerItem& addItem(std::string gameObjectType, float spawnForce, Scene* parentScene, std::string parentName, int itemCount, bool onContainerConstruction=false);
+	void setRefillTimer(float refillTime);
+	void setCapacity(int capacity) { m_capacity = capacity; }
+	void setStartCount(int startCount) {
+		m_startCount = startCount;
+	}
+
+
 	bool isEmpty();
 	bool isFull();
 	std::vector<ContainerItem>& items() { return m_items; }
@@ -45,6 +52,7 @@ private:
 	Timer m_refillTimer{};
 	std::string m_contentItemGameObjectType{};
 	float m_contentsItemSpawnForce{};
+	int m_startCount{};
 	std::string _buildItemName(std::string parentName, int itemCount);
 
 

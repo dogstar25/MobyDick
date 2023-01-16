@@ -14,21 +14,15 @@ ContainerComponent::ContainerComponent(Json::Value componentJSON, std::string pa
 
 	m_capacity = componentJSON["capacity"].asInt();
 	if (componentJSON.isMember("refillTimer")) {
-		m_doesAutoRefill = true;
+
 		float timerDuration = componentJSON["refillTimer"].asFloat();
-		m_refillTimer = Timer(timerDuration, true);
+		setRefillTimer(timerDuration);
+		
 	}
 
 	m_contentItemGameObjectType = componentJSON["gameObjectType"].asString();
 	m_contentsItemSpawnForce = componentJSON["spawnForce"].asFloat();
-	auto count = componentJSON["count"].asInt();
-
-	for (auto i = 0; i < count;i++) {
-
-		addItem(m_contentItemGameObjectType, m_contentsItemSpawnForce, parentScene, parentName, i, true);
-	}
-
-
+	m_startCount = componentJSON["startCount"].asInt();
 
 }
 
@@ -38,12 +32,27 @@ ContainerComponent::~ContainerComponent()
 }
 
 
+void ContainerComponent::setRefillTimer(float refillTime)
+{
+
+	float timerDuration = refillTime;
+
+	if (timerDuration > 0.) {
+		m_doesAutoRefill = true;
+		m_refillTimer = Timer(timerDuration, true);
+	}
+
+
+}
 void ContainerComponent::postInit()
 {
 
 	const auto containerTransformComponent = parent()->getComponent<TransformComponent>(ComponentTypes::TRANSFORM_COMPONENT);
-	
-	for (auto& item : m_items) {
+
+	//Go through each item and 
+	for (auto i = 0; i < m_startCount; i++) {
+
+		auto item = addItem(m_contentItemGameObjectType, m_contentsItemSpawnForce, parent()->parentScene(), parent()->name(), i, true);
 
 		const auto& itemPhysicsComponent = item.gameObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 
@@ -134,7 +143,7 @@ void ContainerComponent::_removeFromWorldPass()
 	m_items.shrink_to_fit();
 
 }
-void ContainerComponent::addItem(std::string gameObjectType, float spawnForce, Scene* parentScene, std::string parentName, int itemCount, bool onContainerConstruction)
+ContainerItem& ContainerComponent::addItem(std::string gameObjectType, float spawnForce, Scene* parentScene, std::string parentName, int itemCount, bool onContainerConstruction)
 {
 
 	ContainerItem containerItem{};
@@ -155,6 +164,8 @@ void ContainerComponent::addItem(std::string gameObjectType, float spawnForce, S
 	}
 	
 	m_items.emplace_back(containerItem);
+
+	return containerItem;
 
 }
 

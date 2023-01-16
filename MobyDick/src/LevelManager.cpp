@@ -167,18 +167,32 @@ std::optional<std::string> LevelManager::getNextLevelId(std::string currentLevel
 	std::optional<std::string> nextLevelId{};
 
 
-	auto it = m_levels.begin();
-	while (it != m_levels.end()) {
+	//auto it = m_levels.begin();
+	//while (it != m_levels.end()) {
 
-		if (*it == currentLevelId && (it+1) != m_levels.end()) {
-			nextLevelId = *(it + 1);
+	//	if (*it == currentLevelId && (it+1) != m_levels.end()) {
+	//		nextLevelId = *(it + 1);
+	//		break;
+	//	}
+	//	else{
+	//		++it;
+	//	}
+
+	//	
+	//}
+
+	bool useNextItem = false;
+	for (auto& level : m_levels) {
+
+		if (useNextItem == true) {
+			nextLevelId = level;
 			break;
 		}
-		else{
-			++it;
+
+		if (level == currentLevelId) {
+			useNextItem = true;
 		}
 
-		
 	}
 
 	return nextLevelId;
@@ -462,6 +476,15 @@ std::optional<LevelObject> LevelManager::_determineColorDefinedObject(SDL_Color 
 			if (colorItemJSON.isMember("brainSensorSize")) {
 				levelObject->brainSensorSize = colorItemJSON["brainSensorSize"].asInt();
 			}
+			if (colorItemJSON.isMember("containerRespawnTimer")) {
+				levelObject->containerRespawnTimer = colorItemJSON["containerRespawnTimer"].asFloat();
+			}
+			if (colorItemJSON.isMember("containerStartCount")) {
+				levelObject->containerStartCount = colorItemJSON["containerStartCount"].asFloat();
+			}
+			if (colorItemJSON.isMember("containerCapacity")) {
+				levelObject->containerCapacity = colorItemJSON["containerCapacity"].asFloat();
+			}
 
 		}
 	}
@@ -521,6 +544,16 @@ std::optional<LevelObject> LevelManager::_determineLocationDefinedObject(int x, 
 			if (locationItemJSON.isMember("brainSensorSize")) {
 				levelObject->brainSensorSize = locationItemJSON["brainSensorSize"].asInt();
 			}
+			if (locationItemJSON.isMember("containerRespawnTimer")) {
+				levelObject->containerRespawnTimer = locationItemJSON["containerRespawnTimer"].asFloat();
+			}
+			if (locationItemJSON.isMember("containerStartCount")) {
+				levelObject->containerStartCount = locationItemJSON["containerStartCount"].asFloat();
+			}
+			if (locationItemJSON.isMember("containerCapacity")) {
+				levelObject->containerCapacity = locationItemJSON["containerCapacity"].asFloat();
+			}
+
 
 			break;
 		}
@@ -790,6 +823,21 @@ void LevelManager::_buildLevelObjects(Scene* scene)
 				//Apply override brain sensor size if exists
 				if (levelObject->brainSensorSize.has_value()) {
 					gameObject->setBrainSensorSize(levelObject->brainSensorSize.value());
+				}
+
+				//Apply override container respawnTimer if exists
+				if (levelObject->containerRespawnTimer.has_value()) {
+					gameObject->setContainerResapwnTimer(levelObject->containerRespawnTimer.value());
+				}
+
+				//Apply override container startCount if exists
+				if (levelObject->containerStartCount.has_value()) {
+					gameObject->setContainerStartCount(levelObject->containerStartCount.value());
+				}
+
+				//Apply override container capacity if exists
+				if (levelObject->containerCapacity.has_value()) {
+					gameObject->setContainerCapacity(levelObject->containerCapacity.value());
 				}
 
 				//Build the navigation map item for this object

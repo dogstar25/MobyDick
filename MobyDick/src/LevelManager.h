@@ -30,6 +30,9 @@ struct LevelObject
 	std::optional<SDL_Color> weaponColor{};
 	std::optional<int> compositePieceLevelCap{};
 	std::optional<int> brainSensorSize{};
+	std::optional<float> containerRespawnTimer{};
+	std::optional<int> containerStartCount{};
+	std::optional<int> containerCapacity{};
 
 };
 
