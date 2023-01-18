@@ -1,0 +1,39 @@
+{
+    "gameTitle": "MortalRescue",
+    "window": {
+        "fullscreen": true,
+        "defaultTileSize": {
+            "width": 1,
+            "height": 1
+        },
+        "targetScreenResolution": {
+            "width": 1920,
+            "height": 1080
+        },
+        "fallbackScreenResolution": {
+            "width": 1280,
+            "height": 720
+        }
+        },
+    "sound": {
+        "numberOfChannels": 128
+    },
+    "scenes": {
+        "maxScenes": 12
+    },
+    "rendererType": "RendererType::SDL",
+    //"rendererType": "RendererType::OPENGL",
+    //"openGLBatching": true,
+    "gameLoopStep": 0.016,
+    "physics": {
+        "box2dScale": 25
+    },
+    "dynamicTextRefreshDelay": 0.2, //need a tiny delay to prevent millions of dynamic text texture regenerations
+    "debugPanel": {
+        "show": true,
+        "xPos": 1,
+        "yPos": 2,
+        "fontSize": 12
+    }
+}
+  

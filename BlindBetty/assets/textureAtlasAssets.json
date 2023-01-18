@@ -1,0 +1,798 @@
+{
+    "textureAtlas": [
+        {
+            "id": "TEXTURE_ATLAS_0",
+            "description": "Texture atlas 0",
+            "openglTextureIndex": "GL_TextureIndexType::MAIN_TEXTURE_ATLAS",
+            "filename": "assets/textureAtlas00.png"
+        },
+        {
+            "id": "TEXTURE_IMGUI_ATLAS",
+            "description": "Texture For IMGUI stuff",
+            "openglTextureIndex": "GL_TextureIndexType::IMGUI_TEXTURE_ATLAS",
+            "filename": "assets/textureAtlasImGui.png"
+        }
+
+    ],
+    "textureBlueprints": [
+        {
+            "id": "TX_LEVEL1_BLUEPRINT",
+            "description": "Level 1 Bluprint",
+            "filename": "assets/levels/level1_blueprint.png"
+        },
+        {
+            "id": "TX_LEVEL2_BLUEPRINT",
+            "description": "Level 2 Bluprint",
+            "filename": "assets/levels/level2_blueprint.png"
+        },
+        {
+            "id": "TX_LEVEL3_BLUEPRINT",
+            "description": "Level 3 Bluprint",
+            "filename": "assets/levels/level3_blueprint.png"
+        },
+        {
+            "id": "TX_LEVEL4_BLUEPRINT",
+            "description": "Level 4 Bluprint",
+            "filename": "assets/levels/level4_blueprint.png"
+        },
+        {
+            "id": "TX_LEVEL5_BLUEPRINT",
+            "description": "Level 5 Bluprint",
+            "filename": "assets/levels/level5_blueprint.png"
+        },
+        {
+            "id": "TX_LEVEL10_BLUEPRINT",
+            "description": "Level 10 Bluprint",
+            "filename": "assets/levels/level10_blueprint.png"
+        },
+        {
+            "id": "TX_LEVEL100_BLUEPRINT",
+            "description": "Level 2 Bluprint",
+            "filename": "assets/levels/level100_blueprint.png"
+        },
+        {
+            "id": "TX_DRONE1_BLUEPRINT",
+            "description": "Drone 1 Blueprint",
+            "filename": "assets/blueprints/drone1_blueprint.png"
+        },
+        {
+            "id": "TX_DRONE2_BLUEPRINT",
+            "description": "Drone 2 Blueprint",
+            "filename": "assets/blueprints/drone2_blueprint.png"
+        },
+        {
+            "id": "TX_BREAKABLE_WALL_64_BLUEPRINT",
+            "description": "Breakable Wall Blueprint",
+            "filename": "assets/blueprints/breakable_wall_64_blueprint.png"
+        },
+        {
+            "id": "TX_BREAKABLE_WALL_96_BLUEPRINT",
+            "description": "Breakable Wall Blueprint",
+            "filename": "assets/blueprints/breakable_wall_96_blueprint.png"
+        },
+        {
+            "id": "TX_BREAKABLE_WALL_128_BLUEPRINT",
+            "description": "Breakable Wall Blueprint",
+            "filename": "assets/blueprints/breakable_wall_128_blueprint.png"
+        }
+
+
+    ],
+    "textures": [
+        {
+            "id": "TX_DEFAULT",
+            "description": "Default Texure",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 4,
+                "y": 880,
+                "width": 128,
+                "height": 128
+            }
+        },
+        {
+            "id": "TX_WHITE_QUAD",
+            "description": "White Quad",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 70,
+                "y": 92,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_CLEAR_QUAD",
+            "description": "Clear Quad",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 268,
+                "y": 56,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_STAIRS",
+            "description": "Stairs",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 37,
+                "y": 92,
+                "width": 32,
+                "height": 32
+            }
+        },
+        //{
+        //    "id": "TX_WHITE_BAR",
+        //    "description": "White Bar",
+        //    "atlas": "TEXTURE_IMGUI",
+        //    "quadPosition": {
+        //        "x": 0,
+        //        "y": 0,
+        //        "width": 1,
+        //        "height": 8
+        //    }
+        //},
+        {
+            "id": "TX_BOWMAN1",
+            "description": "Single bowman image",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 4,
+                "y": 200,
+                "width": 64,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_STUBB",
+            "description": "Stubb Texure",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 4,
+                "y": 880,
+                "width": 128,
+                "height": 128
+            }
+        },
+        {
+            "id": "TX_SWORDLADY1_IDLE",
+            "description": "Sword lady idle",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 69,
+                "y": 200,
+                "width": 1216,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_GINA_64_IDLE",
+            "description": "Pistol Lady Run 64px",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 1543,
+                "y": 200,
+                "width": 64,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_GINA_64_RUN",
+            "description": "Pistol Lady Run 64px",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 1286,
+                "y": 200,
+                "width": 256,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_GINA_64_REDUX_IDLE",
+            "description": "Pistol Lady Run 64px",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2266,
+                "y": 200,
+                "width": 64,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_GINA_64_REDUX_RUN",
+            "description": "Pistol Lady Run 64px",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2009,
+                "y": 200,
+                "width": 256,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_GINA_64_REDUX_BOOST",
+            "description": "Pistol Lady Run 64px",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2655,
+                "y": 200,
+                "width": 64,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_GINA_64_REDUX_BOOST2",
+            "description": "Pistol Lady Run 64px",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2721,
+                "y": 200,
+                "width": 64,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_WALL1_COLUMN",
+            "description": "Wall 1 Column",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 4,
+                "y": 56,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_WALL1_CORNER",
+            "description": "Wall 1 Corner",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 37,
+                "y": 56,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_WALL1_HALL",
+            "description": "Wall 1 Hall",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 103,
+                "y": 56,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_WALL1_OPEN",
+            "description": "Wall 1 Open",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 136,
+                "y": 56,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_WALL1_WALL",
+            "description": "Wall 1 Wall",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 169,
+                "y": 56,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_WALL1_END",
+            "description": "Wall 1 End",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 70,
+                "y": 56,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_PLAYER_BULLET",
+            "description": "Bullet 1",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 4,
+                "y": 4,
+                "width": 5,
+                "height": 1
+            }
+        },
+        {
+            "id": "TX_ENEMY_BULLET",
+            "description": "Bullet 2",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 4,
+                "y": 8,
+                "width": 7,
+                "height": 4
+            }
+        },
+        {
+            "id": "TX_SMOKE_PARTICLE_1",
+            "description": "Smoke particle",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 4,
+                "y": 16,
+                "width": 16,
+                "height": 16
+            }
+        },
+        {
+            "id": "TX_SMOKE_PARTICLE_2",
+            "description": "Glow particle",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 1608,
+                "y": 200,
+                "width": 64,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_PIECE_FULL_8",
+            "description": "8 X 8 square",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 65,
+                "y": 4,
+                "width": 8,
+                "height": 8
+            }
+        },
+        {
+            "id": "TX_PIECE_ANGLE1_8",
+            "description": "Angle",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 29,
+                "y": 4,
+                "width": 8,
+                "height": 8
+            }
+        },
+        {
+            "id": "TX_PIECE_ANGLE2_8",
+            "description": "Angle",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 38,
+                "y": 4,
+                "width": 8,
+                "height": 8
+            }
+        },
+        {
+            "id": "TX_PIECE_ANGLE3_8",
+            "description": "Angle",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 47,
+                "y": 4,
+                "width": 8,
+                "height": 8
+            }
+        },
+        {
+            "id": "TX_PIECE_ANGLE4_8",
+            "description": "Angle",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 56,
+                "y": 4,
+                "width": 8,
+                "height": 8
+            }
+        },
+        {
+            "id": "TX_ENEMYFRAME1_128",
+            "description": "Angle",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 133,
+                "y": 880,
+                "width": 128,
+                "height": 128
+            }
+        },
+        {
+            "id": "TX_DEFLECT1_64",
+            "description": "Deflect",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 1673,
+                "y": 200,
+                "width": 256,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_WEAPON1_IDLE",
+            "description": "Weapon 1 Idle",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 21,
+                "y": 16,
+                "width": 16,
+                "height": 16
+            }
+        },
+        {
+            "id": "TX_DRONE_EYE",
+            "description": "Drone Eye",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 1930,
+                "y": 200,
+                "width": 78,
+                "height": 37
+            }
+        },
+        {
+            "id": "TX_GLOW_TRIANGLE_256",
+            "description": "Glow Triangle 256",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 260,
+                "y": 1540,
+                "width": 256,
+                "height": 256
+            }
+        },
+        {
+            "id": "TX_DRONE_BRAIN_64",
+            "description": "Dron Brain 64",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 586,
+                "y": 268,
+                "width": 64,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_USE_HINT",
+            "description": "Use Hint",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 38,
+                "y": 16,
+                "width": 16,
+                "height": 16
+            }
+        },
+        {
+            "id": "TX_BUTTON_IDLE",
+            "description": "Wall Button",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 202,
+                "y": 56,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_BUTTON_ACTIVE",
+            "description": "Wall Button",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 202,
+                "y": 56,
+                "width": 64,
+                "height": 32
+            }
+
+        },
+        {
+            "id": "TX_BUTTON_DEAD",
+            "description": "Wall Button",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 234,
+                "y": 56,
+                "width": 32,
+                "height": 32
+            }
+
+        },
+        {
+            "id": "TX_TURRET_DEPLOY",
+            "description": "Turret Deploy",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 134,
+                "y": 268,
+                "width": 256,
+                "height": 64
+            }
+
+        },
+        {
+            "id": "TX_TURRET_IDLE",
+            "description": "Turret Idle",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 69,
+                "y": 268,
+                "width": 64,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_TURRET_UNDEPLOY",
+            "description": "Turret UnDeploy",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 134,
+                "y": 336,
+                "width": 256,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_TURRET_ACTIVE",
+            "description": "Turret Active",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 391,
+                "y": 268,
+                "width": 64,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_SURVIVOR_IDLE",
+            "description": "Survivor Idle",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2589,
+                "y": 200,
+                "width": 64,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_SURVIVOR_RUN",
+            "description": "Survivor Run",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2332,
+                "y": 200,
+                "width": 256,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_GLOWWALL_352",
+            "description": "GlowWall 352",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 36,
+                "y": 128,
+                "width": 352,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_TURRET_SCRAP",
+            "description": "Turret Scrap",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 521,
+                "y": 268,
+                "width": 64,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_FOG_BOX",
+            "description": "Fog Box",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 103,
+                "y": 92,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_FORCE_WALL",
+            "description": "Force Wall",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 37,
+                "y": 128,
+                "width": 288,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_FORCE_WALL2",
+            "description": "Force Wall",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 333,
+                "y": 92,
+                "width": 128,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_HEALTH_STATION_IDLE",
+            "description": "Health Station",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 201,
+                "y": 92,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_HEALTH_STATION_ACTIVE",
+            "description": "Health Station",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 234,
+                "y": 92,
+                "width": 64,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_HEARTBEAT_ACTIVE",
+            "description": "HeartBeat",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 85,
+                "y": 4,
+                "width": 48,
+                "height": 8
+            }
+        },
+        {
+            "id": "TX_HEART_PICKUP",
+            "description": "Heart Pickup",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 134,
+                "y": 4,
+                "width": 8,
+                "height": 8
+            }
+        },
+        {
+            "id": "TX_BACKGROUND_1",
+            "description": "Background 1",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 36,
+                "y": 164,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_BACKGROUND_1_512",
+            "description": "Background 1",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 4,
+                "y": 2320,
+                "width": 512,
+                "height": 512
+            }
+        },
+        {
+            "id": "TX_TITLE_SCREEN_IMAGE1",
+            "description": "Background 1",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 518,
+                "y": 2320,
+                "width": 367,
+                "height": 512
+            }
+        },
+        {
+            "id": "TX_TITLE_SCREEN_IMAGE2",
+            "description": "Background 2",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 887,
+                "y": 2320,
+                "width": 800,
+                "height": 800
+            }
+        },
+        {
+            "id": "TX_TITLE_SCREEN_IMAGE3",
+            "description": "Background 3",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 1688,
+                "y": 2319,
+                "width": 720,
+                "height": 720
+            }
+        },
+        {
+            "id": "TX_DIAMOND_32",
+            "description": "A Diamond shape",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 530,
+                "y": 56,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
+            "id": "TX_BROKEN_CIRCLE",
+            "description": "A Broken circle",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 651,
+                "y": 268,
+                "width": 64,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_LASERWALL",
+            "description": "Laser Wall",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 161,
+                "y": 4,
+                "width": 16,
+                "height": 8
+            }
+        },
+        {
+            "id": "TX_PLAYER_GIB",
+            "description": "Player Gib",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 178,
+                "y": 4,
+                "width": 8,
+                "height": 8
+            }
+        }
+
+    ],
+    "fonts": [
+        {
+            "id": "FONT_ARIAL_REG",
+            "description": "Arial Regular",
+            "filename": "assets/fonts/arial.ttf"
+        },
+        {
+            "id": "FONT_DROID_SANS",
+            "description": "Droid Sans",
+            "filename": "assets/fonts/DroidSans.ttf"
+        },
+        {
+            "id": "FONT_CONTHRAX",
+            "description": "Droid Sans",
+            "filename": "assets/fonts/conthrax-sb.ttf"
+        }
+    ]
+
+}
