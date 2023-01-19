@@ -46,17 +46,12 @@ void SurvivorBrainComponent::update()
 
 void SurvivorBrainComponent::followMe(std::shared_ptr<GameObject> gameObjectToFollow) {
 
-
-	//ToDo: add a text bubble to say "ok"
-
 	m_gameObjectToFollow = gameObjectToFollow;
 	m_currentState = BrainState::FOLLOW;
 
 }
 
 void SurvivorBrainComponent::stay() {
-
-	//ToDo: add a text bubble to say "ok"
 
 	m_gameObjectToFollow.reset();
 	m_currentState = BrainState::IDLE;
@@ -78,7 +73,7 @@ int SurvivorBrainComponent::_determineState()
 		if (_detectFollowedObject() == false) {
 
 			if (m_lostTimer.firstTime) {
-				m_lostTimer = Timer(2);
+				m_lostTimer = Timer(3);
 			}
 			else if (m_lostTimer.hasMetTargetDuration()) {
 				state = BrainState::LOST;
