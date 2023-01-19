@@ -63,7 +63,7 @@
     "objectives": [
         {
             "id": "StatusItemId::SURVIVORS",
-            "targetValue": 0
+            "targetValue": 6
         }
 
     ],
