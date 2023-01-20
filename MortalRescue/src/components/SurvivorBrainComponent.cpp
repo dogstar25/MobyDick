@@ -73,7 +73,7 @@ int SurvivorBrainComponent::_determineState()
 		if (_detectFollowedObject() == false) {
 
 			if (m_lostTimer.firstTime) {
-				m_lostTimer = Timer(3);
+				m_lostTimer = Timer(2);
 			}
 			else if (m_lostTimer.hasMetTargetDuration()) {
 				state = BrainState::LOST;
