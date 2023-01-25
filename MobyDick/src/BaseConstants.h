@@ -18,7 +18,6 @@ inline constexpr int TURN_OFF = 1;
 
 inline constexpr int CHILD_POSITIONS = 9;
 inline constexpr int MAX_VITALITY_LEVELS = 5;
-inline constexpr int MAX_ANIMATION_STATES = 12;
 inline constexpr int PARTICLE_EMITTER_FORCE_ADJ = 50;
 inline constexpr int PRACTICLE_MOVE_SPEED_ADJ = 50;
 inline constexpr int MAX_OBJECT_TYPES = 5;
@@ -255,6 +254,8 @@ namespace ComponentTypes {
 }
 
 //Animation States
+inline constexpr int MAX_ANIMATION_STATES = 12;
+
 inline constexpr int ANIMATION_IDLE = 0;
 inline constexpr int ANIMATION_RUN = 1;
 inline constexpr int ANIMATION_ACTIVE = 2;
@@ -263,6 +264,9 @@ inline constexpr int ANIMATION_DEPLOY = 4;
 inline constexpr int ANIMATION_UNDEPLOY = 5;
 inline constexpr int ANIMATION_DEAD = 6;
 inline constexpr int ANIMATION_SPRINT = 7;
+inline constexpr int ANIMATION_ACKNOWLEDGE = 8;
+inline constexpr int ANIMATION_STRAFE_LEFT = 9;
+inline constexpr int ANIMATION_STRAFE_RIGHT = 10;
 
 //Animation Modes
 inline constexpr int ANIMATE_ONE_TIME = 0;

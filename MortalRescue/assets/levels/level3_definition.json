@@ -20,6 +20,17 @@
             }
         }
     ],
+    "parallax": [
+        {
+            "layer": "GameLayer::BACKGROUND_1",
+            "parallaxRate": -10
+        },
+        {
+            "layer": "GameLayer::FOREGROUND_2",
+            "parallaxRate": 15
+        }
+
+    ],
     "statusItems": [
         {
             "id": "StatusItemId::PLAYERS_HEART_COUNT",
@@ -97,7 +108,7 @@
         {
             "colorKey": "Colors::PURPLE",
             "gameObjectType": "VOID_FILLER",
-            "layer": "GameLayer::BACKGROUND_1",
+            "layer": "GameLayer::BACKGROUND_2",
             "objectColor": "Colors::CYAN"
         },
         {

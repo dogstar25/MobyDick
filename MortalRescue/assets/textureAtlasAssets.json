@@ -234,6 +234,28 @@
             }
         },
         {
+            "id": "TX_GINA_64_REDUX_STRAFE_LEFT",
+            "description": "Pistol Lady Run 64px",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2980,
+                "y": 200,
+                "width": 192,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_GINA_64_REDUX_STRAFE_RIGHT",
+            "description": "Pistol Lady Run 64px",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2787,
+                "y": 200,
+                "width": 192,
+                "height": 64
+            }
+        },
+        {
             "id": "TX_WALL1_COLUMN",
             "description": "Wall 1 Column",
             "atlas": "TEXTURE_ATLAS_0",
@@ -574,6 +596,17 @@
                 "x": 2332,
                 "y": 200,
                 "width": 256,
+                "height": 64
+            }
+        },
+        {
+            "id": "TX_SURVIVOR_ACKNOWLEDGE",
+            "description": "Survivor Acknowledge",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2332,
+                "y": 200,
+                "width": 128,
                 "height": 64
             }
         },

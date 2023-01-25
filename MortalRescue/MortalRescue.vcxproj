@@ -81,12 +81,14 @@
     <IncludePath>C:\projects\MobyDick\MobyDick\vendor;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)MobyDick\src</IncludePath>
     <LibraryPath>C:\projects\MobyDick\MobyDick\x64\$(Configuration)\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
+    <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>C:\projects\MobyDick\MobyDick\vendor;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(SolutionDir)MobyDick\src</IncludePath>
     <LibraryPath>C:\projects\MobyDick\MobyDick\x64\$(Configuration)\lib;$(LibraryPath)</LibraryPath>
     <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
+    <CopyCppRuntimeToOutputDir>true</CopyCppRuntimeToOutputDir>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <VcpkgUseStatic>false</VcpkgUseStatic>
@@ -140,6 +142,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <FloatingPointModel>Fast</FloatingPointModel>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -167,11 +170,12 @@
       </AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <Optimization>Full</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <FloatingPointModel>Fast</FloatingPointModel>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -284,6 +288,7 @@
     <None Include="assets\levels\level3_definition.json" />
     <None Include="assets\levels\level10_definition.json" />
     <None Include="assets\levels\level4_definition.json" />
+    <None Include="assets\levels\level5_definition.json" />
     <None Include="assets\levels\levels.json" />
     <None Include="assets\levels\level100_definition.json" />
     <None Include="assets\sound\buttonWorking.ogg" />

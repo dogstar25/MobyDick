@@ -20,6 +20,17 @@
             }
         }
     ],
+    "parallax": [
+        {
+            "layer": "GameLayer::BACKGROUND_1",
+            "parallaxRate": -10 // percent of normal scroll. negative value is slower. positive value is faster
+        },
+        {
+            "layer": "GameLayer::FOREGROUND_2",
+            "parallaxRate": 15
+        }
+
+    ],
     "statusItems": [
         {
             "id": "StatusItemId::PLAYERS_HEART_COUNT",
@@ -63,7 +74,7 @@
     "objectives": [
         {
             "id": "StatusItemId::SURVIVORS",
-            "targetValue": 6
+            "targetValue": 0
         }
 
     ],
@@ -82,7 +93,13 @@
         {
             "colorKey": "Colors::PURPLE",
             "gameObjectType": "VOID_FILLER",
-            "layer": "GameLayer::BACKGROUND_1",
+            "layer": "GameLayer::BACKGROUND_2",
+            "objectColor": "Colors::CYAN"
+        },
+        {
+            "colorKey": "Colors::GRAPE",
+            "gameObjectType": "BARREL_FILLER",
+            "layer": "GameLayer::MAIN",
             "objectColor": "Colors::CYAN"
         }
 
@@ -141,7 +158,7 @@
             "gameObjectType": "HEALTH_STATION",
             "containerStartCount": 20,
             "containerCapacity": 20,
-            "containerSpawnTimer":  0.0
+            "containerSpawnTimer": 0.0
         },
         {
             "id": "LOC_0023_0026",

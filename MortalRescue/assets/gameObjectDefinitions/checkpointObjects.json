@@ -192,6 +192,44 @@
                     "contactRequired": true
                 }
             ]
+        },
+        {
+            "type": "CHECKPOINT_5_A",
+            "description": "Checkpoint for level 1",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 1408
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::CHECKPOINT",
+                            "collisionShape": "B2_BOX",
+                            "isSensor": true
+                        }
+                    ]
+                },
+                {
+                    "id": "CHECKPOINT_COMPONENT",
+                    "sequence": 1,
+                    "reSpawnLocation": {
+                        "x": 97,
+                        "y": 55
+                    },
+                    "contactRequired": true
+                }
+            ]
         }
 
     ]

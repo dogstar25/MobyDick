@@ -7,8 +7,8 @@ namespace ParticleEffects {
 		.poolId = "SMOKE1_POOL",
 		.originMin = {0,0},
 		.originMax = {0,0},
-		.forceMin = 5,
-		.forceMax = 15,
+		.forceMin = 10,
+		.forceMax = 25,
 		.lifetimeMin = 0.1F,
 		.lifetimeMax = 1.2F,
 		.alphaFade = true,
@@ -45,8 +45,8 @@ namespace ParticleEffects {
 		.poolId = "SCRAP1_POOL",
 		.originMin = {0,0},
 		.originMax = {0,0},
-		.forceMin = 2,
-		.forceMax = 15,
+		.forceMin = 10,
+		.forceMax = 25,
 		.lifetimeMin = 0.0F,
 		.lifetimeMax = 0.0F,
 		.alphaFade = false,
@@ -61,22 +61,22 @@ namespace ParticleEffects {
 	};
 
 	static const ParticleEffect spark = {
-		.poolId = "SMOKE1_POOL",
+		.poolId = "SMOKE_HEAVY_POOL",
 		.originMin = {0,0},
 		.originMax = {0,0},
-		.forceMin = 1,
-		.forceMax = 5,
+		.forceMin = 10,
+		.forceMax = 20,
 		.lifetimeMin = 0.2F,
 		.lifetimeMax = 1.5F,
 		.alphaFade = true,
-		.angleMin = 90,
-		.angleMax = 90,
-		.particleSizeMin = 1.F,
-		.particleSizeMax = 3.F,
-		.colorRangeBegin = {255,0,0,255},
-		.colorRangeEnd = {255,0,0,255},
-		.particleSpawnCountMin = 2,
-		.particleSpawnCountMax = 70
+		.angleMin = 0,
+		.angleMax = 360,
+		.particleSizeMin = 5.F,
+		.particleSizeMax = 10.F,
+		.colorRangeBegin = {205,97,0,0}, //orange tones
+		.colorRangeEnd = {255,161,15,50},
+		.particleSpawnCountMin = 5,
+		.particleSpawnCountMax = 10
 	};
 
 	static const ParticleEffect jetpack = {
@@ -244,10 +244,10 @@ namespace ParticleEffects {
 		.angleMax = 145,
 		.particleSizeMin = 5.1,
 		.particleSizeMax = 20.2,
-		.colorRangeBegin = {180,0,0,255},
-		.colorRangeEnd = {255,30,76,255},
-		.particleSpawnCountMin = 20,
-		.particleSpawnCountMax = 40
+		.colorRangeBegin = {180,10,0,255},
+		.colorRangeEnd = {255,100,76,255},
+		.particleSpawnCountMin = 12,
+		.particleSpawnCountMax = 22
 	};
 
 	static const ParticleEffect playerExplode = {
