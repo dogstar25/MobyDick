@@ -1,12 +1,12 @@
 {
-    "id": "LEVEL_2",
-    "blueprint": "TX_LEVEL2_BLUEPRINT",
-    "description": "TX_LEVEL_2",
-    "backgroundMusic": "MUSIC_LEVEL_BG_B",
+    "id": "LEVEL_5",
+    "blueprint": "TX_LEVEL5_BLUEPRINT",
+    "backgroundMusic": "MUSIC_LEVEL_BG_A",
+    "description": "TX_LEVEL_5",
     "wallColor": "Colors::PARAKEET",
     "dimensions": {
-        "levelWidth": 120,
-        "levelHeight": 33,
+        "levelWidth": 128,
+        "levelHeight": 64,
         "tileWidth": 32,
         "tileHeight": 32
     },
@@ -64,9 +64,9 @@
         },
         {
             "id": "StatusItemId::SURVIVORS",
-            "initialValue": 6,
+            "initialValue": 5,
             "minValue": 0,
-            "maxValue": 6
+            "maxValue": 5
         },
         {
             "id": "StatusItemId::SCRAP_COUNT",
@@ -80,7 +80,6 @@
             "minValue": 0,
             "maxValue": 3
         }
-
 
     ],
     "objectives": [
@@ -124,202 +123,210 @@
             "objectColor": "Colors::CYAN"
         },
         {
-            "colorKey": "Colors::CLOUD",
-            "gameObjectType": "IMPASSE",
+            "colorKey": "Colors::YELLOW",
+            "gameObjectType": "SURVIVOR",
             "layer": "GameLayer::MAIN"
         }
 
     ],
     "locationDefinedObjects": [
         {
-            "id": "LOC_0002_0014",
+            "id": "LOC_0007_0007",
             "gameObjectType": "GINA_64",
             "name": "PlayerGina",
             "cameraFollow": true
         },
         {
-            "id": "LOC_0051_0027",
+            "id": "LOC_0076_0056",
+            "gameObjectType": "DRONE",
+            "name": "EnemyC",
+            "cameraFollow": false
+        },
+        {
+            "id": "LOC_0083_0056",
+            "gameObjectType": "DRONE",
+            "name": "EnemyD"
+        },
+        {
+            "id": "LOC_0068_0057",
             "gameObjectType": "DRONE2",
-            "name": "EnemyA",
-            "compositePieceLevelCap": 1
+            "name": "EnemyA"
         },
         {
-            "id": "LOC_0052_0027",
-            "gameObjectType": "DRONE2",
-            "name": "EnemyB",
-            "compositePieceLevelCap": 1
+            "id": "LOC_0074_0018",
+            "gameObjectType": "TURRET"
         },
         {
-            "id": "LOC_0038_0006",
-            "gameObjectType": "DRONE2",
-            "name": "EnemyZ",
-            "compositePieceLevelCap": 1
+            "id": "LOC_0078_0020",
+            "gameObjectType": "TURRET"
         },
         {
-            "id": "LOC_0089_0013",
-            "gameObjectType": "HEALTH_STATION_96"
+            "id": "LOC_0084_0022",
+            "gameObjectType": "TURRET"
         },
         {
-            "id": "LOC_0117_0014",
-            "gameObjectType": "ESCAPE_STAIRS"
+            "id": "LOC_0090_0023",
+            "gameObjectType": "TURRET"
         },
         {
-            "id": "LOC_0075_0030",
-            "gameObjectType": "SURVIVOR"
-        },
-        {
-            "id": "LOC_0018_0015",
-            "gameObjectType": "SURVIVOR"
-        },
-        {
-            "id": "LOC_0037_0015",
-            "gameObjectType": "SURVIVOR",
-            "angle": 180
-        },
-        {
-            "id": "LOC_0074_0015",
-            "gameObjectType": "SURVIVOR"
-        },
-        {
-            "id": "LOC_0073_0016",
-            "gameObjectType": "SURVIVOR"
-        },
-        {
-            "id": "LOC_0090_0017",
-            "gameObjectType": "SURVIVOR"
-        },
-        {
-            "id": "LOC_0068_0027",
+            "id": "LOC_0110_0025",
             "gameObjectType": "TURRET",
             "angle": 90,
             "weaponColor": "Colors::RED"
         },
         {
-            "id": "LOC_0097_0030",
-            "gameObjectType": "TURRET",
-            "weaponColor": "Colors::RED",
-            "angle": 180
-        },
-        {
-            "id": "LOC_0099_0025",
+            "id": "LOC_0110_0039",
             "gameObjectType": "TURRET",
             "angle": 90,
             "weaponColor": "Colors::RED"
         },
         {
-            "id": "LOC_0008_0015",
-            "gameObjectType": "TOGGLE_BUTTON",
+            "id": "LOC_0110_0043",
+            "gameObjectType": "TURRET",
+            "angle": 90,
+            "weaponColor": "Colors::RED"
+        },
+        {
+            "id": "LOC_0110_0046",
+            "gameObjectType": "TURRET",
+            "angle": 90,
+            "weaponColor": "Colors::RED"
+        },
+        {
+            "id": "LOC_0117_0037",
+            "gameObjectType": "TURRET",
+            "angle": 180,
+            "weaponColor": "Colors::RED"
+        },
+        {
+            "id": "LOC_0109_0048",
+            "gameObjectType": "TURRET",
+            "angle": 180,
+            "weaponColor": "Colors::RED"
+        },
+        {
+            "id": "LOC_0043_0050",
+            "gameObjectType": "TURRET",
+            "angle": 270,
+            "weaponColor": "Colors::RED"
+        },
+        {
+            "id": "LOC_0043_0052",
+            "gameObjectType": "TURRET",
+            "angle": 270,
+            "weaponColor": "Colors::RED"
+        },
+        {
+            "id": "LOC_0115_0026",
+            "gameObjectType": "TURRET",
+            "angle": 270,
+            "weaponColor": "Colors::RED"
+        },
+        {
+            "id": "LOC_0115_0048",
+            "gameObjectType": "TURRET",
+            "angle": 270,
+            "weaponColor": "Colors::RED"
+        },
+        {
+            "id": "LOC_0023_0028",
+            "gameObjectType": "LASERWALL_64",
+            "name": "button1_TARGET"
+        },
+        {
+            "id": "LOC_0044_0020",
+            "gameObjectType": "LASERWALL_64",
+            "angle": 90,
+            "name": "button1_TARGET"
+        },
+        {
+            "id": "LOC_0042_0048",
+            "gameObjectType": "LASERWALL_64",
+            "name": "button2_TARGET"
+        },
+        {
+            "id": "LOC_0088_0042",
+            "gameObjectType": "LASERWALL_64",
+            "name": "button3_TARGET"
+        },
+        {
+            "id": "LOC_0101_0044",
+            "gameObjectType": "LASERWALL_64",
+            "angle": 90,
+            "name": "button4_TARGET"
+        },
+        {
+            "id": "LOC_0105_0025",
+            "gameObjectType": "LASERWALL_64",
+            "name": "button4_TARGET"
+        },
+        {
+            "id": "LOC_0098_0060",
+            "gameObjectType": "LASERWALL_64",
+            "name": "button5_TARGET",
+            "objectColor": "Colors::ORANGE"
+        },
+        {
+            "id": "LOC_0031_0048",
+            "gameObjectType": "BREAKABLE_WALL_64"
+        },
+        {
+            "id": "LOC_0095_0053",
+            "gameObjectType": "BREAKABLE_WALL_64"
+        },
+        {
+            "id": "LOC_0058_0028",
+            "gameObjectType": "BREAKABLE_WALL_64"
+        },
+        {
+            "id": "LOC_0119_0039",
+            "gameObjectType": "ONETIME_BUTTON",
             "name": "button1",
             "angle": 270
         },
         {
-            "id": "LOC_0030_0023",
-            "gameObjectType": "TOGGLE_BUTTON",
+            "id": "LOC_0119_0041",
+            "gameObjectType": "ONETIME_BUTTON",
             "name": "button2",
-            "angle": 180
+            "angle": 270
         },
         {
-            "id": "LOC_0061_0023",
-            "gameObjectType": "TOGGLE_BUTTON",
+            "id": "LOC_0119_0043",
+            "gameObjectType": "ONETIME_BUTTON",
             "name": "button3",
-            "angle": 180
+            "angle": 270
         },
         {
-            "id": "LOC_0093_0022",
-            "gameObjectType": "TOGGLE_BUTTON",
-            "name": "button5"
+            "id": "LOC_0119_0045",
+            "gameObjectType": "ONETIME_BUTTON",
+            "name": "button4",
+            "angle": 270
         },
         {
-            "id": "LOC_0005_0013",
-            "gameObjectType": "LASERWALL_128",
-            "name": "button1_TARGET"
+            "id": "LOC_0060_0023",
+            "gameObjectType": "ONETIME_BUTTON",
+            "name": "button5",
+            "angle": 270
         },
         {
-            "id": "LOC_0090_0018",
-            "gameObjectType": "LASERWALL_64",
-            "name": "button5_TARGET"
+            "id": "LOC_0099_0061",
+            "gameObjectType": "ESCAPE_STAIRS"
         },
         {
-            "id": "LOC_0005_0018",
-            "gameObjectType": "LASERWALL_128",
-            "name": "button1_TARGET"
-        },
-        {
-            "id": "LOC_0020_0014",
-            "gameObjectType": "LASERWALL_192",
-            "name": "button2_TARGET"
-        },
-        {
-            "id": "LOC_0020_0017",
-            "gameObjectType": "LASERWALL_192",
-            "name": "button3_TARGET"
-        },
-        {
-            "id": "LOC_0028_0014",
-            "gameObjectType": "LASERWALL_192",
-            "name": "button2_TARGET"
-        },
-        {
-            "id": "LOC_0028_0017",
-            "gameObjectType": "LASERWALL_192",
-            "name": "button3_TARGET"
-        },
-        {
-            "id": "LOC_0040_0014",
-            "gameObjectType": "LASERWALL_192",
-            "name": "button2_TARGET"
-        },
-        {
-            "id": "LOC_0040_0017",
-            "gameObjectType": "LASERWALL_192",
-            "name": "button3_TARGET"
-        },
-        {
-            "id": "LOC_0047_0014",
-            "gameObjectType": "LASERWALL_192",
-            "name": "button2_TARGET"
-        },
-        {
-            "id": "LOC_0047_0017",
-            "gameObjectType": "LASERWALL_192",
-            "name": "button3_TARGET"
-        },
-        {
-            "id": "LOC_0060_0014",
-            "gameObjectType": "LASERWALL_192",
-            "name": "button2_TARGET"
-        },
-        {
-            "id": "LOC_0060_0017",
-            "gameObjectType": "LASERWALL_192",
-            "name": "button3_TARGET"
-        },
-        {
-            "id": "LOC_0067_0014",
-            "gameObjectType": "LASERWALL_192",
-            "name": "button2_TARGET"
-        },
-        {
-            "id": "LOC_0067_0017",
-            "gameObjectType": "LASERWALL_192",
-            "name": "button3_TARGET"
-        },
-        {
-            "id": "LOC_0077_0028",
-            "gameObjectType": "BARREL_STATIC_FILLER"
-        },
-        {
-            "id": "LOC_0069_0026",
-            "gameObjectType": "BARREL_STATIC_FILLER"
-        },
-        {
-            "id": "LOC_0074_0030",
-            "gameObjectType": "CHECKPOINT_2_A",
-            "checkPointContact": true,
+            "id": "LOC_0106_0016",
+            "gameObjectType": "CHECKPOINT_5_A",
             "layer": "GameLayer::ABSTRACT"
-
+        },
+        {
+            "id": "LOC_0021_0036",
+            "gameObjectType": "HEALTH_STATION_128"
+        },
+        {
+            "id": "LOC_0057_0020",
+            "gameObjectType": "HEALTH_STATION_128",
+            "containerStartCount": 1,
+            "containerRespawnTimer": 0
         }
-
 
     ]
 }

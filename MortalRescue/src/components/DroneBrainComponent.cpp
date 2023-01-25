@@ -22,7 +22,7 @@ DroneBrainComponent::DroneBrainComponent(Json::Value definitionJSON)
 {
 
 	m_engageStateTimer = Timer(3);
-	m_eyeFireDelayTimer = Timer(.5, true);
+	m_eyeFireDelayTimer = Timer(.4, true);
 
 
 
@@ -114,21 +114,26 @@ void DroneBrainComponent::_doEngage()
 
 	auto navigationComponent = parent()->getComponent<NavigationComponent>(ComponentTypes::NAVIGATION_COMPONENT);
 
+	//If we can see the player, we might not be able to navigate to him because of our isze
+	//but if we can SEE him, then still try, so disable the navigation size check
+	if (_detectPlayer() != std::nullopt) {
 
-	//Point eye/weapon at target location
-	const auto& attachmentComponent = parent()->getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
-	const auto& eye = attachmentComponent->getAttachment("DRONE_EYE");
-	const auto& eyeGameObject = eye.value().gameObject;
-	b2Vec2 targetLoc = { m_focusPoint.value().x ,m_focusPoint.value().y };
-	b2Vec2 rotationCenter{ parent()->getCenterPosition().x, parent()->getCenterPosition().y };
-	_rotateTowards(targetLoc, rotationCenter, eyeGameObject.get());
+		//Point eye/weapon at target location
+		const auto& attachmentComponent = parent()->getComponent<AttachmentsComponent>(ComponentTypes::ATTACHMENTS_COMPONENT);
+		const auto& eye = attachmentComponent->getAttachment("DRONE_EYE");
+		const auto& eyeGameObject = eye.value().gameObject;
+		b2Vec2 targetLoc = { m_focusPoint.value().x ,m_focusPoint.value().y };
+		b2Vec2 rotationCenter{ parent()->getCenterPosition().x, parent()->getCenterPosition().y };
+		_rotateTowards(targetLoc, rotationCenter, eyeGameObject.get());
 
-	//Fire eye/weapon
-	if (m_eyeFireDelayTimer.hasMetTargetDuration()) {
-		auto actionComponent = eyeGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+		//Fire eye/weapon
+		if (m_eyeFireDelayTimer.hasMetTargetDuration()) {
+			auto actionComponent = eyeGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 
-		const auto& action = actionComponent->getAction(ACTION_USAGE);
-		action->perform(eyeGameObject.get());
+			const auto& action = actionComponent->getAction(ACTION_USAGE);
+			action->perform(eyeGameObject.get());
+		}
+
 	}
 
 	//If we are pretty close to the player then stop but should keep shooting
@@ -137,8 +142,12 @@ void DroneBrainComponent::_doEngage()
 	auto objectSize = parent()->getSize().x;
 	if (playerDistance > (objectSize * 2)) {
 
+		//Attempt to navigate to the playerlocation
+		 
 		//Navigate towards target location, unless you are already there
-		navigationCode = navigationComponent->navigateTo(m_focusPoint.value().x, m_focusPoint.value().y);
+		//This is the player you are trying to navigate to, so add a fuzzy factor so that standing next to 
+		//walls doesnt throw off large drones able to reach your exact location
+		navigationCode = navigationComponent->navigateTo(m_focusPoint.value().x, m_focusPoint.value().y, 1);
 
 		//If we cant get to the player location then stop navigating
 		if (navigationCode == NavigationStatus::NO_PATH_FOUND) {
@@ -154,8 +163,6 @@ void DroneBrainComponent::_doEngage()
 
 
 }
-
-
 
 SDL_FPoint DroneBrainComponent::_getNextPatrolDestination()
 {
@@ -177,8 +184,6 @@ SDL_FPoint DroneBrainComponent::_getNextPatrolDestination()
 
 	auto newDestination = m_wayPoints[m_currentWaypointIndex];
 	newPatrolLocation = newDestination.lock().get()->getCenterPosition();
-
-	//newPatrolLocation = util::pixelToTileLocation(newPatrolLocation.x, newPatrolLocation.y);
 
 	return newPatrolLocation;
 
@@ -208,7 +213,6 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 
 	//TODO: save the last ABS of the difference and compare and adjust forward
 	//or back based on that to zero-in on target
-
 	if ((desiredAngle - currentAngle) < 0.0) {
 		rotationVelocity = vitality->rotateSpeed() * -1;
 	}
@@ -234,8 +238,6 @@ void DroneBrainComponent::_rotateTowards(b2Vec2 targetPoint, b2Vec2 rotationCent
 
 }
 
-
-
 int DroneBrainComponent::_determineState()
 {
 	int state{ m_currentState };
@@ -253,7 +255,7 @@ int DroneBrainComponent::_determineState()
 
 		if (m_currentState == BrainState::ENGAGE) {
 
-			if (m_engageStateTimer.hasMetTargetDuration()) {
+ 			if (m_engageStateTimer.hasMetTargetDuration()) {
 
 				m_focusPoint = std::nullopt;
 				state = BrainState::PATROL;

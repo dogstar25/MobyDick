@@ -46,7 +46,7 @@ void NavigationComponent::navigateStop()
 	//}
 }
 
-NavigationStatus NavigationComponent::navigateTo(float pixelX, float pixelY)
+NavigationStatus NavigationComponent::navigateTo(float pixelX, float pixelY, int fuzzyFactor)
 {
 	bool destinationChanged{};
 
@@ -62,7 +62,6 @@ NavigationStatus NavigationComponent::navigateTo(float pixelX, float pixelY)
 
 	//If we have been stuck in the same spot for a few seconds then
 	//return stuck status and let the brain decide what to do
-	//bool isStuck = _isStuck();
 	if (_isStuck()) {
 		return NavigationStatus::STUCK;
 	}
@@ -70,7 +69,6 @@ NavigationStatus NavigationComponent::navigateTo(float pixelX, float pixelY)
 	// If the navigatioMap changed based on conditional walls and such
 	// OR
 	// this objects destination changed, then
-
 	if (parent()->parentScene()->navigationMapChanged() == true || 
 		destinationChanged == true ||
 		m_solutionPath.empty() == true || 
@@ -79,10 +77,10 @@ NavigationStatus NavigationComponent::navigateTo(float pixelX, float pixelY)
 		m_solutionPath.clear();
 		m_currentNavStep = 0;
 		
-		//std::thread t1([&](NavigationComponent* foo) { foo->_findPathToDestination2(); }, this);
+		//std::thread t1([&](NavigationComponent* foo) { foo->enable(); }, this);
 
 		if (m_solutionPath.empty()) {
-			pathFound = _buildPathToDestination();
+			pathFound = _buildPathToDestination(fuzzyFactor);
 		}
 
 		if (pathFound == false) {
@@ -92,7 +90,7 @@ NavigationStatus NavigationComponent::navigateTo(float pixelX, float pixelY)
 		m_pathRefreshTimer.reset();
 	}
 
-	//Have we reached the taregtDestination
+	//Have we reached the targetDestination
 	if (util::calculateDistance(parent()->getCenterPosition(), m_targetPixelDestination) < m_navigationDestinationTolerance) {
 	
 		m_solutionPath.clear();
@@ -135,8 +133,10 @@ void NavigationComponent::postInit()
 
 }
 
-bool NavigationComponent::_buildPathToDestination()
+bool NavigationComponent::_buildPathToDestination(int fuzzyFactor)
 {
+
+
 	std::unordered_map<std::string, std::shared_ptr<AStarNode>> toSearch{};
 	std::unordered_map<std::string, std::shared_ptr<AStarNode>> processed{};
 
@@ -155,12 +155,8 @@ bool NavigationComponent::_buildPathToDestination()
 	toSearch.emplace(std::pair<std::string, std::shared_ptr<AStarNode>>(key, startingNode));
 
 	//test
-
 	parent()->parentScene()->resetGridDisplay();
-
-
 	////
-
 
 	//While there are nodes left to search
 	while (toSearch.empty() == false) {
@@ -189,12 +185,13 @@ bool NavigationComponent::_buildPathToDestination()
 		toSearch.erase(currentItr);
 
 		//If this current node is actually our target node then build the path back and return
-		if (currentNode->position.x == m_targetTileDestination.x &&
-			currentNode->position.y == m_targetTileDestination.y) {
+		if(_foundDestinationNode(m_targetTileDestination, currentNode, fuzzyFactor)){
 
 			//This first node should be the destination node so add it to the solution
 			AStarNode* pathNode{ currentNode.get() };
 			m_solutionPath.insert(m_solutionPath.begin(), pathNode->position);
+
+			//std::thread t1([&](Scene* parentScene) { parentScene->updateGridDisplay(pathNode->position.x, pathNode->position.y, TURN_ON, Colors::GREEN); }, parent()->parentScene());
 
 			//Now traverse the rest of the nodes using each ones connection key
 			while (true) {
@@ -212,9 +209,7 @@ bool NavigationComponent::_buildPathToDestination()
 				m_solutionPath.insert(m_solutionPath.begin(), pathNode->position);
 
 				//test
-
 				//parent()->parentScene()->updateGridDisplay(pathNode->position.x, pathNode->position.y, TURN_ON, Colors::GREEN);
-
 				/////
 
 			}
@@ -261,6 +256,71 @@ bool NavigationComponent::_buildPathToDestination()
 
 	return false;
 
+}
+
+bool NavigationComponent::_foundDestinationNode(SDL_Point destinationTile, std::shared_ptr<AStarNode> currentNode, int fuzzyFactor)
+{
+
+	//Exact location match
+	if (destinationTile.x == currentNode->position.x &&
+		destinationTile.y == currentNode->position.y) {
+		return true;
+	}
+
+	if (fuzzyFactor > 0) {
+
+		auto matchFound = false;
+
+		for (auto adj = 1; adj <= fuzzyFactor; adj++) {
+			//top left
+			if (destinationTile.x -adj  == currentNode->position.x &&
+				destinationTile.y -adj == currentNode->position.y) {
+				matchFound = true;
+				break;
+			}
+			//top
+			if (destinationTile.x == currentNode->position.x &&
+				destinationTile.y - adj == currentNode->position.y) {
+				matchFound = true;
+				break;
+			}
+			//top right
+			if (destinationTile.x + adj == currentNode->position.x &&
+				destinationTile.y + adj == currentNode->position.y) {
+				matchFound = true;
+				break;
+			}
+			//left
+			if (destinationTile.x - adj == currentNode->position.x &&
+				destinationTile.y  == currentNode->position.y) {
+				matchFound = true;
+				break;
+			}
+			//right
+			if (destinationTile.x + adj == currentNode->position.x &&
+				destinationTile.y == currentNode->position.y) {
+				matchFound = true;
+				break;
+			}
+			//bottom left
+			if (destinationTile.x - adj == currentNode->position.x &&
+				destinationTile.y - adj == currentNode->position.y) {
+				matchFound = true;
+				break;
+			}
+			//bottom right
+			if (destinationTile.x + adj == currentNode->position.x &&
+				destinationTile.y + adj == currentNode->position.y) {
+				matchFound = true;
+				break;
+			}
+
+		}
+
+		return matchFound;
+	}
+
+	return false;
 }
 
 bool NavigationComponent::_isStuck()
@@ -379,6 +439,11 @@ void NavigationComponent::_addNeighbor(int x, int y, std::vector<std::shared_ptr
 		std::shared_ptr<AStarNode> starNode = std::make_shared<AStarNode>();
 		starNode->position = { x, y };
 		starNode->keyValue = util::locationToString((float)x,(float)y);
+
+		if (x < 0 || y < 0) {
+			int todd = 1;
+		}
+
 		neighbors.push_back(starNode);
 
 	}
@@ -390,7 +455,7 @@ bool NavigationComponent::_isValidNode(const int x, const int y)
 	const auto& navMap = parent()->parentScene()->navigationMap();
 	int xMax = navMap.size();
 	int yMax = navMap[0].size();
-	bool passable{true};
+	bool passable{false};
 
 	//Check map boundaries - small navigating object
 	if (x >= 0 && x < xMax && y > 0 && y < yMax) {
@@ -400,11 +465,13 @@ bool NavigationComponent::_isValidNode(const int x, const int y)
 
 			passable = false;
 		}
+		else {
+			passable = true;
+		}
 
 		// If this tile was passable and this is a medium size navigating object
 		// then also check each tile around this one
-
-		if (m_passageFitSizeCategory > NavigationSizeCategory::SMALL && passable == true) {
+		if (m_applyPassageFit ==true && m_passageFitSizeCategory > NavigationSizeCategory::SMALL && passable == true ) {
 
 			//first check medium
 			if (m_passageFitSizeCategory == NavigationSizeCategory::MEDIUM || m_passageFitSizeCategory == NavigationSizeCategory::LARGE) {
@@ -434,7 +501,7 @@ bool NavigationComponent::_applyNavObjectSizeCheck(int x, int y, int objectCateg
 
 	//Top Left
 	sizeAdjPoint = { x - objectCategory, y - objectCategory };
-	if (sizeAdjPoint.x >= 0 && sizeAdjPoint.x < xMax && sizeAdjPoint.y > 0 && sizeAdjPoint.y < yMax) {
+	if (sizeAdjPoint.x >= 0 && sizeAdjPoint.x < xMax && sizeAdjPoint.y >= 0 && sizeAdjPoint.y < yMax) {
 		if (navMap[sizeAdjPoint.x][sizeAdjPoint.y].passable == false) {
 			passable = false;
 		}
@@ -442,7 +509,7 @@ bool NavigationComponent::_applyNavObjectSizeCheck(int x, int y, int objectCateg
 
 	//Top
 	sizeAdjPoint = { x, y - objectCategory };
-	if (sizeAdjPoint.x >= 0 && sizeAdjPoint.x < xMax && sizeAdjPoint.y > 0 && sizeAdjPoint.y < yMax) {
+	if (sizeAdjPoint.x >= 0 && sizeAdjPoint.x < xMax && sizeAdjPoint.y >= 0 && sizeAdjPoint.y < yMax) {
 		if (navMap[sizeAdjPoint.x][sizeAdjPoint.y].passable == false) {
 			passable = false;
 		}
@@ -450,7 +517,7 @@ bool NavigationComponent::_applyNavObjectSizeCheck(int x, int y, int objectCateg
 
 	//Top Right
 	sizeAdjPoint = { x + objectCategory, y - objectCategory };
-	if (sizeAdjPoint.x >= 0 && sizeAdjPoint.x < xMax && sizeAdjPoint.y > 0 && sizeAdjPoint.y < yMax) {
+	if (sizeAdjPoint.x >= 0 && sizeAdjPoint.x < xMax && sizeAdjPoint.y >= 0 && sizeAdjPoint.y < yMax) {
 		if (navMap[sizeAdjPoint.x][sizeAdjPoint.y].passable == false) {
 			passable = false;
 		}
@@ -458,7 +525,7 @@ bool NavigationComponent::_applyNavObjectSizeCheck(int x, int y, int objectCateg
 
 	//Left
 	sizeAdjPoint = { x - objectCategory, y };
-	if (sizeAdjPoint.x >= 0 && sizeAdjPoint.x < xMax && sizeAdjPoint.y > 0 && sizeAdjPoint.y < yMax) {
+	if (sizeAdjPoint.x >= 0 && sizeAdjPoint.x < xMax && sizeAdjPoint.y >= 0 && sizeAdjPoint.y < yMax) {
 		if (navMap[sizeAdjPoint.x][sizeAdjPoint.y].passable == false) {
 			passable = false;
 		}
@@ -466,7 +533,7 @@ bool NavigationComponent::_applyNavObjectSizeCheck(int x, int y, int objectCateg
 
 	//Right
 	sizeAdjPoint = { x + objectCategory, y };
-	if (sizeAdjPoint.x >= 0 && sizeAdjPoint.x < xMax && sizeAdjPoint.y > 0 && sizeAdjPoint.y < yMax) {
+	if (sizeAdjPoint.x >= 0 && sizeAdjPoint.x < xMax && sizeAdjPoint.y >= 0 && sizeAdjPoint.y < yMax) {
 		if (navMap[sizeAdjPoint.x][sizeAdjPoint.y].passable == false) {
 			passable = false;
 		}
@@ -474,7 +541,7 @@ bool NavigationComponent::_applyNavObjectSizeCheck(int x, int y, int objectCateg
 
 	//Bottom Left
 	sizeAdjPoint = { x - objectCategory, y + objectCategory };
-	if (sizeAdjPoint.x >= 0 && sizeAdjPoint.x < xMax && sizeAdjPoint.y > 0 && sizeAdjPoint.y < yMax) {
+	if (sizeAdjPoint.x >= 0 && sizeAdjPoint.x < xMax && sizeAdjPoint.y >= 0 && sizeAdjPoint.y < yMax) {
 		if (navMap[sizeAdjPoint.x][sizeAdjPoint.y].passable == false) {
 			passable = false;
 		}
@@ -482,7 +549,7 @@ bool NavigationComponent::_applyNavObjectSizeCheck(int x, int y, int objectCateg
 
 	//Bottom 
 	sizeAdjPoint = { x, y + objectCategory };
-	if (sizeAdjPoint.x >= 0 && sizeAdjPoint.x < xMax && sizeAdjPoint.y > 0 && sizeAdjPoint.y < yMax) {
+	if (sizeAdjPoint.x >= 0 && sizeAdjPoint.x < xMax && sizeAdjPoint.y >= 0 && sizeAdjPoint.y < yMax) {
 		if (navMap[sizeAdjPoint.x][sizeAdjPoint.y].passable == false) {
 			passable = false;
 		}
@@ -490,7 +557,7 @@ bool NavigationComponent::_applyNavObjectSizeCheck(int x, int y, int objectCateg
 
 	//Bottom Right
 	sizeAdjPoint = { x + objectCategory, y + objectCategory };
-	if (sizeAdjPoint.x >= 0 && sizeAdjPoint.x < xMax && sizeAdjPoint.y > 0 && sizeAdjPoint.y < yMax) {
+	if (sizeAdjPoint.x >= 0 && sizeAdjPoint.x < xMax && sizeAdjPoint.y >= 0 && sizeAdjPoint.y < yMax) {
 		if (navMap[sizeAdjPoint.x][sizeAdjPoint.y].passable == false) {
 			passable = false;
 		}
@@ -577,25 +644,6 @@ void NavigationComponent::_applyAvoidanceMovement(b2Vec2& trajectory)
 				}
 
 			}
-
-			//Avoid a wall if its too close
-			//This code below MAY help from getting stuck. I havent proven that. Ima leveave it in for now and revisit when needed
-			//if (distance < 50 && barrierItem.gameObject.lock().get()->hasTrait(TraitTag::barrier)) {
-
-			//	//which is the closer to the wall, the X or the Y direction
-			//	float xDistance = abs(parent()->getCenterPosition().x - barrierItem.gameObject.lock()->getCenterPosition().x);
-			//	float yDistance = abs(parent()->getCenterPosition().y - barrierItem.gameObject.lock()->getCenterPosition().y);
-
-			//	if (xDistance > yDistance) {
-			//		trajectory.x = trajectory.x + -(barrierItem.normal.x);
-			//	}
-			//	else {
-			//		trajectory.y = trajectory.y + -(barrierItem.normal.y);
-			//	}
-
-			//	break;
-
-			//}
 
 		}
 

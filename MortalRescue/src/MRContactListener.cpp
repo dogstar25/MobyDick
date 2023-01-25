@@ -196,6 +196,7 @@ void MRContactListener::_bullet_wall(GameObject* bullet, GameObject* wall, b2Vec
 	auto particleEmitterObject = SceneManager::instance().addGameObject("PARTICLE_X_EMITTER", GameLayer::MAIN, -1, -1);
 	const auto& particleComponent = particleEmitterObject->getComponent<ParticleComponent>(ComponentTypes::PARTICLE_X_COMPONENT);
 	particleComponent->addParticleEffect(ParticleEffects::ricochet);
+	particleComponent->addParticleEffect(ParticleEffects::spark);
 
 	//Convert from box2d to gameWorld coordinates
 	contactPoint.x *= GameConfig::instance().scaleFactor();

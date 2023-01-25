@@ -475,6 +475,12 @@
                             "textureId": "TX_SURVIVOR_RUN",
                             "speed": 0.06,
                             "frames": 4
+                        },
+                        {
+                            "state": "ANIMATION_ACKNOWLEDGE",
+                            "textureId": "TX_SURVIVOR_ACKNOWLEDGE",
+                            "speed": 0.1,
+                            "frames": 2
                         }
 
                     ]
@@ -849,7 +855,7 @@
                     "textureId": "TX_BACKGROUND_1_512",
                     "color": {
                         "tint": "Colors::CYAN",
-                        "alpha": 33
+                        "alpha": 60
                     }
                 },
                 {

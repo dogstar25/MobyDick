@@ -278,6 +278,7 @@
     <None Include="assets\sound\jetpack_start2.ogg" />
     <None Include="assets\levels\level4_definition.json" />
     <None Include="assets\sound\radiationLeak1.ogg" />
+    <None Include="assets\levels\level5_definition.json" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\ambience_deep_shining.wav">

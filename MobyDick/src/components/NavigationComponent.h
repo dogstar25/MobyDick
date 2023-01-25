@@ -33,15 +33,16 @@ public:
 
 	void update() override;
 	void postInit() override;
-	NavigationStatus navigateTo(float pixelX, float pixelY);
+	NavigationStatus navigateTo(float pixelX, float pixelY, int fuzzyFactor=0);
 	void navigateStop();
-
+	void disablePassageFitCheck() { m_applyPassageFit = false; }
+	void enablePassageFitCheck() { m_applyPassageFit = true; }
 
 private:
 
 	std::vector<SDL_Point>m_solutionPath{};
 
-	bool _buildPathToDestination();
+	bool _buildPathToDestination(int fuzzyFactor=0);
 	void _buildNeighbors(AStarNode& currentNode, std::vector<std::shared_ptr<AStarNode>>& neighbors);
 	bool _isValidNode(const int x, const int y);
 	void _addNeighbor(int x, int y, std::vector<std::shared_ptr<AStarNode>>& neighbors);
@@ -53,9 +54,10 @@ private:
 	void _checkLocation(const int x, const int y);
 	bool _applyNavObjectSizeCheck(int x, int y, int objectCategory);
 	bool _isStuck();
+	bool _foundDestinationNode(SDL_Point destinationTile, std::shared_ptr<AStarNode> currentNode, int fuzzyFactor=0);
 
 
-	Timer m_pathRefreshTimer{ 0.5, true };
+	Timer m_pathRefreshTimer{ .5, true };
 	
 	SDL_FPoint m_targetPixelDestination{};
 	SDL_Point m_targetTileDestination{};
@@ -64,6 +66,7 @@ private:
 	Timer m_stuckTimer{2, true};
 	SDL_FPoint m_previousLocation{};
 	int m_passageFitSizeCategory{};
+	bool m_applyPassageFit{ true };
 	float m_navigationDestinationTolerance{};
 	float m_navigationStuckTolerance{};
 

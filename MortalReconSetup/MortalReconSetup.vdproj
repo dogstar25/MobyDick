@@ -63,6 +63,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_0D1492159462415382A0791EE4A07287"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0DB9F98F8A414444880C34694A28C908"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -82,6 +88,12 @@
         "Entry"
         {
         "MsmKey" = "8:_13BD02E841AE44358789F8C123F39CE0"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_15953E0901B1483CB6DA7D4C8606F3DE"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -159,6 +171,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_2A64C4B090054891BBA0CFC8B40DC9A3"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_2EB7E6C458EC4654955236F3FF92ABFB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -178,6 +196,12 @@
         "Entry"
         {
         "MsmKey" = "8:_34E8D9CCAC0F4AED9183170804FC061C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3909F8DB0CF049B886855022E1F6B063"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -225,6 +249,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_5146ACD765D248EBB0242D35FF2AE15C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_5306B1916A6A43359218D328E0E62F71"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -237,7 +267,19 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_548DD63F56B344299A7E613C7DB2D259"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_5793E8877E9B47758BC90ED4DE91661A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_57D4AF3830DB4FFF82BE01E9335C4A05"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -309,6 +351,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_7FA0C758DD1C46F59FABA4441D28DDB3"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_80653E5C999B4F0691F100A88ECFFAF0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -322,6 +370,12 @@
         "Entry"
         {
         "MsmKey" = "8:_838D63C7B59146C9A5834094B0791D9B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_863F8540491F44A6B4B6EE7F72225602"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -388,6 +442,12 @@
         "Entry"
         {
         "MsmKey" = "8:_9DF13D7C2B6F47EAB9F51E52C36E81C0"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A05045BC19434B62BC48DDC5329B0BD9"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -460,6 +520,12 @@
         "Entry"
         {
         "MsmKey" = "8:_C712FD5F861D403496A7C8C57529BC6D"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C769920EBBAF4BD194912376E4F4C2C2"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -592,6 +658,12 @@
         "Entry"
         {
         "MsmKey" = "8:_F214A20F8677487BA65D3AF22354D5F3"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F33749B2192548B2A17D0B753201D1BB"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -860,6 +932,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0D1492159462415382A0791EE4A07287"
+            {
+            "SourcePath" = "8:..\\MortalRescue\\x64\\Release\\vcomp140.dll"
+            "TargetName" = "8:vcomp140.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C9509C680B034D81B71B1DD3A0ECFDB0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0DB9F98F8A414444880C34694A28C908"
             {
             "SourcePath" = "8:..\\MortalRescue\\assets\\blueprints\\breakable_wall_128_blueprint.png"
@@ -924,6 +1016,26 @@
             {
             "SourcePath" = "8:..\\MortalRescue\\x64\\Release\\brotlicommon.dll"
             "TargetName" = "8:brotlicommon.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C9509C680B034D81B71B1DD3A0ECFDB0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_15953E0901B1483CB6DA7D4C8606F3DE"
+            {
+            "SourcePath" = "8:..\\MortalRescue\\x64\\Release\\vccorlib140.dll"
+            "TargetName" = "8:vccorlib140.dll"
             "Tag" = "8:"
             "Folder" = "8:_C9509C680B034D81B71B1DD3A0ECFDB0"
             "Condition" = "8:"
@@ -1180,6 +1292,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2A64C4B090054891BBA0CFC8B40DC9A3"
+            {
+            "SourcePath" = "8:..\\MortalRescue\\x64\\Release\\vcamp140.dll"
+            "TargetName" = "8:vcamp140.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C9509C680B034D81B71B1DD3A0ECFDB0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2EB7E6C458EC4654955236F3FF92ABFB"
             {
             "SourcePath" = "8:..\\MortalRescue\\assets\\levels\\levels.json"
@@ -1244,6 +1376,26 @@
             {
             "SourcePath" = "8:..\\MortalRescue\\x64\\Release\\jsoncpp.dll"
             "TargetName" = "8:jsoncpp.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C9509C680B034D81B71B1DD3A0ECFDB0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_3909F8DB0CF049B886855022E1F6B063"
+            {
+            "SourcePath" = "8:..\\MortalRescue\\x64\\Release\\msvcp140_1.dll"
+            "TargetName" = "8:msvcp140_1.dll"
             "Tag" = "8:"
             "Folder" = "8:_C9509C680B034D81B71B1DD3A0ECFDB0"
             "Condition" = "8:"
@@ -1400,6 +1552,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5146ACD765D248EBB0242D35FF2AE15C"
+            {
+            "SourcePath" = "8:..\\MortalRescue\\x64\\Release\\vcruntime140_1.dll"
+            "TargetName" = "8:vcruntime140_1.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C9509C680B034D81B71B1DD3A0ECFDB0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5306B1916A6A43359218D328E0E62F71"
             {
             "SourcePath" = "8:..\\MortalRescue\\assets\\sound\\weapon2_fire1_01.ogg"
@@ -1440,12 +1612,52 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_548DD63F56B344299A7E613C7DB2D259"
+            {
+            "SourcePath" = "8:..\\MortalRescue\\x64\\Release\\msvcp140_atomic_wait.dll"
+            "TargetName" = "8:msvcp140_atomic_wait.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C9509C680B034D81B71B1DD3A0ECFDB0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5793E8877E9B47758BC90ED4DE91661A"
             {
             "SourcePath" = "8:..\\MortalRescue\\assets\\sound\\turretUndeploy1_01.ogg"
             "TargetName" = "8:turretUndeploy1_01.ogg"
             "Tag" = "8:"
             "Folder" = "8:_29B15C8D3A9A41C1939A89AC4A9739BE"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_57D4AF3830DB4FFF82BE01E9335C4A05"
+            {
+            "SourcePath" = "8:..\\MortalRescue\\x64\\Release\\msvcp140_codecvt_ids.dll"
+            "TargetName" = "8:msvcp140_codecvt_ids.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C9509C680B034D81B71B1DD3A0ECFDB0"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1680,6 +1892,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7FA0C758DD1C46F59FABA4441D28DDB3"
+            {
+            "SourcePath" = "8:..\\MortalRescue\\x64\\Release\\vcruntime140.dll"
+            "TargetName" = "8:vcruntime140.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C9509C680B034D81B71B1DD3A0ECFDB0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_80653E5C999B4F0691F100A88ECFFAF0"
             {
             "SourcePath" = "8:..\\MortalRescue\\assets\\levels\\level10_blueprint.png"
@@ -1726,6 +1958,26 @@
             "TargetName" = "8:AtariFontFullVersion-ZJ23.ttf"
             "Tag" = "8:"
             "Folder" = "8:_950D6154FB244EA5BA76216A0FD1F8F4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_863F8540491F44A6B4B6EE7F72225602"
+            {
+            "SourcePath" = "8:..\\MortalRescue\\x64\\Release\\concrt140.dll"
+            "TargetName" = "8:concrt140.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C9509C680B034D81B71B1DD3A0ECFDB0"
             "Condition" = "8:"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
@@ -1944,6 +2196,26 @@
             {
             "SourcePath" = "8:..\\MortalRescue\\assets\\levels\\level100_definition.json"
             "TargetName" = "8:level100_definition.json"
+            "Tag" = "8:"
+            "Folder" = "8:_7CCBB526A02A46BF964A97B7975BD1D0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A05045BC19434B62BC48DDC5329B0BD9"
+            {
+            "SourcePath" = "8:..\\MortalRescue\\assets\\levels\\level5_definition.json"
+            "TargetName" = "8:level5_definition.json"
             "Tag" = "8:"
             "Folder" = "8:_7CCBB526A02A46BF964A97B7975BD1D0"
             "Condition" = "8:"
@@ -2184,6 +2456,26 @@
             {
             "SourcePath" = "8:..\\MortalRescue\\assets\\icon2.ico"
             "TargetName" = "8:icon2.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_C9509C680B034D81B71B1DD3A0ECFDB0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C769920EBBAF4BD194912376E4F4C2C2"
+            {
+            "SourcePath" = "8:..\\MortalRescue\\x64\\Release\\msvcp140_2.dll"
+            "TargetName" = "8:msvcp140_2.dll"
             "Tag" = "8:"
             "Folder" = "8:_C9509C680B034D81B71B1DD3A0ECFDB0"
             "Condition" = "8:"
@@ -2640,6 +2932,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F33749B2192548B2A17D0B753201D1BB"
+            {
+            "SourcePath" = "8:..\\MortalRescue\\x64\\Release\\msvcp140.dll"
+            "TargetName" = "8:msvcp140.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_C9509C680B034D81B71B1DD3A0ECFDB0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F857AE812FBF4A2F838BC908A05F14FE"
             {
             "SourcePath" = "8:..\\MortalRescue\\assets\\sound\\music\\level_background_f.mp3"
@@ -2844,15 +3156,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MortalRecon"
-        "ProductCode" = "8:{A2130368-D2CC-497F-A95D-698360F7B746}"
-        "PackageCode" = "8:{00B1649C-C564-4B63-9670-4AB148F41C8D}"
+        "ProductCode" = "8:{45C055ED-2267-46EA-BEA7-78F2DD8F4AF6}"
+        "PackageCode" = "8:{923DEFA5-1413-492A-82FB-0DA74698ED86}"
         "UpgradeCode" = "8:{1F7F63EA-209E-46C5-927C-1F6FAE07143E}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
-        "DetectNewerInstalledVersion" = "11:FALSE"
+        "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.0.2"
         "Manufacturer" = "8:SinbadGames"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -2862,7 +3174,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_C712FD5F861D403496A7C8C57529BC6D"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"

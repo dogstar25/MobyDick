@@ -883,7 +883,7 @@ void LevelManager::_buildTiledLayers(Scene* scene)
 				//adjust the X and Y map position based on the size of our background tiles
 				auto newBackgroundObject = 
 					scene->addGameObject(
-						tiledLayer.second.tiledObjectId, GameLayer::BACKGROUND_1, (float)x * adjustX, (float)y * adjustY, (float)0);
+						tiledLayer.second.tiledObjectId, tiledLayer.second.layerId, (float)x * adjustX, (float)y * adjustY, (float)0);
 
 			}
 

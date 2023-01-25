@@ -75,6 +75,18 @@
                             "state": "ANIMATION_SPRINT",
                             "textureId": "TX_GINA_64_REDUX_BOOST2",
                             "frames": 1
+                        },
+                        {
+                            "state": "ANIMATION_STRAFE_LEFT",
+                            "textureId": "TX_GINA_64_REDUX_STRAFE_LEFT",
+                            "speed": 0.07,
+                            "frames": 3
+                        },
+                        {
+                            "state": "ANIMATION_STRAFE_RIGHT",
+                            "textureId": "TX_GINA_64_REDUX_STRAFE_RIGHT",
+                            "speed": 0.07,
+                            "frames": 3
                         }
                     ]
                 },

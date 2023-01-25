@@ -205,10 +205,14 @@ namespace util
 	{
 		char buffer[10];
 		
-		snprintf(buffer, 10, "%04d_%04d", (int)x, (int)y);
-		auto position = std::string(buffer, 10);
+		//snprintf(buffer, 10, "%04d_%04d", (int)x, (int)y);
+		//auto position = std::string(buffer, 10);
 
 		//auto position = std::format("{:04}_{:04}", (int)x, (int)y);
+
+		auto positionx = std::to_string((int)x);
+		auto positiony = std::to_string((int)y);
+		auto position = positionx + "_" + positiony;
 
 		return position;
 	}

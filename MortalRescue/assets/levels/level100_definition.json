@@ -3,8 +3,8 @@
     "blueprint": "TX_LEVEL100_BLUEPRINT",
     "description": "TX_LEVEL_T100",
     "dimensions": {
-        "levelWidth": 61,
-        "levelHeight": 33,
+        "levelWidth": 60,
+        "levelHeight": 32,
         "tileWidth": 32,
         "tileHeight": 32
     },
@@ -59,12 +59,8 @@
             "cameraFollow": true
         },
         {
-            "id": "LOC_0018_0008",
-            "gameObjectType": "TURRET"
-        },
-        {
-            "id": "LOC_0018_0013",
-            "gameObjectType": "TURRET"
+            "id": "LOC_0035_0014",
+            "gameObjectType": "DRONE"
         }
 
     ],

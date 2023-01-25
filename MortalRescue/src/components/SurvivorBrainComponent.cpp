@@ -49,12 +49,22 @@ void SurvivorBrainComponent::followMe(std::shared_ptr<GameObject> gameObjectToFo
 	m_gameObjectToFollow = gameObjectToFollow;
 	m_currentState = BrainState::FOLLOW;
 
+	//Animate acknowledge
+	auto const& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
+	animationComponent->animate(ANIMATION_ACKNOWLEDGE, ANIMATE_ONE_TIME);
+	animationComponent->setFlash(Colors::YELLOW, .05, 1);
+
 }
 
 void SurvivorBrainComponent::stay() {
 
 	m_gameObjectToFollow.reset();
 	m_currentState = BrainState::IDLE;
+
+	//Animate acknowledge
+	auto const& animationComponent = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
+	animationComponent->animate(ANIMATION_ACKNOWLEDGE, ANIMATE_ONE_TIME);
+	animationComponent->setFlash(Colors::YELLOW, .05, 1);
 
 }
 
