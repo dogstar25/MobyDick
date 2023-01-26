@@ -22,7 +22,7 @@ IMGuiTestLevelMenu::IMGuiTestLevelMenu(std::string gameObjectType, b2Vec2 paddin
 
 glm::vec2 IMGuiTestLevelMenu::render()
 {
-	ImVec2 buttonSize{ ImGui::BBSettings::button1Size };
+	ImVec2 buttonSize{ ImGui::GameSettings::button1Size };
 	glm::vec2 windowSize{};
 
 	const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);

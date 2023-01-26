@@ -24,15 +24,15 @@ struct LevelObject
 	int angleAdjustment {};
 	bool cameraFollow{ false };
 	std::string name{};
-	std::optional<SDL_Color> color{};
-	std::optional<int> disabledType{};
-	std::optional<float> weaponForce{};
-	std::optional<SDL_Color> weaponColor{};
-	std::optional<int> compositePieceLevelCap{};
-	std::optional<int> brainSensorSize{};
-	std::optional<float> containerRespawnTimer{};
-	std::optional<int> containerStartCount{};
-	std::optional<int> containerCapacity{};
+	std::optional<SDL_Color> color;
+	std::optional<int> disabledType;
+	std::optional<float> weaponForce;
+	std::optional<SDL_Color> weaponColor;
+	std::optional<int> compositePieceLevelCap;
+	std::optional<int> brainSensorSize;
+	std::optional<float> containerRespawnTimer;
+	std::optional<int> containerStartCount;
+	std::optional<int> containerCapacity;
 
 };
 

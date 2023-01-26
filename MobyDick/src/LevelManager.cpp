@@ -10,6 +10,7 @@
 #include "SoundManager.h"
 
 
+
 extern std::unique_ptr<Game> game;
 
 static const unsigned char wallOnLeft = 0b0001;
@@ -80,7 +81,7 @@ void LevelManager::_loadDefinition(std::string levelId)
 	//Read file and stream it to a JSON object
 	std::stringstream filename;
 
-	filename << "assets/levels/level" << levelId << "_definition.json";
+	filename << "assets/levels/" << levelId << "_definition.json";
 
 	Json::Value root;
 	std::ifstream ifs(filename.str());
@@ -399,7 +400,8 @@ std::optional<LevelObject> LevelManager::_determineTile(int x, int y, SDL_Surfac
 {
 	int bpp = surface->format->BytesPerPixel;
 	Uint8 red, green, blue, alpha;
-	std::optional<LevelObject> levelObject{ std::nullopt };
+	std::optional<LevelObject> levelObject;
+	//levelObject = std::nullopt;
 	Uint8* pixel = NULL;
 	SDL_Color leftColor, rightColor, topColor, bottomColor;
 	unsigned int borderWalls = 0;

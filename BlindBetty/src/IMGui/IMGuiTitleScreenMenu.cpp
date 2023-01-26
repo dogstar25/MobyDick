@@ -22,7 +22,7 @@ IMGuiTitleScreenMenu::IMGuiTitleScreenMenu(std::string gameObjectType, b2Vec2 pa
 
 glm::vec2 IMGuiTitleScreenMenu::render()
 {
-	ImVec2 buttonSize{ ImGui::BBSettings::button1Size };
+	ImVec2 buttonSize{ ImGui::GameSettings::button1Size };
 	glm::vec2 windowSize{};
 	bool continueButtonDisabled{};
 
@@ -56,7 +56,7 @@ glm::vec2 IMGuiTitleScreenMenu::render()
 			ImGui::BeginDisabled();
 		}
 
-		if (ImGui::Button("Continue", ImGui::BBSettings::button1Size)) {
+		if (ImGui::Button("Continue", ImGui::GameSettings::button1Size)) {
 			ImGui::continueGameLoad();
 		}
 
@@ -67,7 +67,7 @@ glm::vec2 IMGuiTitleScreenMenu::render()
 		//spacing
 		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
-		if (ImGui::Button("New Game", ImGui::BBSettings::button1Size)) {
+		if (ImGui::Button("New Game", ImGui::GameSettings::button1Size)) {
 			ImGui::newGameLoad();
 		}
 
@@ -75,7 +75,7 @@ glm::vec2 IMGuiTitleScreenMenu::render()
 		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
 		//Settings Button
-		if (ImGui::Button("Settings", ImGui::BBSettings::button1Size)) {
+		if (ImGui::Button("Settings", ImGui::GameSettings::button1Size)) {
 			ImGui::OpenPopup("SettingsModal");
 		}
 
@@ -87,7 +87,7 @@ glm::vec2 IMGuiTitleScreenMenu::render()
 		ImGui::Spacing(); ImGui::Spacing();	ImGui::Spacing(); ImGui::Spacing();
 
 		//Exit Button
-		if (ImGui::Button("Exit Game", ImGui::BBSettings::button1Size)) {
+		if (ImGui::Button("Exit Game", ImGui::GameSettings::button1Size)) {
 			util::sendSceneEvent(SCENE_ACTION_QUIT);
 		}
 
@@ -150,14 +150,14 @@ void IMGuiTitleScreenMenu::settingsModal()
 	ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
 	//Buttons
-	if (ImGui::Button("Ok", ImGui::BBSettings::button1Size)) {
+	if (ImGui::Button("Ok", ImGui::GameSettings::button1Size)) {
 		apply(mouseSensitivity, soundvolume);
 		ImGui::CloseCurrentPopup();
 		//ImGui::sendSceneExitEvent();
 	}
 
 	ImGui::SameLine(156);
-	if (ImGui::Button("Cancel", ImGui::BBSettings::button1Size)) {
+	if (ImGui::Button("Cancel", ImGui::GameSettings::button1Size)) {
 		ImGui::CloseCurrentPopup();
 		//ImGui::sendSceneExitEvent();
 	}

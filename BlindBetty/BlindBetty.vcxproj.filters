@@ -72,6 +72,9 @@
     <ClCompile Include="src\blindBetty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\IMGui\IMGuiPlayerDeath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\actions\BBActionFactory.h">
@@ -134,5 +137,38 @@
     <ClInclude Include="src\GameConstants.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\IMGui\IMGuiPlayerDeath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\bowman1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\textureAtlas00.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\textureAtlasImGui.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\levels\front1_blueprint.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\textureAtlas00.psd" />
+    <None Include="assets\textureAtlasAssets.json" />
+    <None Include="assets\levels\front1_definition.json" />
+    <None Include="assets\levels\levels.json" />
+    <None Include="assets\gameObjectDefinitions\playerObjects.json" />
+    <None Include="assets\gameObjectDefinitions\guiObjects.json" />
+    <None Include="assets\gameObjectDefinitions\houseObjects.json" />
+    <None Include="assets\config\gameConfig.json" />
+    <None Include="assets\config\gameScenes.json" />
+    <None Include="assets\sound\soundAssets.json" />
+    <None Include="assets\sound\buttonWorking.ogg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="assets\sound\music\main_theme_a.mp3" />
   </ItemGroup>
 </Project>

@@ -22,7 +22,7 @@ IMGuiPauseWindow::IMGuiPauseWindow(std::string gameObjectType, b2Vec2 padding, I
 
 glm::vec2 IMGuiPauseWindow::render()
 {
-	ImVec2 buttonSize{ ImGui::BBSettings::button1Size};
+	ImVec2 buttonSize{ ImGui::GameSettings::button1Size};
 	glm::vec2 windowSize{};
 
 	const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
@@ -44,7 +44,7 @@ glm::vec2 IMGuiPauseWindow::render()
 		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
 		//Continue Button
-		if (ImGui::Button("Continue", ImGui::BBSettings::button1Size)) {
+		if (ImGui::Button("Continue", ImGui::GameSettings::button1Size)) {
 			util::sendSceneEvent(SCENE_ACTION_EXIT);
 		}
 
@@ -52,7 +52,7 @@ glm::vec2 IMGuiPauseWindow::render()
 		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
 		//Settings Button
-		if (ImGui::Button("Settings", ImGui::BBSettings::button1Size)) {
+		if (ImGui::Button("Settings", ImGui::GameSettings::button1Size)) {
 			ImGui::OpenPopup("SettingsModal");
 		}
 
@@ -64,7 +64,7 @@ glm::vec2 IMGuiPauseWindow::render()
 		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
 		//Quit Button
-		if (ImGui::Button("Quit", ImGui::BBSettings::button1Size)) {
+		if (ImGui::Button("Quit", ImGui::GameSettings::button1Size)) {
 			//Exit the pause scene
 			util::sendSceneEvent(SCENE_ACTION_EXIT);
 			//Replace the play scene with the title screen
@@ -126,14 +126,14 @@ void IMGuiPauseWindow::settingsModal()
 	ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
 	//Buttons
-	if (ImGui::Button("Ok", ImGui::BBSettings::button1Size)) {
+	if (ImGui::Button("Ok", ImGui::GameSettings::button1Size)) {
 		apply(mouseSensitivity, soundvolume);
 		//ImGui::CloseCurrentPopup();
 		util::sendSceneEvent(SCENE_ACTION_EXIT);
 	}
 
 	ImGui::SameLine(156);
-	if (ImGui::Button("Cancel", ImGui::BBSettings::button1Size)) {
+	if (ImGui::Button("Cancel", ImGui::GameSettings::button1Size)) {
 		//ImGui::CloseCurrentPopup();
 		util::sendSceneEvent(SCENE_ACTION_EXIT);
 	}

@@ -59,6 +59,7 @@ bool BBGame::init(std::shared_ptr<ContactListener> contactListener, std::shared_
 	//Initialize the Game Object Manager
 	GameObjectManager::instance().init();
 	GameObjectManager::instance().load("gameObjectDefinitions/houseObjects");
+	GameObjectManager::instance().load("gameObjectDefinitions/playerObjects");
 
 	_displayLoadingMsg();
 
@@ -66,7 +67,8 @@ bool BBGame::init(std::shared_ptr<ContactListener> contactListener, std::shared_
 	SoundManager::instance().initSound();
 
 	//Load a first scene
-	Scene& scene = SceneManager::instance().pushScene("SCENE_TITLE_SCREEN");
+	Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
+	scene.loadLevel("front1");
 
 	//Initialize the clock object
 	Clock::instance().init();

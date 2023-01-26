@@ -7,7 +7,7 @@
 
 namespace ImGui
 {
-	namespace BBSettings {
+	namespace GameSettings {
 
 		inline static ImVec2 button1Size{ 145,36 };
 

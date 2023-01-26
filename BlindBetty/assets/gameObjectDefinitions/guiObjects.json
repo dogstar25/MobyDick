@@ -18,31 +18,6 @@
 
         },
         {
-            "type": "PLAYER_LABEL_2",
-            "traitTags": [ "abstract" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT"
-                },
-                {
-                    "id": "IMGUI_COMPONENT",
-                    "imguiType": "IMGuiText",
-                    "staticText": "Player 1",
-                    "autoSize": true,
-                    "color": {
-                        "text": "Colors::WHITE"
-                    },
-                    "padding": {
-                        "x": 8,
-                        "y": 8
-                    }
-                }
-            ]
-        },
-        {
             "type": "IMGUI_PAUSE_WINDOW",
             "traitTags": [ "abstract" ],
             "components": [
@@ -71,152 +46,6 @@
                     "padding": {
                         "x": 24,
                         "y": 24
-                    },
-                    "autoSize": false
-
-                }
-            ]
-
-        },
-        {
-            "type": "IMGUI_HUD_TOP_CENTER",
-            "traitTags": [ "abstract" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 255,
-                        "height": 130
-                    },
-                    "absolutePositioning": true
-
-                },
-                {
-                    "id": "IMGUI_COMPONENT",
-                    "imguiType": "IMGuiTopHud",
-                    "padding": {
-                        "x": 24,
-                        "y": 24
-                    },
-                    "color": {
-                        "background": "Colors::CHARCOAL",
-                        "backgroundAlpha": 150,
-                        "text": "Colors::WHITE"
-                    },
-                    "autoSize": false
-
-                }
-            ]
-
-        },
-        {
-            "type": "IMGUI_HUD_TOP_LEFT",
-            "traitTags": [ "abstract" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 275,
-                        "height": 100
-                    },
-                    "absolutePositioning": true,
-                    "location": {
-                        "windowPosition": "PositionAlignment::TOP_LEFT",
-                        "adjust": {
-                            "x": 48,
-                            "y": 48
-                        }
-                    }
-                },
-                {
-                    "id": "IMGUI_COMPONENT",
-                    "imguiType": "IMGuiTopLeftHud",
-                    "padding": {
-                        "x": 24,
-                        "y": 12
-                    },
-                    "color": {
-                        "background": "Colors::CHARCOAL",
-                        "backgroundAlpha": 150,
-                        "text": "Colors::WHITE"
-                    },
-                    "autoSize": false
-
-                }
-            ]
-
-        },
-        {
-            "type": "IMGUI_HUD_TOP_RIGHT",
-            "traitTags": [ "abstract" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 275,
-                        "height": 0
-                    },
-                    "absolutePositioning": true
-
-                },
-                {
-                    "id": "IMGUI_COMPONENT",
-                    "imguiType": "IMGuiTopRightHud",
-                    "padding": {
-                        "x": 24,
-                        "y": 24
-                    },
-                    "color": {
-                        "background": "Colors::CHARCOAL",
-                        "backgroundAlpha": 150,
-                        "text": "Colors::WHITE"
-                    },
-                    "autoSize": false
-
-                }
-            ]
-
-        },
-        {
-            "type": "IMGUI_LEVEL_COMPLETE",
-            "traitTags": [ "abstract" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 512,
-                        "height": 256
-                    },
-                    "absolutePositioning": true
-
-                },
-                {
-                    "id": "IMGUI_COMPONENT",
-                    "imguiType": "IMGuiLevelComplete",
-                    "padding": {
-                        "x": 24,
-                        "y": 24
-                    },
-                    "color": {
-                        "background": "Colors::CHARCOAL",
-                        "backgroundAlpha": 225,
-                        "text": "Colors::WHITE",
-                        "button": "Colors::BLUE",
-                        "buttonHover": "Colors::MIRKWOOD",
-                        "buttonActive": "Colors::YELLOW"
-
                     },
                     "autoSize": false
 
@@ -263,44 +92,6 @@
 
         },
         {
-            "type": "IMGUI_YOUWIN_PANEL",
-            "traitTags": [ "abstract" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 512,
-                        "height": 315
-                    },
-                    "absolutePositioning": true
-
-                },
-                {
-                    "id": "IMGUI_COMPONENT",
-                    "imguiType": "IMGuiYouWin",
-                    "padding": {
-                        "x": 24,
-                        "y": 24
-                    },
-                    "color": {
-                        "background": "Colors::CHARCOAL",
-                        "backgroundAlpha": 225,
-                        "text": "Colors::WHITE",
-                        "button": "Colors::BLUE",
-                        "buttonHover": "Colors::MIRKWOOD",
-                        "buttonActive": "Colors::YELLOW"
-
-                    },
-                    "autoSize": false
-
-                }
-            ]
-
-        },
-        {
             "type": "INTERACTIVE_MENU_BASIC",
             "traitTags": [ "abstract" ],
             "components": [
@@ -323,38 +114,6 @@
                         "backgroundAlpha": 172,
                         "text": "Colors::WHITE",
                         "button": "Colors::BLUE",
-                        "buttonHover": "Colors::MIRKWOOD",
-                        "buttonActive": "Colors::YELLOW"
-                    }
-
-                }
-            ]
-
-
-        },
-        {
-            "type": "INTERACTIVE_MENU_SURVIVOR",
-            "traitTags": [ "abstract" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT"
-                },
-                {
-                    "id": "IMGUI_COMPONENT",
-                    "imguiType": "IMGuiInteractiveMenuSurvivor",
-                    "autoSize": true,
-                    "padding": {
-                        "x": 4,
-                        "y": 4
-                    },
-                    "color": {
-                        "background": "Colors::CHARCOAL",
-                        "backgroundAlpha": 172,
-                        "text": "Colors::WHITE",
-                        "button": "Colors::MIRKWOOD",
                         "buttonHover": "Colors::MIRKWOOD",
                         "buttonActive": "Colors::YELLOW"
                     }

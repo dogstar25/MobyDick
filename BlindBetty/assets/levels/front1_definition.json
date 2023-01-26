@@ -1,0 +1,28 @@
+{
+    "id": "FRONT_1",
+    "blueprint": "TX_FRONT1_BLUEPRINT",
+    "description": "Front elevation level 1",
+    "dimensions": {
+        "levelWidth": 128,
+        "levelHeight": 64,
+        "tileWidth": 64,
+        "tileHeight": 64
+    },
+    "colorDefinedObjects": [
+        {
+            "colorKey": "Colors::BROWN",
+            "gameObjectType": "BRICK_WALL_1",
+            "layer": "GameLayer::BACKGROUND_1"
+        }
+
+    ],
+    "locationDefinedObjects": [
+        {
+            "id": "LOC_0019_0028",
+            "gameObjectType": "BOBBY",
+            "name": "Player Bobby",
+            "cameraFollow": true
+        }
+
+    ]
+}
