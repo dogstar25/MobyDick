@@ -5,23 +5,34 @@
     "dimensions": {
         "levelWidth": 128,
         "levelHeight": 64,
-        "tileWidth": 64,
-        "tileHeight": 64
+        "tileWidth": 32,
+        "tileHeight": 32
     },
     "colorDefinedObjects": [
         {
             "colorKey": "Colors::BROWN",
             "gameObjectType": "BRICK_WALL_1",
             "layer": "GameLayer::BACKGROUND_1"
+        },
+        {
+            "colorKey": "Colors::ORANGE",
+            "gameObjectType": "BRICK_WALL_2",
+            "layer": "GameLayer::BACKGROUND_1"
         }
 
     ],
     "locationDefinedObjects": [
         {
-            "id": "LOC_0019_0028",
+            "id": "LOC_0032_0033",
             "gameObjectType": "BOBBY",
             "name": "Player Bobby",
             "cameraFollow": true
+        },
+        {
+            "id": "LOC_0017_0026",
+            "gameObjectType": "ROOM_1",
+            "name": "Room 1",
+            "layer": "GameLayer::BACKGROUND_2"
         }
 
     ]

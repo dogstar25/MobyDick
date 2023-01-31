@@ -60,6 +60,8 @@ bool BBGame::init(std::shared_ptr<ContactListener> contactListener, std::shared_
 	GameObjectManager::instance().init();
 	GameObjectManager::instance().load("gameObjectDefinitions/houseObjects");
 	GameObjectManager::instance().load("gameObjectDefinitions/playerObjects");
+	GameObjectManager::instance().load("gameObjectDefinitions/commonObjects");
+	GameObjectManager::instance().load("gameObjectDefinitions/guiObjects");
 
 	_displayLoadingMsg();
 

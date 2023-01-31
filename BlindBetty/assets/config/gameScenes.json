@@ -12,7 +12,22 @@
                         "action": "SCENE_ACTION_ADD_AND_PAUSE",
                         "actionId": "SCENE_PAUSE_MENU"
                     }
+                }, 
+                {
+                    "keyCode": "SDLK_F3",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_TOGGLE_SETTING",
+                        "actionId": "DebugSceneSettings::SHOW_NAVIGATION_DEBUG_MAP"
+                    }
+                },
+                {
+                    "keyCode": "SDLK_F4",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_TOGGLE_SETTING",
+                        "actionId": "DebugSceneSettings::SHOW_PHYSICS_DEBUG"
+                    }
                 }
+
 
             ],
             "physics": {
@@ -25,6 +40,31 @@
                 "velocityIterations": 6,
                 "positionIterations": 2
             }
+        },
+        {
+            "id": "SCENE_PAUSE_MENU",
+            "inputControlMode": "CONTROL_MODE_IMGUI",
+            "maxObjects": 24,
+            "tags": [ "gui" ],
+            "gameObjects": [
+                {
+                    "gameObjectType": "IMGUI_PAUSE_WINDOW",
+                    //"gameObjectType": "IMGUI_EXAMPLE_PANEL",
+                    "layer": "GameLayer::GUI",
+                    "location": {
+                        "windowPosition": "PositionAlignment::CENTER"
+                    }
+                }
+            ],
+            "keyActions": [
+                {
+                    "keyCode": "SDLK_ESCAPE",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_EXIT"
+                    }
+
+                }
+            ]
         }
     ]
 }

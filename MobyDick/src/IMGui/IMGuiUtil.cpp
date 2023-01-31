@@ -32,9 +32,14 @@ namespace ImGui
 			ImGui_ImplSDLRenderer_Init(mobyDickGame->renderer()->sdlRenderer());
 		}
 
+		//We must load a default font
+		io.Fonts->AddFontDefault();
+
 	}
 	void MobyDickNewFrame()
 	{
+
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
 
 		{
 			if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
@@ -45,6 +50,8 @@ namespace ImGui
 				ImGui_ImplSDLRenderer_NewFrame();
 				ImGui_ImplSDL2_NewFrame();
 			}
+
+			//io.Fonts->Build();
 			ImGui::NewFrame();
 
 		}
@@ -76,7 +83,6 @@ namespace ImGui
 		auto frate = ImGui::GetIO().Framerate;
 		ImGui::Value("FPS", frate);
 
-		//ImGui::PushFont(game->renderer()->font32());
 		//ImGui::Text("Todd");
 		//ImGui::PopFont();
 		//ImGui::Text("Todd2");

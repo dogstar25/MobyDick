@@ -36,6 +36,9 @@ glm::vec2 IMGuiPauseWindow::render()
 	ImGui::Begin(m_gameObjectType.c_str(), nullptr, m_flags);
 	{
 
+		//Set Font
+		ImGui::PushFont(m_normalFont);
+
 		ImGui::PushStyleColor(ImGuiCol_Button, m_buttonColor);
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, m_buttonHoverColor);
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, m_buttonActiveColor);
@@ -66,9 +69,9 @@ glm::vec2 IMGuiPauseWindow::render()
 		//Quit Button
 		if (ImGui::Button("Quit", ImGui::GameSettings::button1Size)) {
 			//Exit the pause scene
-			util::sendSceneEvent(SCENE_ACTION_EXIT);
+			util::sendSceneEvent(SCENE_ACTION_QUIT);
 			//Replace the play scene with the title screen
-			util::sendSceneEvent(SCENE_ACTION_REPLACE, "SCENE_TITLE_SCREEN");
+			//util::sendSceneEvent(SCENE_ACTION_REPLACE, "SCENE_TITLE_SCREEN");
 		}
 
 		//spacing
@@ -78,6 +81,7 @@ glm::vec2 IMGuiPauseWindow::render()
 		ImGui::PopStyleColor();
 		ImGui::PopStyleColor();
 
+		ImGui::PopFont();
 
 		windowSize = { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
 

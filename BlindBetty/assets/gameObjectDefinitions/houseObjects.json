@@ -13,8 +13,8 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 64,
-                        "height": 64
+                        "width": 32,
+                        "height": 32
                     }
                 },
                 {
@@ -26,6 +26,73 @@
                             "collisionShape": "B2_BOX"
                         }
                     ]
+                }
+            ]
+
+        },
+        {
+            "type": "BRICK_WALL_2",
+            "traitTags": [ "barrier" ],
+            "description": "Brick Wall 2",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_BRICK_WALL_2"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::WALL",
+                            "collisionShape": "B2_BOX"
+                        }
+                    ]
+                }
+            ]
+
+        },
+        {
+            "type": "ROOM_1",
+            "traitTags": [],
+            "description": "Brick Wall 1",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_ROOM_1"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 800,
+                        "height": 320
+                    }
+                }
+            ]
+
+        },
+        {
+            "type": "ROOM_2",
+            "traitTags": [],
+            "description": "Brick Wall 1",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_ROOM_1"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 1600,
+                        "height": 576
+                    }
                 }
             ]
 

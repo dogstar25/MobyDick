@@ -66,7 +66,7 @@ namespace Colors {
 	inline SDL_Color PURPLE = { 255, 0, 255, 255 };
 	inline SDL_Color ORANGE = { 255, 127, 0, 255 };
 	inline SDL_Color GREY = { 127, 127, 127, 255 };
-	inline SDL_Color BROWN = { 9, 59, 27, 255 };
+	inline SDL_Color BROWN = { 102, 57, 49, 255 };
 	inline SDL_Color CYAN = { 0, 255, 255, 255 };
 	
 

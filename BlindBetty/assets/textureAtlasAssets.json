@@ -57,6 +57,17 @@
             }
         },
         {
+            "id": "TX_FOG_BOX",
+            "description": "Fog Box",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 37,
+                "y": 21,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
             "id": "TX_BOWMAN1",
             "description": "Single bowman image",
             "atlas": "TEXTURE_ATLAS_0",
@@ -72,10 +83,32 @@
             "description": "Brick Wall 1",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 2,
+                "x": 38,
+                "y": 2,
+                "width": 16,
+                "height": 16
+            }
+        },
+        {
+            "id": "TX_BRICK_WALL_2",
+            "description": "Brick Wall 2",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 134,
                 "y": 54,
                 "width": 64,
                 "height": 64
+            }
+        },
+        {
+            "id": "TX_ROOM_1",
+            "description": "Brick Wall 1",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2,
+                "y": 250,
+                "width": 800,
+                "height": 320
             }
         }
 

@@ -196,6 +196,7 @@
   <ItemGroup>
     <None Include="assets\config\gameConfig.json" />
     <None Include="assets\config\gameScenes.json" />
+    <None Include="assets\gameObjectDefinitions\commonObjects.json" />
     <None Include="assets\gameObjectDefinitions\guiObjects.json" />
     <None Include="assets\gameObjectDefinitions\houseObjects.json" />
     <None Include="assets\gameObjectDefinitions\playerObjects.json" />
@@ -208,6 +209,14 @@
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\music\main_theme_a.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="assets\fonts\arial.ttf" />
+    <Font Include="assets\fonts\AtariFontFullVersion-ZJ23.ttf" />
+    <Font Include="assets\fonts\conthrax-sb.ttf" />
+    <Font Include="assets\fonts\DroidSans.ttf" />
+    <Font Include="assets\fonts\ProggyClean.ttf" />
+    <Font Include="assets\fonts\Roboto-Medium.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

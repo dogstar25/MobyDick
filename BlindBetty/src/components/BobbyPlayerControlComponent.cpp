@@ -85,9 +85,6 @@ void BobbyPlayerControlComponent::handleMovement()
 	const uint32_t currentMouseStates = SDL_GetRelativeMouseState(&mouseX, &mouseY);
 	float angularVelocity = mouseX * game->contextMananger()->getMouseSensitivity();
 
-	const auto& rotateAction = actionComponent->getAction(ACTION_ROTATE);
-	rotateAction->perform(parent(), angularVelocity);
-
 }
 void BobbyPlayerControlComponent::handleActions()
 {
@@ -101,6 +98,10 @@ void BobbyPlayerControlComponent::handleActions()
 
 		const Uint8* keyStates = nullptr;
 		std::shared_ptr<Action> action{};
+
+		ImGui::Begin("test2");
+		ImGui::Text("Test");
+		ImGui::End();
 
 		for (auto& inputEvent : SceneManager::instance().playerInputEvents())
 		{

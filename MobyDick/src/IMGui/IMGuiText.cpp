@@ -42,11 +42,13 @@ glm::vec2 IMGuiText::render()
 		ImGui::Text(m_staticTextValue.c_str());
 
 		windowSize = { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
+
 	}
 	ImGui::End();
 
 	//pop color style
 	ImGui::PopStyleColor();
+	//
 
 	return windowSize;
 

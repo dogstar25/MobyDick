@@ -157,6 +157,31 @@
                 }
             ]
 
+        },
+        {
+            "type": "BOBBY_LABEL",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "IMGUI_COMPONENT",
+                    "imguiType": "IMGuiText",
+                    "staticText": "Bobby",
+                    "autoSize": true,
+                    "color": {
+                        "text": "Colors::WHITE"
+                    },
+                    "padding": {
+                        "x": 8,
+                        "y": 8
+                    }
+                }
+            ]
         }
     ]
 }

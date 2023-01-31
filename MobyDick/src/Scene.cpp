@@ -77,7 +77,6 @@ Scene::Scene(std::string sceneId)
 		std::string backGroundMusicId = definitionJSON["backgroundMusicId"].asString();
 		SoundManager::instance().playMusic(backGroundMusicId, -1);
 	}
-		
 
 }
 

@@ -13,7 +13,7 @@ BBEnumMap::BBEnumMap()
 	addEnumItem("ContactTag::WALL", ContactTag::WALL);
 
 	//Custom Component Types
-	addEnumItem("GINA_PLAYER_CONTROL_COMPONENT", ComponentTypes::BOBBY_PLAYER_CONTROL_COMPONENT);
+	addEnumItem("BOBBY_PLAYER_CONTROL_COMPONENT", ComponentTypes::BOBBY_PLAYER_CONTROL_COMPONENT);
 
 	//Custom Status/Context Item Types
 	addEnumItem("StatusItemId::PLAYERS_HEART_COUNT", StatusItemId::PLAYERS_HEART_COUNT);

@@ -400,7 +400,7 @@ std::optional<LevelObject> LevelManager::_determineTile(int x, int y, SDL_Surfac
 {
 	int bpp = surface->format->BytesPerPixel;
 	Uint8 red, green, blue, alpha;
-	std::optional<LevelObject> levelObject;
+	std::optional<LevelObject> levelObject{};
 	//levelObject = std::nullopt;
 	Uint8* pixel = NULL;
 	SDL_Color leftColor, rightColor, topColor, bottomColor;
@@ -924,7 +924,6 @@ void LevelManager::_buildLevelStatusItems(std::string levelId)
 
 		for (Json::Value itrObjective : m_levelDefinition["statusItems"])
 		{
-
 			
 			int statusItemId = game->enumMap()->toEnum(itrObjective["id"].asString());
 			StatusItem statusItem(statusItemId);
@@ -937,14 +936,6 @@ void LevelManager::_buildLevelStatusItems(std::string levelId)
 		}
 
 	}
-
-	//Update the context manager current Level - this is part of the base game
-	float level = std::stof(levelId);
-	StatusItem statusItem(StatusItemId::CURRENT_LEVEL);
-	statusItem.setValue(level);
-	game->contextMananger()->addStatusItem(StatusItemId::CURRENT_LEVEL, statusItem);
-	game->contextMananger()->setStatusItemValue(StatusItemId::CURRENT_LEVEL, level);
-
 
 }
 

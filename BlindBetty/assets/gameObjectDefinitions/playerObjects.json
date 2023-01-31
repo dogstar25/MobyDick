@@ -1,6 +1,4 @@
 {
-    "$schema": "http://json-schema.org/draft/2020-12/schema",
-
     "gameObjects": [
         {
             "type": "BOBBY",
@@ -47,28 +45,20 @@
                     "actions": [
                         {
                             "actionId": "ACTION_MOVE",
-                            "actionClass": "ActorMove"
-                        },
-                        {
-                            "actionId": "ACTION_ROTATE",
-                            "actionClass": "ActorRotate"
-                        },
-                        {
-                            "actionId": "ACTION_USE",
-                            "actionClass": "ActorUse"
-                        },
-                        {
-                            "actionId": "ACTION_INTERACT",
-                            "actionClass": "Interact"
-                        },
-                        {
-                            "actionId": "ACTION_ON_HOVER",
-                            "actionClass": "DefaultHover"
-                        },
-                        {
-                            "actionId": "ACTION_SPRINT",
-                            "actionClass": "ActorSprintAction"
+                            "actionClass": "DefaultMove"
                         }
+                    ]
+                },  
+                {
+                    "id": "CHILDREN_COMPONENT",
+                    "childPadding": 0,
+                    "childPositionRelative": false,
+                    "childObjects": [
+                        {
+                            "gameObjectType": "BOBBY_LABEL",
+                            "locationSlot": 1
+                        }
+
                     ]
                 }
 
