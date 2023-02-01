@@ -324,25 +324,6 @@
             "maxObjects": 500
         },
         {
-            "id": "SCENE_LEVEL_COMPLETE",
-            "inputControlMode": "CONTROL_MODE_IMGUI",
-            "tags": [ "gui" ],
-            "maxObjects": 24,
-            "gameObjects": [
-                {
-                    "gameObjectType": "IMGUI_LEVEL_COMPLETE",
-                    "layer": "GameLayer::GUI",
-                    "location": {
-                        "windowPosition": "PositionAlignment::CENTER",
-                        "adjust": {
-                            "x": 0,
-                            "y": 0
-                        }
-                    }
-                }
-            ]
-        },
-        {
             "id": "SCENE_NAVMAP",
             "inputControlMode": "CONTROL_MODE_IMGUI",
             "tags": [],

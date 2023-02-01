@@ -123,9 +123,11 @@ void IMGuiTitleScreenMenu::settingsModal()
 
 	//Button Style
 	ImGui::PushStyleColor(ImGuiCol_Text, util::SDLColorToImVec4(Colors::WHITE));
-	ImGui::PushStyleColor(ImGuiCol_Button, util::SDLColorToImVec4(Colors::BLUE));
-	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, m_buttonHoverColor);
-	ImGui::PushStyleColor(ImGuiCol_ButtonActive, m_buttonActiveColor);
+	ImGui::PushStyleColor(ImGuiCol_Button, util::SDLColorToImVec4(Colors::ROBINEGG));
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, util::SDLColorToImVec4(Colors::RICK_BLACK));
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, util::SDLColorToImVec4(Colors::BLACK));
+
+
 
 	ImGui::SameLine(24);
 	ImGui::BeginGroup();

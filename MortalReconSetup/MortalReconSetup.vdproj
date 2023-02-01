@@ -3157,7 +3157,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MortalRecon"
         "ProductCode" = "8:{E35D2BF5-2AC1-4745-9623-A49F482F438D}"
-        "PackageCode" = "8:{13BD676F-A68C-4507-B9CF-7E5E3C623498}"
+        "PackageCode" = "8:{D6C1CBB4-A8DA-433C-BC91-34D472BB45F1}"
         "UpgradeCode" = "8:{1F7F63EA-209E-46C5-927C-1F6FAE07143E}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"

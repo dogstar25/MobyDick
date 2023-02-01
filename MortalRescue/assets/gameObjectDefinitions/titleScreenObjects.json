@@ -47,8 +47,8 @@
                         "backgroundAlpha": 175,
                         "text": "Colors::SLATE",
                         "button": "Colors::CYAN",
-                        "buttonHover": "Colors::MIRKWOOD",
-                        "buttonActive": "Colors::YELLOW"
+                        "buttonHover": "Colors::TEAL",
+                        "buttonActive": "Colors::EGGSHELL"
                     },
                     "padding": {
                         "x": 24,
