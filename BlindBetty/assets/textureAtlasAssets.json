@@ -19,6 +19,11 @@
             "id": "TX_FRONT1_BLUEPRINT",
             "description": "Level 1 Bluprint",
             "filename": "assets/levels/front1_blueprint.png"
+        },
+        {
+            "id": "TX_LEFT1_BLUEPRINT",
+            "description": "Level 1 Bluprint",
+            "filename": "assets/levels/left1_blueprint.png"
         }
 
     ],
@@ -101,13 +106,46 @@
             }
         },
         {
-            "id": "TX_ROOM_1",
-            "description": "Brick Wall 1",
+            "id": "TX_ROOM_PARLOR",
+            "description": "Parlor Room",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 484,
+                "y": 250,
+                "width": 480,
+                "height": 320
+            }
+        },
+        {
+            "id": "TX_ROOM_DEN",
+            "description": "Den Room",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
                 "x": 2,
                 "y": 250,
-                "width": 800,
+                "width": 480,
+                "height": 320
+            }
+        },
+        {
+            "id": "TX_ROOM_TOPSTAIRS",
+            "description": "Top Floor Stairs",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2,
+                "y": 572,
+                "width": 320,
+                "height": 320
+            }
+        },
+        {
+            "id": "TX_ROOM_BOTSTAIRS",
+            "description": "Bottom Floor Stairs",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 324,
+                "y": 572,
+                "width": 320,
                 "height": 320
             }
         }

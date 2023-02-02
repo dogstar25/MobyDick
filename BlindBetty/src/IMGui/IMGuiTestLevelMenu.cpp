@@ -194,7 +194,7 @@ void IMGuiTestLevelMenu::quit()
 
 	if (ImGui::IsKeyPressed(ImGuiKey_Y)) {
 		ImGui::CloseCurrentPopup();
-		util::sendSceneEvent(SCENE_ACTION_REPLACE, "SCENE_TITLE_SCREEN");
+		util::sendSceneEvent(SCENE_ACTION_QUIT);
 	}
 	else if (ImGui::IsKeyPressed(ImGuiKey_N) ) {
 		ImGui::CloseCurrentPopup();

@@ -201,6 +201,7 @@
     <None Include="assets\gameObjectDefinitions\houseObjects.json" />
     <None Include="assets\gameObjectDefinitions\playerObjects.json" />
     <None Include="assets\levels\front1_definition.json" />
+    <None Include="assets\levels\left1_definition.json" />
     <None Include="assets\levels\levels.json" />
     <None Include="assets\sound\buttonWorking.ogg" />
     <None Include="assets\sound\soundAssets.json" />

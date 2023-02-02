@@ -168,6 +168,7 @@
     <None Include="assets\sound\soundAssets.json" />
     <None Include="assets\sound\buttonWorking.ogg" />
     <None Include="assets\gameObjectDefinitions\commonObjects.json" />
+    <None Include="assets\levels\left1_definition.json" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="assets\sound\music\main_theme_a.mp3" />

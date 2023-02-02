@@ -7,12 +7,19 @@
 
             "keyActions": [
                 {
+                    "keyCode": "SDLK_F2",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_REPLACE",
+                        "actionId": "SCENE_TEST"
+                    }
+                },
+                {
                     "keyCode": "SDLK_ESCAPE",
                     "sceneAction": {
                         "action": "SCENE_ACTION_ADD_AND_PAUSE",
                         "actionId": "SCENE_PAUSE_MENU"
                     }
-                }, 
+                },
                 {
                     "keyCode": "SDLK_F3",
                     "sceneAction": {
@@ -65,6 +72,58 @@
 
                 }
             ]
+        },
+        {
+            "id": "SCENE_TEST",
+            "inputControlMode": "CONTROL_MODE_PLAY",
+            "maxObjects": 8000,
+            "gameObjects": [
+                {
+                    "gameObjectType": "IMGUI_TEST_MENU",
+                    "layer": "GameLayer::GUI",
+                    "location": {
+                        "windowPosition": "PositionAlignment::TOP_RIGHT",
+                        "adjust": {
+                            "x": -64,
+                            "y": 0
+                        }
+                    }
+                }
+            ],
+            "keyActions": [
+                {
+                    "keyCode": "SDLK_F1",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_DIRECT",
+                        "actionId": "CutSceneExample"
+                    }
+                },
+                {
+                    "keyCode": "SDLK_F3",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_TOGGLE_SETTING",
+                        "actionId": "DebugSceneSettings::SHOW_NAVIGATION_DEBUG_MAP"
+                    }
+                },
+                {
+                    "keyCode": "SDLK_F4",
+                    "sceneAction": {
+                        "action": "SCENE_ACTION_TOGGLE_SETTING",
+                        "actionId": "DebugSceneSettings::SHOW_PHYSICS_DEBUG"
+                    }
+                }
+
+            ],
+            "physics": {
+                "gravity": {
+                    "x": 0.0,
+                    "y": 0.0
+                },
+                "b2DebugDrawMode": false,
+                "timeStep": 0.016,
+                "velocityIterations": 6,
+                "positionIterations": 2
+            }
         }
     ]
 }

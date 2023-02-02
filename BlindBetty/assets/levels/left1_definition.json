@@ -1,0 +1,63 @@
+{
+    "id": "LEFT_1",
+    "blueprint": "TX_LEFT1_BLUEPRINT",
+    "description": "Left elevation level 1",
+    "dimensions": {
+        "levelWidth": 128,
+        "levelHeight": 64,
+        "tileWidth": 32,
+        "tileHeight": 32
+    },
+    "colorDefinedObjects": [
+        {
+            "colorKey": "Colors::BROWN",
+            "gameObjectType": "BRICK_WALL_1",
+            "layer": "GameLayer::BACKGROUND_1"
+        },
+        {
+            "colorKey": "Colors::ORANGE",
+            "gameObjectType": "BRICK_WALL_2",
+            "layer": "GameLayer::BACKGROUND_1"
+        }
+
+    ],
+    "locationDefinedObjects": [
+        {
+            "id": "LOC_0037_0033",
+            "gameObjectType": "BOBBY",
+            "name": "Player Bobby",
+            "cameraFollow": true
+        },
+        {
+            "id": "LOC_0022_0026",
+            "gameObjectType": "PARLOR_ROOM",
+            "layer": "GameLayer::BACKGROUND_2"
+        },
+        {
+            "id": "LOC_0044_0026",
+            "gameObjectType": "DEN_ROOM",
+            "layer": "GameLayer::BACKGROUND_2"
+        },
+        {
+            "id": "LOC_0022_0037",
+            "gameObjectType": "PARLOR_ROOM",
+            "layer": "GameLayer::BACKGROUND_2"
+        },
+        {
+            "id": "LOC_0044_0037",
+            "gameObjectType": "DEN_ROOM",
+            "layer": "GameLayer::BACKGROUND_2"
+        },
+        {
+            "id": "LOC_0033_0026",
+            "gameObjectType": "TOP_STAIRS_ROOM",
+            "layer": "GameLayer::BACKGROUND_2"
+        },
+        {
+            "id": "LOC_0033_0037",
+            "gameObjectType": "BOT_STAIRS_ROOM",
+            "layer": "GameLayer::BACKGROUND_2"
+        }
+
+    ]
+}

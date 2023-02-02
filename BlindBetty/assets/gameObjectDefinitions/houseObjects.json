@@ -60,18 +60,18 @@
 
         },
         {
-            "type": "ROOM_1",
+            "type": "PARLOR_ROOM",
             "traitTags": [],
-            "description": "Brick Wall 1",
+            "description": "Parlor Room",
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "textureId": "TX_ROOM_1"
+                    "textureId": "TX_ROOM_PARLOR"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 800,
+                        "width": 480,
                         "height": 320
                     }
                 }
@@ -79,19 +79,57 @@
 
         },
         {
-            "type": "ROOM_2",
+            "type": "DEN_ROOM",
             "traitTags": [],
-            "description": "Brick Wall 1",
+            "description": "Den Room",
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "textureId": "TX_ROOM_1"
+                    "textureId": "TX_ROOM_DEN"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 1600,
-                        "height": 576
+                        "width": 480,
+                        "height": 320
+                    }
+                }
+            ]
+
+        },
+        {
+            "type": "TOP_STAIRS_ROOM",
+            "traitTags": [],
+            "description": "Top Stairs Room",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_ROOM_TOPSTAIRS"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 320,
+                        "height": 320
+                    }
+                }
+            ]
+
+        },
+        {
+            "type": "BOT_STAIRS_ROOM",
+            "traitTags": [],
+            "description": "Bottom Stairs Room",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_ROOM_BOTSTAIRS"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 320,
+                        "height": 320
                     }
                 }
             ]
