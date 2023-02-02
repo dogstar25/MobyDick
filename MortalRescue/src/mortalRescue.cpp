@@ -23,7 +23,7 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, char*, int nShowCmd)
 	//create game 
 	game = std::make_unique<MRGame>();
 
-	std::cout << "Mortal Rescue Begins\n";
+	std::cout << "Mortal Rescue Begins" << std::endl;
 
 	//init game
 	game->init(

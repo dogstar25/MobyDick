@@ -62,11 +62,11 @@
                     "imguiType": "IMGuiPauseWindow",
                     "color": {
                         "background": "Colors::CHARCOAL",
-                        "backgroundAlpha": 175,
+                        "backgroundAlpha": 250,
                         "text": "Colors::WHITE",
-                        "button": "Colors::BLUE",
-                        "buttonHover": "Colors::MIRKWOOD",
-                        "buttonActive": "Colors::YELLOW"
+                        "button": "Colors::ROBINEGG",
+                        "buttonHover": "Colors::RICK_BLACK",
+                        "buttonActive": "Colors::BLACK"
                     },
                     "padding": {
                         "x": 24,
@@ -211,11 +211,11 @@
                     },
                     "color": {
                         "background": "Colors::CHARCOAL",
-                        "backgroundAlpha": 225,
+                        "backgroundAlpha": 250,
                         "text": "Colors::WHITE",
-                        "button": "Colors::BLUE",
-                        "buttonHover": "Colors::MIRKWOOD",
-                        "buttonActive": "Colors::YELLOW"
+                        "button": "Colors::ROBINEGG",
+                        "buttonHover": "Colors::RICK_BLACK",
+                        "buttonActive": "Colors::BLACK"
 
                     },
                     "autoSize": false
@@ -249,11 +249,11 @@
                     },
                     "color": {
                         "background": "Colors::CHARCOAL",
-                        "backgroundAlpha": 225,
+                        "backgroundAlpha": 250,
                         "text": "Colors::WHITE",
-                        "button": "Colors::BLUE",
-                        "buttonHover": "Colors::MIRKWOOD",
-                        "buttonActive": "Colors::YELLOW"
+                        "button": "Colors::ROBINEGG",
+                        "buttonHover": "Colors::RICK_BLACK",
+                        "buttonActive": "Colors::BLACK"
 
                     },
                     "autoSize": false
@@ -287,11 +287,11 @@
                     },
                     "color": {
                         "background": "Colors::CHARCOAL",
-                        "backgroundAlpha": 225,
+                        "backgroundAlpha": 250,
                         "text": "Colors::WHITE",
-                        "button": "Colors::BLUE",
-                        "buttonHover": "Colors::MIRKWOOD",
-                        "buttonActive": "Colors::YELLOW"
+                        "button": "Colors::ROBINEGG",
+                        "buttonHover": "Colors::RICK_BLACK",
+                        "buttonActive": "Colors::BLACK"
 
                     },
                     "autoSize": false
@@ -320,11 +320,11 @@
                     },
                     "color": {
                         "background": "Colors::CHARCOAL",
-                        "backgroundAlpha": 172,
+                        "backgroundAlpha": 250,
                         "text": "Colors::WHITE",
-                        "button": "Colors::BLUE",
-                        "buttonHover": "Colors::MIRKWOOD",
-                        "buttonActive": "Colors::YELLOW"
+                        "button": "Colors::RICK_BLACK",
+                        "buttonHover": "Colors::RICK_BLACK",
+                        "buttonActive": "Colors::BLACK"
                     }
 
                 }
@@ -352,11 +352,11 @@
                     },
                     "color": {
                         "background": "Colors::CHARCOAL",
-                        "backgroundAlpha": 172,
+                        "backgroundAlpha": 250,
                         "text": "Colors::WHITE",
-                        "button": "Colors::MIRKWOOD",
-                        "buttonHover": "Colors::MIRKWOOD",
-                        "buttonActive": "Colors::YELLOW"
+                        "button": "Colors::RICK_BLACK",
+                        "buttonHover": "Colors::RICK_BLACK",
+                        "buttonActive": "Colors::BLACK"
                     }
 
                 }

@@ -276,8 +276,8 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 7,
-                        "height": 4
+                        "width": 9,
+                        "height": 6
                     }
                 },
                 {
@@ -301,7 +301,7 @@
                     "id": "VITALITY_COMPONENT",
                     "speed": 70,
                     "lifetime": 1.0,
-                    "lifetimeAlphaFade": true
+                    "lifetimeAlphaFade": false
                 }
             ]
         },
@@ -318,8 +318,8 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 7,
-                        "height": 4
+                        "width": 9,
+                        "height": 6
                     }
                 },
                 {

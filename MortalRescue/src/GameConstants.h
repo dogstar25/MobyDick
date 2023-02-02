@@ -6,6 +6,8 @@ namespace Colors {
 
 	inline SDL_Color NOCOLOR = { 0, 0, 0, 0 };
 
+	inline SDL_Color EGGSHELL = { 225, 225, 225, 225 };
+
 	//green
 	inline SDL_Color FOREST = { 10, 75, 10, 255 };
 	inline SDL_Color EMERALD = { 10, 125, 10, 255 };
@@ -21,9 +23,12 @@ namespace Colors {
 	//blue
 	inline SDL_Color MARINE = { 50, 147, 196, 255 };
 	inline SDL_Color SAPPHIRE = { 113, 197, 219, 255 };
+	inline SDL_Color TEAL = { 0, 71, 71, 255 };
+	inline SDL_Color ROBINEGG = { 0, 141, 141, 255 };
 
 	//grey / dark
 	inline SDL_Color CHARCOAL = { 25, 25, 25, 255 };
+	inline SDL_Color RICK_BLACK = { 0, 64, 64, 255 };
 	inline SDL_Color MIRKWOOD = { 39, 52, 39, 255 };
 	inline SDL_Color SLATE = { 11, 14, 51, 255 };
 
