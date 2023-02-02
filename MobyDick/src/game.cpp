@@ -61,8 +61,8 @@ bool Game::init(std::shared_ptr<ContactListener> contactListener, std::shared_pt
 	{
 		//Swict these depending on if you are building for a release executable or just local development
 		//SDL_WINDOW_FULLSCREEN_DESKTOP for local development
-		//windowFlags = windowFlags | SDL_WINDOW_FULLSCREEN;
-		windowFlags = windowFlags | SDL_WINDOW_FULLSCREEN_DESKTOP;
+		windowFlags = windowFlags | SDL_WINDOW_FULLSCREEN;
+		//windowFlags = windowFlags | SDL_WINDOW_FULLSCREEN_DESKTOP;
 	}
 	else
 	{
