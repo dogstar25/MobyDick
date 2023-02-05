@@ -134,6 +134,60 @@
                 }
             ]
 
+        },
+        {
+            "type": "DOOR",
+            "traitTags": [ "interactive"],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 104,
+                        "height": 235
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 104,
+                        "height": 235
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_DOOR_1",
+                            "speed": 0.1,
+                            "frames": 1
+                        }
+                    ]
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::DOOR",
+                            "collisionShape": "B2_BOX"
+                        }
+                    ]
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "interactiveMenuObject": "INTERACTIVE_MENU_DOOR",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_MOVE",
+                            "actionClass": "DroneMove"
+                        }
+
+                    ]
+                }
+            ]
         }
     ]
 }

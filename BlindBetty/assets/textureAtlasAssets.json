@@ -148,6 +148,17 @@
                 "width": 320,
                 "height": 320
             }
+        },
+        {
+            "id": "TX_DOOR_1",
+            "description": "Door1",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 640,
+                "y": 572,
+                "width": 104,
+                "height": 235
+            }
         }
 
     ],
