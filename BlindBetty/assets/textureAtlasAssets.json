@@ -24,6 +24,11 @@
             "id": "TX_LEFT1_BLUEPRINT",
             "description": "Level 1 Bluprint",
             "filename": "assets/levels/left1_blueprint.png"
+        },
+        {
+            "id": "TX_FULL_INTERIOR_BLUEPRINT",
+            "description": "Level 1 Bluprint",
+            "filename": "assets/levels/full_interior_blueprint.png"
         }
 
     ],
@@ -156,8 +161,30 @@
             "quadPosition": {
                 "x": 640,
                 "y": 572,
-                "width": 104,
+                "width": 101,
                 "height": 235
+            }
+        },
+        {
+            "id": "TX_BOBBY_IDLE",
+            "description": "Bobby Idle",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 1468,
+                "y": 232,
+                "width": 89,
+                "height": 116
+            }
+        },
+        {
+            "id": "TX_BOBBY_WALK",
+            "description": "Bobby Walk",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 1024,
+                "y": 0,
+                "width": 534,
+                "height": 464
             }
         }
 

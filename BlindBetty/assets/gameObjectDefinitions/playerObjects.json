@@ -17,6 +17,11 @@
                     }
                 },
                 {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 10,
+                    "health": 6
+                },
+                {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
                     "linearDamping": 0.0,
@@ -45,10 +50,10 @@
                     "actions": [
                         {
                             "actionId": "ACTION_MOVE",
-                            "actionClass": "DefaultMove"
+                            "actionClass": "ActorMove"
                         }
                     ]
-                },  
+                },
                 {
                     "id": "CHILDREN_COMPONENT",
                     "childPadding": 0,
@@ -59,6 +64,27 @@
                             "locationSlot": 1
                         }
 
+                    ]
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 89,
+                        "height": 116
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_BOBBY_IDLE",
+                            "frames": 1
+                        },
+                        {
+                            "state": "ANIMATION_RUN",
+                            "textureId": "TX_BOBBY_WALK",
+                            "speed": 0.01  ,
+                            "frames": 24
+                        }
                     ]
                 }
 

@@ -143,7 +143,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\actions\ActorMoveAction.cpp" />
     <ClCompile Include="src\actions\BBActionFactory.cpp" />
+    <ClCompile Include="src\actions\DoorInteractionAction.cpp" />
     <ClCompile Include="src\BBColorMap.cpp" />
     <ClCompile Include="src\BBComponentFactory.cpp" />
     <ClCompile Include="src\BBContactFilter.cpp" />
@@ -156,6 +158,7 @@
     <ClCompile Include="src\cutScenes\BBCutSceneFactory.cpp" />
     <ClCompile Include="src\IMGui\BB_IMGuiFactory.cpp" />
     <ClCompile Include="src\IMGui\BB_IMGuiUtil.cpp" />
+    <ClCompile Include="src\IMGui\IMGuiInteractiveMenuDoor.cpp" />
     <ClCompile Include="src\IMGui\IMGuiPauseWindow.cpp" />
     <ClCompile Include="src\IMGui\IMGuiPlayerDeath.cpp" />
     <ClCompile Include="src\IMGui\IMGuiTestLevelMenu.cpp" />
@@ -165,7 +168,9 @@
     <ClCompile Include="src\triggers\PlayerDeath.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\actions\ActorMoveAction.h" />
     <ClInclude Include="src\actions\BBActionFactory.h" />
+    <ClInclude Include="src\actions\DoorInteractionAction.h" />
     <ClInclude Include="src\BBColorMap.h" />
     <ClInclude Include="src\BBComponentFactory.h" />
     <ClInclude Include="src\BBContactFilter.h" />
@@ -178,6 +183,7 @@
     <ClInclude Include="src\GameConstants.h" />
     <ClInclude Include="src\IMGui\BB_IMGuiFactory.h" />
     <ClInclude Include="src\IMGui\BB_IMGuiUtil.h" />
+    <ClInclude Include="src\IMGui\IMGuiInteractiveMenuDoor.h" />
     <ClInclude Include="src\IMGui\IMGuiPauseWindow.h" />
     <ClInclude Include="src\IMGui\IMGuiPlayerDeath.h" />
     <ClInclude Include="src\IMGui\IMGuiTestLevelMenu.h" />
@@ -190,6 +196,7 @@
   <ItemGroup>
     <Image Include="assets\bowman1.png" />
     <Image Include="assets\levels\front1_blueprint.png" />
+    <Image Include="assets\levels\full_interior_blueprint.png" />
     <Image Include="assets\textureAtlas00.png" />
     <Image Include="assets\textureAtlasImGui.png" />
   </ItemGroup>
@@ -200,8 +207,7 @@
     <None Include="assets\gameObjectDefinitions\guiObjects.json" />
     <None Include="assets\gameObjectDefinitions\houseObjects.json" />
     <None Include="assets\gameObjectDefinitions\playerObjects.json" />
-    <None Include="assets\levels\front1_definition.json" />
-    <None Include="assets\levels\left1_definition.json" />
+    <None Include="assets\levels\full_interior_definition.json" />
     <None Include="assets\levels\levels.json" />
     <None Include="assets\sound\buttonWorking.ogg" />
     <None Include="assets\sound\soundAssets.json" />

@@ -289,6 +289,7 @@ inline constexpr int ACTION_ON_HOVER_OUT = 9;
 inline constexpr int ACTION_ON_TRIGGER = 10;
 inline constexpr int ACTION_SPRINT = 11;
 inline constexpr int ACTION_USAGE_SPECIAL = 12;
+inline constexpr int ACTION_WARP = 13;
 
 //GameSpace Types
 inline constexpr int GAMESPACE_INTRO = 0;

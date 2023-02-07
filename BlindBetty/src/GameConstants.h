@@ -39,6 +39,7 @@ namespace ContactTag {
 	inline constexpr int PLAYER_COLLISION = 15;
 	inline constexpr int PLAYER_HITBOX = 16;
 	inline constexpr int WALL = 17;
+	inline constexpr int DOOR = 18;
 
 }
 

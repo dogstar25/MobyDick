@@ -115,12 +115,12 @@ void BobbyPlayerControlComponent::handleActions()
 				//case SDL_KEYUP:
 				case SDL_KEYDOWN:
 
-					//Interaction Keys
-					if (keyScanCode == SDL_SCANCODE_E || keyScanCode == SDL_SCANCODE_R)
-					{
-						action = actionComponent->getAction(ACTION_INTERACT);
-						action->perform(parent(), keyScanCode);
-					}
+					////Interaction Keys
+					//if (keyScanCode == SDL_SCANCODE_E || keyScanCode == SDL_SCANCODE_R)
+					//{
+					//	action = actionComponent->getAction(ACTION_INTERACT);
+					//	action->perform(parent(), keyScanCode);
+					//}
 
 					break;
 				case SDL_MOUSEBUTTONDOWN:

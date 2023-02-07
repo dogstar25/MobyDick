@@ -70,7 +70,9 @@ bool BBGame::init(std::shared_ptr<ContactListener> contactListener, std::shared_
 
 	//Load a first scene
 	Scene& scene = SceneManager::instance().pushScene("SCENE_PLAY");
-	scene.loadLevel("front1");
+	//scene.loadLevel("front1");
+	scene.loadLevel("full_interior");
+
 
 	//Initialize the clock object
 	Clock::instance().init();

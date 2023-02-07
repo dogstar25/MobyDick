@@ -1,14 +1,14 @@
-#include "IMGuiInteractiveMenuBasic.h"
-#include "IMGuiUtil.h"
-#include "../ContextManager.h"
-#include "../Util.h"
-#include "../game.h"
+#include "IMGuiInteractiveMenuDoor.h"
+#include "IMGui/IMGuiUtil.h"
+#include "ContextManager.h"
+#include "Util.h"
+#include "game.h"
 #include <memory>
 
 
 extern std::unique_ptr<Game> game;
 
-IMGuiInteractiveMenuBasic::IMGuiInteractiveMenuBasic(std::string gameObjectType, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor,
+IMGuiInteractiveMenuDoor::IMGuiInteractiveMenuDoor(std::string gameObjectType, b2Vec2 padding, ImVec4 backgroundColor, ImVec4 textColor,
 	ImVec4 buttonColor, ImVec4 buttonHoverColor, ImVec4 buttonActiveColor, bool autoSize) :
 	IMGuiItem(gameObjectType, padding, backgroundColor, textColor, buttonColor, buttonHoverColor, buttonActiveColor, autoSize)
 {
@@ -17,7 +17,7 @@ IMGuiInteractiveMenuBasic::IMGuiInteractiveMenuBasic(std::string gameObjectType,
 
 }
 
-glm::vec2 IMGuiInteractiveMenuBasic::render()
+glm::vec2 IMGuiInteractiveMenuDoor::render()
 {
 
 	glm::vec2 windowSize{};
@@ -37,12 +37,12 @@ glm::vec2 IMGuiInteractiveMenuBasic::render()
 
 	ImGui::Begin(m_gameObjectType.c_str(), nullptr, m_flags);
 	{
-		ImGui::PushFont(m_smallFont);
+		ImGui::PushFont(m_normalFont);
 		ImGui::SetWindowPos(ImVec2{ renderComponent->getRenderDestRect().x, renderComponent->getRenderDestRect().y });
 		ImGui::SmallButton("E");
 		ImGui::SameLine();
+		ImGui::Text("Enter");
 
-		ImGui::Text("Use");
 		ImGui::PopFont();
 		ImGui::SameLine();
 
@@ -57,7 +57,6 @@ glm::vec2 IMGuiInteractiveMenuBasic::render()
 	ImGui::PopStyleColor();
 	ImGui::PopStyleVar();
 
-
 	//Handle executing the interActionAction tied to what the user selects
 	//The interaction object at this point, needed by the interactAction will always be the player at this point
 	const auto& player = parent()->parentScene()->getFirstGameObjectByTrait(TraitTag::player);
@@ -69,6 +68,7 @@ glm::vec2 IMGuiInteractiveMenuBasic::render()
 		const auto& interactAction = baseObjectActionComponent->getAction(ACTION_INTERACTION);
 
 		if (ImGui::IsKeyPressed(ImGuiKey_E)) {
+
 			interactAction->perform(player->get(), parent()->parent().value(), SDL_SCANCODE_E);
 		}
 	}

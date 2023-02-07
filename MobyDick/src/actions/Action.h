@@ -26,6 +26,7 @@ public:
 	virtual void perform(SDL_FRect*, glm::vec2, float) { assert(false && "An Empty Action was executed!"); };
 	virtual void perform(GameObject*, SDL_Scancode) { assert(false && "An Empty Action was executed!"); };
 	virtual void perform(GameObject*, GameObject*, SDL_Scancode) { assert(false && "An Empty Action was executed!"); };
+	virtual void perform(GameObject*, GameObject*, b2Vec2) { assert(false && "An Empty Action was executed!"); };
 	
 };
 

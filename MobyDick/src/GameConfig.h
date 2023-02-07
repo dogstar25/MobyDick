@@ -29,9 +29,6 @@ public:
 	int soundChannels() {
 		return m_soundChannels;
 	}
-	bool debugPanel() {
-		return m_debugPanel;
-	}
 	std::string gameTitle() {
 		return m_gameTitle;
 	}
@@ -59,6 +56,9 @@ public:
 	SDL_Point defaultTileSize() {
 		return m_defaultTileSize;
 	}
+	bool debugGrid() {
+		return m_debugGrid;
+	}
 
 private:
 	GameConfig();
@@ -70,7 +70,7 @@ private:
 	float m_gameLoopStep{};
 	bool m_windowFullscreen{};
 	bool m_openGLBatching{};
-	bool m_debugPanel{};
+	bool m_debugGrid{};
 	SDL_Point m_debugPanelLocation{};
 	int	m_debugPanelFontSize{};
 	int m_soundChannels{};

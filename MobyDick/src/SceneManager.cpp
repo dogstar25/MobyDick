@@ -36,7 +36,6 @@ void SceneManager::deleteGameObject(std::string gameObjectName)
 
 void SceneManager::init()
 {
-	m_currentSceneIndex = 0;
 	m_scenes.reserve(MAX_SCENES);
 
 	float gameLoopStep = GameConfig::instance().gameLoopStep();
@@ -161,7 +160,7 @@ std::optional<SceneAction> SceneManager::pollEvents()
 						break;
 
 					default:
-						std::cout << "Unknown Event" << count << std::endl;
+						//std::cout << "Unknown Event" << count << std::endl;
 						break;
 
 				}

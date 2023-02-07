@@ -255,7 +255,9 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 	_buildLevelObjects(scene);
 
 	//Build theDebug_grid_level objects
-	_buildDebugGridObjects(scene);
+	if (GameConfig::instance().debugGrid() == true) {
+		_buildDebugGridObjects(scene);
+	}
 
 	//Build the background image/objects
 	_buildTiledLayers(scene);
