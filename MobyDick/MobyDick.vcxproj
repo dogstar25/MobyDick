@@ -134,7 +134,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <SDLCheck>true</SDLCheck>
       <WarningLevel>Level2</WarningLevel>
       <Optimization>Disabled</Optimization>
@@ -174,7 +174,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <SDLCheck>true</SDLCheck>
       <WarningLevel>Level2</WarningLevel>
       <Optimization>Full</Optimization>
@@ -215,6 +215,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\actions\ActionFactory.cpp" />
+    <ClCompile Include="src\actions\ActorWarpAction.cpp" />
     <ClCompile Include="src\actions\PrimitiveMoveAction.cpp" />
     <ClCompile Include="src\ColorMap.cpp" />
     <ClCompile Include="src\components\CheckPointComponent.cpp" />
@@ -309,6 +310,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\actions\ActionFactory.h" />
+    <ClInclude Include="src\actions\ActorWarpAction.h" />
     <ClInclude Include="src\actions\PrimitiveMoveAction.h" />
     <ClInclude Include="src\ColorMap.h" />
     <ClInclude Include="src\components\CheckPointComponent.h" />

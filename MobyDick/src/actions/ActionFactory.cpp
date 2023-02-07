@@ -8,6 +8,7 @@
 #include "LoadNextLevelAction.h"
 #include "InteractAction.h"
 #include "NoAction.h"
+#include "ActorWarpAction.h"
 
 #include <iostream>
 
@@ -56,6 +57,11 @@ std::shared_ptr<Action> ActionFactory::create(std::string actionType)
 
         action = std::make_shared<NoAction>();
     }
+    else if (actionType == "ActorWarpAction") {
+
+        action = std::make_shared<ActorWarpAction>();
+    }
+    
     else {
         std::cout << "No Action was Matched" << std::endl;
         action = std::make_shared<NoAction>();

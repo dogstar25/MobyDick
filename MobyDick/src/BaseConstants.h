@@ -66,6 +66,7 @@ namespace Colors {
 	inline SDL_Color PURPLE = { 255, 0, 255, 255 };
 	inline SDL_Color ORANGE = { 255, 127, 0, 255 };
 	inline SDL_Color GREY = { 127, 127, 127, 255 };
+	inline SDL_Color BROWN = { 102, 57, 49, 255 };
 	inline SDL_Color CYAN = { 0, 255, 255, 255 };
 	
 
@@ -288,6 +289,7 @@ inline constexpr int ACTION_ON_HOVER_OUT = 9;
 inline constexpr int ACTION_ON_TRIGGER = 10;
 inline constexpr int ACTION_SPRINT = 11;
 inline constexpr int ACTION_USAGE_SPECIAL = 12;
+inline constexpr int ACTION_WARP = 13;
 
 //GameSpace Types
 inline constexpr int GAMESPACE_INTRO = 0;

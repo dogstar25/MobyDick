@@ -28,7 +28,6 @@ bool GameConfig::init(std::string configFile)
 	m_gameTitle = root["gameTitle"].asString();
 	m_gameLoopStep = root["gameLoopStep"].asFloat();
 	m_dynamicTextRefreshDelay = root["dynamicTextRefreshDelay"].asFloat();
-	m_debugPanel = root["debugPanel"]["show"].asBool();
 	m_debugPanelLocation.x = root["debugPanel"]["xPos"].asInt();
 	m_debugPanelLocation.y = root["debugPanel"]["yPos"].asInt();
 	m_debugPanelFontSize = root["debugPanel"]["fontSize"].asInt();
@@ -36,6 +35,8 @@ bool GameConfig::init(std::string configFile)
 	m_scaleFactor = root["physics"]["box2dScale"].asFloat();
 	m_rendererType = static_cast<RendererType>(game->enumMap()->toEnum(root["rendererType"].asString()));
 	m_openGLBatching = root["openGLBatching"].asBool();
+
+	m_debugGrid = root["debugGrid"].asBool();
 
 	Json::Value windowJSON = root["window"];
 	m_defaultTileSize = { windowJSON["defaultTileSize"]["width"].asInt(), windowJSON["defaultTileSize"]["height"].asInt() };

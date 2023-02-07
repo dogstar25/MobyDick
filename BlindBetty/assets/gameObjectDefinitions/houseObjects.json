@@ -1,427 +1,20 @@
 {
-    "$schema": "http://json-schema.org/draft/2020-12/schema",
 
     "gameObjects": [
         {
-            "type": "TOGGLE_BUTTON",
-            "traitTags": [ "interactive" ],
-            "description": "Wall button",
+            "type": "BRICK_WALL_1",
+            "traitTags": [ "barrier" ],
+            "description": "Brick Wall 1",
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "color": {
-                        "tint": "Colors::CYAN",
-                        "alpha": 185
-                    }
+                    "textureId": "TX_BRICK_WALL_1"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
                         "width": 32,
                         "height": 32
-                    }
-                },
-                {
-                    "id": "ANIMATION_COMPONENT",
-                    "defaultState": "ANIMATION_IDLE",
-                    "frameSize": {
-                        "width": 32,
-                        "height": 32
-                    },
-                    "animations": [
-                        {
-                            "state": "ANIMATION_IDLE",
-                            "textureId": "TX_BUTTON_IDLE",
-                            "speed": 0.05,
-                            "frames": 1
-                        },
-                        {
-                            "state": "ANIMATION_ACTIVE",
-                            "textureId": "TX_BUTTON_ACTIVE",
-                            "speed": 0.2,
-                            "frames": 2
-                        }
-                    ]
-                },
-                {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_DYNAMIC",
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::BUTTON",
-                            "collisionShape": "B2_BOX",
-                            "isSensor": true
-                        }
-                    ]
-                },
-                {
-                    "id": "ACTION_COMPONENT",
-                    "interactiveMenuObject": "INTERACTIVE_MENU_BASIC",
-                    "actions": [
-                        {
-                            "actionId": "ACTION_INTERACTION",
-                            "actionClass": "ToggleButtonInteraction"
-                        }
-                    ]
-                },
-                {
-                    "id": "SOUND_COMPONENT",
-                    "sounds": [
-                        {
-                            "id": "USE_SOUND",
-                            "soundAssetId": "SFX_BUTTON_WORKING_1",
-                            "distanceSensitive": false,
-                            "continuous": false
-                        },
-                        {
-                            "id": "USE_BROKEN_SOUND",
-                            "soundAssetId": "SFX_BUTTON_BROKEN_1",
-                            "distanceSensitive": false,
-                            "continuous": false
-                        }
-
-                    ]
-                }
-
-            ]
-        },
-        {
-            "type": "ONETIME_BUTTON",
-            "traitTags": [ "interactive" ],
-            "description": "Wall button",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "color": {
-                        "tint": "Colors::CYAN",
-                        "alpha": 185
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 32,
-                        "height": 32
-                    }
-                },
-                {
-                    "id": "ANIMATION_COMPONENT",
-                    "defaultState": "ANIMATION_IDLE",
-                    "frameSize": {
-                        "width": 32,
-                        "height": 32
-                    },
-                    "animations": [
-                        {
-                            "state": "ANIMATION_IDLE",
-                            "textureId": "TX_BUTTON_IDLE",
-                            "speed": 0.05,
-                            "frames": 1
-                        },
-                        {
-                            "state": "ANIMATION_ACTIVE",
-                            "textureId": "TX_BUTTON_ACTIVE",
-                            "speed": 0.2,
-                            "frames": 2
-                        },
-                        {
-                            "state": "ANIMATION_DEAD",
-                            "textureId": "TX_BUTTON_DEAD",
-                            "speed": 0.2,
-                            "frames": 1
-                        }
-                    ]
-                },
-                {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_DYNAMIC",
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::BUTTON",
-                            "collisionShape": "B2_BOX",
-                            "isSensor": true
-                        }
-                    ]
-                },
-                {
-                    "id": "ACTION_COMPONENT",
-                    "interactiveMenuObject": "INTERACTIVE_MENU_BASIC",
-                    "actions": [
-                        {
-                            "actionId": "ACTION_INTERACTION",
-                            "actionClass": "OnetimeButtonInteraction"
-                        }
-                    ]
-                },
-                {
-                    "id": "SOUND_COMPONENT",
-                    "sounds": [
-                        {
-                            "id": "USE_SOUND",
-                            "soundAssetId": "SFX_BUTTON_WORKING_1",
-                            "distanceSensitive": false,
-                            "continuous": false
-                        },
-                        {
-                            "id": "USE_BROKEN_SOUND",
-                            "soundAssetId": "SFX_BUTTON_BROKEN_1",
-                            "distanceSensitive": false,
-                            "continuous": false
-                        }
-
-                    ]
-                }
-
-
-            ]
-        },
-        {
-            "type": "SWORDLADY",
-            "traitTags": [],
-            "description": "SwordLady",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 32,
-                        "height": 32
-                    },
-                    "absolutePositioning": true
-                },
-                {
-                    "id": "ANIMATION_COMPONENT",
-                    "defaultState": "ANIMATION_IDLE",
-                    "frameSize": {
-                        "width": 64,
-                        "height": 64
-                    },
-                    "animations": [
-                        {
-                            "state": "ANIMATION_IDLE",
-                            "textureId": "TX_SWORDLADY1_IDLE",
-                            "speed": 0.05,
-                            "frames": 19
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "BOWMAN",
-            "traitTags": [],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_BOWMAN1"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 64,
-                        "height": 64
-                    },
-                    "absolutePositioning": false
-
-                },
-                {
-                    "id": "VITALITY_COMPONENT",
-                    "speed": 10
-                },
-                {
-                    "id": "ACTION_COMPONENT",
-                    "actions": [
-                        {
-                            "actionId": "ACTION_MOVE",
-                            "actionClass": "DroneMove"
-                        }
-                    ]
-                }
-
-
-            ]
-        },
-        {
-            "type": "ESCAPE_STAIRS",
-            "traitTags": [ "objective" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_STAIRS",
-                    "color": "Colors::PARAKEET"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 32,
-                        "height": 32
-                    },
-                    "absolutePositioning": false
-
-                },
-                {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_STATIC",
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::ESCAPE_STAIRS",
-                            "collisionShape": "B2_BOX",
-                            "size": {
-                                "width": 16,
-                                "height": 16
-                            }
-
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "STUBB",
-            "traitTags": [],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_STUBB",
-                    "color": {
-                        "tint": "Colors::WHITE",
-                        "alpha": 127
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 128,
-                        "height": 128
-                    },
-                    "absolutePositioning": false
-
-                }
-            ]
-        },
-        {
-            "type": "PARTICLE_X_EMITTER",
-            "traitTags": [ "abstract" ],
-            "description": "Particle Emitter",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 4,
-                        "height": 4
-                    }
-                },
-                {
-                    "id": "PARTICLE_X_COMPONENT",
-                    "type": "ParticleEmitterType::ONETIME"
-                }
-            ]
-        },
-        {
-            "type": "PARTICLE_EMITTER",
-            "traitTags": [ "abstract" ],
-            "description": "Particle Emitter",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT"
-                },
-                {
-                    "id": "PARTICLE_COMPONENT",
-                    "type": "ParticleEmitterType::ONETIME",
-                    "maxParticles": 100
-                }
-            ]
-        },
-        {
-            "type": "PARTICLE_EMITTER_SPARK",
-            "traitTags": [ "abstract" ],
-            "description": "Particle Emitter",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 4,
-                        "height": 4
-                    }
-                },
-                {
-                    "id": "PARTICLE_X_COMPONENT",
-                    "type": "ParticleEmitterType::CONTINUOUS",
-                    "emissionInterval": 3.2,
-                    "effects": [
-                        "spark"
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "METEOR_EMITTER",
-            "traitTags": [ "abstract" ],
-            "description": "Rain Emitter",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT"
-                },
-                {
-                    "id": "PARTICLE_COMPONENT",
-                    "type": "ParticleEmitterType::CONTINUOUS",
-                    "emissionInterval": 0.5,
-                    "maxParticles": 2000,
-                    "effects": [
-                        "meteor"
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "METEOR_EMITTER_2",
-            "traitTags": [ "abstract" ],
-            "description": "Rain Emitter",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT"
-                },
-                {
-                    "id": "PARTICLE_COMPONENT",
-                    "type": "ParticleEmitterType::CONTINUOUS",
-                    "emissionInterval": 0.5,
-                    "maxParticles": 2000,
-                    "effects": [
-                        "meteor2"
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "NAVIGATION_WAYPOINT",
-            "traitTags": [ "waypoint", "abstract" ],
-            "description": "Navigation Object",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 64,
-                        "height": 64
                     }
                 },
                 {
@@ -429,641 +22,159 @@
                     "type": "B2_STATIC",
                     "fixtures": [
                         {
-                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "contactTag": "ContactTag::WALL",
                             "collisionShape": "B2_BOX"
                         }
                     ]
-
                 }
             ]
+
         },
         {
-            "type": "SURVIVOR",
-            "traitTags": [ "interactive", "objective" ],
+            "type": "BRICK_WALL_2",
+            "traitTags": [ "barrier" ],
+            "description": "Brick Wall 2",
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "color": {
-                        "tint": "Colors::YELLOW",
-                        "alpha": 127
-                    }
+                    "textureId": "TX_BRICK_WALL_2"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 64,
-                        "height": 64
+                        "width": 32,
+                        "height": 32
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::WALL",
+                            "collisionShape": "B2_BOX"
+                        }
+                    ]
+                }
+            ]
+
+        },
+        {
+            "type": "PARLOR_ROOM",
+            "traitTags": [],
+            "description": "Parlor Room",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_ROOM_PARLOR"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 480,
+                        "height": 320
+                    }
+                }
+            ]
+
+        },
+        {
+            "type": "DEN_ROOM",
+            "traitTags": [],
+            "description": "Den Room",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_ROOM_DEN"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 480,
+                        "height": 320
+                    }
+                }
+            ]
+
+        },
+        {
+            "type": "TOP_STAIRS_ROOM",
+            "traitTags": [],
+            "description": "Top Stairs Room",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_ROOM_TOPSTAIRS"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 320,
+                        "height": 320
+                    }
+                }
+            ]
+
+        },
+        {
+            "type": "BOT_STAIRS_ROOM",
+            "traitTags": [],
+            "description": "Bottom Stairs Room",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_ROOM_BOTSTAIRS"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 320,
+                        "height": 320
+                    }
+                }
+            ]
+
+        },
+        {
+            "type": "DOOR",
+            "traitTags": [ "interactive"],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_DOOR_1",
+                    "xRenderAdjustment": 0,
+                    "yRenderAdjustment": 20
+
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 104,
+                        "height": 235
                     },
                     "absolutePositioning": false
                 },
                 {
-                    "id": "ANIMATION_COMPONENT",
-                    "defaultState": "ANIMATION_IDLE",
-                    "frameSize": {
-                        "width": 64,
-                        "height": 64
-                    },
-                    "animations": [
-                        {
-                            "state": "ANIMATION_IDLE",
-                            "textureId": "TX_SURVIVOR_IDLE",
-                            "speed": 0.1,
-                            "frames": 1
-                        },
-                        {
-                            "state": "ANIMATION_RUN",
-                            "textureId": "TX_SURVIVOR_RUN",
-                            "speed": 0.06,
-                            "frames": 4
-                        }
-
-                    ]
-                },
-                {
-                    "id": "VITALITY_COMPONENT",
-                    "speed": 25,
-                    "rotationSpeed": 20
-                },
-                {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "linearDamping": 50.0,
-                    "angularDamping": 3.0,
                     "fixtures": [
                         {
-                            "contactTag": "ContactTag::SURVIVOR",
-                            "collisionShape": "B2_CIRCLE",
-                            "collisionRadius": 0.64,
-                            "density": 50.5
-                        }
-                    ],
-                    "anchorPoint": {
-                        "x": 0.8,
-                        "y": 0.0
-                    }
-
-                },
-                {
-                    "id": "ACTION_COMPONENT",
-                    "interactiveMenuObject": "INTERACTIVE_MENU_SURVIVOR",
-                    "actions": [
-                        {
-                            "actionId": "ACTION_MOVE",
-                            "actionClass": "DroneMove"
-                        },
-                        {
-                            "actionId": "ACTION_INTERACTION",
-                            "actionClass": "SurvivorInteraction"
-                        },
-                        {
-                            "actionId": "ACTION_ROTATE",
-                            "actionClass": "DefaultRotate"
-                        }
-
-                    ]
-                },
-                {
-                    "id": "SURVIVOR_BRAIN_COMPONENT",
-                    "sightSensorSize": 15,
-                    "detectObjectTraits": [ "player", "objective" ]
-                },
-                {
-                    "id": "ATTACHMENTS_COMPONENT",
-                    "attachments": [
-                        {
-                            "id": "PLAYER_HEART",
-                            "gameObjectType": "PLAYER_HEART",
-                            "attachLocation": {
-                                "x": 0.0,
-                                "y": 0.0
-                            },
-                            "attachB2JointType": "B2_WELD"
-                        }
-
-                    ]
-                },
-                {
-                    "id": "NAVIGATION_COMPONENT",
-                    "passageFitSizeCategory": "NavigationSizeCategory::SMALL"
-                }
-            ]
-        },
-        {
-            "type": "TURRET_SCRAP",
-            "traitTags": [ "pooled" ],
-            "description": "Turret Scrap",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_TURRET_SCRAP",
-                    "color": "Colors::CYAN"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 64,
-                        "height": 64
-                    }
-                },
-                {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_DYNAMIC",
-                    "linearDamping": 4.0,
-                    "angularDamping": 1.0,
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::HEAVY_PARTICLE",
+                            "contactTag": "ContactTag::DOOR",
                             "collisionShape": "B2_BOX",
-                            "density": 5,
-                            "restitution": 0.3,
-                            "size": {
-                                "width": 32,
-                                "height": 32
-                            }
+                            "isSensor": true
                         }
-                    ]
-
-                },
-                {
-                    "id": "POOL_COMPONENT"
-                },
-                {
-                    "id": "VITALITY_COMPONENT",
-                    "lifetime": 0.0,
-                    "lifetimeAlphaFade": true
-                }
-            ]
-        },
-        {
-            "type": "HEALTH_STATION",
-            "traitTags": [ "interactive" ],
-            "description": "Health Station",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "color": {
-                        "tint": "Colors::CYAN",
-                        "alpha": 255
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 64,
-                        "height": 64
-                    }
-                },
-                {
-                    "id": "ANIMATION_COMPONENT",
-                    "defaultState": "ANIMATION_IDLE",
-                    "frameSize": {
-                        "width": 32,
-                        "height": 32
-                    },
-                    "animations": [
-                        {
-                            "state": "ANIMATION_IDLE",
-                            "textureId": "TX_HEALTH_STATION_IDLE",
-                            "frames": 1
-                        },
-                        {
-                            "state": "ANIMATION_ACTIVE",
-                            "textureId": "TX_HEALTH_STATION_ACTIVE",
-                            "frames": 1
-                        }
-                    ]
-                },
-                {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_STATIC",
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::GENERAL_FREE",
-                            "collisionShape": "B2_CHAIN",
-                            "physicsChainType": "PhysicsChainType::CW_REFLECT_OUT",
-                            "friction": 0.00,
-                            "restitution": 0.0,
-                            "density": 1.5
-                        },
-                        {
-                            "contactTag": "ContactTag::CONTAINER_INSIDE",
-                            "collisionShape": "B2_CHAIN",
-                            "physicsChainType": "PhysicsChainType::CCW_REFLECT_IN",
-                            "friction": 0.00,
-                            "restitution": 0.0,
-                            "density": 1.5
-                        }
-
                     ]
                 },
                 {
                     "id": "ACTION_COMPONENT",
-                    "interactiveMenuObject": "INTERACTIVE_MENU_BASIC",
+                    "interactiveMenuObject": "INTERACTIVE_MENU_DOOR",
                     "actions": [
                         {
                             "actionId": "ACTION_INTERACTION",
-                            "actionClass": "HealthStationInteraction"
-                        }
-                    ]
-                },
-                {
-                    "id": "CONTAINER_COMPONENT",
-                    "capacity": 20,
-                    "refillTimer": 10,
-                    "gameObjectType": "HEALTH_HEART",
-                    "startCount": 2,
-                    "spawnForce": 0.5,
-                    "layer": "GameLayer::MAIN"
-                }
-            ]
-        },
-        {
-            "type": "HEALTH_STATION_96",
-            "traitTags": [ "interactive" ],
-            "description": "Health Station",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "color": {
-                        "tint": "Colors::CYAN",
-                        "alpha": 255
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 96,
-                        "height": 96
-                    }
-                },
-                {
-                    "id": "ANIMATION_COMPONENT",
-                    "defaultState": "ANIMATION_IDLE",
-                    "frameSize": {
-                        "width": 32,
-                        "height": 32
-                    },
-                    "animations": [
-                        {
-                            "state": "ANIMATION_IDLE",
-                            "textureId": "TX_HEALTH_STATION_IDLE",
-                            "frames": 1
-                        },
-                        {
-                            "state": "ANIMATION_ACTIVE",
-                            "textureId": "TX_HEALTH_STATION_ACTIVE",
-                            "frames": 1
-                        }
-                    ]
-                },
-                {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_STATIC",
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::GENERAL_FREE",
-                            "collisionShape": "B2_CHAIN",
-                            "physicsChainType": "PhysicsChainType::CW_REFLECT_OUT",
-                            "friction": 0.00,
-                            "restitution": 0.0,
-                            "density": 1.5
-                        },
-                        {
-                            "contactTag": "ContactTag::CONTAINER_INSIDE",
-                            "collisionShape": "B2_CHAIN",
-                            "physicsChainType": "PhysicsChainType::CCW_REFLECT_IN",
-                            "friction": 0.00,
-                            "restitution": 0.0,
-                            "density": 1.5
+                            "actionClass": "DoorInteractionAction"
                         }
 
                     ]
-                },
-                {
-                    "id": "ACTION_COMPONENT",
-                    "interactiveMenuObject": "INTERACTIVE_MENU_BASIC",
-                    "actions": [
-                        {
-                            "actionId": "ACTION_INTERACTION",
-                            "actionClass": "HealthStationInteraction"
-                        }
-                    ]
-                },
-                {
-                    "id": "CONTAINER_COMPONENT",
-                    "capacity": 15,
-                    "gameObjectType": "HEALTH_HEART",
-                    "startCount": 5,
-                    "spawnForce": 1,
-                    "layer": "GameLayer::MAIN"
-                }
-            ]
-        },
-        {
-            "type": "HEALTH_STATION_128",
-            "traitTags": [ "interactive" ],
-            "description": "Health Station",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "color": {
-                        "tint": "Colors::CYAN",
-                        "alpha": 255
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 128,
-                        "height": 128
-                    }
-                },
-                {
-                    "id": "ANIMATION_COMPONENT",
-                    "defaultState": "ANIMATION_IDLE",
-                    "frameSize": {
-                        "width": 32,
-                        "height": 32
-                    },
-                    "animations": [
-                        {
-                            "state": "ANIMATION_IDLE",
-                            "textureId": "TX_HEALTH_STATION_IDLE",
-                            "frames": 1
-                        },
-                        {
-                            "state": "ANIMATION_ACTIVE",
-                            "textureId": "TX_HEALTH_STATION_ACTIVE",
-                            "frames": 1
-                        }
-                    ]
-                },
-                {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_STATIC",
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::GENERAL_FREE",
-                            "collisionShape": "B2_CHAIN",
-                            "physicsChainType": "PhysicsChainType::CW_REFLECT_OUT",
-                            "friction": 0.00,
-                            "restitution": 0.0,
-                            "density": 1.5
-                        },
-                        {
-                            "contactTag": "ContactTag::CONTAINER_INSIDE",
-                            "collisionShape": "B2_CHAIN",
-                            "physicsChainType": "PhysicsChainType::CCW_REFLECT_IN",
-                            "friction": 0.00,
-                            "restitution": 0.0,
-                            "density": 1.5
-                        }
-
-                    ]
-                },
-                {
-                    "id": "ACTION_COMPONENT",
-                    "interactiveMenuObject": "INTERACTIVE_MENU_BASIC",
-                    "actions": [
-                        {
-                            "actionId": "ACTION_INTERACTION",
-                            "actionClass": "HealthStationInteraction"
-                        }
-                    ]
-                },
-                {
-                    "id": "CONTAINER_COMPONENT",
-                    "capacity": 15,
-                    "gameObjectType": "HEALTH_HEART",
-                    "startCount": 15,
-                    "layer": "GameLayer::MAIN"
-                }
-            ]
-        },
-        {
-            "type": "BACKGROUND_GRID_1",
-            "traitTags": [],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_BACKGROUND_1_512",
-                    "color": {
-                        "tint": "Colors::CYAN",
-                        "alpha": 33
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 512,
-                        "height": 512
-                    },
-                    "absolutePositioning": false
-                }
-            ]
-        },
-        {
-            "type": "LEVEL_CAGE",
-            "traitTags": [ "abstract" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                }
-            ]
-        },
-        {
-            "type": "LEVEL_MUSIC_PLAYER",
-            "traitTags": [ "abstract" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "SOUND_COMPONENT",
-                    "sounds": [
-                        {
-                            "id": "OPERATING_SOUND",
-                            "continuous": true
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "IMPASSE",
-            "traitTags": [ "abstract", "impasse" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT"
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 32,
-                        "height": 32
-                    },
-                    "absolutePositioning": false
-                }
-
-            ]
-        },
-        {
-            "type": "VOID_FILLER",
-            "traitTags": [],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_DRONE_BRAIN_64",
-                    "color": {
-                        "tint": "Colors::CYAN",
-                        "alpha": 255
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 32,
-                        "height": 32
-                    },
-                    "absolutePositioning": false
-                }
-            ]
-        },
-        {
-            "type": "BARREL_FILLER",
-            "traitTags": [ "barrier" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_DRONE_BRAIN_64",
-                    "color": {
-                        "tint": "Colors::CYAN",
-                        "alpha": 255
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 32,
-                        "height": 32
-                    },
-                    "absolutePositioning": false
-                },
-                {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_DYNAMIC",
-                    "linearDamping": 4.0,
-                    "angularDamping": 3.0,
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::GENERAL_SOLID",
-                            "collisionShape": "B2_CIRCLE",
-                            "collisionRadius": 0.64,
-                            "friction": 0.00,
-                            "restitution": 0.7,
-                            "density": 80.5
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "BARREL_STATIC_FILLER",
-            "traitTags": [ "barrier" ],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_DRONE_BRAIN_64",
-                    "color": {
-                        "tint": "Colors::CYAN",
-                        "alpha": 255
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 32,
-                        "height": 32
-                    },
-                    "absolutePositioning": false
-                },
-                {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_STATIC",
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::GENERAL_SOLID",
-                            "collisionShape": "B2_CIRCLE",
-                            "collisionRadius": 0.64,
-                            "restitution": 2.7,
-                            "density": 80.5
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "RADIATION_EMITTER",
-            "traitTags": [],
-            "description": "Particle Emitter",
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_BROKEN_CIRCLE",
-                    "color": {
-                        "tint": "Colors::CYAN",
-                        "alpha": 255
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 32,
-                        "height": 32
-                    }
-                },
-                {
-                    "id": "PARTICLE_X_COMPONENT",
-                    "type": "ParticleEmitterType::CONTINUOUS",
-                    "emissionInterval": 0.2,
-                    "effects": [
-                        "radiation"
-                    ]
-                },
-                {
-                    "id": "SOUND_COMPONENT",
-                    "sounds": [
-                        {
-                            "id": "OPERATING_SOUND",
-                            "soundAssetId": "SFX_RADIATION_LEAK_1",
-                            "distanceSensitive": true,
-                            "continuous": true,
-                            "soundRange": 800
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "DEBUG_GRID_32",
-            "traitTags": [],
-            "components": [
-                {
-                    "id": "RENDER_COMPONENT",
-                    "textureBlendMode": "RenderBlendMode::NONE",
-                    "textureId": "TX_FOG_BOX",
-                    "color": {
-                        "tint": "Colors::RED",
-                        "alpha": 255
-                    }
-                },
-                {
-                    "id": "TRANSFORM_COMPONENT",
-                    "size": {
-                        "width": 32,
-                        "height": 32
-                    },
-                    "absolutePositioning": false
                 }
             ]
         }

@@ -12,6 +12,9 @@ EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MortalReconSetup", "MortalReconSetup\MortalReconSetup.vdproj", "{66332F15-4F2D-4405-A232-AD61D9A8F8C3}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BlindBetty", "BlindBetty\BlindBetty.vcxproj", "{FA5EC07E-261C-4CAF-B6D0-67A8324E627D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5BC96C69-A864-419D-96C6-BC3507DE7D1B} = {5BC96C69-A864-419D-96C6-BC3507DE7D1B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

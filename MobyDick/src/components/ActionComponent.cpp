@@ -35,6 +35,8 @@ ActionComponent::ActionComponent(Json::Value componentJSON, Scene* parentScene)
 		auto interactiveMenuObjectId = componentJSON["interactiveMenuObject"].asString();
 		m_interactiveMenuObject = std::make_shared<GameObject>(interactiveMenuObjectId, -5.f, -5.f, 0.f, parentScene);
 
+		m_interactionMenuRequiresPointingAt = componentJSON["interactionMenuRequiresPointingAt"].asBool();
+
 	}
 
 }
@@ -72,8 +74,10 @@ void ActionComponent::render()
 			if(touchingObject.second.expired() == false && touchingObject.second.lock()->hasTrait(TraitTag::player)) {
 
 				GameObject* interactingObject = touchingObject.second.lock().get();
+
 				//Is the interactingObject(player) pointing at this interactive object?
-				if (interactingObject->isPointingAt(parent()->getCenterPosition())) {
+				if (m_interactionMenuRequiresPointingAt == false ||
+					(m_interactionMenuRequiresPointingAt == true && interactingObject->isPointingAt(parent()->getCenterPosition()))) {
 
 					if (m_interactiveMenuObject) {
 						SDL_FPoint position = determineInteractionMenuLocation(interactingObject, parent(), m_interactiveMenuObject.get());

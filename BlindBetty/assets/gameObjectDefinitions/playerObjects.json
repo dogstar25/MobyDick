@@ -1,0 +1,95 @@
+{
+    "gameObjects": [
+        {
+            "type": "BOBBY",
+            "traitTags": [ "player" ],
+            "description": "Payer",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_BOWMAN1"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 112
+                    }
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 10,
+                    "health": 6
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "linearDamping": 0.0,
+                    "angularDamping": 3.0,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::PLAYER_COLLISION",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 1.28,
+                            "friction": 0.00,
+                            "restitution": 0.0,
+                            "density": 50.5,
+                            "isSensor": false
+                        }
+                    ],
+                    "anchorPoint": {
+                        "x": 0.8,
+                        "y": 0.0
+                    }
+                },
+                {
+                    "id": "BOBBY_PLAYER_CONTROL_COMPONENT"
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_MOVE",
+                            "actionClass": "ActorMove"
+                        }
+                    ]
+                },
+                {
+                    "id": "CHILDREN_COMPONENT",
+                    "childPadding": 0,
+                    "childPositionRelative": false,
+                    "childObjects": [
+                        {
+                            "gameObjectType": "BOBBY_LABEL",
+                            "locationSlot": 1
+                        }
+
+                    ]
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "ANIMATION_IDLE",
+                    "frameSize": {
+                        "width": 89,
+                        "height": 116
+                    },
+                    "animations": [
+                        {
+                            "state": "ANIMATION_IDLE",
+                            "textureId": "TX_BOBBY_IDLE",
+                            "frames": 1
+                        },
+                        {
+                            "state": "ANIMATION_RUN",
+                            "textureId": "TX_BOBBY_WALK",
+                            "speed": 0.01  ,
+                            "frames": 24
+                        }
+                    ]
+                }
+
+            ]
+
+        }
+    ]
+}

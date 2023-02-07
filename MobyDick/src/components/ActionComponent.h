@@ -42,6 +42,7 @@ public:
 private:
 	std::vector<std::shared_ptr<Action>>m_actions;
 	std::shared_ptr<GameObject> m_interactiveMenuObject{};
+	bool m_interactionMenuRequiresPointingAt{};
 
 };
 

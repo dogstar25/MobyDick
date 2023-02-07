@@ -1,0 +1,18 @@
+{
+    "soundEffects": [
+        {
+            "id": "SFX_BUTTON_WORKING_1",
+            "description": "Button Working 1",
+            "filename": "buttonWorking.ogg"
+        }
+
+    ],
+    "music": [
+        {
+            "id": "MUSIC_MAIN_THEME_A",
+            "description": "Music",
+            "filename": "main_theme_a.mp3"
+        }
+    ]
+
+}

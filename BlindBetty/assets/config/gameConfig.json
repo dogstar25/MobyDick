@@ -1,5 +1,5 @@
 {
-    "gameTitle": "MortalRescue",
+    "gameTitle": "Blind Betty",
     "window": {
         "fullscreen": true,
         "defaultTileSize": {
@@ -22,18 +22,12 @@
         "maxScenes": 12
     },
     "rendererType": "RendererType::SDL",
+    "debugGrid":  false,
     //"rendererType": "RendererType::OPENGL",
     //"openGLBatching": true,
     "gameLoopStep": 0.016,
     "physics": {
         "box2dScale": 25
-    },
-    "dynamicTextRefreshDelay": 0.2, //need a tiny delay to prevent millions of dynamic text texture regenerations
-    "debugPanel": {
-        "show": true,
-        "xPos": 1,
-        "yPos": 2,
-        "fontSize": 12
     }
 }
   

@@ -22,7 +22,7 @@ IMGuiPauseWindow::IMGuiPauseWindow(std::string gameObjectType, b2Vec2 padding, I
 
 glm::vec2 IMGuiPauseWindow::render()
 {
-	ImVec2 buttonSize{ ImGui::BBSettings::button1Size};
+	ImVec2 buttonSize{ ImGui::GameSettings::button1Size};
 	glm::vec2 windowSize{};
 
 	const auto& renderComponent = parent()->getComponent<RenderComponent>(ComponentTypes::RENDER_COMPONENT);
@@ -36,6 +36,9 @@ glm::vec2 IMGuiPauseWindow::render()
 	ImGui::Begin(m_gameObjectType.c_str(), nullptr, m_flags);
 	{
 
+		//Set Font
+		ImGui::PushFont(m_normalFont);
+
 		ImGui::PushStyleColor(ImGuiCol_Button, m_buttonColor);
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, m_buttonHoverColor);
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, m_buttonActiveColor);
@@ -44,7 +47,7 @@ glm::vec2 IMGuiPauseWindow::render()
 		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
 		//Continue Button
-		if (ImGui::Button("Continue", ImGui::BBSettings::button1Size)) {
+		if (ImGui::Button("Continue", ImGui::GameSettings::button1Size)) {
 			util::sendSceneEvent(SCENE_ACTION_EXIT);
 		}
 
@@ -52,7 +55,7 @@ glm::vec2 IMGuiPauseWindow::render()
 		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
 		//Settings Button
-		if (ImGui::Button("Settings", ImGui::BBSettings::button1Size)) {
+		if (ImGui::Button("Settings", ImGui::GameSettings::button1Size)) {
 			ImGui::OpenPopup("SettingsModal");
 		}
 
@@ -64,11 +67,11 @@ glm::vec2 IMGuiPauseWindow::render()
 		ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
 		//Quit Button
-		if (ImGui::Button("Quit", ImGui::BBSettings::button1Size)) {
+		if (ImGui::Button("Quit", ImGui::GameSettings::button1Size)) {
 			//Exit the pause scene
-			util::sendSceneEvent(SCENE_ACTION_EXIT);
+			util::sendSceneEvent(SCENE_ACTION_QUIT);
 			//Replace the play scene with the title screen
-			util::sendSceneEvent(SCENE_ACTION_REPLACE, "SCENE_TITLE_SCREEN");
+			//util::sendSceneEvent(SCENE_ACTION_REPLACE, "SCENE_TITLE_SCREEN");
 		}
 
 		//spacing
@@ -78,6 +81,7 @@ glm::vec2 IMGuiPauseWindow::render()
 		ImGui::PopStyleColor();
 		ImGui::PopStyleColor();
 
+		ImGui::PopFont();
 
 		windowSize = { ImGui::GetWindowSize().x, ImGui::GetWindowSize().y };
 
@@ -126,14 +130,14 @@ void IMGuiPauseWindow::settingsModal()
 	ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
 
 	//Buttons
-	if (ImGui::Button("Ok", ImGui::BBSettings::button1Size)) {
+	if (ImGui::Button("Ok", ImGui::GameSettings::button1Size)) {
 		apply(mouseSensitivity, soundvolume);
 		//ImGui::CloseCurrentPopup();
 		util::sendSceneEvent(SCENE_ACTION_EXIT);
 	}
 
 	ImGui::SameLine(156);
-	if (ImGui::Button("Cancel", ImGui::BBSettings::button1Size)) {
+	if (ImGui::Button("Cancel", ImGui::GameSettings::button1Size)) {
 		//ImGui::CloseCurrentPopup();
 		util::sendSceneEvent(SCENE_ACTION_EXIT);
 	}

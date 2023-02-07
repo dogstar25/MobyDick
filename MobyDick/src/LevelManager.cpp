@@ -10,6 +10,7 @@
 #include "SoundManager.h"
 
 
+
 extern std::unique_ptr<Game> game;
 
 static const unsigned char wallOnLeft = 0b0001;
@@ -80,7 +81,7 @@ void LevelManager::_loadDefinition(std::string levelId)
 	//Read file and stream it to a JSON object
 	std::stringstream filename;
 
-	filename << "assets/levels/level" << levelId << "_definition.json";
+	filename << "assets/levels/" << levelId << "_definition.json";
 
 	Json::Value root;
 	std::ifstream ifs(filename.str());
@@ -254,7 +255,9 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 	_buildLevelObjects(scene);
 
 	//Build theDebug_grid_level objects
-	_buildDebugGridObjects(scene);
+	if (GameConfig::instance().debugGrid() == true) {
+		_buildDebugGridObjects(scene);
+	}
 
 	//Build the background image/objects
 	_buildTiledLayers(scene);
@@ -399,7 +402,8 @@ std::optional<LevelObject> LevelManager::_determineTile(int x, int y, SDL_Surfac
 {
 	int bpp = surface->format->BytesPerPixel;
 	Uint8 red, green, blue, alpha;
-	std::optional<LevelObject> levelObject{ std::nullopt };
+	std::optional<LevelObject> levelObject{};
+	//levelObject = std::nullopt;
 	Uint8* pixel = NULL;
 	SDL_Color leftColor, rightColor, topColor, bottomColor;
 	unsigned int borderWalls = 0;
@@ -922,7 +926,6 @@ void LevelManager::_buildLevelStatusItems(std::string levelId)
 
 		for (Json::Value itrObjective : m_levelDefinition["statusItems"])
 		{
-
 			
 			int statusItemId = game->enumMap()->toEnum(itrObjective["id"].asString());
 			StatusItem statusItem(statusItemId);
@@ -935,14 +938,6 @@ void LevelManager::_buildLevelStatusItems(std::string levelId)
 		}
 
 	}
-
-	//Update the context manager current Level - this is part of the base game
-	float level = std::stof(levelId);
-	StatusItem statusItem(StatusItemId::CURRENT_LEVEL);
-	statusItem.setValue(level);
-	game->contextMananger()->addStatusItem(StatusItemId::CURRENT_LEVEL, statusItem);
-	game->contextMananger()->setStatusItemValue(StatusItemId::CURRENT_LEVEL, level);
-
 
 }
 

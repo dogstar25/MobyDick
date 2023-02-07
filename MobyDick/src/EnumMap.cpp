@@ -109,6 +109,7 @@ EnumMap::EnumMap()
 	m_enumMap["ACTION_ON_CLICK"] = ACTION_ON_CLICK;
 	m_enumMap["ACTION_SPRINT"] = ACTION_SPRINT;
 	m_enumMap["ACTION_USAGE_SPECIAL"] = ACTION_USAGE_SPECIAL;
+	m_enumMap["ACTION_WARP"] = ACTION_WARP;
 
 	//Keys
 	m_enumMap["SDLK_ESCAPE"] = SDLK_ESCAPE;

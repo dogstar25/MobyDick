@@ -1,0 +1,174 @@
+{
+    
+    "gameObjects": [
+        {
+            "type": "BOWMAN",
+            "traitTags": [],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_BOWMAN1"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 64
+                    },
+                    "absolutePositioning": false
+
+                },
+                {
+                    "id": "VITALITY_COMPONENT",
+                    "speed": 10
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_MOVE",
+                            "actionClass": "DroneMove"
+                        }
+                    ]
+                }
+
+
+            ]
+        },
+        {
+            "type": "PARTICLE_X_EMITTER",
+            "traitTags": [ "abstract" ],
+            "description": "Particle Emitter",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 4,
+                        "height": 4
+                    }
+                },
+                {
+                    "id": "PARTICLE_X_COMPONENT",
+                    "type": "ParticleEmitterType::ONETIME"
+                }
+            ]
+        },
+        {
+            "type": "PARTICLE_EMITTER",
+            "traitTags": [ "abstract" ],
+            "description": "Particle Emitter",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT"
+                },
+                {
+                    "id": "PARTICLE_COMPONENT",
+                    "type": "ParticleEmitterType::ONETIME",
+                    "maxParticles": 100
+                }
+            ]
+        },
+        {
+            "type": "NAVIGATION_WAYPOINT",
+            "traitTags": [ "waypoint", "abstract" ],
+            "description": "Navigation Object",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 64,
+                        "height": 64
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_FREE",
+                            "collisionShape": "B2_BOX"
+                        }
+                    ]
+
+                }
+            ]
+        },
+        {
+            "type": "LEVEL_CAGE",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                }
+            ]
+        },
+        {
+            "type": "LEVEL_MUSIC_PLAYER",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "SOUND_COMPONENT",
+                    "sounds": [
+                        {
+                            "id": "OPERATING_SOUND",
+                            "continuous": true
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "IMPASSE",
+            "traitTags": [ "abstract", "impasse" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                }
+
+            ]
+        },
+        {
+            "type": "DEBUG_GRID_32",
+            "traitTags": [],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureBlendMode": "RenderBlendMode::NONE",
+                    "textureId": "TX_FOG_BOX",
+                    "color": {
+                        "tint": "Colors::RED",
+                        "alpha": 255
+                    }
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                }
+            ]
+        }
+    ]
+}

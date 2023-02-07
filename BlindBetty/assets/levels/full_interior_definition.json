@@ -1,0 +1,75 @@
+{
+    "id": "FULL_INTERIOR",
+    "blueprint": "TX_FULL_INTERIOR_BLUEPRINT",
+    "description": "Front elevation level 1",
+    "dimensions": {
+        "levelWidth": 172,
+        "levelHeight": 172,
+        "tileWidth": 32,
+        "tileHeight": 32
+    },
+    "colorDefinedObjects": [
+        {
+            "colorKey": "Colors::BROWN",
+            "gameObjectType": "BRICK_WALL_1",
+            "layer": "GameLayer::BACKGROUND_1"
+        },
+        {
+            "colorKey": "Colors::ORANGE",
+            "gameObjectType": "BRICK_WALL_2",
+            "layer": "GameLayer::BACKGROUND_1"
+        }
+
+    ],
+    "locationDefinedObjects": [
+        {
+            "id": "LOC_0032_0141",
+            "gameObjectType": "BOBBY",
+            "name": "Player Bobby",
+            "cameraFollow": true
+        },
+        {
+            "id": "LOC_0017_0026",
+            "gameObjectType": "PARLOR_ROOM",
+            "layer": "GameLayer::BACKGROUND_2"
+        },
+        {
+            "id": "LOC_0044_0026",
+            "gameObjectType": "DEN_ROOM",
+            "layer": "GameLayer::BACKGROUND_2"
+        },
+        {
+            "id": "LOC_0017_0037",
+            "gameObjectType": "PARLOR_ROOM",
+            "layer": "GameLayer::BACKGROUND_2"
+        },
+        {
+            "id": "LOC_0044_0037",
+            "gameObjectType": "DEN_ROOM",
+            "layer": "GameLayer::BACKGROUND_2"
+        },
+        {
+            "id": "LOC_0033_0026",
+            "gameObjectType": "TOP_STAIRS_ROOM",
+            "layer": "GameLayer::BACKGROUND_2"
+        },
+        {
+            "id": "LOC_0033_0037",
+            "gameObjectType": "BOT_STAIRS_ROOM",
+            "layer": "GameLayer::BACKGROUND_2"
+        },
+        {
+            "id": "LOC_0018_0136",
+            "gameObjectType": "DOOR",
+            "name": "door1",
+            "layer": "GameLayer::BACKGROUND_2"
+        },
+        {
+            "id": "LOC_0015_0048",
+            "gameObjectType": "DOOR",
+            "name": "door1",
+            "layer": "GameLayer::BACKGROUND_2"
+        }
+
+    ]
+}
