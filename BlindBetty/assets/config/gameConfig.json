@@ -14,7 +14,7 @@
             "width": 1280,
             "height": 720
         }
-        },
+    },
     "sound": {
         "numberOfChannels": 128
     },
@@ -22,12 +22,12 @@
         "maxScenes": 12
     },
     "rendererType": "RendererType::SDL",
-    "debugGrid":  false,
     //"rendererType": "RendererType::OPENGL",
     //"openGLBatching": true,
+    "debugGrid": false,
     "gameLoopStep": 0.016,
     "physics": {
-        "box2dScale": 25
+        "box2dScale": 100
     }
 }
   

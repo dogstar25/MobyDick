@@ -13,6 +13,7 @@ public:
 	SDL_Surface* surface{};
 	SDL_Rect textureAtlasQuad{};
 	bool isRootTexture{ false };
+	bool applyFlip{ false };
 	GL_TextureIndexType openglTextureIndex{};
 };
 

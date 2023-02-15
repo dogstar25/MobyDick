@@ -69,15 +69,15 @@ void BobbyPlayerControlComponent::handleMovement()
 	if (currentKeyStates[SDL_SCANCODE_LSHIFT])
 	{
 
-		const auto& action = actionComponent->getAction(ACTION_SPRINT);
-		action->perform(parent(), direction, strafe);
-		m_state.set(PlayerState::sprinting);
+		//const auto& action = actionComponent->getAction(ACTION_SPRINT);
+		//action->perform(parent(), direction, strafe);
+		//m_state.set(PlayerState::sprinting);
 	}
 	else {
 
 		const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
 		moveAction->perform(parent(), direction, strafe);
-		m_state.reset(PlayerState::sprinting);
+		//m_state.reset(PlayerState::sprinting);
 	}
 
 

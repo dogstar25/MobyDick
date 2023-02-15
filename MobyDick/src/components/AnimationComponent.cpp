@@ -45,6 +45,14 @@ AnimationComponent::~AnimationComponent()
 
 }
 
+void AnimationComponent::setToDefaultAnimation()
+{
+
+	m_currentAnimationState = m_defaultAnimationState;
+
+}
+
+
 void AnimationComponent::update()
 {
 

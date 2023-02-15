@@ -3,8 +3,14 @@
         {
             "id": "TEXTURE_ATLAS_0",
             "description": "Texture atlas 0",
-            "openglTextureIndex": "GL_TextureIndexType::MAIN_TEXTURE_ATLAS",
+            "openglTextureIndex": "GL_TextureIndexType::MAIN_TEXTURE_ATLAS_0",
             "filename": "assets/textureAtlas00.png"
+        },
+        {
+            "id": "TEXTURE_ATLAS_1",
+            "description": "Texture atlas 1",
+            "openglTextureIndex": "GL_TextureIndexType::MAIN_TEXTURE_ATLAS_1",
+            "filename": "assets/textureAtlas01.png"
         },
         {
             "id": "TEXTURE_IMGUI_ATLAS",
@@ -155,7 +161,7 @@
             }
         },
         {
-            "id": "TX_DOOR_1",
+            "id": "TX_DOOR_CLOSED_FRONT_1",
             "description": "Door1",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
@@ -166,22 +172,68 @@
             }
         },
         {
-            "id": "TX_BOBBY_IDLE",
-            "description": "Bobby Idle",
+            "id": "TX_DOOR_CLOSED_SIDE_1",
+            "description": "Door from side closed",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 1468,
+                "x": 743,
+                "y": 572,
+                "width": 32,
+                "height": 256
+            }
+        },
+        {
+            "id": "TX_DOOR_OPEN_SIDE_1",
+            "description": "Door from side open",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 777,
+                "y": 572,
+                "width": 59,
+                "height": 256
+            }
+        },
+        {
+            "id": "TX_BOBBY_IDLE_RIGHT",
+            "description": "Bobby Idle Right",
+            "atlas": "TEXTURE_ATLAS_1",
+            "quadPosition": {
+                "x": 444,
                 "y": 232,
                 "width": 89,
                 "height": 116
             }
         },
         {
-            "id": "TX_BOBBY_WALK",
-            "description": "Bobby Walk",
-            "atlas": "TEXTURE_ATLAS_0",
+            "id": "TX_BOBBY_IDLE_LEFT",
+            "description": "Bobby Idle",
+            "atlas": "TEXTURE_ATLAS_1",
+            "flip": true,
             "quadPosition": {
-                "x": 1024,
+                "x": 444,
+                "y": 232,
+                "width": 89,
+                "height": 116
+            }
+        },
+        {
+            "id": "TX_BOBBY_WALK_RIGHT",
+            "description": "Bobby Walk",
+            "atlas": "TEXTURE_ATLAS_1",
+            "quadPosition": {
+                "x": 0,
+                "y": 0,
+                "width": 534,
+                "height": 464
+            }
+        },
+        {
+            "id": "TX_BOBBY_WALK_LEFT",
+            "description": "Bobby Walk",
+            "atlas": "TEXTURE_ATLAS_1",
+            "flip": true,
+            "quadPosition": {
+                "x": 0,
                 "y": 0,
                 "width": 534,
                 "height": 464

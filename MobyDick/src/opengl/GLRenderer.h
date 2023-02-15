@@ -22,7 +22,8 @@
 class DrawBatch;
 
 enum class GL_TextureIndexType {
-	MAIN_TEXTURE_ATLAS = 0,
+	MAIN_TEXTURE_ATLAS_0 = 0,
+	MAIN_TEXTURE_ATLAS_1,
 	IMGUI_TEXTURE_ATLAS,
 	DYNAMICALLY_LOADED,
 
@@ -33,8 +34,9 @@ enum class GL_TextureIndexType {
 class GLRenderer : public Renderer
 {
 
-	inline static constexpr int MAX_TEXTURES_IDS = 4;
+	inline static constexpr int MAX_TEXTURES_IDS = 5;
 	const std::vector<glm::uint> spriteindexBuffer{ 0,1,2,2,3,0 };
+	const std::vector<glm::uint> fspriteindexBuffer{ 1,0,3,3,2,1 };
 	const std::vector<glm::uint> lineindexBuffer{ 0,1};
 
 

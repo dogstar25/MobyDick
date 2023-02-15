@@ -6,8 +6,7 @@
             "description": "Payer",
             "components": [
                 {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_BOWMAN1"
+                    "id": "RENDER_COMPONENT"
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
@@ -18,29 +17,24 @@
                 },
                 {
                     "id": "VITALITY_COMPONENT",
-                    "speed": 10,
+                    "speed": 3,
                     "health": 6
                 },
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "linearDamping": 0.0,
-                    "angularDamping": 3.0,
+                    "gravityScale": 5,
+                    "linearDamping": 1.0,
                     "fixtures": [
                         {
                             "contactTag": "ContactTag::PLAYER_COLLISION",
-                            "collisionShape": "B2_CIRCLE",
-                            "collisionRadius": 1.28,
-                            "friction": 0.00,
+                            "collisionShape": "B2_BOX",
+                            "friction": 0.2,
                             "restitution": 0.0,
-                            "density": 50.5,
-                            "isSensor": false
+                            "density": 100
                         }
-                    ],
-                    "anchorPoint": {
-                        "x": 0.8,
-                        "y": 0.0
-                    }
+
+                    ]
                 },
                 {
                     "id": "BOBBY_PLAYER_CONTROL_COMPONENT"
@@ -68,24 +62,97 @@
                 },
                 {
                     "id": "ANIMATION_COMPONENT",
-                    "defaultState": "ANIMATION_IDLE",
+                    "defaultState": "AnimationState::IDLE_RIGHT",
                     "frameSize": {
                         "width": 89,
                         "height": 116
                     },
                     "animations": [
                         {
-                            "state": "ANIMATION_IDLE",
-                            "textureId": "TX_BOBBY_IDLE",
+                            "state": "AnimationState::IDLE_RIGHT",
+                            "textureId": "TX_BOBBY_IDLE_RIGHT",
                             "frames": 1
                         },
                         {
-                            "state": "ANIMATION_RUN",
-                            "textureId": "TX_BOBBY_WALK",
-                            "speed": 0.01  ,
+                            "state": "AnimationState::IDLE_LEFT",
+                            "textureId": "TX_BOBBY_IDLE_LEFT",
+                            "frames": 1
+                        },
+                        {
+                            "state": "AnimationState::WALK_RIGHT",
+                            "textureId": "TX_BOBBY_WALK_RIGHT",
+                            "speed": 0.01,
+                            "frames": 24
+                        },
+                        {
+                            "state": "AnimationState::WALK_LEFT",
+                            "textureId": "TX_BOBBY_WALK_LEFT",
+                            "speed": 0.01,
                             "frames": 24
                         }
                     ]
+                }
+                //{
+                //    "id": "ATTACHMENTS_COMPONENT",
+                //    "attachments": [
+                //        {
+                //            "id": "Bumper1",
+                //            "gameObjectType": "PLAYER_BUMPER",
+                //            "attachLocation": {
+                //                "x": -0.35,
+                //                "y": 0.43
+                //            },
+                //            "attachB2JointType": "B2_WELD"
+                //        },
+                //        {
+                //            "id": "Bumper2",
+                //            "gameObjectType": "PLAYER_BUMPER",
+                //            "attachLocation": {
+                //                "x": 0.35,
+                //                "y": 0.43
+                //            },
+                //            "attachB2JointType": "B2_WELD"
+                //        }
+
+                //    ]
+                //}
+
+            ]
+
+        },
+        {
+            "type": "PLAYER_BUMPER",
+            "traitTags": [ ],
+            "description": "Payer Bumper",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 16,
+                        "height": 16
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "gravityScale": 1,
+                    "linearDamping": 0.0,
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::PLAYER_COLLISION",
+                            "collisionShape": "B2_CIRCLE",
+                            "collisionRadius": 0.16,
+                            "friction": 0.5,
+                            "density": 50
+                        }
+                    ],
+                    "anchorPoint": {
+                        "x": 0.0,
+                        "y": 0.0
+                    }
                 }
 
             ]

@@ -35,6 +35,7 @@ BBContactFilter::BBContactFilter()
 	m_contactMasks[WALL].set(GENERAL_SOLID);
 	m_contactMasks[WALL].set(HEAVY_PARTICLE);
 	m_contactMasks[WALL].set(PLAYER_COLLISION);
+	m_contactMasks[WALL].set(WALL);
 
 	//DOOR
 	m_contactMasks[DOOR].reset();

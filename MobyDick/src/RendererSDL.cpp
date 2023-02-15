@@ -81,6 +81,12 @@ void RendererSDL::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* textu
 	SDL_SetTextureAlphaMod(texture->sdlTexture, color.a);
 	SDL_SetTextureColorMod(texture->sdlTexture, color.r, color.g, color.b);
 
+	SDL_RendererFlip flip = SDL_RendererFlip::SDL_FLIP_NONE;
+	if (texture->applyFlip == true) {
+		flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
+
+	}
+
 	//Render the texture
 	SDL_RenderCopyExF(
 		m_sdlRenderer,
@@ -89,7 +95,7 @@ void RendererSDL::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* textu
 		&destQuad,
 		angle,
 		NULL,
-		SDL_FLIP_NONE);
+		flip);
 	
 	//outline the object if defined to
 	if (outline) {

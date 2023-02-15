@@ -65,4 +65,13 @@ namespace StatusItemId {
 	
 };
 
+namespace AnimationState {
+
+	inline constexpr int IDLE_RIGHT = 8;
+	inline constexpr int IDLE_LEFT = 9;
+	inline constexpr int WALK_RIGHT = 10;
+	inline constexpr int WALK_LEFT = 11;
+
+}
+
 

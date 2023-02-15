@@ -16,14 +16,49 @@
                         "width": 32,
                         "height": 32
                     }
+                }
+                //{
+                //    "id": "PHYSICS_COMPONENT",
+                //    "type": "B2_STATIC",
+                //    "fixtures": [
+                //        {
+                //            "friction": 1,
+                //            "restitution": 0.5,
+                //            "contactTag": "ContactTag::WALL",
+                //            "collisionShape": "B2_BOX"
+                //        }
+                //    ]
+                //}
+            ]
+
+        },
+        {
+            "type": "BRICK_WALL_1_P",
+            "traitTags": [ "barrier" ],
+            "description": "Brick Wall 1",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_BRICK_WALL_1"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    }
                 },
                 {
                     "id": "PHYSICS_COMPONENT",
-                    "type": "B2_STATIC",
+                    "type": "B2_DYNAMIC",
+                    "linearDamping": 0.0,
+                    //"gravityScale": 1,
+                    "restitution": 1,
                     "fixtures": [
                         {
                             "contactTag": "ContactTag::WALL",
-                            "collisionShape": "B2_BOX"
+                            "collisionShape": "B2_BOX",
+                            "density": 100
                         }
                     ]
                 }
@@ -45,16 +80,6 @@
                         "width": 32,
                         "height": 32
                     }
-                },
-                {
-                    "id": "PHYSICS_COMPONENT",
-                    "type": "B2_STATIC",
-                    "fixtures": [
-                        {
-                            "contactTag": "ContactTag::WALL",
-                            "collisionShape": "B2_BOX"
-                        }
-                    ]
                 }
             ]
 
@@ -136,12 +161,12 @@
 
         },
         {
-            "type": "DOOR",
-            "traitTags": [ "interactive"],
+            "type": "DOOR_CLOSED_FRONT",
+            "traitTags": [ "interactive" ],
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "textureId": "TX_DOOR_1",
+                    "textureId": "TX_DOOR_CLOSED_FRONT_1",
                     "xRenderAdjustment": 0,
                     "yRenderAdjustment": 20
 
@@ -172,6 +197,97 @@
                         {
                             "actionId": "ACTION_INTERACTION",
                             "actionClass": "DoorInteractionAction"
+                        }
+
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "DOOR_CLOSED_SIDE",
+            "traitTags": [ "interactive" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_DOOR_CLOSED_SIDE_1"
+
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 256
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::DOOR",
+                            "collisionShape": "B2_BOX",
+                            "isSensor": true
+                        }
+                    ]
+                },
+                {
+                    "id": "ACTION_COMPONENT",
+                    "interactiveMenuObject": "INTERACTIVE_MENU_DOOR",
+                    "actions": [
+                        {
+                            "actionId": "ACTION_INTERACTION",
+                            "actionClass": "DoorInteractionAction"
+                        }
+
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "DOOR_DESTINATION",
+            "traitTags": [ "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                }
+            ]
+        },
+        {
+            "type": "FLOOR_42",
+            "traitTags": [ "abstract" ],
+
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 1344,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_SOLID",
+                            "collisionShape": "B2_CHAIN",
+                            "physicsChainType": "PhysicsChainType::CW_REFLECT_OUT",
+                            "friction": 0.5
                         }
 
                     ]

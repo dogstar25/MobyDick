@@ -463,7 +463,7 @@ void Scene::_processGameObjectInterdependecies()
 void Scene::_buildPhysicsWorld(Json::Value physicsJSON)
 {
 
-	m_physicsConfig.gravity.Set(physicsJSON["gravity"]["x"].asFloat(), physicsJSON["gravity"]["y"].asFloat());
+ 	m_physicsConfig.gravity.Set(physicsJSON["gravity"]["x"].asFloat(), physicsJSON["gravity"]["y"].asFloat());
 	m_physicsConfig.timeStep = physicsJSON["timeStep"].asFloat();
 	m_physicsConfig.velocityIterations = physicsJSON["velocityIterations"].asInt();
 	m_physicsConfig.positionIterations = physicsJSON["positionIterations"].asInt();

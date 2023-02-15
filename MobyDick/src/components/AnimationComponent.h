@@ -47,6 +47,7 @@ public:
 	int currentAnimationState() { return m_currentAnimationState; }
 	int defaultAnimationState() { return m_defaultAnimationState; }
 	void setDefaultAnimationState(int defaultAnimationState);
+	void setToDefaultAnimation();
 	void setFlash(SDL_Color flashColor, float flashSpeed, int flashTimes);
 
 	std::array<Animation, MAX_ANIMATION_STATES>& animations() { return m_animations; }
