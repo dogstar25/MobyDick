@@ -18,7 +18,7 @@ glm::vec2 IMGuiExample::render()
 	//OpenGl Version of displaying an image
 	if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
 
-		GLuint64 textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::MAIN_TEXTURE_ATLAS);
+		GLuint64 textureAtlasId = static_cast<GLRenderer*>(game->renderer())->getTextureId(GL_TextureIndexType::MAIN_TEXTURE_ATLAS_0);
 		ImGui::Image((GLvoid*)textureAtlasId, ImVec2(64, 64), ImVec2(.0009765, .048828), ImVec2(.01635, .0642));
 	}
 	else {

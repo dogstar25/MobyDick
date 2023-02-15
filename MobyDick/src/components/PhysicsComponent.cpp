@@ -273,6 +273,18 @@ void PhysicsComponent::applyImpulse(float force, b2Vec2 trajectory)
 
 }
 
+void PhysicsComponent::applyImpulse(float speed, int direction, int strafeDirection)
+{
+	b2Vec2 trajectory = { (float)strafeDirection, (float)direction };
+	trajectory.Normalize();
+
+	trajectory *= speed;
+
+	//m_physicsBody->ApplyLinearImpulseToCenter(trajectory, true);
+	m_physicsBody->ApplyLinearImpulseToCenter(trajectory, true);
+
+}
+
 void PhysicsComponent::applyMovement(float velocity, b2Vec2 trajectory)
 {
 

@@ -132,10 +132,25 @@ void GLRenderer::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* textur
 	// 	   Build the 4 vertices that make a quad/rectangle/square
 	// 
 	int zIndex = -1;
-	
+
+	//xPosition values
+	int x1 = 0;
+	int x2 = glSize.x;
+	int x3 = glSize.x;
+	int x4 = 0;
+
+	//Horizontal Flip
+	if (texture->applyFlip == true) {
+		x1 = glSize.x;
+		x2 = 0;
+		x3 = 0;
+		x4 = glSize.x;
+	}
+
+
 	SpriteVertex vertex;
 	//v0
-	vertex.positionAttribute = glm::vec3(0, 0, zIndex);
+	vertex.positionAttribute = glm::vec3(x1, 0, zIndex);
 	vertex.colorAttribute = glColor;
 	glm::vec2 calculatedTextureCoordinates = { textureSrcQuad->x, textureSrcQuad->y };
 	auto normalizedTextureCoords = util::glNormalizeTextureCoords(
@@ -145,7 +160,7 @@ void GLRenderer::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* textur
 	spriteVertexBuffer.push_back(vertex);
 
 	//v1
-	vertex.positionAttribute = glm::vec3{ glSize.x, 0, zIndex };
+	vertex.positionAttribute = glm::vec3{ x2, 0, zIndex };
 	vertex.colorAttribute = glColor;
 
 	calculatedTextureCoordinates = { textureSrcQuad->x + textureSrcQuad->w, textureSrcQuad->y };
@@ -157,7 +172,7 @@ void GLRenderer::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* textur
 	spriteVertexBuffer.push_back(vertex);
 
 	//v2
-	vertex.positionAttribute = glm::vec3{ glSize.x, glSize.y, zIndex };
+	vertex.positionAttribute = glm::vec3{ x3, glSize.y, zIndex };
 	vertex.colorAttribute = glColor;
 
 	calculatedTextureCoordinates = { textureSrcQuad->x + textureSrcQuad->w, textureSrcQuad->y + textureSrcQuad->h };
@@ -169,7 +184,7 @@ void GLRenderer::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* textur
 	spriteVertexBuffer.push_back(vertex);
 
 	//v3
-	vertex.positionAttribute = glm::vec3{ 0, glSize.y, zIndex };
+	vertex.positionAttribute = glm::vec3{ x4, glSize.y, zIndex };
 	vertex.colorAttribute = glColor;
 
 	calculatedTextureCoordinates = { textureSrcQuad->x , textureSrcQuad->y + textureSrcQuad->h };
@@ -190,7 +205,6 @@ void GLRenderer::drawSprite(SDL_FRect destQuad, SDL_Color color, Texture* textur
 	//shader needs to be passed in
 	auto shadertype = GLShaderType::BASIC;
 	//auto shadertype = GLShaderType::GLOW;
-
 
 	if (GameConfig::instance().openGLBatching() == true) {
 		_addVertexBufferToBatch(spriteVertexBuffer, GLDrawerType::GLSPRITE, texture, shadertype, textureBlendMode);

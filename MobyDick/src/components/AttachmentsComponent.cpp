@@ -79,14 +79,15 @@ void AttachmentsComponent::postInit()
 		//set layer from parent
 		attachment.gameObject->setLayer(parent()->layer());
 
+		//The attachment objects are offscreen, so first move them to the parent's position before trying to attach them
+		attachment.gameObject->setPosition(parent()->getCenterPosition());
+
 		physicsComponent->attachItem(attachment.gameObject.get(), attachment.attachB2JointType, attachment.attachLocation);
 		if (attachment.addToInventory == true) {
 
 			const auto& inventoryComponent = parent()->getComponent<InventoryComponent>(ComponentTypes::INVENTORY_COMPONENT);
 			inventoryComponent->addItem(attachment.gameObject);
 		}
-
-		attachment.gameObject->postInit();
 
 	}
 }

@@ -175,6 +175,9 @@
     <Image Include="assets\levels\full_interior_blueprint.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\textureAtlas01.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\textureAtlas00.psd" />

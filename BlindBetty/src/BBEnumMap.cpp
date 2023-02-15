@@ -19,4 +19,10 @@ BBEnumMap::BBEnumMap()
 	//Custom Status/Context Item Types
 	addEnumItem("StatusItemId::PLAYERS_HEART_COUNT", StatusItemId::PLAYERS_HEART_COUNT);
 
+	//Custom animation states
+	addEnumItem("AnimationState::WALK_LEFT", AnimationState::WALK_LEFT);
+	addEnumItem("AnimationState::WALK_RIGHT", AnimationState::WALK_RIGHT);
+	addEnumItem("AnimationState::IDLE_LEFT", AnimationState::IDLE_LEFT);
+	addEnumItem("AnimationState::IDLE_RIGHT", AnimationState::IDLE_RIGHT);
+
 }

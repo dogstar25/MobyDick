@@ -84,10 +84,10 @@ void ContainerComponent::update()
 		const auto& animation = parent()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 		if (isEmpty()) {
 
-			animation->setCurrentAnimationState(ANIMATION_IDLE);
+			animation->setCurrentAnimationState(AnimationState::IDLE);
 		}
 		else {
-			animation->setCurrentAnimationState(ANIMATION_ACTIVE);
+			animation->setCurrentAnimationState(AnimationState::ACTIVE);
 		}
 	}
 

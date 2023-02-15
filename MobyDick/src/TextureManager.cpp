@@ -194,7 +194,7 @@ bool TextureManager::load(std::string texturesAssetsFile)
 		textureObject->textureAtlasQuad = std::move(quad);
 
 		if (GameConfig::instance().rendererType() == RendererType::OPENGL) {
-			textureObject->openglTextureIndex = GL_TextureIndexType::MAIN_TEXTURE_ATLAS;
+			textureObject->openglTextureIndex = m_textureMap[atlasId]->openglTextureIndex;
 
 		}
 
@@ -205,6 +205,9 @@ bool TextureManager::load(std::string texturesAssetsFile)
 		if (GameConfig::instance().rendererType() == RendererType::SDL) {
 			textureObject->sdlTexture = m_textureMap[atlasId]->sdlTexture;
 		}
+
+		//Is Flipped
+		textureObject->applyFlip = itr["flip"].asBool();
 
 		m_textureMap.emplace(id, std::make_shared<Texture>(*textureObject));
 

@@ -34,7 +34,7 @@ public:
 
 private:
 	float   m_speed{ 0 };
-	int     m_state{ ANIMATION_IDLE };
+	int     m_state{ AnimationState::IDLE };
 	int     m_frameCount{ 0 };
 	int     m_currentAnimFrame{ 0 };
 	b2Vec2 	m_frameSize{ 0,0 };

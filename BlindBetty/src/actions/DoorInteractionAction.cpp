@@ -12,21 +12,17 @@ void DoorInteractionAction::perform(GameObject* interactingObject, GameObject* i
 
 		const auto& physicsComponent = interactingObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 
+		//build name for the door destination object 
+		std::string doorDestination = interactionObject->name() + "_DEST";
 
 		//Find this doors partner
-		const auto& doors = interactionObject->parentScene()->getGameObjectsByName(interactionObject->name());
-		for (const auto& door : doors) {
+		const auto& destination = interactionObject->parentScene()->getFirstGameObjectByName(doorDestination);
+		if (destination.has_value()) {
 
-			//If we match on name, and this isnt the object itself, then its our match/partner
-			if (door->name() == interactionObject->name() && door.get() != interactionObject) {
-
-				//Get location and use it as warp destination
-				b2Vec2 destination = { door->getCenterPosition().x, door->getCenterPosition().y };
-				util::toBox2dPoint(destination);
-
-				physicsComponent->setTransform(destination);
-
-			}
+			//Get location and use it as warp destination
+			b2Vec2 destinationLocation = { destination.value()->getCenterPosition().x, destination.value()->getCenterPosition().y};
+			util::toBox2dPoint(destinationLocation);
+			physicsComponent->setTransform(destinationLocation);
 
 		}
 

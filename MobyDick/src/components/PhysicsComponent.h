@@ -30,6 +30,7 @@ public:
 	void applyMovement(float velocity, int direction, int strafeDirection);
 	void applyMovement(float velocity, b2Vec2 trajectory);
 	void applyImpulse(float force, b2Vec2 trajectory);
+	void applyImpulse(float speed, int direction, int strafeDirection);
 	void applyAngleImpulse(float force);
 	void applyRotation(float angularVelocity);
 	void applyTorque(float angularVelocity);

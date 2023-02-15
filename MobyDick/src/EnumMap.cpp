@@ -81,14 +81,14 @@ EnumMap::EnumMap()
 	m_enumMap["PhysicsChainType::CW_REFLECT_OUT"] = (int)PhysicsChainType::CW_REFLECT_OUT;
 
 	//Animation Statessdpssss
-	m_enumMap["ANIMATION_IDLE"] = ANIMATION_IDLE;
-	m_enumMap["ANIMATION_RUN"] = ANIMATION_RUN;
-	m_enumMap["ANIMATION_ACTIVE"] = ANIMATION_ACTIVE;
-	m_enumMap["ANIMATION_ACTION"] = ANIMATION_ACTION;
-	m_enumMap["ANIMATION_DEPLOY"] = ANIMATION_DEPLOY;
-	m_enumMap["ANIMATION_UNDEPLOY"] = ANIMATION_UNDEPLOY;
-	m_enumMap["ANIMATION_DEAD"] = ANIMATION_DEAD;
-	m_enumMap["ANIMATION_SPRINT"] = ANIMATION_SPRINT;
+	m_enumMap["AnimationState::IDLE"] = AnimationState::IDLE;
+	m_enumMap["AnimationState::RUN"] = AnimationState::RUN;
+	m_enumMap["AnimationState::ACTIVE"] = AnimationState::ACTIVE;
+	m_enumMap["AnimationState::ACTION"] = AnimationState::ACTION;
+	m_enumMap["AnimationState::DEPLOY"] = AnimationState::DEPLOY;
+	m_enumMap["AnimationState::UNDEPLOY"] = AnimationState::UNDEPLOY;
+	m_enumMap["AnimationState::DEAD"] = AnimationState::DEAD;
+	m_enumMap["AnimationState::SPRINT"] = AnimationState::SPRINT;
 
 	//Player Control
 	m_enumMap["INPUT_CONTROL_MOVEMENT"] = INPUT_CONTROL_MOVEMENT;
@@ -165,7 +165,8 @@ EnumMap::EnumMap()
 	m_enumMap["ParticleEmitterType::CONTINUOUS"] = ParticleEmitterType::CONTINUOUS;
 
 	//OpenGL Texture Index values
-	m_enumMap["GL_TextureIndexType::MAIN_TEXTURE_ATLAS"] = (int)GL_TextureIndexType::MAIN_TEXTURE_ATLAS;
+	m_enumMap["GL_TextureIndexType::MAIN_TEXTURE_ATLAS_0"] = (int)GL_TextureIndexType::MAIN_TEXTURE_ATLAS_0;
+	m_enumMap["GL_TextureIndexType::MAIN_TEXTURE_ATLAS_1"] = (int)GL_TextureIndexType::MAIN_TEXTURE_ATLAS_1;
 	m_enumMap["GL_TextureIndexType::IMGUI_TEXTURE_ATLAS"] = (int)GL_TextureIndexType::IMGUI_TEXTURE_ATLAS;
 	
 	//Texure Blend Modes
