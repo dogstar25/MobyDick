@@ -62,17 +62,10 @@ LevelManager& LevelManager::instance()
 	return singletonInstance;
 }
 
-void LevelManager::addLevelObject(int xIndex, int yIndex, LevelObject levelObject)
-{
-
-	m_levelObjects[xIndex][yIndex]=levelObject;
-
-}
-
 void LevelManager::setLevelObjectArraySize(int width, int height)
 {
 
-	m_levelObjects.resize(width, std::vector<LevelObject>(height));
+	m_levelObjects.resize(width, std::vector<std::vector<LevelObject>>(height));
 
 }
 
@@ -236,12 +229,12 @@ void LevelManager::loadLevel(std::string levelId, Scene* scene)
 	{
 		for (int x = 0; x < surface->w; x++)
 		{
-			//determine what tile to build for current x,y location
-			auto levelObject = _determineTile(x, y, surface);
+			//determine the list of objects to build on this location
+			auto levelObjects = _determineTile(x, y, surface);
 
 			//If a valid gameObject was found at this location then store its Id
-			if (levelObject.has_value()) {
-				m_levelObjects[x][y] = levelObject.value();
+			if (levelObjects.empty() == false) {
+				m_levelObjects[x][y].insert(m_levelObjects[x][y].begin(), levelObjects.begin(), levelObjects.end());
 			}
 		}
 	}
@@ -398,11 +391,16 @@ void LevelManager::_buildParallax(Scene* scene)
 
 }
 
-std::optional<LevelObject> LevelManager::_determineTile(int x, int y, SDL_Surface* surface)
+std::vector<LevelObject> LevelManager::_determineTile(int x, int y, SDL_Surface* surface)
 {
 	int bpp = surface->format->BytesPerPixel;
 	Uint8 red, green, blue, alpha;
 	std::optional<LevelObject> levelObject{};
+
+
+	std::vector<LevelObject> levelObjects{};
+
+
 	//levelObject = std::nullopt;
 	Uint8* pixel = NULL;
 	SDL_Color leftColor, rightColor, topColor, bottomColor;
@@ -417,30 +415,42 @@ std::optional<LevelObject> LevelManager::_determineTile(int x, int y, SDL_Surfac
 	SDL_GetRGBA(*(Uint32*)currentPixel, surface->format, &red, &green, &blue, &alpha);
 	SDL_Color currentPixelcolor = { red, green, blue };
 
-	//Black pixels are walls
-	if (currentPixelcolor == Colors::BLACK)	{
-		levelObject = _determineWallObject(x,y,surface);
+	//If this is NOT a white pixel then it is an object to be built
+	if (currentPixelcolor != Colors::WHITE) {
+
+		//Black pixels are walls with special wall angles
+		if (currentPixelcolor == Colors::BLACK) {
+			levelObject = _determineWallObject(x, y, surface);
+			levelObjects.push_back(levelObject.value());
+		}
+
+		//color defined objects
+		levelObject = _determineColorDefinedObject(currentPixelcolor);
+		if (levelObject.has_value()) {
+			levelObjects.push_back(levelObject.value());
+		}
+
+		//Location defined objects - ther can be many location defined objects
+		auto locationObjects = _determineLocationDefinedObject(x, y);
+		if (locationObjects.empty() == false) {
+
+			levelObjects.insert(levelObjects.begin(), locationObjects.begin(), locationObjects.end());
+
+		}
+
+
+	
 	}
 
-	//If this is NOT white, then its either a color defined object or a locationdefined object
-	//both are defined in the levelX_definition.json file
-	else if (currentPixelcolor != Colors::WHITE) {
-		if (_isColorDefinedObject(currentPixelcolor)) {
-			levelObject = _determineColorDefinedObject(currentPixelcolor);
-		}
-		else {
-			levelObject = _determineLocationDefinedObject(x, y);
-		}
-	}
 
-	return levelObject;
+	return levelObjects;
 
 }
 
 std::optional<LevelObject> LevelManager::_determineColorDefinedObject(SDL_Color color)
 {
 
-	std::optional<LevelObject> levelObject{ };
+	std::optional<LevelObject> levelObject{std::nullopt };
 
 	//This location should have a location item defined for it 
 	for (Json::Value colorItemJSON : m_colorDefinedList) {
@@ -484,10 +494,10 @@ std::optional<LevelObject> LevelManager::_determineColorDefinedObject(SDL_Color 
 				levelObject->containerRespawnTimer = colorItemJSON["containerRespawnTimer"].asFloat();
 			}
 			if (colorItemJSON.isMember("containerStartCount")) {
-				levelObject->containerStartCount = colorItemJSON["containerStartCount"].asFloat();
+				levelObject->containerStartCount = colorItemJSON["containerStartCount"].asInt();
 			}
 			if (colorItemJSON.isMember("containerCapacity")) {
-				levelObject->containerCapacity = colorItemJSON["containerCapacity"].asFloat();
+				levelObject->containerCapacity = colorItemJSON["containerCapacity"].asInt();
 			}
 
 		}
@@ -500,14 +510,14 @@ std::optional<LevelObject> LevelManager::_determineColorDefinedObject(SDL_Color 
 	return levelObject;
 }
 
-std::optional<LevelObject> LevelManager::_determineLocationDefinedObject(int x, int y)
+std::vector<LevelObject> LevelManager::_determineLocationDefinedObject(int x, int y)
 {
 
 	std::stringstream levellocationObjectId;
 	levellocationObjectId << "LOC" << "_" << std::setw(4) << std::setfill('0') << x << "_";
 	levellocationObjectId << std::setw(4) << std::setfill('0') << y;
 	std::string levelObjectId = levellocationObjectId.str();
-	std::optional<LevelObject> levelObject{ };
+	std::vector<LevelObject> levelObjects{ };
 
 	//This location should have a location item defined for it 
 	for (Json::Value locationItemJSON : m_locationDefinedList) {
@@ -515,59 +525,61 @@ std::optional<LevelObject> LevelManager::_determineLocationDefinedObject(int x, 
 		std::string id = locationItemJSON["id"].asString();
 		if (levelObjectId == id) {
 
-			levelObject = LevelObject();
-			levelObject->gameObjectType = locationItemJSON["gameObjectType"].asString();
+			auto levelObject = LevelObject();
+			levelObject.gameObjectType = locationItemJSON["gameObjectType"].asString();
 
 			if (locationItemJSON.isMember("layer")) {
-				levelObject->layer = game->enumMap()->toEnum(locationItemJSON["layer"].asString());
+				levelObject.layer = game->enumMap()->toEnum(locationItemJSON["layer"].asString());
 			}
 			if (locationItemJSON.isMember("cameraFollow")) {
-				levelObject->cameraFollow = locationItemJSON["cameraFollow"].asBool();
+				levelObject.cameraFollow = locationItemJSON["cameraFollow"].asBool();
 			}
 			if (locationItemJSON.isMember("name")) {
-				levelObject->name = locationItemJSON["name"].asString();
+				levelObject.name = locationItemJSON["name"].asString();
 			}
 			if (locationItemJSON.isMember("angle")) {
-				levelObject->angleAdjustment = locationItemJSON["angle"].asInt();
+				levelObject.angleAdjustment = locationItemJSON["angle"].asInt();
 			}
 			if (locationItemJSON.isMember("objectColor")) {
-				levelObject->color = game->colorMap()->toSDLColor(locationItemJSON["objectColor"].asString());
+				levelObject.color = game->colorMap()->toSDLColor(locationItemJSON["objectColor"].asString());
 			}
 			if (locationItemJSON.isMember("disabled")) {
-				levelObject->disabledType = game->enumMap()->toEnum(locationItemJSON["disabled"].asString());
+				levelObject.disabledType = game->enumMap()->toEnum(locationItemJSON["disabled"].asString());
 			}
 			if (locationItemJSON.isMember("weaponForce")) {
-				levelObject->weaponForce = locationItemJSON["weaponForce"].asFloat();
+				levelObject.weaponForce = locationItemJSON["weaponForce"].asFloat();
 			}
 			if (locationItemJSON.isMember("weaponColor")) {
-				levelObject->weaponColor = game->colorMap()->toSDLColor(locationItemJSON["weaponColor"].asString());
+				levelObject.weaponColor = game->colorMap()->toSDLColor(locationItemJSON["weaponColor"].asString());
 			}
 			if (locationItemJSON.isMember("compositePieceLevelCap")) {
-				levelObject->compositePieceLevelCap = locationItemJSON["compositePieceLevelCap"].asInt();
+				levelObject.compositePieceLevelCap = locationItemJSON["compositePieceLevelCap"].asInt();
 			}
 			if (locationItemJSON.isMember("brainSensorSize")) {
-				levelObject->brainSensorSize = locationItemJSON["brainSensorSize"].asInt();
+				levelObject.brainSensorSize = locationItemJSON["brainSensorSize"].asInt();
 			}
 			if (locationItemJSON.isMember("containerRespawnTimer")) {
-				levelObject->containerRespawnTimer = locationItemJSON["containerRespawnTimer"].asFloat();
+				levelObject.containerRespawnTimer = locationItemJSON["containerRespawnTimer"].asFloat();
 			}
 			if (locationItemJSON.isMember("containerStartCount")) {
-				levelObject->containerStartCount = locationItemJSON["containerStartCount"].asFloat();
+				levelObject.containerStartCount = locationItemJSON["containerStartCount"].asInt();
 			}
 			if (locationItemJSON.isMember("containerCapacity")) {
-				levelObject->containerCapacity = locationItemJSON["containerCapacity"].asFloat();
+				levelObject.containerCapacity = locationItemJSON["containerCapacity"].asInt();
 			}
 
+			levelObjects.push_back(levelObject);
 
-			break;
 		}
+
+		if (levelObjects.empty() == true) {
+			std::cout << "WARNING: Blueprint LevelObject found at " << x << " " << y << " " << " found with no definition.\n";
+		}
+
 	}
 
-	if (levelObject.has_value() == false) {
-		std::cout << "WARNING: Blueprint LevelObject found at " << x << " " << y << " " << " found with no definition.\n";
-	}
 
-	return levelObject;
+	return levelObjects;
 }
 
 LevelObject LevelManager::_determineWallObject(int x, int y, SDL_Surface* bluePrintSurface)
@@ -770,39 +782,38 @@ void LevelManager::_buildLevelObjects(Scene* scene)
 	for (int y = 0; y < m_height; y++) {
 		for (int x = 0; x < m_width; x++) {
 
-			if (m_levelObjects[x][y].gameObjectType.empty() == false) {
+			//Loop through all level objects to build for each x,y location
+			for (auto& levelObject : m_levelObjects[x][y]) {
 
-				levelObject = &m_levelObjects[x][y];
-
-				auto gameObject = scene->addGameObject(levelObject->gameObjectType, levelObject->layer,
-					(float)x, (float)y, (float)levelObject->angleAdjustment, levelObject->cameraFollow, levelObject->name);
+				auto gameObject = scene->addGameObject(levelObject.gameObjectType, levelObject.layer,
+					(float)x, (float)y, (float)levelObject.angleAdjustment, levelObject.cameraFollow, levelObject.name);
 
 				//Apply color override
-				if (levelObject->color.has_value()) {
-					gameObject->setColor(levelObject->color.value());
+				if (levelObject.color.has_value()) {
+					gameObject->setColor(levelObject.color.value());
 				}
 
 				//Apply disabled override
-				if (levelObject->disabledType.has_value()) {
-					
-					if (levelObject->disabledType.value() == DISABLED_TYPE::RENDER) {
+				if (levelObject.disabledType.has_value()) {
+
+					if (levelObject.disabledType.value() == DISABLED_TYPE::RENDER) {
 						gameObject->disableRender();
 					}
-					else if (levelObject->disabledType.value() == DISABLED_TYPE::UPDATE) {
+					else if (levelObject.disabledType.value() == DISABLED_TYPE::UPDATE) {
 						gameObject->disableUpdate();
 					}
-					else if (levelObject->disabledType.value() == DISABLED_TYPE::PHYSICS) {
+					else if (levelObject.disabledType.value() == DISABLED_TYPE::PHYSICS) {
 						gameObject->disablePhysics();
 					}
-					else if (levelObject->disabledType.value() == DISABLED_TYPE::RENDER_AND_PHYSICS) {
+					else if (levelObject.disabledType.value() == DISABLED_TYPE::RENDER_AND_PHYSICS) {
 						gameObject->disableRender();
 						gameObject->disablePhysics();
 					}
-					else if (levelObject->disabledType.value() == DISABLED_TYPE::RENDER_AND_UPDATE) {
+					else if (levelObject.disabledType.value() == DISABLED_TYPE::RENDER_AND_UPDATE) {
 						gameObject->disableRender();
 						gameObject->disableUpdate();
 					}
-					else if (levelObject->disabledType.value() == DISABLED_TYPE::PHYICS_AND_UPDATE) {
+					else if (levelObject.disabledType.value() == DISABLED_TYPE::PHYICS_AND_UPDATE) {
 						gameObject->disablePhysics();
 						gameObject->disableUpdate();
 					}
@@ -810,38 +821,38 @@ void LevelManager::_buildLevelObjects(Scene* scene)
 				}
 
 				//Apply override weapon color if exists
-				if (levelObject->weaponColor.has_value()) {
-					gameObject->setWeaponColor(levelObject->weaponColor.value());
+				if (levelObject.weaponColor.has_value()) {
+					gameObject->setWeaponColor(levelObject.weaponColor.value());
 				}
 
 				//Apply override weapon force if exists
-				if (levelObject->weaponForce.has_value()) {
-					gameObject->setWeaponForce(levelObject->weaponForce.value());
+				if (levelObject.weaponForce.has_value()) {
+					gameObject->setWeaponForce(levelObject.weaponForce.value());
 				}
 
 				//Apply override vitality levelCap if exists
-				if (levelObject->compositePieceLevelCap.has_value()) {
-					gameObject->setCompositePieceLevelCap(levelObject->compositePieceLevelCap.value());
+				if (levelObject.compositePieceLevelCap.has_value()) {
+					gameObject->setCompositePieceLevelCap(levelObject.compositePieceLevelCap.value());
 				}
 
 				//Apply override brain sensor size if exists
-				if (levelObject->brainSensorSize.has_value()) {
-					gameObject->setBrainSensorSize(levelObject->brainSensorSize.value());
+				if (levelObject.brainSensorSize.has_value()) {
+					gameObject->setBrainSensorSize(levelObject.brainSensorSize.value());
 				}
 
 				//Apply override container respawnTimer if exists
-				if (levelObject->containerRespawnTimer.has_value()) {
-					gameObject->setContainerResapwnTimer(levelObject->containerRespawnTimer.value());
+				if (levelObject.containerRespawnTimer.has_value()) {
+					gameObject->setContainerResapwnTimer(levelObject.containerRespawnTimer.value());
 				}
 
 				//Apply override container startCount if exists
-				if (levelObject->containerStartCount.has_value()) {
-					gameObject->setContainerStartCount(levelObject->containerStartCount.value());
+				if (levelObject.containerStartCount.has_value()) {
+					gameObject->setContainerStartCount(levelObject.containerStartCount.value());
 				}
 
 				//Apply override container capacity if exists
-				if (levelObject->containerCapacity.has_value()) {
-					gameObject->setContainerCapacity(levelObject->containerCapacity.value());
+				if (levelObject.containerCapacity.has_value()) {
+					gameObject->setContainerCapacity(levelObject.containerCapacity.value());
 				}
 
 				//Build the navigation map item for this object

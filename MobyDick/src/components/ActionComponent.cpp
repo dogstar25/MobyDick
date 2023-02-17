@@ -79,11 +79,20 @@ void ActionComponent::render()
 				if (m_interactionMenuRequiresPointingAt == false ||
 					(m_interactionMenuRequiresPointingAt == true && interactingObject->isPointingAt(parent()->getCenterPosition()))) {
 
+					//If there is a menu then display the interaction menu and it will execute the selected action
 					if (m_interactiveMenuObject) {
 						SDL_FPoint position = determineInteractionMenuLocation(interactingObject, parent(), m_interactiveMenuObject.get());
 						m_interactiveMenuObject->setPosition(position);
 						m_interactiveMenuObject->render();
 					}
+					//If there is NO interactive menu then simple execute the INTERACTION action immediately
+					else {
+
+						const auto& interactionAction = getAction(ACTION_INTERACTION);
+						interactionAction->perform(interactingObject, parent());
+
+					}
+
 
 				}
 			}

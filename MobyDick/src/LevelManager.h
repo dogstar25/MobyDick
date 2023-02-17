@@ -71,7 +71,6 @@ public:
 	void loadLevel(std::string levelId, std::string sceneId);
 	std::optional<std::string> getNextLevelId(std::string levelId);
 
-	void addLevelObject(int xIndex, int yIndex, LevelObject levelObject);
 	void setLevelObjectArraySize(int width, int height);
 	
 
@@ -90,13 +89,13 @@ private:
 	Json::Value m_levelDefinition{};
 	std::optional<std::string> m_backgroundMusicAssetId{};
 
-	std::vector< std::vector <LevelObject>> m_levelObjects{};
+	std::vector<std::vector< std::vector <LevelObject>>> m_levelObjects{};
 	std::vector<std::string> m_levels{};
 	std::map<int, TiledLayerDefinition> m_tiledLayerDefinitions;
 
-	std::optional<LevelObject> _determineTile(int x, int y, SDL_Surface* bluePrintSurface);
+	std::vector<LevelObject> _determineTile(int x, int y, SDL_Surface* bluePrintSurface);
 	LevelObject _determineWallObject(int x, int y, SDL_Surface* bluePrintSurface);
-	std::optional<LevelObject> _determineLocationDefinedObject(int x, int y);
+	std::vector<LevelObject> _determineLocationDefinedObject(int x, int y);
 	std::optional<LevelObject> _determineColorDefinedObject(SDL_Color color);
 	void _loadDefinition(std::string levelId);
 	void _buildLevelObjects(Scene* scene);

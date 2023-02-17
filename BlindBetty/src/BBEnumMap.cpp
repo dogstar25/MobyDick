@@ -12,6 +12,7 @@ BBEnumMap::BBEnumMap()
 	addEnumItem("ContactTag::PLAYER_HITBOX", ContactTag::PLAYER_HITBOX);
 	addEnumItem("ContactTag::WALL", ContactTag::WALL);
 	addEnumItem("ContactTag::DOOR", ContactTag::DOOR);
+	addEnumItem("ContactTag::WARP_ENTRY", ContactTag::WARP_ENTRY);
 
 	//Custom Component Types
 	addEnumItem("BOBBY_PLAYER_CONTROL_COMPONENT", ComponentTypes::BOBBY_PLAYER_CONTROL_COMPONENT);
