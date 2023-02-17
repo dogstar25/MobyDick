@@ -13,7 +13,7 @@ void DoorInteractionAction::perform(GameObject* interactingObject, GameObject* i
 		const auto& physicsComponent = interactingObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 
 		//build name for the door destination object 
-		std::string doorDestination = interactionObject->name() + "_DEST";
+		std::string doorDestination = interactionObject->name() + "_EXIT";
 
 		//Find this doors partner
 		const auto& destination = interactionObject->parentScene()->getFirstGameObjectByName(doorDestination);

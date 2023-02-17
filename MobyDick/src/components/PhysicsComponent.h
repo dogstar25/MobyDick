@@ -43,6 +43,9 @@ public:
 	void setBullet(bool isBullet);
 	void setAngle(float angle);
 	void setLinearDamping(float linearDamping);
+
+	//This is when we want to chnage the position of the object from within a box2d callback
+	void setChangePositionPosition(b2Vec2 position) { m_changePositionPosition = position; }
 	
 	void attachItem(GameObject* inventoryObject, b2JointType jointType, std::optional<b2Vec2> attachLocation = std::nullopt);
 	void deleteAllJoints();
@@ -61,6 +64,7 @@ private:
 	b2Body* m_physicsBody{ nullptr };
 	uint16 m_physicsType{ 0 };
 	b2Vec2 m_objectAnchorPoint{ 0 , 0 };
+	std::optional<b2Vec2> m_changePositionPosition{};
 
 };
 

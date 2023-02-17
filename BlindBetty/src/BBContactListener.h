@@ -25,7 +25,7 @@ public:
 
 private:
 
-	void _player_wall(GameObject*, GameObject*, b2Vec2 contactPoint);
+	void _actor_warpEntry(GameObject*, GameObject*, b2Vec2 contactPoint);
 	
 };
 

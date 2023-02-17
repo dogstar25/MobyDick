@@ -2,7 +2,7 @@
 
     "gameObjects": [
         {
-            "type": "BRICK_WALL_1",
+            "type": "BRICK_WALL_STATIC_1",
             "traitTags": [ "barrier" ],
             "description": "Brick Wall 1",
             "components": [
@@ -16,24 +16,43 @@
                         "width": 32,
                         "height": 32
                     }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "friction": 1,
+                            "restitution": 0.5,
+                            "contactTag": "ContactTag::WALL",
+                            "collisionShape": "B2_BOX"
+                        }
+                    ]
                 }
-                //{
-                //    "id": "PHYSICS_COMPONENT",
-                //    "type": "B2_STATIC",
-                //    "fixtures": [
-                //        {
-                //            "friction": 1,
-                //            "restitution": 0.5,
-                //            "contactTag": "ContactTag::WALL",
-                //            "collisionShape": "B2_BOX"
-                //        }
-                //    ]
-                //}
             ]
 
         },
         {
-            "type": "BRICK_WALL_1_P",
+            "type": "BRICK_WALL_FREE_1",
+            "traitTags": [],
+            "description": "Brick Wall 1",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_BRICK_WALL_1"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    }
+                }
+            ]
+
+        },
+        {
+            "type": "BRICK_WALL_DYNAMIC_1",
             "traitTags": [ "barrier" ],
             "description": "Brick Wall 1",
             "components": [
@@ -58,7 +77,8 @@
                         {
                             "contactTag": "ContactTag::WALL",
                             "collisionShape": "B2_BOX",
-                            "density": 100
+                            "density": 100,
+                            "friction": 1.0
                         }
                     ]
                 }
@@ -161,7 +181,7 @@
 
         },
         {
-            "type": "DOOR_CLOSED_FRONT",
+            "type": "DOOR_FRONT",
             "traitTags": [ "interactive" ],
             "components": [
                 {
@@ -245,7 +265,37 @@
             ]
         },
         {
-            "type": "DOOR_DESTINATION",
+            "type": "DOOR_WARP_ENTRY",
+            "traitTags": [ "interactive", "abstract" ],
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 8,
+                        "height": 8
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::WARP_ENTRY",
+                            "collisionShape": "B2_BOX",
+                            "isSensor": true
+                        }
+                    ]
+                }
+
+            ]
+        },
+        {
+            "type": "DOOR_EXIT",
             "traitTags": [ "abstract" ],
             "components": [
                 {
@@ -263,7 +313,7 @@
             ]
         },
         {
-            "type": "FLOOR_42",
+            "type": "FLOOR_46",
             "traitTags": [ "abstract" ],
 
             "components": [
@@ -274,7 +324,7 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 1344,
+                        "width": 1472,
                         "height": 32
                     },
                     "absolutePositioning": false

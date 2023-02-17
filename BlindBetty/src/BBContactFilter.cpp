@@ -20,6 +20,7 @@ BBContactFilter::BBContactFilter()
 	m_contactMasks[PLAYER_COLLISION].set(LEVEL_CAGE);
 	m_contactMasks[PLAYER_COLLISION].set(PLAYER_COLLISION);
 	m_contactMasks[PLAYER_COLLISION].set(DOOR);
+	m_contactMasks[PLAYER_COLLISION].set(WARP_ENTRY);
 
 	//PLAYER_TOUCH
 	m_contactMasks[PLAYER_TOUCH].reset();
@@ -40,6 +41,10 @@ BBContactFilter::BBContactFilter()
 	//DOOR
 	m_contactMasks[DOOR].reset();
 	m_contactMasks[DOOR].set(PLAYER_COLLISION);
+
+	//WARP ENTRY
+	m_contactMasks[WARP_ENTRY].reset();
+	m_contactMasks[WARP_ENTRY].set(PLAYER_COLLISION);
 
 }
 

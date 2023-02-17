@@ -12,7 +12,7 @@ namespace Colors {
 	inline SDL_Color PARAKEET = { 38, 195, 15, 255 };
 	
 	//red
-	inline SDL_Color WINE = { 127, 6, 34, 255 };
+	inline SDL_Color WINE = { 127, 0, 34, 255 };
 	inline SDL_Color GRAPE = { 200, 0, 255, 255 };
 
 	//yellow
@@ -40,6 +40,7 @@ namespace ContactTag {
 	inline constexpr int PLAYER_HITBOX = 16;
 	inline constexpr int WALL = 17;
 	inline constexpr int DOOR = 18;
+	inline constexpr int WARP_ENTRY = 19;
 
 }
 

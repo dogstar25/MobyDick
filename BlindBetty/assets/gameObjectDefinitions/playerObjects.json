@@ -23,7 +23,7 @@
                 {
                     "id": "PHYSICS_COMPONENT",
                     "type": "B2_DYNAMIC",
-                    "gravityScale": 5,
+                    "gravityScale": 15,
                     "linearDamping": 1.0,
                     "fixtures": [
                         {
@@ -31,7 +31,7 @@
                             "collisionShape": "B2_BOX",
                             "friction": 0.2,
                             "restitution": 0.0,
-                            "density": 100
+                            "density": 1000
                         }
 
                     ]
@@ -99,20 +99,21 @@
                 //            "id": "Bumper1",
                 //            "gameObjectType": "PLAYER_BUMPER",
                 //            "attachLocation": {
-                //                "x": -0.35,
-                //                "y": 0.43
+                //                "x": 0,
+                //                "y": 0
                 //            },
                 //            "attachB2JointType": "B2_WELD"
                 //        },
                 //        {
-                //            "id": "Bumper2",
+                //            "id": "Bumper1",
                 //            "gameObjectType": "PLAYER_BUMPER",
                 //            "attachLocation": {
-                //                "x": 0.35,
-                //                "y": 0.43
+                //                "x": 0,
+                //                "y": 0.62
                 //            },
                 //            "attachB2JointType": "B2_WELD"
                 //        }
+
 
                 //    ]
                 //}
@@ -122,7 +123,7 @@
         },
         {
             "type": "PLAYER_BUMPER",
-            "traitTags": [ ],
+            "traitTags": ["abstract" ],
             "description": "Payer Bumper",
             "components": [
                 {
@@ -131,8 +132,8 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 16,
-                        "height": 16
+                        "width": 64,
+                        "height": 8
                     }
                 },
                 {
@@ -143,10 +144,9 @@
                     "fixtures": [
                         {
                             "contactTag": "ContactTag::PLAYER_COLLISION",
-                            "collisionShape": "B2_CIRCLE",
-                            "collisionRadius": 0.16,
-                            "friction": 0.5,
-                            "density": 50
+                            "collisionShape": "B2_BOX",
+                            "friction": 4.5,
+                            "density": 500
                         }
                     ],
                     "anchorPoint": {

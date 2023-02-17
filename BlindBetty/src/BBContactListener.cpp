@@ -16,21 +16,24 @@ extern std::unique_ptr<Game> game;
 
 
 
-void BBContactListener::_player_wall(GameObject* player, GameObject* wall, b2Vec2 contactPoint)
+void BBContactListener::_actor_warpEntry(GameObject* interactingObject, GameObject* warpEntry, b2Vec2 contactPoint)
 {
 
-	//If we are in the middle of boosting and we are touching a wall at pointing towards the wall, then stop boosting
-	//If we are not pointing at the wall then we are okay to slide/boost aganist it
-	//const auto& playerControlComponent = player->getComponent<GinaPlayerControlComponent>(ComponentTypes::PLAYER_CONTROL_COMPONENT);
+	const auto& physicsComponent = interactingObject->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 
-	//if (playerControlComponent->state() == PlayerState::boosting) {
+	//build name for the warp exit object 
+	std::string warpExitName = warpEntry->name() + "_EXIT";
 
-	//	if (player->isPointingAt(wall->getCenterPosition())) {
-	//		playerControlComponent->boostReset(false);
-	//	}
-	//	
-	//}
-	
+	//Find this warp interactions exit
+	const auto& exit = interactingObject->parentScene()->getFirstGameObjectByName(warpExitName);
+	if (exit.has_value()) {
+
+		//Get location and use it as warp destination
+		b2Vec2 exitLocation = { exit.value()->getCenterPosition().x, exit.value()->getCenterPosition().y };
+		util::toBox2dPoint(exitLocation);
+		physicsComponent->setChangePositionPosition(exitLocation);
+
+	}
 
 }
 
@@ -78,14 +81,14 @@ void BBContactListener::handleContact(b2Contact* contact, b2Vec2 contactPoint)
 	////////////////////////////////////
 	// Player -  Wall
 	//////////////////////////////////
-	if ((contactTag1 == ContactTag::PLAYER_COLLISION && contactTag2 == ContactTag::WALL) ||
-		(contactTag2 == ContactTag::PLAYER_COLLISION && contactTag1 == ContactTag::WALL)) {
+	if ((contactTag1 == ContactTag::PLAYER_COLLISION && contactTag2 == ContactTag::WARP_ENTRY) ||
+		(contactTag2 == ContactTag::PLAYER_COLLISION && contactTag1 == ContactTag::WARP_ENTRY)) {
 
 		if (contactTag1 == ContactTag::PLAYER_COLLISION) {
-			_player_wall(contact1, contact2, contactPoint);
+			_actor_warpEntry(contact1, contact2, contactPoint);
 		}
 		else {
-			_player_wall(contact2, contact1, contactPoint);
+			_actor_warpEntry(contact2, contact1, contactPoint);
 		}
 	}
 

@@ -124,8 +124,19 @@ void PhysicsComponent::update()
 	// X and Y position, so we have to send setTransform the current X,Y position as well as the updated angle
 	// value 
 	auto normalizedAngle = util::normalizeRadians(m_physicsBody->GetAngle());
+
+	//If we were given a position change from our contactListener, since we cannnot change position within
+	//contactListener, we set it here. An example would be warping the player to a new location after making contact
+	//with a portal object
 	b2Vec2 currentPosition = { m_physicsBody->GetPosition().x , m_physicsBody->GetPosition().y };
+	if (m_changePositionPosition.has_value()) {
+		currentPosition = { m_changePositionPosition->x , m_changePositionPosition->y };
+		m_changePositionPosition.reset();
+	}
+	
+	//Set the transform
 	m_physicsBody->SetTransform(currentPosition, normalizedAngle);
+
 
 	//Transfer the physicsComponent coordinates to the transformComponent
 	//converting the angle to degrees
@@ -280,8 +291,11 @@ void PhysicsComponent::applyImpulse(float speed, int direction, int strafeDirect
 
 	trajectory *= speed;
 
+	//apply point
+	b2Vec2 applyPoint{2, -2};
+
 	//m_physicsBody->ApplyLinearImpulseToCenter(trajectory, true);
-	m_physicsBody->ApplyLinearImpulseToCenter(trajectory, true);
+	m_physicsBody->ApplyForce(trajectory, applyPoint, true);
 
 }
 

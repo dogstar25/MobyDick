@@ -11,7 +11,12 @@
     "colorDefinedObjects": [
         {
             "colorKey": "Colors::BROWN",
-            "gameObjectType": "BRICK_WALL_1",
+            "gameObjectType": "BRICK_WALL_STATIC_1",
+            "layer": "GameLayer::BACKGROUND_1"
+        },
+        {
+            "colorKey": "Colors::WINE",
+            "gameObjectType": "BRICK_WALL_FREE_1",
             "layer": "GameLayer::BACKGROUND_1"
         },
         {
@@ -28,25 +33,14 @@
             "name": "Player Bobby",
             "cameraFollow": true
         },
+
+        //
+        //ROOMS
+        //
         {
             "id": "LOC_0017_0026",
             "gameObjectType": "PARLOR_ROOM",
             "layer": "GameLayer::BACKGROUND_2"
-        },
-        {
-            "id": "LOC_0027_0139",
-            "gameObjectType": "BRICK_WALL_1_P",
-            "layer": "GameLayer::MAIN"
-        },
-        {
-            "id": "LOC_0049_0136",
-            "gameObjectType": "BRICK_WALL_1_P",
-            "layer": "GameLayer::MAIN"
-        },
-        {
-            "id": "LOC_0053_0140",
-            "gameObjectType": "BRICK_WALL_1_P",
-            "layer": "GameLayer::MAIN"
         },
         {
             "id": "LOC_0044_0026",
@@ -73,32 +67,109 @@
             "gameObjectType": "BOT_STAIRS_ROOM",
             "layer": "GameLayer::BACKGROUND_2"
         },
+        //
+        //BRICKS
+        //
         {
-            "id": "LOC_0018_0136",
-            "gameObjectType": "DOOR_CLOSED_FRONT",
+            "id": "LOC_0050_0136",
+            "gameObjectType": "BRICK_WALL_DYNAMIC_1",
+            "layer": "GameLayer::MAIN"
+        },
+        {
+            "id": "LOC_0054_0140",
+            "gameObjectType": "BRICK_WALL_DYNAMIC_1",
+            "layer": "GameLayer::MAIN"
+        },
+        //
+        //DOORS
+        //
+        {
+            "id": "LOC_0017_0136",
+            "gameObjectType": "DOOR_FRONT",
             "description": "Bedroom 1 door",
-            "name": "bedroom1_door",
+            "name": "bedroom1_in",
             "layer": "GameLayer::BACKGROUND_2"
         },
         {
-            "id": "LOC_0052_0048",
+            "id": "LOC_0050_0053",
+            "gameObjectType": "DOOR_EXIT",
+            "description": "Bedroom1 door destination",
+            "name": "bedroom1_in_EXIT",
+            "layer": "GameLayer::ABSTRACT"
+        },
+        {
+            "id": "LOC_0051_0048",
             "gameObjectType": "DOOR_CLOSED_SIDE",
             "description": "Large Closet door",
             "name": "door1",
             "layer": "GameLayer::BACKGROUND_2"
         },
         {
-            "id": "LOC_0053_0055",
-            "gameObjectType": "DOOR_DESTINATION",
-            "description": "Parlor door destination",
-            "name": "bedroom1_door_DEST",
+            "id": "LOC_0054_0054",
+            "gameObjectType": "DOOR_WARP_ENTRY",
+            "description": "Bedroom1 door waro to other location",
+            "name": "bedroom1_in_warp",
             "layer": "GameLayer::ABSTRACT"
         },
         {
-            "id": "LOC_0017_0144",
-            "gameObjectType": "FLOOR_42",
+            "id": "LOC_0018_0142",
+            "gameObjectType": "DOOR_EXIT",
+            "description": "Bedroom1 door destination",
+            "name": "bedroom1_in_warp_EXIT",
+            "layer": "GameLayer::ABSTRACT"
+        },
+
+        //
+        //FLOORS
+        //
+        {
+            "id": "LOC_0015_0133",
+            "gameObjectType": "FLOOR_46",
+            "description": "Floor",
+            "layer": "GameLayer::ABSTRACT"
+        },
+        {
+            "id": "LOC_0015_0144",
+            "gameObjectType": "FLOOR_46",
+            "description": "Floor",
+            "layer": "GameLayer::ABSTRACT"
+        },
+        {
+            "id": "LOC_0015_0155",
+            "gameObjectType": "FLOOR_46",
+            "description": "Floor",
+            "layer": "GameLayer::ABSTRACT"
+        },
+        {
+            "id": "LOC_0015_0164",
+            "gameObjectType": "FLOOR_46",
+            "description": "Floor",
+            "layer": "GameLayer::ABSTRACT"
+        },
+        {
+            "id": "LOC_0010_0045",
+            "gameObjectType": "FLOOR_46",
+            "description": "Floor",
+            "layer": "GameLayer::ABSTRACT"
+        },
+        {
+            "id": "LOC_0010_0056",
+            "gameObjectType": "FLOOR_46",
+            "description": "Floor",
+            "layer": "GameLayer::ABSTRACT"
+        },
+        {
+            "id": "LOC_0010_0067",
+            "gameObjectType": "FLOOR_46",
+            "description": "Floor",
+            "layer": "GameLayer::ABSTRACT"
+        },
+        {
+            "id": "LOC_0010_0076",
+            "gameObjectType": "FLOOR_46",
             "description": "Floor",
             "layer": "GameLayer::ABSTRACT"
         }
+
     ]
 }
