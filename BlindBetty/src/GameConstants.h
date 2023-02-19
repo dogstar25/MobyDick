@@ -72,6 +72,10 @@ namespace AnimationState {
 	inline constexpr int IDLE_LEFT = 9;
 	inline constexpr int WALK_RIGHT = 10;
 	inline constexpr int WALK_LEFT = 11;
+	inline constexpr int OPEN = 12;
+	inline constexpr int CLOSE = 13;
+	inline constexpr int OPENED = 14;
+	inline constexpr int CLOSED = 15;
 
 }
 

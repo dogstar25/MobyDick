@@ -256,7 +256,7 @@ namespace ComponentTypes {
 }
 
 //Animation States
-inline constexpr int MAX_ANIMATION_STATES = 16;
+inline constexpr int MAX_ANIMATION_STATES = 20;
 namespace AnimationState {
 
 	inline constexpr int IDLE = 0;

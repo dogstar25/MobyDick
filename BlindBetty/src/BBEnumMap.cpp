@@ -25,5 +25,9 @@ BBEnumMap::BBEnumMap()
 	addEnumItem("AnimationState::WALK_RIGHT", AnimationState::WALK_RIGHT);
 	addEnumItem("AnimationState::IDLE_LEFT", AnimationState::IDLE_LEFT);
 	addEnumItem("AnimationState::IDLE_RIGHT", AnimationState::IDLE_RIGHT);
+	addEnumItem("AnimationState::OPEN", AnimationState::OPEN);
+	addEnumItem("AnimationState::CLOSE", AnimationState::CLOSE);
+	addEnumItem("AnimationState::OPENED", AnimationState::OPENED);
+	addEnumItem("AnimationState::CLOSED", AnimationState::CLOSED);
 
 }

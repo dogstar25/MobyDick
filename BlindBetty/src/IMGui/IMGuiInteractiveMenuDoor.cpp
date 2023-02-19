@@ -4,6 +4,9 @@
 #include "Util.h"
 #include "game.h"
 #include <memory>
+#include "components/AnimationComponent.h"
+#include "../gameConstants.h"
+
 
 
 extern std::unique_ptr<Game> game;
@@ -35,13 +38,34 @@ glm::vec2 IMGuiInteractiveMenuDoor::render()
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 
 
+	//What is the current state of the door
+	const auto& doorGameObject = parent()->parent();
+	const auto& doorAnimationComponent = doorGameObject.value()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
+	auto doorState = doorAnimationComponent->currentAnimationState();
+
 	ImGui::Begin(m_gameObjectType.c_str(), nullptr, m_flags);
 	{
 		ImGui::PushFont(m_normalFont);
 		ImGui::SetWindowPos(ImVec2{ renderComponent->getRenderDestRect().x, renderComponent->getRenderDestRect().y });
+
+		//Walk thru kety if its open
+		if (doorState == AnimationState::OPENED && doorGameObject.value()->type() != "DOOR_SIDE") {
+			ImGui::SmallButton("W");
+			ImGui::SameLine();
+			ImGui::Text("ENTER");
+
+		}
+
+		//Open/Close button
 		ImGui::SmallButton("E");
 		ImGui::SameLine();
-		ImGui::Text("Enter");
+
+		if (doorState == AnimationState::OPENED) {
+			ImGui::Text("CLOSE");
+		}
+		else if (doorState == AnimationState::CLOSED) {
+			ImGui::Text("OPEN");
+		}
 
 		ImGui::PopFont();
 		ImGui::SameLine();
@@ -60,17 +84,25 @@ glm::vec2 IMGuiInteractiveMenuDoor::render()
 	//Handle executing the interActionAction tied to what the user selects
 	//The interaction object at this point, needed by the interactAction will always be the player at this point
 	const auto& player = parent()->parentScene()->getFirstGameObjectByTrait(TraitTag::player);
-	const auto& baseGameObject = parent()->parent();
+	
 
-	if (player.has_value() && baseGameObject.has_value()) {
+	if (player.has_value() && doorGameObject.has_value()) {
 
-		const auto& baseObjectActionComponent = baseGameObject.value()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+		const auto& baseObjectActionComponent = doorGameObject.value()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 		const auto& interactAction = baseObjectActionComponent->getAction(ACTION_INTERACTION);
 
 		if (ImGui::IsKeyPressed(ImGuiKey_E)) {
 
 			interactAction->perform(player->get(), parent()->parent().value(), SDL_SCANCODE_E);
 		}
+		if (doorState == AnimationState::OPENED) {
+
+			if (ImGui::IsKeyPressed(ImGuiKey_W) && doorGameObject.value()->type() != "DOOR_SIDE") {
+
+				interactAction->perform(player->get(), parent()->parent().value(), SDL_SCANCODE_W);
+			}
+		}
+
 	}
 
 	return windowSize;
