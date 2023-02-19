@@ -48,14 +48,14 @@ void BobbyPlayerControlComponent::handleMovement()
 	//Handle Keyboard related movement
 	const uint8_t* currentKeyStates = SDL_GetKeyboardState(NULL);
 
-	if (currentKeyStates[SDL_SCANCODE_W])
-	{
-		direction = -1;
-	}
-	if (currentKeyStates[SDL_SCANCODE_S])
-	{
-		direction = 1;
-	}
+	//if (currentKeyStates[SDL_SCANCODE_W])
+	//{
+	//	direction = -1;
+	//}
+	//if (currentKeyStates[SDL_SCANCODE_S])
+	//{
+	//	direction = 1;
+	//}
 	if (currentKeyStates[SDL_SCANCODE_A])
 	{
 		strafe = -1;

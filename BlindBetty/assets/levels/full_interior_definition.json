@@ -87,35 +87,35 @@
             "id": "LOC_0017_0136",
             "gameObjectType": "DOOR_FRONT",
             "description": "Bedroom 1 door",
-            "name": "bedroom1_in",
+            "name": "bedroom1",
             "layer": "GameLayer::BACKGROUND_2"
         },
         {
-            "id": "LOC_0050_0053",
+            "id": "LOC_0050_0054",
             "gameObjectType": "DOOR_EXIT",
             "description": "Bedroom1 door destination",
-            "name": "bedroom1_in_EXIT",
+            "name": "bedroom1_EXIT",
             "layer": "GameLayer::ABSTRACT"
         },
         {
-            "id": "LOC_0051_0048",
-            "gameObjectType": "DOOR_CLOSED_SIDE",
+            "id": "LOC_0050_0048",
+            "gameObjectType": "DOOR_SIDE",
             "description": "Large Closet door",
-            "name": "door1",
+            "name": "bedroom1",
             "layer": "GameLayer::BACKGROUND_2"
         },
         {
             "id": "LOC_0054_0054",
             "gameObjectType": "DOOR_WARP_ENTRY",
             "description": "Bedroom1 door waro to other location",
-            "name": "bedroom1_in_warp",
+            "name": "bedroom1_warp",
             "layer": "GameLayer::ABSTRACT"
         },
         {
             "id": "LOC_0018_0142",
             "gameObjectType": "DOOR_EXIT",
             "description": "Bedroom1 door destination",
-            "name": "bedroom1_in_warp_EXIT",
+            "name": "bedroom1_warp_EXIT",
             "layer": "GameLayer::ABSTRACT"
         },
 

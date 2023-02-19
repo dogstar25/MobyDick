@@ -85,14 +85,6 @@ void ActionComponent::render()
 						m_interactiveMenuObject->setPosition(position);
 						m_interactiveMenuObject->render();
 					}
-					//If there is NO interactive menu then simple execute the INTERACTION action immediately
-					else {
-
-						const auto& interactionAction = getAction(ACTION_INTERACTION);
-						interactionAction->perform(interactingObject, parent());
-
-					}
-
 
 				}
 			}

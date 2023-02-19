@@ -161,35 +161,68 @@
             }
         },
         {
-            "id": "TX_DOOR_CLOSED_FRONT_1",
+            "id": "TX_DOOR1_FRONT_CLOSE",
             "description": "Door1",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 640,
-                "y": 572,
+                "x": 1226,
+                "y": 2,
+                "width": 303,
+                "height": 235
+            }
+        },
+        {
+            "id": "TX_DOOR1_FRONT_OPEN",
+            "description": "Door1",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 1024,
+                "y": 2,
+                "width": 303,
+                "height": 235
+            }
+        },
+        {
+            "id": "TX_DOOR1_FRONT_OPENED",
+            "description": "Door1",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 1226,
+                "y": 2,
                 "width": 101,
                 "height": 235
             }
         },
         {
-            "id": "TX_DOOR_CLOSED_SIDE_1",
+            "id": "TX_DOOR1_FRONT_CLOSED",
+            "description": "Door1",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 1024,
+                "y": 2,
+                "width": 101,
+                "height": 235
+            }
+        },
+        {
+            "id": "TX_DOOR1_SIDE_OPENED",
             "description": "Door from side closed",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 743,
-                "y": 572,
-                "width": 32,
+                "x": 1617,
+                "y": 2,
+                "width": 64,
                 "height": 256
             }
         },
         {
-            "id": "TX_DOOR_OPEN_SIDE_1",
+            "id": "TX_DOOR1_SIDE_CLOSED",
             "description": "Door from side open",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 777,
-                "y": 572,
-                "width": 59,
+                "x": 1531,
+                "y": 2,
+                "width": 64,
                 "height": 256
             }
         },

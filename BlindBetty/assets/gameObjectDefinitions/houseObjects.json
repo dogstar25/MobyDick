@@ -186,7 +186,6 @@
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "textureId": "TX_DOOR_CLOSED_FRONT_1",
                     "xRenderAdjustment": 0,
                     "yRenderAdjustment": 20
 
@@ -194,7 +193,7 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 104,
+                        "width": 101,
                         "height": 235
                     },
                     "absolutePositioning": false
@@ -220,22 +219,54 @@
                         }
 
                     ]
-                }
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "AnimationState::CLOSED",
+                    "frameSize": {
+                        "width": 101,
+                        "height": 235
+                    },
+                    "animations": [
+                        {
+                            "state": "AnimationState::OPEN",
+                            "textureId": "TX_DOOR1_FRONT_OPEN",
+                            "speed": 0.05,
+                            "frames": 3
+                        },
+                        {
+                            "state": "AnimationState::CLOSE",
+                            "textureId": "TX_DOOR1_FRONT_CLOSE",
+                            "speed": 0.05,
+                            "frames": 3
+                        },
+                        {
+                            "state": "AnimationState::CLOSED",
+                            "textureId": "TX_DOOR1_FRONT_CLOSED",
+                            "frames": 1
+                        },
+                        {
+                            "state": "AnimationState::OPENED",
+                            "textureId": "TX_DOOR1_FRONT_OPENED",
+                            "frames": 1
+                        }
+                    ]
+                }            
+
             ]
         },
         {
-            "type": "DOOR_CLOSED_SIDE",
+            "type": "DOOR_SIDE",
             "traitTags": [ "interactive" ],
             "components": [
                 {
-                    "id": "RENDER_COMPONENT",
-                    "textureId": "TX_DOOR_CLOSED_SIDE_1"
+                    "id": "RENDER_COMPONENT"
 
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 32,
+                        "width": 64,
                         "height": 256
                     },
                     "absolutePositioning": false
@@ -260,8 +291,40 @@
                             "actionClass": "DoorInteractionAction"
                         }
 
+
                     ]
-                }
+                },
+                {
+                    "id": "ANIMATION_COMPONENT",
+                    "defaultState": "AnimationState::CLOSED",
+                    "frameSize": {
+                        "width": 64,
+                        "height": 235
+                    },
+                    "animations": [
+                        {
+                            "state": "AnimationState::CLOSE",
+                            "textureId": "TX_DOOR1_SIDE_CLOSED",
+                            "frames": 1
+                        },
+                        {
+                            "state": "AnimationState::OPEN",
+                            "textureId": "TX_DOOR1_SIDE_OPENED",
+                            "frames": 1
+                        },
+                        {
+                            "state": "AnimationState::CLOSED",
+                            "textureId": "TX_DOOR1_SIDE_CLOSED",
+                            "frames": 1
+                        },
+                        {
+                            "state": "AnimationState::OPENED",
+                            "textureId": "TX_DOOR1_SIDE_OPENED",
+                            "frames": 1
+                        }
+
+                    ]
+                }    
             ]
         },
         {
