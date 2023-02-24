@@ -3,7 +3,9 @@
 #include "BaseConstants.h"
 #include "actions/NoAction.h"
 #include "ActorMoveAction.h"
-#include "DoorInteractionAction.h"
+#include "DoorCloseAction.h"
+#include "DoorOpenAction.h"
+#include "DoorEnterAction.h"
 
 
 #include <iostream>
@@ -17,9 +19,17 @@ std::shared_ptr<Action> BBActionFactory::create(std::string actionType)
 
         action = std::make_shared<NoAction>();
     }
-    else if (actionType == "DoorInteractionAction") {
+    else if (actionType == "DoorOpenAction") {
 
-        action = std::make_shared<DoorInteractionAction>();
+        action = std::make_shared<DoorOpenAction>();
+    }
+    else if (actionType == "DoorCloseAction") {
+
+        action = std::make_shared<DoorCloseAction>();
+    }
+    else if (actionType == "DoorEnterAction") {
+
+        action = std::make_shared<DoorEnterAction>();
     }
     else if (actionType == "ActorMove") {
 

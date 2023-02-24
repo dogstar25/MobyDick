@@ -14,7 +14,6 @@
 #include "../actions/InteractAction.h"
 #include "../actions/UseAction.h"
 #include "../actions/NoAction.h"
-#include "../actions/LoadNextLevelAction.h"
 #include "../Util.h"
 #include "../BaseConstants.h"
 
@@ -38,6 +37,7 @@ public:
 	}
 	SDL_FPoint determineInteractionMenuLocation(GameObject* interactingObject, GameObject* contactGameObject, GameObject* menuObject);
 	void setParent(GameObject* gameObject) override;
+	bool hasAction(int actionId);
 
 private:
 	std::vector<std::shared_ptr<Action>>m_actions;

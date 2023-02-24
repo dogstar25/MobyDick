@@ -14,7 +14,6 @@
 #include "../actions/InteractAction.h"
 #include "../actions/UseAction.h"
 #include "../actions/NoAction.h"
-#include "../actions/LoadNextLevelAction.h"
 #include "../Util.h"
 #include "../BaseConstants.h"
 

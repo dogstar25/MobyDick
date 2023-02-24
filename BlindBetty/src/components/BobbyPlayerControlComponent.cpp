@@ -75,7 +75,7 @@ void BobbyPlayerControlComponent::handleMovement()
 	}
 	else {
 
-		const auto& moveAction = actionComponent->getAction(ACTION_MOVE);
+		const auto& moveAction = actionComponent->getAction(Actions::MOVE);
 		moveAction->perform(parent(), direction, strafe);
 		//m_state.reset(PlayerState::sprinting);
 	}
@@ -98,10 +98,6 @@ void BobbyPlayerControlComponent::handleActions()
 
 		const Uint8* keyStates = nullptr;
 		std::shared_ptr<Action> action{};
-
-		ImGui::Begin("test2");
-		ImGui::Text("Test");
-		ImGui::End();
 
 		for (auto& inputEvent : SceneManager::instance().playerInputEvents())
 		{
@@ -128,8 +124,8 @@ void BobbyPlayerControlComponent::handleActions()
 					if(m_state.test(PlayerState::sprinting) == false){
 
 						if (mouseButtons & SDL_BUTTON_LMASK) {
-							action = actionComponent->getAction(ACTION_USE);
-							action->perform(parent(), ACTION_USAGE);
+							action = actionComponent->getAction(Actions::USE);
+							action->perform(parent(), Actions::USAGE);
 						}
 					}
 					break;

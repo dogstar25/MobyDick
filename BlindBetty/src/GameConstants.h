@@ -61,6 +61,13 @@ namespace TraitTag {
 	//Custom traits
 }
 
+namespace Actions {
+	inline constexpr int WARP = 13;
+	inline constexpr int OPEN = 14;
+	inline constexpr int CLOSE = 15;
+	inline constexpr int ENTER = 16;
+}
+
 namespace StatusItemId {
 	inline constexpr int PLAYERS_HEART_COUNT = 10;
 	

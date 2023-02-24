@@ -66,7 +66,7 @@ glm::vec2 IMGuiInteractiveMenuBasic::render()
 	if (player.has_value() && baseGameObject.has_value()) {
 
 		const auto& baseObjectActionComponent = baseGameObject.value()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-		const auto& interactAction = baseObjectActionComponent->getAction(ACTION_INTERACTION);
+		const auto& interactAction = baseObjectActionComponent->getAction(Actions::INTERACTION);
 
 		if (ImGui::IsKeyPressed(ImGuiKey_E)) {
 			interactAction->perform(player->get(), parent()->parent().value(), SDL_SCANCODE_E);

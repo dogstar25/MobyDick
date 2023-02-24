@@ -280,20 +280,22 @@ inline constexpr int INPUT_CONTROL_HOVER = 3;
 inline constexpr int INPUT_CONTROL_CLICK = 4;
 
 //Actions
-inline constexpr int ACTION_NONE = 0;
-inline constexpr int ACTION_MOVE = 1;
-inline constexpr int ACTION_ROTATE = 2;
-inline constexpr int ACTION_USE = 3;
-inline constexpr int ACTION_USAGE = 4;
-inline constexpr int ACTION_INTERACT = 5;
-inline constexpr int ACTION_INTERACTION = 6;
-inline constexpr int ACTION_ON_HOVER = 7;
-inline constexpr int ACTION_ON_CLICK = 8;
-inline constexpr int ACTION_ON_HOVER_OUT = 9;
-inline constexpr int ACTION_ON_TRIGGER = 10;
-inline constexpr int ACTION_SPRINT = 11;
-inline constexpr int ACTION_USAGE_SPECIAL = 12;
-inline constexpr int ACTION_WARP = 13;
+namespace Actions {
+	inline constexpr int NONE = 0;
+	inline constexpr int MOVE = 1;
+	inline constexpr int ROTATE = 2;
+	inline constexpr int USE = 3;
+	inline constexpr int USAGE = 4;
+	inline constexpr int INTERACT = 5;
+	inline constexpr int INTERACTION = 6;
+	inline constexpr int ON_HOVER = 7;
+	inline constexpr int ON_CLICK = 8;
+	inline constexpr int ON_HOVER_OUT = 9;
+	inline constexpr int ON_TRIGGER = 10;
+	inline constexpr int SPRINT = 11;
+	inline constexpr int USAGE_SPECIAL = 12;
+	
+}
 
 //GameSpace Types
 inline constexpr int GAMESPACE_INTRO = 0;
