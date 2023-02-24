@@ -214,8 +214,16 @@
                     "interactiveMenuObject": "INTERACTIVE_MENU_DOOR",
                     "actions": [
                         {
-                            "actionId": "ACTION_INTERACTION",
-                            "actionClass": "DoorInteractionAction"
+                            "actionId": "Actions::OPEN",
+                            "actionClass": "DoorOpenAction"
+                        },
+                        {
+                            "actionId": "Actions::CLOSE",
+                            "actionClass": "DoorCloseAction"
+                        },
+                        {
+                            "actionId": "Actions::ENTER",
+                            "actionClass": "DoorEnterAction"
                         }
 
                     ]
@@ -251,7 +259,7 @@
                             "frames": 1
                         }
                     ]
-                }            
+                }
 
             ]
         },
@@ -287,10 +295,13 @@
                     "interactiveMenuObject": "INTERACTIVE_MENU_DOOR",
                     "actions": [
                         {
-                            "actionId": "ACTION_INTERACTION",
-                            "actionClass": "DoorInteractionAction"
+                            "actionId": "Actions::OPEN",
+                            "actionClass": "DoorOpenAction"
+                        },
+                        {
+                            "actionId": "Actions::CLOSE",
+                            "actionClass": "DoorCloseAction"
                         }
-
 
                     ]
                 },
@@ -324,7 +335,7 @@
                         }
 
                     ]
-                }    
+                }
             ]
         },
         {

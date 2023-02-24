@@ -97,19 +97,19 @@ EnumMap::EnumMap()
 	m_enumMap["INPUT_CONTROL_CLICK"] = INPUT_CONTROL_CLICK;
 
 	//Game Object Actions
-	m_enumMap["ACTION_NONE"] = ACTION_NONE;
-	m_enumMap["ACTION_MOVE"] = ACTION_MOVE;
-	m_enumMap["ACTION_ROTATE"] = ACTION_ROTATE;
-	m_enumMap["ACTION_USE"] = ACTION_USE;
-	m_enumMap["ACTION_USAGE"] = ACTION_USAGE;
-	m_enumMap["ACTION_INTERACT"] = ACTION_INTERACT;
-	m_enumMap["ACTION_INTERACTION"] = ACTION_INTERACTION;
-	m_enumMap["ACTION_ON_HOVER"] = ACTION_ON_HOVER;
-	m_enumMap["ACTION_ON_HOVER_OUT"] = ACTION_ON_HOVER_OUT;
-	m_enumMap["ACTION_ON_CLICK"] = ACTION_ON_CLICK;
-	m_enumMap["ACTION_SPRINT"] = ACTION_SPRINT;
-	m_enumMap["ACTION_USAGE_SPECIAL"] = ACTION_USAGE_SPECIAL;
-	m_enumMap["ACTION_WARP"] = ACTION_WARP;
+	m_enumMap["Actions::NONE"] = Actions::NONE;
+	m_enumMap["Actions::MOVE"] = Actions::MOVE;
+	m_enumMap["Actions::ROTATE"] = Actions::ROTATE;
+	m_enumMap["Actions::USE"] = Actions::USE;
+	m_enumMap["Actions::USAGE"] = Actions::USAGE;
+	m_enumMap["Actions::INTERACT"] = Actions::INTERACT;
+	m_enumMap["Actions::INTERACTION"] = Actions::INTERACTION;
+	m_enumMap["Actions::ON_HOVER"] = Actions::ON_HOVER;
+	m_enumMap["Actions::ON_HOVER_OUT"] = Actions::ON_HOVER_OUT;
+	m_enumMap["Actions::ON_CLICK"] = Actions::ON_CLICK;
+	m_enumMap["Actions::SPRINT"] = Actions::SPRINT;
+	m_enumMap["Actions::USAGE_SPECIAL"] = Actions::USAGE_SPECIAL;
+	
 
 	//Keys
 	m_enumMap["SDLK_ESCAPE"] = SDLK_ESCAPE;

@@ -30,4 +30,9 @@ BBEnumMap::BBEnumMap()
 	addEnumItem("AnimationState::OPENED", AnimationState::OPENED);
 	addEnumItem("AnimationState::CLOSED", AnimationState::CLOSED);
 
+	//Custom actions
+	m_enumMap["Actions::WARP"] = Actions::WARP;
+	m_enumMap["Actions::OPEN"] = Actions::OPEN;
+	m_enumMap["Actions::CLOSE"] = Actions::CLOSE;
+	m_enumMap["Actions::ENTER"] = Actions::ENTER;
 }

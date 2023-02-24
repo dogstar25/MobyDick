@@ -78,10 +78,16 @@
     <ClCompile Include="src\IMGui\IMGuiInteractiveMenuDoor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\actions\DoorInteractionAction.cpp">
+    <ClCompile Include="src\actions\DoorOpenAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\actions\ActorMoveAction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\actions\DoorCloseAction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\actions\DoorEnterAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -152,10 +158,16 @@
     <ClInclude Include="src\IMGui\IMGuiInteractiveMenuDoor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\actions\DoorInteractionAction.h">
+    <ClInclude Include="src\actions\DoorOpenAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\actions\ActorMoveAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\actions\DoorCloseAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\actions\DoorEnterAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -162,9 +162,6 @@
     <ClCompile Include="src\actions\DroneMoveAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\actions\LoadNextLevelAction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\triggers\Trigger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -465,9 +462,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\BaseConstants.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\actions\LoadNextLevelAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\triggers\Trigger.h">

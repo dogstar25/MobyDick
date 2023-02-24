@@ -5,7 +5,6 @@
 #include "DefaultOnHoverOutAction.h"
 #include "PrimitiveMoveAction.h"
 #include "DroneMoveAction.h"
-#include "LoadNextLevelAction.h"
 #include "InteractAction.h"
 #include "NoAction.h"
 #include "ActorWarpAction.h"
@@ -44,10 +43,6 @@ std::shared_ptr<Action> ActionFactory::create(std::string actionType)
     else if (actionType == "DroneMove") {
 
         action = std::make_shared<DroneMoveAction>();
-    }
-    else if (actionType == "LoadNextLevel") {
-
-        action = std::make_shared<LoadNextLevelAction>();
     }
     else if (actionType == "Interact") {
 

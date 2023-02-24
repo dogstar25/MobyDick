@@ -51,11 +51,11 @@ void UIControlComponent::update()
 
 	//Handle OnHover
 	if (mouseIsOnGameObject) {
-		const auto& action = actionComponent->getAction(ACTION_ON_HOVER);
+		const auto& action = actionComponent->getAction(Actions::ON_HOVER);
 		action->perform(parent());
 	}
 	else {
-		const auto& action = actionComponent->getAction(ACTION_ON_HOVER_OUT);
+		const auto& action = actionComponent->getAction(Actions::ON_HOVER_OUT);
 		action->perform(parent());
 	}
 
@@ -67,7 +67,7 @@ void UIControlComponent::update()
 			{
 				SDL_Point mouseClick[1] = { inputEvent.event.button.x , inputEvent.event.button.y };
 				if (SDL_PointInRect(mouseClick, &gameObjectPosition)) {
-					const auto& action = actionComponent->getAction(ACTION_ON_CLICK);
+					const auto& action = actionComponent->getAction(Actions::ON_CLICK);
 					action->perform();
 				}
 			}

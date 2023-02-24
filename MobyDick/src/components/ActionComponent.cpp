@@ -148,6 +148,15 @@ std::shared_ptr<Action> ActionComponent::getAction(int actionId)
 	return m_actions[actionId];
 }
 
+bool ActionComponent::hasAction(int actionId)
+{
+
+	if (m_actions.at(actionId)) {
+		return true;
+	}
+
+}
+
 
 
 

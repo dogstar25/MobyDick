@@ -127,6 +127,11 @@ void DroneBrainComponent::_doEngage()
 	if (m_eyeFireDelayTimer.hasMetTargetDuration()) {
 		auto actionComponent = eyeGameObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 
+		//Instead, get the weapon component and execute fire - PROPOSAL FOR ACTIONcOMPONENT CHANGES
+		//const auto& weaponComponent = eyeGameObject->getComponent<WeaponComponent>(ComponentTypes::WEAPON_COMPONENT);
+		//weaponComponent->fire();
+
+
 		const auto& action = actionComponent->getAction(ACTION_USAGE);
 		action->perform(eyeGameObject.get());
 	}

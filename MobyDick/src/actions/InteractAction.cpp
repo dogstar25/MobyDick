@@ -14,7 +14,7 @@ void InteractAction::perform(GameObject* gameObject, SDL_Scancode keyScanCode)
 				const auto& interactiveObjectActionComponent = interactiveObject->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
 				//Is the interactingObject(player) pointing at this interactive object?
 				if (gameObject->isPointingAt(interactiveObject->getCenterPosition())) {
-					const auto& action = interactiveObjectActionComponent->getAction(ACTION_INTERACTION);
+					const auto& action = interactiveObjectActionComponent->getAction(Actions::INTERACTION);
 					action->perform(gameObject, interactiveObject, keyScanCode);
 				}
 			}

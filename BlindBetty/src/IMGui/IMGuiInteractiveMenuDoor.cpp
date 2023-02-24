@@ -42,14 +42,22 @@ glm::vec2 IMGuiInteractiveMenuDoor::render()
 	const auto& doorGameObject = parent()->parent();
 	const auto& doorAnimationComponent = doorGameObject.value()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 	auto doorState = doorAnimationComponent->currentAnimationState();
+	
+	//Get the doors action component
+	const auto& doorActionComponent = doorGameObject.value()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
+	std::optional<std::shared_ptr<Action>> openCloseAction{};
+	std::optional<std::shared_ptr<Action>> enterAction{};
 
 	ImGui::Begin(m_gameObjectType.c_str(), nullptr, m_flags);
 	{
 		ImGui::PushFont(m_normalFont);
 		ImGui::SetWindowPos(ImVec2{ renderComponent->getRenderDestRect().x, renderComponent->getRenderDestRect().y });
 
-		//Walk thru kety if its open
-		if (doorState == AnimationState::OPENED && doorGameObject.value()->type() != "DOOR_SIDE") {
+		//If the door is open and the door has an "ENTER" action defined, then show the ENTER menu item
+		if (doorState == AnimationState::OPENED && doorActionComponent->hasAction(Actions::ENTER)) {
+			
+			enterAction = doorActionComponent->getAction(Actions::ENTER);
+			
 			ImGui::SmallButton("W");
 			ImGui::SameLine();
 			ImGui::Text("ENTER");
@@ -60,10 +68,13 @@ glm::vec2 IMGuiInteractiveMenuDoor::render()
 		ImGui::SmallButton("E");
 		ImGui::SameLine();
 
+		//If the door is open, then make the openCloseAction , the Close action, and visa versa
 		if (doorState == AnimationState::OPENED) {
+			openCloseAction = doorActionComponent->getAction(Actions::CLOSE);
 			ImGui::Text("CLOSE");
 		}
 		else if (doorState == AnimationState::CLOSED) {
+			openCloseAction = doorActionComponent->getAction(Actions::OPEN);
 			ImGui::Text("OPEN");
 		}
 
@@ -81,27 +92,18 @@ glm::vec2 IMGuiInteractiveMenuDoor::render()
 	ImGui::PopStyleColor();
 	ImGui::PopStyleVar();
 
-	//Handle executing the interActionAction tied to what the user selects
-	//The interaction object at this point, needed by the interactAction will always be the player at this point
-	const auto& player = parent()->parentScene()->getFirstGameObjectByTrait(TraitTag::player);
-	
+	//Execute the open or close action of the door
+	if (ImGui::IsKeyPressed(ImGuiKey_E) && openCloseAction.has_value()) {
 
-	if (player.has_value() && doorGameObject.has_value()) {
+		openCloseAction.value()->perform(parent()->parent().value());
 
-		const auto& baseObjectActionComponent = doorGameObject.value()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
-		const auto& interactAction = baseObjectActionComponent->getAction(ACTION_INTERACTION);
+	}
 
-		if (ImGui::IsKeyPressed(ImGuiKey_E)) {
+	//Execute the player ENTERING the door action
+	if (ImGui::IsKeyPressed(ImGuiKey_W) && enterAction.has_value()) {
 
-			interactAction->perform(player->get(), parent()->parent().value(), SDL_SCANCODE_E);
-		}
-		if (doorState == AnimationState::OPENED) {
-
-			if (ImGui::IsKeyPressed(ImGuiKey_W) && doorGameObject.value()->type() != "DOOR_SIDE") {
-
-				interactAction->perform(player->get(), parent()->parent().value(), SDL_SCANCODE_W);
-			}
-		}
+		const auto& player = parent()->parentScene()->getFirstGameObjectByTrait(TraitTag::player);
+		enterAction.value()->perform(player->get(), parent()->parent().value());
 
 	}
 

@@ -143,7 +143,7 @@ void ContainerComponent::_removeFromWorldPass()
 	m_items.shrink_to_fit();
 
 }
-ContainerItem& ContainerComponent::addItem(std::string gameObjectType, float spawnForce, Scene* parentScene, std::string parentName, int itemCount, bool onContainerConstruction)
+ContainerItem ContainerComponent::addItem(std::string gameObjectType, float spawnForce, Scene* parentScene, std::string parentName, int itemCount, bool onContainerConstruction)
 {
 
 	ContainerItem containerItem{};

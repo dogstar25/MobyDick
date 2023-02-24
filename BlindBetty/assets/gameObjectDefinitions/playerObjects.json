@@ -43,7 +43,7 @@
                     "id": "ACTION_COMPONENT",
                     "actions": [
                         {
-                            "actionId": "ACTION_MOVE",
+                            "actionId": "Actions::MOVE",
                             "actionClass": "ActorMove"
                         }
                     ]
