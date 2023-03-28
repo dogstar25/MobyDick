@@ -219,7 +219,7 @@ std::optional<SceneAction> SceneManager::pollEvents()
 				break;
 			}
 			default:
-				std::cout << "Unhandled Event Type is " << event.type << std::endl;
+				//std::cout << "Unhandled Event Type is " << event.type << std::endl;
 				break;
 
 		}
@@ -480,5 +480,6 @@ void SceneManager::testIMGUI()
 	//glClear(GL_COLOR_BUFFER_BIT);
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	//SDL_GL_SwapWindow(window);
+
 
 }

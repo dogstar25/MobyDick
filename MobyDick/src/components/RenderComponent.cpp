@@ -50,8 +50,6 @@ RenderComponent::RenderComponent(Json::Value componentJSON)
 	}
 
 	m_textureId = componentJSON["textureId"].asString();
-	m_xRenderAdjustment = componentJSON["xRenderAdjustment"].asFloat();
-	m_yRenderAdjustment = componentJSON["yRenderAdjustment"].asFloat();
 
 	if (componentJSON.isMember("textureBlendMode")) {
 		m_textureBlendMode = static_cast<RenderBlendMode>(game->enumMap()->toEnum(componentJSON["textureBlendMode"].asString()));
@@ -144,9 +142,6 @@ SDL_FRect RenderComponent::getRenderDestRect()
 
 	//Get its current position. Should be center of object
 	destRect = transform->getPositionRect();
-
-	destRect.w += m_xRenderAdjustment;
-	destRect.h += m_yRenderAdjustment;
 
 	//Adjust position based on current camera position - offset
 	if (transform->absolutePositioning() == false)

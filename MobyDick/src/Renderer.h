@@ -36,6 +36,8 @@ enum class RenderBlendMode {
 
 	BLEND,
 	ADD,
+	MULTIPLY,
+	MODULATE,
 	NONE
 
 };

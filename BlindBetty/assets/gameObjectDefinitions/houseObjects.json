@@ -105,6 +105,26 @@
 
         },
         {
+            "type": "DARK_OVERLAY",
+            "traitTags": [],
+            "description": "Dark room overlay",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_DARK_BOX",
+                    "textureBlendMode": "RenderBlendMode::MULTIPLY"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 544,
+                        "height": 320
+                    }
+                }
+            ]
+
+        },
+        {
             "type": "PARLOR_ROOM",
             "traitTags": [],
             "description": "Parlor Room",
@@ -116,7 +136,45 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 480,
+                        "width": 544,
+                        "height": 320
+                    }
+                }
+            ]
+
+        },
+        {
+            "type": "BEDROOM1_ROOM",
+            "traitTags": [],
+            "description": "Bedroom1 Room",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_BEDROOM_1"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 544,
+                        "height": 320
+                    }
+                }
+            ]
+
+        },
+        {
+            "type": "BEDROOM2_ROOM",
+            "traitTags": [],
+            "description": "Bedroom2 Room",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_BEDROOM_2"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 544,
                         "height": 320
                     }
                 }
@@ -135,7 +193,7 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 480,
+                        "width": 544,
                         "height": 320
                     }
                 }
@@ -181,20 +239,54 @@
 
         },
         {
+            "type": "MAIN_STAIRS",
+            "traitTags": [],
+            "description": "Bottom Stairs Room",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_MAIN_STAIRS"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 160,
+                        "height": 320
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::STAIRS_TOUCH",
+                            "collisionShape": "B2_BOX",
+                            "isSensor": true,
+                            "size": {
+                                "width": 96,
+                                "height": 400
+                            }
+
+                        }
+                    ]
+                }
+
+            ]
+
+        },
+        {
             "type": "DOOR_FRONT",
             "traitTags": [ "interactive" ],
             "components": [
                 {
-                    "id": "RENDER_COMPONENT",
-                    "xRenderAdjustment": 0,
-                    "yRenderAdjustment": 20
+                    "id": "RENDER_COMPONENT"
 
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 101,
-                        "height": 235
+                        "width": 96,
+                        "height": 224
                     },
                     "absolutePositioning": false
                 },
@@ -203,7 +295,7 @@
                     "type": "B2_DYNAMIC",
                     "fixtures": [
                         {
-                            "contactTag": "ContactTag::DOOR",
+                            "contactTag": "ContactTag::DOOR_TOUCH",
                             "collisionShape": "B2_BOX",
                             "isSensor": true
                         }
@@ -232,8 +324,8 @@
                     "id": "ANIMATION_COMPONENT",
                     "defaultState": "AnimationState::CLOSED",
                     "frameSize": {
-                        "width": 101,
-                        "height": 235
+                        "width": 96,
+                        "height": 225
                     },
                     "animations": [
                         {
@@ -274,7 +366,7 @@
                 {
                     "id": "TRANSFORM_COMPONENT",
                     "size": {
-                        "width": 64,
+                        "width": 69,
                         "height": 256
                     },
                     "absolutePositioning": false
@@ -284,10 +376,20 @@
                     "type": "B2_DYNAMIC",
                     "fixtures": [
                         {
-                            "contactTag": "ContactTag::DOOR",
+                            "contactTag": "ContactTag::DOOR_TOUCH",
                             "collisionShape": "B2_BOX",
                             "isSensor": true
+                        },
+                        {
+                            "contactTag": "ContactTag::DOOR_COLLISION",
+                            "collisionShape": "B2_BOX",
+                            "size": {
+                                "width": 16,
+                                "height": 256
+                            }
+
                         }
+
                     ]
                 },
                 {
@@ -309,8 +411,8 @@
                     "id": "ANIMATION_COMPONENT",
                     "defaultState": "AnimationState::CLOSED",
                     "frameSize": {
-                        "width": 64,
-                        "height": 235
+                        "width": 69,
+                        "height": 256
                     },
                     "animations": [
                         {
@@ -387,7 +489,7 @@
             ]
         },
         {
-            "type": "FLOOR_46",
+            "type": "BEAM_46",
             "traitTags": [ "abstract" ],
 
             "components": [
@@ -409,14 +511,138 @@
                     "fixtures": [
                         {
                             "contactTag": "ContactTag::GENERAL_SOLID",
-                            "collisionShape": "B2_CHAIN",
-                            "physicsChainType": "PhysicsChainType::CW_REFLECT_OUT",
+                            "collisionShape": "B2_BOX",
                             "friction": 0.5
                         }
 
                     ]
                 }
             ]
+        },
+        {
+            "type": "BEAM_24",
+            "traitTags": [ "abstract" ],
+
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 768,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_SOLID",
+                            "collisionShape": "B2_BOX",
+                            "friction": 0.5
+                        }
+
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "BEAM_19",
+            "traitTags": [ "abstract" ],
+
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 608,
+                        "height": 32
+                    },
+                    "absolutePositioning": false
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_SOLID",
+                            "collisionShape": "B2_BOX",
+                            "friction": 0.5
+                        }
+
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "BEAM_6",
+            "traitTags": [ "abstract" ],
+
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT"
+
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 192,
+                        "height": 32
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_STATIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_SOLID",
+                            "collisionShape": "B2_BOX",
+                            "friction": 0.5
+                        }
+
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "CRYSTAL",
+            "traitTags": [],
+            "description": "",
+            "components": [
+                {
+                    "id": "RENDER_COMPONENT",
+                    "textureId": "TX_CRYSTAL"
+                },
+                {
+                    "id": "TRANSFORM_COMPONENT",
+                    "size": {
+                        "width": 32,
+                        "height": 32
+                    }
+                },
+                {
+                    "id": "PHYSICS_COMPONENT",
+                    "type": "B2_DYNAMIC",
+                    "fixtures": [
+                        {
+                            "contactTag": "ContactTag::GENERAL_SOLID",
+                            "collisionShape": "B2_BOX",
+                            "density": 10,
+                            "restitution": 1,
+                            "friction": 1.0
+                        }
+                    ]
+                }
+
+            ]
+
         }
     ]
 }

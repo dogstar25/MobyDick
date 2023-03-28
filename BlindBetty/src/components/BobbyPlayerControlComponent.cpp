@@ -4,6 +4,7 @@
 #include "SceneManager.h"
 #include "EnumMap.h"
 #include "game.h"
+#include "../GameConstants.h"
 
 extern std::unique_ptr<Game> game;
 
@@ -31,16 +32,21 @@ void BobbyPlayerControlComponent::postInit()
 void BobbyPlayerControlComponent::update()
 {
 
-	handleActions();
+	//ALways ensure that bobby is upright
+	const auto& playerPhysics = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	playerPhysics->setAngle(0.);
 
-	handleMovement();
+	_handleActions();
+
+	_handleMovement();
 
 }
 
-void BobbyPlayerControlComponent::handleMovement()
+void BobbyPlayerControlComponent::_handleMovement()
 {
 	int mouseX = 0, mouseY = 0;
 	int direction = 0, strafe = 0;
+	bool onStairs{};
 
 	//convenience reference to outside component(s)
 	const auto& actionComponent = parent()->getComponent<ActionComponent>(ComponentTypes::ACTION_COMPONENT);
@@ -48,14 +54,26 @@ void BobbyPlayerControlComponent::handleMovement()
 	//Handle Keyboard related movement
 	const uint8_t* currentKeyStates = SDL_GetKeyboardState(NULL);
 
-	//if (currentKeyStates[SDL_SCANCODE_W])
-	//{
-	//	direction = -1;
-	//}
-	//if (currentKeyStates[SDL_SCANCODE_S])
-	//{
-	//	direction = 1;
-	//}
+	if (_isTouchingStairs()) {
+
+		onStairs = true;
+		_applyStairWalkingSettings();
+	}
+	else {
+		onStairs = false;
+		_removeStairWalkingSettings();
+	}
+
+	if (currentKeyStates[SDL_SCANCODE_W])
+	{
+		direction = -1;
+	}
+	if (currentKeyStates[SDL_SCANCODE_S])
+	{
+		direction = 1;
+
+	}
+
 	if (currentKeyStates[SDL_SCANCODE_A])
 	{
 		strafe = -1;
@@ -64,7 +82,7 @@ void BobbyPlayerControlComponent::handleMovement()
 	{
 		strafe = 1;
 	}
-
+	
 	//Sprint
 	if (currentKeyStates[SDL_SCANCODE_LSHIFT])
 	{
@@ -75,8 +93,17 @@ void BobbyPlayerControlComponent::handleMovement()
 	}
 	else {
 
-		const auto& moveAction = actionComponent->getAction(Actions::MOVE);
-		moveAction->perform(parent(), direction, strafe);
+
+		if (onStairs) {
+			const auto& moveAction = actionComponent->getAction(Actions::STAIRS_MOVE);
+			moveAction->perform(parent(), direction);
+		}
+		if(strafe != 0) {
+			const auto& moveAction = actionComponent->getAction(Actions::MOVE);
+			moveAction->perform(parent(), direction, strafe);
+		}
+
+
 		//m_state.reset(PlayerState::sprinting);
 	}
 
@@ -86,7 +113,34 @@ void BobbyPlayerControlComponent::handleMovement()
 	float angularVelocity = mouseX * game->contextMananger()->getMouseSensitivity();
 
 }
-void BobbyPlayerControlComponent::handleActions()
+
+
+void BobbyPlayerControlComponent::_applyStairWalkingSettings()
+{
+	const auto& playerPhysics = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	const auto& playerVitality = parent()->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+
+	playerPhysics->setGravityScale(0);
+	playerPhysics->setLinearDamping(100);
+	playerPhysics->setAngularDamping(100);
+	playerVitality->setSpeed(5);
+
+}
+
+void BobbyPlayerControlComponent::_removeStairWalkingSettings()
+{
+
+	const auto& playerPhysics = parent()->getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
+	const auto& playerVitality = parent()->getComponent<VitalityComponent>(ComponentTypes::VITALITY_COMPONENT);
+
+	playerPhysics->setGravityScale(15);
+	playerPhysics->setLinearDamping(1);
+	playerPhysics->setAngularDamping(1);
+	playerVitality->setSpeed(3);
+
+}
+
+void BobbyPlayerControlComponent::_handleActions()
 {
 	//Get the current mouse state
 	int mouseX, mouseY;
@@ -137,5 +191,19 @@ void BobbyPlayerControlComponent::handleActions()
 		}
 	}
 }
+
+bool BobbyPlayerControlComponent::_isTouchingStairs()
+{
+
+	for (const auto& touchingObject : parent()->getTouchingObjects()) {
+
+		if (touchingObject.second.expired() == false && touchingObject.second.lock()->type() == "MAIN_STAIRS") {
+			return true;
+		}
+	}
+
+	return false;
+}
+
 
 

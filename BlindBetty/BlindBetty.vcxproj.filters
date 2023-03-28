@@ -90,6 +90,9 @@
     <ClCompile Include="src\actions\DoorEnterAction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\actions\ActorStairsMoveAction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\actions\BBActionFactory.h">
@@ -168,6 +171,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\actions\DoorEnterAction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\actions\ActorStairsMoveAction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

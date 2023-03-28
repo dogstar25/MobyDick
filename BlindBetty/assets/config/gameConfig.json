@@ -21,8 +21,8 @@
     "scenes": {
         "maxScenes": 12
     },
-    "rendererType": "RendererType::SDL",
-    //"rendererType": "RendererType::OPENGL",
+    //"rendererType": "RendererType::SDL",
+    "rendererType": "RendererType::OPENGL",
     //"openGLBatching": true,
     "debugGrid": false,
     "gameLoopStep": 0.016,

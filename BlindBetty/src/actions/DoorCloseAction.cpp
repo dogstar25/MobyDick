@@ -11,7 +11,7 @@ void DoorCloseAction::perform(GameObject* doorObject)
 	const auto& doorAnimationComponent = doorObject->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT);
 	auto doorState = doorAnimationComponent->currentAnimationState();
 
-	GameObject* partnerDoor{};
+	std::optional<GameObject*> partnerDoor{};
 
 	//Get this doors matching partner to sets its state as well
 	const auto& doors = doorObject->parentScene()->getGameObjectsByName(doorObject->name());
@@ -24,9 +24,18 @@ void DoorCloseAction::perform(GameObject* doorObject)
 		}
 	}
 
+	//animate the open
 	doorAnimationComponent->animate(AnimationState::CLOSE, ANIMATE_ONE_TIME);
 	doorAnimationComponent->setDefaultAnimationState(AnimationState::CLOSED);
-	partnerDoor->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT)->setCurrentAnimationState(AnimationState::CLOSED);
+	//Disable the collision
+	doorObject->enableCollision();
+	
 
+	//If there is a partner door, animate state to opened and disabled its collision
+	if (partnerDoor.has_value()) {
+
+		partnerDoor.value()->getComponent<AnimationComponent>(ComponentTypes::ANIMATION_COMPONENT)->setCurrentAnimationState(AnimationState::CLOSED);
+		partnerDoor.value()->enableCollision();
+	}
 
 }

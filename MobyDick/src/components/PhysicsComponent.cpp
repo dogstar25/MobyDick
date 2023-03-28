@@ -4,6 +4,7 @@
 #include "../EnumMap.h"
 #include "../Game.h"
 
+
 extern std::unique_ptr<Game> game;
 
 PhysicsComponent::PhysicsComponent(Json::Value definitionJSON, Scene* parentScene, float xMapPos, float yMapPos, float angleAdjust)
@@ -107,6 +108,16 @@ void PhysicsComponent::setLinearDamping(float linearDamping)
 	m_physicsBody->SetLinearDamping(linearDamping);
 }
 
+void PhysicsComponent::setAngularDamping(float angularDamping)
+{
+	m_physicsBody->SetAngularDamping(angularDamping);
+}
+
+void PhysicsComponent::setGravityScale(float gravityScale)
+{
+	m_physicsBody->SetGravityScale(gravityScale);
+}
+
 void PhysicsComponent::setAngle(float angle)
 {
 	auto normalizedAngle = util::normalizeRadians(angle);
@@ -152,10 +163,7 @@ void PhysicsComponent::update()
 b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::Value transformComponentJSON, b2World* physicsWorld)
 {
 	b2BodyDef bodyDef;
-
 	bodyDef.type = static_cast<b2BodyType>(m_physicsType);
-
-	
 
 	//Default the position to zero.
 	bodyDef.position.SetZero();
@@ -178,6 +186,9 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 	//Build fixtures
 	for (const auto& fixtureJSON : physicsComponentJSON["fixtures"]) {
 
+		float xOffset{};
+		float yOffset{};
+
 		b2Shape* shape;
 		b2PolygonShape box;
 		b2CircleShape circle;
@@ -188,9 +199,25 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 		//default
 		shape = &box;
 
+		//See if we have an offset value
+		if (fixtureJSON.isMember("offset")) {
+
+			auto offsetJSON = fixtureJSON["offset"];
+			if (offsetJSON.isMember("x")) {
+				xOffset = fixtureJSON["offset"]["x"].asFloat();
+				util::toBox2dPoint(xOffset);
+			}
+			if (offsetJSON.isMember("y")) {
+				yOffset = fixtureJSON["offset"]["y"].asFloat();
+				util::toBox2dPoint(yOffset);
+			}
+
+		}
+
 		if (collisionShape == b2Shape::e_circle)
 		{
 			circle.m_radius = fixtureJSON["collisionRadius"].asFloat();
+			circle.m_p.Set(xOffset, yOffset);
 			shape = &circle;
 		}
 		else if (collisionShape == b2Shape::e_polygon) {
@@ -208,6 +235,8 @@ b2Body* PhysicsComponent::_buildB2Body(Json::Value physicsComponentJSON, Json::V
 			}
 			
 			box.SetAsBox(sizeX, sizeY);
+			b2Vec2 offsetLocation = { xOffset, yOffset };
+			box.SetAsBox(sizeX, sizeY, offsetLocation, 0);
 			shape = &box;
 		}
 		else if (collisionShape == b2Shape::e_chain) {
@@ -437,12 +466,6 @@ void PhysicsComponent::attachItem(GameObject* attachObject, b2JointType jointTyp
 	attachObjectPhysicsComponent->m_objectAnchorPoint.y
 	};
 
-
-	//test
-	//attachObjectAnchorPoint = attachObjectPhysicsComponent.get()->physicsBody()->GetLocalCenter();
-
-
-
 	//Build specific joint
 	if (jointType == b2JointType::e_weldJoint) {
 		weldJointDef = new b2WeldJointDef();
@@ -461,10 +484,6 @@ void PhysicsComponent::attachItem(GameObject* attachObject, b2JointType jointTyp
 		revoluteJointDef->localAnchorA = anchorPoint;
 		revoluteJointDef->localAnchorB = attachObjectAnchorPoint;
 
-		////test
-		//revoluteJointDef->enableMotor = true;
-		//revoluteJointDef->maxMotorTorque = 100;
-		
 		jointDef = revoluteJointDef;
 	}
 
