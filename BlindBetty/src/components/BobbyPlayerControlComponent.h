@@ -33,8 +33,11 @@ public:
 
 private:
 
-	void handleMovement();
-	void handleActions();
+	void _handleMovement();
+	void _handleActions();
+	bool _isTouchingStairs();
+	void _applyStairWalkingSettings();
+	void _removeStairWalkingSettings();
 
 };
 

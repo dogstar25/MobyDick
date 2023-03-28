@@ -637,7 +637,7 @@ void GameObject::enableRender()
 	m_stateTags.set(StateTag::disabledRender, false);
 }
 
-void GameObject::disableCollision()
+void GameObject::disableCollision(bool includeSensors)
 {
 	m_stateTags.set(StateTag::disabledCollision, true);
 
@@ -645,8 +645,11 @@ void GameObject::disableCollision()
 		const auto& physicsComponent = getComponent<PhysicsComponent>(ComponentTypes::PHYSICS_COMPONENT);
 		for (auto fixture = physicsComponent->physicsBody()->GetFixtureList(); fixture != 0; fixture = fixture->GetNext())
 		{
-			ContactDefinition* contactDefinition = reinterpret_cast<ContactDefinition*>(fixture->GetUserData().pointer);
-			contactDefinition->contactTag = ContactTag::GENERAL_FREE;
+			if (fixture->IsSensor() == false || (fixture->IsSensor() == true && includeSensors == true)) {
+				ContactDefinition* contactDefinition = reinterpret_cast<ContactDefinition*>(fixture->GetUserData().pointer);
+				contactDefinition->contactTag = ContactTag::GENERAL_FREE;
+				fixture->Refilter();
+			}
 		}
 	}
 
@@ -662,6 +665,7 @@ void GameObject::enableCollision()
 		{
 			ContactDefinition* contactDefinition = reinterpret_cast<ContactDefinition*>(fixture->GetUserData().pointer);
 			contactDefinition->contactTag = contactDefinition->saveOriginalContactTag;
+			fixture->Refilter();
 		}
 	}
 

@@ -66,6 +66,12 @@ void GLDrawer::draw(const std::vector<SpriteVertex>& spriteVertices, const std::
 	else if (textureBlendMode == RenderBlendMode::ADD) {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 	}
+	else if (textureBlendMode == RenderBlendMode::MULTIPLY) {
+		glBlendFunc(GL_DST_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+	}
+	else if (textureBlendMode == RenderBlendMode::MODULATE) {
+		glBlendFunc(GL_DST_COLOR, GL_ZERO);
+	}
 	else if (textureBlendMode == RenderBlendMode::NONE) {
 		glBlendFunc(GL_ONE, GL_ZERO);
 	}

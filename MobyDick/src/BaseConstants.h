@@ -124,17 +124,6 @@ namespace StateTag {
 	inline constexpr int disabledCollision = 4;
 }
 
-namespace GameObjectType {
-
-	inline constexpr auto ABSTRACT = 0; // SOMETHING LIKE A NAVIGATION POINT THAT DOES NOT DISPLAY
-	inline constexpr auto SPRITE = 1;
-	inline constexpr auto LINE = 2;
-	inline constexpr auto POINT = 3;
-	inline constexpr auto RECTANGLE = 4;
-
-}
-
-
 namespace BrainState {
 
 	inline constexpr auto IDLE = 0;

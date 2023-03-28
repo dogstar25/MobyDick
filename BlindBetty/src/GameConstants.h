@@ -39,8 +39,13 @@ namespace ContactTag {
 	inline constexpr int PLAYER_COLLISION = 15;
 	inline constexpr int PLAYER_HITBOX = 16;
 	inline constexpr int WALL = 17;
-	inline constexpr int DOOR = 18;
-	inline constexpr int WARP_ENTRY = 19;
+	inline constexpr int DOOR_TOUCH = 18;
+	inline constexpr int DOOR_COLLISION = 19;
+	inline constexpr int WARP_ENTRY = 20;
+	inline constexpr int STAIRS_TOUCH = 21;
+	inline constexpr int STAIRS_TOP_TOUCH = 22;
+	inline constexpr int STAIRS_BOTTOM_TOUCH = 23;
+	
 
 }
 
@@ -59,6 +64,7 @@ namespace BrainState {
 namespace TraitTag {
 
 	//Custom traits
+	inline constexpr int stairs = 20;
 }
 
 namespace Actions {
@@ -66,6 +72,7 @@ namespace Actions {
 	inline constexpr int OPEN = 14;
 	inline constexpr int CLOSE = 15;
 	inline constexpr int ENTER = 16;
+	inline constexpr int STAIRS_MOVE = 17;
 }
 
 namespace StatusItemId {
@@ -83,6 +90,10 @@ namespace AnimationState {
 	inline constexpr int CLOSE = 13;
 	inline constexpr int OPENED = 14;
 	inline constexpr int CLOSED = 15;
+	inline constexpr int WALK_DOWN = 16;
+	inline constexpr int WALK_UP = 17;
+	inline constexpr int WALK_UP_IDLE = 18;
+	inline constexpr int WALK_DOWN_IDLE = 19;
 
 }
 

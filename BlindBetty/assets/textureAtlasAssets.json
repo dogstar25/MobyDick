@@ -84,6 +84,17 @@
             }
         },
         {
+            "id": "TX_DARK_BOX",
+            "description": "Dark Box",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 70,
+                "y": 20,
+                "width": 32,
+                "height": 32
+            }
+        },
+        {
             "id": "TX_BOWMAN1",
             "description": "Single bowman image",
             "atlas": "TEXTURE_ATLAS_0",
@@ -121,9 +132,9 @@
             "description": "Parlor Room",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 484,
-                "y": 250,
-                "width": 480,
+                "x": 1256,
+                "y": 572,
+                "width": 544,
                 "height": 320
             }
         },
@@ -132,9 +143,9 @@
             "description": "Den Room",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 2,
+                "x": 548,
                 "y": 250,
-                "width": 480,
+                "width": 544,
                 "height": 320
             }
         },
@@ -150,25 +161,50 @@
             }
         },
         {
-            "id": "TX_ROOM_BOTSTAIRS",
+            "id": "TX_MAIN_STAIRS",
             "description": "Bottom Floor Stairs",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 324,
+                "x": 2,
                 "y": 572,
-                "width": 320,
+                "width": 160,
                 "height": 320
             }
         },
+        {
+            "id": "TX_BEDROOM_1",
+            "description": "Bedroom 1",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 2,
+                "y": 250,
+                "width": 544,
+                "height": 320
+            }
+        },
+        {
+            "id": "TX_BEDROOM_2",
+            "description": "Bedroom 2",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 710,
+                "y": 572,
+                "width": 544,
+                "height": 320
+            }
+        },
+        //
+        //DOORS
+        //
         {
             "id": "TX_DOOR1_FRONT_CLOSE",
             "description": "Door1",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 1226,
-                "y": 2,
-                "width": 303,
-                "height": 235
+                "x": 621,
+                "y": 23,
+                "width": 288,
+                "height": 225
             }
         },
         {
@@ -176,10 +212,10 @@
             "description": "Door1",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 1024,
-                "y": 2,
-                "width": 303,
-                "height": 235
+                "x": 429,
+                "y": 23,
+                "width": 288,
+                "height": 225
             }
         },
         {
@@ -187,8 +223,8 @@
             "description": "Door1",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 1226,
-                "y": 2,
+                "x": 621,
+                "y": 23,
                 "width": 101,
                 "height": 235
             }
@@ -198,8 +234,8 @@
             "description": "Door1",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 1024,
-                "y": 2,
+                "x": 429,
+                "y": 23,
                 "width": 101,
                 "height": 235
             }
@@ -209,9 +245,9 @@
             "description": "Door from side closed",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 1617,
+                "x": 1752,
                 "y": 2,
-                "width": 64,
+                "width": 69,
                 "height": 256
             }
         },
@@ -220,9 +256,9 @@
             "description": "Door from side open",
             "atlas": "TEXTURE_ATLAS_0",
             "quadPosition": {
-                "x": 1531,
+                "x": 1683,
                 "y": 2,
-                "width": 64,
+                "width": 69,
                 "height": 256
             }
         },
@@ -270,6 +306,39 @@
                 "y": 0,
                 "width": 534,
                 "height": 464
+            }
+        },
+        {
+            "id": "TX_BOBBY_WALK_DOWN_STAIRS",
+            "description": "Bobby Walk",
+            "atlas": "TEXTURE_ATLAS_1",
+            "quadPosition": {
+                "x": 536,
+                "y": 0,
+                "width": 356,
+                "height": 116
+            }
+        },
+        {
+            "id": "TX_BOBBY_WALK_DOWN_IDLE_STAIRS",
+            "description": "Bobby Walk",
+            "atlas": "TEXTURE_ATLAS_1",
+            "quadPosition": {
+                "x": 625,
+                "y": 0,
+                "width": 89,
+                "height": 116
+            }
+        },
+        {
+            "id": "TX_CRYSTAL",
+            "description": "CC",
+            "atlas": "TEXTURE_ATLAS_0",
+            "quadPosition": {
+                "x": 56,
+                "y": 2,
+                "width": 16,
+                "height": 16
             }
         }
 

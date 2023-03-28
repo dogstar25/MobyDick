@@ -320,6 +320,13 @@ namespace util
 		return point;
 	}
 
+	float& toBox2dPoint(float& value)
+	{
+		value /= (float)GameConfig::instance().scaleFactor();
+
+		return value;
+	}
+
 	b2Vec2& toRenderPoint(b2Vec2& point)
 	{
 		point.x *= (float)25;

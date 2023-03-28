@@ -67,7 +67,7 @@ Scene::Scene(std::string sceneId)
 	//Debug Mode
 	if (m_hasPhysics == true)
 	{
-		DebugDraw::instance().SetFlags(DebugDraw::e_shapeBit);
+		DebugDraw::instance().SetFlags(DebugDraw::e_shapeBit | DebugDraw::e_centerOfMassBit | DebugDraw::e_jointBit);
 		m_physicsWorld->SetDebugDraw(&DebugDraw::instance());
 	}
 
@@ -284,7 +284,8 @@ void Scene::render() {
 		}
 
 		//Render any primitive object for this layer (lines and single pixels/points)
-		game->renderer()->renderPrimitives(gameLayerIndex);
+		//ToDo:Make this use the layer that we are passing it
+		//game->renderer()->renderPrimitives(gameLayerIndex);
 
 		gameLayerIndex++;
 
@@ -295,6 +296,9 @@ void Scene::render() {
 	{
 		m_physicsWorld->DebugDraw();
 	}
+
+	//Draw primitive lines and pixels
+	game->renderer()->renderPrimitives(0);
 
 }
 

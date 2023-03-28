@@ -45,7 +45,12 @@
                         {
                             "actionId": "Actions::MOVE",
                             "actionClass": "ActorMove"
+                        },
+                        {
+                            "actionId": "Actions::STAIRS_MOVE",
+                            "actionClass": "ActorStairsMoveAction"
                         }
+
                     ]
                 },
                 {
@@ -89,6 +94,18 @@
                             "textureId": "TX_BOBBY_WALK_LEFT",
                             "speed": 0.01,
                             "frames": 24
+                        },
+                        {
+                            "state": "AnimationState::WALK_DOWN",
+                            "textureId": "TX_BOBBY_WALK_DOWN_STAIRS",
+                            "speed": 0.1,
+                            "frames": 4
+                        },
+                        {
+                            "state": "AnimationState::WALK_DOWN_IDLE",
+                            "textureId": "TX_BOBBY_WALK_DOWN_IDLE_STAIRS",
+                            "speed": 0.1,
+                            "frames": 1
                         }
                     ]
                 }

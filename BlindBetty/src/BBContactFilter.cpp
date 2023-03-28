@@ -19,9 +19,11 @@ BBContactFilter::BBContactFilter()
 	m_contactMasks[PLAYER_COLLISION].set(HEAVY_PARTICLE);
 	m_contactMasks[PLAYER_COLLISION].set(LEVEL_CAGE);
 	m_contactMasks[PLAYER_COLLISION].set(PLAYER_COLLISION);
-	m_contactMasks[PLAYER_COLLISION].set(DOOR);
+	m_contactMasks[PLAYER_COLLISION].set(DOOR_COLLISION);
+	m_contactMasks[PLAYER_COLLISION].set(DOOR_TOUCH);
 	m_contactMasks[PLAYER_COLLISION].set(WARP_ENTRY);
-
+	m_contactMasks[PLAYER_COLLISION].set(STAIRS_TOUCH);
+	
 	//PLAYER_TOUCH
 	m_contactMasks[PLAYER_TOUCH].reset();
 	m_contactMasks[PLAYER_TOUCH].flip();
@@ -38,13 +40,20 @@ BBContactFilter::BBContactFilter()
 	m_contactMasks[WALL].set(PLAYER_COLLISION);
 	m_contactMasks[WALL].set(WALL);
 
-	//DOOR
-	m_contactMasks[DOOR].reset();
-	m_contactMasks[DOOR].set(PLAYER_COLLISION);
+	//DOOR Collision
+	m_contactMasks[DOOR_COLLISION].reset();
+	m_contactMasks[DOOR_COLLISION].set(PLAYER_COLLISION);
+
+	//DOOR TOUCH
+	m_contactMasks[DOOR_TOUCH].reset();
+	m_contactMasks[DOOR_TOUCH].set(PLAYER_COLLISION);
 
 	//WARP ENTRY
 	m_contactMasks[WARP_ENTRY].reset();
 	m_contactMasks[WARP_ENTRY].set(PLAYER_COLLISION);
+
+	//Stairs Touch
+	m_contactMasks[STAIRS_TOUCH].set(PLAYER_COLLISION);
 
 }
 

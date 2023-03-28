@@ -60,8 +60,6 @@ private:
 	std::shared_ptr<Texture> m_texture;
 	SDL_Color m_color;
 	SDL_Color m_outLineColor;
-	float m_xRenderAdjustment;
-	float m_yRenderAdjustment;
 	bool m_renderOutline;
 	std::string	m_textureId;
 	RenderBlendMode	m_textureBlendMode;

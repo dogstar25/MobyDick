@@ -12,7 +12,7 @@
         {
             "colorKey": "Colors::BROWN",
             "gameObjectType": "BRICK_WALL_STATIC_1",
-            "layer": "GameLayer::BACKGROUND_1"
+            "layer": "GameLayer::FOREGROUND_1"
         },
         {
             "colorKey": "Colors::WINE",
@@ -28,22 +28,66 @@
     ],
     "locationDefinedObjects": [
         {
-            "id": "LOC_0032_0141",
+            "id": "LOC_0029_0141",
             "gameObjectType": "BOBBY",
             "name": "Player Bobby",
+            "layer": "GameLayer::MAIN",
             "cameraFollow": true
         },
+        {
+            "id": "LOC_0027_0139",
+            "gameObjectType": "CRYSTAL",
+            "objectColor": "Colors::GREEN",
+            "layer": "GameLayer::FOREGROUND_1"
+        },
+        {
+            "id": "LOC_0027_0139",
+            "gameObjectType": "CRYSTAL",
+            "objectColor": "Colors::GREEN",
+            "layer": "GameLayer::FOREGROUND_1"
+        },
+        {
+            "id": "LOC_0027_0139",
+            "gameObjectType": "CRYSTAL",
+            "objectColor": "Colors::GREEN",
+            "layer": "GameLayer::FOREGROUND_1"
+        },
+        {
+            "id": "LOC_0027_0139",
+            "gameObjectType": "CRYSTAL",
+            "objectColor": "Colors::GREEN",
+            "layer": "GameLayer::FOREGROUND_1"
+        },
+        {
+            "id": "LOC_0027_0139",
+            "gameObjectType": "CRYSTAL",
+            "objectColor": "Colors::GREEN",
+            "layer": "GameLayer::FOREGROUND_1"
+        },
+        {
+            "id": "LOC_0027_0139",
+            "gameObjectType": "CRYSTAL",
+            "objectColor": "Colors::GREEN",
+            "layer": "GameLayer::FOREGROUND_1"
+        },
+        {
+            "id": "LOC_0027_0139",
+            "gameObjectType": "CRYSTAL",
+            "objectColor": "Colors::GREEN",
+            "layer": "GameLayer::FOREGROUND_1"
+        },
+
 
         //
         //ROOMS
         //
         {
-            "id": "LOC_0017_0026",
+            "id": "LOC_0016_0145",
             "gameObjectType": "PARLOR_ROOM",
             "layer": "GameLayer::BACKGROUND_2"
         },
         {
-            "id": "LOC_0044_0026",
+            "id": "LOC_0043_0145",
             "gameObjectType": "DEN_ROOM",
             "layer": "GameLayer::BACKGROUND_2"
         },
@@ -53,18 +97,28 @@
             "layer": "GameLayer::BACKGROUND_2"
         },
         {
-            "id": "LOC_0044_0037",
-            "gameObjectType": "DEN_ROOM",
+            "id": "LOC_0016_0134",
+            "gameObjectType": "BEDROOM1_ROOM",
             "layer": "GameLayer::BACKGROUND_2"
         },
         {
-            "id": "LOC_0033_0026",
-            "gameObjectType": "TOP_STAIRS_ROOM",
-            "layer": "GameLayer::BACKGROUND_2"
+            "id": "LOC_0016_0134",
+            "gameObjectType": "DARK_OVERLAY",
+            "layer": "GameLayer::FOREGROUND_1"
         },
         {
-            "id": "LOC_0033_0037",
-            "gameObjectType": "BOT_STAIRS_ROOM",
+            "id": "LOC_0043_0134",
+            "gameObjectType": "BEDROOM2_ROOM",
+            "layer": "GameLayer::BACKGROUND_2"
+        },
+        //{
+        //    "id": "LOC_0033_0134",
+        //    "gameObjectType": "TOP_STAIRS_ROOM",
+        //    "layer": "GameLayer::BACKGROUND_2"
+        //},
+        {
+            "id": "LOC_0038_0145",
+            "gameObjectType": "MAIN_STAIRS",
             "layer": "GameLayer::BACKGROUND_2"
         },
         //
@@ -80,11 +134,26 @@
             "gameObjectType": "BRICK_WALL_DYNAMIC_1",
             "layer": "GameLayer::MAIN"
         },
+        {
+            "id": "LOC_0039_0144",
+            "gameObjectType": "BRICK_WALL_FREE_1",
+            "layer": "GameLayer::FOREGROUND_2"
+        },
+        {
+            "id": "LOC_0040_0144",
+            "gameObjectType": "BRICK_WALL_FREE_1",
+            "layer": "GameLayer::FOREGROUND_2"
+        },
+        {
+            "id": "LOC_0041_0144",
+            "gameObjectType": "BRICK_WALL_FREE_1",
+            "layer": "GameLayer::FOREGROUND_2"
+        },
         //
         //DOORS
         //
         {
-            "id": "LOC_0017_0136",
+            "id": "LOC_0017_0137",
             "gameObjectType": "DOOR_FRONT",
             "description": "Bedroom 1 door",
             "name": "bedroom1",
@@ -105,6 +174,13 @@
             "layer": "GameLayer::BACKGROUND_2"
         },
         {
+            "id": "LOC_0031_0136",
+            "gameObjectType": "DOOR_SIDE",
+            "description": "Large Closet door",
+            "name": "bedroom1_side",
+            "layer": "GameLayer::BACKGROUND_2"
+        },
+        {
             "id": "LOC_0054_0054",
             "gameObjectType": "DOOR_WARP_ENTRY",
             "description": "Bedroom1 door waro to other location",
@@ -118,55 +194,70 @@
             "name": "bedroom1_warp_EXIT",
             "layer": "GameLayer::ABSTRACT"
         },
-
+        //
+        //WALLS
+        //
+        {
+            "id": "LOC_0038_0145",
+            "gameObjectType": "BEAM_6",
+            "description": "wall",
+            "layer": "GameLayer::ABSTRACT",
+            "angle": 90
+        },
         //
         //FLOORS
         //
         {
             "id": "LOC_0015_0133",
-            "gameObjectType": "FLOOR_46",
+            "gameObjectType": "BEAM_46",
             "description": "Floor",
             "layer": "GameLayer::ABSTRACT"
         },
         {
             "id": "LOC_0015_0144",
-            "gameObjectType": "FLOOR_46",
+            "gameObjectType": "BEAM_24",
+            "description": "Floor",
+            "layer": "GameLayer::ABSTRACT"
+        },
+        {
+            "id": "LOC_0042_0144",
+            "gameObjectType": "BEAM_19",
             "description": "Floor",
             "layer": "GameLayer::ABSTRACT"
         },
         {
             "id": "LOC_0015_0155",
-            "gameObjectType": "FLOOR_46",
+            "gameObjectType": "BEAM_46",
             "description": "Floor",
             "layer": "GameLayer::ABSTRACT"
         },
         {
             "id": "LOC_0015_0164",
-            "gameObjectType": "FLOOR_46",
+            "gameObjectType": "BEAM_46",
             "description": "Floor",
             "layer": "GameLayer::ABSTRACT"
         },
         {
             "id": "LOC_0010_0045",
-            "gameObjectType": "FLOOR_46",
+            "gameObjectType": "BEAM_46",
             "description": "Floor",
             "layer": "GameLayer::ABSTRACT"
         },
         {
             "id": "LOC_0010_0056",
-            "gameObjectType": "FLOOR_46",
+            "gameObjectType": "BEAM_46",
             "description": "Floor",
             "layer": "GameLayer::ABSTRACT"
         },
         {
             "id": "LOC_0010_0067",
-            "gameObjectType": "FLOOR_46",
+            "gameObjectType": "BEAM_46",
             "description": "Floor",
             "layer": "GameLayer::ABSTRACT"
         },
         {
             "id": "LOC_0010_0076",
-            "gameObjectType": "FLOOR_46",
+            "gameObjectType": "BEAM_46",
             "description": "Floor",
             "layer": "GameLayer::ABSTRACT"
         }

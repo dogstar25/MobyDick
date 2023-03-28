@@ -43,6 +43,8 @@ EnumMap::EnumMap()
 	//Render Modes
 	m_enumMap["RenderBlendMode::BLEND"] = (int)RenderBlendMode::BLEND;
 	m_enumMap["RenderBlendMode::ADD"] = (int)RenderBlendMode::ADD;
+	m_enumMap["RenderBlendMode::MULTIPLY"] = (int)RenderBlendMode::MULTIPLY;
+	m_enumMap["RenderBlendMode::MODULATE"] = (int)RenderBlendMode::MODULATE;
 	m_enumMap["RenderBlendMode::NONE"] = (int)RenderBlendMode::NONE;
 
 	//Mouse State

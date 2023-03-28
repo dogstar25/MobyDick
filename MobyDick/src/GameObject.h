@@ -119,7 +119,7 @@ public:
 	void enableRender();
 	bool renderDisabled() { return m_stateTags.test(StateTag::disabledRender); }
 
-	void disableCollision();
+	void disableCollision(bool includeSensors=false);
 	void enableCollision();
 	bool collisionDisabled() { return m_stateTags.test(StateTag::disabledCollision); }
 

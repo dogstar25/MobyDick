@@ -144,6 +144,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\actions\ActorMoveAction.cpp" />
+    <ClCompile Include="src\actions\ActorStairsMoveAction.cpp" />
     <ClCompile Include="src\actions\BBActionFactory.cpp" />
     <ClCompile Include="src\actions\DoorCloseAction.cpp" />
     <ClCompile Include="src\actions\DoorEnterAction.cpp" />
@@ -171,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\actions\ActorMoveAction.h" />
+    <ClInclude Include="src\actions\ActorStairsMoveAction.h" />
     <ClInclude Include="src\actions\BBActionFactory.h" />
     <ClInclude Include="src\actions\DoorCloseAction.h" />
     <ClInclude Include="src\actions\DoorEnterAction.h" />
