@@ -31,7 +31,7 @@
             "id": "LOC_0029_0141",
             "gameObjectType": "BOBBY",
             "name": "Player Bobby",
-            "layer": "GameLayer::MAIN",
+            "layer": "GameLayer::FOREGROUND_2",
             "cameraFollow": true
         },
         {
