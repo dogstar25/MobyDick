@@ -111,8 +111,13 @@
             "components": [
                 {
                     "id": "RENDER_COMPONENT",
-                    "textureId": "TX_DARK_BOX",
-                    "textureBlendMode": "RenderBlendMode::MULTIPLY"
+                    "textureId": "TX_WHITE_QUAD",
+                    "textureBlendMode": "RenderBlendMode::BLEND",
+                    "color": {
+                        "tint": "Colors::BLACK",
+                        "alpha": 200
+                    }
+
                 },
                 {
                     "id": "TRANSFORM_COMPONENT",
